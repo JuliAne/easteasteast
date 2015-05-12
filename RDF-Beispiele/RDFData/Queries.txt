@@ -1,0 +1,137 @@
+#############################
+# 145 Ortsbeschreibungen in Jugendstadtplan.ttl
+
+PREFIX jsp: <http://leipzig-data.de/Data/Jugendstadtplan/> 
+select ?a ?b ?l 
+from <http://leipzig-data.de/Data/Jugendstadtplan/> 
+where {
+  ?a a jsp:Ort .
+optional{  ?a jsp:describes ?b . }
+optional{  ?a rdfs:label ?l . }
+}
+
+PREFIX jsp: <http://leipzig-data.de/Data/Jugendstadtplan/> 
+select count(distinct ?b) 
+from <http://leipzig-data.de/Data/Jugendstadtplan/> 
+where {
+  ?a a jsp:Ort; jsp:describes ?b . 
+}
+
+#############################
+#Vergleiche und extrahiere alle Einträge der 145 Orte aus Orte.ttl, die in
+#Jugendstadtplan.ttl referenziert werden
+
+PREFIX jsp: <http://leipzig-data.de/Data/Jugendstadtplan/> 
+PREFIX ld: <http://leipzig-data.de/Data/Model/> 
+select count(distinct ?b) 
+from <http://leipzig-data.de/Data/Jugendstadtplan/>  
+from <http://leipzig-data.de/Data/Orte/> 
+where {
+  ?a a jsp:Ort; jsp:describes ?b .
+  ?b a ld:Ort . 
+}
+
+Ein ld:Ort fehlte -> Schreibfehler bei ldo:Anker. Gefixt.
+
+PREFIX jsp: <http://leipzig-data.de/Data/Jugendstadtplan/> 
+PREFIX ld: <http://leipzig-data.de/Data/Model/> 
+construct { ?b ?c ?d . }
+from <http://leipzig-data.de/Data/Jugendstadtplan/> 
+from <http://leipzig-data.de/Data/Orte/> 
+where {
+  ?a a jsp:Ort; jsp:describes ?b .
+  ?b a ld:Ort; ?c ?d .
+}
+
+#############################
+#Vergleiche und extrahiere alle Einträge der Adressen der 145 Orte aus
+#Adressen.ttl, die in Jugendstadtplan.ttl referenziert werden, sowie deren
+#GeoDaten, sofern vorhanden.
+
+-> Viele Adressen in Orte.ttl waren noch nicht auf das neue AdressURIformat
+   umgestellt.  Ich habe AdressURIs im neuen Format ergänzt.
+
+PREFIX jsp: <http://leipzig-data.de/Data/Jugendstadtplan/> 
+PREFIX ld: <http://leipzig-data.de/Data/Model/> 
+select count(distinct ?c) 
+from <http://leipzig-data.de/Data/Jugendstadtplan/>  
+from <http://leipzig-data.de/Data/Orte/>  
+where {
+  ?a a jsp:Ort; jsp:describes ?b .
+  ?b a ld:Ort; ld:hasAddress ?c . 
+  filter (!regex(?c, "Adresse"))	
+} 
+
+-> 133 AdressURIs neuen Formats, mehrere Orte haben dieselbe Adresse
+
+PREFIX jsp: <http://leipzig-data.de/Data/Jugendstadtplan/> 
+PREFIX ld: <http://leipzig-data.de/Data/Model/> 
+select count(distinct ?c) 
+from <http://leipzig-data.de/Data/Jugendstadtplan/>  
+from <http://leipzig-data.de/Data/Orte/>   
+from <http://leipzig-data.de/Data/Adressen/>  
+where {
+  ?a a jsp:Ort; jsp:describes ?b .
+  ?b a ld:Ort; ld:hasAddress ?c . ?c a ld:Adresse .
+} 
+
+-> von denen existieren 126 in Adressen.ttl
+
+PREFIX jsp: <http://leipzig-data.de/Data/Jugendstadtplan/> 
+PREFIX ld: <http://leipzig-data.de/Data/Model/> 
+select ?b ?c 
+from <http://leipzig-data.de/Data/Jugendstadtplan/>  
+from <http://leipzig-data.de/Data/Orte/>  
+from <http://leipzig-data.de/Data/Adressen/> 
+where {
+  ?a a jsp:Ort; jsp:describes ?b .
+  optional{ ?b a ld:Ort; ld:hasAddress ?c . ?c a ld:Adresse . }
+  filter (!bound(?c)) 
+} order by ?b
+
+Folgende 10 Orte haben keine valide Adresse
+http://leipzig-data.de/Data/Ort/Alter_Johannisfriedhof 	
+http://leipzig-data.de/Data/Ort/Bar_Fusz 	
+http://leipzig-data.de/Data/Ort/Bootsverleih_am_Leipziger_Eck 	
+http://leipzig-data.de/Data/Ort/Fa_Dietmar_Becker 	
+http://leipzig-data.de/Data/Ort/Grassimuseum 	
+http://leipzig-data.de/Data/Ort/Liebfrauen_LeipzigLindenau 	
+http://leipzig-data.de/Data/Ort/Panometer_Leipzig 	
+http://leipzig-data.de/Data/Ort/Russische_Gedaechtniskirche 	
+http://leipzig-data.de/Data/Ort/StuK 	
+http://leipzig-data.de/Data/Ort/UniLeipzig.Augustusplatz 	
+
+-> von denen existieren 126 in Adressen.ttl
+
+PREFIX jsp: <http://leipzig-data.de/Data/Jugendstadtplan/> 
+PREFIX ld: <http://leipzig-data.de/Data/Model/> 
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> 
+select count(distinct ?c)  
+from <http://leipzig-data.de/Data/Jugendstadtplan/>  
+from <http://leipzig-data.de/Data/Orte/>  
+from <http://leipzig-data.de/Data/Adressen/> 
+from <http://leipzig-data.de/Data/GeoDaten/> 
+where {
+  ?a a jsp:Ort; jsp:describes ?b .
+  ?b a ld:Ort; ld:hasAddress ?c . ?c a ld:Adresse . 
+  optional { ?c geo:lat ?g . }
+  filter (!bound(?g))
+} 
+
+-> 109 davon haben Geokoordinaten
+
+Extrahiere diese Adress- und Geo-Daten:
+
+PREFIX jsp: <http://leipzig-data.de/Data/Jugendstadtplan/> 
+PREFIX ld: <http://leipzig-data.de/Data/Model/> 
+construct { ?c ?d ?e . }
+from <http://leipzig-data.de/Data/Jugendstadtplan/> 
+from <http://leipzig-data.de/Data/Orte/> 
+from <http://leipzig-data.de/Data/Adressen/> 
+from <http://leipzig-data.de/Data/GeoDaten/> 
+where {
+  ?a a jsp:Ort; jsp:describes ?b .
+  ?b a ld:Ort; ld:hasAddress ?c .
+  ?c a ld:Adresse; ?d ?e .
+}
+

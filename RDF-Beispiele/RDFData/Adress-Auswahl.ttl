@@ -1,0 +1,1336 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ld: <http://leipzig-data.de/Data/Model/> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix gn: <http://www.geonames.org/ontology#> .
+
+<http://leipzig-data.de/Data/04103.Leipzig.BrandenburgerStrasse.2>
+    ld:hasHouseNumber "2" ;
+    ld:hasPostCode "04103" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/BrandenburgerStrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way33527464> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3855966214077 51.3445321)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Brandenburger Straße 2" ;
+    geo:lat 51.3445321 ;
+    geo:long 12.3855966214077 .
+
+<http://leipzig-data.de/Data/04103.Leipzig.DeutscherPlatz.1>
+    ld:hasHouseNumber "1" ;
+    ld:hasPostCode "04103" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/DeutscherPlatz> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Deutscher Platz 1" .
+
+<http://leipzig-data.de/Data/04103.Leipzig.DeutscherPlatz.4>
+    ld:hasHouseNumber "4" ;
+    ld:hasPostCode "04103" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/DeutscherPlatz> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way184958480> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.395329 51.3212298)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Deutscher Platz 4" ;
+    geo:lat 51.3212298 ;
+    geo:long 12.395329 .
+
+<http://leipzig-data.de/Data/04103.Leipzig.Goldschmidtstrasse.12>
+    ld:hasHouseNumber "12" ;
+    ld:hasPostCode "04103" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Goldschmidtstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node919480451> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3834348 51.3361147)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Goldschmidtstraße 12" ;
+    geo:lat 51.3361147 ;
+    geo:long 12.3834348 .
+
+<http://leipzig-data.de/Data/04103.Leipzig.Kurt-Schumacher-Strasse.4>
+    ld:hasHouseNumber "4" ;
+    ld:hasPostCode "04103" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Kurt-Schumacher-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node359546471> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3794132 51.3461576)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Kurt-Schumacher-Straße 4" ;
+    geo:lat 51.3461576 ;
+    geo:long 12.3794132 .
+
+<http://leipzig-data.de/Data/04103.Leipzig.Linnestrasse.1>
+    ld:hasHouseNumber "1" ;
+    ld:hasPostCode "04103" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Linnestrasse> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Linnéstraße 1" .
+
+<http://leipzig-data.de/Data/04103.Leipzig.NuernbergerStrasse.11>
+    ld:hasHouseNumber "11" ;
+    ld:hasPostCode "04103" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/NuernbergerStrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node311330953> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3845048 51.336819)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Nürnberger Straße 11" ;
+    geo:lat 51.336819 ;
+    geo:long 12.3845048 .
+
+<http://leipzig-data.de/Data/04103.Leipzig.Querstrasse.16>
+    ld:hasHouseNumber "16" ;
+    ld:hasPostCode "04103" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Querstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node312164362> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3854771 51.3406028)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Querstraße 16" ;
+    geo:lat 51.3406028 ;
+    geo:long 12.3854771 .
+
+<http://leipzig-data.de/Data/04103.Leipzig.Strassedes18Oktober.100>
+    ld:hasHouseNumber "100" ;
+    ld:hasPostCode "04103" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Strassedes18Oktober> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Straße des 18. Oktober 100" .
+
+<http://leipzig-data.de/Data/04103.Leipzig.Tarostrasse.10>
+    ld:hasHouseNumber "10" ;
+    ld:hasPostCode "04103" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Tarostrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way24674336> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.38579475 51.323966)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Tarostraße 10" ;
+    geo:lat 51.323966 ;
+    geo:long 12.38579475 .
+
+<http://leipzig-data.de/Data/04105.Leipzig.Jacobstrasse.8>
+    ld:hasHouseNumber "8" ;
+    ld:hasPostCode "04105" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Jacobstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way62294275> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3688089968686 51.3449002106769)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Jacobstraße 8" ;
+    geo:lat 51.3449002106769 ;
+    geo:long 12.3688089968686 .
+
+<http://leipzig-data.de/Data/04105.Leipzig.Lortzingstrasse.3>
+    ld:hasHouseNumber "3" ;
+    ld:hasPostCode "04105" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Lortzingstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way51499006> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3708558022852 51.3449840539751)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Lortzingstraße 3" ;
+    geo:lat 51.3449840539751 ;
+    geo:long 12.3708558022852 .
+
+<http://leipzig-data.de/Data/04105.Leipzig.Lumumbastrasse.4>
+    ld:hasHouseNumber "4" ;
+    ld:hasPostCode "04105" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Lumumbastrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way31977151> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3711824306798 51.353383511013)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Lumumbastraße 4" ;
+    geo:lat 51.353383511013 ;
+    geo:long 12.3711824306798 .
+
+<http://leipzig-data.de/Data/04105.Leipzig.PfaffendorferStrasse.29>
+    ld:hasHouseNumber "29" ;
+    ld:hasPostCode "04105" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/PfaffendorferStrasse> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Pfaffendorfer Straße 29" .
+
+<http://leipzig-data.de/Data/04105.Leipzig.Roscherstrasse.33>
+    ld:hasHouseNumber "33" ;
+    ld:hasPostCode "04105" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Roscherstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way182333895> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3772673 51.3532176)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Roscherstraße 33" ;
+    geo:lat 51.3532176 ;
+    geo:long 12.3772673 .
+
+<http://leipzig-data.de/Data/04105.Leipzig.Waldstrasse.13>
+    ld:hasHouseNumber "13" ;
+    ld:hasPostCode "04105" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Waldstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way95415701> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3580741253152 51.3432554366102)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Waldstraße 13" ;
+    geo:lat 51.3432554366102 ;
+    geo:long 12.3580741253152 .
+
+<http://leipzig-data.de/Data/04105.Leipzig.Zoellnerweg.6>
+    ld:hasHouseNumber "6" ;
+    ld:hasPostCode "04105" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Zoellnerweg> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way158427460> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3621288 51.3472531)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Zöllnerweg 6" ;
+    geo:lat 51.3472531 ;
+    geo:long 12.3621288 .
+
+<http://leipzig-data.de/Data/04107.Leipzig.Karl-Liebknecht-Strasse.36>
+    ld:hasHouseNumber "36" ;
+    ld:hasPostCode "04107" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Karl-Liebknecht-Strasse> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Karl-Liebknecht-Straße 36" .
+
+<http://leipzig-data.de/Data/04107.Leipzig.Karl-Tauchnitz-Strasse.11>
+    ld:hasHouseNumber "11" ;
+    ld:hasPostCode "04107" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Karl-Tauchnitz-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way44950352> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3653064336483 51.334033626271)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Karl-Tauchnitz-Straße 11" ;
+    geo:lat 51.334033626271 ;
+    geo:long 12.3653064336483 .
+
+<http://leipzig-data.de/Data/04107.Leipzig.Peterssteinweg.17>
+    ld:hasHouseNumber "17" ;
+    ld:hasPostCode "04107" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Peterssteinweg> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way48278432> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3738960336922 51.3325365047859)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Peterssteinweg 17" ;
+    geo:lat 51.3325365047859 ;
+    geo:long 12.3738960336922 .
+
+<http://leipzig-data.de/Data/04107.Leipzig.Rennbahnweg.2A>
+    ld:hasHouseNumber "2A" ;
+    ld:hasPostCode "04107" ;
+    ld:inOrtsteil <http://leipzig-data.de/Data/Ortsteil/Reudnitz-Thonberg> ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Rennbahnweg> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way36058842> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3608311 51.3280607)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Rennbahnweg 2A" ;
+    geo:lat 51.3280607 ;
+    geo:long 12.3608311 .
+
+<http://leipzig-data.de/Data/04107.Leipzig.Riemannstrasse.3>
+    ld:hasHouseNumber "3" ;
+    ld:hasPostCode "04107" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Riemannstrasse> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Riemannstraße 3" .
+
+<http://leipzig-data.de/Data/04107.Leipzig.Riemannstrasse.42>
+    ld:hasHouseNumber "42" ;
+    ld:hasPostCode "04107" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Riemannstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way48244217> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3745313204895 51.3312832889421)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Riemannstraße 42" ;
+    geo:lat 51.3312832889421 ;
+    geo:long 12.3745313204895 .
+
+<http://leipzig-data.de/Data/04107.Leipzig.Schletterstrasse.5>
+    ld:hasHouseNumber "5" ;
+    ld:hasPostCode "04107" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Schletterstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way80044587> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3743628 51.3304639)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Schletterstraße 5" ;
+    geo:lat 51.3304639 ;
+    geo:long 12.3743628 .
+
+<http://leipzig-data.de/Data/04107.Leipzig.Simsonplatz.1>
+    ld:hasHouseNumber "1" ;
+    ld:hasPostCode "04107" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Simsonplatz> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Simsonplatz 1" .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Augustusplatz.1>
+    ld:hasHouseNumber "1" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Augustusplatz> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way85281043> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3807993 51.3391581)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Augustusplatz 1" ;
+    geo:lat 51.3391581 ;
+    geo:long 12.3807993 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Augustusplatz.10>
+    ld:hasHouseNumber "10" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Augustusplatz> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1797676820> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3794636 51.3385309)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Augustusplatz 10" ;
+    geo:lat 51.3385309 ;
+    geo:long 12.3794636 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Augustusplatz.8>
+    ld:hasHouseNumber "8" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Augustusplatz> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way85281043> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3807993 51.3391581)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Augustusplatz 8" ;
+    geo:lat 51.3391581 ;
+    geo:long 12.3807993 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Augustusplatz.9>
+    ld:hasHouseNumber "9" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Augustusplatz> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1856954721> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3790116 51.3379418)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Augustusplatz 9" ;
+    geo:lat 51.3379418 ;
+    geo:long 12.3790116 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Bosestrasse.1>
+    ld:hasHouseNumber "1" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Bosestrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node890992486> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3691785 51.3405119)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Bosestraße 1" ;
+    geo:lat 51.3405119 ;
+    geo:long 12.3691785 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Bruehl.1>
+    ld:hasHouseNumber "1" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Bruehl> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Brühl 1" .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Bruehl.33>
+    ld:hasHouseNumber "33" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Bruehl> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node332389548> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3772359 51.3431089)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Brühl 33" ;
+    geo:lat 51.3431089 ;
+    geo:long 12.3772359 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Dittrichring.16>
+    ld:hasHouseNumber "16" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Dittrichring> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way164014258> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3716066 51.3384492)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Dittrichring 16" ;
+    geo:lat 51.3384492 ;
+    geo:long 12.3716066 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Dittrichring.24>
+    ld:hasHouseNumber "24" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Dittrichring> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node358346509> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3699113 51.3417126)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Dittrichring 24" ;
+    geo:lat 51.3417126 ;
+    geo:long 12.3699113 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Goerdelerring.20>
+    ld:hasHouseNumber "20" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Goerdelerring> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way184923170> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3703905135446 51.3421443491536)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Goerdelerring 20" ;
+    geo:lat 51.3421443491536 ;
+    geo:long 12.3703905135446 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Goethestrasse.2>
+    ld:hasHouseNumber "2" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Goethestrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way150289829> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3808824 51.3420602)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Goethestraße 2" ;
+    geo:lat 51.3420602 ;
+    geo:long 12.3808824 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Gottschedstrasse.2>
+    ld:hasHouseNumber "2" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Gottschedstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way96833207> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3707341132968 51.340154818931)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Gottschedstraße 2" ;
+    geo:lat 51.340154818931 ;
+    geo:long 12.3707341132968 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Gottschedstrasse.7>
+    ld:hasHouseNumber "7" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Gottschedstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way49603104> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3711064 51.339763)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Gottschedstraße 7" ;
+    geo:lat 51.339763 ;
+    geo:long 12.3711064 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.GrimmaischeStrasse.13>
+    ld:hasHouseNumber "13" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/GrimmaischeStrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node260629059> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3775309 51.3399992)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Grimmaische Straße 13" ;
+    geo:lat 51.3399992 ;
+    geo:long 12.3775309 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.GrimmaischeStrasse.2>
+    ld:hasHouseNumber "2" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/GrimmaischeStrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node891854876> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3754683 51.3390391)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Grimmaische Straße 2" ;
+    geo:lat 51.3390391 ;
+    geo:long 12.3754683 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.GrimmaischeStrasse.6>
+    ld:hasHouseNumber "6" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/GrimmaischeStrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1483459937> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3758923 51.3397563)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Grimmaische Straße 6" ;
+    geo:lat 51.3397563 ;
+    geo:long 12.3758923 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Hainstrasse.1>
+    ld:hasHouseNumber "1" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Hainstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node870940537> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3740125 51.3411992)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Hainstraße 1" ;
+    geo:lat 51.3411992 ;
+    geo:long 12.3740125 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Hainstrasse.12>
+    ld:hasHouseNumber "12" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Hainstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1758322240> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3736481 51.3421412)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Hainstraße 12" ;
+    geo:lat 51.3421412 ;
+    geo:long 12.3736481 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Hainstrasse.19A>
+    ld:hasHouseNumber "19A" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Hainstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node250581913> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3723657 51.3422084)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Hainstraße 19A" ;
+    geo:lat 51.3422084 ;
+    geo:long 12.3723657 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Katharinenstrasse.10>
+    ld:hasHouseNumber "10" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Katharinenstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way22734771> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3757738364676 51.3423561740415)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Katharinenstraße 10" ;
+    geo:lat 51.3423561740415 ;
+    geo:long 12.3757738364676 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Katharinenstrasse.17>
+    ld:hasHouseNumber "17" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Katharinenstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1452582437> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3747466 51.342422)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Katharinenstraße 17" ;
+    geo:lat 51.342422 ;
+    geo:long 12.3747466 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Klostergasse.16>
+    ld:hasHouseNumber "16" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Klostergasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way132052481> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3730778 51.3398928)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Klostergasse 16" ;
+    geo:lat 51.3398928 ;
+    geo:long 12.3730778 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Kolonnadenstrasse.18>
+    ld:hasHouseNumber "18" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Kolonnadenstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1707300843> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3663195 51.3381287)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Kolonnadenstraße 18" ;
+    geo:lat 51.3381287 ;
+    geo:long 12.3663195 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Lessingstrasse.7>
+    ld:hasHouseNumber "7" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Lessingstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node798544505> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3667086 51.342061)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Lessingstraße 7" ;
+    geo:lat 51.342061 ;
+    geo:long 12.3667086 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Magazingasse.4>
+    ld:hasHouseNumber "4" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Magazingasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node310395313> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3769462 51.3373148)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Magazingasse 4" ;
+    geo:lat 51.3373148 ;
+    geo:long 12.3769462 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Markt.1>
+    ld:hasHouseNumber "1" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Markt> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way8031319> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3753358279286 51.3403673487936)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Markt 1" ;
+    geo:lat 51.3403673487936 ;
+    geo:long 12.3753358279286 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Markt.11>
+    ld:hasHouseNumber "11" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Markt> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1473520646> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3740639 51.3401474)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Markt 11" ;
+    geo:lat 51.3401474 ;
+    geo:long 12.3740639 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Markt.17>
+    ld:hasHouseNumber "17" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Markt> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way131015598> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3750950311048 51.3397582377417)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Markt 17" ;
+    geo:lat 51.3397582377417 ;
+    geo:long 12.3750950311048 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Markt.9>
+    ld:hasHouseNumber "9" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Markt> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way30244963> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3744783 51.3399172)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Markt 9" ;
+    geo:lat 51.3399172 ;
+    geo:long 12.3744783 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Martin-Luther-Ring.4>
+    ld:hasHouseNumber "4" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Martin-Luther-Ring> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1454062734> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3726786 51.3360228)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Martin-Luther-Ring 4" ;
+    geo:lat 51.3360228 ;
+    geo:long 12.3726786 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Martin-Luther-Ring.4-6>
+    ld:hasHouseNumber "4-6" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Martin-Luther-Ring> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Martin-Luther-Ring 4-6" .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Naschmarkt.2>
+    ld:hasHouseNumber "2" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Naschmarkt> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way24606480> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.375737541309 51.3406659760547)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Naschmarkt 2" ;
+    geo:lat 51.3406659760547 ;
+    geo:long 12.375737541309 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Neumarkt.9>
+    ld:hasHouseNumber "9" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Neumarkt> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node316522778> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3765118 51.3386805)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Neumarkt 9" ;
+    geo:lat 51.3386805 ;
+    geo:long 12.3765118 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Nikolaikirchhof.2>
+    ld:hasHouseNumber "2" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Nikolaikirchhof> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way131748135> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.378415764121 51.3407802754391)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Nikolaikirchhof 2" ;
+    geo:lat 51.3407802754391 ;
+    geo:long 12.378415764121 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Nikolaikirchhof.3>
+    ld:hasHouseNumber "3" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Nikolaikirchhof> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node309922222> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3787986 51.340714)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Nikolaikirchhof 3" ;
+    geo:lat 51.340714 ;
+    geo:long 12.3787986 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Nikolaistrasse.6-10>
+    ld:hasHouseNumber "6-10" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Nikolaistrasse> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Nikolaistraße 6-10" .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Peterskirchhof.1>
+    ld:hasHouseNumber "1" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Peterskirchhof> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way7947559> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3761541 51.3373401)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Peterskirchhof 1" ;
+    geo:lat 51.3373401 ;
+    geo:long 12.3761541 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Petersstrasse.15>
+    ld:hasHouseNumber "15" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Petersstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1449096953> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3755943 51.3390122)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Petersstraße 15" ;
+    geo:lat 51.3390122 ;
+    geo:long 12.3755943 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Petersstrasse.20>
+    ld:hasHouseNumber "20" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Petersstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way7947555> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3749632 51.3365202)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Petersstraße 20" ;
+    geo:lat 51.3365202 ;
+    geo:long 12.3749632 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Petersstrasse.36>
+    ld:hasHouseNumber "36" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Petersstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node310218384> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3739315 51.3377874)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Petersstraße 36" ;
+    geo:lat 51.3377874 ;
+    geo:long 12.3739315 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Petersstrasse.39>
+    ld:hasHouseNumber "39" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Petersstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1453763575> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.375183 51.3373661)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Petersstraße 39" ;
+    geo:lat 51.3373661 ;
+    geo:long 12.375183 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Reichsstrasse.4>
+    ld:hasHouseNumber "4" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Reichsstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node850864818> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3769412 51.340418)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Reichsstraße 4" ;
+    geo:lat 51.340418 ;
+    geo:long 12.3769412 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Salzgaesschen.6>
+    ld:hasHouseNumber "6" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Salzgaesschen> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way135097551> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3759045 51.3407958)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Salzgäßchen 6" ;
+    geo:lat 51.3407958 ;
+    geo:long 12.3759045 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Schreberstrasse.15>
+    ld:hasHouseNumber "15" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Schreberstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way78828949> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3593224 51.3387807)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Schreberstraße 15" ;
+    geo:lat 51.3387807 ;
+    geo:long 12.3593224 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Thomasiusstrasse.16>
+    ld:hasHouseNumber "16" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Thomasiusstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way96832294> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3651653095289 51.3410699018016)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Thomasiusstraße 16" ;
+    geo:lat 51.3410699018016 ;
+    geo:long 12.3651653095289 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Thomaskirchhof.12>
+    ld:hasHouseNumber "12" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Thomaskirchhof> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Thomaskirchhof 12" .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Thomaskirchhof.15>
+    ld:hasHouseNumber "15" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Thomaskirchhof> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1673864592> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3722682 51.33865)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Thomaskirchhof 15" ;
+    geo:lat 51.33865 ;
+    geo:long 12.3722682 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Thomaskirchhof.16>
+    ld:hasHouseNumber "16" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Thomaskirchhof> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1673864592> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3722682 51.33865)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Thomaskirchhof 16" ;
+    geo:lat 51.33865 ;
+    geo:long 12.3722682 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Thomaskirchhof.18>
+    ld:hasHouseNumber "18" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Thomaskirchhof> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1454101807> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3721452 51.3391293)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Thomaskirchhof 18" ;
+    geo:lat 51.3391293 ;
+    geo:long 12.3721452 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Universitaetsstrasse.5>
+    ld:hasHouseNumber "5" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Universitaetsstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node416063978> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3778643 51.3381402)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Universitätsstraße 5" ;
+    geo:lat 51.3381402 ;
+    geo:long 12.3778643 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Universitaetsstrasse.9>
+    ld:hasHouseNumber "9" ;
+    ld:hasPostCode "04109" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Universitaetsstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/relation1769862> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3790743082259 51.3372777930953)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Universitätsstraße 9" ;
+    geo:lat 51.3372777930953 ;
+    geo:long 12.3790743082259 .
+
+<http://leipzig-data.de/Data/04129.Leipzig.DessauerStrasse.2>
+    ld:hasHouseNumber "2" ;
+    ld:hasPostCode "04129" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/DessauerStrasse> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Dessauer Straße 2" .
+
+<http://leipzig-data.de/Data/04155.Leipzig.Kirschbergstrasse.84>
+    ld:hasHouseNumber "84" ;
+    ld:hasPostCode "04155" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Kirschbergstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way35768720> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3533798806412 51.3622473101597)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Kirschbergstraße 84" ;
+    geo:lat 51.3622473101597 ;
+    geo:long 12.3533798806412 .
+
+<http://leipzig-data.de/Data/04155.Leipzig.Menckestrasse.23>
+    ld:hasHouseNumber "23" ;
+    ld:hasPostCode "04155" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Menckestrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way36232476> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3642573717771 51.3567403479623)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Menckestraße 23" ;
+    geo:lat 51.3567403479623 ;
+    geo:long 12.3642573717771 .
+
+<http://leipzig-data.de/Data/04155.Leipzig.Menckestrasse.42>
+    ld:hasHouseNumber "42" ;
+    ld:hasPostCode "04155" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Menckestrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way80889011> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3624706 51.3590262)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Menckestraße 42" ;
+    geo:lat 51.3590262 ;
+    geo:long 12.3624706 .
+
+<http://leipzig-data.de/Data/04157.Leipzig.Kleiststrasse.54>
+    ld:hasHouseNumber "54" ;
+    ld:hasPostCode "04157" ;
+    ld:inOrtsteil <http://leipzig-data.de/Data/Ortsteil/Gruenau-Ost> ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Kleiststrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way43898246> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3813368133442 51.3723678294689)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Kleiststraße 54" ;
+    geo:lat 51.3723678294689 ;
+    geo:long 12.3813368133442 .
+
+<http://leipzig-data.de/Data/04158.Leipzig.AmFreibad.3>
+    ld:hasHouseNumber "3" ;
+    ld:hasPostCode "04158" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/AmFreibad> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way24233150> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3285411 51.3931482)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Am Freibad 3" ;
+    geo:lat 51.3931482 ;
+    geo:long 12.3285411 .
+
+<http://leipzig-data.de/Data/04159.Leipzig.Gustav-Esche-Strasse.4>
+    ld:hasHouseNumber "4" ;
+    ld:hasPostCode "04159" ;
+    ld:inOrtsteil <http://leipzig-data.de/Data/Ortsteil/Hartmannsdorf-Knautnaundorf> ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Gustav-Esche-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way31103567> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3157822754293 51.3698273225452)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Gustav-Esche-Straße 4" ;
+    geo:lat 51.3698273225452 ;
+    geo:long 12.3157822754293 .
+
+<http://leipzig-data.de/Data/04159.Leipzig.Renftstrasse.1>
+    ld:hasHouseNumber "1" ;
+    ld:hasPostCode "04159" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Renftstrasse> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Renftstraße 1" .
+
+<http://leipzig-data.de/Data/04177.Leipzig.Aurelienstrasse.41>
+    ld:hasHouseNumber "41" ;
+    ld:hasPostCode "04177" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Aurelienstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way117965382> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3335735 51.3328241)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Aurelienstraße 41" ;
+    geo:lat 51.3328241 ;
+    geo:long 12.3335735 .
+
+<http://leipzig-data.de/Data/04177.Leipzig.Haehnelstrasse.27>
+    ld:hasHouseNumber "27" ;
+    ld:hasPostCode "04177" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Haehnelstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way40717530> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3334491 51.3330662)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Hähnelstraße 27" ;
+    geo:lat 51.3330662 ;
+    geo:long 12.3334491 .
+
+<http://leipzig-data.de/Data/04177.Leipzig.LindenauerMarkt.21>
+    ld:hasHouseNumber "21" ;
+    ld:hasPostCode "04177" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/LindenauerMarkt> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node918029785> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3332312 51.3378024)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Lindenauer Markt 21" ;
+    geo:lat 51.3378024 ;
+    geo:long 12.3332312 .
+
+<http://leipzig-data.de/Data/04177.Leipzig.Wasserstrasse.18>
+    ld:hasHouseNumber "18" ;
+    ld:hasPostCode "04177" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Wasserstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way4297480> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3351994 51.3426053)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Wasserstraße 18" ;
+    geo:lat 51.3426053 ;
+    geo:long 12.3351994 .
+
+<http://leipzig-data.de/Data/04179.Leipzig.Gustav-Esche-Strasse.1>
+    ld:hasHouseNumber "1" ;
+    ld:hasPostCode "04179" ;
+    ld:inOrtsteil <http://leipzig-data.de/Data/Ortsteil/Plagwitz> ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Gustav-Esche-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way40356559> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3138925806912 51.3575709335382)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Gustav-Esche-Straße 1" ;
+    geo:lat 51.3575709335382 ;
+    geo:long 12.3138925806912 .
+
+<http://leipzig-data.de/Data/04179.Leipzig.Hans-Driesch-Strasse.52A>
+    ld:hasHouseNumber "52A" ;
+    ld:hasPostCode "04179" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Hans-Driesch-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way43308926> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3119438084343 51.3465501797225)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Hans-Driesch-Straße 52A" ;
+    geo:lat 51.3465501797225 ;
+    geo:long 12.3119438084343 .
+
+<http://leipzig-data.de/Data/04179.Leipzig.SaarlaenderStrasse.17>
+    ld:hasHouseNumber "17" ;
+    ld:hasPostCode "04179" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/SaarlaenderStrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way65424147> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3156686157657 51.3248779756373)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Saarländer Straße 17" ;
+    geo:lat 51.3248779756373 ;
+    geo:long 12.3156686157657 .
+
+<http://leipzig-data.de/Data/04179.Leipzig.Spinnereistrasse.7>
+    ld:hasHouseNumber "7" ;
+    ld:hasPostCode "04179" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Spinnereistrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way37041532> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3196474158046 51.3277079553625)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Spinnereistraße 7" ;
+    geo:lat 51.3277079553625 ;
+    geo:long 12.3196474158046 .
+
+<http://leipzig-data.de/Data/04209.Leipzig.Kolpingweg.1>
+    ld:hasHouseNumber "1" ;
+    ld:hasPostCode "04209" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Kolpingweg> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way30812475> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.2796854 51.3132783)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Kolpingweg 1" ;
+    geo:lat 51.3132783 ;
+    geo:long 12.2796854 .
+
+<http://leipzig-data.de/Data/04209.Leipzig.StuttgarterAllee.7>
+    ld:hasHouseNumber "7" ;
+    ld:hasPostCode "04209" ;
+    ld:inOrtsteil <http://leipzig-data.de/Data/Ortsteil/Loessnig> ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/StuttgarterAllee> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way23239139> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.291660072778 51.3150466771421)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Stuttgarter Allee 7" ;
+    geo:lat 51.3150466771421 ;
+    geo:long 12.291660072778 .
+
+<http://leipzig-data.de/Data/04229.Leipzig.Antonienstrasse.2>
+    ld:hasHouseNumber "2" ;
+    ld:hasPostCode "04229" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Antonienstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way60469725> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.329405 51.3203635)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Antonienstraße 2" ;
+    geo:lat 51.3203635 ;
+    geo:long 12.329405 .
+
+<http://leipzig-data.de/Data/04229.Leipzig.Antonienstrasse.8>
+    ld:hasHouseNumber "8" ;
+    ld:hasPostCode "04229" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Antonienstrasse> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Antonienstraße 8" .
+
+<http://leipzig-data.de/Data/04229.Leipzig.Karl-Heine-Strasse.50>
+    ld:hasHouseNumber "50" ;
+    ld:hasPostCode "04229" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Karl-Heine-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way103717883> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3342416 51.3315304)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Karl-Heine-Straße 50" ;
+    geo:lat 51.3315304 ;
+    geo:long 12.3342416 .
+
+<http://leipzig-data.de/Data/04229.Leipzig.Karl-Heine-Strasse.83>
+    ld:hasHouseNumber "83" ;
+    ld:hasPostCode "04229" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Karl-Heine-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1454371602> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3322044 51.3308274)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Karl-Heine-Straße 83" ;
+    geo:lat 51.3308274 ;
+    geo:long 12.3322044 .
+
+<http://leipzig-data.de/Data/04229.Leipzig.Karl-Heine-Strasse.9>
+    ld:hasHouseNumber "9" ;
+    ld:hasPostCode "04229" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Karl-Heine-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1454515599> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3464161 51.332044)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Karl-Heine-Straße 9" ;
+    geo:lat 51.332044 ;
+    geo:long 12.3464161 .
+
+<http://leipzig-data.de/Data/04229.Leipzig.Karl-Heine-Strasse.93>
+    ld:hasHouseNumber "93" ;
+    ld:hasPostCode "04229" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Karl-Heine-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node495428912> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.330839 51.330364)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Karl-Heine-Straße 93" ;
+    geo:lat 51.330364 ;
+    geo:long 12.330839 .
+
+<http://leipzig-data.de/Data/04229.Leipzig.Klingenstrasse.20>
+    ld:hasHouseNumber "20" ;
+    ld:hasPostCode "04229" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Klingenstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way128110610> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3247376 51.32325)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Klingenstraße 20" ;
+    geo:lat 51.32325 ;
+    geo:long 12.3247376 .
+
+<http://leipzig-data.de/Data/04229.Leipzig.Klingerweg.2>
+    ld:hasHouseNumber "2" ;
+    ld:hasPostCode "04229" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Klingerweg> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way179718848> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3486591132822 51.3300920083114)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Klingerweg 2" ;
+    geo:lat 51.3300920083114 ;
+    geo:long 12.3486591132822 .
+
+<http://leipzig-data.de/Data/04229.Leipzig.Kuechenholzallee.75>
+    ld:hasHouseNumber "75" ;
+    ld:hasPostCode "04229" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Kuechenholzallee> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way24704480> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3371996 51.3133339)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Küchenholzallee 75" ;
+    geo:lat 51.3133339 ;
+    geo:long 12.3371996 .
+
+<http://leipzig-data.de/Data/04229.Leipzig.MerseburgerStrasse.25>
+    ld:hasHouseNumber "25" ;
+    ld:hasPostCode "04229" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/MerseburgerStrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way165264459> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3345583 51.3286489)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Merseburger Straße 25" ;
+    geo:lat 51.3286489 ;
+    geo:long 12.3345583 .
+
+<http://leipzig-data.de/Data/04229.Leipzig.Nonnenstrasse.38>
+    ld:hasHouseNumber "38" ;
+    ld:hasPostCode "04229" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Nonnenstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node1454267159> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3437185 51.3290976)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Nonnenstraße 38" ;
+    geo:lat 51.3290976 ;
+    geo:long 12.3437185 .
+
+<http://leipzig-data.de/Data/04249.Leipzig.Dieskaustrasse.459>
+    ld:hasHouseNumber "459" ;
+    ld:hasPostCode "04249" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Dieskaustrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way55799399> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3272934 51.298494)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Dieskaustraße 459" ;
+    geo:lat 51.298494 ;
+    geo:long 12.3272934 .
+
+<http://leipzig-data.de/Data/04275.Leipzig.Karl-Liebknecht-Strasse.46>
+    ld:hasHouseNumber "46" ;
+    ld:hasPostCode "04275" ;
+    ld:inOrtsteil <http://leipzig-data.de/Data/Ortsteil/Reudnitz-Thonberg> ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Karl-Liebknecht-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way149827704> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3733241133172 51.3251322133374)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Karl-Liebknecht-Straße 46" ;
+    geo:lat 51.3251322133374 ;
+    geo:long 12.3733241133172 .
+
+<http://leipzig-data.de/Data/04275.Leipzig.Karl-Liebknecht-Strasse.75>
+    ld:hasHouseNumber "75" ;
+    ld:hasPostCode "04275" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Karl-Liebknecht-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way40796062> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.373950035743 51.3236601843908)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Karl-Liebknecht-Straße 75" ;
+    geo:lat 51.3236601843908 ;
+    geo:long 12.373950035743 .
+
+<http://leipzig-data.de/Data/04275.Leipzig.Karl-Liebknecht-Strasse.81>
+    ld:hasHouseNumber "81" ;
+    ld:hasPostCode "04275" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Karl-Liebknecht-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way40522918> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3739021795944 51.3228314929345)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Karl-Liebknecht-Straße 81" ;
+    geo:lat 51.3228314929345 ;
+    geo:long 12.3739021795944 .
+
+<http://leipzig-data.de/Data/04275.Leipzig.Karl-Liebknecht-Strasse.95>
+    ld:hasHouseNumber "95" ;
+    ld:hasPostCode "04275" ;
+    ld:inOrtsteil <http://leipzig-data.de/Data/Ortsteil/Reudnitz-Thonberg> ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Karl-Liebknecht-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way40522874> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3738714729816 51.3215634286456)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Karl-Liebknecht-Straße 95" ;
+    geo:lat 51.3215634286456 ;
+    geo:long 12.3738714729816 .
+
+<http://leipzig-data.de/Data/04275.Leipzig.Kurt-Eisner-Strasse.108>
+    ld:hasHouseNumber "108" ;
+    ld:hasPostCode "04275" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Kurt-Eisner-Strasse> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Kurt-Eisner-Straße 108" .
+
+<http://leipzig-data.de/Data/04277.Leipzig.Bernhard-Goering-Strasse.152>
+    ld:hasHouseNumber "152" ;
+    ld:hasPostCode "04277" ;
+    ld:inOrtsteil <http://leipzig-data.de/Data/Ortsteil/Stoetteritz> ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Bernhard-Goering-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/node94847901> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3762637 51.3108007)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Bernhard-Göring-Straße 152" ;
+    geo:lat 51.3108007 ;
+    geo:long 12.3762637 .
+
+<http://leipzig-data.de/Data/04277.Leipzig.Eichendorffstrasse.7>
+    ld:hasHouseNumber "7" ;
+    ld:hasPostCode "04277" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Eichendorffstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way153893595> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3726558531293 51.313862468585)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Eichendorffstraße 7" ;
+    geo:lat 51.313862468585 ;
+    geo:long 12.3726558531293 .
+
+<http://leipzig-data.de/Data/04277.Leipzig.KoburgerStrasse.12A>
+    ld:hasHouseNumber "12A" ;
+    ld:hasPostCode "04277" ;
+    ld:inOrtsteil <http://leipzig-data.de/Data/Ortsteil/Stoetteritz> ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/KoburgerStrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way37935467> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3731197 51.3016982)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Koburger Straße 12A" ;
+    geo:lat 51.3016982 ;
+    geo:long 12.3731197 .
+
+<http://leipzig-data.de/Data/04277.Leipzig.KoburgerStrasse.17>
+    ld:hasHouseNumber "17" ;
+    ld:hasPostCode "04277" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/KoburgerStrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way37935467> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3731197 51.3016982)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Koburger Straße 17" ;
+    geo:lat 51.3016982 ;
+    geo:long 12.3731197 .
+
+<http://leipzig-data.de/Data/04277.Leipzig.Kochstrasse.132>
+    ld:hasHouseNumber "132" ;
+    ld:hasPostCode "04277" ;
+    ld:inOrtsteil <http://leipzig-data.de/Data/Ortsteil/Stoetteritz> ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Kochstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way33768801> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3713328476493 51.310057128245)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Kochstraße 132" ;
+    geo:lat 51.310057128245 ;
+    geo:long 12.3713328476493 .
+
+<http://leipzig-data.de/Data/04277.Leipzig.Wolfgang-Heinze-Strasse.12A>
+    ld:hasHouseNumber "12A" ;
+    ld:hasPostCode "04277" ;
+    ld:inOrtsteil <http://leipzig-data.de/Data/Ortsteil/Stoetteritz> ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Wolfgang-Heinze-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way24006397> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3729202 51.3100414)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Wolfgang-Heinze-Straße 12A" ;
+    geo:lat 51.3100414 ;
+    geo:long 12.3729202 .
+
+<http://leipzig-data.de/Data/04277.Leipzig.Wolfgang-Heinze-Strasse.15>
+    ld:hasHouseNumber "15" ;
+    ld:hasPostCode "04277" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Wolfgang-Heinze-Strasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way96622007> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.3734458397503 51.3083922230651)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Wolfgang-Heinze-Straße 15" ;
+    geo:lat 51.3083922230651 ;
+    geo:long 12.3734458397503 .
+
+<http://leipzig-data.de/Data/04299.Leipzig.Friedhofsweg.3>
+    ld:hasHouseNumber "3" ;
+    ld:hasPostCode "04299" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Friedhofsweg> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Friedhofsweg 3" .
+
+<http://leipzig-data.de/Data/04299.Leipzig.Kolmstrasse.35>
+    ld:hasHouseNumber "35" ;
+    ld:hasPostCode "04299" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Kolmstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way9886188> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.4283771 51.3131058)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Kolmstraße 35" ;
+    geo:lat 51.3131058 ;
+    geo:long 12.4283771 .
+
+<http://leipzig-data.de/Data/04316.Leipzig.Gottschalkstrasse.9>
+    ld:hasHouseNumber "9" ;
+    ld:hasPostCode "04316" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Gottschalkstrasse> ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Gottschalkstraße 9" .
+
+<http://leipzig-data.de/Data/04317.Leipzig.Oststrasse.73>
+    ld:hasHouseNumber "73" ;
+    ld:hasPostCode "04317" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Oststrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way50583484> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.4086395912933 51.3313673107627)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Oststraße 73" ;
+    geo:lat 51.3313673107627 ;
+    geo:long 12.4086395912933 .
+
+<http://leipzig-data.de/Data/04317.Leipzig.Taeubchenweg.26>
+    ld:hasHouseNumber "26" ;
+    ld:hasPostCode "04317" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Taeubchenweg> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way136387042> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.400037171702 51.3358372636766)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Täubchenweg 26" ;
+    geo:lat 51.3358372636766 ;
+    geo:long 12.400037171702 .
+
+<http://leipzig-data.de/Data/04347.Leipzig.SchoenefelderAllee.26>
+    ld:hasHouseNumber "26" ;
+    ld:hasPostCode "04347" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/SchoenefelderAllee> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way30674074> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.4049559232766 51.358358550604)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Schönefelder Allee 26" ;
+    geo:lat 51.358358550604 ;
+    geo:long 12.4049559232766 .
+
+<http://leipzig-data.de/Data/04347.Leipzig.Stoeckelstrasse.60>
+    ld:hasHouseNumber "60" ;
+    ld:hasPostCode "04347" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/Stoeckelstrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way104118474> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.4132538 51.3591365)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Stöckelstraße 60" ;
+    geo:lat 51.3591365 ;
+    geo:long 12.4132538 .
+
+<http://leipzig-data.de/Data/04357.Leipzig.TauchaerStrasse.14>
+    ld:hasHouseNumber "14" ;
+    ld:hasPostCode "04357" ;
+    ld:inStreet <http://leipzig-data.de/Data/Strasse/TauchaerStrasse> ;
+    gn:nearbyFeatures <http://linkedgeodata.org/triplify/way141133475> ;
+    <http://www.opengis.net/ont/geosparql#asWKT> "Point(12.4180296133609 51.378688302058)" ;
+    a ld:Adresse ;
+    rdfs:label "Leipzig, Tauchaer Straße 14" ;
+    geo:lat 51.378688302058 ;
+    geo:long 12.4180296133609 .
+

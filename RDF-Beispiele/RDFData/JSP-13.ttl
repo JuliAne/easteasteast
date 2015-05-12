@@ -1,0 +1,2723 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix jsp: <http://leipzig-data.de/Data/Jugendstadtplan/> .
+@prefix ld: <http://leipzig-data.de/Data/Model/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+
+# Recompiled from jugendstadtplan.json, added jsp:Bildung entry, since it was
+# missing for jsp:hascategory, and transformed with
+# rapper -g JSP.ttl -o json 
+# to a new version of jugendstadtplan.json.
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Werk_II>
+  a <http://leipzig-data.de/Data/Jugendstadtplan/Ort> ;
+  rdfs:label "Werk II" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.werk-2.de> ;
+  jsp:Rauchmoeglichkeit jsp:keineRaucher ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04277.Kochstrasse.132> ;
+  jsp:hasdescription "Kulturgelände mit Fabrikflair."@de ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Musikrichtung jsp:Charts, jsp:ElektronischeMusik, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/AlternativeRock>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/WaveGothic> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art jsp:Club, jsp:Konzert .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Sleepy_Lion_Hostel>
+  a jsp:Ort ;
+  rdfs:label "Sleepy Lion Hostel" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.hostel-leipzig.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04105.Jacobstrasse.8> ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art <http://leipzig-data.de/Data/Jugendstadtplan/Art/Hostel> ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Art/Proberaeume>
+  a jsp:Art ;
+  rdfs:label "Proberäume"@de .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Fahrradladen_Sattelfest>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:ohne ;
+  jsp:hasUnterpunkt jsp:Radverleih ;
+  rdfs:label "Fahrradladen Sattelfest" ;
+  jsp:Kostentyp jsp:preiswert ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Kolonnadenstrasse.18> ;
+  jsp:hasdescription "The bikeshop has specified itself on nostalgia bikes. If you give your own bike in for inspection, you can rent a bike even cheaper."@en, "Der Fahrradladen hat sich auf Nostailgieräder spezialisiert. Wer sein eigenes Fahrrad zur Inspektion bringt, bekommt das Leihrad noch günstiger geliehen."@de ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (10:00-19:00), Di (10:00-19:00), Mi (10:00-19:00), Do (10:00-19:00), Fr (10:00-19:00), Sa (10:00-14:00), So (!) " ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Aktivsport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Grupetto>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:ohne ;
+  jsp:hasUnterpunkt jsp:Radverleih ;
+  rdfs:label "Grupetto" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.grupetto.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04105.Waldstrasse.13> ;
+  jsp:hasdescription "An 8 Leihstationen können die Räder des Verleihs abgeholt werden. Die Stationen sind auf der Internetseite zu finden."@de, "This bikerent has 8 rentstations, where you can pick up a bike. You’ll find the stations on the webpage." ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (10:00-19:00), Di (10:00-19:00), Mi (10:00-19:00), Do (10:00-19:00), Fr (10:00-19:00), Sa (09:00-14:00), So (!)" ;
+  jsp:Anmeldung jsp:noetig ;
+  jsp:Art jsp:Aktivsport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Kuehnis_Fahrradhaus>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:ohne ;
+  jsp:hasUnterpunkt jsp:Radverleih ;
+  rdfs:label "Kühnis Fahrradhaus" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.kuehnis-radhaus.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04249.Dieskaustrasse.459> ;
+  jsp:hasdescription "In this bikestore you can’t just rent normal bikes, but also tandembikes."@en, "In diesem Fahrradgeschäft kann man neben normalen Fahrrädern auch Tandems leihen."@de ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (10:00-18:00), Di (10:00-18:00), Mi (!), Do (10:00-18:00), Fr (10:00-18:00), Sa (10:00-12:00), So (!)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Aktivsport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/nextbike>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:ohne ;
+  jsp:hasUnterpunkt jsp:Radverleih ;
+  jsp:AccessibilityComment "Die Radstationen sind über die Stadt verteilt und barrierefrei. Nur die Geschäftstelle ist nicht barrierefrei."@de, "The bikestations in the city are barrier-free. Only the shop isn’t."@en ;
+  rdfs:label "nextbike" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.nextbike.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Thomasiusstrasse.16> ;
+  jsp:hasdescription "After you registered youself you can use the several bikestations all over the city."@en, "Nach einer Registrierung stehen einem die vielen Stationen des Fahrradverleihs, die überall in der Stadt verteilt sind, zur Verfügung."@de ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  jsp:Anmeldung jsp:noetig ;
+  jsp:Art jsp:Aktivsport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Bootsverleih_am_Leipziger_Eck>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:ohne ;
+  jsp:hasUnterpunkt jsp:Bootsverleih ;
+  rdfs:label "Bootsverleih am Leipziger Eck" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Mai-Sep.: Mo (14:00-20:00), Di (14:00-20:00), Mi (14:00-20:00), Do (14:00-20:00), Fr (14:00-20:00), Sa (10:00-20:00), So (10:00-20:00), Feiertage (10:00-20:00); Während den Sommerferien: Mo (10:00-20:00), Di (10:00-20:00), Mi (10:00-20:00), Do (10:00-20:00), Fr (10:00-20:00), Sa (10:00-20:00), So (10:00-20:00), Feiertage (10:00-20:00); April + Okt.: Mo (14:00-18:00), Di (14:00-18:00), Mi(14:00-18:00), Do (14:00-18:00), Fr (14:00-18:00), Sa (10:00-18:00), So (10:00-18:00), Feiertage (10:00-18:00)" ;
+  ld:hasURL <http://www.bootsverleih-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04275.SchleussigerWeg.2A> ;
+  jsp:hasdescription "This boatrent is located at the horse-race-course. Bigger groups can also rent the barbeque spot. "@en, "Der Bootsverleih liegt direkt an der Rennbahn. Neben den Booten können größere Gruppen auch noch den Grillplatz mieten."@de ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Aktivsport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Bootsverleih_Klingerweg>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:ohne ;
+  jsp:hasUnterpunkt jsp:Bootsverleih ;
+  rdfs:label "Bootsverleih Klingerweg" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Apr.-Aug.: Mo (10:00-20:00), Di (10:00-20:00), Mi (10:00-20:00), Do (10:00-20:00), Fr (10:00-20:00), Sa (10:00-20:00), So (10:00-20:00); Sep.: Mo (10:00-19:00), Di (10:00-19:00), Mi (10:00-19:00), Do (10:00-19:00), Fr (10:00-19:00), Sa (10:00-19:00), So (10:00-19:00); Okt.: Mo (10:00-18:00), Di (10:00-18:00), Mi (10:00-18:00), Do (10:00-18:00), Fr (10:00-18:00), Sa (10:00-18:00), So (10:00-18:00)" ;
+  ld:hasURL <http://www.bootstour-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04229.Klingerweg.2> ;
+  jsp:hasdescription "The boatrent offers individual tours, but also guided kanu- and motorboattours. They have a beachvolleyballfield and from up to 10 persons you can rent the barbeque-area. "@en, "Der Bootsverleih bietet neben individuellen Touren auch geführte Kanutouren und Motorbootrundfahrten an. Ein Beachvolleyballfeld ist vorhanden, außerdem kann ab 10 Personen der Grillplatz gemietet werden."@de ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Aktivsport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Kanuverleih_am_Rennbahnsteg>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:ohne ;
+  jsp:hasUnterpunkt jsp:Bootsverleih ;
+  rdfs:label "Kanuverleih am Rennbahnsteg" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "in den Sommerferien: Mo (10:00-20:00), Di (10:00-20:00), Mi (10:00-20:00), Do (10:00-20:00), Fr (10:00-20:00), Sa (10:00-20:00), So (10:00-20:00); außerhalb der Sommerferien: Mo (14:00-20:00), Di (14:00-20:00), Mi v, Do (14:00-20:00), Fr (14:00-20:00), Sa (14:00-20:00), So (14:00-20:00)" ;
+  ld:hasURL <http://www.kanuverleih-am-rennbahnsteg.com> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04107.Rennbahnweg.2A> ;
+  jsp:hasdescription "Vom Verleih gelangt man schnell auf die Wasserwege durch den Auenwald. Am Wochenende werden auch geführte Touren angeboten."@de, "From the boatrent you get fast to the waterways through the alluvial forest. On weekends they also offer guided tours."@en ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Aktivsport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Bootsverleih_Herold>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:ohne ;
+  jsp:hasUnterpunkt jsp:Bootsverleih ;
+  rdfs:label "Bootsverleih Herold" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.bootsbau-herold.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04229.Antonienstrasse.2> ;
+  jsp:hasdescription "The boatrent is already in business for over 100 years. Besides kanus and kajaks you can also rent row-boats. They also offer grouptours on a motorboat."@en, "Der Bootsverleih besteht schon seit über 100 Jahren. Neben Kanus und Kajaks werden auch Ruderboote verliehen. Auch Gruppenfahrten auf einem Motorboot werden angeboten."@de ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (10:00-19:00), Di (10:00-19:00), Mi (10:00-19:00), Do (10:00-19:00), Fr (10:00-19:00), Sa (10:00-19:00), So (10:00-19:00)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Aktivsport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Bootsverleih_am_Wildpark>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:ohne ;
+  jsp:hasUnterpunkt jsp:Bootsverleih ;
+  rdfs:label "Bootsverleih am Wildpark" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Öffnungszeiten sind telefonisch zu erfragen: 016095411138" ;
+  ld:hasURL <http://www.bootsverleih-am-wildpark.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04277.KoburgerStrasse.17> ;
+  jsp:hasdescription "Der Bootsverleih liegt, wie der Name schon sagt, direkt am Wildpark. Hier rudert man direkt durch den Auenwald."@de, "The boatrent is located near the deer-park. Here you row directly through the alluvial forest."@en ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Anmeldung jsp:noetig ;
+  jsp:Art jsp:Aktivsport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Gruenauer_Welle>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:eigenes ;
+  jsp:hasUnterpunkt jsp:Hallenbad ;
+  rdfs:label "Grünauer Welle" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.sportbaeder-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04209.StuttgarterAllee.7> ;
+  jsp:hasdescription "Das Schwimmbad verfügt neben verschiedenen Becken auch über eine Sauna."@de, "This bath has several pools and a sauna."@en ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (!), Di (12:00-22:00), Mi (07:00-22:00), Do (12:00-22:00), Fr (12:00-15:00), Sa (10:00-21:00), So (10:00-18:00)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Wellness, jsp:Wassersport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Schwimmhalle_Mitte>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:eigenes ;
+  jsp:hasUnterpunkt jsp:Hallenbad ;
+  rdfs:label "Schwimmhalle Mitte" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.sportbaeder-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04155.Kirschbergstrasse.84> ;
+  jsp:hasdescription "This bath has a 25-meters-lap."@en, "Das nur selten geöffnete Schwimmbad bietet wenig Platz zum Planschen. Es eignet sich eher für Schwimmer."@de ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (!), Di (06:30-08:00), Mi (!), Do (06:30-08:00), Fr (17:00-21:00), Sa (!), So (!)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Wassersport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Schwimmhalle_Nord>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:eigenes ;
+  jsp:hasUnterpunkt jsp:Hallenbad ;
+  rdfs:label "Schwimmhalle Nord" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.sportbaeder-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04157.Kleiststrasse.54> ;
+  jsp:hasdescription "Die Schwimmhalle verfügt über eine 25-Meter-Bahn und eine finnische Sauna. Im Sommer ist auch das Kinderfreibecken 'Robbe' geöffnet."@de, "This bath has a 25-meters-lap an da finnish sauna. During summer the childrens-open-air-bath ‚Robbe‘ is also opend."@en ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (15:00-21:00), Di (07:00-08:00, 17:00-22:00), Mi (15:00-21:00), Do (08:00-10:00, 15:00-22:00), Fr (!), Sa (10:00-18:00), So (10:00-18:00)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Wassersport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Schwimmhalle_Nordost>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:eigenes ;
+  jsp:hasUnterpunkt jsp:Hallenbad ;
+  rdfs:label "Schwimmhalle Nordost" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.sportbaeder-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04347.SchoenefelderAllee.26> ;
+  jsp:hasdescription "In der Schwimmhalle kann auf einer 25-Meter-Bahn geschwommen werden."@de, "This bath has a 25-meters-lap."@en ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (15:00-19:00), Di (08:00-09:00), Mi (07:00-08:00), Do (18:00-21:00), Fr (12:00-15:00), Sa (!), So (!)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Wassersport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Schwimmhalle_Sued>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:eigenes ;
+  jsp:hasUnterpunkt jsp:Hallenbad ;
+  rdfs:label "schwimmhalle Süd" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.sportbaeder-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04103.Tarostrasse.10> ;
+  jsp:hasdescription "Die Schwimmhalle verfügt über eine 25-Meter-Bahn."@de, "This bath has a 25-meters-lap."@en ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (!), Di (08:00-09:00, 15:00-20:00), Mi (!), Do (!), Fr (07:00-09:00, 16:00-22:00), Sa (!), So (!)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Wassersport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Schwimmhalle_Suedost>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:eigenes ;
+  jsp:hasUnterpunkt jsp:Hallenbad ;
+  rdfs:label "Schwimmhalle Südost" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.sportbaeder-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04299.Kolmstrasse.35> ;
+  jsp:hasdescription "In der Schwimmhalle kann auf einer 25-Meter-Bahn geschwommen werden."@de, "This bath has a 25-meters-lap."@en ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (08:00-09:30, 16:00-20:00), Di (!), Mi (07:00-09:00, 18:00-20:00), Do (08:00-09:00, 15:00-21:00), Fr (!), Sa (08:00-13:00), So (08:00-13:00)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Wassersport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Schwimmhalle_West>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:eigenes ;
+  jsp:hasUnterpunkt jsp:Hallenbad ;
+  rdfs:label "Schwimmhalle West" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.sportbaeder-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04179.Hans-Driesch-Strasse.52A> ;
+  jsp:hasdescription "In der Schwimmhalle West kann auf einer 25-Meter-Bahn geschwommen werden. Während der Freibadsaison hat es am Wochenende geschlossen."@de, "This bath has a 25-meters-lap. During the open-air-bath-season it’s closed on weekends."@en ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (06:30-08:00), Di (!), Mi (06:30-08:00), Do (18:00-22:00), Fr (!), Sa (!), So(!)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Wassersport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Sportbad_an_der_Elster>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:eigenes ;
+  jsp:hasUnterpunkt jsp:Hallenbad ;
+  rdfs:label "Sportbad an der Elster" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Mo Schwimmbecken + Flachwasserbecken(07:00-08:00), Di Schwimmbecken + Flachwasserbecken(07:00-08:00), Mi Schwimmbecken (15:00-22:00) Flachwasserbecken (!), Do Schwimmbecken + Flachwasserbecken (07:00-08:00), Fr Schwimmbecken (07:00-09:00, 12:00-15:00), Flachwasserbecken (07:00-09:00), Sa(!), So (!)" ;
+  ld:hasURL <http://www.sportbaeder-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04229.Antonienstrasse.8> ;
+  jsp:hasdescription "Das moderne Schwimmbad verfügt über eine 50-Meter-Bahn mit einer Wassertiefe von 2 Metern. Daneben gibt es noch ein Flachwasserbecken. Die Öffnungszeiten der Becken varriieren."@de, "The modern bath has a 50-meters-lap, 2 meters deep, and a dead-water-pool. The openinghours fort he pools aren’t always the same."@en ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Wassersport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Sommerbad_Kleinzschorcher>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:eigenes ;
+  jsp:hasUnterpunkt jsp:Freibad ;
+  rdfs:label "Sommerbad Kleinzschorcher" ;
+  jsp:Kostentyp jsp:preiswert ;
+  jsp:hasIrregularOpeningHours "nur in Sommer: Mo (10:00-20:00), Di (10:00-20:00), Mi (10:00-20:00), Do (10:00-20:00), Fr v, Sa (10:00-20:00), So (10:00-20:00)" ;
+  ld:hasURL <http://www.sportbaeder-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04229.Kuechenholzallee.75> ;
+  jsp:hasdescription "Das Freibad hat ein kombiniertes Schwimmer-/Nichtschwimmerbecken. Es sind Liegewiesen, Beachvolleyballfelder und Tischtennisplatten vorhanden."@de, "The open-air-bath has a combined swimming/-nonswimmingpool. It has sunbathing areas, beachvolleyballfields and ping-pong-tables."@en ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Wassersport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Schreberbad>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:eigenes ;
+  jsp:hasUnterpunkt jsp:Freibad ;
+  rdfs:label "schreberbad" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.sportbaeder-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Schreberstrasse.15> ;
+  jsp:hasdescription "In the open-air-bath Schreberbad you can swim on a 25-meter-lap and plash in another pool. Also there are sunbathing areas, playgrounds, volleyball- and basketballfields and ping-pong-tables."@en, "Im Schreberbad kann auf einer 25-Meter-Bahn geschwommen und in einem Freizeitbecken geplanscht werden. Außerdem gibt es Liegewiesen, Spielplätze, Volleyball-, Basketballfelder und Tischtennisplatten."@de ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (09:00-21:00), Di (07:00-21:00), Mi (09:00-21:00), Do (07:00-21:00), Fr (09:00-21:00), Sa (09:00-21:00), So (09:00-21:00)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Wassersport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Sommerbad_Suedost>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:eigenes ;
+  jsp:hasUnterpunkt jsp:Freibad ;
+  rdfs:label "Sommerbad Südost" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.sportbaeder-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04317.Oststrasse.73> ;
+  jsp:hasdescription "This open-air-bath has a seperate baby-pool and a combined swimming-/nonswimmingpool. Also there is a playground and a sunbathing area."@en, "In diesem Freibad gibt es ein separates Planschbecken und ein kombiniertes Schwimmer-/Nichtschwimmerbecken, außerdem gibt es einen Spielplatz und eine Liegewiese."@de ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (10:00.20:00), Di (10:00.20:00), Mi (10:00.20:00), Do (10:00.20:00), Fr (10:00.20:00), Sa (10:00.20:00), So (10:00.20:00)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Wassersport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Oekobad_Lindenthal>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:eigenes ;
+  jsp:hasUnterpunkt jsp:Freibad ;
+  rdfs:label "Ökobad Lindenthal" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.sportbaeder-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04158.AmFreibad.3> ;
+  jsp:hasdescription "In diesem Freibad schwimmt man in einem naturbelassenen Badeteich. Eine 35 Meter lange Rutsche führt in ein kombiniertes Schwimmer-/Nichtschwimmerbecken. Es gibt eine Liegewiese und einen Spielplatz."@de, "This open-air-bath is a natural finished lake. It has a 35 meter long slide into a combined swimming/-nonswimmingpool. There is a sunbathing area and a playground."@en ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours " Mo (13:00-20:00), Di (13:00-20:00), Mi (13:00-20:00), Do (13:00-20:00), Fr (13:00-20:00), Sa (10:00-20:00), So (10:00-20:00)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Wassersport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Kletterhalle_No_Limit>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:gestellt, jsp:eigenes ;
+  jsp:hasUnterpunkt jsp:Klettern ;
+  rdfs:label "Kletterhalle No Limit" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.kletterhalle-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04129.DessauerStrasse.2> ;
+  jsp:hasdescription "No-Limit is the biggest indoor climbinghall in middlegermany. Here you can go climbing and bouldering on over 200 routes, every day of the year."@en, "In Mitteldeutschlands größter Indoor-Kletterhalle kann man an jedem Tag des Jahres auf über 200 Routen klettern und bouldern."@de ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (10:00-23:00), Di (10:00-23:00), Mi (10:00-23:00), Do (10:00-23:00), Fr (10:00-23:00), Sa (10:00-23:00), So (10:00-23:00)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Aktivsport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Kletterturm_Mockau>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:gestellt, jsp:eigenes ;
+  jsp:hasUnterpunkt jsp:Klettern ;
+  rdfs:label "Kletterturm Mockau" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.kletterturm.info> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04357.TauchaerStrasse.14> ;
+  jsp:hasdescription "Die in Europa einmalige Anlage wurde an einem alten Wasserturm errichtet. Mit 30,5 Metern erreicht man hier luftige Höhen auf über 200 Routen. Sowohl drinnen als auch draußen."@de, "The construction is unique in europe. The climbingtower was build out of an old watertower. With 30,5 meters it’s pretty high. You can climb and boulder on over 200 routes, outside and inside."@en ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (16:00-24:00), Di (12:00-24:00), Mi (12:00-24:00), Do (12:00-24:00), Fr (12:00-24:00), Sa (10:00-22:00), So (10:00-22:00)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Aktivsport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Zoo_Leipzig>
+  a jsp:Ort ;
+  rdfs:label "Zoo Leipzig" ;
+  jsp:Kostentyp jsp:gehoben ;
+  jsp:hasIrregularOpeningHours "Mai-Sep.: Mo (09:00-19:00); Di (09:00-19:00), Mi (09:00-19:00), Do (09:00-19:00), Fr (09:00-19:00), Sa (09:00-19:00), So (09:00-19:00); März, Apr., Okt.: Mo (09:00-18:00), Di (09:00-18:00), Mi (09:00-18:00), Do (09:00-18:00), Fr (09:00-18:00), Sa (09:00-18:00), So (09:00-18:00); Nov.-März: Mo (09:00-17:00), Di(09:00-17:00), Mi (09:00-17:00), Do (09:00-17:00), Fr (09:00-17:00), Sa (09:00-17:00), So (09:00-17:00) " ;
+  ld:hasURL <http://www.zoo-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04105.PfaffendorferStrasse.29> ;
+  jsp:hasdescription "Der Leipziger Zoo hat nicht nur seine eigene Fernsehsendung, sondern auch ein modernes Tropenhaus. Im Gondwanaland erlebt man den Urwald hautnah. Auch das restliche Gelände läd zum Spazieren und Schauen ein."@de, "The Leipzig Zoo has not only its own tv-show but also a very modern tropic house. In the Gondwanaland you experience the (almost) real jungle. The rest of the park is also very nice and invites for a walk."@en ;
+  jsp:hasAccessibilityComment "Der Außenbereich des Zoos ist berrierefrei, das Gondwanaland ist nur eingeschränkt barrierefrei."@de, "The outdoor-area is barrier-free, but only parts of the Gondwanaland are barrier-free."@en ;
+  jsp:hascategory jsp:Sightseeing, jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Park, jsp:PlatzGarten ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Wildpark>
+  a jsp:Ort ;
+  rdfs:label "Wildpark" ;
+  jsp:Kostentyp jsp:kostenlos ;
+  jsp:hasIrregularOpeningHours "März-Okt.: Mo (09:00-19:00), Di (09:00-19:00), Mi (09:00-19:00), Do (09:00-19:00), Fr (09:00-19:00), Sa (09:00-19:00), So (09:00-19:00); Nov.-März: Mo (09:00-17:00), Di (09:00-17:00), Mi (09:00-17:00), Do (09:00-17:00), Fr (09:00-17:00), Sa (09:00-17:00), So (09:00-17:00)" ;
+  ld:hasURL <http://www.wildparkverein-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04277.KoburgerStrasse.12A> ;
+  jsp:hasdescription "The deer-park is direcly in the alluvial forest. Here you can watch the native wildlife without a fee."@en, "Der Wildpark ist direkt im Auenwald gelegen. Hier kann man eintrittsfrei heimische Wildtiere sehen."@de ;
+  jsp:hascategory jsp:Sightseeing, jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:PlatzGarten, jsp:Park ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Zooschaufenster>
+  a jsp:Ort ;
+  rdfs:label "Zooschaufenster" ;
+  jsp:Kostentyp jsp:kostenlos ;
+  ld:hasURL <http://www.leipzig.de/de/buerger/freizeit/leipzig/parks/rosental/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04105.Zoellnerweg.6> ;
+  jsp:hasdescription "Ein Highlight des Rosentals ist das Zooschaufenster. Hier sieht man von der Picknickdecke aus die Zebras, Giraffen und Straußen auf der anderen Seite eines kleinen Kanals grasen und manchmal auch rennen."@de, "A highlight of the Rosental is the so called zoo-window. You can watch the giraffes, zebras and ostrichs walk on the other side of a small canal from a nice spot on your picnicblanket."@en ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Park ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Rosentalturm>
+  a jsp:Ort ;
+  rdfs:label "Rosentalturm" ;
+  jsp:Kostentyp jsp:kostenlos ;
+  ld:hasURL <http://www.leipzig.de/de/buerger/freizeit/leipzig/parks/rosental/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04105.Zoellnerweg.6> ;
+  jsp:hasdescription "Von diesem 20 Meter hohen Turm hat man einen guten Blick über das Rosental und den angrenzenden Stadtteil Gohlis."@de, "From this 20 meters high tower you get a good view over the Rosental and the district Gohlis."@en ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Park ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Panoramatower_Leipzig>
+  a jsp:Ort ;
+  rdfs:label "Panoramatower Leipzig" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.panorama-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Augustusplatz.9> ;
+  jsp:hasdescription "The tower used to be the buildig of the university. Today there is a viewpoint on the roof and a restaurant on the upper floor."@en, "Im ehemahligen Universitätsgebäude, dem Uniriesen, sind heute Büros. Im obersten Stockwerk befindet sich mit dem 'Panorama Tower' ein Restaurant mit spektakulärer Aussicht. Auf dem Dach ist eine Aussichtsplattform, von der man bis zum 'Neuseenland' schauen kann."@de ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (09:00-23:00), Di (09:00-23:00), Mi (09:00-23:00), Do (09:00-23:00), Fr (09:00-23:00), Sa (09:00-23:00), So (09:00-23:00)" ;
+  jsp:Art jsp:Viewpoint ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Rathausturm>
+  a jsp:Ort ;
+  rdfs:label "Rathausturm" ;
+  jsp:Kostentyp jsp:preiswert ;
+  jsp:hasIrregularOpeningHours "nur Führungen: Mo (09:00, 14:00), Di (09:00, 14:00), Mi (09:00, 14:00), Do (09:00, 14:00), Fr (09:00, 14:00)" ;
+  ld:hasURL <http://www.leipzig.de/de/buerger/service/wegweiser/neuesrathaus/Turmbesteigung-Leipziger-Rathausturm.18697.shtml> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Martin-Luther-Ring.4-6> ;
+  jsp:hasdescription "If you don’t only want to enjoy a view, but also learn something about the city, you shouldn’t miss the ascent of the tower of the new townhall. A guid will tell you a lot about the tower and the view."@en, "Wer nicht nur die Aussicht genießen , sondern auch noch etwas über die Stadt erfahren will, dem sei die Besteigung des Turms des neuen Rathauses empfohlen. Die Tour ist geführt und man erfährt wissenswertes zu Turm und Umgebung."@de ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Art jsp:Viewpoint ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Rosental>
+  a jsp:Ort ;
+  rdfs:label "Rosental" ;
+  jsp:Kostentyp jsp:kostenlos ;
+  ld:hasURL <http://www.leipzig.de/de/buerger/freizeit/leipzig/parks/rosental/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04105.Zoellnerweg.6> ;
+  jsp:hasdescription "The park is beloved by the Leipzig people but also by tourists. Big lawns invite for barbeque or a picnic and the view to the zoo makes the feeling exotic."@en, "Der Park ist beliebt bei Leipzigern und Touristen. Große Wiesen laden zum Grillen und Picknicken ein und das Zooschaufenster sorgt für ein exotisches Flair."@de ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Park ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Notenspur>
+  a jsp:Ort ;
+  rdfs:label "Notenspur" ;
+  jsp:Kostentyp jsp:kostenlos ;
+  ld:hasURL <http://www.notenspur-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Augustusplatz.8> ;
+  jsp:hasdescription "Leipzig has a very eventful history. For example there lived and worked a lot of musicians. The Notenspur is a walk through the central city. On several points it tells the story of the artists."@en, "Leipzig hat eine bewegte Geschichte. Zum Beispiel lebten und wirkten hier viele Musiker. Die Leipziger Notenspur führt als ein Spaziergang durch die Leipziger Innenstadt und erzählt an verschiedenen Stationen die Geschichte der Künstler."@de ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  jsp:Art jsp:PlatzGarten ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Maedlerpassage>
+  a jsp:Ort ;
+  rdfs:label "Mädlerpassage" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Geschäfte: Mo (10:00-20:00), Di (10:00-20:00), Mi (10:00-20:00), Do (10:00-20:00), Fr (10:00-20:00), Sa (10:00-20:00), So (!)" ;
+  ld:hasURL <http://www.maedlerpassage.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.GrimmaischeStrasse.2> ;
+  jsp:hasdescription "The Mädlerpassage is one of Leipzigs most beautiful and famous passages. Already Goethe spend a lot of time of his law-students life in the Auerbachs Keller (used to be a pub, today a restaurant). Goethes lawstudies weren’t that successful, but his career as a writer was. In his drama ‘Faust’ Faust and Mephisto visit the Auerbachs Keller. The shops in the Mädlerpassage are mostly expensive. There are also a couple cafés."@en, "Die Mädlerpasse gehört zu Leipzigs schönsten und auch bekanntesten Passagen. Schon der Dichter Goethe verbrachte hier, in Auerbachs Keller, einen Großteil seiner Zeit, als er in Leipzig Jura studierte. Sein Studium war weniger erfolgreich, wohl aber sein Werk ‚Faust‘, in dem Faust und Mephisto ebenfalls in Auerbachs Keller einkehren. In der Mädlerpassage sind hauptsächlich hochpreisige Geschäfte angesiedelt. Auch Cafés sind vertreten. "@de ;
+  jsp:hascategory jsp:Sightseeing, jsp:Shopping ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Angebot jsp:gehoben ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Koenigshauspassage>
+  a jsp:Ort ;
+  rdfs:label "Königshauspassage" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Geschäfte: Mo (10:00-20:00), Di (10:00-20:00), Mi (10:00-20:00), Do (10:00-20:00), Fr (10:00-20:00), Sa (10:00-20:00), So (!)" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Markt.17> ;
+  jsp:hasdescription "The Königshauspassage belongs to the passagebuilding in the center of the city, that is entered from the Grimmaische Straße, Petersstraße, Markt and Neumarkt. The stores in the Königshauspassage are moderatly priced."@en, "Die Königshauspassage gehört zum Passagenkomplex der von der Grimmaischen Straße, der Petersstraße, Markt und Neumarkt erreichbar ist. Hier gehen mehrere Passagen ineinander über. Die Geschäfte in der Königshauspassage sind preislich moderat angesiedelt."@de ;
+  jsp:hascategory jsp:Sightseeing, jsp:Shopping ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Angebot jsp:gehoben, jsp:sportlich ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Messehofpassage>
+  a jsp:Ort ;
+  rdfs:label "Messehofpassage" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Geschäfte: Mo (10:00-20:00), Di (10:00-20:00), Mi (10:00-20:00), Do (10:00-20:00), Fr (10:00-20:00), Sa (10:00-20:00), So (!)" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Petersstrasse.15> ;
+  jsp:hasdescription "Wer gerne nascht sollte in die Messehofpassage gehen. Hier gibt es über Eis bis hin zu Schokolade oder auch Herzhaftem besonders viele Gelegenheiten den Gaumen zu erfreuen. Auch Einrichtungsfreunde finden in den Geschäften bestimmt etwas Besonders."@de, "If you like sweets, you should visit the Messehofpassage. Here you can get lots of ice-cream, chocolate but also heartly-styled food. Also friends of homedecoration will find something special here."@en ;
+  jsp:hascategory jsp:Sightseeing, jsp:Shopping ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Angebot jsp:gehoben, jsp:sportlich, jsp:selbstmachen ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Petersbogen>
+  a jsp:Ort ;
+  rdfs:label "Petersbogen" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Geschäfte: Mo (10:00-20:00), Di (10:00-20:00), Mi (10:00-20:00), Do (10:00-20:00), Fr (10:00-20:00), Sa (10:00-20:00), So (!)" ;
+  ld:hasURL <http://www.petersbogen-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Petersstrasse.36> ;
+  jsp:hasdescription "Der Petersbogen ist ein moderneres Einkaufscenter. Neben verschiedenen Geschäften für Mode, Einrichtung und Bücher sind hier auch ein großes Kino und ein Fitnesscenter beheimatet."@de, "The Petersbogen is a modern shoppingmall. There are several clothing stores, homedecoration-, and bookshops. There is also a big cinema and a gym."@en ;
+  jsp:hascategory jsp:Shopping ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Angebot jsp:gehoben, jsp:sportlich, jsp:alternativ ;
+  jsp:Art jsp:Passagen ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Stenzlers_Hof>
+  a jsp:Ort ;
+  rdfs:label "Stenzlers Hof" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Peterskirchhof.1> ;
+  jsp:hasdescription "Das Gebäude wurde Anfang des 20. Jahrhunderts gebaut. Es liegt direkt an der zentralen Fußgängerzone Petersstraße."@de, "Stenzlers Hof was build in the beginning of the 20th century . It’s located central at the Petersstraße."@en ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Handelshof>
+  a jsp:Ort ;
+  rdfs:label "Handelshof" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Salzgaesschen.6> ;
+  jsp:hasdescription "Im Gebäude des Handelshofs sind verschiedene Geschäfte untergebracht. Unter anderem finden sich hier Kleidungsgeschäfte, ein Schmuckladen und ein Einrichtungsgeschäft."@de, "In the building of the Handelshof are mulitfaceted stores located. For example there are clothing stores, jewelry shops, and a homedecoration store."@en ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Staedtisches_Kaufhaus>
+  a jsp:Ort ;
+  rdfs:label "Städtisches Kaufhaus" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Geschäfte: Mo (10:00-20:00), Di (10:00-20:00), Mi (10:00-20:00), Do (10:00-20:00), Fr (10:00-20:00), Sa (10:00-20:00), So (!)" ;
+  ld:hasURL <http://www.staedtisches-kaufhaus.de> ;
+  jsp:Rauchmoeglichkeit jsp:keineRaucher ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Neumarkt.9> ;
+  jsp:hasirregularAccessibility jsp:nichtBarrierefrei ;
+  jsp:Ambiente jsp:leger ;
+  jsp:hasdescription "Das Städtische Kaufhaus beherbergt in seinem Inneren vor allem hochpreisigere Geschäfte. Auch an der Außenseite sind Verkaufsflächen. Die Preise sind hier etwas niedriger. Das Angebot ist sehr vielfältig, unter anderem gibt es einen Spieleladen."@de, "The Städtisches Kaufhaus has in its inside mostly expensive stores. But there are stores outside aswell. Prices in the stores outside are a little lower. The offer is very multifaceted. For example there is a very nice toystore. "@en ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/HipHopRnB>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/Charts>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ElektronischeMusik> ;
+  jsp:hascategory jsp:Nachtleben, jsp:Sightseeing, jsp:Shopping ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Angebot jsp:gehoben, jsp:sportlich, jsp:alternativ ;
+  jsp:Art jsp:Passage, jsp:Club ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Specks_Hof>
+  a jsp:Ort ;
+  rdfs:label "Speck's Hof" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Geschäfte: Mo (10:00-20:00), Di (10:00-20:00), Mi (10:00-20:00), Do (10:00-20:00), Fr (10:00-20:00), Sa (10:00-20:00), So (!)" ;
+  ld:hasURL <http://www.speckshof.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Reichsstrasse.4> ;
+  jsp:hasdescription "Bücherfreunde sollten im Speck's Hof die Connewitzer Verlagsbuchhandlung nicht verpassen. Auch das restliche Angebot in der Passage begeistert. So gibt es ein Hutgeschäft und an der Außenseite einen ganz besonderen Getränkeladen. Außerdem gibt es die Möglichkeit in einem Steakhouse essen zu gehen."@de, "Booklovers shouldn’t miss the bookstore ‚Connewitzer Verlagsbuchhandlung‘ in Speck’s Hof. The other offers in the passage are also worth to take a look at. There is a hatshop and on the outside a very special beveragestore."@en ;
+  jsp:hascategory jsp:Sightseeing, jsp:Shopping ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Angebot jsp:gehoben, jsp:alternativ ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Hansa_Haus>
+  a jsp:Ort ;
+  rdfs:label "Hansa Haus" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Geschäfte: Mo (10:00-20:00), Di (10:00-20:00), Mi (10:00-20:00), Do (10:00-20:00), Fr (10:00-20:00), Sa (10:00-20:00), So (!)" ;
+  ld:hasURL <http://www.speckshof.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.GrimmaischeStrasse.13> ;
+  jsp:hasdescription "Das Hansa Haus ist direkt mit Speck's Hof verbunden. Die Passage lohnt sich sowohl für ihr Angebot als auch für die reichlichen Verziehrungen in ihrem Inneren."@de, "The Hansa Haus ist directly connected to Speck’s Hof. The passage is not only known for the shops, but also for it’s decoration on the inside. "@en ;
+  jsp:hascategory jsp:Sightseeing, jsp:Shopping ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Angebot jsp:gehoben, jsp:alternativ ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Strohsackpassage>
+  a jsp:Ort ;
+  rdfs:label "Strohsackpassage" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Geschäfte: Mo (10:00-20:00), Di (10:00-20:00), Mi (10:00-20:00), Do (10:00-20:00), Fr (10:00-20:00), Sa (10:00-20:00), So (!)" ;
+  ld:hasURL <http://www.strohsackpassage.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Nikolaistrasse.6-10> ;
+  jsp:hasdescription "Die Strohsackpassage lohnt sich nicht nur für's Shoppen. Sie beheimatet außerdem die größte in den Boden eingelassene Uhr Europas."@de, "The Strohsackpassage ist not only good for shopping. There’s also the biggest ground-inserted Clock in europe."@en ;
+  jsp:hascategory jsp:Sightseeing, jsp:Shopping ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Angebot jsp:sportlich, jsp:gehoben, jsp:alternativ ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Brühl_Arkade>
+  a jsp:Ort ;
+  rdfs:label "Brühl Arkade" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Geschäfte: Mo (10:00-20:00), Di (10:00-20:00), Mi (10:00-20:00), Do (10:00-20:00), Fr (10:00-20:00), Sa (10:00-20:00), So (!)" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Bruehl.33> ;
+  jsp:hasdescription "Die Geschäfte in den Brühl-Arkaden sind recht verschieden. Gemeinsam haben sie aber, dass hier weniger Ketten und mehr einzelne Läden angesiedelt sind."@de, "The stores in the Brühl-Arcaden are pretty different. But they have in common, that they're all small shops and mostly no multiple stores."@en ;
+  jsp:hascategory jsp:Shopping ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Angebot jsp:sportlich, jsp:alternativ ;
+  jsp:Art jsp:Passagen ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Hoefe_am_Bruehl>
+  a jsp:Ort ;
+  rdfs:label "Höfe am Brühl" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Geschäfte: Mo (10:00-21:00), Di (10:00-21:00), Mi (10:00-21:00), Do (10:00-21:00), Fr (10:00-21:00), Sa (10:00-21:00), So (!)" ;
+  ld:hasURL <http://www.hoefe-am-bruehl.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Bruehl.1> ;
+  jsp:hasdescription "The mall was build in 2012. It has supermarkets, restaurants, mulitmediastores, clothingshops: Everything that lets a shoppingheart beat higher."@en, "Das erst 2012 fertiggestellte Einkaufscenter beherbergt von  Supermärkte über Gastronomiebetriebe, Multimediageschäften und Modeläden alles was das Shoppingherz höher schlagen lässt."@de ;
+  jsp:hascategory jsp:Sightseeing, jsp:Shopping ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Angebot jsp:sportlich, jsp:selbstmachen, jsp:gehoben, jsp:alternativ ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Kretschmanns_Hof>
+  a jsp:Ort ;
+  rdfs:label "Kretschmanns Hof" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  ld:hasURL <http://www.kretschmanns-hof.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Katharinenstrasse.17> ;
+  jsp:hasdescription "The passage was build in the beginnig of the 20th century and used to be an important tradecenter. It has, besides of normal lifts, a goodslift and a working paternoster."@en, "Das Anfang des 20. Jahrhunderts errichtete Gebäude war früher ein wichtiges Hanndelszentrum. Es verfügt neben den normalen Aufzügen über einen Lastenaufzug und einen Paternoster."@de ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Webers_Hof>
+  a jsp:Ort ;
+  rdfs:label "Webers Hof" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Hainstrasse.1> ;
+  jsp:hasdescription "Webers Hof was already build in 1662. During summer it is one of the famous locations for Leipzigs open-air-summertheatre."@en, "Webers Hof ist bereits 1662 errichtet worden. Im Sommer dient er als ein Veranstaltungsort für Leipzigs beliebte Sommertheater."@de ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Barthels_Hof>
+  a jsp:Ort ;
+  rdfs:label "Barthels Hof" ;
+  jsp:Kostentyp jsp:kostenlos ;
+  jsp:hasIrregularOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  ld:hasURL <http://www.barthelshof.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Hainstrasse.1> ;
+  jsp:hasdescription "Barthels Hof ist ein alter Durchgangsmessehof. Heute ist es hier besonders am Abend schön, wenn man an den Freisitzen der Cafés Platz nimmt."@de, "Barthels Hof is an old passage way. Today it’s aspecially nice in the evening, if you sit down on one of the cafétables outside."@en ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Koenig_Albert_Haus>
+  a jsp:Ort ;
+  rdfs:label "König-Albert-Haus" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  ld:hasURL <http://www.markt9.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Markt.9> ;
+  jsp:hasdescription "Das König-Albert-Haus liegt zentral direkt am Barfußgässchen. In den oberen Etagen wird tagsüber gearbeitet, die unteren Etagen sind als Cafés und Bars abends gut besucht."@de, "The König-Albert-Haus is located central at the Barfußgässchen. During the day people work on the upper floors, the lower floors are cafés and bars and well visited during the night."@en ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Handwerkspassage>
+  a jsp:Ort ;
+  rdfs:label "Handwerkspassage" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Klostergasse.16> ;
+  jsp:hasdescription "The Handwerkspassage connects Markt and the Klostergasse. Walking through it is nice, both day and night."@en, "Die Handwerkspassage verbindet den Markt mit der Klostergasse. Hier hindurch zu schlendern lohnt sich sowohl am Tag als auch am Abend."@de ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Marktgalerie>
+  a jsp:Ort ;
+  rdfs:label "Marktgalerie" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Geschäfte: Mo (10:00-20:00), Di (10:00-20:00), Mi (10:00-20:00), Do (10:00-20:00), Fr (10:00-20:00), Sa (10:00-20:00), So (!)" ;
+  ld:hasURL <http://www.leipzig.marktgalerie.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Markt.11> ;
+  jsp:hasdescription "In the Marktgalerie there are both restaurants and clothingshops. You should aspecially try the selfmade icecream in the chocolatiere ‚Goethe‘. "@en, "In der Marktgalerie finden sich sowohl Kleidungsgeschäfte als auch Restaurants. Besonders probieren sollte man das selbstgemachte Eis in der Chocolaterie 'Goethe'."@de ;
+  jsp:hascategory jsp:Sightseeing, jsp:Shopping ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Angebot jsp:sportlich, jsp:selbstmachen, jsp:gehoben ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Bosehaus>
+  a jsp:Ort ;
+  rdfs:label "Bosehaus" ;
+  jsp:Kostentyp jsp:preiswert ;
+  jsp:hasIrregularOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Thomaskirchhof.16> ;
+  jsp:hasdescription "The Bose family was a popular family in Leipzig. Since they’ve been very close to the Bach family, the Bachmuseum was build in their house."@en, "Die Familie Bose war eine bekannte Familie in Leipzig. Weil sie so eng mit der Familie Bachs befreundet waren, richtet man im Bosehaus das Bachmuseum ein."@de ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Petershof>
+  a jsp:Ort ;
+  rdfs:label "Petershof" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Geschäfte: Mo (10:00-20:00), Di (10:00-20:00), Mi (10:00-20:00), Do (10:00-20:00), Fr (10:00-20:00), Sa (10:00-20:00), So (!)" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Petersstrasse.20> ;
+  jsp:hasdescription "Im Petershof ist heute nur das große Geschäft 'Kult' untergebracht. Doch auch wem der Laden nicht gefällt, sollte einen Blick hineinwerfen, da die Architektur im Inneren sehr sehenswert ist."@de, "Today there is only the shop ‚Kult‘ in the Petershof. But even, if you don’t like that shop, you should take a look in it, since the architecture on the inside is very nice."@en ;
+  jsp:hascategory jsp:Sightseeing, jsp:Shopping ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Angebot jsp:sportlich ;
+  jsp:Art jsp:Passage ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Peterskirche>
+  a jsp:Ort ;
+  rdfs:label "Peterskirche" ;
+  jsp:hasIrregularOpeningHours "So. Gottesdienst um 10:30" ;
+  ld:hasURL <http://www.peterskirche-leipzig.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04107.Schletterstrasse.5> ;
+  jsp:Religioeser_Ort <http://leipzig-data.de/Data/Jugendstadtplan/Religioeser_Ort/Kirche_evangelischlutherisch> ;
+  jsp:hasdescription "Schon von weitem grüßt der Turm der Peterskirche, der höchste Kirchturm der Stadt.  Die 1885 geweihte Kirche ist die dritte große Innenstadtkirche im südlichen Zentrum. Neben dem Sonntagsgottesdienst um 10:30 findet Donnerstags um 12:00 ein kleines Orgelkonzert mit Andacht statt."@de ;
+  jsp:hasCost jsp:kostenlos ;
+  jsp:hasAccessibility jsp:eingeschraenktBarrierefrei ;
+  jsp:hasOpeningHours "Mo (10:00-16:00), Di (10:00-16:00), Mi (10:00-18:00), Do (10:00-16:00), Fr (10:00-14:00)" ;
+  jsp:Supplier jsp:Max ;
+  jsp:isType jsp:Sightseeing ;
+  jsp:Art jsp:HistorischeGebaeude ;
+  jsp:Untergruppe jsp:geistliche .
+
+jsp:Kostentyp
+  a owl:Class ;
+  rdfs:label "Kostentyp" ;
+  jsp:hasRelation jsp:Allgemein .
+
+jsp:kostenlos
+  a jsp:Kostentyp ;
+  rdfs:label "kostenlos "@de, "free"@en .
+
+jsp:preiswert
+  a jsp:Kostentyp ;
+  rdfs:label "budget"@en, "preiswert"@de .
+
+jsp:moderat
+  a jsp:Kostentyp ;
+  rdfs:label "moderate"@en, "moderat"@de .
+
+jsp:gehoben
+  a jsp:Ambiente, jsp:Angebot, jsp:Kostentyp ;
+  rdfs:label "gehoben"@de, "upper"@en .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Botanischer_Garten>
+  a jsp:Ort ;
+  rdfs:label "Botanischer Garten" ;
+  ld:hasURL <http://www.uni-leipzig.de/bota/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04103.Linnestrasse.1> ;
+  jsp:hasdescription "Im botanischen Garten der Universität Leipzig wachsen viele exotische und einheimische Pflanzen. Daneben ermöglicht der Besuch des Schmetterlingshauses, die filigranen Falter aus der Nähe zu begutachten."@de ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Di (13:00-18:00), Mi (13:00-18:00), Do (13:00-18:00), Fr (13:00-18:00), Sa (10:00-18:00), So (10:00-18:00) " ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Neues_Rathaus>
+  a jsp:Ort ;
+  rdfs:label "Neues Rathaus" ;
+  jsp:Kostentyp jsp:kostenlos ;
+  ld:hasURL <http://www.leipzig.de/de/buerger/service/wegweiser/neuesrathaus/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Martin-Luther-Ring.4-6> ;
+  jsp:hasdescription "Das neue Rathaus wurde 1897 gebaut, auch wenn viele es für älter halten. Es wurde an der Stelle errichtet, an der früher die Pleißeburg stand."@de, "The new townhall was build in 1897, although many people guess that it's older. It was build on the spot where the Pleißecastle used to be."@en ;
+  jsp:hascategory jsp:Sightseeing, jsp:Bildung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo, Di (8:00-18:00), Mi (8:00-18:00), Do (8:00-18:00), Fr (8:00-15:00), Sa (!), So (!)" ;
+  jsp:Unterpunkt jsp:weltliche ;
+  jsp:Art jsp:HistorischeGebaeude ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Gohliser_Schloesschen>
+  a jsp:Ort ;
+  rdfs:label "Gohliser Schlösschen" ;
+  jsp:Kostentyp jsp:preiswert ;
+  jsp:hasIrregularOpeningHours "Mo (14:00-18:00), Di (14:00-18:00), Mi (14:00-18:00), Do (14:00-18:00), Fr (14:00-18:00), Sa (14:00-18:00), So (14:00-18:00); Führungen: Mi (15:00), So (11:00)" ;
+  ld:hasURL <http://www.gohliser-schloss.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04155.Menckestrasse.23> ;
+  jsp:hasdescription "Der Garten des Schlosses kann täglich besichtig werden. In das Innere kommt man nur zu den öffentlichen Führungen oder zu Lesungen und Konzerten die häufig in dem klassizistischen Bau stattfinden."@de, "The garden of the palace can be visited every day. The inside can only be vistied in on a guided tour on Wendesdays (15:00) and Sundays (11:00). It's also possible to get inside for a concert or reading, which take place often in the palace."@en ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Unterpunkt jsp:weltliche ;
+  jsp:Art jsp:HistorischeGebaeude ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Fa_Dietmar_Becker>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:ohne ;
+  jsp:hasUnterpunkt jsp:Radverleih ;
+  rdfs:label "Fa. Dietmar Becker" ;
+  jsp:Kostentyp jsp:preiswert ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04416.Hafenstrasse.23> ;
+  jsp:hasdescription "From this bikerent you are able to access the loop road around the Cospudener lake."@en, "Von diesen Fahrradverleih aus kommt man schnell auf den Rundweg, der um den Cospudener See führt."@de ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:barrierefrei, jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (10:00-19:00), Di (10:00-19:00), Mi (10:00-19:00), Do (10:00-19:00), Fr (10:00-19:00), Sa (10:00-19:00), So (10:00-19:00)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Aktivsport ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/St_Martin>
+  a jsp:Ort ;
+  rdfs:label "St. Martin" ;
+  ld:hasURL "http://www.st-martin-leipzig.de/" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04209.Kolpingweg.1> ;
+  jsp:Religioeser_Ort <http://leipzig-data.de/Data/Jugendstadtplan/Religioeser_Ort/Kirche_roemischkatholisch> ;
+  jsp:Supplier jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Religioeser_Ort/Moschee>
+  a jsp:Religioeser_Ort ;
+  rdfs:label "Moschee" .
+
+jsp:ArtDerFreiheit
+  a owl:Class ;
+  rdfs:label "Art der Freiheit" ;
+  jsp:hasRelation jsp:Allgemein .
+
+jsp:Rauchmoeglichkeit
+  a owl:Class ;
+  rdfs:label "Rauchmöglichkeit" ;
+  jsp:hasRelation jsp:Nachtleben .
+
+jsp:Raucher
+  a jsp:Rauchmoeglichkeit ;
+  rdfs:label "Raucher" .
+
+jsp:separaterRaucherraum
+  a jsp:Rauchmoeglichkeit ;
+  rdfs:label "separater Raucherraum" .
+
+jsp:keineRaucher
+  a jsp:Rauchmoeglichkeit ;
+  rdfs:label "keine Rauchmöglichkeit" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Duke>
+  a jsp:Ort ;
+  rdfs:label "Duke" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:Rauchmoeglichkeit jsp:keineRaucher ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04107.Riemannstrasse.3> ;
+  jsp:hasdescription "Szekneipe im Herzen Leipzigs."@de ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (18:00-03:00), Di (18:00-03:00), Mi (18:00-03:00), Do (18:00-03:00), Fr (18:00-03:00), Sa (18:00-03:00), So (18:00-03:00)" ;
+  jsp:Art jsp:Bar ;
+  jsp:suppliedBy jsp:Lisa .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Nikolaikirchhof>
+  a jsp:Ort ;
+  rdfs:label "Nikolaikirchhof" ;
+  jsp:Kostentyp jsp:kostenlos ;
+  ld:hasURL <http://www.leipzig.de/de/tourist/leipzig/spaziergang/panorama/04202.aspx> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Nikolaikirchhof.1> ;
+  jsp:hasdescription "Die große Säule auf dem Kirchhof ist ein Symbol des Friedens. Nach den Friendsgebeten in der Nikolaikirche gingen die Montagsdemonstrationen auf dem Nikolaikirchhof los."@de, "The great pillar on the Nikolaichurchyard is a symbol for peace. After the peace-prayers in the Nikolaichurch the mondaydemonstrations started at the churchyard."@en ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  jsp:hasArt jsp:PlatzGarten ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Art/Kino>
+  a jsp:Art ;
+  rdfs:label "Kino" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Passage_Kinos>
+  a jsp:Ort ;
+  rdfs:label "Passage Kinos" ;
+  ld:hasURL <http://www.passage-kinos.de/index.php?id=109> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Hainstrasse.19> ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art <http://leipzig-data.de/Data/Jugendstadtplan/Art/Kino> ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Nikolaikirche>
+  a jsp:Ort ;
+  rdfs:label "Nikolaikirche" ;
+  jsp:hasIrregularOpeningHours "So. Gottesdienst um 9:30, 11:15, 17:00" ;
+  ld:hasURL <http://www.nikolaikirche-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Nikolaikirchhof.3> ;
+  jsp:Religioeser_Ort <http://leipzig-data.de/Data/Jugendstadtplan/Religioeser_Ort/Kirche_evangelischlutherisch> ;
+  jsp:hasdescription "Die Nikolaikirche im Zentrum Leipzigs war Ausgangspunkt der Montagsdemonstrationen und damit Keimzelle der Friedlichen Revolution von 1989. Jeden Sonntag gibt es drei Gottesdienste: Um 9:30 den Gemeindegottesdienst, um 11:15 den Universitätsgottesdienst und um 17:00 den römisch-katholischen Gottesdienst."@de ;
+  jsp:hasCost jsp:kostenlos ;
+  jsp:hasAccessibility jsp:eingeschraenktBarrierefrei ;
+  jsp:hasOpeningHours "Mo (10:00-18:00), Di (10:00-18:00), Mi (10:00-18:00), Do (10:00-18:00), Fr (10:00-18:00), Sa (10:00-18:00)" ;
+  jsp:Supplier jsp:Paula ;
+  jsp:isType jsp:Sightseeing ;
+  jsp:Art jsp:HistorischeGebaeude .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Religioeser_Ort/Tempel>
+  a jsp:Religioeser_Ort ;
+  rdfs:label "Tempel" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Ilses_Erika>
+  a jsp:Ort ;
+  rdfs:label "Ilses Erika" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.ilseserika.de> ;
+  jsp:Rauchmoeglichkeit jsp:separaterRaucherraum ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04277.Bernhard-Goering-Strasse.152> ;
+  jsp:Ambiente jsp:studentisch ;
+  jsp:hasdescription "Indiedisco im alternativen Ambiente"@de ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ElektronischeMusik>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/Indie>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/HipHopRnB> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (!), Di (21:00-03:00), Mi (!), Do (22:00-05:00), Fr (22:00-05:00), Sa (22:00-05:00), So (!)" ;
+  jsp:Art jsp:Club .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/McCormacks>
+  a jsp:Ort ;
+  rdfs:label "McCormacks" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.mc-cormacks.com> ;
+  jsp:Rauchmoeglichkeit jsp:separaterRaucherraum ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04275.Karl-Liebknecht-Strasse.75> ;
+  jsp:Ambiente jsp:leger ;
+  jsp:hasdescription "Gemütlicher Pub im Süden Leipzigs"@de ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (16:00-04:00), Di (16:00-04:00), Mi (16:00-04:00), Do (16:00-04:00), Fr (16:00-04:00), Sa (16:00-04:00), So(16:00-04:00)" ;
+  jsp:Art jsp:Bar .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/BillHart>
+  a jsp:Ort ;
+  rdfs:label "BillHart" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:Rauchmoeglichkeit jsp:Raucher ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04277.Wolfgang-Heinze-Strasse.15> ;
+  jsp:Ambiente jsp:alternativ ;
+  jsp:hasdescription "Gemütliche Bar mit angrenzender veganer Küche, Kicker und Billard."@de ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Type jsp:restaurant ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:eingeschraenktBarrierefrei ;
+  jsp:hasOpeningHours "Mo (17:00-05:00), Di (17:00-05:00), Mi (17:00-05:00), Do (17:00-05:00), Fr (17:00-05:00), Sa (17:00-05:00), So(17:00-05:00)" ;
+  jsp:hasFreeTag "Billiard", "Kicker" ;
+  jsp:Art jsp:Bar .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/StuK>
+  a jsp:Ort ;
+  rdfs:label "StuK e.V." ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.stuk-leipzig.de> ;
+  jsp:Rauchmoeglichkeit jsp:keine ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04103.Nuernberger.Strasse.42> ;
+  jsp:Ambiente jsp:studentisch ;
+  jsp:hasdescription "Studentenclub mit 2 Floors."@de ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/AlternativeRock>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/Charts> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Art jsp:Club, jsp:Bar .
+
+jsp:Ortskategorie
+  a owl:Class ;
+  rdfs:label "Ortskategorie" .
+
+jsp:EssenTrinken
+  a jsp:Ortskategorie ;
+  rdfs:label "Food & Drink"@en, "Essen & Trinken"@de .
+
+jsp:Bildung
+  a jsp:Ortskategorie ;
+  rdfs:label "Education"@en, "Bildung"@de .
+
+jsp:KunstKultur
+  a jsp:Ortskategorie ;
+  rdfs:label "Art & Culture"@en, "Kunst & Kultur"@de .
+
+jsp:Shopping
+  a jsp:Ortskategorie ;
+  rdfs:label "Shopping"@en, "Shopping"@de .
+
+jsp:Sightseeing
+  a jsp:Ortskategorie ;
+  rdfs:label "Sightseeing"@de, "Sightseeing"@en .
+
+jsp:SportErholung
+  a jsp:Ortskategorie ;
+  rdfs:label "Sport & Erholung"@de, "Sport & Recreation"@en .
+
+jsp:Nachtleben
+  a jsp:Ortskategorie ;
+  rdfs:label "Nachtleben"@de, "Nightlife"@en .
+
+jsp:Max
+  a foaf:Person ;
+  foaf:name "Max Schnurrenberger" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Art/Hostel>
+  a jsp:Art ;
+  rdfs:label "Hostel" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Panometer_Leipzig>
+  a jsp:Ort ;
+  rdfs:label "Panometer Leipzig" ;
+  ld:hasURL <http://www.asisi.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04275.Richard-Lehmann-Strasse.114> ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Di (10:00-17:00), Mi (10:00-17:00), Do(10:00-17:00), Fr (10:00-17:00), Sa (10:00-18:00), So (10:00-18:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Spinnerei>
+  a jsp:Ort ;
+  rdfs:label "Spinnerei" ;
+  ld:hasURL <http://www.spinnerei.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04179.Spinnereistrasse.7> ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Art <http://leipzig-data.de/Data/Jugendstadtplan/Art/Proberaeume>, jsp:Galerie, <http://leipzig-data.de/Data/Jugendstadtplan/Art/Ateliers> ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Passage_Kinos/1>
+  a jsp:Ort ;
+  rdfs:label "Passage Kinos" ;
+  ld:hasURL <http://www.passage-kinos.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Hainstrasse.19> ;
+  jsp:hasdescription "Die Passage Kinos verstehen sich als Arthouse-Kinos im Zentrum Leipzigs. Hier gibt es kleinere Produnktionen zu sehen und oft Originalfilme mit deutschen Untertiteln."@de ;
+  jsp:Art <http://leipzig-data.de/Data/Jugendstadtplan/Art/Kino> ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/AlRahman_Moschee>
+  a jsp:Ort ;
+  jsp:hasUnterpunkt jsp:geistliche ;
+  rdfs:label "Al-Rahman Moschee" ;
+  ld:hasURL <http://www.alrahman-moschee.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04105.Roscherstrasse.33> ;
+  jsp:Religioeser_Ort <http://leipzig-data.de/Data/Jugendstadtplan/Religioeser_Ort/Moschee> ;
+  jsp:hasdescription "The Al-Rahman mosque ist the largest mosque in Leipzig. The Friday prayers are held in arabic and german language."@en, "Die Al-Rahman Moschee ist die größte Moschee in Leipzig. Die Freitagsgebete finden um 14:00 statt und werden in arabischer und deutscher Sprache gehalten."@de ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Voelkerschlachtdenkmal>
+  a jsp:Ort ;
+  jsp:hasUnterpunkt jsp:weltliche ;
+  rdfs:label "Völkerschlachtdenkmal" ;
+  jsp:Kostentyp jsp:moderat, jsp:preiswert ;
+  jsp:hasIrregularOpeningHours "Apr- Okt: Mo (10:00 - 18:00), Di (10:00 - 18:00), Mi (10:00 - 18:00), Do (10:00 - 18:00), Fr (10:00 - 18:00), Sa (10:00 - 18:00), So (10:00 - 18:00), Nov - März: Mo (10:00-16:00), Di (10:00-16:00), Mi (10:00-16:00), Do (10:00-16:00), fr, (10:00-16:00) Sa (10:00-16:00), So (10:00-16:00)" ;
+  ld:hasURL <http://www.stadtgeschichtliches-museum-leipzig.de/site_deutsch/voelkerschlachtdenkmal/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04299.Strassedes18Oktober.100> ;
+  jsp:hasdescription "The Völkerschlachtdenkmal reminds to the battle of nations that took place 1813 in the region. Die european federate succeed to cast Napoleon out."@en, "Das Völkerschlachtdenkmal erinnert an die Völkerschlacht die 1813 in dieser Region stattgefunden hat. Die europäischen Verbündeten schafften es hier Napoleon in die Flucht zu schlagen."@de ;
+  jsp:hascategory jsp:Bildung, jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Art jsp:Museum, jsp:HistorischeGebaeude ;
+  jsp:suppliedBy jsp:Paula .
+
+rdfs:Class
+  rdfs:label "Class" ;
+  rdfs:comment "The class of classes." ;
+  rdfs:isDefinedBy rdfs: .
+
+jsp:Ambiente
+  a owl:Class ;
+  rdfs:label "Ambiente" ;
+  jsp:hasRelation jsp:Nachtleben .
+
+jsp:leger
+  a jsp:Ambiente ;
+  rdfs:label "leger" .
+
+jsp:studentisch
+  a jsp:Ambiente ;
+  rdfs:label "studentisch" .
+
+jsp:alternativ
+  a jsp:Ambiente, jsp:Angebot ;
+  rdfs:label "alternativ" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ReggaeSka>
+  a jsp:Musikrichtung ;
+  rdfs:label "Reggae/Ska" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/StadtgeschichtlichesMuseum>
+  a jsp:Ort ;
+  rdfs:label "Stadtgeschichtliches Museum" ;
+  ld:hasURL "http://www.stadtgeschichtliches-museum-leipzig.de" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Markt.1> ;
+  jsp:hasdescription "Das Stadtgeschichtliche Museum befindet sich im alten Rathaus der Stadt. Die ständige Ausstellung beschäftigt sich mit der wechselvollen Geschichte Leipzigs."@de ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Di (10:00-18:00), Mi (10:00-18:00), Do (10:00-18:00), Fr (10:00-18:00), Sa (10:00-18:00), So (10:00-18:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Augustusplatz>
+  a jsp:Ort ;
+  rdfs:label "Augustusplatz" ;
+  jsp:Kostentyp jsp:kostenlos ;
+  ld:hasURL <http://www.leipzig.de/de/tourist/leipzig/spaziergang/panorama/04173.aspx> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Augustusplatz.10> ;
+  jsp:hasdescription "On the Augustusplace you stand between University, Opera and the Gewandhaus. But the place ist not only beautiful, but also history-charged. 1989 there were over tenthousands of people to listens to the manifestations of the monday-demonstrations. The Leipziger Lightfestival reminds of it every November."@en, "Auf dem Augustusplatz steht man zwischen Universität, Oper und Gewandhaus. Doch der Platz ist nicht nur schön, sondern auch geschichtsträchtig. Hier drängten sich 1989 Zehntausende um die Abschlusskundgebungen der Montagsdemonstrationen zu hören. Das Leipziger Lichtfest erinnert jeden November daran."@de ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  jsp:hasArt jsp:PlatzGarten ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Krystallpalast_Variet>
+  a jsp:Ort ;
+  rdfs:label "Krystallpalast Varieté" ;
+  ld:hasURL <http://www.krystallpalast.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Magazingasse.4> ;
+  jsp:hasdescription "Im Krystallpalast Varieté Leipzig treten international rennomierte Showgrößen auf. Es ist der Nachfolgebau der ehemals größten Vergnügungsstätte Deutschlands. Neben dem kulturellen Angebot dürfen die Gäste auch kulinarische Freuden erwarten."@de ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Religioeser_Ort/Synagoge>
+  a jsp:Religioeser_Ort ;
+  rdfs:label "Synagoge" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Dark_Flower>
+  a jsp:Ort ;
+  rdfs:label "Dark Flower" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.darkflower.de> ;
+  jsp:Rauchmoeglichkeit jsp:separaterRaucherraum ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Hainstrasse.12> ;
+  jsp:Ambiente jsp:alternativ ;
+  jsp:hasdescription "Alternative Szenedisco der Wave/Gotik-Szene."@de ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/WaveGothic>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/AlternativeRock> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (!), Di (!), Mi (!), Do (21:00-06:00), Fr (21:00-06:00), Sa (21:00-06:00), So(!)" ;
+  jsp:Art jsp:Club .
+
+jsp:Altersbeschraenkung
+  a owl:Class ;
+  rdfs:label "Altersbeschränkung" ;
+  jsp:hasRelation jsp:Nachtleben .
+
+jsp:keineAltersbeschraenkung
+  a jsp:Altersbeschraenkung ;
+  rdfs:label "keine" .
+
+jsp:ab18
+  a jsp:Altersbeschraenkung ;
+  rdfs:label "ab 18 Jahre" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Art/Theater>
+  a jsp:Art ;
+  rdfs:label "Theater" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Suedfriedhof>
+  a jsp:Ort ;
+  rdfs:label "Südfriedhof" ;
+  jsp:hasIrregularOpeningHours "Apr - Sep: Mo (7:00 - 21:00), Di(7:00 - 21:00), Mi (7:00 - 21:00), Do (7:00 - 21:00), Fr (7:00 - 21:00), Sa (7:00 - 21:00),  So (7:00 - 21:00); Okt -März: Mo (8:00-18:00), Di (8:00-18:00), Mi (8:00-18:00), Do (8:00-18:00), Fr (8:00-18:00), Sa (8:00-18:00), So (8:00-18:00)" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04299.Friedhofsweg.1> ;
+  jsp:hasdescription "Der Südfriedhof ist der zweitgrößte Parkfriedhof Deutschlands. Ein Spaziergang lohnt sich, denn der Friedhof hat einen sehr alten Baumbestand und sehr künstlerische Grabmale."@de, "The South-cemetery is the 2nd biggest park-cemetery in Germany. You should take a walk, since the cemetery has very old trees and very artistically tombs."@en ;
+  jsp:hasCost jsp:kostenlos ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasArt jsp:PlatzGarten ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Grassimuseum>
+  a jsp:Ort ;
+  rdfs:label "Grassimuseum" ;
+  ld:hasURL "http://www.grassimuseum.de" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04103.Johannisplatz.5-11> ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Di (10:00-18:00), Mi (10:00-18:00), Do (10:00-18:00), Fr (10:00-18:00), Sa (10:00-18:00), So (10:00-18:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Art/Ateliers>
+  a jsp:Art ;
+  rdfs:label "Ateliers" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/BalkanKlezmer>
+  a jsp:Musikrichtung ;
+  rdfs:label "Balkan/Klezmer" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Inspirata>
+  a jsp:Ort ;
+  rdfs:label "Inspirata" ;
+  jsp:hasIrregularOpeningHours "Mo bis Fr jeweils 8:30-10:00, 10:30-12:00, 12:30-14:00, 14:30-16:00" ;
+  ld:hasURL <http://www.inspirata.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04103.DeutscherPlatz.4> ;
+  jsp:hasdescription "Die Ausstellung in der Inspirata umfasst über 100 Exponate, mit denen experimentiert werden darf. So soll ein Verständnis für naturwissenschaftliche Phänomene vermittelt werden."@de ;
+  jsp:hascategory jsp:KunstKultur ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/russische_Gedaechtniskirche>
+  a jsp:Ort ;
+  rdfs:label "russische Gedächtniskirche" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.russische-kirche-l.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04103.Philipp-Rosenthal-Strasse.51a> ;
+  jsp:hasdescription "The russian church was dedicated in 1913, 100 years after the victory over Napoleon. It also remembers of the over 20.000 russian soldiers who died in the battle of nations."@en, "Die russische Kirche wurde 1913, 100 Jahre nach dem Sieg über Napoleon, geweiht. Sie erinnert auch an die über 20.000 russischen Soldaten die in der Völkerschlacht fielen."@de ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (10:00-13:15, 14:00-17:00), Di (10:00-13:15, 14:00-17:00), Mi (10:00-13:15, 14:00-17:00), Do (10:00-13:15, 14:00-17:00), Fr (10:00-13:15, 14:00-17:00), Sa (10:00-13:15, 14:00-17:00), So (10:00-13:15, 14:00-17:00)" ;
+  jsp:Unterpunkt jsp:geistliche ;
+  jsp:Art jsp:HistorischeGebaeude ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/BachMuseum>
+  a jsp:Ort ;
+  rdfs:label "Bach-Museum" ;
+  ld:hasURL <http://www.bach-leipzig.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Thomaskirchhof.15> ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Di (10:00-18:00), Mi (10:00-18:00), Do (10:00-18:00), Fr (10:00-18:00), Sa (10:00-18:00), So (10:00-18:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Stasimuseum_Runde_Ecke>
+  a jsp:Ort ;
+  rdfs:label "Stasimuseum Runde Ecke" ;
+  ld:hasURL <http://www.runde-ecke-leipzig.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Dittrichring.24> ;
+  jsp:hasdescription "Die ehemalige Stasi-Zentrale in der Runden Ecke beherbergt eine detaillierte Ausstellung über die Spitzelmethoden der DDR-Staatssicherheit. Es lohnt sich, an einer Führung teilzunehmen. Der Eintritt ist frei."@de ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (10:00-18:00), Di (10:00-18:00), Mi (10:00-18:00), Do(10:00-18:00), Fr (10:00-18:00), Sa (10:00-18:00), So (10:00-18:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Theater_der_jungen_Welt>
+  a jsp:Ort ;
+  rdfs:label "Theater der jungen Welt" ;
+  ld:hasURL "http://www.theaterderjungenweltleipzig.de/" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04177.LindenauerMarkt.21> ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art <http://leipzig-data.de/Data/Jugendstadtplan/Art/Theater> ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Basamo>
+  a jsp:Ort ;
+  rdfs:label "Basamo" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.basamo.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04103.NuernbergerStrasse.11> ;
+  jsp:Ambiente jsp:leger ;
+  jsp:hasdescription "Bar mit afrikanischem Flair" ;
+  jsp:Type jsp:restaurant ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasOpeningHours "Mo (!), Di (18:00-03:00), Mi (18:00-03:00), Do (18:00-03:00), Fr (18:00-03:00), Sa (18:00-03:00), So (18:00-03:00)" ;
+  jsp:Art jsp:Club, jsp:Bar .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/UT_Connewitz>
+  a jsp:Ort ;
+  rdfs:label "UT Connewitz" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.utconnewitz.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04277.Wolfgang-Heinze-Strasse.12a> ;
+  jsp:Ambiente jsp:leger ;
+  jsp:hasdescription "Lichtspieltheater, das auch für Konzerte einlädt." ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/BalkanKlezmer>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/AlternativeRock>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ElektronischeMusik>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/Indie> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:Art jsp:Club, jsp:Bar, jsp:Konzert .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Villa_Hasenholz>
+  a jsp:Ort ;
+  rdfs:label "Villa Hasenholz" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.villahasenholz.de> ;
+  jsp:Rauchmoeglichkeit jsp:Raucherraum ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04179.Gustav-Esche-Strasse.1> ;
+  jsp:Ambiente jsp:leger ;
+  jsp:hasdescription "Künstlerresidenz und Club im Nordwesten Leipzigs" ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ElektronischeMusik> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:Art jsp:Club .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Distillery>
+  a jsp:Ort ;
+  rdfs:label "Distillery" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.distillery.de> ;
+  jsp:Rauchmoeglichkeit jsp:separaterRaucherraum ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04275.Kurt-Eisner-Strasse.108> ;
+  jsp:Ambiente jsp:leger ;
+  jsp:hasdescription "Szeneclub im Süden Leipzigs" ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/BalkanKlezmer>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ReggaeSka>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/HipHopRnB>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ElektronischeMusik> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Art jsp:Club .
+
+jsp:Musikrichtung
+  a owl:Class ;
+  rdfs:label "Musikrichtung" ;
+  jsp:hasRelation jsp:Nachtleben .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/Indie>
+  a jsp:Musikrichtung ;
+  rdfs:label "Indie" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Antikenmuseum>
+  a jsp:Ort ;
+  rdfs:label "Antikenmuseum" ;
+  ld:hasURL <http://www.uni-leipzig.de/antik/index.php?id=9> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Nikolaikirchhof.2> ;
+  jsp:hasdescription "Das Antikenmuseum der Universität Leipzig präsentiert seit 1994 im historischen Gebäude der der Alten Nikolaischule eine Auswahl von rund 450 originalen Objekten aus mehr als 2500 Jahren der griechischen, etruskischen und römischen Antike."@de ;
+  jsp:hasOpeningHours "Di (12:00-17:00), Mi (12:00-17:00), Do (12:00-17:00), Sa (12:00-17:00), So (12:00-17:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Galerie_Potemka>
+  a jsp:Ort ;
+  rdfs:label "Galerie Potemka" ;
+  ld:hasURL <http://potemka.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04177.Aurelienstrasse.41> ;
+  jsp:hasOpeningHours "Di (14:00-18:00), Mi (14:00-18:00), Do (14:00-18:00), Fr (14:00-18:00), Sa (11:00-16:00)" ;
+  jsp:Art jsp:Galerie ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Religioeser_Ort/Kirche_evangelischlutherisch>
+  a jsp:Religioeser_Ort ;
+  rdfs:label "Kirche (evangelisch-lutherisch)" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/AlternativeRock>
+  a jsp:Musikrichtung ;
+  rdfs:label "Alternative/Rock" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/AegyptischesMuseum>
+  a jsp:Ort ;
+  rdfs:label "Ägyptisches Museum" ;
+  ld:hasURL <http://www.gko.uni-leipzig.de/aegyptisches-museum/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Goethestrasse.2> ;
+  jsp:hasdescription "Im Ägyptischen Museum können Kunstwerke, Sarkophage, Papyrii und Gebrauchsgegenstände aus dem alten Ägypten besichtigt werden."@de ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Di (13:00-17:00), Mi (13:00-17:00), Do (13:00-17:00), Fr (13:00-17:00), Sa (10:00-17:00), So (10:00-17:00)" ;
+  jsp:suppliedBy jsp:Max .
+
+jsp:Galerie
+  a jsp:Art ;
+  rdfs:label "Galerie" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/AO_Hostel>
+  a jsp:Ort ;
+  rdfs:label "A&O Hostel" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.aohostels.com/de/leipzig/leipzig-hauptbahnhof/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04103.BrandenburgerStrasse.2> ;
+  jsp:Art <http://leipzig-data.de/Data/Jugendstadtplan/Art/Hostel> ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/LuruKino>
+  a jsp:Ort ;
+  rdfs:label "Luru-Kino" ;
+  ld:hasURL <http://www.luru-kino.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04179.Spinnereistrasse.7> ;
+  jsp:hasdescription "Wer Hollywood-Blockbuster sehen möchte, sollte das Luru-Kino nicht besuchen. Dafür stehen kleinere, oft anspruchsvolle und meist sehenswerte Produktionen auf dem Spielplan, die in den großen Kinos nicht gezeigt werden."@de ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Art <http://leipzig-data.de/Data/Jugendstadtplan/Art/Kino> ;
+  jsp:suppliedBy jsp:Max .
+
+jsp:Requirements
+  a owl:Class ;
+  rdfs:label "requirements"@en ;
+  jsp:hasRelation jsp:Bildung .
+
+jsp:LocationType
+  a owl:Class ;
+  rdfs:label "type"@en ;
+  jsp:hasRelation jsp:EssenTrinken .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Centraltheater>
+  a jsp:Ort ;
+  rdfs:label "Centraltheater" ;
+  ld:hasURL "www.centraltheater-leipzig.de" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Bosestrasse.1> ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art <http://leipzig-data.de/Data/Jugendstadtplan/Art/Theater> ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Absturz>
+  a jsp:Ort ;
+  rdfs:label "Absturz" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.absturz.com‎> ;
+  jsp:Rauchmoeglichkeit jsp:Raucher ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04107.Karl-Liebknecht-Strasse.36> ;
+  jsp:Ambiente jsp:studentisch ;
+  jsp:hasdescription "Club auf dem Feinkostgelände" ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ElektronischeMusik>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/BalkanKlezmer>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ReggaeSka>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/HipHopRnB> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:Barrierefrei ;
+  jsp:Art jsp:Club .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Nachtcafe>
+  a jsp:Ort ;
+  rdfs:label "Nachtcafé" ;
+  jsp:Kostentyp jsp:gehoben ;
+  ld:hasURL <http://www.nachtcafe.com> ;
+  jsp:Rauchmoeglichkeit jsp:separaterRaucherraum ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Petersstrasse.39> ;
+  jsp:Ambiente jsp:gehoben ;
+  jsp:hasdescription "3 Floors, die zum Tanzen einladen" ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/Charts>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ElektronischeMusik>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/HipHopRnB> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Art jsp:Club .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/TwentyOne>
+  a jsp:Ort ;
+  rdfs:label "Twenty One" ;
+  jsp:Kostentyp jsp:gehoben ;
+  ld:hasURL <http://www.twentyone-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Gottschedstrasse.2> ;
+  jsp:Ambiente jsp:gehoben ;
+  jsp:hasdescription "Club ab 21 mit gehobenen Ambiente" ;
+  jsp:Altersbeschraenkung jsp:ab21 ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/Charts>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ElektronischeMusik> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Art jsp:Club .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/L1>
+  a jsp:Ort ;
+  rdfs:label "L1" ;
+  jsp:Kostentyp jsp:gehoben ;
+  ld:hasURL <http://www.club-l1.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Markt.17> ;
+  jsp:Ambiente jsp:gehoben ;
+  jsp:hasdescription "Tanzen im gehobenen Ambiente" ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ElektronischeMusik>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/HipHopRnB> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Art jsp:Club .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Kickers_In>
+  a jsp:Ort ;
+  rdfs:label "Kicker's In" ;
+  jsp:Kostentyp jsp:moderat ;
+  jsp:Rauchmoeglichkeit jsp:Raucher ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04275.Karl-Liebknecht-Strasse.81> ;
+  jsp:Ambiente jsp:studentisch ;
+  jsp:hasdescription "Kicker-Bar mit Kellerflair" ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (18:00-02:00), Di (18:00-02:00), Mi (18:00-02:00), Do (18:00-03:00), Fr (18:00-03:00), Sa (18:00-03:00), So(18:00-01:00)" ;
+  jsp:hasFreeTag "Kicker" ;
+  jsp:Art jsp:Bar .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/InterDaf_eV>
+  a jsp:Ort ;
+  rdfs:label "InterDaf e.V" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04105.Lumumbastrasse.4> ;
+  jsp:hasInstitutionType "Institution of further education" ;
+  jsp:suppliedBy "Sandra Praetor" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Apothekenmuseum>
+  a jsp:Ort ;
+  rdfs:label "Apothekenmuseum" ;
+  ld:hasURL <http://www.apothekenmuseum.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Thomaskirchhof.12> ;
+  jsp:hasdescription "Das Apothekenmuseum dokumentiert Apothekengeschichte. Ausgestellt sind Exponate aus vergangenen Jahrhunderten. Besucher können selbst nach einer alten Methode Tabletten herstellen."@de ;
+  jsp:hascategory jsp:KunstKultur ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Di (11:00-17:00), Mi (11:00-17:00), Do (14:00-20:00), Fr (11:00-17:00), Sa (11:00-17:00), So (11:00-17:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Lindenfels_Westfluegel>
+  a jsp:Ort ;
+  rdfs:label "Lindenfels Westflügel" ;
+  ld:hasURL <http://www.westfluegel.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04177.Haehnelstrasse.27> ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Art <http://leipzig-data.de/Data/Jugendstadtplan/Art/Theater> ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Altes_Rathaus>
+  a jsp:Ort ;
+  rdfs:label "Altes Rathaus" ;
+  jsp:Kostentyp jsp:preiswert, jsp:moderat ;
+  jsp:hasIrregularOpeningHours "Geschäfte: Mo (10:00-20:00), Di (10:00-20:00), Mi(10:00-20:00),Do (10:00-20:00), Fr (10:00-20:00), Sa (10:00-20:00), So (!)" ;
+  ld:hasURL <http://www.stadtgeschichtliches-museum-leipzig.de/site_deutsch/altes_rathaus/index.php> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Markt.1> ;
+  jsp:hasdescription "The old townhall was build in 1556 by Hieronymus Lotter. At the point where the 90 meters high tower is today, there used to be the hallway of the gothic townhall on witch foundation walls Lotter build his townhall. Today there are shops and the city-historical museum in the old townhall."@en, "Das alte Rathaus wurde 1556 vom Stadtbaumeister Hieronymus Lotter errichtet. Dort wo sich heute der 90 Meter hohe Turm empor streckt war das Treppenhaus des gotischen Rathauses, auf dessen Grundmauern Lotter das Gebäude errichtete. Im alten Rathaus sind heute Geschäfte und das stadtgeschichtliche Museum untergebracht."@de ;
+  jsp:hascategory jsp:Sightseeing, jsp:Shopping, jsp:Bildung ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Unterpunkt jsp:weltliche ;
+  jsp:Art jsp:HistorischeGebaeude ;
+  jsp:suppliedBy jsp:Paula .
+
+jsp:Klettern
+  a jsp:Unterpunkt ;
+  rdfs:label "Klettern" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Zweirad_Eckhard>
+  a jsp:Ort ;
+  jsp:hasEquipment jsp:ohne ;
+  jsp:hasUnterpunkt jsp:Radverleih ;
+  rdfs:label "Zweirad Eckhardt" ;
+  jsp:Kostentyp jsp:preiswert ;
+  ld:hasURL <http://www.bikeandsport.de/ueber-uns/Fahrradverleih/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04103.Kurt-Schumacher-Strasse.4> ;
+  jsp:hasdescription "Das Fahrradgeschäft verleiht auch Räder. Die Cityräder haben mindestens eine 3-Gang-Nabenschaltung. Das Personal gibt auch gerne Tipps zu individuellen Stadtentdeckung."@de, "The bikestore also rents bikes. The Citybikes at least have a 3-gear hub. The employees love to give you some advice for an individual city-tour."@en ;
+  jsp:hascategory jsp:SportErholung ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (08:00-20:00), Di (08:00-20:00), Mi (08:00-20:00), Do (08:00-20:00), Fr (08:00-20:00), Sa (09:00-18:00), So (!)" ;
+  jsp:Anmeldung jsp:nichtnoetig ;
+  jsp:Art jsp:Aktivsport ;
+  jsp:suppliedBy jsp:Paula .
+
+jsp:eingeschraenktBarrierefrei
+  a jsp:ArtDerFreiheit ;
+  rdfs:label "eingeschränkt barrierefrei"@de, "with restrictions accessible"@en .
+
+jsp:HistorischeGebaeude
+  a jsp:Art ;
+  rdfs:label "Historische Gebäude" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Schillerhaus>
+  a jsp:Ort ;
+  rdfs:label "Schillerhaus" ;
+  ld:hasURL "http://www.stadtgeschichtliches-museum-leipzig.de/site_deutsch/schillerhaus/index.php" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04155.Menckestrasse.42> ;
+  jsp:hasdescription "Als Gohlis noch ein Dorf vor den Toren Leipzigs war, wohnte der Dichter Friedrich Schiller von Mai bis September 1785 in dem Gebäude, das heutzutage eine Ausstellung über das Leben und Werk des Literaten beherbergt."@de ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Di (10:00-17:00), Mi (10:00-17:00), Do (10:00-17:00), Fr (10:00-17:00), Sa (10:00-17:00), So (10:00-17:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Galerie_Koenitz>
+  a jsp:Ort ;
+  rdfs:label "Galerie Koenitz" ;
+  ld:hasURL <http://www.galerie-koenitz.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Dittrichring.16> ;
+  jsp:hasOpeningHours "Mo (10:00-18:00), Di (10:00-18:00), Mi (10:00-18:00), Do (10:00-18:00), Fr (10:00-18:00), Sa (10:00-16:00)" ;
+  jsp:Art jsp:Galerie ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/newResource/8f038d42379433182289885a3ef7688a>
+  a jsp:Ort ;
+  rdfs:label "Kaos e.V." ;
+  ld:hasURL "http://www.kaos-leipzig.de" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04177.Wasserstrasse.18> ;
+  jsp:hasdescription "In einer alten Villa auf einem idyllischen Gelände mit See und Park in Alt-Lindenau befindet sich die Kulturwerkstatt KAOS. Hier bietet eine Gruppe ideenreicher Kulturpädagogen Kurse, Workshops, Projekte und Räume für Kinder, Jugendliche und Erwachsene an, die Lust haben in den Bereichen Kunst & Handwerk, Klassische & Neue Medien sowie Theater & Musik kreativ zu werden."@de ;
+  jsp:Art jsp:Jugendzentrum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Museum_fuer_Druckkunst>
+  a jsp:Ort ;
+  rdfs:label "Museum für Druckkunst" ;
+  ld:hasURL <http://www.druckkunst-museum.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04229.Nonnenstrasse.42> ;
+  jsp:hasdescription "Das Drucken war eine der wichtigsten Medienrevolutionen der Neuzeit. Im Museum für Druckkunst stehen viele historische Druckmaschinen bereit, die die Geschichte dieses Mediums erlebbar machen."@de ;
+  jsp:hascategory jsp:KunstKultur ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (11:00-17:00), Di (11:00-17:00), Mi (11:00-17:00), Do (11:00-17:00), Fr (11:00-17:00), So (11:00-17:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+jsp:Jugendzentrum
+  a jsp:Art ;
+  rdfs:label "Jugendzentrum" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Staubsauger>
+  a jsp:Ort ;
+  rdfs:label "Staubsauger" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.staub-sauger.de> ;
+  jsp:Rauchmoeglichkeit jsp:Raucher ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04275.Karl-Liebknecht-Strasse.95> ;
+  jsp:Ambiente jsp:studentisch ;
+  jsp:hasdescription "Bar und Club mit alternativen Flair" ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (18:00-03:00), Di (18:00-03:00), Mi (18:00-03:00), Do (18:00-03:00), Fr (18:00-03:00), Sa (18:00-03:00), So (18:00-03:00)" ;
+  jsp:Art jsp:Bar ;
+  jsp:suppliedBy jsp:Lisa .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Alter_Johannisfriedhof>
+  a jsp:Ort ;
+  rdfs:label "Alter Johannisfriedhof" ;
+  jsp:Kostentyp jsp:kostenlos ;
+  ld:hasURL <http://www.leipzig.de/de/buerger/freizeit/leipzig/friedhoefe/johannis/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04103.Johannisfriedhof> ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo - So" ;
+  jsp:hasArt jsp:PlatzGarten .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Cineding>
+  a jsp:Ort ;
+  rdfs:label "Cineding" ;
+  ld:hasURL <http://www.cineding-leipzig.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04229.Karl-Heine-Strasse.83> ;
+  jsp:hasdescription "Das \"Cineding\" ist ein Programmkino im Leipziger Westen. Auf dem Programm stehen Filme mit künstlerischem Anspruch."@de ;
+  jsp:Art <http://leipzig-data.de/Data/Jugendstadtplan/Art/Kino> ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Noch_besser_leben>
+  a jsp:Ort ;
+  rdfs:label "Noch besser leben" ;
+  ld:hasURL <http://www.nochbesserleben.com> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04229.MerseburgerStrasse.25> ;
+  jsp:hasdescription "Bar mit familiären Flair" ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasOpeningHours "Mo (19:30-02:00), Di (19:30-02:00), Mi (19:30-02:00), Do (19:30-02:00), Fr (19:30-02:00), Sa (19:30-02:00), So (19:30-02:00)" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Alte_Damenhandschuhfabrik>
+  a jsp:Ort ;
+  rdfs:label "Alte Damenhandschuhfabrik" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.damenhandschuhfabrik.de> ;
+  jsp:Rauchmoeglichkeit jsp:Raucher ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04229.Klingenstrasse.20> ;
+  jsp:Ambiente jsp:alternativ ;
+  jsp:hasdescription "Szenedisco mit alternativen Flair" ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ElektronischeMusik> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art jsp:Club .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/KrishnaTempel_ISKCON>
+  a jsp:Ort ;
+  rdfs:label "Krishna-Tempel (ISKCON)" ;
+  ld:hasURL <https://www.facebook.com/krishna.tempel.leipzig> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04347.Stoeckelstrasse.60> ;
+  jsp:Religioeser_Ort <http://leipzig-data.de/Data/Jugendstadtplan/Religioeser_Ort/Tempel> ;
+  jsp:hasdescription "Every sunday there is a feast in the Krishna-Temple of Leizig. Besides, you can visit the temple on temple days, which are announced on the homepage."@en, "Im Leipziger Krishna Tempel finden sonntags Sonntagsfeste statt. An Tempeltagen besteht die Möglichkeit, den Tempel kennen zu lernen."@de ;
+  jsp:Unterpunkt jsp:geistliche ;
+  jsp:suppliedBy jsp:Max .
+
+jsp:barrierefrei
+  a jsp:ArtDerFreiheit ;
+  rdfs:label "barrierefrei"@de, "barrier-free"@en .
+
+jsp:nichtBarrierefrei
+  a jsp:ArtDerFreiheit ;
+  rdfs:label "nicht barrierefrei "@de, "non barrier-free"@en .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Mendelssohnhaus>
+  a jsp:Ort ;
+  rdfs:label "Mendelssohnhaus" ;
+  ld:hasURL <http://www.mendelssohn-stiftung.de/r-haus.html> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04103.Goldschmidtstrasse.12> ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (10:00-18:00), Di (10:00-18:00), Mi (10:00-18:00) Do (10:00-18:00), Fr (10:00-18:00), Sa (10:00-18:00), So (10:00-18:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Naturkundemuseum>
+  a jsp:Ort ;
+  rdfs:label "Naturkundemuseum" ;
+  ld:hasURL <http://www.leipzig.de/de/extern/naturkundemuseum/content/index2.htm> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04105.Lortzingstrasse.3> ;
+  jsp:hasdescription "Anhand zahlreicher Präparate und Schautafeln lernen Besucher des Naturkundemuseums viel Wissenswertes über die Umwelt des Menschen."@de ;
+  jsp:hascategory jsp:KunstKultur ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (9:00–18:00), Di (9:00–18:00), Mi (9:00–18:00), Do (9:00–18:00, Fr (9:00–13:00), Sa (11:00-17:00), So (10:00–16:30)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Bundesverwaltungsgericht>
+  a jsp:Ort ;
+  rdfs:label "Bundesverwaltungsgericht" ;
+  jsp:Kostentyp jsp:kostenlos ;
+  ld:hasURL <http://www.beverwg.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04107.Simsonplatz.1> ;
+  jsp:hasdescription "The former Reichscourt experienced a couple of explosive trials. The trail against Karl Liebknecht for high treason was conducted here, and also the case of the Reichstags-burning. Since the restoration in 2002 the building is used as the administrationscourt. Some parts of the building can be visited."@en, "Das ehemalige Reichsgericht erlebte während seines Bestehens einige brisante Prozesse. So wurde hier der Prozess gegen Karl Liebknecht wegen Hochverrats geführt und der Fall um den Reichstagsbrand verhandelt. Seit seiner Sanierung 2002, dient das Gebäude als Bundesverwaltungsgericht. Einige Teile des Gebäudes können besichtigt werden."@de ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (08:00-16:00), Di (08:00-16:00), Mi (08:00-16:00), Do (08:00-16:00), Fr (08:00-16:00), Sa (!), So (!)" ;
+  jsp:Unterpunkt jsp:weltliche ;
+  jsp:Art jsp:HistorischeGebaeude ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Markt>
+  a jsp:Ort ;
+  rdfs:label "Markt" ;
+  ld:hasURL <http://www.leipzig.de/de/tourist/leipzig/spaziergang/panorama/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Markt.1> ;
+  jsp:hasdescription "Der zentrale Marktplatz liegt vor dem alten Rathaus. Hier findet jeden Dienstag und Freitag ein Markt statt, auf dem Produkte der Region verkauft werden. Für Veranstlatungen wie dem Weihnachts- oder Ostermarkt wird der Platz ebenfalls genutzt."@de, "The Marketplace is located cantral in front of the old townhall. Every Tuesday and Friday a market takes place here, were products of the region are sold. For events like the Christmas- or Eastermarket the place is also used."@en ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  jsp:hasArt jsp:PlatzGarten ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Zeitgeschichtliches_Forum>
+  a jsp:Ort ;
+  rdfs:label "Zeitgeschichtliches Forum" ;
+  ld:hasURL <http://www.hdg.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.GrimmaischeStrasse.6> ;
+  jsp:hasdescription "Das moderne Museum im Zentrum Leipzigs erinnert an die Geschichte von politischer Repression, von Opposition sowie von Widerstand und an die friedliche Revolution vor dem Hintergrund der deutschen Teilung und dem Alltagsleben in der kommunistischen Diktatur. Dazu kommt die Darstellung des Wiedervereinigungsprozesses in den vergangenen zwanzig Jahren. Bereichert wird das Angebot des Museums durch wechselnde Sonderausstellungen."@de ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (9:00-18:00), Di (9:00-18:00) Mi (9:00-18:00), Do (9:00-18:00), Fr (9:00-18:00), Sa (10:00-18:00), So (10:00-18:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/GfzK>
+  a jsp:Ort ;
+  rdfs:label "Galerie für zeitgenössische Kunst" ;
+  ld:hasURL <http://www.gfzk-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04107.Karl-Tauchnitz-Strasse.11> ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Di (14:00-19:00), Mi (14:00-19:00), Do (14:00-19:00), Fr (14:00-19:00), Sa (12:00-18:00), So (12:00-18:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Haus_Auensee>
+  a jsp:Ort ;
+  rdfs:label "Haus Auensee" ;
+  ld:hasURL <http://www.haus-auensee-leipzig.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04159.Gustav-Esche-Strasse.4> ;
+  jsp:hasdescription "Das Haus Auensee bietet weltweit erfolgreichen Künstlern eine Bühne. Wer Größen aus der aktuellen Popmusik sehen und hören möchte, ist hier richtig."@de ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art jsp:Konzert ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Bar_Fusz>
+  a jsp:Ort ;
+  rdfs:label "Bar Fusz" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.barfusz.de> ;
+  jsp:Rauchmoeglichkeit jsp:Raucher ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Barfussgaesschen.6-8> ;
+  jsp:Ambiente jsp:leger ;
+  jsp:hasdescription "Bar im Herzen Leipzigs" ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:eingeschraenktBarrierefrei ;
+  jsp:hasOpeningHours "Mo  (09:00-03:00), Di (09:00-03:00), Mi (09:00-03:00), Do (09:00-03:00), Fr (09:00-03:00), Sa (09:00-03:00), So (10:00-03:00)" ;
+  jsp:Art jsp:Bar .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/4rooms>
+  a jsp:Ort ;
+  rdfs:label "4rooms" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.fourooms.net> ;
+  jsp:Rauchmoeglichkeit jsp:separaterRaucherraum ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04317.Taeubchenweg.26> ;
+  jsp:Ambiente jsp:leger ;
+  jsp:hasdescription "Konzert- und Clublocation mit Bar und Kicker" ;
+  jsp:Altersbeschraenkung jsp:keine ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/AlternativeRock>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ElektronischeMusik>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/BalkanKlezmer>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ReggaeSka>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/HipHopRnB> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (19:00-02:00), Di (19:00-02:00), Mi (19:00-02:00), Do (19:00-02:00), Fr (19:00-02:00), Sa (19:00-02:00), So(!)" ;
+  jsp:Art jsp:Bar, jsp:Konzert, jsp:Club .
+
+jsp:Ort
+  a owl:Class ;
+  rdfs:label "Ort" .
+
+jsp:DieVilla
+  a jsp:Ort ;
+  rdfs:label "Die Villa" ;
+  ld:hasURL "http://www.villa-leipzig.de/" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Lessingstrasse.7> ;
+  jsp:hasdescription "Im soziokulturellen Zentrum \"Die Villa\" werden Kurse angeboten, Konzerte aufgeführt, Fahrräder repariert und Kontakte geknüpft. All das findet, wie der Name vermuten lässt, unter dem Dach einer altehrwürdigen Villa in der Nähe des Stadtzentrums statt."@de ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/WaveGothic>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/AlternativeRock>, jsp:ElektronischeMusik, jsp:Charts ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasOpeningHours "Mo (14:00-19:00), Di (14:00-19:00), Mi (14:00-19:00), Do (14:00-19:00), Fr (14:00-19:00)" ;
+  jsp:Art jsp:Jugendzentrum ;
+  jsp:suppliedBy jsp:Max .
+
+jsp:Moritzbastei
+  a jsp:Ort, jsp:EssenTrinken, jsp:KunstKultur ;
+  rdfs:label "Moritzbastei" ;
+  ld:hasURL <http://www.moritzbastei.de> ;
+  jsp:Rauchmoeglichkeit jsp:keineRaucher ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Universitaetsstrasse.9> ;
+  jsp:Ambiente jsp:studentisch ;
+  jsp:hasdescription "Gebaut in den Jahren 1551-53 und seit 1982 als Kulturzentrum genutzt ist die Moritzbastei einer der größten Studentenclubs Europas, der mit 3 Floors zum Tanzen einlädt." ;
+  jsp:Altersbeschraenkung "ab 22:00 ab 18" ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/AlternativeRock>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ReggaeSka>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/WaveGothic>, jsp:ElektronischeMusik, jsp:Charts ;
+  jsp:hasCost jsp:moderat ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo  (10:00-02:00), Di (10:00-02:00), Mi (10:00-04:00), Do (10:00-02:00), Fr (10:00-03:00), Sa (12:00-05:00), So (09:00-02:00)" ;
+  jsp:Art jsp:Bar, jsp:Konzert, jsp:Club ;
+  jsp:suppliedBy jsp:Lisa .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Kameramuseum>
+  a jsp:Ort ;
+  rdfs:label "Kameramuseum" ;
+  ld:hasURL <http://www.fotomuseum.eu/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04316.Gottschalkstrasse.9> ;
+  jsp:hasdescription "Im Kameramuseum wird die Geschiche der Fotografie mit historischen Apparaten nachgezeichnet."@de ;
+  jsp:hascategory jsp:KunstKultur ;
+  jsp:hasOpeningHours "Mi (13:00-17:00), Sa (13:00-17:00), So (13:00-17:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+jsp:Angebot
+  a owl:Class ;
+  rdfs:label "Angebot" ;
+  jsp:hasRelation jsp:Shopping .
+
+jsp:Passagen
+  a jsp:Art ;
+  rdfs:label "Passagen/Center" .
+
+jsp:Unterpunkt
+  a owl:Class ;
+  rdfs:label "Unterpunkt" ;
+  jsp:hasRelation jsp:Shopping .
+
+jsp:Allgemein
+  a jsp:Unterpunkt ;
+  rdfs:label "Allgemeine Buchhandlung" .
+
+jsp:weltliche
+  a jsp:Unterpunkt ;
+  rdfs:label "weltliche" .
+
+jsp:geistliche
+  a jsp:Unterpunkt ;
+  rdfs:label "geistliche" .
+
+jsp:sportlich
+  a jsp:Angebot ;
+  rdfs:label "sportlich/casual" .
+
+jsp:selbstmachen
+  a jsp:Angebot ;
+  rdfs:label "selbst machen" .
+
+jsp:PlatzGarten
+  a jsp:Art ;
+  rdfs:label "Plätze und Gärten" .
+
+jsp:Denkmal
+  a jsp:Art ;
+  rdfs:label "Denkmal" .
+
+jsp:Passage
+  a jsp:Art ;
+  rdfs:label "Passage" .
+
+jsp:Park
+  a jsp:Art ;
+  rdfs:label "Park" .
+
+jsp:Wassersport
+  a jsp:Art ;
+  rdfs:label "Wassersport" .
+
+jsp:Aktivsport
+  a jsp:Art ;
+  rdfs:label "Aktivsport" .
+
+jsp:Equipment
+  a owl:Class, jsp:Requirements ;
+  rdfs:label "equipment"@en, "Equipment" ;
+  jsp:hasRelation jsp:SportErholung .
+
+jsp:eigenes
+  a jsp:Equipment ;
+  rdfs:label "eigenes Equipment" .
+
+jsp:ohne
+  a jsp:Equipment ;
+  rdfs:label "ohne Equipment" .
+
+jsp:gestellt
+  a jsp:Equipment ;
+  rdfs:label "Equipment wird gestellt" .
+
+jsp:Anmeldung
+  a owl:class ;
+  rdfs:label "Anmeldung/Reservierung" .
+
+jsp:noetig
+  a jsp:Anmeldung ;
+  rdfs:label "Anmeldung erforderlich" .
+
+jsp:nichtnoetig
+  a jsp:Anmeldung ;
+  rdfs:label "Keine Anmeldung erforderlich" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Synagogengedenkstaette>
+  a jsp:Ort ;
+  rdfs:label "Synagogengedenkstätte" ;
+  jsp:Kostentyp jsp:kostenlos ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Gottschedstrasse.7> ;
+  jsp:hasdescription "The area with the chairs remembers of the synogogoue that used to be there and of 14.000 jewish citizens that fell victim to the fascistic terror. The area can and shall be entered at the backside."@en, "Die Fläche mit den Stühlen erinnert an die Synagoge die dort ursprünglich stand und an den faschistischen Terror dem in Leipzig 14.000 Bürger jüdischen Glaubens zum Opfer fielen. Die Fläche darf und soll von der hinteren Seite betreten werden."@de ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  jsp:hasArt jsp:Denkmal, jsp:PlatzGarten ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Westwerk>
+  a jsp:Ort ;
+  rdfs:label "Westwerk" ;
+  ld:hasURL <http://westwerk-leipzig.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04229.Karl-Heine-Strasse.93> ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Art <http://leipzig-data.de/Data/Jugendstadtplan/Art/Proberaeume>, <http://leipzig-data.de/Data/Jugendstadtplan/Art/Ateliers> ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Adressen/newResource/bf4610198bdef753b1ea295882cc00c4> a jsp:Ort .
+<http://leipzig-data.de/Data/Adressen/newResource/b3fdd61bcf8ab0d2724c85d51d6a4901> a jsp:Ort .
+<http://leipzig-data.de/Data/Adressen/newResource/df2c28e69462fc619389ed6c5e87c89d> a jsp:Ort .
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Technologiezentrum_GARAGE>
+  a jsp:Ort ;
+  rdfs:label "Technologiezentrum G-A-R-A-G-E" ;
+  ld:hasURL <http://www.g-a-r-a-g-e.com/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04229.Karl-Heine-Strasse.9> ;
+  jsp:hasdescription "Im Technologiezentrum G-A-R-A-G-E können Kinder und Jugendliche die Grundlagen von Technik und Wirtschaft erlernen. Dazu stehen Exponate bereit. Daneben gibt es ein vielfältiges Kursangebot."@de ;
+  jsp:hascategory jsp:KunstKultur ;
+  jsp:hasOpeningHours "Mo (8:00-17:00), Di (8:00-17:00), Mi (8:00-17:00), Do (8:00-17:00), Fr (8:00-17:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Waermehalle_Sued>
+  a jsp:Ort ;
+  rdfs:label "Wärmehalle Süd" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.waermehalle-sued.de/‎> ;
+  jsp:Rauchmoeglichkeit jsp:keineRaucher ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04277.Eichendorffstrasse.7> ;
+  jsp:Ambiente jsp:leger ;
+  jsp:hasdescription "Bar mit familiären Flair, in der ab und zu Konzerte stattfinden." ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/AlternativeRock> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (!), Di (20:00-02:30), Mi (20:00-02:30), Do (20:00-02:30), Fr (20:00-02:30), Sa (20:00-02:30), So (20:00-02:30)" ;
+  jsp:Art jsp:Bar, jsp:Konzert .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/HipHopRnB>
+  a jsp:Musikrichtung ;
+  rdfs:label "HipHop/RnB" .
+
+jsp:Museum
+  a jsp:SubtypeOfInstitution, jsp:Art ;
+  rdfs:label "museum"@en, "Museum" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Buch_und_Schriftmuseum>
+  a jsp:Ort ;
+  rdfs:label "Buch- und Schriftmuseum" ;
+  ld:hasURL <http://www.dnb.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04103.DeutscherPlatz.1> ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Di (10:00-18:00), Mi (10:00-18:00), Do (10:00-20:00), Fr (10:00-18:00), Sa (10:00-18:00), So (10:00-18:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Thomaskirche>
+  a jsp:Ort ;
+  rdfs:label "Thomaskirche" ;
+  jsp:Kostentyp jsp:kostenlos ;
+  ld:hasURL <http://www.thomaskirche.org> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Thomaskirchhof.18> ;
+  jsp:Religioeser_Ort <http://leipzig-data.de/Data/Jugendstadtplan/Religioeser_Ort/Kirche_evangelischlutherisch> ;
+  jsp:hasdescription "Die Thomaskirche ist der ehemalige Arbeitsplatz von Johann Sebastian Bach. Dementsprechend wird hier viel Wert auf Musik gelegt. Die Gottesdienste werden oft vom Thomanerchor mitgestaltet. Gottesdienst ist Sonntags um 9:30 und 18:00."@de ;
+  jsp:Altersbeschraenkung jsp:keineAltersbeschraenkung ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (9:00-18:00), Di (9:00-18:00), Mi (9:00-18:00), Do (9:00-18:00), Fr (9:00-18:00), Sa (9:00-18:00), So  (9:00-18:00)" ;
+  jsp:Art jsp:Sightseeing .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Schaubuehne_Lindenfels>
+  a jsp:Ort ;
+  rdfs:label "Schaubühne Lindenfels" ;
+  ld:hasURL <http://www.schaubuehne.com/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04229.Karl-Heine-Strasse.50> ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:Art <http://leipzig-data.de/Data/Jugendstadtplan/Art/Theater> ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Alte_Handelsboerse>
+  a jsp:Ort ;
+  rdfs:label "Alte Handelsbörse" ;
+  jsp:Kostentyp jsp:kostenlos ;
+  jsp:hasIrregularOpeningHours "Mo, Di, Mi, Do, Fr, Sa, So" ;
+  ld:hasURL <http://www.stadtgeschichtliches-museum-leipzig.de/site_deutsch/alteboerse/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Naschmarkt.2> ;
+  jsp:hasdescription "The old exchangemarket was build in 1679 under pressurisation of the Leipzig traders. Money and goods changed their owners in the building while on the 'Naschmarkt' outside bread and other groceries were sold. The building can only be visited from the outside, unless you go to a concert or a reading that take place in the old exchancemarket every once in a while."@en, "Das Gebäude wurde 1679 auf drängen der Leipziger Kaufleute gebaut. Geld und Waren wechselten in dem kleinen Gebäude den Besitzer, während unten auf dem Naschmarkt Brot und andere Lebensmittel verkauft wurden. Das Gebäude kann nur von außen besichtig werden, es sei denn man besucht ein Konzert oder eine Lesung die von Zeit zu Zeit in der alten Börse stattfinden."@de ;
+  jsp:hascategory jsp:Sightseeing ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Unterpunkt jsp:weltliche ;
+  jsp:Art jsp:HistorischeGebaeude ;
+  jsp:suppliedBy jsp:Paula .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Museum_der_bildenden_Kuenste>
+  a jsp:Ort ;
+  rdfs:label "Museum der bildenden Künste" ;
+  ld:hasURL <http://www.mdbk.de> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Katharinenstrasse.10> ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Di (10:00-18:00), Mi (12:00-20:00), Do (10:00-18:00), Fr (10:00-18:00), Sa (10:00-18:00), So (10:00-18:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Schulmuseum>
+  a jsp:Ort ;
+  rdfs:label "Schulmuseum" ;
+  ld:hasURL <http://www.schulmuseum-leipzig.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Goerdelerring.20> ;
+  jsp:hasdescription "Das Schulmuseum beherbergt eine Ausstellung über die Schule im Wandel der Zeiten. Der Eintritt ist frei."@de ;
+  jsp:hasAccessibility jsp:barrierefrei ;
+  jsp:hasOpeningHours "Mo (9:00-16:00), Di (9:00-16:00) Mi (9:00-16:00), Do (9:00-16:00), Fr (9:00-16:00)" ;
+  jsp:Art jsp:Museum ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/NaTo>
+  a jsp:Ort ;
+  rdfs:label "NaTo" ;
+  ld:hasURL "http://www.nato-leipzig.de/" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04275.Karl-Liebknecht-Strasse.46> ;
+  jsp:hasdescription "Im soziokulturellen Zentrum NaTo gibt es ein Kino, in dem nicht nur Filme gezeigt werden, sondern auch Konzerte und Theaterdarbietungen staffinden."@de ;
+  jsp:hascategory jsp:KunstKultur ;
+  jsp:Art jsp:Jugendzentrum ;
+  jsp:suppliedBy jsp:Max .
+
+jsp:ab21
+  a jsp:Altersbeschraenkung ;
+  rdfs:label "ab 21 Jahre" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Sweat>
+  a jsp:Ort ;
+  rdfs:label "SWEAT!" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.sweat-club.de> ;
+  jsp:Rauchmoeglichkeit jsp:separaterRaucherraum ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04107.Peterssteinweg.17> ;
+  jsp:Ambiente jsp:leger ;
+  jsp:hasdescription "Elektro-Club nähe Innenstadt" ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ElektronischeMusik> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (!), Di (!), Mi (!), Do (!), Fr (23:00-05:00), Sa (23:00-05:00), So(!)" ;
+  jsp:Art jsp:Club .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Spizz>
+  a jsp:Ort ;
+  rdfs:label "Spizz" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.spizz.org> ;
+  jsp:Rauchmoeglichkeit jsp:separaterRaucherraum ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04109.Markt.9> ;
+  jsp:Ambiente jsp:leger ;
+  jsp:hasdescription "Bar direkt am Markt Leipzigs mit angrenzendem Club" ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Type jsp:restaurant ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/ElektronischeMusik>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/Charts>, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/HipHopRnB> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:eingeschraenktBarrierefrei ;
+  jsp:hasOpeningHours "Mo (09:00-03:00), Di (09:00-03:00), Mi (09:00-03:00), Do (09:00-03:00), Fr (09:00-03:00), Sa (09:00-05:00), So(09:00-05:00)" ;
+  jsp:Art jsp:Bar, jsp:Club .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Flowerpower>
+  a jsp:Ort ;
+  rdfs:label "Flowerpower" ;
+  jsp:Kostentyp jsp:moderat ;
+  ld:hasURL <http://www.flowerpower.eu> ;
+  jsp:Rauchmoeglichkeit jsp:Raucher ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04107.Riemannstrasse.42> ;
+  jsp:Ambiente jsp:studentisch ;
+  jsp:hasdescription "Alternative Kneipe, die zu später Stunde immer noch ihre Türen geöffnet hat." ;
+  jsp:Altersbeschraenkung jsp:ab18 ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/AlternativeRock> ;
+  jsp:hascategory jsp:Nachtleben ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:hasOpeningHours "Mo (19:00-05:00), Di (19:00-05:00), Mi (19:00-05:00), Do (19:00-05:00), Fr (19:00-05:00), Sa (19:00-05:00), So(19:00-05:00)" ;
+  jsp:hasFreeTag "Karaoke" ;
+  jsp:Art jsp:Bar, jsp:Konzert .
+
+jsp:Art
+  a owl:Class ;
+  rdfs:label "Art" ;
+  jsp:hasRelation jsp:Nachtleben, jsp:Sightseeing, jsp:SportErholung, jsp:Shopping .
+
+jsp:Club
+  a jsp:Art ;
+  rdfs:label "Club" .
+
+jsp:Bar
+  a jsp:LocationType, jsp:Art ;
+  rdfs:label "Bar", "bar/pub"@en .
+
+jsp:Konzert
+  a jsp:Art ;
+  rdfs:label "Konzert" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/WaveGothic>
+  a jsp:Musikrichtung ;
+  rdfs:label "Wave/Gothic" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Der_Anker_eV>
+  a jsp:Ort ;
+  rdfs:label "Der Anker e.V." ;
+  ld:hasURL "http://www.anker-leipzig.de/" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04159.Renftstrasse.1> ;
+  jsp:hasdescription "Der \"Anker\" ist ein soziokulturelles Zentrum im Norden der Stadt. Neben einem reichhaltigen Kursangebot gibt es einen offenen Jugendtreff und Konzerte."@de ;
+  jsp:Musikrichtung <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/WaveGothic>, jsp:ElektronischeMusik, jsp:Charts, <http://leipzig-data.de/Data/Jugendstadtplan/Musikrichtung/AlternativeRock> ;
+  jsp:hasOpeningHours "Mo (14:00-20:00), Di (14:00-20:00), Mi (14:00-20:00), Do (14:00-20:00), Fr (14:00-20:00), Sa (14:00-20:00)" ;
+  jsp:Art jsp:Jugendzentrum ;
+  jsp:suppliedBy jsp:Max .
+
+jsp:Lisa
+  a foaf:Person ;
+  foaf:name "Lisa Possner" .
+
+jsp:Charts
+  a jsp:Musikrichtung ;
+  rdfs:label "Charts" .
+
+jsp:ElektronischeMusik
+  a jsp:Musikrichtung ;
+  rdfs:label "Elektronische Musik" .
+
+jsp:Radverleih
+  a jsp:Unterpunkt ;
+  rdfs:label "Farradverleih" .
+
+jsp:Bootsverleih
+  a jsp:Unterpunkt ;
+  rdfs:label "Bootsverleih" .
+
+jsp:Freibad
+  a jsp:Unterpunkt ;
+  rdfs:label "Freibad" .
+
+jsp:Hallenbad
+  a jsp:Unterpunkt ;
+  rdfs:label "Hallenbad" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Bandhaus_Bandcommunity_eV__>
+  a jsp:Ort ;
+  rdfs:label "Bandhaus Bandcommunity e.V." ;
+  ld:hasURL <http://www.bandcommunity-leipzig.org/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04179.SaarlaenderStrasse.17> ;
+  jsp:hasAccessibility jsp:nichtBarrierefrei ;
+  jsp:Art <http://leipzig-data.de/Data/Jugendstadtplan/Art/Proberaeume> ;
+  jsp:suppliedBy jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Religioeser_Ort/Kirche_roemischkatholisch>
+  a jsp:Religioeser_Ort ;
+  rdfs:label "Kirche (römisch-katholisch)" .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Liebfrauen_LeipzigLindenau>
+  a jsp:Ort ;
+  rdfs:label "Liebfrauen Leipzig-Lindenau" ;
+  ld:hasURL "http://www.liebfrauen-lindenau.de/" ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04229.Karl-Heine-Strasse.110> ;
+  jsp:Religioeser_Ort <http://leipzig-data.de/Data/Jugendstadtplan/Religioeser_Ort/Kirche_roemischkatholisch> ;
+  jsp:hasdescription "In der Liebfrauen-Kirche wird an diesen Terminen Heilige Messe gefeiert: Sonntag 10:00 und 17:00, Dienstag, Mittwoch und Freitag um 8:00 und Samstags um 18:30. Donnerstags findet die Messe um 8:00 im Pfarrhaus statt."@de ;
+  jsp:hasOpeningHours "Sa (15:00-18:30)" ;
+  jsp:Supplier jsp:Max .
+
+<http://leipzig-data.de/Data/Jugendstadtplan/Ort/Synagoge_und_Begegnungszentrum>
+  a jsp:Ort ;
+  rdfs:label "Synagoge und Begegnungszentrum" ;
+  ld:hasURL <http://www.synagoge-leipzig.de/> ;
+  jsp:hasAddress <http://leipzig-data.de/Data/Adresse/04103.Querstrasse.16> ;
+  jsp:Religioeser_Ort <http://leipzig-data.de/Data/Jugendstadtplan/Religioeser_Ort/Synagoge> ;
+  jsp:hasdescription "The Ariowitsch-Haus is a Jewish culture centre, where visitors can get in touch with Jewish culture. Regularly there are concerts and events."@en, "Das Ariowitsch-Haus ist ein jüdisches Kulturzentrum und eine Begegnungsstätte. Hier finden regelmäßig Konzerte und Veranstaltungen statt, bei denen man die jüdische Kultur kennen lernen kann."@de ;
+  jsp:suppliedBy jsp:Max ;
+  jsp:Untergruppe jsp:geistliche .
+
+<http://leipzig-data.de/Data/Adresse/04277.Kochstrasse.132>
+  geo:lat "51.31006145" ;
+  geo:long "12.3710142659311" .
+
+<http://leipzig-data.de/Data/Adresse/04105.Jacobstrasse.8>
+  geo:lat "51.34489995" ;
+  geo:long "12.3688100237112" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Kolonnadenstrasse.18>
+  geo:lat "51.3381287" ;
+  geo:long "12.3663195" .
+
+<http://leipzig-data.de/Data/Adresse/04105.Waldstrasse.13>
+  geo:lat "51.3432517" ;
+  geo:long "12.3582" .
+
+<http://leipzig-data.de/Data/Adresse/04249.Dieskaustrasse.459>
+  geo:lat "51.298494" ;
+  geo:long "12.3272934" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Thomasiusstrasse.16>
+  geo:lat "51.34106975" ;
+  geo:long "12.365166028592" .
+
+<http://leipzig-data.de/Data/Adresse/04229.Klingerweg.2>
+  geo:lat "51.33009645" ;
+  geo:long "12.3486352014702" .
+
+<http://leipzig-data.de/Data/Adresse/04107.Rennbahnweg.2A>
+  geo:lat "51.3280607" ;
+  geo:long "12.3608311" .
+
+<http://leipzig-data.de/Data/Adresse/04229.Antonienstrasse.2>
+  geo:lat "51.3201775" ;
+  geo:long "12.330443" .
+
+<http://leipzig-data.de/Data/Adresse/04277.KoburgerStrasse.17>
+  geo:lat "51.2976148" ;
+  geo:long "12.3723869" .
+
+<http://leipzig-data.de/Data/Adresse/04155.Kirschbergstrasse.84>
+  geo:lat "51.36223875" ;
+  geo:long "12.3533824271558" .
+
+<http://leipzig-data.de/Data/Adresse/04157.Kleiststrasse.54>
+  geo:lat "51.3723678" ;
+  geo:long "12.3813368562228" .
+
+<http://leipzig-data.de/Data/Adresse/04103.Tarostrasse.10>
+  geo:lat "51.323966" ;
+  geo:long "12.38579475" .
+
+<http://leipzig-data.de/Data/Adresse/04299.Kolmstrasse.35>
+  geo:lat "51.3183548" ;
+  geo:long "12.4264258" .
+
+<http://leipzig-data.de/Data/Adresse/04179.Hans-Driesch-Strasse.52A>
+  geo:lat "51.3465445" ;
+  geo:long "12.3119389158605" .
+
+<http://leipzig-data.de/Data/Adresse/04229.Antonienstrasse.8>
+  geo:lat "51.31969685" ;
+  geo:long "12.3359276778302" .
+
+<http://leipzig-data.de/Data/Adresse/04229.Kuechenholzallee.75>
+  geo:lat "51.3042112" ;
+  geo:long "12.3329394" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Schreberstrasse.15>
+  geo:lat "51.3383157" ;
+  geo:long "12.3599488" .
+
+<http://leipzig-data.de/Data/Adresse/04317.Oststrasse.73>
+  geo:lat "51.33137145" ;
+  geo:long "12.4086397051387" .
+
+<http://leipzig-data.de/Data/Adresse/04129.DessauerStrasse.2>
+  geo:lat "51.35618665" ;
+  geo:long "12.3847038425548" .
+
+<http://leipzig-data.de/Data/Adresse/04357.TauchaerStrasse.14>
+  geo:lat "51.3786881" ;
+  geo:long "12.418029552832" .
+
+<http://leipzig-data.de/Data/Adresse/04105.PfaffendorferStrasse.29>
+  geo:lat "51.35090345" ;
+  geo:long "12.3689811094924" .
+
+<http://leipzig-data.de/Data/Adresse/04277.KoburgerStrasse.12A>
+  geo:lat "51.2996028" ;
+  geo:long "12.3721404" .
+
+<http://leipzig-data.de/Data/Adresse/04105.Zoellnerweg.6>
+  geo:lat "51.3509368" ;
+  geo:long "12.3542322" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Martin-Luther-Ring.4-6>
+  geo:lat "51.3360228" ;
+  geo:long "12.3726786" .
+
+<http://leipzig-data.de/Data/Adresse/04109.GrimmaischeStrasse.2>
+  geo:lat "51.3390391" ;
+  geo:long "12.3754683" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Markt.17>
+  geo:lat "51.33975815" ;
+  geo:long "12.375094275271" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Petersstrasse.15>
+  geo:lat "51.3390122" ;
+  geo:long "12.3755943" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Petersstrasse.36>
+  geo:lat "51.3377874" ;
+  geo:long "12.3739315" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Salzgaesschen.6>
+  geo:lat "51.3405483" ;
+  geo:long "12.376247468736" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Neumarkt.9>
+  geo:lat "51.3384601" ;
+  geo:long "12.3768116" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Reichsstrasse.4>
+  geo:lat "51.3418136" ;
+  geo:long "12.376587" .
+
+<http://leipzig-data.de/Data/Adresse/04109.GrimmaischeStrasse.13>
+  geo:lat "51.3399992" ;
+  geo:long "12.3775309" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Nikolaistrasse.6-10>
+  geo:lat "51.3410186" ;
+  geo:long "12.3788155" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Bruehl.33>
+  geo:lat "51.3430301" ;
+  geo:long "12.3772851" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Bruehl.1>
+  geo:lat "51.34350225" ;
+  geo:long "12.3737470571897" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Katharinenstrasse.17>
+  geo:lat "51.3425961" ;
+  geo:long "12.3742694" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Hainstrasse.1>
+  geo:lat "51.3426768" ;
+  geo:long "12.3731856" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Markt.9>
+  geo:lat "51.3410144" ;
+  geo:long "12.3735505" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Klostergasse.16>
+  geo:lat "51.3398928" ;
+  geo:long "12.3730778" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Markt.11>
+  geo:lat "51.3401474" ;
+  geo:long "12.3740639" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Thomaskirchhof.16>
+  geo:lat "51.3386844" ;
+  geo:long "12.372311387464" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Petersstrasse.20>
+  geo:lat "51.339076" ;
+  geo:long "12.3745776" .
+
+<http://leipzig-data.de/Data/Adresse/04107.Schletterstrasse.5>
+  geo:lat "51.3304639" ;
+  geo:long "12.3743628" .
+
+<http://leipzig-data.de/Data/Adresse/04103.Linnestrasse.1>
+  geo:lat "51.3279644" ;
+  geo:long "12.3928941" .
+
+<http://leipzig-data.de/Data/Adresse/04155.Menckestrasse.23>
+  geo:lat "51.3567474" ;
+  geo:long "12.3642579101756" .
+
+<http://leipzig-data.de/Data/Adresse/04416.Hafenstrasse.23>
+  geo:lat "51.2637524" ;
+  geo:long "12.3485179" .
+
+<http://leipzig-data.de/Data/Adresse/04209.Kolpingweg.1>
+  geo:lat "51.3132783" ;
+  geo:long "12.2796854" .
+
+<http://leipzig-data.de/Data/Adresse/04107.Riemannstrasse.3>
+  geo:lat "51.3305236" ;
+  geo:long "12.3791741" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Nikolaikirchhof.1>
+  geo:lat "51.3406175" ;
+  geo:long "12.3792876" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Hainstrasse.19>
+  geo:lat "51.3426768" ;
+  geo:long "12.3731856" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Nikolaikirchhof.3>
+  geo:lat "51.340714" ;
+  geo:long "12.3787986" .
+
+<http://leipzig-data.de/Data/Adresse/04277.Bernhard-Goering-Strasse.152>
+  geo:lat "51.3088598" ;
+  geo:long "12.3764412" .
+
+<http://leipzig-data.de/Data/Adresse/04275.Karl-Liebknecht-Strasse.75>
+  geo:lat "51.32366025" ;
+  geo:long "12.3739500215909" .
+
+<http://leipzig-data.de/Data/Adresse/04277.Wolfgang-Heinze-Strasse.15>
+  geo:lat "51.3083922" ;
+  geo:long "12.3734458547166" .
+
+<http://leipzig-data.de/Data/Adresse/04103.Nuernberger.Strasse.42>
+  geo:lat "51.3324839" ;
+  geo:long "12.3813793" .
+
+<http://leipzig-data.de/Data/Adresse/04275.Richard-Lehmann-Strasse.114>
+  geo:lat "51.31376495" ;
+  geo:long "12.3878498776959" .
+
+<http://leipzig-data.de/Data/Adresse/04179.Spinnereistrasse.7>
+  geo:lat "51.3274991" ;
+  geo:long "12.3201986" .
+
+<http://leipzig-data.de/Data/Adresse/04105.Roscherstrasse.33>
+  geo:lat "51.3533199" ;
+  geo:long "12.376905" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Markt.1>
+  geo:lat "51.3403735" ;
+  geo:long "12.3753426958294" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Hainstrasse.12>
+  geo:lat "51.3422053" ;
+  geo:long "12.3736155" .
+
+<http://leipzig-data.de/Data/Adresse/04299.Friedhofsweg.1>
+  geo:lat "51.3184329" ;
+  geo:long "12.4070969" .
+
+<http://leipzig-data.de/Data/Adresse/04103.Johannisplatz.5-11>
+  geo:lat "51.3371603" ;
+  geo:long "12.3885481895452" .
+
+<http://leipzig-data.de/Data/Adresse/04103.DeutscherPlatz.4>
+  geo:lat "51.3212298" ;
+  geo:long "12.395329" .
+
+<http://leipzig-data.de/Data/Adresse/04103.Philipp-Rosenthal-Strasse.51a>
+  geo:lat "51.3244053" ;
+  geo:long "12.3939687" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Thomaskirchhof.15>
+  geo:lat "51.338867" ;
+  geo:long "12.3724338" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Dittrichring.24>
+  geo:lat "51.3417521" ;
+  geo:long "12.3699982" .
+
+<http://leipzig-data.de/Data/Adresse/04177.LindenauerMarkt.21>
+  geo:lat "51.3375558" ;
+  geo:long "12.3331861" .
+
+<http://leipzig-data.de/Data/Adresse/04103.NuernbergerStrasse.11>
+  geo:lat "51.3367696" ;
+  geo:long "12.3844659" .
+
+<http://leipzig-data.de/Data/Adresse/04277.Wolfgang-Heinze-Strasse.12a>
+  geo:lat "51.30885035" ;
+  geo:long "12.3725657955261" .
+
+<http://leipzig-data.de/Data/Adresse/04179.Gustav-Esche-Strasse.1>
+  geo:lat "51.35757775" ;
+  geo:long "12.3138454434732" .
+
+<http://leipzig-data.de/Data/Adresse/04275.Kurt-Eisner-Strasse.108>
+  geo:lat "51.320654" ;
+  geo:long "12.3808336" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Nikolaikirchhof.2>
+  geo:lat "51.34077505" ;
+  geo:long "12.3784062903685" .
+
+<http://leipzig-data.de/Data/Adresse/04177.Aurelienstrasse.41>
+  geo:lat "51.33222005" ;
+  geo:long "12.3315716995865" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Goethestrasse.2>
+  geo:lat "51.3413375" ;
+  geo:long "12.3806165" .
+
+<http://leipzig-data.de/Data/Adresse/04103.BrandenburgerStrasse.2>
+  geo:lat "51.344525" ;
+  geo:long "12.3855888211021" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Bosestrasse.1>
+  geo:lat "51.340441" ;
+  geo:long "12.3688428" .
+
+<http://leipzig-data.de/Data/Adresse/04107.Karl-Liebknecht-Strasse.36>
+  geo:lat "51.3264418" ;
+  geo:long "12.3734818" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Petersstrasse.39>
+  geo:lat "51.3373918" ;
+  geo:long "12.3753220888281" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Gottschedstrasse.2>
+  geo:lat "51.3401809" ;
+  geo:long "12.3707600661168" .
+
+<http://leipzig-data.de/Data/Adresse/04275.Karl-Liebknecht-Strasse.81>
+  geo:lat "51.32283115" ;
+  geo:long "12.3739022018441" .
+
+<http://leipzig-data.de/Data/Adresse/04105.Lumumbastrasse.4>
+  geo:lat "51.3539131" ;
+  geo:long "12.3701185" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Thomaskirchhof.12>
+  geo:lat "51.3387591" ;
+  geo:long "12.3728838" .
+
+<http://leipzig-data.de/Data/Adresse/04177.Haehnelstrasse.27>
+  geo:lat "51.3316116" ;
+  geo:long "12.3341996" .
+
+<http://leipzig-data.de/Data/Adresse/04103.Kurt-Schumacher-Strasse.4>
+  geo:lat "51.3461576" ;
+  geo:long "12.3794132" .
+
+<http://leipzig-data.de/Data/Adresse/04155.Menckestrasse.42>
+  geo:lat "51.3591358" ;
+  geo:long "12.3624164" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Dittrichring.16>
+  geo:lat "51.3386925" ;
+  geo:long "12.3709306" .
+
+<http://leipzig-data.de/Data/Adresse/04177.Wasserstrasse.18>
+  geo:lat "51.3426053" ;
+  geo:long "12.3351994" .
+
+<http://leipzig-data.de/Data/Adresse/04229.Nonnenstrasse.42>
+  geo:lat "51.3316125" ;
+  geo:long "12.3485349" .
+
+<http://leipzig-data.de/Data/Adresse/04275.Karl-Liebknecht-Strasse.95>
+  geo:lat "51.32156315" ;
+  geo:long "12.3738772505856" .
+
+<http://leipzig-data.de/Data/Adresse/04103.Johannisfriedhof>
+  geo:lat "51.3365109" ;
+  geo:long "12.3904267248557" .
+
+<http://leipzig-data.de/Data/Adresse/04229.Karl-Heine-Strasse.83>
+  geo:lat "51.3308274" ;
+  geo:long "12.3322044" .
+
+<http://leipzig-data.de/Data/Adresse/04229.MerseburgerStrasse.25>
+  geo:lat "51.331033" ;
+  geo:long "12.3333729" .
+
+<http://leipzig-data.de/Data/Adresse/04229.Klingenstrasse.20>
+  geo:lat "51.3234373" ;
+  geo:long "12.3242033" .
+
+<http://leipzig-data.de/Data/Adresse/04347.Stoeckelstrasse.60>
+  geo:lat "51.3561392" ;
+  geo:long "12.4116473" .
+
+<http://leipzig-data.de/Data/Adresse/04103.Goldschmidtstrasse.12>
+  geo:lat "51.3361072" ;
+  geo:long "12.3833683" .
+
+<http://leipzig-data.de/Data/Adresse/04105.Lortzingstrasse.3>
+  geo:lat "51.34498405" ;
+  geo:long "12.3708560066668" .
+
+<http://leipzig-data.de/Data/Adresse/04107.Simsonplatz.1>
+  geo:lat "51.33311805" ;
+  geo:long "12.369815869174" .
+
+<http://leipzig-data.de/Data/Adresse/04109.GrimmaischeStrasse.6>
+  geo:lat "51.3397722" ;
+  geo:long "12.3757506" .
+
+<http://leipzig-data.de/Data/Adresse/04107.Karl-Tauchnitz-Strasse.11>
+  geo:lat "51.3340277" ;
+  geo:long "12.3653235947647" .
+
+<http://leipzig-data.de/Data/Adresse/04159.Gustav-Esche-Strasse.4>
+  geo:lat "51.36979345" ;
+  geo:long "12.3155928609925" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Barfussgaesschen.6-8>
+  geo:lat "51.3408344" ;
+  geo:long "12.3736908" .
+
+<http://leipzig-data.de/Data/Adresse/04317.Taeubchenweg.26>
+  geo:lat "51.3361053" ;
+  geo:long "12.4000687" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Lessingstrasse.7>
+  geo:lat "51.342061" ;
+  geo:long "12.3667086" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Universitaetsstrasse.9>
+  geo:lat "51.3392576" ;
+  geo:long "12.3777868" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Gottschedstrasse.7>
+  geo:lat "51.3415483" ;
+  geo:long "12.3665582" .
+
+<http://leipzig-data.de/Data/Adresse/04229.Karl-Heine-Strasse.93>
+  geo:lat "51.3301806" ;
+  geo:long "12.3313541624121" .
+
+<http://leipzig-data.de/Data/Adresse/04229.Karl-Heine-Strasse.9>
+  geo:lat "51.332044" ;
+  geo:long "12.3464161" .
+
+<http://leipzig-data.de/Data/Adresse/04277.Eichendorffstrasse.7>
+  geo:lat "51.3138681" ;
+  geo:long "12.3726564540604" .
+
+<http://leipzig-data.de/Data/Adresse/04103.DeutscherPlatz.1>
+  geo:lat "51.32202" ;
+  geo:long "12.3971021" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Thomaskirchhof.18>
+  geo:lat "51.33907235" ;
+  geo:long "12.3721686265072" .
+
+<http://leipzig-data.de/Data/Adresse/04229.Karl-Heine-Strasse.50>
+  geo:lat "51.3323179" ;
+  geo:long "12.3412494" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Naschmarkt.2>
+  geo:lat "51.340666" ;
+  geo:long "12.3757375524221" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Katharinenstrasse.10>
+  geo:lat "51.3423561" ;
+  geo:long "12.3757740095066" .
+
+<http://leipzig-data.de/Data/Adresse/04109.Goerdelerring.20>
+  geo:lat "51.3421945" ;
+  geo:long "12.3701826" .
+
+<http://leipzig-data.de/Data/Adresse/04275.Karl-Liebknecht-Strasse.46>
+  geo:lat "51.3251648" ;
+  geo:long "12.3733388" .
+
+<http://leipzig-data.de/Data/Adresse/04107.Peterssteinweg.17>
+  geo:lat "51.3325368" ;
+  geo:long "12.373895475" .
+
+<http://leipzig-data.de/Data/Adresse/04107.Riemannstrasse.42>
+  geo:lat "51.33129055" ;
+  geo:long "12.3744786968336" .
+
+<http://leipzig-data.de/Data/Adresse/04179.SaarlaenderStrasse.17>
+  geo:lat "51.32491505" ;
+  geo:long "12.3156740964271" .
+
+<http://leipzig-data.de/Data/Adresse/04229.Karl-Heine-Strasse.110>
+  geo:lat "51.3288665" ;
+  geo:long "12.3232187803217" .
+
+<http://leipzig-data.de/Data/Adresse/04103.Querstrasse.16>
+  geo:lat "51.3406266" ;
+  geo:long "12.3856555" .
+
+
+

@@ -1,0 +1,143 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+
+<http://leipzig-data.de/Data/04103.Leipzig.DeutscherPlatz.4>
+    geo:lat 51.3212298 ;
+    geo:long 12.395329 .
+
+<http://leipzig-data.de/Data/04105.Leipzig.Lortzingstrasse.3>
+    geo:lat 51.3449840539751 ;
+    geo:long 12.3708558022852 .
+
+<http://leipzig-data.de/Data/04107.Leipzig.Karl-Tauchnitz-Strasse.11>
+    geo:lat 51.334033626271 ;
+    geo:long 12.3653064336483 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Augustusplatz.1>
+    geo:lat 51.3391581 ;
+    geo:long 12.3807993 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Augustusplatz.10>
+    geo:lat 51.3385309 ;
+    geo:long 12.3794636 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Augustusplatz.9>
+    geo:lat 51.3379418 ;
+    geo:long 12.3790116 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Bosestrasse.1>
+    geo:lat 51.3405119 ;
+    geo:long 12.3691785 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Goerdelerring.20>
+    geo:lat 51.3421443491536 ;
+    geo:long 12.3703905135446 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.GrimmaischeStrasse.6>
+    geo:lat 51.3397563 ;
+    geo:long 12.3758923 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Hainstrasse.12>
+    geo:lat 51.3421412 ;
+    geo:long 12.3736481 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Hainstrasse.19A>
+    geo:lat 51.3422084 ;
+    geo:long 12.3723657 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Katharinenstrasse.10>
+    geo:lat 51.3423561740415 ;
+    geo:long 12.3757738364676 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Lessingstrasse.7>
+    geo:lat 51.342061 ;
+    geo:long 12.3667086 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Magazingasse.4>
+    geo:lat 51.3373148 ;
+    geo:long 12.3769462 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Martin-Luther-Ring.4>
+    geo:lat 51.3360228 ;
+    geo:long 12.3726786 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Naschmarkt.2>
+    geo:lat 51.3406659760547 ;
+    geo:long 12.375737541309 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Neumarkt.9>
+    geo:lat 51.3386805 ;
+    geo:long 12.3765118 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Nikolaikirchhof.2>
+    geo:lat 51.3407802754391 ;
+    geo:long 12.378415764121 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Nikolaikirchhof.3>
+    geo:lat 51.340714 ;
+    geo:long 12.3787986 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Salzgaesschen.6>
+    geo:lat 51.3407958 ;
+    geo:long 12.3759045 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Thomaskirchhof.18>
+    geo:lat 51.3391293 ;
+    geo:long 12.3721452 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Universitaetsstrasse.5>
+    geo:lat 51.3381402 ;
+    geo:long 12.3778643 .
+
+<http://leipzig-data.de/Data/04109.Leipzig.Universitaetsstrasse.9>
+    geo:lat 51.3372777930953 ;
+    geo:long 12.3790743082259 .
+
+<http://leipzig-data.de/Data/04177.Leipzig.LindenauerMarkt.21>
+    geo:lat 51.3378024 ;
+    geo:long 12.3332312 .
+
+<http://leipzig-data.de/Data/04177.Leipzig.Wasserstrasse.18>
+    geo:lat 51.3426053 ;
+    geo:long 12.3351994 .
+
+<http://leipzig-data.de/Data/04179.Leipzig.Spinnereistrasse.7>
+    geo:lat 51.3277079553625 ;
+    geo:long 12.3196474158046 .
+
+<http://leipzig-data.de/Data/04229.Leipzig.Karl-Heine-Strasse.50>
+    geo:lat 51.3315304 ;
+    geo:long 12.3342416 .
+
+<http://leipzig-data.de/Data/04229.Leipzig.MerseburgerStrasse.25>
+    geo:lat 51.3286489 ;
+    geo:long 12.3345583 .
+
+<http://leipzig-data.de/Data/04229.Leipzig.Nonnenstrasse.38>
+    geo:lat 51.3290976 ;
+    geo:long 12.3437185 .
+
+<http://leipzig-data.de/Data/04275.Leipzig.Karl-Liebknecht-Strasse.46>
+    geo:lat 51.3251322133374 ;
+    geo:long 12.3733241133172 .
+
+<http://leipzig-data.de/Data/04275.Leipzig.Karl-Liebknecht-Strasse.95>
+    geo:lat 51.3215634286456 ;
+    geo:long 12.3738714729816 .
+
+<http://leipzig-data.de/Data/04277.Leipzig.Bernhard-Goering-Strasse.152>
+    geo:lat 51.3108007 ;
+    geo:long 12.3762637 .
+
+<http://leipzig-data.de/Data/04277.Leipzig.KoburgerStrasse.12A>
+    geo:lat 51.3016982 ;
+    geo:long 12.3731197 .
+
+<http://leipzig-data.de/Data/04277.Leipzig.Kochstrasse.132>
+    geo:lat 51.310057128245 ;
+    geo:long 12.3713328476493 .
+
+<http://leipzig-data.de/Data/04277.Leipzig.Wolfgang-Heinze-Strasse.12A>
+    geo:lat 51.3100414 ;
+    geo:long 12.3729202 .
+
