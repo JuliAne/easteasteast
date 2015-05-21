@@ -1,0 +1,100 @@
+/************************************************************************
+ *
+ *    Kalender / Buchungstabelle
+ *
+ */
+
+#sparqalendar{
+border-collapse:separate;
+border-spacing:15px 0px;
+}
+ 
+#buchungstabelle{
+//position:relative;
+color:#004;
+margin:0 0 10px 5px;
+}
+
+#buchungstabelle td, #buchungstabelle table{
+border:0px solid #004;
+width:175px
+}
+
+#buchungstabelle td{
+width:25px;
+height:25px;
+font-size:11px;
+text-align:center;
+vertical-align:middle;
+padding:0px
+
+}
+#Tageleiste th{
+text-align:center;
+vertical-align:middle;
+padding:0px;
+text-transform: uppercase;
+font-size: 10px;
+}
+
+#letzterMonat {
+text-align:left;
+}
+
+#naechsterMonat {
+text-align:right;
+}
+
+#monat {
+text-align:center;
+vertical-align:middle;
+padding:0px;
+text-transform: uppercase;
+font-size: 10px;
+} 
+
+
+#buchungstabelle td.teilfrei{
+//background-color:#fc0;
+color:#009;
+}
+
+#buchungstabelle td.frei{
+//background-color:#006600;
+//color:#fff;
+}
+
+#buchungstabelle td.zu{
+background-color:rgb(196,196,196);
+color:#fff;
+}
+
+#buchungstabelle input{
+	width:25px;
+	height:25px;
+	background:none;
+	border: none;
+}
+
+#buchungstabelle input:hover{
+	cursor: pointer;
+}
+
+#buchungsinfo{
+//position:absolute;
+//margin:-160px 0 0 220px;
+//width:300px;
+font-size:13px;
+}
+
+#EventInfoHead {
+font-size:13px;
+font-weight:bold;
+text-align:center;
+}
+
+#EventInfo{
+font-size:12px;
+border-collapse: separate;
+border-spacing: 5px;
+}
