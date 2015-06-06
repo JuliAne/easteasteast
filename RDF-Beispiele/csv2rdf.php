@@ -55,13 +55,13 @@ function createAkteureRDF($subject,$data) {
   $a[]="a ld:Akteur, org:Organization";
   $a[]="ki:hatAkteurVCard kiv:$subject";
   $a[]="ki:hatAkteurProfil kip:$subject";
-  $b[]="a ki:AkteurVCard";
+  $b[]="a vcard:Organization";
   $b[]="vcard:hasAddress kiva:$subject";
   $c[]="a ki:AkteurProfil";
   $d[]="a vcard:Address";
   $a=addKeyValue($a,"rdfs:label",$data[0]);
   $a=addKeyValue($a,"skos:prefLabel",$data[0]);
-  $b=addKeyValue($b,"rdfs:label",$data[0]);
+  $b=addKeyValue($b,"vcard:organization-name",$data[0]);
   $c=addKeyValue($c,"rdfs:label",$data[0]);
   $d=addKeyValue($d,"vcard:street-address","$data[1] $data[2]");
   $d=addKeyValue($d,"vcard:postal-code",$data[3]);
