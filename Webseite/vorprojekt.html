@@ -34,6 +34,9 @@
             	<li>grobes Layout einer Event-Seite und Akteur-Seite (Ort, Datum, Name, Kurzbeschreibung, Kontakt)</li>
                 - Verknüpfung mit dem Kalender eingerichtet<br>
                 - Beispielinhalte wurden eingetragen<br>
+                <li>Nutzerrollen wurden in Drupal angelegt (Akteur, registrierter User) und entsprechende
+Berechtigungen gesetzt</li>
+				<li>Kommentarfunktion der Events und Akteure für registrierte User in Drupal eingerichtet</li>
                 <li>(extra: Karte mittels Mapbox aus Open Street Map wird vorbereitet und beinhaltet bereits
 die Stadtteilgrenzen und Beispielkoordinaten, siehe http://grinch.pavo.uberspace.de/lo/#pageIntro)</li>
             </ul>
@@ -42,11 +45,20 @@ die Stadtteilgrenzen und Beispielkoordinaten, siehe http://grinch.pavo.uberspace
             Es fehlt:<br>
             <ul>
             	<li>RDF-Ontologie</li>
-                - Datenintegration der K.I.L.O Daten ist zur Zeit nicht möglich. Die Daten sind zum
-größten Teil veraltet und sollen daher nicht ausgegeben werden. Allerdings soll uns
-in Zukunft eine Excel-Tabelle übergeben werden, die interessierte Akteure enthalten
-soll (eventuell mit Daten)<br>
+                - Datenintegration: die K.I.L.O Daten liegen in Excelform zur Verfügung und sind noch
+nicht integriert, wurden von Herrn Gräbe unter Verwendung diverser RDF-Ontologien
+bereits in eine Turtle-Datei übertragen, welche jedoch gegebenenfalls noch an unser
+finales RDF-Schema angepasst werden muss<br>
 				- Eigene Ontologie in Anlehnung an die Ontologie von Leipzig Open Data Projekt
+            </ul>
+            </p>
+            <p>
+        	<b>Release 08.06.2015:</b><br>
+            <ul>
+        		<li>Drupal: Christian, Paul, Ruth</li>
+                - Kommentarfunktion für registrierte Nutzer<br>
+                - Einrichtung von Nutzerrollen in Drupal: Akteur, registrierte Nutzer<br>
+                - Bestrebungen zum Anlegen eigener DB-Tabellen, welche mittels PHP und SQL über Drupal-Pages ausgelesen/gefüttert werden führen nun doch in die Richtung, die SQL-Anfragen über ein eigenes Modul zu realisieren
             </ul>
             </p>
             <p>
