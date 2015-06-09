@@ -1,0 +1,4 @@
+name = "Stadteilplattform Leipziger Osten"
+description = "Ergänzungsmodul Stadteilplattform Leipziger Osten"
+core = "7.x"
+package = "Custom Modules"
