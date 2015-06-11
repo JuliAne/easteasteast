@@ -1,8 +1,8 @@
 <?php
 /**
  * User: Hans-Gert Gräbe
- * Date: 12.02.2015
- * Make turtle out of jugendstadtplan.json
+ * Date: 11.06.2015
+ * 
  */
 
 require_once("lib/EasyRdf.php");
@@ -11,8 +11,10 @@ require_once("lib/EasyRdf.php");
 //=========================
 ini_set('default_charset', 'utf-8');
 
-$graph = new EasyRdf_Graph("http://leipzig-data.de/Data/JSP-Alt/");
-$graph->parseFile("RDFData/jugendstadtplan.json");
+$graph = new EasyRdf_Graph("http://kultur-initiative.net/Data/Akteure/");
+//$graph->parseFile("../Daten/Akteure.ttl");
+$graph->parseFile("Akteure.json");
+//echo $graph->serialise("json");
 echo $graph->serialise("turtle");
 
 ?>
