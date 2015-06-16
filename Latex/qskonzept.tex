@@ -1,0 +1,52 @@
+\documentclass{swp}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\maketitle{Qualit\"atssicherungskonzept}{15.06.2015}{Christian Seidemann}
+\\\\\\\\\\
+
+\tableofcontents
+\newpage
+\section{Dokumentationskonzept}
+Die Einigung auf ein einheitliches Dokumentationskonzept ist f\"ur die erfolgreiche und termingerechte Entwicklung der Stadtteilplattform unerl\"asslich. Dadurch wird ein gemeinsames Arbeiten erleichtert und garantiert, dass auch bei personellen Ver\"anderungen ein weiters Voranschreiten ohne Probleme m\"oglich ist.
+\subsection{Sprache}
+Unsere Standarddokumentationssprache ist deutsch. In deutsch werden die internen Quelltextkommentare verfasst, sowie alle externen Protokolle und Berichte. Ausnahmen hierbei bilden Fachbegriffe wie Contentmanagement System oder Semantic Web, die im Englischen gel\"aufiger sind, sowie Programmstrukturen des Quelltexts, also Klassen, Variablen, Funktionen etc.
+\subsection{Coding Standard}
+Wir halten uns beim Programmieren an die Coding Standards\\(\url{https://www.drupal.org/coding-standards}) von Drupal, die wiederum entfernt auf den \glqq PEAR Coding standards\grqq{} basieren. Durch eine einheitliche Verwendung dieser globalen Standards kann sich jeder Entwickler weltweit besser im fremden Code zurechtfinden. Wie bereits erw\"ahnt stellt die Dokumentation eine Ausnahme dar, da diese auf Deutsch erfolgt. Grund daf\"ur ist, dass es sich um ein lokales Projekt handelt.
+\subsection{Code-Dokumentation}
+Eine externe Dokumentation erm\"oglicht eine schnelle und unkomplizierte Einarbeitung in ein bestehendes Projekt. Au{ss}erdem bietet eine solche Dokumentation die M\"oglichkeit explizite Probleme nachzuschlagen.\\
+F\"ur die automatische Code-Dokumentation verwenden wir phpDocumentor \\(\url{http://www.phpdoc.org/}). Durch Verwendung von Tags in der Quelltextdokumentation kann der phpDocumentor zusammengeh\"orige Bl\"ocke, wie z. B. Klassen, Funktionen, ect., ausmachen und diese formatiert darstellen mitsamt ihren zugeh\"origen Attributen (Variablen, R\"uckgabewerte, ect.).
+\subsection{sonstige Dokumentation}
+Es ist wichtig, nicht nur den Quelltext zu dokumentieren, sondern auch alle anderen Ereignisse, die das Projekt betreffen zu protokollieren. Dazu z\"ahlen interne Gruppenmeetings, wie auch jegliche Treffen mit externen Steakholdern. Darin sind alle wesentlichen Details zu den Treffen festzuhalten, so dass bestimmte Entwicklungen und Entscheidungen auch nach l\"angerer Zeit nachvollzogen werden k\"onnen. Diese Protokolle werden in das Wiki in OLAT hochgeladen und sind dort unter dem Punkt \glqq Protokolle\grqq{} f\"ur jedes Teammitglied einsehbar.\\
+Desweiteren soll auf der sp\"ateren Drupalplattform selbst eine Hilfeseite eingerichtet werden mit Anleitungen und FAQs, damit auch technisch unversierte Benutzer das Portal bedienen k\"onnen.
+
+\newpage
+\section{Testkonzept}
+Um in der Implementierungsphase effizient arbeiten zu k\"onnen, d\"urfen die Tests selbst nicht unn\"otig viel Zeit in Anspruch nehmen. Da ein gro{\ss}er Teil des Teams weder Erfahrung mit Drupals Test-Modul, noch mit Softwaretests im allgemeinen hat und daher extra geschult werden m\"usste, werden nicht alle Teammitglieder Tests durchf\"uhren. Stattdessen werden die im folgenden erl\"auterten Tests von den am Backend arbeitenden Mitgliedern ausgef\"uhrt, die das zu testende Material selbst geschrieben haben.\\
+Bei einem Projekt dieser Gr\"o{ss}e ist es von Vorteil, so viel wie m\"oglich automatisch testen zu lassen. Viele Entwicklungsumgebungen und Sprachen stellen Tests und Testumgebungen zur Verf\"ugung, so auch Drupal. Diese automatischen Test ber\"ucksichtigen aber keine individuellen Fehler, so dass auch manuelle Tests von Zeit zu Zeit n\"otig sind. Das Testkonzept unterteilt sich in vier Testabschnitte.
+\subsection{Komponententests}
+Als Komponententest bezeichnet man Testverfahren, die nur einzelne Bereiche der Software auf ihre Funktionalit\"at pr\"ufen, ohne Ber\"ucksichtigung der Kompatibilit\"at mit anderen Modulen.\\
+F\"ur unsere Komponententests benutzen wir das integrierte Drupalmodul Testing.\\
+Komponententests haben f\"ur uns keine gro{ss}e Bedeutung, da wir vermutlich vorallem mit vorgefertigten Modulen arbeiten werden, die bereits getestet sind.
+\subsection{Integrationstests}
+Integrationstest pr\"ufen das Zusammenspiel der einzelnen Komponenten, d.h. ob die einzelnen Drupalmodule und die Datenbank harmonieren und richtig dargestellt werden.
+F\"ur unsere Integratitionstests benutzen wir das integrierte Drupalmodul Testing.
+\subsection{Systemtests}
+Der Unterschied zu den Integrationstest ist, dass nun auch die Gesamtfunktionalit\"at gepr\"uft wird. Au{ss}erdem wird getestet, ob das Produkt innerhalb der sp\"ateren Nutzungsumgebung funktioniert.\\
+Drupals \glqq Testing\grqq{}-Modul ersetzt das Tool Selenium, dessen Verwendung urspr\"unglich geplant war. Damit k\"onnen auch automatisierte Browseranfragen und Stresstests mit beliebig vielen Anfragen innerhalb der Testumgebung von Drupal durchgef\"uhrt werden.
+\subsection{Abnahmetest}
+Das Produkt wird dem Auftraggeber vorgef\"uhrt und auf Vollst\"andigkeit gepr\"uft. Bei Zufriedenheit des Kunden, kann das Produkt \"ubergeben und abgeschlossen werden.
+
+\newpage
+\section{Organisatorisches}
+F\"ur eine erfolgreiche Zusammenarbeit trifft sich das Team zweimal in der Woche. Dadurch k\"onnen Fragen schnell gekl\"art werden und jedes Teammitglied wei{ss}, wie der aktuelle Stand der Dinge ist. Zus\"atzlich k\"onnen und sollten sich bei Bedarf Arbeitsgruppen bilden, die konkrete Aufgaben erledigen und sich u. U. separat treffen. Die Ergebnisse dieser Treffen werden beim n\"achsten Teammeeting vorgestellt. Weiterhin erfolgt die Kommunikation bei teamrelevanten Themen \"uber das OLAT-Forum, sowie bei arbeitsgruppenspezifischen Absprachen \"uber andere private Kan\"ale. 
+F\"ur gemeinsames Programmieren haben wir ein Git-Repository eingerichtet. Jede \"Anderung ist dort zu beschreiben. Dabei ist sich an die vorab genannten Standards zu halten, um unn\"otige Umformatierungs\"anderungen zu vermeiden.
+
+\newpage
+\section{Quellen}
+\url{https://www.drupal.org/coding-standards}\\
+\url{http://www.phpdoc.org/}
+\end{document}

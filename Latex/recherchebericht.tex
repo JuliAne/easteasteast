@@ -1,0 +1,114 @@
+\documentclass{swp}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\maketitle{Recherchebericht}{26.04.2015}{Martin Lechner}
+\\\\\\\\\\
+
+\tableofcontents
+\section{Begriffe}
+\subsection{Akteure}
+Unter Akteure sind Folgende zu verstehen: Veranstalter, Vereine, Initiativen und Privatpersonen, die im Leipziger Osten auf verschiedene Art aktiv sind.
+\subsection{Angebot}
+Eine vom Akteur angebotene Dienstleistung, Aktivit\"at oder Veranstaltung.
+\subsection{Datenaustausch}
+Datenaustausch bezieht sich auf die Kooperation mit Akteuren, deren Datens\"atze \"ubernommen bzw. \glqq gehandelt\grqq{} werden k\"onnen oder aber aus Open Data stammen.
+\subsection{Front-/Backend}
+Beide unterscheiden die Art und Weise der Pr\"asentation von Datens\"atzen; abh\"angig davon, welchen Status der Nutzer genie{\ss}t. W\"ahrend der gew\"ohnliche User meist nur \"uber das Frontend, dem quasi \"offentlich zug\"anglichen Part der Webseite agiert, stehen dem Webmaster nach erfolgreichem Login im Backend (meist erreichbar durch URL-Parameter wie \glqq .../admin\grqq{} bzw. \glqq .../drupal\grqq{}) systemnahe Konfigurationsm\"oglichkeiten zur Verf\"ugung.\\
+
+Im Beispiel unseres Portals sind die \"Uberg\"ange zwischen beiden flie{\ss}end:
+\begin{itemize}
+\item Der Akteur \glqq Besucher\grqq{} kann zwar gewisse Suchergebnisse filtern, doch werden ihm letztlich \glqq statische\grqq{} (sprich: nur vom Urheber selbst ver\"anderbare) Datens\"atze pr\"asentiert. Als interaktive M\"oglichkeit kann er bspw. Kommentare hinterlassen, doch m\"ussen diese erst vom \glqq Admin\grqq{} genehmigt werden.
+\item User, welche ein Projekt, Event, o.\"a. eingestellt haben, k\"onnen \"uber eine Oberfl\"ache die Informationen hierzu (oder zu ihrem Profil) jederzeit editieren. Durch dieses gesonderte Einstellungs-Men\"u sind ihre Privilegien ein wenig h\"oher als f\"ur nicht registrierte User.
+\item Der \glqq Administrator\grqq{} hat als einziger den vollen Zugriff auf die Datenbank - und damit die M\"oglichkeit, Inhalte oder User zu moderieren, neue Kategorien anzulegen oder die Oberfl\"ache des Frontend's umzugestalten.
+\end{itemize}
+\subsection{Kurzdarstellung}
+Selbstdarstellung von Akteuren auf der Stadtteilplattform, \"ahnlich eines Profils. Dies sollte mindestens folgende Daten umfassen: Name, Beschreibung, Adresse, sonstige Kontaktm\"oglichkeit (E-Mail, Facebook, ...), Sparte, Zielgruppe, optional sind Bilder, ..., etc. Um ein Profil auf der Plattform anzulegen, ben\"otigen die Akteure eine entsprechende Zugangsm\"oglichkeit.
+\subsection{Leipziger Osten}
+Neustadt Neusch\"onefeld, Volkmarsdorf, Anger-Crottendorf, Sellerhausen - St\"unz, Paunsdorf, M\"olkau, Heiterblick, Engelsdorf, Baalsdorf, Althen- Kleinp\"osna. Zu kl\"aren w\"are, in wie fern man Nordost und S\"udost mit einbezieht (oder erweiterbar macht) oder nicht.
+\subsection{Moderationsschicht}
+(s. Backend) Registrierte UserInnen (Profil, Angebote) und sonstige BesucherInnen (Kommentarfunktion?) sollen die M\"oglichkeit haben, Content auf die Plattform zu stellen. Um eventuell urheber- oder strafrechtlich relevante Inhalte sowie Inhalte die nicht im Einklang mit den Nutzungsbedingungen der Seite stehen, editieren oder l\"oschen zu k\"onnen, ben\"otigt der Betreiber die M\"oglichkeit eine Moderation der Inhalte vorzunehmen. Dies kann in zwei Varianten umgesetzt werden: die Moderation erfolgt nachdem Content online geht (freies Posting, laufende Pr\"ufung durch Moderation), oder die Moderation wird als obligatorische Schranke eingebaut, bevor Content online gehen kann (Freischalten von Content durch Moderation nach vorheriger Pr\"ufung). Welche der beiden Varianten praktikabel ist, kann jedoch wahrscheinlich erst im laufenden Betrieb festgestellt werden. 
+\subsection{Ressourcenpool}
+Im Ressourcenpool werden Ger\"ate, Materialien und Dienstleistungen, \"ahnlich einer Nachbarschaftshilfe, bekannt gemacht, welche angeboten und in Anspruch genommen werden k\"onnen. 
+\subsection{Zugangsm\"oglichkeit}
+Beim Zugang zur Stadtteilplattform sollte mehrfach unterschieden werden. Eine Registrierung mit Accountdaten etc. sollte dann stattfinden, wenn man sich als Akteur mit eigenen Angeboten und Programmen eintragen m\"ochte, sowie auch als Kunde/Kursteilnehmer. Unregistrierte Besucher der Website, die ein wenig st\"obern m\"ochten, ist der Zutritt auch ohne Passwort gew\"ahrt. Will man sich jedoch, (sollte diese Funktion aktiv sein), in einen angebotenen Kurs (Cosplayn\"ahkurs,..) online einschreiben, so ist eine Authentifizierung n\"otig. Besucher ohne Anmeldung k\"onnten Veranstaltungen oder Akteure \"uber ein Formular vorschlagen. Die Registrierung f\"ur Akteure sollte im Allgemeinen andere Daten erfassen als die f\"ur einen Kunden/ Interresenten.
+\begin{itemize}
+\item Z.B. bei einem Laden: Stra{\ss}e+Nr., \"Offnungszeiten, Kurzbeschreibung, Inhaber, Kurzbschreibung des Angebotes, etc.
+\item Kunde: Geschlecht, Alter, Name, etc.
+\item Eventuell auch Werbung
+\end{itemize}
+
+\section{Konzepte}
+\subsection{Content-Management-Framework (CMF)}
+Mit CMFs k\"onnen CMSs erstellt werden mittels diverser bereitgestellter Bausteine, um beispielsweise Dinge wie einen Zugriffsschutz oder Datenbankenschnittstellen zu realisieren.
+\subsection{Content-Management-System (CMS)}
+Software zur einfacheren Erstellung, Bearbeitung und Organisation von Inhalten von Webseiten, um auch Personen ohne HTML- oder Programmiererfahrung dies zu erm\"oglichen.
+\subsection{Drupal}
+Drupal ist ein Content-Management-System (CMS) und -Framework. Es ist eine freie Software und steht unter der GNU General Public License. Drupal ist in PHP geschrieben und verwendet verschiedene Datenbanksysteme ( MySQL/MariaDB, PostgreSQL, SQLite, Oracle, MSSQLServer). Drupal unterst\"utzt den Aufbau von Communities, die gemeinsam an Inhalten arbeiten und sich \"uber Themen austauschen und informieren wollen, weshalb es als CMS f\"ur eine Stadtteilplattform, wie sie hier angestrebt wird, besonders geeignet ist.\\
+Drupal besitzt einen gro{\ss}en \glqq Vorrat\grqq{} an verschiedensten Modulen. Diese erm\"oglichen ein schnelles Erweitern der eigenen Seite um zus\"atzliche Features wie ein Forum, eine Kommentarliste und viele weitere n\"utzliche Dinge. Au{\ss}erdem werden von der Drupal-Community best\"andig weitere Module entwickelt und kostenlos ver\"offentlicht. Die M\"oglichkeiten sind also vielf\"altig, allerdings muss man erst das passende Modul finden. Dazu gibt es n\"utzliche Seiten wie Drupal Modules und Drupal.org.
+\subsection{Linked Open Data}
+Eine Erweiterung des Open Data Konzeptes (siehe Open Data) um einen standardisierten und einzigartigen Bezeichner, der einen globalen Zugriff gew\"ahrleistet und erm\"oglicht, dass die Daten weiterverlinkt werden k\"onnen. Ziel ist eine durch diese Verlinkung enstehende gigantische Datenbasis.
+\subsection{Leipzig Onthology LEO}
+Eine Onthologie definiert ein Schema zur systematischen Bezeichnung von Klassen und ihren Objekten und deren Beziehungen. 
+LEO definiert verschiedene Klassen und liefert bereits ein Vokabular f\"ur Ortsbezeichnungen, Geodaten, Personen und vieles mehr.
+\subsection{Open Data}
+Das Konzept von Open Data erm\"oglicht eine freie Verwendung und/oder Bereitstellung \glqq offener\grqq{}, sprich: unlizenzierter Datens\"atze. Diese k\"onnen Informationen \"uber Orte (Stra{\ss}en, Spielpl\"atze,...), Angebote (Vereine, Werkst\"atten...) und vieles mehr umfassen. Der Austausch von Daten findet i.d.R. dezentral \"uber eigens definierte Schnittstellen (s. \glqq RDF\grqq{}) statt. Dies erm\"oglicht es, auf unserer Website einen gr\"o{\ss}eren Angebotskatalog zur Verf\"ugung zu stellen und damit den Mehrwert dieses Portals merklich zu steigern - ohne selbst Autor aller genutzten Daten zu sein oder f\"ur deren Aktualit\"at b\"urgen zu m\"ussen. Gleichzeitig stellen auch wir Teile unserer Datenbank als \glqq Open Data\grqq{} zur Verf\"ugung, wodurch ein gewisser gemeinschaftlicher Nutzen entsteht.
+\subsection{PHP}
+Skriptsprache zur Erstellung von dynamischen Webseiten und Webanwendungen. PHP ist eine freie Software und unterst\"utzt diverse Datenbanken.
+\subsection{RDF/URI}
+Das RDF (Resource Description Framework) dient als grundlegender Baustein des Semantic Web der Formulierung logischer Aussagen \"uber Ressourcen (eindeutig identifizierbar mittels URIs). URIs (Uniform Resource Identifier) k\"onnen zum Identifizieren beliebiger Sachen verwendet werden, insbesondere also auch von Sachen, die in der Welt (z. B. H\"auser, Personen, B\"ucher) oder auch nur abstrakt sind (z. B. Ideen, Religionen, Beziehungen). Die Aussagen in RDF liegen in Tripelform vor und bilden zusammen einen gerichteten Graphen. Diese Tripel bestehen aus Subjekt, Pr\"adikat, Objekt, wobei Subjekt und Objekt durch URIs repr\"asentiert werden (Objekte k\"onnen auch nur ein Wert sein). Dabei sollten wir uns an der Onthologie von Leipzig Data anlehnen (siehe LEO).
+\subsection{Relationale Datenbank}
+In einer relationalen Datenbank werden Daten tabellarisch verwaltet. Besonderes Merkmal ist, dass die Daten in anwendungsunabh\"angiger Form vorliegen und so auch bei einem Wechsel der Darstellung l\"uckenlos erhalten bleiben. Au{\ss}erdem erm\"oglichen relationale Datenbanken, dass die Daten sich in einem direkten Bezug zueinander befinden. Diese Bez\"uge erm\"oglichen eine simple Modellierung realer Verh\"altnisse und dadurch ein klar verst\"andliches Abbild der realen Welt in Form von Daten. Desweiteren verf\"ugen Datenbanken \"uber interne Sicherungsma{\ss}nahmen um Datenverluste oder widerspr\"uchliche Daten zu vermeiden.
+\subsection{Responsive Webdesign}
+Programmierung eines Webauftritts, so dass die Darstellung und Funktionsweise automatisch an das Endger\"at angepasst werden. Drupal bietet viele Module an, die die Entwicklung einer anpassungsf\"ahigen Plattform unterst\"utzen. In Zeiten von vermehrter Parallelnutzung von PC und Smartphone ein besonders wichtiger Aspekt.
+\subsection{Semantic Web}
+Das Semantic Web dient dem einfacheren Datenaustausch zwischen verschiedenen Anwendungen und der besseren Datenverwertung, in dem Inhalte mit weiteren Informationen verkn\"upft werden. Dadurch entsteht ein Graph mit Knoten und Kanten. Dies wird vor allem durch URIs und RDF realisiert (siehe RDF/URI). Au{\ss}erdem erm\"oglicht die Semantic Web Technologie das automatische generieren von Webseiten, sodass nicht mehr jede Seite exakt mit HTML geschrieben werden muss, sondern sich erzeugt sobald ein User auf den Link klickt.
+\subsection{SPARQL}
+Anfragesprache f\"ur RDF. Das hei{\ss}t, SPARQL dient der Informationsextrahierung/ bzw. -filterung aus RDF-Daten. F\"ur die Implementierung in Drupal steht ein gleichnamiges Plugin zur Verf\"ugung.
+\subsection{Stadtteilplattform}
+Eine interaktive (Online)-Plattform, welche der Organisation, Versch\"onerung, Attraktivit\"at, Vermittlung, \glqq News-Verbreitung\grqq{} und vielem mehr dienen soll. Die Plattform sollte so aufgesetzt sein, dass sie in gewisser Weise selbst fuktioniert. D.h. AkteurInnen und KundInnen k\"onnen sich registrieren und Programme und Angebote erstellen und aufzeigen. Ziel der Plattform ist es, eine \"ubersichtliche Website zu gestalten, die mittels interaktiver Karte, Kalender, etc. den Stadtteil mit seinen Akteuren attraktiv macht und die Vernetzung innerhalb der Stadtteile f\"ordert.
+
+\section{Aspekte}
+\subsection{Marktlage}
+\subsubsection{\"Ahnliche Initiativen}
+Der Fokus auf den Leipziger Osten und der Charakter einer Plattform ist bereits bei anderen Projekten vorhanden: Die Website der Kulturinitiative Leipziger Osten (\glqq K.I.L.O.\grqq{}) bietet etwa einen Newsfeed, einen Veranstaltungskalender, Email-Newsletter, Kurzinformationen von Akteuren, sowie interaktive Karten. Mit Open Data wird hier nicht gearbeitet, auch User-generated-content scheint keine Rolle zu spielen. Weiterhin beginnt das Quartiersmanagement Leipziger Osten in den n\"achsten Monaten die Arbeit an einer Stadtteilplattform auf Wordpress-Basis. Die konkrete Ausgestaltung dieses Projekts ist im Moment nicht bekannt. Wir k\"onnen jedoch m\"oglicherweise davon ausgehen, dass hier ein st\"arkerer Fokus auf Partizipation durch User-generated-content liegen wird (ausgehend davon, dass dies bisher weder bei den Webauftritten von K.I.L.O. noch vom Quartiersmanagement der Fall ist, jedoch zum Standard einer \glqq Plattform\grqq{} geh\"oren sollte). Auch ist absehbar, dass es auf der neuen Plattform wieder Kurzinformationen zu Akteuren und Projekten, interaktive Karten und einen Newsfeed / Newsletter geben wird, wie sie bereits auf der aktuellen Seite des Quartiersmanagments auftauchen. Auch einen Kalender wird es sicher geben.
+\subsubsection{Mehrwert}
+Alleinstellungsmerkmale, welche die Attraktivit\"at und langfristige Nutzung unserer Plattform sicherstellen, k\"onnten aus jetziger Sicht also aus folgenden S\"aulen bestehen: 
+\begin{enumerate}
+\item Die konsequente Umsetzung eines Open-Data-Konzepts, wobei verwendeter Content von au{\ss}en zu einem breiteren Angebotskatalog f\"uhrt.
+\item Umfangreiche Partizipationsm\"oglichkeiten durch lokale Akteure aller Art mit m\"oglichst kurzen Anmeldeprozessen.
+\item Ein ansprechendes, funktionales Design, welches durch seine klare und \"ubersichtliche Strukturierung besticht. In Hinblick auf die etwas \glqq veraltet\grqq{} anmutenden Auftritte von K.I.L.O. und dem Quartiersmanagement kann sich unsere Plattform hierbei durch die konsequente Gestaltung des Frontends unter einem \glqq mobile first\grqq{}-Ansatz von besagten Angeboten abgrenzen und gleichzeitig maximale Barrierefreiheit unter einem einheitlichen Benutzererlebnis sicherstellen.
+\end{enumerate}
+\subsubsection{Kooperation}
+Dieser Aspekt wird vor allem im sp\"ateren Verlauf des 2. \& 3. Sprints eine Rolle spielen. Die verantwortlichen Team-Mitglieder sollten prim\"ar in Kontakt mit den bestehenden Initiativen aus dem Leipziger Osten treten und diese um eine Zusammenarbeit bitten, etwa zwecks eines gemeinsamen Austausches von Projekt- oder Eventdaten. Ebenso k\"onnte in Erfahrung gebracht werden, inwiefern der Wunsch nach einem gemeinsamen \glqq News-pool\grqq{} besteht, also dem gegenseitigen Einblenden und Verlinken von \glqq fremden\grqq{} Blog-Inhalten. Als weiteres sollte je nach Bedarf mit \glqq externen Experten\grqq{} kommuniziert werden, um im sp\"ateren Verlauf eine realistischere Product Vision entwickeln zu k\"onnen.
+\subsection{Zielgruppen}
+Da unser Produkt als Stadtteilplattform konzipiert ist, wird es im Allgemeinen nicht auf eine oder wenige spezifische Zielgruppen zugeschnitten sein. Im Sinne eines Service- und Vernetzungsangebotes f\"ur BewohnerInnen und sonstige im Viertel aktive Parteien stellt sich vielmehr die Frage, wie wir alle im Stadtteil vertretenen Zielgruppen ansprechen k\"onnen, ohne einzelne auszugrenzen oder ihnen den Zugang und die Nutzung zu erschweren. Dieser Gedanke muss sowohl in die inhaltliche und strukturelle Konzeption der Plattform einflie{\ss}en, als auch bei der konkreten Ausgestaltung des Designs ber\"ucksichtigt werden. Wir m\"ussen uns \"uberlegen, ob sich f\"ur einzelne Zielgruppen hier konkrete Anspr\"uche ergeben, und wie diese gegebenenfalls miteinander in Einklang gebracht werden k\"onnen.\\
+Beispielhafte Zielgruppen sind: Personen aller Altersgruppen, nicht deutschsprachige NutzerInnen, Parteien, Verb\"ande, Gemeinschaften, kulturelle Einrichtungen.
+
+Aus der zu erwartenden Vielfalt an Zielgruppen lassen sich beispielsweise folgende Anforderungen ableiten:
+\begin{itemize}
+\item Thema Sprache: Die Plattform sollte f\"ur alle genannten Zielgruppen leicht zug\"anglich sein, dies muss auch bei der Formulierungen von Beschreibungstexten und Navigation beachtet werden. Ebenfalls sollte bedacht werden, dass unter Umst\"anden eine mehrsprachliche Ausf\"uhrung sinnvoll sein k\"onnte.
+\item Thema Barrierefreiheit von Orten/Angeboten: Diese sollte bei Angeboten und Ortsbeschreibungen im Detail mit angegeben werden.
+\end{itemize}
+\subsection{Kategorien}
+Die Stadtteilplattform soll zun\"achst Akteure aus dem kreativen, sozialen Bereich einbinden. Kategorien k\"onnten also umfassen: Musik, Technik, Unterhaltung, u.\"a. Sekund\"ar k\"onnen, je nach Gruppen-internem Konsens, auch Kategorien aus dem (Klein-)Gewerbe in das Angebot eingebunden werden, wobei sie gesondert pr\"asentiert werden sollten oder zu kl\"aren ist, ob diese (\glqq kommerziellen\grqq{}) Akteure Events o.\"a. erstellen d\"urfen.
+\subsection{Grundlegende Funktionen}
+\begin{itemize}
+\item User-Management: Registrierung, Bearbeiten und L\"oschen des Profils, Anlegen von Projekten oder Events.
+\item Profil: Kann von einem User angelegt und von diesem nach Inhalt, Kategorie-Zugeh\"origkeit, angezeigtem Foto, etc. editiert werden.
+\item Eventkalender: Auflistung von aktuellen Veranstaltungen, wobei diese nicht nur nach Monaten, sondern ggf. auch nach Kategorien oder Bezirken gefiltert werden sollen. Pluspunkt w\"are die M\"oglichkeit des Abonnierens: Entweder via Newsletter oder RSS-Feed (positiv: kann auf vielerlei Weisen verwendet werden, aktualisiert sich automatisch).
+\item Interaktive Karte: Stadtteilkarte, auf welcher Events, Akteure und der Kalender dargestellt werden k\"onnen.
+\item News: Werden \"uber Drupal's Blog-Modul aktualisiert. Je nach Kooperationsm\"oglichkeiten mit externen Akteuren (s. \glqq Kooperationen\grqq{}) k\"onnten News aus dem Ost-Leipziger Umfeld aber auch an anderer Stelle gesammelt und pr\"asentiert werden.
+\item Kommentieren: BesucherInnen und registrierte NutzerInnen k\"onnen Kommentare hinterlassen. Die kommentierbaren Inhalte sind noch festzulegen.
+\item Suche: Der User hat die M\"oglichkeit einer allgemeinen Schlagwortsuche oder einer spezifizierten Suche, in welcher nach Kategorie gefiltert werden kann.
+\end{itemize}
+
+\section{Quellen}
+\url{http://de.wikipedia.org/wiki/Semantic\_ Web}\\
+\url{http://de.wikipedia.org/wiki/Resource\_ Description\_ Framework}\\
+\url{http://de.wikipedia.org/wiki/Drupal}
+
+\end{document}

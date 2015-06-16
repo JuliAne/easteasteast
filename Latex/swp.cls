@@ -1,12 +1,8 @@
 % -----------------------------------------------------------------------
-% pi1.cls
-% Based on pi1-muster.tex and defs.tex used before 2003 for
-% PI 1 in Bremen.
-% Adapted by Thomas Röfer and Ulrich Hannemann
+% swp.cls
 
 \NeedsTeXFormat{LaTeX2e}
 
-\ProvidesClass{pi1}
 \LoadClass[11pt,a4paper,twoside]{article}
 \usepackage{ngerman}
 \usepackage[latin1]{inputenc}
@@ -45,43 +41,33 @@
 % #3: Autor 
 
 
-\renewcommand{\maketitle}[9]
-          {\@maketitle{#1}{#2}{#3}{#4}{#5}{#6}{#7}{#8}{#9}}
-\renewcommand\thesection{Aufgabe \arabic{section}}
+\renewcommand{\maketitle}[3]
+          {\@maketitle{#1}{#2}{#3}}
 \newcommand\skipsection{\stepcounter{section}}
 
-% -----------------------------------------------------------------------
-% Misc macros
-
-\newcommand{\grenzop}[3]{\mathop{#1}\limits^{#2}_{#3}}
-\newcommand{\langrechtspfeil}[2]{\grenzop{\longrightarrow}{#1}{#2}}
-\newcommand{\bob}[0]{\hspace*{\fill}$\Box$}
-
-% -----------------------------------------------------------------------
+%  -----------------------------------------------------------------------
 
 \renewcommand{\@maketitle}[9]
 {
     \begin{tabular}[t]{lr}
       \begin{tabular}[t]{l}
         \begin{tabular}[t]{l@{\hskip 10mm}l}
-            Softwaretechnikpraktikum & Gruppe: swp15.aae \hspace{4ex} \\
+            Softwaretechnikpraktikum & Gruppe: swp15-aae \hspace{4ex} \\
             \thissemester  &  Betreuer: Prof. Gräbe \\
-            Datum: {#2}	&	Tutor: Klemens Schölhorn\\
+            Datum: {#3}	&	Tutor: Klemens Schölhorn\\
         \end{tabular} \vspace{20mm} \\
-        {\Huge\sf {#1}} \\[1.5ex]
-        %{\Large Softwaretechnikpraktikum} \\[1ex]
-        %{\Large Abgabe: {#3}} \\[1ex]
+        {\Huge\sf {#2}} \\[1.5ex]
       \end{tabular}
       &
       \begin{tabular}[t]{l}
      	  Projektteam:\\
-          {#3}\\
-          {#4}\\
-          {#5}\\
-          {#6}\\
-          {#7}\\
-          {#8}\\
-          {#9}\\
+          Felix Albroscheit\\
+          Dorian Dahms\\
+          Paul Eisenhuth\\
+          Martin Lechner\\
+          Christian Seidemann\\
+          Ruth von Borell\\
+          Franz Wendt\\
       \end{tabular} \\[2ex]
     \end{tabular}\\
     \rule{\linewidth}{1pt}
@@ -90,8 +76,8 @@
 % Create headings (Thanks to Elmar Loos)
 
     \fancyhead{} %clear all fields
-    \fancyhead[LO,RE]{swp15.aae}
-    \fancyhead[RO,LE]{Max Mustermann, {#2}}
+    \fancyhead[LO,RE]{swp15-aae}
+    \fancyhead[RO,LE]{{#4}, {#3}}
     \fancyfoot{} %clear all fields
     \fancyfoot[RO,LE]{\thepage}
 }
