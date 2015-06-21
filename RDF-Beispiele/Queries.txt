@@ -1,0 +1,88 @@
+SPARQL Endpunkt: http://leipzig-data.de:8890/sparql
+
+Ein paar Beispiel-Anfragen:
+
+# Finde alle Ortsteile im Leipziger Osten
+
+PREFIX ld: <http://leipzig-data.de/Data/Model/>
+SELECT ?o
+from <http://leipzig-data.de/Data/Planungsraeume/>
+WHERE {
+  <http://leipzig-data.de/Data/Planungsraum/LeipzigerOsten>
+    ld:containsOrtsteil ?o .
+} 
+
+# Wie viele LD-Adressen im Leipziger Osten? -- 9882
+
+PREFIX ld: <http://leipzig-data.de/Data/Model/>
+SELECT count(distinct ?a)
+from <http://leipzig-data.de/Data/Planungsraeume/>
+from <http://leipzig-data.de/Data/Adressen/>
+WHERE {
+  <http://leipzig-data.de/Data/Planungsraum/LeipzigerOsten>
+    ld:containsOrtsteil ?o .
+?a a ld:Adresse ; ld:inOrtsteil ?o .
+} 
+
+# Finde alle LD-Orte im Leipziger Osten
+
+PREFIX ld: <http://leipzig-data.de/Data/Model/>
+SELECT distinct ?ort
+from <http://leipzig-data.de/Data/Planungsraeume/>
+from <http://leipzig-data.de/Data/Adressen/>
+from <http://leipzig-data.de/Data/Orte/>
+WHERE {
+  <http://leipzig-data.de/Data/Planungsraum/LeipzigerOsten>
+    ld:containsOrtsteil ?o .
+?a a ld:Adresse ; ld:inOrtsteil ?o .
+?ort a ld:Ort; ld:hasAddress ?a .
+} 
+
+http://leipzig-data.de/Data/Ort/Hotel.Ramada.Schongauerstrasse
+http://leipzig-data.de/Data/Ort/ZAW.Bogislawstrasse
+http://leipzig-data.de/Data/Ort/BMFZ
+http://leipzig-data.de/Data/Ort/DBFZ
+http://leipzig-data.de/Data/Ort/Bibliothek.Paunsdorf
+http://leipzig-data.de/Data/Ort/Bibliothek.Volkmarsdorf
+http://leipzig-data.de/Data/Ort/Culturtraeger
+http://leipzig-data.de/Data/Ort/DieBrueckeLeipzig
+http://leipzig-data.de/Data/Ort/FZ.Oskar
+http://leipzig-data.de/Data/Ort/ISEI
+http://leipzig-data.de/Data/Ort/MandalaSpieleck
+http://leipzig-data.de/Data/Ort/OFT.Crazy
+http://leipzig-data.de/Data/Ort/OFT.Rabet
+http://leipzig-data.de/Data/Ort/OFT.Sellershausen
+http://leipzig-data.de/Data/Ort/OFT.TanteHedwig
+http://leipzig-data.de/Data/Ort/Schule.S04
+http://leipzig-data.de/Data/Ort/Schulungszentrum.Mommsenstrasse
+http://leipzig-data.de/Data/Ort/ciT
+http://leipzig-data.de/Data/Ort/Kameramuseum
+
+# Wie viele LD-Orte gibt es in den einzelnen Ortsteilen? 
+
+PREFIX ld: <http://leipzig-data.de/Data/Model/>
+SELECT distinct ?o count(?ort)
+from <http://leipzig-data.de/Data/Planungsraeume/>
+from <http://leipzig-data.de/Data/Adressen/>
+from <http://leipzig-data.de/Data/Orte/>
+WHERE {
+?ort a ld:Ort; ld:hasAddress ?a .
+?a a ld:Adresse ; ld:inOrtsteil ?o .
+} 
+
+# Finde alle LD-Events im Leipziger Osten
+
+PREFIX ld: <http://leipzig-data.de/Data/Model/>
+PREFIX ical: <http://www.w3.org/2002/12/cal/ical#> 
+SELECT distinct ?e ?ort
+from <http://leipzig-data.de/Data/Planungsraeume/>
+from <http://leipzig-data.de/Data/Adressen/>
+from <http://leipzig-data.de/Data/Orte/>
+from <http://leipzig-data.de/Data/Events/>
+WHERE {
+?e a ld:Event ; ical:location ?ort .
+  <http://leipzig-data.de/Data/Planungsraum/LeipzigerOsten>
+    ld:containsOrtsteil ?o .
+?a a ld:Adresse ; ld:inOrtsteil ?o .
+?ort a ld:Ort; ld:hasAddress ?a .
+} 
