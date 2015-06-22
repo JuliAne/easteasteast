@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Updates Drupal to be way ruther.
+ */
+
+if (drupal_is_front_page()) {
+  $GLOBALS['conf']['cache'] = FALSE;
+}
+
+
+/* Hier ist entsprechender Code zu ergänzen */
