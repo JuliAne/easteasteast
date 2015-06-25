@@ -1,0 +1,25 @@
+ name = AAE
+ description = Theme für die Stadtteilplattform.
+ core = 7.x
+
+
+ ;;;;;;;;;;;;;;;;;;;;;
+ ;; Regions
+ ;;;;;;;;;;;;;;;;;;;;;
+
+ regions[navigation]     = 'Navigation'
+ regions[header]         = 'Top Bar'
+ regions[highlighted]    = 'Highlighted'
+ ;regions[help]           = 'Help'
+ regions[content]        = 'Content'
+ ;regions[sidebar_first]  = 'Primary'
+ ;regions[sidebar_second] = 'Secondary'
+ regions[footer]         = 'Footer'
+ ;regions[page_top]       = 'Page top'
+ ;regions[page_bottom]    = 'Page bottom'
+
+ ;stylesheets[all][] = http://fonts.googleapis.com/css?family=Open+Sans:400,300
+ stylesheets[all][] = css/jquery.fullPage.css
+ stylesheets[all][] = css/app.css
+ stylesheets[all][] = css/foundation.css
+ stylesheets[all][] = css/pace.css
