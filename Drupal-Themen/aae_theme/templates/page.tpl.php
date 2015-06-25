@@ -69,52 +69,10 @@
 
   <h1>Neueste <strong>Projekte</strong></h1>
 
-  <?php print render($page['content']); ?>
+
 
 	<div class="row">
-   <div class="large-3 large-offset-1 columns pcard">
-    <header>
-     <h3><a href="#">Project Title</a></h3>
-     <img title="Barrierefrei" class="barrierefrei" src="<?= base_path().path_to_theme(); ?>/img/wheelchair.svg" />
-    </header>
-    <section>
-     <p><strong>Reudnitz</strong> - dies ist ein nichtssagender total bl&ouml;dsinniger Beschreibungstext blakeks aber naja was soll man sagen irgendetwas muss ja schlie&szlig;lich hier stehen. Hauptsache, dies ist nicht zu viel! <a href="#">Mehr erfahren...</a></p>
-    </section>
-    <footer>
-     <a href="#" title="Hier erscheint bei Klick eine Minimap inkl. Strassenangabe"><img src="<?= base_path().path_to_theme(); ?>/img/location.svg" /></a>
-     <a href="#" title="Weiterleitung zu Terminen dieses Projektes"><img class="gimmeborder" src="<?= base_path().path_to_theme(); ?>/img/calendar.svg" /></a>
-     <button class="button blue">&gt;</button>
-    </footer>
-   </div>
-
-   <div class="large-3 large-offset-1 columns pcard">
-    <header style="background-image: url(<?= base_path().path_to_theme(); ?>/pcard_bg.jpg);">
-     <h3><a href="#">Project Title</a></h3>
-    </header>
-    <section>
-     <p><strong>Reudnitz</strong> - dies ist ein nichtssagender total bl&ouml;dsinniger Beschreibungstext blakeks aber naja was soll man sagen irgendetwas muss ja schlie&szlig;lich hier stehen. Hauptsache, dies ist nicht zu viel! <a href="#">Mehr erfahren...</a></p>
-    </section>
-    <footer>
-     <a href="#" title="Hier erscheint bei Klick eine Minimap inkl. Strassenangabe"><img src="<?= base_path().path_to_theme(); ?>/img/location.svg" /></a>
-     <a href="#" title="Weiterleitung zu Terminen dieses Projektes"><img class="gimmeborder" src="<?= base_path().path_to_theme(); ?>/img/calendar.svg" /></a>
-     <button class="button blue">&gt;</button>
-    </footer>
-   </div>
-
-   <div class="large-3 large-offset-1 columns pcard">
-    <header style="background-image: url(<?= base_path().path_to_theme(); ?>/pcard_bg.jpg);">
-     <h3><a href="#">Project Title</a></h3>
-    </header>
-    <section>
-     <p><strong>Reudnitz</strong> - dies ist ein nichtssagender total bl&ouml;dsinniger Beschreibungstext blakeks aber naja was soll man sagen irgendetwas muss ja schlie&szlig;lich hier stehen. Hauptsache, dies ist nicht zu viel! <a href="#">Mehr erfahren...</a></p>
-    </section>
-    <footer>
-     <a href="#" title="Hier erscheint bei Klick eine Minimap inkl. Strassenangabe"><img src="img/location.svg" /></a>
-     <a href="#" title="Weiterleitung zu Terminen dieses Projektes"><img class="gimmeborder" src="img/calendar.svg" /></a>
-     <a href="#"><button class="button blue">&gt;</button></a>
-    </footer>
-   </div>
-
+    <?php print render($page['content']); ?>
   </div>
 
   <h1>N&auml;chste <strong>Veranstaltungen</strong></h1>
@@ -163,25 +121,6 @@
    <a href="#"><button class="button radius secondary">Anmelden</button></a>
 
   </div>
-
-  <!--<div style="background-color: #fff; padding: 1px; margin-bottom: 25px;"></div>
-
-  <div class="row" id="features">
-
-   <div class="data large-5 columns">
-    <h3>Offen.</h3>
-    <p>Von unserem Angebot profitieren viele: Lorem ipsum sed dolor sit amet meine mudda mag H&uuml;hnchen.</p>
-    <p>...Aber nur das knusprige H&uuml;hnchen!</p>
-   </div>
-
-   <div class="shop large-5 columns">
-    <img src="img/shop.svg" />
-    <h3>Lokal.</h3>
-    <p>Von unserem Angebot profitieren viele: Lorem ipsum sed dolor sit amet meine mudda mag H&uuml;hnchen.</p>
-    <p>...Aber nur das knusprige H&uuml;hnchen!</p>
-   </div>
-
-  </div> -->
 
 
  </section>

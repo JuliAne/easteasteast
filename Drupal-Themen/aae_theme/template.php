@@ -17,7 +17,7 @@ function aae_preprocess_html(&$variables) {
 
 
   if (user_access('administer')) {
-   echo '<style type="text/css">#mainnav { margin-top: 88px !important; }';
+   echo '<style type="text/css">#mainnav { margin-top: 65px !important; }</style>';
  }
 }
 
