@@ -17,7 +17,7 @@ function aae_data_schema() {
     	'fields' => array(
     		'AID' => array('description' => 'ID für Akteur', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
     	 	'hatAkteurVCard' => array('description' => 'Verweis auf VCard', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
-    		'hatAkteurProfil' => array('description' => 'Verweis auf Inhaber', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
+    		'hatAkteurProfil' => array('description' => 'Verweis auf Profil', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
     		'label' => array('description' => 'Name des Akteurs', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE, 'default' => ''),
     		'hasAddress' => array('description' => 'Website des Akteurs', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
     		'hatAnsprechpartner' => array('description' => 'Kontaktperson', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
@@ -25,14 +25,23 @@ function aae_data_schema() {
   		),
 		'primary key' => array('AID'),
 		'unique keys' => array('hatAkteurVCard' => array('hatAkteurVCard'), 'hatAkteurProfil' => array('hatAkteurProfil')),
-		'foreign keys' => array('Akteurowner' => array('table' => 'user', 'columns' => array('hatAkteurProfil' => 'uid')), 'AkteurVCard' => array('table' => 'aae_data_organization', 'columns' => array('hatAkteurVCard' => 'OID')))
+		'foreign keys' => array('Akteurowner' => array('table' => 'aae_data_profil', 'columns' => array('hatAkteurProfil' => 'PID')), 'AkteurVCard' => array('table' => 'aae_data_organization', 'columns' => array('hatAkteurVCard' => 'OID')))
+	);
+	$schema ['aae_data_profil'] = array(
+		'description' => 'Tabelle für Profil',
+		'fields' => array(
+			'PID' => array('description' => 'ID für Profil', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+			'label' => array('description' => 'Label des Profils', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+			'hatKurzbeschreibung' => array('description' => 'Kurzbeschreibung', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
+		),
+		'primary key' => array('PID')
 	);
 	$schema ['aae_data_organization'] = array(
 		'description' => 'Tabelle für Organisationsinfos',
 		'fields' => array(
 			'OID' => array('description' => 'ID für Organisation', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 			'hasAddress' => array('description' => 'Addresse der Orga', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
-			'organization-name' => array('description' => 'Name der Orga', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE, 'default' => ''),
+			'organizationname' => array('description' => 'Name der Orga', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE, 'default' => ''),
 			'hasTelephone' => array('description' => 'Telefonnummer der Orga', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
 			'hasURL' => array('description' => 'Website der Orga', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 		),
@@ -43,10 +52,10 @@ function aae_data_schema() {
 		'description' => 'Tabelle für Addressen',
 		'fields' => array(
 			'VAID' => array('description' => 'ID für Addressen', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
-			'street-address' => array('description' => 'Strassenname', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-			'postal-code' => array('description' => 'PLZ', 'type' => 'numeric', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
+			'streetaddress' => array('description' => 'Strassenname', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+			'postalcode' => array('description' => 'PLZ', 'type' => 'numeric', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
 			'locality' => array('description' => 'Stadt', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE, 'default' => ''),
-			'hasGeo' => array('description' => 'Geodaten', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE, 'default' => ''),
+			'hasGeo' => array('description' => 'Geodaten', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 		),
 		'primary key' => array('VAID')
 	);
@@ -94,8 +103,13 @@ function aae_data_schema() {
  * Wird bei Installation des Moduls ausgeführt, NACH hook_schema()
  */
 function aae_data_install() {
+	
+	if (easyrdf()) {
+	  // Do something with EasyRdf... e.g.
+	  $graph = new EasyRdf_Graph("http://www.bbc.co.uk/music/artists/70248960-cb53-4ea4-943a-edb18f7d336f.rdf");
+	}
 	//Einlesen der json-Datei in aae_data DB-Tabellen
-	require_once __DIR__ . '/database/db_connect.php';
+	/*require_once __DIR__ . '/database/db_connect.php';
 
 	$con = new DB_CONNECT();
 	$json = file_get_contents('profil.json', FILE_USE_INCLUDE_PATH);
@@ -104,7 +118,7 @@ function aae_data_install() {
 	 	->fields(array(
 			'tag' => $res['label'],
 		))
-		->execute();
+		->execute();*/
 }
 
 /**
@@ -113,6 +127,7 @@ function aae_data_install() {
  * löscht alle Tabellen, die das Modul angelegt hat.
  */
 function aae_data_uninstall() {
+	drupal_uninstall_schema('aae_data');
 }
 
 /**
@@ -121,5 +136,5 @@ function aae_data_uninstall() {
  * Löschen aller Tabellen, die das Modul angelegt hat.
  */
 function aae_data_disable() {
-	drupal_uninstall_schema('aae_data');
+	//drupal_uninstall_schema('aae_data');
 }
