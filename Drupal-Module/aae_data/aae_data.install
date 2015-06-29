@@ -136,5 +136,5 @@ function aae_data_uninstall() {
  * Löschen aller Tabellen, die das Modul angelegt hat.
  */
 function aae_data_disable() {
-	//drupal_uninstall_schema('aae_data');
+	drupal_uninstall_schema('aae_data');
 }
