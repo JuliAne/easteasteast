@@ -19,16 +19,16 @@ $db = new DB_CONNECT();
 
 //Auswahl aller Akteure (nur Name) in alphabetischer Reihenfolge
 $result = db_select($tbl_akteur, 'a')
-    ->fields('a', array(
-		'label',
-	))
-	->orderBy('label', 'ASC')
-    ->execute();
+  ->fields('a', array(
+    'label',
+  ))
+  ->orderBy('label', 'ASC')
+  ->execute();
 
 //Ausgabe
 $profileHTML = <<<EOF
 EOF;
 
 foreach($result as $row){
-$profileHTML .= '<p>'.$row->label.'</p>';
+  $profileHTML .= '<p>'.$row->label.'</p>';
 }
