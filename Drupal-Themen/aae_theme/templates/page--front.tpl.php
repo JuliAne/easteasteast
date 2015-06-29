@@ -22,49 +22,18 @@
    <a href="#"><button class="button radius secondary"><strong>Veranstaltungen</strong></button></a>
   </div>
 
-	<div id="map"></div>
+  <div id="map"></div>
  </header>
 
  <section class="section" id="projects">
 
   <h1>Neueste <strong>Projekte</strong></h1>
 
-	<div class="row">
+  <div class="row">
     <?php print render($page['content']); ?>
   </div>
 
-  <h1>N&auml;chste <strong>Veranstaltungen</strong></h1>
-
-  <div class="row">
-
-   <div class="large-3 large-offset-1 columns event">
-    <a href="#"><button class="button blue date">08<br />Sept</button></a>
-    <a href="#"><h4>Cosplay Workshop</h4></a>
-    <aside><a href="#">
-     <img src="img/location.svg" />UT Connewitz <br/>
-     <img src="img/clock.svg" /><strong>8:00</strong> - <strong>12:30</strong></p>
-    </a></aside>
-   </div>
-
-   <div class="large-3 large-offset-1 columns event">
-    <a href="#"><button class="button blue date">08<br />Sept</button></a>
-    <a href="#"><h4>Cosplay Workshop</h4></a>
-    <aside><a href="#">
-     <img src="img/location.svg" style="width: 15px;" />UT Connewitz <br/>
-     <img src="img/clock.svg" style="width: 15px;" /><strong>8:00</strong> - <strong>12:30</strong></p>
-    </a></aside>
-   </div>
-
-   <div class="large-3 large-offset-1 columns event">
-    <a href="#"><button class="button blue date">08<br />Sept</button></a>
-    <a href="#"><h4>Cosplay Workshop</h4></a>
-    <aside><a href="#">
-     <img src="img/location.svg" style="width: 15px;" />UT Connewitz <br/>
-     <img src="img/clock.svg" style="width: 15px;" /><strong>8:00</strong> - <strong>12:30</strong></p>
-    </a></aside>
-   </div>
-
-  </div>
+  <!-- <h1>N&auml;chste <strong>Veranstaltungen</strong></h1> -->
 
  </section>
 
