@@ -5,7 +5,7 @@
 
 \begin{document}
 
-\maketitle{Entwurfsbeschreibung Gesamtprojekt}{15.06.2015}{Martin Lechner}
+\maketitle{Entwurfsbeschreibung Gesamtprojekt}{29.06.2015}{Martin Lechner}
 \\\\\\\\\\
 
 \tableofcontents
@@ -55,12 +55,15 @@ Die Daten werden in ein RDF-Format \"uberf\"uhrt oder stehen bereits als solches
 \subsection{Darstellungsebene}
 Es soll eine Hauptseite geben, die die interaktive Karte, den Newsfeed, sowie eine \"Ubersicht \"uber anstehende Events und Navigationsleiste beinhaltet. Weiterhin soll es Seiten geben f\"ur: Profile, Events, den Kalender, die Registrierung, die Karte, FAQ und dergleichen.
 \subsection{Eigene Drupal-Module}
-Um die Zusammenarbeit vorgefertigter Drupal-Module zu erm\"oglichen, und um soweit m\"oglich auf fehlerhafte / schwer integrierbare Module zu verzichten, wird ein Teil der Funktionalit\"aten in vom Entwicklungsteam selbst geschriebenen Drupal-Modulen umgesetzt. Der genaue Umfang der oder des Moduls steht noch nicht fest.
+Um die Zusammenarbeit vorgefertigter Drupal-Module zu erm\"oglichen, und um soweit m\"oglich auf fehlerhafte / schwer integrierbare Module zu verzichten, wird ein Teil der Funktionalit\"aten in vom Entwicklungsteam selbst geschriebenen Drupal-Modulen umgesetzt. Der genaue Umfang der oder des Moduls steht noch nicht fest.\\
+Angedacht ist, drei Module zu implementieren: ein Datenmodul welches die Daten handelt (Import, Export), ein Darstellungsmodul welches die Darstellung regelt und ein Schnittstellenmodul.\\
+Das Datenmodul legt in der relationalen Drupaldatenbank Tabellen unseres Datenmodelles an. Es soll das Importieren von Daten aus einer Turtle-Datei in diese Tabellen erm\"oglichen, sowie den Export der Tabellendaten in eine Turtle-Datei (oder andere Formate). Desweiteren erm\"oglicht es die Dateneingabe f\"uer Akteure \"uber ein Eingabeformular, sowie die Ausgabe aller vorhandenen Akteure.\\
+Die Ausgestaltung des Darstellungs- und Schnittstellenmoduls wird sich in der Implementierungsphase konkretisieren.
 \subsection{Eigenes Drupal-Theme}
 Um bei der Gestaltung des Layouts freie Hand zu haben und eigene Ideen umsetzen zu k\"onnen, wird f\"ur die Stadtteilplattform ein eigenes Drupal-Theme entwickelt. Es existiert dazu bereits ein Entwurf: http://grinch.pavo.uberspace.de/lo/. Dieser wird noch auf die Drupaltheme \"uberf\"uhrt und erf\"ullt bereits das Merkmal \glqq Responsive\grqq{}.
 \section{Datenmodell}
 Das Projekt orientiert sich an der RDF-Ontologie des Leipzig Data Projekts.\\\\
-%\includegraphics[width=\textwidth]{Datenmodell.jpg}\\\\
+\includegraphics[width=\textwidth]{Datenmodell.jpg}\\\\
 Wir streben an, dass die Daten in einer Graphdatenbank abgespeichert werden, da es das Konzept von Open Data besser umsetzt und es sp\"ater den R\"uckfluss zu Leipzig Data erleichtert. Allerdings benutzen wir \"ubergangsweise eine relationale Datenbank, da sie die Einarbeitung erleichtert und die Entwicklung unserer Module beschleunigt.
 \section{Testkonzept}
 Um in der Implementierungsphase effizient arbeiten zu k\"onnen, d\"urfen die Tests selbst nicht unn\"otig viel Zeit in Anspruch nehmen. Da ein gro{\ss}er Teil des Teams weder Erfahrung mit Drupals Test-Modul, noch mit Softwaretests im allgemeinen hat und daher extra geschult werden m\"usste, werden nicht alle Teammitglieder Tests durchf\"uhren. Stattdessen werden die im folgenden erl\"auterten Tests von den am Backend arbeitenden Mitgliedern ausgef\"uhrt, die das zu testende Material selbst geschrieben haben.
