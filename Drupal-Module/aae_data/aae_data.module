@@ -26,7 +26,7 @@ function aae_data_menu() {
   );
     
   //adding a menu item called "aae_data" (nur für Testzwecke!)
-  $items['/?q=aae_data'] = array(
+  $items['aae_data'] = array(
     'title' => 'aae_data',
     'page callback' => 'aae_data_page',
     'access arguments' => array('access content'),
