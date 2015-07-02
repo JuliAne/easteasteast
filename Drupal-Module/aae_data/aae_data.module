@@ -26,7 +26,7 @@ function aae_data_menu() {
   );
     
   //adding a menu item called "aae_data" (nur für Testzwecke!)
-  $items['aae_data'] = array(
+  $items['/?q=aae_data'] = array(
     'title' => 'aae_data',
     'page callback' => 'aae_data_page',
     'access arguments' => array('access content'),
@@ -52,7 +52,7 @@ function aae_data_menu() {
 function aae_data_page() {
   //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/?q=aae_data.php';
+  include $modulePath . '/aae_data.php';
     
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
