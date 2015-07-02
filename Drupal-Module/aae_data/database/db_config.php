@@ -10,5 +10,6 @@
  //Put your DB for Drupal in here
  define('DB_DATABASE', "swp15_aae");
  //Put your server in here
- define('DB_SERVER', "localhost");
+ //define('DB_SERVER', "localhost");
+define('DB_SERVER', "http://pcai042.informatik.uni-leipzig.de");
 ?>
