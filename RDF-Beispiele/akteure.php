@@ -6,10 +6,10 @@ require_once("lib/EasyRdf.php");
 
 function getAkteursProfil($v) {
   $name=$v->get("rdfs:label");
-  $url=$v->get("ki:hatAkteurVCard")->get("vcard:hasURL");
-  $email=$v->get("ki:hatAkteurVCard")->get("vcard:hasEmail");
-  $img=$v->get("ki:hatAkteurVCard")->get("vcard:hasPhoto");
-  $telefon=$v->get("ki:hatAkteurVCard")->get("vcard:hasTelefon");
+  $url=$v->get("foaf:homepage");
+  $email=$v->get("foaf:mbox");
+  $img=$v->get("foaf:image");
+  $telefon=$v->get("foaf:phone");
   $profile=$v->get("ki:hatAkteurProfil")->get("ki:hatKurzbeschreibung");
   $out='
 <div style="float: left; width: 70%; ">
@@ -42,11 +42,10 @@ function htmlEnvelope($out) {
 }
 
 function listAkteure() { 
-  EasyRdf_Namespace::set('vcard', 'http://www.w3.org/2006/vcard/ns#');
   EasyRdf_Namespace::set('ld', 'http://leipzig-data.de/Data/Model/');
   EasyRdf_Namespace::set('ki', 'http://kultur-initiative.net/Data/Model#');
-  $graph = new EasyRdf_Graph("http://kultur-initiative.net/Data/Akteure/");
-  $graph->parseFile("Akteure.json");
+  $graph = new EasyRdf_Graph("http://kultur-initiative.net/Data/Akteure-1/");
+  $graph->parseFile("Akteure-1.json");
   $s=array();
   foreach ($graph->allOfType("ld:Akteur") as $v) {
     $s[]=getAkteursProfil($v); 

@@ -11,20 +11,19 @@
 @prefix ld: <http://leipzig-data.de/Data/Model/> .
 @prefix ki: <http://kultur-initiative.net/Data/Model#> .
 @prefix kia: <http://kultur-initiative.net/Data/Akteur/> .
-@prefix kiv: <http://kultur-initiative.net/Data/Akteur/VCard/> .
-@prefix kiva: <http://kultur-initiative.net/Data/Akteur/VCard/Adresse/> .
 @prefix kip: <http://kultur-initiative.net/Data/Akteur/Profil/> .
 
 
 <http://kultur-initiative.net/Data/Akteure/> a owl:Ontology ;
    rdfs:label "Akteure im Leipziger Osten" ;
    cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+   rdfs:comment "Reorganisation nach Datenmodell v.2"; 
    cc:attributionURL <http://kultur-initiative.net> ;
    cc:attributionName "Kulturinitiative Leipziger Osten" .
 
 kia:A1000
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1000;
+	ki:hatAkteurVCard kia:A1000;
 	ki:hatAkteurProfil kip:A1000;
 	rdfs:label "16. Oberschule";
 	skos:prefLabel "16. Oberschule";
@@ -32,14 +31,14 @@ kia:A1000
 	ki:hatAnsprechpartner "Herr Uwe Hempel";
 	ki:hatRolle "Schulleiter".
 
-kiv:A1000
+kia:A1000
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1000;
+	vcard:hasAddress kia:A1000;
 	vcard:organization-name "16. Oberschule";
 	vcard:hasTelephon "0341-6865780";
 	vcard:hasURL <http://www.ms16.de>.
 
-kiva:A1000
+kia:A1000
 	a vcard:Address;
 	vcard:street-address "Konradstraße   67";
 	vcard:postal-code "04315";
@@ -53,7 +52,7 @@ kip:A1000
 
 kia:A1001
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1001;
+	ki:hatAkteurVCard kia:A1001;
 	ki:hatAkteurProfil kip:A1001;
 	rdfs:label "Allgemeiner Turnverein Volkmarsdorf e.V.";
 	skos:prefLabel "Allgemeiner Turnverein Volkmarsdorf e.V.";
@@ -61,15 +60,15 @@ kia:A1001
 	ki:hatAnsprechpartner "Peter Zinke";
 	ki:hatRolle "Vorsitzender".
 
-kiv:A1001
+kia:A1001
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1001;
+	vcard:hasAddress kia:A1001;
 	vcard:organization-name "Allgemeiner Turnverein Volkmarsdorf e.V.";
 	vcard:hasTelephon "0341-6882995";
 	vcard:hasURL <http://www.atv-volkmarsdorf.de/>;
 	vcard:hasPhoto "images/atv_volkmarsdorf.jpg".
 
-kiva:A1001
+kia:A1001
 	a vcard:Address;
 	vcard:street-address "Torgauer Straße   15";
 	vcard:postal-code "04315";
@@ -83,20 +82,20 @@ kip:A1001
 
 kia:A1002
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1002;
+	ki:hatAkteurVCard kia:A1002;
 	ki:hatAkteurProfil kip:A1002;
 	rdfs:label "Animato Musikschule e.V.";
 	skos:prefLabel "Animato Musikschule e.V.";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Lilienstrasse.27>;
 	ki:hatAnsprechpartner "Jens Schneegaß".
 
-kiv:A1002
+kia:A1002
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1002;
+	vcard:hasAddress kia:A1002;
 	vcard:organization-name "Animato Musikschule e.V.";
 	vcard:hasTelephon "0177-3309570".
 
-kiva:A1002
+kia:A1002
 	a vcard:Address;
 	vcard:street-address "Lilienstraße   27";
 	vcard:postal-code "04315";
@@ -109,21 +108,21 @@ kip:A1002
 
 kia:A1003
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1003;
+	ki:hatAkteurVCard kia:A1003;
 	ki:hatAkteurProfil kip:A1003;
 	rdfs:label "Bahá´i Zentrum Leipzig";
 	skos:prefLabel "Bahá´i Zentrum Leipzig";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Konradstrasse.57>.
 
-kiv:A1003
+kia:A1003
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1003;
+	vcard:hasAddress kia:A1003;
 	vcard:organization-name "Bahá´i Zentrum Leipzig";
 	vcard:hasEmail "grleipzig@web.de";
 	vcard:hasTelephon "0341-5196134";
 	vcard:hasURL <http://www.leipzig.bahai.de>.
 
-kiva:A1003
+kia:A1003
 	a vcard:Address;
 	vcard:street-address "Konradstraße   57";
 	vcard:postal-code "04315";
@@ -137,22 +136,22 @@ kip:A1003
 
 kia:A1004
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1004;
+	ki:hatAkteurVCard kia:A1004;
 	ki:hatAkteurProfil kip:A1004;
 	rdfs:label "IC-E InfoCenter Eisenbahnstraße";
 	skos:prefLabel "IC-E InfoCenter Eisenbahnstraße";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Eisenbahnstrasse.49>;
 	ki:hatAnsprechpartner "Claudia Thiele".
 
-kiv:A1004
+kia:A1004
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1004;
+	vcard:hasAddress kia:A1004;
 	vcard:organization-name "IC-E InfoCenter Eisenbahnstraße";
 	vcard:hasTelephon "0341-6810080";
 	vcard:hasURL <http://www.leipziger-osten.de>;
 	vcard:hasPhoto "images/ice.jpg".
 
-kiva:A1004
+kia:A1004
 	a vcard:Address;
 	vcard:street-address "Eisenbahnstraße   49";
 	vcard:postal-code "04315";
@@ -166,7 +165,7 @@ kip:A1004
 
 kia:A1005
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1005;
+	ki:hatAkteurVCard kia:A1005;
 	ki:hatAkteurProfil kip:A1005;
 	rdfs:label "Integrativer Bürgerverein Volkmarsdorf e.V.";
 	skos:prefLabel "Integrativer Bürgerverein Volkmarsdorf e.V.";
@@ -174,14 +173,14 @@ kia:A1005
 	ki:hatAnsprechpartner "Stefan Kuhtz";
 	ki:hatRolle "Vorsitzender".
 
-kiv:A1005
+kia:A1005
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1005;
+	vcard:hasAddress kia:A1005;
 	vcard:organization-name "Integrativer Bürgerverein Volkmarsdorf e.V.";
 	vcard:hasTelephon "0341-5293510";
 	vcard:hasPhoto "images/integrativer_bv.jpg".
 
-kiva:A1005
+kia:A1005
 	a vcard:Address;
 	vcard:street-address "Konradstraße   57";
 	vcard:postal-code "04315";
@@ -195,7 +194,7 @@ kip:A1005
 
 kia:A1006
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1006;
+	ki:hatAkteurVCard kia:A1006;
 	ki:hatAkteurProfil kip:A1006;
 	rdfs:label "Interessengemeinschaft Eisenbahnstraße - \"Die Lo(c)k-Meile\" e.V.";
 	skos:prefLabel "Interessengemeinschaft Eisenbahnstraße - \"Die Lo(c)k-Meile\" e.V.";
@@ -203,13 +202,13 @@ kia:A1006
 	ki:hatAnsprechpartner "Rolf Müller";
 	ki:hatRolle "Vorsitzender".
 
-kiv:A1006
+kia:A1006
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1006;
+	vcard:hasAddress kia:A1006;
 	vcard:organization-name "Interessengemeinschaft Eisenbahnstraße - \"Die Lo(c)k-Meile\" e.V.";
 	vcard:hasTelephon "0341-6888297".
 
-kiva:A1006
+kia:A1006
 	a vcard:Address;
 	vcard:street-address "Eisenbahnstraße   23";
 	vcard:postal-code "04315";
@@ -222,21 +221,21 @@ kip:A1006
 
 kia:A1007
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1007;
+	ki:hatAkteurVCard kia:A1007;
 	ki:hatAkteurProfil kip:A1007;
 	rdfs:label "KulturLounge";
 	skos:prefLabel "KulturLounge";
 	ld:hasAddress <http://leipzig-data.de/Data/04103.Leipzig.DresdnerStrasse.25>;
 	ki:hatAnsprechpartner "Pierre Eichner".
 
-kiv:A1007
+kia:A1007
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1007;
+	vcard:hasAddress kia:A1007;
 	vcard:organization-name "KulturLounge";
 	vcard:hasTelephon "0341-3373775";
 	vcard:hasURL <http://www.kulturlounge.de>.
 
-kiva:A1007
+kia:A1007
 	a vcard:Address;
 	vcard:street-address "Dresdner Straße   25";
 	vcard:postal-code "04103";
@@ -249,21 +248,21 @@ kip:A1007
 
 kia:A1008
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1008;
+	ki:hatAkteurVCard kia:A1008;
 	ki:hatAkteurProfil kip:A1008;
 	rdfs:label "Lebenszeiten Verein für Frauen und Mädchen e.V.";
 	skos:prefLabel "Lebenszeiten Verein für Frauen und Mädchen e.V.";
 	ld:hasAddress <http://leipzig-data.de/Data/04317.Leipzig.DresdnerStrasse.82>.
 
-kiv:A1008
+kia:A1008
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1008;
+	vcard:hasAddress kia:A1008;
 	vcard:organization-name "Lebenszeiten Verein für Frauen und Mädchen e.V.";
 	vcard:hasTelephon "0341-5298026";
 	vcard:hasURL <http://www.lebenszeiten.leipzigerinnen.de>;
 	vcard:hasPhoto "images/frauensymbol.jpg".
 
-kiva:A1008
+kia:A1008
 	a vcard:Address;
 	vcard:street-address "Dresdner Straße   82";
 	vcard:postal-code "04317";
@@ -277,20 +276,20 @@ kip:A1008
 
 kia:A1009
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1009;
+	ki:hatAkteurVCard kia:A1009;
 	ki:hatAkteurProfil kip:A1009;
 	rdfs:label "Leipziger Förderverein für Kinder und Familien";
 	skos:prefLabel "Leipziger Förderverein für Kinder und Familien";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Konradstrasse.69>;
 	ki:hatAnsprechpartner "Karin Fahnert".
 
-kiv:A1009
+kia:A1009
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1009;
+	vcard:hasAddress kia:A1009;
 	vcard:organization-name "Leipziger Förderverein für Kinder und Familien";
 	vcard:hasTelephon "0341-6810796".
 
-kiva:A1009
+kia:A1009
 	a vcard:Address;
 	vcard:street-address "Konradstraße   69";
 	vcard:postal-code "04315";
@@ -304,23 +303,23 @@ kip:A1009
 
 kia:A1010
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1010;
+	ki:hatAkteurVCard kia:A1010;
 	ki:hatAkteurProfil kip:A1010;
 	rdfs:label "Naomi e.V., Jugendmigrationsdienst und Migrationserstberatung";
 	skos:prefLabel "Naomi e.V., Jugendmigrationsdienst und Migrationserstberatung";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Eisenbahnstrasse.66>;
 	ki:hatAnsprechpartner "Schwester Gudrun Neubert".
 
-kiv:A1010
+kia:A1010
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1010;
+	vcard:hasAddress kia:A1010;
 	vcard:organization-name "Naomi e.V., Jugendmigrationsdienst und Migrationserstberatung";
 	vcard:hasEmail "jmd@naomi-leipzig.de";
 	vcard:hasTelephon "0341-9610975";
 	vcard:hasURL <http://www.naomi-leipzig.de/>;
 	vcard:hasPhoto "images/naomi.jpg".
 
-kiva:A1010
+kia:A1010
 	a vcard:Address;
 	vcard:street-address "Eisenbahnstraße  66";
 	vcard:postal-code "04315";
@@ -334,21 +333,21 @@ kip:A1010
 
 kia:A1011
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1011;
+	ki:hatAkteurVCard kia:A1011;
 	ki:hatAkteurProfil kip:A1011;
 	rdfs:label "Offener Freizeittreff \"Club Sellerhausen\"";
 	skos:prefLabel "Offener Freizeittreff \"Club Sellerhausen\"";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.PuechauerStrasse.4>;
 	ki:hatAnsprechpartner "Dorit Koblitz".
 
-kiv:A1011
+kia:A1011
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1011;
+	vcard:hasAddress kia:A1011;
 	vcard:organization-name "Offener Freizeittreff \"Club Sellerhausen\"";
 	vcard:hasTelephon "0341-2301023";
 	vcard:hasURL <http://www.club-sellerhausen.de>.
 
-kiva:A1011
+kia:A1011
 	a vcard:Address;
 	vcard:street-address "Püchauer Straße   4";
 	vcard:postal-code "04315";
@@ -362,22 +361,22 @@ kip:A1011
 
 kia:A1012
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1012;
+	ki:hatAkteurVCard kia:A1012;
 	ki:hatAkteurProfil kip:A1012;
 	rdfs:label "Offener Freizeittreff \"Rabet\"";
 	skos:prefLabel "Offener Freizeittreff \"Rabet\"";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Eisenbahnstrasse.54>.
 
-kiv:A1012
+kia:A1012
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1012;
+	vcard:hasAddress kia:A1012;
 	vcard:organization-name "Offener Freizeittreff \"Rabet\"";
 	vcard:hasEmail "oft-rabet@web.de";
 	vcard:hasTelephon "0341-6995598";
 	vcard:hasURL <http://www.oft-rabet.de/>;
 	vcard:hasPhoto "images/oft_rabet_2.jpg".
 
-kiva:A1012
+kia:A1012
 	a vcard:Address;
 	vcard:street-address "Eisenbahnstraße   54";
 	vcard:postal-code "04315";
@@ -391,20 +390,20 @@ kip:A1012
 
 kia:A1013
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1013;
+	ki:hatAkteurVCard kia:A1013;
 	ki:hatAkteurProfil kip:A1013;
 	rdfs:label "Offener Freizeittreff \"Tante Hedwig\"";
 	skos:prefLabel "Offener Freizeittreff \"Tante Hedwig\"";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Hedwigstrasse.7>.
 
-kiv:A1013
+kia:A1013
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1013;
+	vcard:hasAddress kia:A1013;
 	vcard:organization-name "Offener Freizeittreff \"Tante Hedwig\"";
 	vcard:hasTelephon "0341-6884696";
 	vcard:hasPhoto "images/v_tante_hedwig.jpg".
 
-kiva:A1013
+kia:A1013
 	a vcard:Address;
 	vcard:street-address "Hedwigstraße   7";
 	vcard:postal-code "04315";
@@ -418,22 +417,22 @@ kip:A1013
 
 kia:A1014
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1014;
+	ki:hatAkteurVCard kia:A1014;
 	ki:hatAkteurProfil kip:A1014;
 	rdfs:label "Sportverein Leipzig Ost 1858 e.V.";
 	skos:prefLabel "Sportverein Leipzig Ost 1858 e.V.";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.WurznerStrasse.140b>;
 	ki:hatAnsprechpartner "Jürgen Schmidt".
 
-kiv:A1014
+kia:A1014
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1014;
+	vcard:hasAddress kia:A1014;
 	vcard:organization-name "Sportverein Leipzig Ost 1858 e.V.";
 	vcard:hasEmail "info@sv-leipzig-ost-1858.de";
 	vcard:hasTelephon "0341-2332406";
 	vcard:hasURL <http://www.sv-leipzig-ost-1858.de>.
 
-kiva:A1014
+kia:A1014
 	a vcard:Address;
 	vcard:street-address "Wurzner Straße   140b";
 	vcard:postal-code "04315";
@@ -447,21 +446,21 @@ kip:A1014
 
 kia:A1015
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1015;
+	ki:hatAkteurVCard kia:A1015;
 	ki:hatAkteurProfil kip:A1015;
 	rdfs:label "Stadtjugendring Leipzig e.V.";
 	skos:prefLabel "Stadtjugendring Leipzig e.V.";
 	ld:hasAddress <http://leipzig-data.de/Data/04317.Leipzig.DresdnerStrasse.82>.
 
-kiv:A1015
+kia:A1015
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1015;
+	vcard:hasAddress kia:A1015;
 	vcard:organization-name "Stadtjugendring Leipzig e.V.";
 	vcard:hasTelephon "0341-6894859";
 	vcard:hasURL <http://www.stadtjugendring-leipzig.de>;
 	vcard:hasPhoto "images/v_stadtjugendring.jpg".
 
-kiva:A1015
+kia:A1015
 	a vcard:Address;
 	vcard:street-address "Dresdner Straße   82";
 	vcard:postal-code "04317";
@@ -475,20 +474,20 @@ kip:A1015
 
 kia:A1016
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1016;
+	ki:hatAkteurVCard kia:A1016;
 	ki:hatAkteurProfil kip:A1016;
 	rdfs:label "Stadtpfadfinder";
 	skos:prefLabel "Stadtpfadfinder";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Eisenbahnstrasse.35>.
 
-kiv:A1016
+kia:A1016
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1016;
+	vcard:hasAddress kia:A1016;
 	vcard:organization-name "Stadtpfadfinder";
 	vcard:hasTelephon "0341-6865277";
 	vcard:hasURL <http://www.stadtpfadfinder.de>.
 
-kiva:A1016
+kia:A1016
 	a vcard:Address;
 	vcard:street-address "Eisenbahnstraße   35";
 	vcard:postal-code "04315";
@@ -501,21 +500,21 @@ kip:A1016
 
 kia:A1017
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1017;
+	ki:hatAkteurVCard kia:A1017;
 	ki:hatAkteurProfil kip:A1017;
 	rdfs:label "Stadtteilbibliothek Volkmarsdorf";
 	skos:prefLabel "Stadtteilbibliothek Volkmarsdorf";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.TorgauerPlatz.3>;
 	ki:hatAnsprechpartner "Frau Pontow".
 
-kiv:A1017
+kia:A1017
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1017;
+	vcard:hasAddress kia:A1017;
 	vcard:organization-name "Stadtteilbibliothek Volkmarsdorf";
 	vcard:hasTelephon "0341-6802019";
 	vcard:hasURL <http://www.leipzig.de/de/buerger/bildung/bib/sbib/stadtteilbib/01160.shtml>.
 
-kiva:A1017
+kia:A1017
 	a vcard:Address;
 	vcard:street-address "Torgauer Platz   3";
 	vcard:postal-code "04315";
@@ -529,21 +528,21 @@ kip:A1017
 
 kia:A1018
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1018;
+	ki:hatAkteurVCard kia:A1018;
 	ki:hatAkteurProfil kip:A1018;
 	rdfs:label "Straßenkinder Haus Tante E.";
 	skos:prefLabel "Straßenkinder Haus Tante E.";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Rosa-Luxemburg-Strasse.38>.
 
-kiv:A1018
+kia:A1018
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1018;
+	vcard:hasAddress kia:A1018;
 	vcard:organization-name "Straßenkinder Haus Tante E.";
 	vcard:hasEmail "info@strassenkinder-leipzig.de";
 	vcard:hasTelephon "0341-6819824";
 	vcard:hasURL <http://www.strassenkinder-leipzig.de/>.
 
-kiva:A1018
+kia:A1018
 	a vcard:Address;
 	vcard:street-address "Rosa-Luxemburg-Straße   38";
 	vcard:postal-code "04315";
@@ -556,19 +555,19 @@ kip:A1018
 
 kia:A1019
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1019;
+	ki:hatAkteurVCard kia:A1019;
 	ki:hatAkteurProfil kip:A1019;
 	rdfs:label "Streetwork Kontaktladen Straßensozialarbeit";
 	skos:prefLabel "Streetwork Kontaktladen Straßensozialarbeit";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Eisenbahnstrasse.>.
 
-kiv:A1019
+kia:A1019
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1019;
+	vcard:hasAddress kia:A1019;
 	vcard:organization-name "Streetwork Kontaktladen Straßensozialarbeit";
 	vcard:hasTelephon "0341-6888189".
 
-kiva:A1019
+kia:A1019
 	a vcard:Address;
 	vcard:street-address "Eisenbahnstraße";
 	vcard:postal-code "04315";
@@ -582,21 +581,21 @@ kip:A1019
 
 kia:A1020
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1020;
+	ki:hatAkteurVCard kia:A1020;
 	ki:hatAkteurProfil kip:A1020;
 	rdfs:label "SV Leipzig Ost 1858 e.V.";
 	skos:prefLabel "SV Leipzig Ost 1858 e.V.";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.WurznerStrasse.140>.
 
-kiv:A1020
+kia:A1020
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1020;
+	vcard:hasAddress kia:A1020;
 	vcard:organization-name "SV Leipzig Ost 1858 e.V.";
 	vcard:hasEmail "info@sv-leipzig-ost-1858.de";
 	vcard:hasTelephon "0341-2332406";
 	vcard:hasURL <http://www.sv-leipzig-ost-1858.de>.
 
-kiva:A1020
+kia:A1020
 	a vcard:Address;
 	vcard:street-address "Wurzner Straße   140";
 	vcard:postal-code "04315";
@@ -609,21 +608,21 @@ kip:A1020
 
 kia:A1021
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1021;
+	ki:hatAkteurVCard kia:A1021;
 	ki:hatAkteurProfil kip:A1021;
 	rdfs:label "SV Reudnitz e.V.";
 	skos:prefLabel "SV Reudnitz e.V.";
 	ld:hasAddress <http://leipzig-data.de/Data/04317.Leipzig.BreiteStrasse.17>.
 
-kiv:A1021
+kia:A1021
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1021;
+	vcard:hasAddress kia:A1021;
 	vcard:organization-name "SV Reudnitz e.V.";
 	vcard:hasEmail "service@sv-reudnitz.de";
 	vcard:hasTelephon "0341-2612919";
 	vcard:hasURL <http://www.sv-reudnitz.de/>.
 
-kiva:A1021
+kia:A1021
 	a vcard:Address;
 	vcard:street-address "Breite Straße   17";
 	vcard:postal-code "04317";
@@ -637,21 +636,21 @@ kip:A1021
 
 kia:A1022
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1022;
+	ki:hatAkteurVCard kia:A1022;
 	ki:hatAkteurProfil kip:A1022;
 	rdfs:label "SV Tapfer 06 e.V.";
 	skos:prefLabel "SV Tapfer 06 e.V.";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.TorgauerStrasse.106>.
 
-kiv:A1022
+kia:A1022
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1022;
+	vcard:hasAddress kia:A1022;
 	vcard:organization-name "SV Tapfer 06 e.V.";
 	vcard:hasEmail "svo6@gmx.de";
 	vcard:hasTelephon "0341-2323224";
 	vcard:hasURL <http://www.svtapfer06.de/>.
 
-kiva:A1022
+kia:A1022
 	a vcard:Address;
 	vcard:street-address "Torgauer Straße   106";
 	vcard:postal-code "04315";
@@ -665,18 +664,18 @@ kip:A1022
 
 kia:A1023
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1023;
+	ki:hatAkteurVCard kia:A1023;
 	ki:hatAkteurProfil kip:A1023;
 	rdfs:label "Takva Moschee";
 	skos:prefLabel "Takva Moschee";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Rosa-Luxemburg-Strasse.45a>.
 
-kiv:A1023
+kia:A1023
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1023;
+	vcard:hasAddress kia:A1023;
 	vcard:organization-name "Takva Moschee".
 
-kiva:A1023
+kia:A1023
 	a vcard:Address;
 	vcard:street-address "Rosa-Luxemburg-Straße   45a";
 	vcard:postal-code "04315";
@@ -689,22 +688,22 @@ kip:A1023
 
 kia:A1024
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1024;
+	ki:hatAkteurVCard kia:A1024;
 	ki:hatAkteurProfil kip:A1024;
 	rdfs:label "TANGOMANIE";
 	skos:prefLabel "TANGOMANIE";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Hans-Poeche-Strasse.2-4>;
 	ki:hatAnsprechpartner "Anke Hofmann".
 
-kiv:A1024
+kia:A1024
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1024;
+	vcard:hasAddress kia:A1024;
 	vcard:organization-name "TANGOMANIE";
 	vcard:hasEmail "anke@ballsaal-tangomanie.de";
 	vcard:hasTelephon "0341-2235080";
 	vcard:hasURL <http://www.tangomanie.com/>.
 
-kiva:A1024
+kia:A1024
 	a vcard:Address;
 	vcard:street-address "Hans-Poeche-Straße   2-4";
 	vcard:postal-code "04315";
@@ -717,22 +716,22 @@ kip:A1024
 
 kia:A1025
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1025;
+	ki:hatAkteurVCard kia:A1025;
 	ki:hatAkteurProfil kip:A1025;
 	rdfs:label "tanzZenit e.V., Studio 1";
 	skos:prefLabel "tanzZenit e.V., Studio 1";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Lilienstrasse.27>.
 
-kiv:A1025
+kia:A1025
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1025;
+	vcard:hasAddress kia:A1025;
 	vcard:organization-name "tanzZenit e.V., Studio 1";
 	vcard:hasEmail "undine.foerster@tanzzenit.de";
 	vcard:hasTelephon "0341-5650504";
 	vcard:hasURL <http://www.tanzzenit.de/>;
 	vcard:hasPhoto "images/tanzprobe_tanzzenit.jpg".
 
-kiva:A1025
+kia:A1025
 	a vcard:Address;
 	vcard:street-address "Lilienstraße   27";
 	vcard:postal-code "04315";
@@ -746,20 +745,20 @@ kip:A1025
 
 kia:A1026
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1026;
+	ki:hatAkteurVCard kia:A1026;
 	ki:hatAkteurProfil kip:A1026;
 	rdfs:label "Wächterhaus Lu99";
 	skos:prefLabel "Wächterhaus Lu99";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Ludwigstrasse.99>.
 
-kiv:A1026
+kia:A1026
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1026;
+	vcard:hasAddress kia:A1026;
 	vcard:organization-name "Wächterhaus Lu99";
 	vcard:hasURL <http://ludwig99.wordpress.com/>;
 	vcard:hasPhoto "images/waechterhaus.jpg".
 
-kiva:A1026
+kia:A1026
 	a vcard:Address;
 	vcard:street-address "Ludwigstraße   99";
 	vcard:postal-code "04315";
@@ -773,21 +772,21 @@ kip:A1026
 
 kia:A1027
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1027;
+	ki:hatAkteurVCard kia:A1027;
 	ki:hatAkteurProfil kip:A1027;
 	rdfs:label "ZEOK-Zentrum für europäische und orientalische Kultur e.V. Zeok";
 	skos:prefLabel "ZEOK-Zentrum für europäische und orientalische Kultur e.V. Zeok";
 	ld:hasAddress <http://leipzig-data.de/Data/04317.Leipzig.DresdnerStrasse.82>.
 
-kiv:A1027
+kia:A1027
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1027;
+	vcard:hasAddress kia:A1027;
 	vcard:organization-name "ZEOK-Zentrum für europäische und orientalische Kultur e.V. Zeok";
 	vcard:hasTelephon "0341-5298027";
 	vcard:hasURL <http://www.zeok.de>;
 	vcard:hasPhoto "images/v_zeokk.jpg".
 
-kiva:A1027
+kia:A1027
 	a vcard:Address;
 	vcard:street-address "Dresdner Straße   82";
 	vcard:postal-code "04317";
@@ -801,7 +800,7 @@ kip:A1027
 
 kia:A1028
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1028;
+	ki:hatAkteurVCard kia:A1028;
 	ki:hatAkteurProfil kip:A1028;
 	rdfs:label "Bülowviertel e.V.";
 	skos:prefLabel "Bülowviertel e.V.";
@@ -809,14 +808,14 @@ kia:A1028
 	ki:hatAnsprechpartner "Frau Asena Katrin Kahraman";
 	ki:hatRolle "Vorstandsvorsitzende".
 
-kiv:A1028
+kia:A1028
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1028;
+	vcard:hasAddress kia:A1028;
 	vcard:organization-name "Bülowviertel e.V.";
 	vcard:hasEmail "buelowviertel-ev@web.de";
 	vcard:hasTelephon "0163-3068031".
 
-kiva:A1028
+kia:A1028
 	a vcard:Address;
 	vcard:street-address "Geißlerstraße 16";
 	vcard:postal-code "04315";
@@ -830,19 +829,19 @@ kip:A1028
 
 kia:A1029
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1029;
+	ki:hatAkteurVCard kia:A1029;
 	ki:hatAkteurProfil kip:A1029;
 	rdfs:label "Bürgertreff Volkmarsdorf";
 	skos:prefLabel "Bürgertreff Volkmarsdorf";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Konradstrasse.60A>.
 
-kiv:A1029
+kia:A1029
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1029;
+	vcard:hasAddress kia:A1029;
 	vcard:organization-name "Bürgertreff Volkmarsdorf";
 	vcard:hasPhoto "images/v_buergertreff.jpg".
 
-kiva:A1029
+kia:A1029
 	a vcard:Address;
 	vcard:street-address "Konradstraße 60A";
 	vcard:postal-code "04315";
@@ -856,23 +855,23 @@ kip:A1029
 
 kia:A1030
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1030;
+	ki:hatAkteurVCard kia:A1030;
 	ki:hatAkteurProfil kip:A1030;
 	rdfs:label "Bürgerverein Neustädter Markt e.V.";
 	skos:prefLabel "Bürgerverein Neustädter Markt e.V.";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Schulze-Delitzsch-Strasse.19>;
 	ki:hatAnsprechpartner "Henry Hufenreuter".
 
-kiv:A1030
+kia:A1030
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1030;
+	vcard:hasAddress kia:A1030;
 	vcard:organization-name "Bürgerverein Neustädter Markt e.V.";
 	vcard:hasEmail "bv-neustadt@gmx.de";
 	vcard:hasTelephon "0341-6811944";
 	vcard:hasURL <http://www.neustaedtermarkt-leipzig.de>;
 	vcard:hasPhoto "images/bt_neustaedter_markt-1_zuschnitt.jpg".
 
-kiva:A1030
+kia:A1030
 	a vcard:Address;
 	vcard:street-address "Schulze-Delitzsch-Straße 19";
 	vcard:postal-code "04315";
@@ -885,21 +884,21 @@ kip:A1030
 
 kia:A1031
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1031;
+	ki:hatAkteurVCard kia:A1031;
 	ki:hatAkteurProfil kip:A1031;
 	rdfs:label "Bürgerverein Ostvorstadt e.V.";
 	skos:prefLabel "Bürgerverein Ostvorstadt e.V.";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.DresdnerStrasse/Vereinshaus.82>.
 
-kiv:A1031
+kia:A1031
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1031;
+	vcard:hasAddress kia:A1031;
 	vcard:organization-name "Bürgerverein Ostvorstadt e.V.";
 	vcard:hasTelephon "0341-9939339";
 	vcard:hasURL <http://www.bvostvorstadt.de>;
 	vcard:hasPhoto "images/v_bvostvorstadt.jpg".
 
-kiva:A1031
+kia:A1031
 	a vcard:Address;
 	vcard:street-address "Dresdner Straße/Vereinshaus 82";
 	vcard:postal-code "04315";
@@ -913,19 +912,19 @@ kip:A1031
 
 kia:A1032
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1032;
+	ki:hatAkteurVCard kia:A1032;
 	ki:hatAkteurProfil kip:A1032;
 	rdfs:label "City Island-Zentrum für Tanz und Entspannung";
 	skos:prefLabel "City Island-Zentrum für Tanz und Entspannung";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Kohlgartenstrasse.24HH>.
 
-kiv:A1032
+kia:A1032
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1032;
+	vcard:hasAddress kia:A1032;
 	vcard:organization-name "City Island-Zentrum für Tanz und Entspannung";
 	vcard:hasTelephon "0341-9609112".
 
-kiva:A1032
+kia:A1032
 	a vcard:Address;
 	vcard:street-address "Kohlgartenstraße 24 HH";
 	vcard:postal-code "04315";
@@ -938,20 +937,20 @@ kip:A1032
 
 kia:A1033
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1033;
+	ki:hatAkteurVCard kia:A1033;
 	ki:hatAkteurProfil kip:A1033;
 	rdfs:label "Computerspielschule Leipzig";
 	skos:prefLabel "Computerspielschule Leipzig";
 	ld:hasAddress <http://leipzig-data.de/Data/04317.Leipzig.Kurt-Guenther-Str..5>.
 
-kiv:A1033
+kia:A1033
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1033;
+	vcard:hasAddress kia:A1033;
 	vcard:organization-name "Computerspielschule Leipzig";
 	vcard:hasTelephon "0341-2425976";
 	vcard:hasURL <http://www.computerspielschule.org>.
 
-kiva:A1033
+kia:A1033
 	a vcard:Address;
 	vcard:street-address "Kurt-Günther-Str. 5";
 	vcard:postal-code "04317";
@@ -964,23 +963,23 @@ kip:A1033
 
 kia:A1034
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1034;
+	ki:hatAkteurVCard kia:A1034;
 	ki:hatAkteurProfil kip:A1034;
 	rdfs:label "CVJM Leipzig e.V.";
 	skos:prefLabel "CVJM Leipzig e.V.";
 	ld:hasAddress <http://leipzig-data.de/Data/04347.Leipzig.SchoenefelderAllee.23a>;
 	ki:hatAnsprechpartner "Norbert Rentsch".
 
-kiv:A1034
+kia:A1034
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1034;
+	vcard:hasAddress kia:A1034;
 	vcard:organization-name "CVJM Leipzig e.V.";
 	vcard:hasEmail "norbert.rentsch@cvjm-leipzig.de";
 	vcard:hasTelephon "0341-26675540";
 	vcard:hasURL <http://www.cvjm-leipzig.de/>;
 	vcard:hasPhoto "images/cvjm.jpg".
 
-kiva:A1034
+kia:A1034
 	a vcard:Address;
 	vcard:street-address "Schönefelder Allee 23a";
 	vcard:postal-code "04347";
@@ -994,21 +993,21 @@ kip:A1034
 
 kia:A1035
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1035;
+	ki:hatAkteurVCard kia:A1035;
 	ki:hatAkteurProfil kip:A1035;
 	rdfs:label "Deutsch-russisches Hilfswerk zur Heiligen Alexandra";
 	skos:prefLabel "Deutsch-russisches Hilfswerk zur Heiligen Alexandra";
 	ld:hasAddress <http://leipzig-data.de/Data/04317.Leipzig.DresdnerStrasse.82>.
 
-kiv:A1035
+kia:A1035
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1035;
+	vcard:hasAddress kia:A1035;
 	vcard:organization-name "Deutsch-russisches Hilfswerk zur Heiligen Alexandra";
 	vcard:hasEmail "alexandra-e.v@gmx.de";
 	vcard:hasTelephon "0341-2566481";
 	vcard:hasPhoto "images/v_drh.jpg".
 
-kiva:A1035
+kia:A1035
 	a vcard:Address;
 	vcard:street-address "Dresdner Straße 82";
 	vcard:postal-code "04317";
@@ -1022,22 +1021,22 @@ kip:A1035
 
 kia:A1036
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1036;
+	ki:hatAkteurVCard kia:A1036;
 	ki:hatAkteurProfil kip:A1036;
 	rdfs:label "FAIRbund e.V., Familienbildung";
 	skos:prefLabel "FAIRbund e.V., Familienbildung";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Eisenbahnstrasse.66>;
 	ki:hatAnsprechpartner "Susanne Lose".
 
-kiv:A1036
+kia:A1036
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1036;
+	vcard:hasAddress kia:A1036;
 	vcard:organization-name "FAIRbund e.V., Familienbildung";
 	vcard:hasEmail "familienbildung@verein-fairbund.de";
 	vcard:hasTelephon "0341-6991484";
 	vcard:hasURL <http://www.verein-fairbund.de>.
 
-kiva:A1036
+kia:A1036
 	a vcard:Address;
 	vcard:street-address "Eisenbahnstraße  66";
 	vcard:postal-code "04315";
@@ -1049,22 +1048,22 @@ kip:A1036
 
 kia:A1037
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1037;
+	ki:hatAkteurVCard kia:A1037;
 	ki:hatAkteurProfil kip:A1037;
 	rdfs:label "Fanfarenzug des TSV Leipzig-Nordost e.V.";
 	skos:prefLabel "Fanfarenzug des TSV Leipzig-Nordost e.V.";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Eisenbahnstrasse.128b>;
 	ki:hatAnsprechpartner "Kerstin Ethner".
 
-kiv:A1037
+kia:A1037
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1037;
+	vcard:hasAddress kia:A1037;
 	vcard:organization-name "Fanfarenzug des TSV Leipzig-Nordost e.V.";
 	vcard:hasTelephon "0341-6897172";
 	vcard:hasURL <http://www.fanfarenzug-leipzig.de>;
 	vcard:hasPhoto "images/stadtteilfest_fanfarenzug.jpg".
 
-kiva:A1037
+kia:A1037
 	a vcard:Address;
 	vcard:street-address "Eisenbahnstraße 128b";
 	vcard:postal-code "04315";
@@ -1077,22 +1076,22 @@ kip:A1037
 
 kia:A1038
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1038;
+	ki:hatAkteurVCard kia:A1038;
 	ki:hatAkteurProfil kip:A1038;
 	rdfs:label "Filmschule Leipzig e.V.";
 	skos:prefLabel "Filmschule Leipzig e.V.";
 	ld:hasAddress <http://leipzig-data.de/Data/04317.Leipzig.Heinrichstrasse.6>;
 	ki:hatAnsprechpartner "Elenore Saldeck und Simone Bauer".
 
-kiv:A1038
+kia:A1038
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1038;
+	vcard:hasAddress kia:A1038;
 	vcard:organization-name "Filmschule Leipzig e.V.";
 	vcard:hasEmail "FilmschuleLeipzig@web.de";
 	vcard:hasTelephon "0341-2119158";
 	vcard:hasURL <http://www.filmschule-leipzig.de/>.
 
-kiva:A1038
+kia:A1038
 	a vcard:Address;
 	vcard:street-address "Heinrichstraße 6";
 	vcard:postal-code "04317";
@@ -1106,23 +1105,23 @@ kip:A1038
 
 kia:A1039
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1039;
+	ki:hatAkteurVCard kia:A1039;
 	ki:hatAkteurProfil kip:A1039;
 	rdfs:label "Forum für Lebensenergie";
 	skos:prefLabel "Forum für Lebensenergie";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Wiebelstrasse.4a>;
 	ki:hatAnsprechpartner "Katja Bach".
 
-kiv:A1039
+kia:A1039
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1039;
+	vcard:hasAddress kia:A1039;
 	vcard:organization-name "Forum für Lebensenergie";
 	vcard:hasEmail "leipzig@forum-fuer-lebensenergie.de";
 	vcard:hasTelephon "0341-6818738";
 	vcard:hasURL <http://www.forum-fuer-lebensenergie.de/>;
 	vcard:hasPhoto "images/forum_fuer_lebensenergie.jpg".
 
-kiva:A1039
+kia:A1039
 	a vcard:Address;
 	vcard:street-address "Wiebelstraße 4a";
 	vcard:postal-code "04315";
@@ -1136,20 +1135,20 @@ kip:A1039
 
 kia:A1040
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1040;
+	ki:hatAkteurVCard kia:A1040;
 	ki:hatAkteurProfil kip:A1040;
 	rdfs:label "Forum Zeitgenössische Musik Leipzig FZML";
 	skos:prefLabel "Forum Zeitgenössische Musik Leipzig FZML";
 	ld:hasAddress <http://leipzig-data.de/Data/04317.Leipzig.Kohlgartenstrasse.24>.
 
-kiv:A1040
+kia:A1040
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1040;
+	vcard:hasAddress kia:A1040;
 	vcard:organization-name "Forum Zeitgenössische Musik Leipzig FZML";
 	vcard:hasTelephon "0341-2469345";
 	vcard:hasURL <http://www.fzml.de>.
 
-kiva:A1040
+kia:A1040
 	a vcard:Address;
 	vcard:street-address "Kohlgartenstraße 24";
 	vcard:postal-code "04317";
@@ -1162,22 +1161,22 @@ kip:A1040
 
 kia:A1041
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1041;
+	ki:hatAkteurVCard kia:A1041;
 	ki:hatAkteurProfil kip:A1041;
 	rdfs:label "Galerie Hotel Leipziger Hof";
 	skos:prefLabel "Galerie Hotel Leipziger Hof";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Hedwigstrasse.1-3>.
 
-kiv:A1041
+kia:A1041
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1041;
+	vcard:hasAddress kia:A1041;
 	vcard:organization-name "Galerie Hotel Leipziger Hof";
 	vcard:hasEmail "info.homepage@leipziger-hof.de";
 	vcard:hasTelephon "0341-69740";
 	vcard:hasURL <http://www.leipziger-hof.de/>;
 	vcard:hasPhoto "images/v_leipzigerhof.jpg".
 
-kiva:A1041
+kia:A1041
 	a vcard:Address;
 	vcard:street-address "Hedwigstraße 1-3";
 	vcard:postal-code "04315";
@@ -1191,20 +1190,20 @@ kip:A1041
 
 kia:A1042
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1042;
+	ki:hatAkteurVCard kia:A1042;
 	ki:hatAkteurProfil kip:A1042;
 	rdfs:label "Internationale Frauen Leipzig e.V.";
 	skos:prefLabel "Internationale Frauen Leipzig e.V.";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Konradstrasse.60A>.
 
-kiv:A1042
+kia:A1042
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1042;
+	vcard:hasAddress kia:A1042;
 	vcard:organization-name "Internationale Frauen Leipzig e.V.";
 	vcard:hasTelephon "0341-4686869";
 	vcard:hasURL <http://www.if-leipzig.de>.
 
-kiva:A1042
+kia:A1042
 	a vcard:Address;
 	vcard:street-address "Konradstraße 60A";
 	vcard:postal-code "04315";
@@ -1217,22 +1216,22 @@ kip:A1042
 
 kia:A1043
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1043;
+	ki:hatAkteurVCard kia:A1043;
 	ki:hatAkteurProfil kip:A1043;
 	rdfs:label "Kinder- und Jugendkulturzentrum O.S.K.A.R.";
 	skos:prefLabel "Kinder- und Jugendkulturzentrum O.S.K.A.R.";
 	ld:hasAddress <http://leipzig-data.de/Data/04317.Leipzig.Gabelsbergerstrasse.30>.
 
-kiv:A1043
+kia:A1043
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1043;
+	vcard:hasAddress kia:A1043;
 	vcard:organization-name "Kinder- und Jugendkulturzentrum O.S.K.A.R.";
 	vcard:hasEmail "JKZ_OSKAR@t-online.de";
 	vcard:hasTelephon "0341-6865680";
 	vcard:hasURL <http://www.oskarinleipzig.de>;
 	vcard:hasPhoto "images/oskar.jpg".
 
-kiva:A1043
+kia:A1043
 	a vcard:Address;
 	vcard:street-address "Gabelsbergerstraße 30";
 	vcard:postal-code "04317";
@@ -1246,21 +1245,21 @@ kip:A1043
 
 kia:A1044
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1044;
+	ki:hatAkteurVCard kia:A1044;
 	ki:hatAkteurProfil kip:A1044;
 	rdfs:label "Kindervereinigung Leipzig e.V. - KAOS-Spielmobil";
 	skos:prefLabel "Kindervereinigung Leipzig e.V. - KAOS-Spielmobil";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Wasserstrasse.18>;
 	ki:hatAnsprechpartner "Christel Schlichting".
 
-kiv:A1044
+kia:A1044
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1044;
+	vcard:hasAddress kia:A1044;
 	vcard:organization-name "Kindervereinigung Leipzig e.V. - KAOS-Spielmobil";
 	vcard:hasTelephon "0341-4803841";
 	vcard:hasURL <http://www.kaos-leipzig.de>.
 
-kiva:A1044
+kia:A1044
 	a vcard:Address;
 	vcard:street-address "Wasserstraße 18";
 	vcard:postal-code "04315";
@@ -1275,20 +1274,20 @@ kip:A1044
 
 kia:A1045
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1045;
+	ki:hatAkteurVCard kia:A1045;
 	ki:hatAkteurProfil kip:A1045;
 	rdfs:label "Kirchgemeinde Neustadt Neuschönefeld";
 	skos:prefLabel "Kirchgemeinde Neustadt Neuschönefeld";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.NeustaedterMarkt.8>.
 
-kiv:A1045
+kia:A1045
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1045;
+	vcard:hasAddress kia:A1045;
 	vcard:organization-name "Kirchgemeinde Neustadt Neuschönefeld";
 	vcard:hasTelephon "0341-6885162";
 	vcard:hasPhoto "images/heilig-kreuz-kirche_2.jpg".
 
-kiva:A1045
+kia:A1045
 	a vcard:Address;
 	vcard:street-address "Neustädter Markt 8";
 	vcard:postal-code "04315";
@@ -1301,7 +1300,7 @@ kip:A1045
 
 kia:A1046
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1046;
+	ki:hatAkteurVCard kia:A1046;
 	ki:hatAkteurProfil kip:A1046;
 	rdfs:label "Kirchgemeinde Sellerhausen-Volkmarsdorf";
 	skos:prefLabel "Kirchgemeinde Sellerhausen-Volkmarsdorf";
@@ -1309,14 +1308,14 @@ kia:A1046
 	ki:hatAnsprechpartner "Angela Langner-Stephan";
 	ki:hatRolle "Pfarrerin".
 
-kiv:A1046
+kia:A1046
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1046;
+	vcard:hasAddress kia:A1046;
 	vcard:organization-name "Kirchgemeinde Sellerhausen-Volkmarsdorf";
 	vcard:hasTelephon "0341-6881866";
 	vcard:hasURL <http://www.emmauslukas.de/>.
 
-kiva:A1046
+kia:A1046
 	a vcard:Address;
 	vcard:street-address "Juliusstraße 5";
 	vcard:postal-code "04315";
@@ -1330,22 +1329,22 @@ kip:A1046
 
 kia:A1047
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1047;
+	ki:hatAkteurVCard kia:A1047;
 	ki:hatAkteurProfil kip:A1047;
 	rdfs:label "Kreativstube";
 	skos:prefLabel "Kreativstube";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Zollikoferstrasse.23>.
 
-kiv:A1047
+kia:A1047
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1047;
+	vcard:hasAddress kia:A1047;
 	vcard:organization-name "Kreativstube";
 	vcard:hasEmail "jmd@naomi-leipzig.de";
 	vcard:hasTelephon "0341-9610975";
 	vcard:hasURL <http://www.naomi-leipzig.de>;
 	vcard:hasPhoto "images/v_kreativstube.jpg".
 
-kiva:A1047
+kia:A1047
 	a vcard:Address;
 	vcard:street-address "Zollikoferstraße 23";
 	vcard:postal-code "04315";
@@ -1359,20 +1358,20 @@ kip:A1047
 
 kia:A1048
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1048;
+	ki:hatAkteurVCard kia:A1048;
 	ki:hatAkteurProfil kip:A1048;
 	rdfs:label "Leipziger Tafel e.V., Tafelladen Ost";
 	skos:prefLabel "Leipziger Tafel e.V., Tafelladen Ost";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Eisenbahnstrasse.149>.
 
-kiv:A1048
+kia:A1048
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1048;
+	vcard:hasAddress kia:A1048;
 	vcard:organization-name "Leipziger Tafel e.V., Tafelladen Ost";
 	vcard:hasTelephon "0176-1560031";
 	vcard:hasURL <http://www.leipziger-tafel.de>.
 
-kiva:A1048
+kia:A1048
 	a vcard:Address;
 	vcard:street-address "Eisenbahnstraße 149";
 	vcard:postal-code "04315";
@@ -1386,23 +1385,23 @@ kip:A1048
 
 kia:A1049
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1049;
+	ki:hatAkteurVCard kia:A1049;
 	ki:hatAkteurProfil kip:A1049;
 	rdfs:label "Mühlstraße 14 e.V.";
 	skos:prefLabel "Mühlstraße 14 e.V.";
 	ld:hasAddress <http://leipzig-data.de/Data/04317.Leipzig.Muehlstrasse.14>;
 	ki:hatAnsprechpartner "Karin Hörning".
 
-kiv:A1049
+kia:A1049
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1049;
+	vcard:hasAddress kia:A1049;
 	vcard:organization-name "Mühlstraße 14 e.V.";
 	vcard:hasEmail "kontakt@muehlstrasse.de";
 	vcard:hasTelephon "0341-9903600";
 	vcard:hasURL <http://www.muehlstrasse.de/>;
 	vcard:hasPhoto "images/muehlstrasse.jpg".
 
-kiva:A1049
+kia:A1049
 	a vcard:Address;
 	vcard:street-address "Mühlstraße 14";
 	vcard:postal-code "04317";
@@ -1416,21 +1415,21 @@ kip:A1049
 
 kia:A1050
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1050;
+	ki:hatAkteurVCard kia:A1050;
 	ki:hatAkteurProfil kip:A1050;
 	rdfs:label "Orange Guitar – Gitarrenschule";
 	skos:prefLabel "Orange Guitar – Gitarrenschule";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Bautzmannstrasse.16>.
 
-kiv:A1050
+kia:A1050
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1050;
+	vcard:hasAddress kia:A1050;
 	vcard:organization-name "Orange Guitar – Gitarrenschule";
 	vcard:hasEmail "info@orange-guitar.de";
 	vcard:hasTelephon "0341-2230417";
 	vcard:hasURL <http://www.orange-guitar.de>.
 
-kiva:A1050
+kia:A1050
 	a vcard:Address;
 	vcard:street-address "Bautzmannstraße 16";
 	vcard:postal-code "04315";
@@ -1444,20 +1443,20 @@ kip:A1050
 
 kia:A1051
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1051;
+	ki:hatAkteurVCard kia:A1051;
 	ki:hatAkteurProfil kip:A1051;
 	rdfs:label "Schumann-Haus";
 	skos:prefLabel "Schumann-Haus";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Inselstrasse.18>.
 
-kiv:A1051
+kia:A1051
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1051;
+	vcard:hasAddress kia:A1051;
 	vcard:organization-name "Schumann-Haus";
 	vcard:hasTelephon "0341-39339620";
 	vcard:hasPhoto "images/v_schumannhaus.jpg".
 
-kiva:A1051
+kia:A1051
 	a vcard:Address;
 	vcard:street-address "Inselstraße 18";
 	vcard:postal-code "04315";
@@ -1471,7 +1470,7 @@ kip:A1051
 
 kia:A1052
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1052;
+	ki:hatAkteurVCard kia:A1052;
 	ki:hatAkteurProfil kip:A1052;
 	rdfs:label "Quartiersmanagement Leipziger Osten, c/o InfoCenter Eisenbahnstraße";
 	skos:prefLabel "Quartiersmanagement Leipziger Osten, c/o InfoCenter Eisenbahnstraße";
@@ -1479,15 +1478,15 @@ kia:A1052
 	ki:hatAnsprechpartner "Matthias Schirmer";
 	ki:hatRolle "Stadtteilmoderator".
 
-kiv:A1052
+kia:A1052
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1052;
+	vcard:hasAddress kia:A1052;
 	vcard:organization-name "Quartiersmanagement Leipziger Osten, c/o InfoCenter Eisenbahnstraße";
 	vcard:hasEmail "matthias.schirmer@leipziger-osten.de";
 	vcard:hasURL <http://www.leipziger-osten.de/index.asp>;
 	vcard:hasPhoto "images/ice.jpg".
 
-kiva:A1052
+kia:A1052
 	a vcard:Address;
 	vcard:street-address "Eisenbahnstraße   49";
 	vcard:postal-code "04315";
@@ -1501,21 +1500,21 @@ kip:A1052
 
 kia:A1053
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1053;
+	ki:hatAkteurVCard kia:A1053;
 	ki:hatAkteurProfil kip:A1053;
 	rdfs:label "Seniorenheim Leipzig-Volkmarsdorf";
 	skos:prefLabel "Seniorenheim Leipzig-Volkmarsdorf";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Hermann-Liebmann-Strasse.98>.
 
-kiv:A1053
+kia:A1053
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1053;
+	vcard:hasAddress kia:A1053;
 	vcard:organization-name "Seniorenheim Leipzig-Volkmarsdorf";
 	vcard:hasEmail "SHLeipzigvolkmarsdorf@SHSeniorenheime.de";
 	vcard:hasTelephon "0341-4686780";
 	vcard:hasURL <http://www.hrseniorenheime.de/>.
 
-kiva:A1053
+kia:A1053
 	a vcard:Address;
 	vcard:street-address "Hermann-Liebmann-Straße 98";
 	vcard:postal-code "04315";
@@ -1528,21 +1527,21 @@ kip:A1053
 
 kia:A1054
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1054;
+	ki:hatAkteurVCard kia:A1054;
 	ki:hatAkteurProfil kip:A1054;
 	rdfs:label "Sozialdiakonische Offene Jugendarbeit SOJA";
 	skos:prefLabel "Sozialdiakonische Offene Jugendarbeit SOJA";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.NeustaedterMarkt.8>;
 	ki:hatAnsprechpartner "Thomas Donat".
 
-kiv:A1054
+kia:A1054
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1054;
+	vcard:hasAddress kia:A1054;
 	vcard:organization-name "Sozialdiakonische Offene Jugendarbeit SOJA";
 	vcard:hasTelephon "0173-6983915";
 	vcard:hasPhoto "images/neustaedtermarkt8_00.jpg".
 
-kiva:A1054
+kia:A1054
 	a vcard:Address;
 	vcard:street-address "Neustädter Markt 8";
 	vcard:postal-code "04315";
@@ -1556,19 +1555,19 @@ kip:A1054
 
 kia:A1055
 	a ld:Akteur, org:Organization;
-	ki:hatAkteurVCard kiv:A1055;
+	ki:hatAkteurVCard kia:A1055;
 	ki:hatAkteurProfil kip:A1055;
 	rdfs:label "Sozialwarenhaus des ResozialisierungsHilfe Leipzig e.V.";
 	skos:prefLabel "Sozialwarenhaus des ResozialisierungsHilfe Leipzig e.V.";
 	ld:hasAddress <http://leipzig-data.de/Data/04315.Leipzig.Eisenbahnstrasse.163-171>.
 
-kiv:A1055
+kia:A1055
 	a vcard:Organization;
-	vcard:hasAddress kiva:A1055;
+	vcard:hasAddress kia:A1055;
 	vcard:organization-name "Sozialwarenhaus des ResozialisierungsHilfe Leipzig e.V.";
 	vcard:hasPhoto "images/v_sozialwarenhaus_innen.jpg".
 
-kiva:A1055
+kia:A1055
 	a vcard:Address;
 	vcard:street-address "Eisenbahnstraße 163-171";
 	vcard:postal-code "04315";
