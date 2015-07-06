@@ -1,0 +1,44 @@
+\documentclass{swp}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\maketitle{Release 06.07.2015}{06.07.2015}{Paul Eisenhuth}
+\\\\\\\\\\
+
+\section{Inhalt:}
+\begin{itemize} 
+\item Drupal Modul \glqq aae\_{}data\grqq{} Version 1.2
+\item Drupal Theme \glqq aae\_{}theme\grqq{} Version 1.0
+\end{itemize}
+\section{\"Anderungen:}
+\begin{itemize} 
+\item Das Datenmodell wurde auf Grund der j\"ungsten Entwicklungen bzgl. der Zusammenarbeit mit Matthias Petzold neu aufgesetzt
+\item Ein Formular zur Dateneingabe f\"ur Akteurs-Profile sowie eine Anzeigeseite wurden
+an das neue Schema angepasst und eingebunden.
+\end{itemize}
+\section{Installationsanleitung:}
+\subsection{Vorraussetzung:}
+Eine lauffa\"ahige Version von Drupal 7, empfohlen wird Drupal 7.37. Eine Downloadbeschreibung der Installation findet sich unter \url{https://www.drupal.org/start}.
+\subsection{Installation Theme:}
+\begin{enumerate}
+\item Der Ordner \glqq aae\_{}theme\grqq{} muss in der Drupalinstanz in den Ordner \glqq ~/drupal/sites/all/themes\grqq{} kopiert werden.
+\item  Auf der Drupalseite einloggen mit dem bei der Installation erstellten Administrator Account und unter \glqq Appearence\grqq{} das Theme \glqq AAE\grqq{} suchen und mit Klick auf \glqq Enable and set default\grqq aktivieren.
+\end{enumerate}
+\subsection{Installation Module:}
+\begin{enumerate}
+\item Der Ordner \glqq aae\_{}data\grqq{} muss in der Drupalinstanz in den Ordner \glqq ~/drupal/sites/all/modules\grqq{} kopiert werden.
+\item In dem Ordner \glqq aae\_{}data\grqq{} in den Unterordner \glqq database\grqq{} wechseln und die PHP-Datei \glqq db\_{}config\grqq{} mit einem Texteditor o\"offnen. Hier mu\"ussen die Zugangsdaten zur Datenbank eingetragen werden, was wo hin geho\"ort ist durch Kommentare ersichtlich.
+\item Auf der Drupalseite einloggen mit dem bei der Installation erstellten Administrator Account und unter \glqq Modules\grqq{} die Gruppe \glqq Custom Modules\grqq{} suchen und dort einen Haken bei \glqq AAE Data\grqq setzen.
+\end{enumerate}
+\section{Funktionen:}
+Nach dem Abschluss der Installation werden automatisch 6 Tabellen in der Datenbank angelegt. Diese werden im Lauf der Entwicklung des Moduls ben\"otigt. Wenn das Modul deinstalliert wird, werden diese Tabellen wieder gel\"oscht. Au{\ss}erdem sollen in der Navigationsleiste am Rand neue Links erscheinen, die zu den erw\"ahnten Seiten f\"ur Profileingabe und -anzeige f\"uhren.
+\section{Bekannte Probleme:}
+Die Links der Akteure, die aufgelistet werden, f\"uhren bisher nirgendwohin. Dies liegt daran, dass die Entwicklung noch nicht an dieser Seite angekommen ist.\\\\
+Auch werden Fehler bisher nicht abgefangen, die entstehen, wenn Formularfelder nicht ausgef\"ullt wurden, deren Werte aber laut Datenbank erforderlich sind.
+Ansonsten funktioniert alles wie beschrieben.\\\\
+Bei drei manuellen Tests am 06.07.2015 um 21:30 Uhr auf einer lokalen Drupalinstanz und der Praktikumsserverinstanz, sowie um 22:30 auf einer weiteren lokalen Instanz  konnte dies best\"atigt werden.
+
+\end{document}
