@@ -16,84 +16,83 @@ function aae_data_schema() {
     'description' => 'Tabelle für Akteure',
 	'fields' => array(
       'AID' => array('description' => 'ID für Akteur', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
-      'hatAkteurVCard' => array('description' => 'Verweis auf VCard', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
-      'hatAkteurProfil' => array('description' => 'Verweis auf Profil', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
-      'label' => array('description' => 'Name des Akteurs', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE, 'default' => ''),
-      'hasAddress' => array('description' => 'Website des Akteurs', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-      'hatAnsprechpartner' => array('description' => 'Kontaktperson', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-      'hatRolle' => array('description' => 'Rolle der Kontaktperson', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-    ),
-    'primary key' => array('AID'),
-    'unique keys' => array('hatAkteurVCard' => array('hatAkteurVCard'), 'hatAkteurProfil' => array('hatAkteurProfil')),
-    'foreign keys' => array('Akteurowner' => array('table' => 'aae_data_profil', 'columns' => array('hatAkteurProfil' => 'PID')), 'AkteurVCard' => array('table' => 'aae_data_organization', 'columns' => array('hatAkteurVCard' => 'OID')))
+	  'name' => array('description' => 'Name des Akteurs/der Organisation', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
+	  'email' => array('description' => 'Email Adresse zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'telefon' => array('description' => 'Telefonnummer zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'ansprechpartner' => array('description' => 'Öffentlicher Ansprechpartner', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'funktion' => array('description' => 'Funktion des Ansprechpartners', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'gps' => array('description' => 'GPS-Koordinaten für Karte', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'bild' => array('description' => 'Pfad zum hinterlegten Bild', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'kurzbeschreibung' => array('description' => 'Kurzbeschreibung für Übersicht', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
+	  'oeffnungszeiten' => array('description' => 'Wann der Akteur erreichbar ist', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
+	  'adresse' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+	),
+	'primary key' => array('AID'),
+	'foreign keys' => array('Akteursadresse' => array('table' => 'aae_data_adresse', 'columns' => array('adresse' => 'ADID')))
   );
-  $schema ['aae_data_profil'] = array(
-    'description' => 'Tabelle für Profil',
-    'fields' => array(
-      'PID' => array('description' => 'ID für Profil', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
-      'label' => array('description' => 'Label des Profils', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-      'hatKurzbeschreibung' => array('description' => 'Kurzbeschreibung', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
-    ),
-    'primary key' => array('PID')
-  );
-  $schema ['aae_data_organization'] = array(
-    'description' => 'Tabelle für Organisationsinfos',
-    'fields' => array(
-      'OID' => array('description' => 'ID für Organisation', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
-      'hasAddress' => array('description' => 'Addresse der Orga', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
-      'organizationname' => array('description' => 'Name der Orga', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE, 'default' => ''),
-      'hasTelephone' => array('description' => 'Telefonnummer der Orga', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
-      'hasURL' => array('description' => 'Website der Orga', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-    ),
-    'primary key' => array('OID'),
-    'unique keys' => array('hasAddress' => array('hasAddress')),
-    'foreign keys' => array('Orgaaddress' => array('table' => 'aae_data_address', 'columns' => array('hasAddress' => 'VAID')))	
-  );
-  $schema ['aae_data_address'] = array(
-    'description' => 'Tabelle für Addressen',
-    'fields' => array(
-      'VAID' => array('description' => 'ID für Addressen', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
-      'streetaddress' => array('description' => 'Strassenname', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-      'postalcode' => array('description' => 'PLZ', 'type' => 'numeric', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
-      'locality' => array('description' => 'Stadt', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE, 'default' => ''),
-      'hasGeo' => array('description' => 'Geodaten', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-    ),
-    'primary key' => array('VAID')
+  $schema ['aae_data_adresse'] = array(
+    'description' => 'Tabelle für Adressen',
+	'fields' => array(
+	  'ADID' => array('description' => 'ID für Adressen', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'strasse' => array('description' => 'Straßenname', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'adresszusatz' => array('description' => 'Adresszusatz wie Hinterhof oder a', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'ort' => array('description' => 'Stadtname', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'nr' => array('description' => 'Hausnummer', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+	  'plz' => array('description' => 'Postleitzahl', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+	),
+	'primary key' => array('ADID'),
   );
   $schema ['aae_data_event'] = array(
     'description' => 'Tabelle für Events',
-    'fields' => array(
-      'EID' => array('description' => 'ID für Events', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
-      'label' => array('description' => 'Name des Events', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE, 'default' => ''),
-      'hasURL' => array('description' => 'Website des Events', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-      'hatKurzbeschreibung' => array('description' => 'Beschreibung', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-      'dtstart' => array('description' => 'Startdatum', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-      'hasAddress' => array('description' => 'Addresse des Events', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
-      'organizer' => array('description' => 'Initiator', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'default' => 0),
-      'dtend' => array('description' => 'Enddatum', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-      'has AddressAddendum' => array('description' => 'Zusatzaddresse', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-      'summary' => array('description' => 'Zusammenfassung', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-    ),
-    'primary key' => array('EID'),
-    'unique keys' => array('hasAddress' => array('hasAddress'), 'organizer' => array('organizer')),
-    'foreign keys' => array('Eventaddress' => array('table' => 'aae_data_address', 'column' => array('hasAddress' => 'VAID')), 'Organizer' => array('table' => 'aae_data_akteur', 'column' => array('AID')))
+	'fields' => array(
+	  'EID' => array('description' => 'ID für Events', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'name' => array('description' => 'Eventname', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
+	  'veranstalter' => array('description' => 'Ausrichter (Akteur) des Events', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'start' => array('description' => 'Startzeitpunkt', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
+	  'ende' => array('description' => 'Endzeitpunkt', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
+	  'kurzbeschreibung' => array('description' => 'Kurze inhaltliche Erläuterung', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => 0),
+	  'bild' => array('description' => 'Pfad zum Foto', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
+	  'ort' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	),
+	'primary key' => array('EID'),
+	'foreign keys' => array(
+	  'Eventadresse' => array('table' => 'aae_data_adresse', 'columns' => array('ort' => 'ADID')),
+	  'Akteur' => array('table' => 'aae_data_akteur', 'columns' => array('veranstalter' => 'AID'))
+	),
   );
-  $schema ['aae_data_tagging'] = array(
-    'description' => 'Tabelle für Tagging',
-    'fields' => array(
-      'EID' => array('description' => 'ID für Events', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
-      'TID' => array('description' => 'ID für Tags', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
-    ),
-    'primary key' => array('EID', 'TID'),
-    'foreign keys' => array('EventID' => array('table' => 'aae_data_event', 'column' => array('EID' => "EID")), 'TagID' => array('table' => 'aae_data_tags', 'column' => array('TID' => 'TID')))		
+  $schema ['aae_data_hat_sparte'] = array(
+    'description' => 'Hilfstabelle für Sparten/Zielgruppen',
+	'fields' => array(
+	  'hat_AID' => array('description' => 'ID für Akteur', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'hat_KID' => array('description' => 'ID für Kategorien', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	),
+	'primary key' => array('hat_AID', 'hat_KID'),
+	'foreign keys' => array(
+	  'Kategorie' => array('table' => 'aae_data_kategorie', 'columns' => array('hat_KID' => 'KID')),
+	  'Akteur' => array('table' => 'aae_data_akteur', 'columns' => array('hat_AID' => 'AID'))
+	),
   );
-  $schema ['aae_data_tag'] = array(
-    'description' => 'Tabelle für Tags',
-    'fields' => array(
-    'TID' => array('description' => 'ID für Tags', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
-    'tag' => array('description' => 'Tag', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE, 'default' => ''),
-    ),
-    'primary key' => array('TID')
+  $schema ['aae_data_kategorie'] = array(
+    'description' => 'Tabelle für Sparten/Zielgruppen',
+	'fields' => array(
+	  'KID' => array('description' => 'ID für Kategorien', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'kategorie' => array('description' => 'Kategorie für Sparte oder Zielgruppe', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
+	),
+	'primary key' => array('KID'),
+  );
+  $schema ['aae_data_hat_user'] = array(
+    'description' => 'Hilfstabelle für Schreibrechte auf Akteursseiten',
+	'fields' => array(
+	  'hat_UID' => array('description' => 'ID für User', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'hat_AID' => array('description' => 'ID für Akteure', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	),
+	'primary key' => array('hat_AID', 'hat_UID'),
+	'foreign keys' => array(
+	  'User' => array('table' => 'user', 'columns' => array('hat_UID' => 'UID')),
+	  'Akteur' => array('table' => 'aae_data_akteur', 'columns' => array('hat_AID' => 'AID'))
+	),
   );
 
   return $schema;
@@ -104,11 +103,12 @@ function aae_data_schema() {
  * Wird bei Installation des Moduls ausgeführt, NACH hook_schema()
  */
 function aae_data_install() {
-	
+  /*	
   if (easyrdf()) {
     // Do something with EasyRdf... e.g.
     $graph = new EasyRdf_Graph("http://www.bbc.co.uk/music/artists/70248960-cb53-4ea4-943a-edb18f7d336f.rdf");
   }
+*/
   //Einlesen der json-Datei in aae_data DB-Tabellen
   /*require_once __DIR__ . '/database/db_connect.php';
 
@@ -138,5 +138,5 @@ function aae_data_uninstall() {
  * Löschen aller Tabellen, die das Modul angelegt hat.
  */
 function aae_data_disable() {
-  drupal_uninstall_schema('aae_data');
+  //drupal_uninstall_schema('aae_data');
 }

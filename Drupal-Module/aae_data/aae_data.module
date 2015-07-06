@@ -15,7 +15,7 @@ if (drupal_is_front_page()) {
  * Implements hook_menu().
  */
 function aae_data_menu() {
-	
+  $items = array();
   //Menuitem "Akteure"
   $items['Akteure'] = array(
     'title' => 'Akteure',
@@ -24,8 +24,18 @@ function aae_data_menu() {
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
   );
+
+  //Menuitem "Akteurprofil"
+  $items['Akteurformular'] = array(
+    'title' => 'Akteurformular',
+    'page callback' => 'akteurformular_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
     
   //adding a menu item called "aae_data" (nur für Testzwecke!)
+/*
   $items['aae_data'] = array(
     'title' => 'aae_data',
     'page callback' => 'aae_data_page',
@@ -41,7 +51,7 @@ function aae_data_menu() {
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
   );
-	
+*/	
 
   return $items;
 }
@@ -49,6 +59,7 @@ function aae_data_menu() {
 /**
  * Builds page for aae_data
  */
+/*
 function aae_data_page() {
   //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
   $modulePath = drupal_get_path('module', 'aae_data');
@@ -59,6 +70,7 @@ function aae_data_page() {
     
   return $profileHTML;
 }
+*/
 /**
  * Builds page for Akteureingabe
  */
@@ -73,8 +85,22 @@ function akteure_page() {
   return $profileHTML;
 }
 /**
+ * Builds page for Akteurprofil
+ */
+function akteurformular_page() {
+  //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
+  $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/akteurformular.php';
+    
+  $path = current_path();
+  $path_alias = drupal_lookup_path('alias',$path);
+    
+  return $profileHTML;
+}
+/**
  * Builds page for Akteurauflistung
  */
+/*
 function displayAkteure_page() {
   //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
   $modulePath = drupal_get_path('module', 'aae_data');
@@ -85,3 +111,4 @@ function displayAkteure_page() {
     
   return $profileHTML;
 }
+*/
