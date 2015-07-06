@@ -31,7 +31,7 @@ EOF;
 
 //Abfrage, ob Besucher der Seite eingeloggt ist:
 if(user_is_logged_in()){//Link für Generierung eines neuen Akteurs anzeigen
-  $profileHTML .= '<a href="akteurformular.php">Neuen Akteur hinzufügen!</a><br>';
+  $profileHTML .= '<a href="Akteurformular">Neuen Akteur hinzufügen!</a><br>';
 }
 
 foreach($resultakteure as $row){
