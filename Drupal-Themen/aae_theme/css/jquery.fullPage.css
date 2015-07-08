@@ -202,3 +202,18 @@ html.fp-enabled,
 #fp-nav ul li .fp-tooltip.left {
     left: 20px;
 }
+
+/* STYLES FOR AAE */
+
+#slideSection .slide {
+  background-size: 100%;
+  padding: 0 5%;
+}
+
+#slideSection .slide p {
+  margin-bottom: 45px;
+}
+
+#slideSection .slide.whiteText h1, #slideSection .slide.whiteText p {
+  color: #fff !important;
+}
