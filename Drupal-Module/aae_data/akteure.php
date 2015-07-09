@@ -35,5 +35,5 @@ if(user_is_logged_in()){//Link für Generierung eines neuen Akteurs anzeigen
 }
 
 foreach($resultakteure as $row){
-  $profileHTML .= '<a href="Akteurprofil/'.$row->AID.'">'.$row->name.'</a><br>';
+  $profileHTML .= '<a href="?q=Akteurprofil/'.$row->AID.'">'.$row->name.'</a><br>';
 }
