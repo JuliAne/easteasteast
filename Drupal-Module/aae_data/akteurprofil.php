@@ -99,6 +99,6 @@ foreach($resultakteur as $row){
 	  $profileHTML .= $row->kurzbeschreibung.'<br>';
 	}
 	if($row->bild != "") { 
-	  $profileHTML .= '<img src="/'.$row->bild.'" >'; }
+	  $profileHTML .= '<img src="sites/all/modules/aae_data/'.$row->bild.'" >'; }
 	
 }
