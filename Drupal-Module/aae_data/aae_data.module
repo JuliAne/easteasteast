@@ -227,7 +227,7 @@ function listAkteure() {
   EasyRdf_Namespace::set('ki', 'http://kultur-initiative.net/Data/Model#');
   $graph = new EasyRdf_Graph("http://kultur-initiative.net/Data/Akteure-1/");
   //Pfad zum speichernden json-File bitte anpassen!!!
-  $graph->parseFile("~/LokalerGitClon/Drupal-Module/aae_data/lib/Akteure-1.json");
+  $graph->parseFile("~/LokalerGitClon/Drupal-Module/aae_data/lib/Akteure-1.json/");
   $s=array();
   foreach ($graph->allOfType("ld:Akteur") as $v) {
     $s[]=getAkteursProfil($v); 
