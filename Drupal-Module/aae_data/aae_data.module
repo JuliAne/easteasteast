@@ -25,7 +25,7 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
-  //Menuitem "Akteurprofil"
+  //Menuitem "Akteurformular"
   $items['Akteurformular'] = array(
     'title' => 'Akteurformular',
     'page callback' => 'akteurformular_page',
@@ -33,46 +33,21 @@ function aae_data_menu() {
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
   );
-    
-  //adding a menu item called "aae_data" (nur für Testzwecke!)
-/*
-  $items['aae_data'] = array(
-    'title' => 'aae_data',
-    'page callback' => 'aae_data_page',
+
+  //Menuitem "Akteurprofil"
+  $items['Akteurprofil/%'] = array(// /%
+    'title' => '',
+    'page callback' => 'akteurprofil_page',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
   );
-  //adding a menu item called "Akteurliste"
-  $items['Akteurliste'] = array(
-    'title' => 'Akteurliste',
-    'page callback' => 'displayAkteure_page',
-    'access arguments' => array('access content'),
-    'type' => MENU_NORMAL_ITEM,
-    'access callback' => TRUE,
-  );
-*/	
 
   return $items;
 }
 
 /**
- * Builds page for aae_data
- */
-/*
-function aae_data_page() {
-  //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
-  $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/aae_data.php';
-    
-  $path = current_path();
-  $path_alias = drupal_lookup_path('alias',$path);
-    
-  return $profileHTML;
-}
-*/
-/**
- * Builds page for Akteureingabe
+ * Builds page for Akteurliste
  */
 function akteure_page() {
   //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
@@ -85,7 +60,7 @@ function akteure_page() {
   return $profileHTML;
 }
 /**
- * Builds page for Akteurprofil
+ * Builds page for Akteurformular
  */
 function akteurformular_page() {
   //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
@@ -98,17 +73,163 @@ function akteurformular_page() {
   return $profileHTML;
 }
 /**
- * Builds page for Akteurauflistung
+ * Builds page for Akteurprofil
  */
-/*
-function displayAkteure_page() {
+function akteurprofil_page($aid=0) {//$aid=0
   //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/displayAkteure.php';
+  include $modulePath . '/akteurprofil.php';
     
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
     
   return $profileHTML;
 }
-*/
+
+//---------------------------------
+
+/**
+ * Methode zum Aufrufen der Parser-Methode fuer:
+ * Akteure.json, ... more to come
+ */
+function akteureeinlesen(){
+  require_once("lib/EasyRdf.php");
+
+  listAkteure();
+}
+/**
+ * Methode, um das Splitten eines Strings mit mehreren Delimitern zu ermoeglichen
+ */
+function multiexplode ($delimiters,$string) {
+    
+  $ready = str_replace($delimiters, $delimiters[0], $string);
+  $launch = explode($delimiters[0], $ready);
+  return  $launch;
+}
+/**
+ * Methode zum speichern der geparsedten Informationen aus Akteure-1.json
+ *
+ * @param $v Informationen zu einem Akteur
+ */
+function getAkteursProfil($v) {
+  $name=$v->get("rdfs:label");
+  $url=$v->get("foaf:homepage");
+  $email=$v->get("foaf:mbox");
+  $bild=$v->get("foaf:image");
+  $telefon=$v->get("foaf:phone");
+  $kurzbeschreibung=$v->get("ki:hatAkteurProfil")->get("ki:hatKurzbeschreibung");
+  $adresse=$v->get("ld:hasAddress");
+  $explodedadresse = multiexplode(array(".","/"),$adresse);
+  $plz=$explodedadresse[5];
+  $ort=$explodedadresse[6];
+  $strasse=$explodedadresse[7];
+  $nr=$explodedadresse[8];
+  $gpspoint=$v->get("ki:hasGeo");
+  $gps = "";
+  if($gpspoint){
+    $explodedgps = multiexplode(array("(",")"),$gpspoint);
+    $gps=$explodedgps[1];
+  }
+
+  $tbl_adresse = "aae_data_adresse";
+  //Adresse von Akteuren in DB speichern:
+  //Abfrage, ob Adresse bereits vorhanden
+  $resultadresse = db_select($tbl_adresse, 'a')
+    ->fields('a', array(
+      'ADID',
+    ))
+    ->condition('strasse', $strasse, '=')
+    ->condition('nr', $nr, '=')
+    ->condition('plz', $plz, '=')
+    ->condition('ort', $ort, '=')
+    ->condition('gps', $gps, '=')
+    ->execute();
+  $count = $resultadresse->rowCount();
+  $adid = "";
+  if($count != 0){//wenn ja: Adress-ID holen
+	foreach ($resultadresse as $row) {
+		$adid = $row->ADID;
+	}
+  }else{//wenn nein: Adresse in DB speichern
+	$adid = db_insert($tbl_adresse)
+      ->fields(array(
+	    'strasse' => $strasse,
+	    'nr' => $nr,
+	    'plz' => $plz,
+	    'ort' => $ort,
+	    'gps' => $gps,
+	  ))
+	  ->execute();
+  }
+ 
+  $tbl_akteur = "aae_data_akteur";
+  //Akteure in DB speichern
+  $akteur_id = db_insert($tbl_akteur)
+    ->fields(array(
+	  'name' => $name,
+    ))
+  ->execute();
+  if ($url) { 
+	db_update($tbl_akteur)
+	  ->fields(array(
+	    'url' => $url,
+	  ))
+	  ->condition('AID', $akteur_id, '=')
+	  ->execute();
+  }
+  if ($email) { 
+	db_update($tbl_akteur)
+	  ->fields(array(
+	    'email' => $email,
+	  ))
+	  ->condition('AID', $akteur_id, '=')
+	  ->execute();
+  }
+  if ($telefon) {
+	db_update($tbl_akteur)
+	  ->fields(array(
+	    'telefon' => $telefon,
+	  ))
+	  ->condition('AID', $akteur_id, '=')
+	  ->execute();
+  } 
+  if ($kurzbeschreibung) {
+	db_update($tbl_akteur)
+	  ->fields(array(
+	    'kurzbeschreibung' => $kurzbeschreibung,
+	  ))
+	  ->condition('AID', $akteur_id, '=')
+	  ->execute();
+  }
+  if ($bild) { 
+    db_update($tbl_akteur)
+      ->fields(array(
+      'bild' => $bild,
+    ))
+    ->condition('AID', $akteur_id, '=')
+    ->execute();
+  }
+  if ($adid) { 
+    db_update($tbl_akteur)
+      ->fields(array(
+      'adresse' => $adid,
+    ))
+    ->condition('AID', $akteur_id, '=')
+    ->execute();
+  }
+
+}
+/**
+ * Methode, welche die Datei Akteure-1.json parsed
+ */
+function listAkteure() { 
+  EasyRdf_Namespace::set('ld', 'http://leipzig-data.de/Data/Model/');
+  EasyRdf_Namespace::set('ki', 'http://kultur-initiative.net/Data/Model#');
+  $graph = new EasyRdf_Graph("http://kultur-initiative.net/Data/Akteure-1/");
+  //Pfad zum speichernden json-File bitte anpassen!!!
+  $graph->parseFile("~/LokalerGitClon/Drupal-Module/aae_data/lib/Akteure-1.json");
+  $s=array();
+  foreach ($graph->allOfType("ld:Akteur") as $v) {
+    $s[]=getAkteursProfil($v); 
+  } 
+}

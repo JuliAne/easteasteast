@@ -136,12 +136,14 @@ if (isset($_POST['submit'])) {
 		'adresszusatz',
 		'plz',
 		'ort',
+		'gps'
 	  ))
 	  ->condition('strasse', $strasse, '=')
 	  ->condition('nr', $nr, '=')
 	  ->condition('adresszusatz', $adresszusatz, '=')
 	  ->condition('plz', $plz, '=')
 	  ->condition('ort', $ort, '=')
+	  ->condition('gps', $gps, '=')
 	  ->execute();
 	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
 	$i = 0;
@@ -156,6 +158,7 @@ if (isset($_POST['submit'])) {
 		  'adresszusatz' => $adresszusatz,
 		  'plz' => $plz,
 		  'ort' => $ort,
+		  'gps' => $gps,
 	    ))
 		->execute();
 	}
@@ -170,7 +173,6 @@ if (isset($_POST['submit'])) {
 		'url' => $url,
 		'ansprechpartner' => $ansprechpartner,
 		'funktion' => $funktion,
-		'gps' => $gps,
 		'bild' => $bild,
 		'kurzbeschreibung' => $kurzbeschreibung,
 		'oeffnungszeiten' => $oeffnungszeiten,
