@@ -33,6 +33,10 @@
   </div>
   <?php endforeach; ?>
 
+  <div class="slide">
+    <div id="map"></div>
+  </div>
+
   </div>
 
  <section class="section" id="projects">
@@ -45,13 +49,23 @@
   require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/block_aae_letzte_akteure.php';
 
   foreach (block_aae_print_letzte_akteure() as $akteur) : ?>
-  <?php print_r($akteur); ?>
+  <?php //print_r($akteur); ?>
 
-  <?= $akteur->name; ?>
-  <?= $akteur->AID; ?>
-
-  <!-- Array ( [0] => Array ( [AID] => 1 [name] => 16. Oberschule ) [1] => Array ( [AID] => 2 [name] => Allgemeiner Turnverein Volkmarsdorf e.V. )
-   [2] => Array ( [AID] => 3 [name] => Animato Musikschule e.V. ) ) -->
+  <div class="row">
+   <div class="large-3 large-offset-1 columns pcard">
+    <header>
+      <h3><a href="#"><?= $akteur->name; ?></a></h3>
+      <!--<img title="Barrierefrei" class="barrierefrei" src="img/wheelchair.svg" />-->
+     </header>
+     <section>
+      <p><!--<strong>Reudnitz</strong>--><?= $akteur->kurzbeschreibung; ?><a href="?q=Akteurprofil/<?= $row->AID; ?>">Zum Projekt...</a></p>
+     </section>
+     <footer>
+      <a href="#" title="Hier erscheint bei Klick eine Minimap inkl. Strassenangabe"><img src="img/location.svg" /></a>
+      <a href="#" title="Weiterleitung zu Terminen dieses Projektes"><img class="gimmeborder" src="img/calendar.svg" /></a>
+      <button class="button blue"><a href="?q=Akteurprofil/<?= $row->AID; ?>">&gt;</a></button>
+     </footer>
+    </div>
 
   <?php endforeach; ?>
 
@@ -72,44 +86,11 @@
     </a></aside>
    </div>
 
-   <div class="large-3 large-offset-1 columns event">
-    <a href="#"><button class="button blue date">08<br />Sept</button></a>
-    <a href="#"><h4>Cosplay Workshop</h4></a>
-    <aside><a href="#">
-     <img src="img/location.svg" style="width: 15px;" />UT Connewitz <br/>
-     <img src="img/clock.svg" style="width: 15px;" /><strong>8:00</strong> - <strong>12:30</strong></p>
-    </a></aside>
-   </div>
-
-   <div class="large-3 large-offset-1 columns event">
-    <a href="#"><button class="button blue date">08<br />Sept</button></a>
-    <a href="#"><h4>Cosplay Workshop</h4></a>
-    <aside><a href="#">
-     <img src="img/location.svg" style="width: 15px;" />UT Connewitz <br/>
-     <img src="img/clock.svg" style="width: 15px;" /><strong>8:00</strong> - <strong>12:30</strong></p>
-    </a></aside>
-   </div>
-
  </div> -->
 
  </section>
 
- <header class="section" id="header">
-
-  <!--<div id="intro" class="row">
-   <h1>Den <strong>Leipziger Osten</strong> neu entdecken.</h1>
-   <div id="introtext">
-   <p>Deine Plattform f&uuml;r den ganzen Stadtteil: Lerne <strong>kreative Projekte</strong> aus Deiner Umgebung kennen & erfahre, wann und wo sich etwas in Deinem Bezirk bewegt!</p>
-   <p>Kostenlos, offen, lokal.</p>
-   </div>
-   <a href="#pageProjects"><button class="button radius">Zu den <strong>Projekten</strong></button></a>
-   <a href="#"><button class="button radius secondary"><strong>Veranstaltungen</strong></button></a>
- </div> -->
-
-  <div id="map"></div>
- </header>
-
- <section class="section" id="bottom">
+ <!--<section class="section" id="bottom">
 
   <div class="row" id="teaser">
 	 <h1><strong>45</strong> Initiativen, <strong>213</strong> Veranstaltungen, <strong>eine</strong> Plattform.</h1>
@@ -120,7 +101,7 @@
    <a href="#"><button class="button radius secondary">Anmelden</button></a>
 
   </div>
- </section>
+</section> -->
 
  <section class="section" id="footer">
  <?php include_once('footer.tpl.php'); ?>

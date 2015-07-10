@@ -16,6 +16,7 @@ function aae_preprocess_html(&$variables) {
 
 
   if (drupal_is_front_page()) {
+
     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css', array('type' => 'external'));
     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css', array('type' => 'external'));
@@ -24,6 +25,11 @@ function aae_preprocess_html(&$variables) {
     drupal_add_js(path_to_theme().'https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js');
 
     drupal_add_js(path_to_theme().'/js/home.js');
+    
+ } else {
+
+    drupal_add_css(path_to_theme().'/css/projects.css');
+
  }
 
   if (user_access('administer')) {

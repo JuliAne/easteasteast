@@ -10,7 +10,7 @@
   text-decoration: none;
   line-height: 1;
   box-sizing: border-box;
-  list-style: none; 
+  list-style: none;
 }
 
 ol, ul {
@@ -77,14 +77,14 @@ input[type=submit].isSubmitButton{
  background-position: 7px;
 }
 
-header #map {
+#slideSection #map {
  position: absolute;
  top: 0;
  bottom: 0;
  width: 100%;
 }
 
-header #intro {
+/*header #intro {
  margin-top: -30px;
  position: relative;
  z-index: 8;
@@ -103,7 +103,7 @@ header #introtext {
 
 header #introtext p {
   line-height: 1.75em;
-}
+} */
 
 #mainnav {
  position: fixed;
@@ -124,7 +124,7 @@ header #introtext p {
 }
 
 #mainnav.scrolled li {
- height: 50px; /* WTF */ 
+ height: 50px; /* WTF */
  padding-top: 18px;
 }
 
@@ -395,7 +395,7 @@ header #introtext p {
 }
 
 #bottom {
- overflow: hidden; 
+ overflow: hidden;
 }
 
 #bottom #teaser {
@@ -462,7 +462,7 @@ header #introtext p {
 #footer #mini-calendar .date-heading a {
  float: right;
  font-size: 0.9em;
- margin-top: -42px; 
+ margin-top: -42px;
 }
 
 #footer #mini-calendar .mini-day-on a {
@@ -486,9 +486,9 @@ header #introtext p {
         {
             display: block;
         }
- 
+
     /* first level */
- 
+
     #nav > ul
     {
         height: auto;
@@ -507,9 +507,9 @@ header #introtext p {
             width: 100%;
             float: none;
         }
- 
+
     /* second level */
- 
+
     #nav li ul
     {
         position: static;
