@@ -31,7 +31,7 @@
 
     <?php
   // Load content_types.inc from the node module.
-  module_load_include('.module', 'aae_data', 'block_aae_letzte_akteure');
+  require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/block_aae_letzte_akteure.module';
   print_r(block_aae_letzte_akteure_page());
 
    ?>
