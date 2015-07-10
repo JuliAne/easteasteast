@@ -34,7 +34,7 @@ $resultUser = db_select($tbl_hat_user, 'u')
   ->condition('hat_AID', $akteur_id, '=')
   ->condition('hat_UID', $user_id, '=')
   ->execute();
-$hat_recht = empty($resultUser);
+$hat_recht = $resultUser->rowCount();
 
 //uebermittelte ID des Akteurs
 //$akteur_id = $_GET['AID']
@@ -63,7 +63,7 @@ $profileHTML = <<<EOF
 EOF;
 
 //Anzeige Edit Button
-if($hat_recht){
+if($hat_recht == 1){
   $profileHTML .= '<a href="?q=Akteuredit">Akteur bearbeiten</a><br><br>';
 }
 

@@ -50,11 +50,11 @@ function aae_data_schema() {
 	  'name' => array('description' => 'Eventname', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
 	  'veranstalter' => array('description' => 'Ausrichter (Akteur) des Events', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'start' => array('description' => 'Startzeitpunkt', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
-	  'ende' => array('description' => 'Endzeitpunkt', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
+	  'ende' => array('description' => 'Endzeitpunkt', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE),
 	  'kurzbeschreibung' => array('description' => 'Kurze inhaltliche Erläuterung', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => 0),
 	  'bild' => array('description' => 'Pfad zum Foto', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
 	  'ort' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
-	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
 	),
 	'primary key' => array('EID'),
 	'foreign keys' => array(

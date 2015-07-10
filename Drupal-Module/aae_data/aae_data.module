@@ -43,6 +43,24 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
+  //Menuitem "Events"
+  $items['Events'] = array(
+    'title' => 'Events',
+    'page callback' => 'events_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
+
+  //Menuitem "Eventprofil"
+  $items['Eventprofil/%'] = array(// /%
+    'title' => '',
+    'page callback' => 'eventprofil_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
+
   return $items;
 }
 
@@ -85,6 +103,32 @@ function akteurprofil_page($aid=0) {//$aid=0
     
   return $profileHTML;
 }
+/**
+ * Builds page for Events
+ */
+function events_page() {
+  //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
+  $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/events.php';
+    
+  $path = current_path();
+  $path_alias = drupal_lookup_path('alias',$path);
+    
+  return $profileHTML;
+}
+/**
+ * Builds page for Eventprofil
+ */
+function eventprofil_page($eid=0) {//$aid=0
+  //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
+  $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/eventprofil.php';
+    
+  $path = current_path();
+  $path_alias = drupal_lookup_path('alias',$path);
+    
+  return $profileHTML;
+}
 
 //---------------------------------
 
@@ -96,6 +140,7 @@ function akteureeinlesen(){
   require_once("lib/EasyRdf.php");
 
   listAkteure();
+  listEvents();
 }
 /**
  * Methode, um das Splitten eines Strings mit mehreren Delimitern zu ermoeglichen
@@ -107,24 +152,26 @@ function multiexplode ($delimiters,$string) {
   return  $launch;
 }
 /**
- * Methode zum speichern der geparsedten Informationen aus Akteure-1.json
+ * Methode zum speichern der geparsedten Informationen aus Akteure_alle.json
  *
  * @param $v Informationen zu einem Akteur
  */
 function getAkteursProfil($v) {
   $name=$v->get("rdfs:label");
-  $url=$v->get("foaf:homepage");
-  $email=$v->get("foaf:mbox");
-  $bild=$v->get("foaf:image");
-  $telefon=$v->get("foaf:phone");
-  $kurzbeschreibung=$v->get("ki:hatAkteurProfil")->get("ki:hatKurzbeschreibung");
+  $url=$v->get("vcard:hasURL");//("foaf:homepage");
+  $email=$v->get("vcard:hasEmail");//("foaf:mbox");
+  $bild=$v->get("vcard:hasPhoto");//("foaf:image");
+  $telefon=$v->get("vcard:hasTelephon");//("foaf:phone");
+  $kurzbeschreibung=$v->get("ki:hatKurzbeschreibung");//get("ki:hatAkteurProfil")->get("ki:hatKurzbeschreibung");
+  $ansprechpartner=$v->get("ki:hatAnsprechpartner");
+  $funktion=$v->get("ki:hatRolle");
   $adresse=$v->get("ld:hasAddress");
   $explodedadresse = multiexplode(array(".","/"),$adresse);
   $plz=$explodedadresse[5];
   $ort=$explodedadresse[6];
   $strasse=$explodedadresse[7];
   $nr=$explodedadresse[8];
-  $gpspoint=$v->get("ki:hasGeo");
+  $gpspoint=$v->get("vcard:hasGeo");//("ki:hasGeo");
   $gps = "";
   if($gpspoint){
     $explodedgps = multiexplode(array("(",")"),$gpspoint);
@@ -169,6 +216,22 @@ function getAkteursProfil($v) {
 	  'name' => $name,
     ))
   ->execute();
+  if ($ansprechpartner) { 
+	db_update($tbl_akteur)
+	  ->fields(array(
+	    'ansprechpartner' => $ansprechpartner,
+	  ))
+	  ->condition('AID', $akteur_id, '=')
+	  ->execute();
+  }
+  if ($funktion) { 
+	db_update($tbl_akteur)
+	  ->fields(array(
+	    'funktion' => $funktion,
+	  ))
+	  ->condition('AID', $akteur_id, '=')
+	  ->execute();
+  }
   if ($url) { 
 	db_update($tbl_akteur)
 	  ->fields(array(
@@ -219,17 +282,123 @@ function getAkteursProfil($v) {
   }
 
 }
+
+
+function getEvents($v) {
+  $name=$v->get("rdfs:label");//
+  $org=$v->get("ical:organizer");
+  $explodedorg = multiexplode(array("/"),$org);
+  $organizer = $explodedorg[5];
+  $url=$v->get("ical:url");//
+  $start=$v->get("ical:dtstart");
+  $end=$v->get("ical:dtend");
+  $kurzbeschreibung=$v->get("ical:description");
+  $adresse=$v->get("ical:location");//
+  $explodedadresse = multiexplode(array(".","/"),$adresse);
+  $plz=$explodedadresse[5];
+  $ort=$explodedadresse[6];
+  $strasse=$explodedadresse[7];
+  $nr=$explodedadresse[8];
+
+  $veranstalter="";
+  $aid="";
+
+  //Abfrage wegen Organisator:
+  if(strcmp($organizer, "A1049") == 0){
+	$veranstalter = "Mühlstraße 14 e.V.";
+  }else{
+	if(strcmp($organizer, "A1029") == 0){
+	  $veranstalter = "Bürgertreff Volkmarsdorf";
+	}else{
+	  if(strcmp($organizer, "A1043") == 0){
+		$veranstalter = "Kinder- und Jugendkulturzentrum O.S.K.A.R.";
+	  }
+	}
+  }
+
+  $tbl_adresse = "aae_data_adresse";
+  $tbl_akteure = "aae_data_akteur";
+  $tbl_event = "aae_data_event";
+  
+  //ID der Akteure erfragen:
+  $resultakteure = db_select($tbl_akteure, 'a')
+    ->fields('a', array(
+      'AID',
+    ))
+    ->condition('name', $veranstalter, '=')
+    ->execute();
+  foreach ($resultakteure as $row) {
+	$aid = $row->AID;
+  }
+
+  //Prüfen, ob Adresse bereits in DB: wenn ja: Adress-ID holen, wenn nein: einfuegen
+  //Abfrage, ob Adresse bereits vorhanden
+  $resultadresse = db_select($tbl_adresse, 'b')
+    ->fields('b', array(
+      'ADID',
+    ))
+    ->condition('strasse', $strasse, '=')
+    ->condition('nr', $nr, '=')
+    ->condition('plz', $plz, '=')
+    ->condition('ort', $ort, '=')
+    ->execute();
+  $count = $resultadresse->rowCount();
+  $adid = "";
+  if($count != 0){//wenn ja: Adress-ID holen
+	foreach ($resultadresse as $row) {
+		$adid = $row->ADID;
+	}
+  }else{//wenn nein: Adresse in DB speichern
+	$adid = db_insert($tbl_adresse)
+      ->fields(array(
+	    'strasse' => $strasse,
+	    'nr' => $nr,
+	    'plz' => $plz,
+	    'ort' => $ort,
+	  ))
+	  ->execute();
+  }
+
+  //Event in DB speichern
+  $eid = db_insert($tbl_event)
+     ->fields(array(
+      'name' => $name,
+      'veranstalter' => $aid,
+      'start' => $start,
+      'ende' => $end,
+      'kurzbeschreibung' => $kurzbeschreibung,
+      'ort' => $adid,
+      'url' => $url,
+    ))
+    ->execute();
+
+}
+
 /**
- * Methode, welche die Datei Akteure-1.json parsed
+ * Methode, welche die Datei Akteure_alle.json parsed
  */
 function listAkteure() { 
   EasyRdf_Namespace::set('ld', 'http://leipzig-data.de/Data/Model/');
   EasyRdf_Namespace::set('ki', 'http://kultur-initiative.net/Data/Model#');
-  $graph = new EasyRdf_Graph("http://kultur-initiative.net/Data/Akteure-1/");
+  EasyRDF_Namespace::set('vcard', 'http://www.w3.org/2006/vcard/ns#');
+  $graph = new EasyRdf_Graph("http://kultur-initiative.net/Data/Akteure_alle/");
   //Pfad zum speichernden json-File bitte anpassen!!!
-  $graph->parseFile("sites/all/modules/aae_data/lib/Akteure-1.json");
+  $graph->parseFile("sites/all/modules/aae_data/lib/Akteure_alle.json");
   $s=array();
   foreach ($graph->allOfType("ld:Akteur") as $v) {
     $s[]=getAkteursProfil($v); 
+  } 
+}
+/**
+ * Methode, welche die Datei Events.json parsed
+ */
+function listEvents() { 
+  EasyRdf_Namespace::set('ld', 'http://leipzig-data.de/Data/Model/');
+  EasyRdf_Namespace::set('ical', 'http://www.w3.org/2002/12/cal/ical#');
+  $graph = new EasyRdf_Graph("http://kultur-initiative.net/Data/Events/");
+  $graph->parseFile("sites/all/modules/aae_data/lib/Events.json");
+  $s=array();
+  foreach ($graph->allOfType("ld:Event") as $v) {
+    $s[]=getEvents($v); 
   } 
 }
