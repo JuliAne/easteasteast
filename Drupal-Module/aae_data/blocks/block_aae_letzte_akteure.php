@@ -10,7 +10,7 @@ function block_aae_print_letzte_akteure($limit = 3) {
 
   $tbl_akteur = "aae_data_akteur";
 
-  require_once 'database/db_connect.php';
+  require_once '../database/db_connect.php';
   $db = new DB_CONNECT();
 
   $letzteakteure = db_select($tbl_akteur, 'a')
