@@ -29,7 +29,12 @@
     <h1><?= $content['headline']; ?></h1>
     <p><?= $content['description']; ?></p>
 
-    <?php print_r(block_aae_letzte_akteure_page()); ?>
+    <?php
+  // Load content_types.inc from the node module.
+  module_load_include('.module', 'aae', 'block_aae_letzte_akteure');
+  print_r(block_aae_letzte_akteure_page());
+
+   ?>
 
     <?= $blueButton.$whiteButton; ?>
   </div>
