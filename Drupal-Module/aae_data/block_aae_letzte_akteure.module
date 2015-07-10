@@ -13,14 +13,16 @@ function block_aae_print_letzte_akteure($limit = 3) {
   require_once 'database/db_connect.php';
   $db = new DB_CONNECT();
 
-  $resultakteure = db_select($tbl_akteur, 'a')
+  $letzteakteure = db_select($tbl_akteur, 'a')
     ->fields('a')
     ->range(0, $limit)
     ->execute();
 
-/*  foreach($resultakteure as $row){
-    $profileHTML .= '<a href="?q=Akteurprofil/'.$row->AID.'">'.$row->name.'</a><br>';
-  } */
+  $resultakteure = array();
+
+ foreach($letzteakteure as $row){
+    $resultakteure[] = array('AID' => $row->AID, 'name' => $row->name);
+  }
 
   return $resultakteure;
 }
