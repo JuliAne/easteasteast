@@ -29,6 +29,8 @@
     <h1><?= $content['headline']; ?></h1>
     <p><?= $content['description']; ?></p>
 
+    <?php print_r(block_aae_letzte_akteure_page()); ?>
+
     <?= $blueButton.$whiteButton; ?>
   </div>
   <?php endforeach; ?>
