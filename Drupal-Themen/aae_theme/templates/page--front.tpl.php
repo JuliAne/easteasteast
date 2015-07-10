@@ -58,12 +58,12 @@
       <!--<img title="Barrierefrei" class="barrierefrei" src="img/wheelchair.svg" />-->
      </header>
      <section>
-      <p><!--<strong>Reudnitz</strong>--><?= $akteur->kurzbeschreibung; ?><a href="?q=Akteurprofil/<?= $row->AID; ?>">Zum Projekt...</a></p>
+      <p><!--<strong>Reudnitz</strong>--><?= $akteur->kurzbeschreibung; ?><a href="?q=Akteurprofil/<?= $akteur->AID; ?>">Zum Projekt...</a></p>
      </section>
      <footer>
-      <a href="#" title="Hier erscheint bei Klick eine Minimap inkl. Strassenangabe"><img src="img/location.svg" /></a>
-      <a href="#" title="Weiterleitung zu Terminen dieses Projektes"><img class="gimmeborder" src="img/calendar.svg" /></a>
-      <button class="button blue"><a href="?q=Akteurprofil/<?= $row->AID; ?>">&gt;</a></button>
+      <a href="#" title="Hier erscheint bei Klick eine Minimap inkl. Strassenangabe"><img src="<?= base_path().path_to_theme(); ?>/img/location.svg" /></a>
+      <a href="#" title="Weiterleitung zu Terminen dieses Projektes"><img class="gimmeborder" src="<?= base_path().path_to_theme(); ?>/img/calendar.svg" /></a>
+      <button class="button blue"><a href="?q=Akteurprofil/<?= $akteur->AID; ?>">&gt;</a></button>
      </footer>
     </div>
 
