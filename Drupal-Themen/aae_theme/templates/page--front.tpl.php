@@ -32,7 +32,7 @@
     <?php
   // Load content_types.inc from the node module.
   require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/block_aae_letzte_akteure.module';
-  print_r(block_aae_letzte_akteure_page());
+  print_r(block_aae_print_letzte_akteure());
 
    ?>
 
