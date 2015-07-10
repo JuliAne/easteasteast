@@ -15,7 +15,7 @@ function block_aae_print_letzte_akteure($limit = 3) {
 
   $resultakteure = db_select($tbl_akteur, 'a')
     ->fields('a')
-    ->range(0, $limit);
+    ->range(0, $limit)
     ->execute();
 
 /*  foreach($resultakteure as $row){
