@@ -16,11 +16,12 @@ function block_aae_print_letzte_akteure($limit = 3) {
   $letzteakteure = db_select($tbl_akteur, 'a')
     ->fields('a')
     ->range(0, $limit)
-    ->execute();
+    ->execute()
+    ->fetchAll();
 
   $resultakteure = array();
 
- foreach($letzteakteure->fetchAssoc() as $row){
+ foreach($letzteakteure as $row){
     $resultakteure[] = $row; //array('AID' => $row->AID, 'name' => $row->name);
   }
 

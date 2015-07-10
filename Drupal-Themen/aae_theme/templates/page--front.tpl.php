@@ -47,8 +47,8 @@
   foreach (block_aae_print_letzte_akteure() as $akteur) : ?>
   <?php print_r($akteur); ?>
 
-  <?= $akteur['name']; ?>
-  <?= $akteur['AID']; ?>
+  <?= $akteur->name; ?>
+  <?= $akteur->AID; ?>
 
   <!-- Array ( [0] => Array ( [AID] => 1 [name] => 16. Oberschule ) [1] => Array ( [AID] => 2 [name] => Allgemeiner Turnverein Volkmarsdorf e.V. )
    [2] => Array ( [AID] => 3 [name] => Animato Musikschule e.V. ) ) -->
