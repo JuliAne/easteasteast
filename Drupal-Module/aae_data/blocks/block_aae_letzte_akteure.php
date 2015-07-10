@@ -20,8 +20,8 @@ function block_aae_print_letzte_akteure($limit = 3) {
 
   $resultakteure = array();
 
- foreach($letzteakteure as $row){
-    $resultakteure[] = array('AID' => $row->AID, 'name' => $row->name);
+ foreach($letzteakteure->fetchAssoc() as $row){
+    $resultakteure[] = $row; //array('AID' => $row->AID, 'name' => $row->name);
   }
 
   return $resultakteure;

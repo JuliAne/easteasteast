@@ -29,13 +29,6 @@
     <h1><?= $content['headline']; ?></h1>
     <p><?= $content['description']; ?></p>
 
-    <?php
-  // Load content_types.inc from the node module.
-  require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/block_aae_letzte_akteure.module';
-  print_r(block_aae_print_letzte_akteure());
-
-   ?>
-
     <?= $blueButton.$whiteButton; ?>
   </div>
   <?php endforeach; ?>
@@ -45,6 +38,22 @@
  <section class="section" id="projects">
 
   <h1>Neueste <strong>Projekte</strong></h1>
+
+  <?php
+  // Lade "letzte Akteure"-Block
+
+  require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/blocks/block_aae_letzte_akteure.php';
+
+  foreach (block_aae_print_letzte_akteure() as $akteur) : ?>
+  <?php print_r($akteur); ?>
+  
+  <?= $akteur['name']; ?>
+  <?= $akteur['AID']; ?>
+
+  <!-- Array ( [0] => Array ( [AID] => 1 [name] => 16. Oberschule ) [1] => Array ( [AID] => 2 [name] => Allgemeiner Turnverein Volkmarsdorf e.V. )
+   [2] => Array ( [AID] => 3 [name] => Animato Musikschule e.V. ) ) -->
+
+  <?php endforeach; ?>
 
 	<div class="row">
     <?php print render($page['content']); ?>
