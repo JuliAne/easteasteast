@@ -1,0 +1,25 @@
+\documentclass{swp}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\maketitle{Installationsanleitung}{13.07.2015}{Paul Eisenhuth}
+\\\\\\\\\\
+Installationsanleitung f\"ur \glqq aae\_{}data\grqq{} Version 1.3 und \glqq aae\_{}theme\grqq{} Version 1.1
+\section{Voraussetzungen:}
+Eine lauff\"ahige Version von Drupal 7, empfohlen wird Drupal 7.37. Eine Beschreibung der Installation sowie der Download findet sich unter \url{https://www.drupal.org/start}
+\section{aae\_{}theme:}
+\begin{itemize} 
+\item Der Ordner \glqq aae\_{}theme\grqq{} muss in der Drupalinstanz in den Ordner \glqq /drupal/sites/all/themes\grqq{} kopiert werden
+\item Auf der Drupalseite einloggen mit dem bei der Installation erstellten Administrator Account und unter \glqq Appearence\grqq{} das Theme \glqq AAE\grqq{} suchen und mit Klick auf \glqq Enable and set default\grqq{} aktivieren
+\end{itemize}
+\section{aae\_{}data:}
+\begin{itemize} 
+\item Der Ordner \glqq aae\_{}data\grqq{} muss in der Drupalinstanz in den Ordner \glqq /drupal/sites/all/modules\grqq{} kopiert werden
+\item In dem Ordner \glqq aae data\grqq{} in den Unterordner \glqq database\grqq{} wechseln und die PHP-Datei \glqq db\_{}config\grqq{} mit einem Texteditor \"offnen. Hier m\"ussen die Zugangsdaten zur Datenbank eingetragen werden, was wo hin geh\"ort ist durch Kommentare ersichtlich
+\item Auf der Drupalseite einloggen mit dem bei der Installation erstellten Administrator Account und unter \glqq Modules\grqq{} die Gruppe \glqq Custom Modules\grqq{} suchen und dort einen Haken bei \glqq AAE Data\grqq{} setzen
+\end{itemize}
+
+\end{document}
