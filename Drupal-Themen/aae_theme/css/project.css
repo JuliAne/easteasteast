@@ -4,9 +4,9 @@
  background-size: 130%;
  margin: 0 -10px;
  filter: blur(8px);
- -webkit-filter: blur(8px); 
+ -webkit-filter: blur(8px);
  -moz-filter: blur(8px);
- -o-filter: blur(8px); 
+ -o-filter: blur(8px);
  -ms-filter: blur(8px);
 }
 
@@ -70,8 +70,4 @@
 
 #project #project-content p {
  padding-bottom: 0.7em;
-}
-
-footer {
- margin-top: 150px;
 }

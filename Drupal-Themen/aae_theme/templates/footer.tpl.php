@@ -1,7 +1,7 @@
  <div class="row">
 
  <div class="large-4 columns" id="about">
-  <h4>&Uuml;ber den Stadtteil:</h4>
+  <h4>&Uuml;ber den Stadtteil.</h4>
   <p>Der <strong>Leipziger Osten</strong> besteht aus neuen Bezirken mit insgesamt 205.000 Einwohnern. Lorem ipsum sed dolor sit amet blakeks und so weiter hier kommt wohl noch was, damit der User in k&uuml;rze bescheid wei&szlig;, was wir hier machen...</p>
   <p><strong>Weitere Informationen:</strong><br />
   <a href="#">Über uns</a> |
@@ -14,27 +14,15 @@
  <div class="large-4 columns" id="mini-nav">
   <h4>Navigation.</h4>
 
-  <ul class="side-nav">
-   <li class="active"><a href="#">Home</a></li>
-   <li><a href="#">Projekte</a></li>
-   <li><a href="#">Events</a></li>
-   <li><a href="#">Leipziger Osten</a></li>
-
-
-     <?php if ($main_menu): ?>
-       <ul class="large-8 small-8 columns">
-         <?php print theme('links__system_main_menu', array(
+  <?php if ($main_menu): ?>
+     <?php print theme('links__system_main_menu', array(
            'links' => $main_menu,
            'attributes' => array(
-             'id' => 'main-menu-links',
+             'id' => 'side-nav',
              'class' => array('links', 'clearfix'),
            )
          )); ?>
-       </ul>
-     <?php endif; ?>
-
-
-  </ul>
+  <?php endif; ?>
 
  </div>
 

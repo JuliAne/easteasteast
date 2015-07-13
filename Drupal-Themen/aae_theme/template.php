@@ -25,16 +25,20 @@ function aae_preprocess_html(&$variables) {
     drupal_add_js(path_to_theme().'https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js');
 
     drupal_add_js(path_to_theme().'/js/home.js');
-    
+
+ } else if (drupal_get_title() == 'Akteurprofil') {
+
+    drupal_add_css(path_to_theme().'/css/project.css');
+
  } else {
 
-    drupal_add_css(path_to_theme().'/css/projects.css');
+    drupal_add_css(path_to_theme(). '/css/subpage.css');
 
  }
 
   if (user_access('administer')) {
    echo '<!-- IF IS_ADMIN -->';
-   echo '<style type="text/css">#mainnav { margin-top: -13px !important; z-index: 20 !important; }</style>';
+   echo '<style type="text/css">#mainnav { margin-top: -15px !important; z-index: 20 !important; }</style>';
    echo '<!-- /IF -->';
  }
 
@@ -62,7 +66,7 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
     $form['name']['#description'] = t('');
     $form['pass']['#description'] = t('');
 
-  } else {
+  } else  { // @TODO ELSEIF SEARCH-FORM 
 
     $form['actions']['submit']['#attributes']['class'][] = 'small button';
     $form['actions']['submit']['#value'] = 'Suche...';

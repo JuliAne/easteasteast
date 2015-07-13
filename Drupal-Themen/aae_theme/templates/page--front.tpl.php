@@ -60,7 +60,8 @@
       <!--<img title="Barrierefrei" class="barrierefrei" src="img/wheelchair.svg" />-->
      </header>
      <section>
-      <p><!--<strong>Reudnitz</strong>--><?= $akteur->kurzbeschreibung; ?><a href="?q=Akteurprofil/<?= $akteur->AID; ?>">Zum Projekt...</a></p>
+      <p><!--<strong>Reudnitz</strong>--><?= $akteur->kurzbeschreibung; ?></p>
+      <p><a href="?q=Akteurprofil/<?= $akteur->AID; ?>">Zum Projekt...</a></p>
      </section>
      <footer>
       <a href="#" title="Hier erscheint bei Klick eine Minimap inkl. Strassenangabe"><img src="<?= base_path().path_to_theme(); ?>/img/location.svg" /></a>
@@ -91,7 +92,7 @@
     <a href="#"><h4><?= $event->name; ?></h4></a>
     <aside><a href="<?= base_path(); ?>?q=Eventprofil/<?= $event->EID; ?>">
      <img src="<?= base_path().path_to_theme(); ?>/img/location.svg" /><?= $event->veranstalter; ?> <br/>
-     <img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><strong>BEGINN</strong> - <strong>ENDE</strong>--></p>
+     <img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><strong>BEGINN</strong> - <strong>ENDE</strong></p>
     </a></aside>
    </div>
 
