@@ -38,7 +38,7 @@ function aae_data_schema() {
 	  'adresszusatz' => array('description' => 'Adresszusatz wie Hinterhof oder a', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	  'ort' => array('description' => 'Stadtname', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	  'nr' => array('description' => 'Hausnummer', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-	  'plz' => array('description' => 'Postleitzahl', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+	  'plz' => array('description' => 'Postleitzahl', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	  'gps' => array('description' => 'GPS-Koordinaten für Karte', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	),
 	'primary key' => array('ADID'),

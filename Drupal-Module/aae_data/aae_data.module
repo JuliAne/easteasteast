@@ -43,6 +43,15 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
+  //Menuitem "Akteuredit"
+  $items['Akteuredit/%'] = array(// /%
+    'title' => '',
+    'page callback' => 'akteuredit_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
+
   //Menuitem "Events"
   $items['Events'] = array(
     'title' => 'Events',
@@ -97,6 +106,19 @@ function akteurprofil_page($aid=0) {//$aid=0
   //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurprofil.php';
+    
+  $path = current_path();
+  $path_alias = drupal_lookup_path('alias',$path);
+    
+  return $profileHTML;
+}
+/**
+ * Builds page for Akteuredit
+ */
+function akteuredit_page($aid=0) {//$aid=0
+  //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
+  $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/akteuredit.php';
     
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);

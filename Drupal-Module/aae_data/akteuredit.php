@@ -1,8 +1,7 @@
 <?php
 /**
- * akteurformular.php stellt ein Formular dar,
- * in welches alle Informationen über einen Akteur
- * eingetragen werden können.
+ * akteuredit.php stellt ein Formular dar,
+ * durch welches die Informationen zu einem Akteur geändert werden können.
  * Einziges Pflichtfeld ist bisher der Name und die Emailadresse.
  * Anschließend werden die Daten in die DB-Tabellen eingetragen.
  *
@@ -11,19 +10,16 @@
 
 //Eingeloggter User
 global $user;
-$user_id = $user->uid;
 
 //DB-Tabellen
 $tbl_hat_Sparte = "aae_data_hat_sparte";
 $tbl_adresse = "aae_data_adresse";
 $tbl_akteur = "aae_data_akteur";
 $tbl_kategorie = "aae_data_kategorie";
-$tbl_hat_user = "aae_data_hat_user";
 
 //-----------------------------------
 
 //Variablen zum Speichern von Werten, welche in die DB-Tabellen eingefügt werden sollen
-//$tbl_akteur
 $name = "";
 $adresse = "";//Address-ID: Addressinformationen muessen aus Addressdbtabelle geholt werden
 $email = "";
@@ -35,7 +31,6 @@ $bild = "";
 $kurzbeschreibung = "";
 $oeffnungszeiten = "";
 
-//$tbl_adresse
 $strasse = "";
 $nr = "";
 $adresszusatz = "";
@@ -51,8 +46,10 @@ $bildpfad = "sites/all/modules/aae_data/images/";
 
 //-----------------------------------
 
+$akteur_id = "";
 //Variable zur Kategoriebestimmung
 //$sent = "";
+
 //Variable zur Freigabe: muss true sein
 $freigabe = true;
 
@@ -83,7 +80,6 @@ $ph_telefon = "Telefonnummer";
 $ph_url = "Website";
 $ph_ansprechpartner = "Kontaktperson";
 $ph_funktion = "Funktion der Kontaktperson";
-$ph_bild = "Dateiname mit Endung";
 $ph_kurzbeschreibung = "Kurzbeschreibung";
 $ph_oeffnungszeiten = "Öffnungszeiten";
 
@@ -102,6 +98,8 @@ $ph_gps = "GPS-Addresskoordinaten";
 //das wird ausgeführt, wenn auf "Speichern" gedrückt wird
 if (isset($_POST['submit'])) {
 	
+  $akteur_id = $_POST['akteur_id'];
+	
   //Wertezuweisung
   $name = $_POST['name'];
   $email = $_POST['email'];
@@ -112,6 +110,7 @@ if (isset($_POST['submit'])) {
   if(isset($_POST['bild'])){
     $bild = $_POST['bild'];
   }
+  $bild_alt=$_POST['bild_alt'];
   $kurzbeschreibung = $_POST['kurzbeschreibung'];
   $oeffnungszeiten = $_POST['oeffnungszeiten'];
 
@@ -125,108 +124,108 @@ if (isset($_POST['submit'])) {
   //$kategorie = $_POST['kategorie'];
 	
 //-------------------------------------
+
   //Check-Klauseln
 	
-  //Check, ob ein Name eingegeben wurde:
-  if(strlen($name) == 0){
+  //Check, ob ein Name eingegeben wurde:	
+  if(strlen($name) == 0){	
     //Feld nicht ausgefüllt
-    $fehler_name = "Bitte einen Organisationsnamen eingeben!";
+	$fehler_name = "Bitte einen Organisationsnamen eingeben!";
 	$freigabe = false;
   }
   //Ckeck, ob Email angegeben wurde
   if(strlen($email) == 0){
-    //Feld nicht ausgefüllt
-    $fehler_email = "Bitte eine Emailadresse eingeben!";
-	$freigabe = false;
+	//Feld nicht ausgefüllt
+    $fehler_email = "Bitte eine Emailadresse eingeben!";	$freigabe = false;
   }
 
   //überflüssige Leerzeichen am Anfang entfernen
-  $name=trim($name);  
-  $email = trim($email);
-  $telefon = trim($telefon); 
-  $url = trim($url); 
-  $ansprechpartner = trim($ansprechpartner); 
-  $funktion = trim($funktion); 
-  $bild = trim($bild); 
+  $name=trim($name);  	
+  $email = trim($email);	
+  $telefon = trim($telefon); 	
+  $url = trim($url); 	
+  $ansprechpartner = trim($ansprechpartner); 	
+  $funktion = trim($funktion); 	
+  $bild = trim($bild); 	
   $kurzbeschreibung = trim($kurzbeschreibung); 
-  $oeffnungszeiten = trim($oeffnungszeiten); 
-  $strasse = trim($strasse);
-  $nr = trim($nr);
-  $adresszusatz = trim($adresszusatz);
-  $plz = trim($plz);
-  $ort = trim($ort);
+  $oeffnungszeiten = trim($oeffnungszeiten); 	
+  $strasse = trim($strasse);	
+  $nr = trim($nr);	
+  $adresszusatz = trim($adresszusatz);	
+  $plz = trim($plz);	
+  $ort = trim($ort);	
   $gps = trim($gps);
 
   //und alle Tags entfernen (Hacker)
-  $name=strip_tags($name);
-  $email = strip_tags($email);
-  $telefon = strip_tags($telefon); 
-  $url = strip_tags($url); 
+  $name=strip_tags($name);	
+  $email = strip_tags($email);	
+  $telefon = strip_tags($telefon); 	
+  $url = strip_tags($url); 	
   $ansprechpartner = strip_tags($ansprechpartner); 
-  $funktion = strip_tags($funktion); 
-  $bild = strip_tags($bild); 
+  $funktion = strip_tags($funktion); 	
+  $bild = strip_tags($bild); 	
   $kurzbeschreibung = strip_tags($kurzbeschreibung); 
   $oeffnungszeiten = strip_tags($oeffnungszeiten); 
-  $strasse = strip_tags($strasse);
-  $nr = strip_tags($nr);
-  $adresszusatz = strip_tags($adresszusatz);
-  $plz = strip_tags($plz);
-  $ort = strip_tags($ort);
+  $strasse = strip_tags($strasse);	
+  $nr = strip_tags($nr);	
+  $adresszusatz = strip_tags($adresszusatz);	
+  $plz = strip_tags($plz);	
+  $ort = strip_tags($ort);	
   $gps = strip_tags($gps);
-
+	
   //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
-  if (strlen($name) > 100){
-	$fehler_name = "Bitte geben Sie einen kuerzeren Namen an oder verwenden Sie ein Kuerzel.";
+  if (strlen($name) > 100){	
+    $fehler_name = "Bitte geben Sie einen kuerzeren Namen an oder verwenden Sie ein Kuerzel.";
 	$freigabe = false;
-  }
-  if (strlen($email) > 100){
+  }	
+  if (strlen($email) > 100){	
 	$fehler_email = "Bitte geben Sie eine kuerzere Emailadresse an.";
 	$freigabe = false;
-  }
+  }	
   if (strlen($telefon) > 100){
 	$fehler_telefon = "Bitte geben Sie eine kuerzere Telefonnummer an.";
 	$freigabe = false;
-  }
+  }	
   if (strlen($url) > 100){
 	$fehler_url = "Bitte geben Sie eine kuerzere URL an.";
 	$freigabe = false;
-  }
+  }	
   if (strlen($ansprechpartner) > 100){
 	$fehler_ansprechpartner = "Bitte geben Sie einen kuerzeren Ansprechpartner an.";
 	$freigabe = false;
-  }
+  }	
   if (strlen($funktion) > 100){
 	$fehler_funktion = "Bitte geben Sie eine kuerzere Funktion an.";
 	$freigabe = false;
-  }
+  }	
   if (strlen($kurzbeschreibung) > 500){
 	$fehler_kurzbeschreibung = "Bitte geben Sie eine kuerzere Beschreibung an.";
 	$freigabe = false;
-  }
+  }	
   if (strlen($oeffnungszeiten) > 200){
 	$fehler_oeffnungszeiten = "Bitte geben Sie kuerzere Oeffnungszeiten an.";
 	$freigabe = false;
-  }
+  }	
   if (strlen($strasse) > 100){
 	$fehler_strasse = "Bitte geben Sie einen kuerzeren Strassennamen an.";
 	$freigabe = false;
-  }
+  }	
   if (strlen($nr) > 100){
 	$fehler_nr = "Bitte geben Sie eine kuerzere Nummer an.";
 	$freigabe = false;
-  }
+  }	
   if (strlen($adresszusatz) > 100){
 	$fehler_adresszusatz = "Bitte geben Sie einen kuerzeren Adresszusatz an.";
 	$freigabe = false;
-  }
+  }	
   if (strlen($plz) > 100){
 	$fehler_plz = "Bitte geben Sie eine kuerzere PLZ an.";
 	$freigabe = false;
-  }
+  }	
   if (strlen($ort) > 100){
 	$fehler_ort = "Bitte geben Sie einen kuerzeren Ortsnamen an.";
 	$freigabe = false;
-  }
+  }	
   if (strlen($gps) > 100){
 	$fehler_gps = "Bitte geben Sie kuerzere GPS-Daten an.";
 	$freigabe = false;
@@ -238,9 +237,11 @@ if (isset($_POST['submit'])) {
 	if($bildname != ""){
 	  move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname);//Upload
 	  $bild = "images/".$bildname;
+	}else{
+		$bild=$bild_alt;
 	}
   }
-  
+
 //---------------------------------
 
   //Wenn $goodtogo true, ab in die DB mit den Daten
@@ -249,13 +250,11 @@ if (isset($_POST['submit'])) {
 	//include $modulePath . '/templates/utils/rest_helper.php'; Ist aus dem Künstlermodul übernommen
 	$db = new DB_CONNECT();
 	//Das Ergebnis von db_insert()->...->execute(); ist die ID, von diesem Eintrag
-	
 	//Abfrage, ob Adresse bereits in Adresstabelle
 	//Addressdaten aus DB holen:
 	$resultadresse = db_select($tbl_adresse, 'a')
-	  ->fields('a', array(
-	    'ADID',
-		'gps',
+      ->fields('a', array(
+		'ADID',
 	  ))
 	  ->condition('strasse', $strasse, '=')
 	  ->condition('nr', $nr, '=')
@@ -263,12 +262,11 @@ if (isset($_POST['submit'])) {
 	  ->condition('plz', $plz, '=')
 	  ->condition('ort', $ort, '=')
 	  ->execute();
-	
 	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
-    $i = $resultadresse->rowCount();
+	$i = $resultadresse->rowCount();
 	if($i == 0){//Adresse nicht vorhanden
 	  $adresse = db_insert($tbl_adresse)
-	    ->fields(array(
+		->fields(array(
 		  'strasse' => $strasse,
 		  'nr' => $nr,
 		  'adresszusatz' => $adresszusatz,
@@ -277,25 +275,15 @@ if (isset($_POST['submit'])) {
 		  'gps' => $gps,
 		))
 		->execute();
-	}else {//Adresse bereits vorhanden
+	}else {
 	  foreach ($resultadresse as $row) {
-	    //Abfrage, ob GPS-Angaben gemacht wurden
-	    if(strlen($gps) != 0 && strlen($row->gps) == 0 ){//ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
-	      //Update der Adresse  
-	      $adresse_updated = db_update($tbl_adresse)
-	 	    ->fields(array(
-			  'gps' => $gps,
-	        ))
-	        ->condition('ADID', $row->ADID, '=')
-	        ->execute();
-	    }
-	    $adresse = $row->ADID;//Adress-ID merken
+		$adresse = $row->ADID;
 	  }
 	}
 
-    //tbl_akteur INSERT!!!
-	$akteur_id = db_insert($tbl_akteur)
-   	  ->fields(array(
+	//tbl_akteur UPDATE!!!
+	$akteur_updated = db_update($tbl_akteur)
+      ->fields(array(
 		'name' => $name,
 		'adresse' => $adresse,
 		'email' => $email,
@@ -307,37 +295,140 @@ if (isset($_POST['submit'])) {
 		'kurzbeschreibung' => $kurzbeschreibung,
 		'oeffnungszeiten' => $oeffnungszeiten,
 	  ))
+	  ->condition('AID', $akteur_id, '=')
 	  ->execute();
-	
-	//tbl_hat_user insert
-	db_insert($tbl_hat_user)
-	  ->fields(array(
-	    'hat_UID' => $user_id,
-	    'hat_AID' => $akteur_id,
-	  ))
-	  ->execute();
-	    
-	
-	//$tbl_hat-Sparte
-    /*
+	//Kategorien
+	/*
 	foreach ($kategorie as $row) {
-	  //Kategorie noch nicht zugeordnet
-	  //tbl_hat_Sparte INSERT!!!
-	  $hat_sparte_insert = db_insert($tbl_hat_Sparte)
-	 	->fields(array(
-	      'kategorie' => $row1->kategorie_id,
+	  $result_kategorie_id = db_select($tbl_kategorie)//ID der ausgewählten Kategorie holen
+		->fields(array(
+		  'kategorie_id'
 		))
-		->condition('akteur_id', $akteur_id, '=')
-	    ->execute();
+		->condition('kategorie', $row, '=')
+		->execute();
+	  foreach ($result_kategorie_id as $row1) {
+		//Abfragen, ob Kategorie bereits zu dem Akteur vorhanden ist:
+		$result_kategorie_akteur = db_select($tbl_hat_Sparte)
+		  ->fields(array(
+			'akteur',
+			'kategorie',
+		  ))
+		  ->condition('akteur', $akteur_id, '=')
+		  ->condition('kategorie', $row1->kategorie_id)
+		  ->execute();
+		$count1 = $result_kategorie_akteur->rowCount();
+		if($count1 == 0){//Kategorie noch nicht zugeordnet
+		  //tbl_hat_Sparte INSERT!!!
+		  $hat_sparte_insert = db_insert($tbl_hat_Sparte)
+		 	->fields(array(
+		  	  'kategorie' => $row1->kategorie_id,
+			))
+		    ->condition('akteur_id', $akteur_id, '=')
+		    ->execute();
+		}	
+	  }
+	}
+	//Unchecked Kategorien löschen:
+	//Alle markierten Kategorien holen:
+	$result_alle_kategorien = db_select($tbl_hat_Sparte)
+	  ->fields(array(
+		'kategorie',
+	  ))
+	  ->condition('akteur', $akteur_id, '=')
+	  ->execute();
+	foreach ($result_alle_kategorien as $row) {
+	  $zaehler = 0;
+	  foreach ($kategorie as $row1) {
+		if($row->kategorie == $row1){//Kategorie markiert
+		  $zaehler = $zaehler + 1;
+		}
+	  }
+	  if(zaehler == 0){//Kategorie wurde unchecked
+		$kat_deleted = db_delete($tbl_hat_Sparte)//Aus Tabelle loeschen!
+		  ->condition('akteur', $akteur_id, '=')
+		  ->condition('kategorie', $row->kategorie, '=')
+		  ->execute();
+	  }
 	}
 	*/
 		
-	header("Location: ?q=Akteure"); //Hier muss hin, welche Seite aufgerufen werden soll,
-	  //nach dem die Daten erfolgreich gespeichert wurden.
-	}
+	header("Location: ?q=Akteurprofil/$akteur_id"); //Hier muss hin, welche Seite aufgerufen werden soll,
+		//nach dem die Daten erfolgreich gespeichert wurden.
+  }
 	
-}else{
- //Formular wird zum ersten Mal aufgerufen: nichts tun
+} else{
+  //Erstmaliger Aufruf: Daten aus DB in Felder schreiben
+  require_once $modulePath . '/database/db_connect.php';
+  $db = new DB_CONNECT();
+	
+  //AID holen:
+  $path = current_path();
+  $explodedpath = explode("/", $path);
+  $akteur_id = $explodedpath[1];
+
+  //Auswahl der Daten des eingeloggten Akteurs:
+  $resultakteur = db_select($tbl_akteur, 'c')
+    ->fields('c', array(	
+	  'name',
+	  'adresse',
+	  'email',
+	  'telefon',
+	  'url',
+	  'ansprechpartner',
+	  'funktion',
+	  'bild',
+	  'kurzbeschreibung',
+	  'oeffnungszeiten',
+	))
+	->condition('AID', $akteur_id, '=')
+    ->execute();
+  //Speichern der Daten in den Arbeitsvariablen
+  foreach($resultakteur as $row){
+	$name = $row->name;
+	$adresse = $row->adresse;//Address-ID: Addressinformationen muessen aus Addressdbtabelle geholt werden
+	$email = $row->email;
+	$telefon = $row->telefon;
+	$url = $row->url;
+	$ansprechpartner = $row->ansprechpartner;
+	$funktion = $row->funktion;
+	$bild = $row->bild;
+	$kurzbeschreibung = $row->kurzbeschreibung;
+	$oeffnungszeiten = $row->oeffnungszeiten;
+  }
+  if($bild == ""){
+    $bild = "images/xxx.png";
+  }
+	
+  //Adressdaten aus DB holen:
+  $resultadresse = db_select($tbl_adresse, 'd')
+    ->fields('d', array(	
+	  'strasse',
+	  'nr',
+	  'adresszusatz',
+	  'plz',
+	  'ort',
+	  'gps',
+	))
+	->condition('ADID', $adresse, '=')
+    ->execute();
+  //Speichern der Adressdaten in den Arbeitsvariablen
+  foreach ($resultadresse as $row) {
+	$strasse = $row->strasse;
+	$nr = $row->nr;
+	$adresszusatz = $row->adresszusatz;
+	$plz = $row->plz;
+	$ort = $row->ort;
+	$gps = $row->gps;
+  }
+  /*
+  //alle Kategorien holen
+  $resultkategorie = db_select($tbl_kategorie, 'f')
+    ->fields('f', array(
+	  'kategorie_id',
+	  'kategorie',
+	))
+    ->execute();
+  */
 }
 
 $pathThisFile = $_SERVER['REQUEST_URI']; 
@@ -345,8 +436,11 @@ $pathThisFile = $_SERVER['REQUEST_URI'];
 //Darstellung
 $profileHTML = <<<EOF
 <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
+  <input name="akteur_id" type="hidden" id="akteurAIDInput" value="$akteur_id" />
+  <!-- verstecktes Feld für bild -->
+  <input name="bild_alt" type="hidden" id="bild_alt" value="$bild" />
 
-  <label>Name (Pflichtfeld):</label>
+  <label>Name:</label>
   <input type="text" class="akteur" id="akteurNameInput" name="name" value="$name" placeholder="$ph_name" required>$fehler_name
 
   <label>Addresse:</label>
@@ -374,18 +468,40 @@ $profileHTML = <<<EOF
   <input type="text" class="akteur" id="akteurTelefonInput" name="telefon" value="$telefon" placeholder="$ph_telefon">$fehler_telefon
   <label>Website:</label>
   <input type="text" class="akteur" id="akteurURLInput" name="url" value="$url" placeholder="$ph_url">$fehler_url
-  <label>Emailaddresse (Pflichtfeld):</label>
-  <input type="email" class="akteur" id="akteurEmailInput" name ="email" value="$email" placeholder="$ph_email">$fehler_email<br>
+  <label>Emailaddresse:</label>
+  <input type="email" class="akteur" id="akteurEmailInput" name ="email" value="$email" placeholder="$ph_email"><br>$fehler_email
 
   <label>Beschreibung:</label>
-  <textarea name="kurzbeschreibung" class="akteur" cols="45" rows="3" placeholder="$ph_kurzbeschreibung">$kurzbeschreibung</textarea>$fehler_kurzbeschreibung
-  <label>Bild:</label>
-  <input type="file" class="akteur" id="akteurBildInput" name="bild" /><br>
-	
+  <textarea name="kurzbeschreibung" class="akteur" cols="45" rows="3" placeholder="ph_kurzbeschreibung">$kurzbeschreibung</textarea>$fehler_kurzbeschreibung
+  <label>Bild:</label><input type="file" class="akteur" id="akteurBildInput" name="bild" value="$bild" /><br>
+  <img src="sites/all/modules/aae_data/$bild" width=200 ><br>
   <!--<label>Sparten:</label>
+  //Tags
   <input type="hidden" name="sent" value="yes">-->
-
-  <input type="submit" class="akteure" id="akteureSubmit" name="submit" value="Speichern">
+  <br>
+  <input type="submit" class="akteure" id="akteureSubmit" name="submit" value="Übernehmen">
 </form>
 EOF;
 
+/*
+//Kategoriehandling
+foreach($resultkategorie as $row){
+	//Abfrage, ob Kategorie markiert ist (fuer den AKteur gespeichert ist)
+	$resulthatsparte = db_select($tbl_hat_Sparte, 'g')
+	    ->fields('g', array(
+			'kategorie',
+		))
+		->condition('akteur', $akteur_id, '=')
+		->condition('kategorie', $row->kategorie_id, '=')
+	    ->execute();
+	//$count holt Anzahl des Ergebnisses, um zu prüfen, ob Kategorie dem Akteur zugeordnet ist
+	$count = $resulthatsparte->rowCount();
+	if($count == 1){//Kategorie ist markiert
+		$profileHTML .= '<input type="checkbox" class="akteur" name="kategorie[]" value="$row->kategorie" checked>'.$row->kategorie.'</p>';//CHECKED!!!
+	}else{//Kategorie ist nicht markiert
+		$profileHTML .= '<input type="checkbox" class="akteur" name="kategorie[]" value="$row->kategorie">'.$row->kategorie.'</p>';//UNCHECKED!!!
+	}
+}
+$profileHTML .= '<input type="submit" class="akteure" id="akteureSubmit" name="submit" value="Übernehmen">';
+$profileHTML .= '</form>';
+*/

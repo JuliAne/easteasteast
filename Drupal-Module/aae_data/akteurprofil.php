@@ -36,10 +36,7 @@ $resultUser = db_select($tbl_hat_user, 'u')
   ->execute();
 $hat_recht = $resultUser->rowCount();
 
-//uebermittelte ID des Akteurs
-//$akteur_id = $_GET['AID']
-
-//Auswahl aller Akteure (nur Name) in alphabetischer Reihenfolge
+//Auswahl der Daten des AKteurs
 $resultakteur = db_select($tbl_akteur, 'a')
   ->fields('a', array(
     'name',
@@ -64,7 +61,7 @@ EOF;
 
 //Anzeige Edit Button
 if($hat_recht == 1){
-  $profileHTML .= '<a href="?q=Akteuredit">Akteur bearbeiten</a><br><br>';
+  $profileHTML .= '<a href="?q=Akteuredit/'.$akteur_id.'">Akteur bearbeiten</a><br><br>';
 }
 
 foreach($resultakteur as $row){
@@ -99,6 +96,6 @@ foreach($resultakteur as $row){
 	  $profileHTML .= $row->kurzbeschreibung.'<br>';
 	}
 	if($row->bild != "") { 
-	  $profileHTML .= '<img src="sites/all/modules/aae_data/'.$row->bild.'" >'; }
+	  $profileHTML .= '<img src="sites/all/modules/aae_data/'.$row->bild.'" width=400 >'; }
 	
 }
