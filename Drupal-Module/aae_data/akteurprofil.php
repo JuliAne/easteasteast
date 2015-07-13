@@ -3,6 +3,7 @@
  * akteurprofil.php zeigt das Profil eines Akteurs an.
  *
  * Ruth, 2015-06-06
+ * Felix, 2015-06-13
  */
 
 //-----------------------------------
@@ -34,6 +35,7 @@ $resultUser = db_select($tbl_hat_user, 'u')
   ->condition('hat_AID', $akteur_id, '=')
   ->condition('hat_UID', $user_id, '=')
   ->execute();
+
 $hat_recht = $resultUser->rowCount();
 
 //Auswahl der Daten des AKteurs
@@ -59,17 +61,19 @@ $resultakteur = db_select($tbl_akteur, 'a')
 $profileHTML = <<<EOF
 EOF;
 
-//Anzeige Edit Button
-if($hat_recht == 1){
-  $profileHTML .= '<a href="?q=Akteuredit/'.$akteur_id.'">Akteur bearbeiten</a><br><br>';
-}
+// Übergebe Info-Array an templates/project.tpl
 
-foreach($resultakteur as $row){
-	$profileHTML .= '<h1>'.$row->name.'</h1>';
-	
-	$profileHTML .= '<h4>Adresse:</h4>';
-	//Adresse des Akteurs
-	$resultadresse = db_select($tbl_adresse, 'b')
+$aResult = array();
+
+//Anzeige Edit Button
+
+$aResult[$rId]->$hat_recht = $hat_recht;
+
+foreach($resultakteur as $rId => $row){
+
+	$aResult[$rId] = $row;
+
+	$resultAdresse = db_select($tbl_adresse, 'b')
 	  ->fields('b', array(
 	    'strasse',
 	    'nr',
@@ -79,23 +83,24 @@ foreach($resultakteur as $row){
 	  ))
 	  ->condition('ADID', $row->adresse, '=')
 	  ->execute();
-	foreach ($resultadresse as $row1) {
-		$profileHTML .= $row1->strasse.' '.$row1->nr.'<br>';
-		$profileHTML .= $row1->plz.' '.$row1->ort.'<br>';
-		$profileHTML .= 'GPS: '.$row1->gps.'<br>';
+    // FETCH?
+
+    $aResult[$rId]->$adresse = $resultAdresse; // geht?
 	}
-	
-	$profileHTML .= '<h4>Kontakt:</h4>';
-	if($row->ansprechpartner != "") { $profileHTML .= $row->ansprechpartner.'<br>'; }
+
+	/* if($row->ansprechpartner != "") { $profileHTML .= $row->ansprechpartner.'<br>'; }
 	if($row->funktion != "") { $profileHTML .= $row->funktion.'<br>'; }
 	if($row->email != "") { $profileHTML .= $row->email.'<br>'; }
 	if($row->telefon != "") { $profileHTML .= $row->telefon.'<br>'; }
 	if($row->url != "") { $profileHTML .= $row->url.'<br>'; }
-	if($row->kurzbeschreibung != "") { 
+	if($row->kurzbeschreibung != "") {
       $profileHTML .= '<h4>Beschreibung:</h4>';
 	  $profileHTML .= $row->kurzbeschreibung.'<br>';
 	}
-	if($row->bild != "") { 
-	  $profileHTML .= '<img src="sites/all/modules/aae_data/'.$row->bild.'" width=400 >'; }
-	
+	if($row->bild != "") {
+	  $profileHTML .= '<img src="sites/all/modules/aae_data/'.$row->bild.'" width=400 >'; } */
+
+    include $themePath . '/project.tpl.php'; // OUTPUT project.tpl
+
+// return profileHTML???
 }

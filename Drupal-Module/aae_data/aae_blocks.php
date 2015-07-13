@@ -98,6 +98,18 @@ function block_aae_count_projects_events() {
     $resultakteure[] = $row; //array('AID' => $row->AID, 'name' => $row->name);
   } */
 
+  $resultadresse = db_select($tbl_adresse, 'b')
+    ->fields('b', array(
+      'ADID',
+    ))
+    ->condition('strasse', $strasse, '=')
+    ->condition('nr', $nr, '=')
+    ->condition('plz', $plz, '=')
+    ->condition('ort', $ort, '=')
+    ->execute();
+  $count = $resultadresse->rowCount();
+  $adid = "";
+
   return $myCounts;
 
   // return array('akteure' => xy, 'projekte' => xy):

@@ -33,7 +33,6 @@ function aae_preprocess_html(&$variables) {
  } else {
 
     drupal_add_css(path_to_theme(). '/css/subpage.css');
-    echo strpos(current_path(), 'Akteurprofil');
 
  }
 

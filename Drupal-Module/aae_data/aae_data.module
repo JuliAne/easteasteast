@@ -1,19 +1,32 @@
 <?php
 
 /**
- * @file
  * Updates Drupal to be way ruther.
+ * @TODO Aktiviere diese Funktion nur, wenn sich Drupal im
+ * Development-Modus befindet.
  */
 
 if (drupal_is_front_page()) {
   $GLOBALS['conf']['cache'] = FALSE;
 }
 
+/** @function hook_cron()
+*
+* Cronjob, der von Drupal automatisch aufgerufen wird.
+* Updated die LOData.js Maps-Koordinaten-Datei
+*/
 
-/* Hier ist entsprechender Code zu ergänzen */
+function aae_cron() {
+  //....
+}
+
+
 /**
- * Implements hook_menu().
+ * @function hook_menu()
+ *
+ * Verlinkt URL-Pfade auf die entsprechende Funktion.
  */
+
 function aae_data_menu() {
   $items = array();
   //Menuitem "Akteure"
@@ -35,7 +48,7 @@ function aae_data_menu() {
   );
 
   //Menuitem "Akteurprofil"
-  $items['Akteurprofil/%'] = array(// /%
+  $items['Akteurprofil/%'] = array(
     'title' => '',
     'page callback' => 'akteurprofil_page',
     'access arguments' => array('access content'),
@@ -44,7 +57,7 @@ function aae_data_menu() {
   );
 
   //Menuitem "Akteuredit"
-  $items['Akteuredit/%'] = array(// /%
+  $items['Akteuredit/%'] = array(
     'title' => '',
     'page callback' => 'akteuredit_page',
     'access arguments' => array('access content'),
@@ -62,7 +75,7 @@ function aae_data_menu() {
   );
 
   //Menuitem "Eventprofil"
-  $items['Eventprofil/%'] = array(// /%
+  $items['Eventprofil/%'] = array(
     'title' => '',
     'page callback' => 'eventprofil_page',
     'access arguments' => array('access content'),
@@ -77,78 +90,72 @@ function aae_data_menu() {
  * Builds page for Akteurliste
  */
 function akteure_page() {
-  //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteure.php';
-    
+
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
-    
+
   return $profileHTML;
 }
 /**
  * Builds page for Akteurformular
  */
 function akteurformular_page() {
-  //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurformular.php';
-    
+
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
-    
+
   return $profileHTML;
 }
 /**
  * Builds page for Akteurprofil
  */
-function akteurprofil_page($aid=0) {//$aid=0
-  //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
+function akteurprofil_page($aid=0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurprofil.php';
-    
+
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
-    
+
   return $profileHTML;
 }
 /**
  * Builds page for Akteuredit
  */
-function akteuredit_page($aid=0) {//$aid=0
-  //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
+function akteuredit_page($aid=0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteuredit.php';
-    
+
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
-    
+
   return $profileHTML;
 }
 /**
  * Builds page for Events
  */
 function events_page() {
-  //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/events.php';
-    
+
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
-    
+
   return $profileHTML;
 }
 /**
  * Builds page for Eventprofil
  */
-function eventprofil_page($eid=0) {//$aid=0
-  //drupal_add_css("sites/all/modules/aae_data/aae_data.css");
+function eventprofil_page($eid=0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventprofil.php';
-    
+
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
-    
+
   return $profileHTML;
 }
 
@@ -168,7 +175,7 @@ function akteureeinlesen(){
  * Methode, um das Splitten eines Strings mit mehreren Delimitern zu ermoeglichen
  */
 function multiexplode ($delimiters,$string) {
-    
+
   $ready = str_replace($delimiters, $delimiters[0], $string);
   $launch = explode($delimiters[0], $ready);
   return  $launch;
@@ -230,7 +237,7 @@ function getAkteursProfil($v) {
 	  ))
 	  ->execute();
   }
- 
+
   $tbl_akteur = "aae_data_akteur";
   //Akteure in DB speichern
   $akteur_id = db_insert($tbl_akteur)
@@ -238,7 +245,7 @@ function getAkteursProfil($v) {
 	  'name' => $name,
     ))
   ->execute();
-  if ($ansprechpartner) { 
+  if ($ansprechpartner) {
 	db_update($tbl_akteur)
 	  ->fields(array(
 	    'ansprechpartner' => $ansprechpartner,
@@ -246,7 +253,7 @@ function getAkteursProfil($v) {
 	  ->condition('AID', $akteur_id, '=')
 	  ->execute();
   }
-  if ($funktion) { 
+  if ($funktion) {
 	db_update($tbl_akteur)
 	  ->fields(array(
 	    'funktion' => $funktion,
@@ -254,7 +261,7 @@ function getAkteursProfil($v) {
 	  ->condition('AID', $akteur_id, '=')
 	  ->execute();
   }
-  if ($url) { 
+  if ($url) {
 	db_update($tbl_akteur)
 	  ->fields(array(
 	    'url' => $url,
@@ -262,7 +269,7 @@ function getAkteursProfil($v) {
 	  ->condition('AID', $akteur_id, '=')
 	  ->execute();
   }
-  if ($email) { 
+  if ($email) {
 	db_update($tbl_akteur)
 	  ->fields(array(
 	    'email' => $email,
@@ -277,7 +284,7 @@ function getAkteursProfil($v) {
 	  ))
 	  ->condition('AID', $akteur_id, '=')
 	  ->execute();
-  } 
+  }
   if ($kurzbeschreibung) {
 	db_update($tbl_akteur)
 	  ->fields(array(
@@ -286,7 +293,7 @@ function getAkteursProfil($v) {
 	  ->condition('AID', $akteur_id, '=')
 	  ->execute();
   }
-  if ($bild) { 
+  if ($bild) {
     db_update($tbl_akteur)
       ->fields(array(
       'bild' => $bild,
@@ -294,7 +301,7 @@ function getAkteursProfil($v) {
     ->condition('AID', $akteur_id, '=')
     ->execute();
   }
-  if ($adid) { 
+  if ($adid) {
     db_update($tbl_akteur)
       ->fields(array(
       'adresse' => $adid,
@@ -326,22 +333,31 @@ function getEvents($v) {
   $aid="";
 
   //Abfrage wegen Organisator:
-  if(strcmp($organizer, "A1049") == 0){
-	$veranstalter = "Mühlstraße 14 e.V.";
-  }else{
-	if(strcmp($organizer, "A1029") == 0){
+  if (strcmp($organizer, "A1049") == 0) {
+
+  	$veranstalter = "Mühlstraße 14 e.V.";
+
+  } else {
+
+   	if (strcmp($organizer, "A1029") == 0) {
+
 	  $veranstalter = "Bürgertreff Volkmarsdorf";
-	}else{
-	  if(strcmp($organizer, "A1043") == 0){
-		$veranstalter = "Kinder- und Jugendkulturzentrum O.S.K.A.R.";
-	  }
-	}
+
+	  } else {
+
+     if(strcmp($organizer, "A1043") == 0) {
+
+	   $veranstalter = "Kinder- und Jugendkulturzentrum O.S.K.A.R.";
+     
+	   }
+
+	 }
   }
 
   $tbl_adresse = "aae_data_adresse";
   $tbl_akteure = "aae_data_akteur";
   $tbl_event = "aae_data_event";
-  
+
   //ID der Akteure erfragen:
   $resultakteure = db_select($tbl_akteure, 'a')
     ->fields('a', array(
@@ -399,7 +415,7 @@ function getEvents($v) {
 /**
  * Methode, welche die Datei Akteure_alle.json parsed
  */
-function listAkteure() { 
+function listAkteure() {
   EasyRdf_Namespace::set('ld', 'http://leipzig-data.de/Data/Model/');
   EasyRdf_Namespace::set('ki', 'http://kultur-initiative.net/Data/Model#');
   EasyRDF_Namespace::set('vcard', 'http://www.w3.org/2006/vcard/ns#');
@@ -408,19 +424,19 @@ function listAkteure() {
   $graph->parseFile("sites/all/modules/aae_data/lib/Akteure_alle.json");
   $s=array();
   foreach ($graph->allOfType("ld:Akteur") as $v) {
-    $s[]=getAkteursProfil($v); 
-  } 
+    $s[]=getAkteursProfil($v);
+  }
 }
 /**
  * Methode, welche die Datei Events.json parsed
  */
-function listEvents() { 
+function listEvents() {
   EasyRdf_Namespace::set('ld', 'http://leipzig-data.de/Data/Model/');
   EasyRdf_Namespace::set('ical', 'http://www.w3.org/2002/12/cal/ical#');
   $graph = new EasyRdf_Graph("http://kultur-initiative.net/Data/Events/");
   $graph->parseFile("sites/all/modules/aae_data/lib/Events.json");
   $s=array();
   foreach ($graph->allOfType("ld:Event") as $v) {
-    $s[]=getEvents($v); 
-  } 
+    $s[]=getEvents($v);
+  }
 }
