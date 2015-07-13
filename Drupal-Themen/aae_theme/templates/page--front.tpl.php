@@ -89,10 +89,12 @@
 
    <div class="large-3 large-offset-1 columns event">
     <a href="#"><button class="button blue date">08<br />Sept</button></a>
-    <a href="#"><h4>Cosplay Workshop</h4></a>
-    <aside><a href="<?= base_path(); ?>/?q=Eventprofil/NR">
-     <img src="img/location.svg" />UT Connewitz <br/>
-     <img src="img/clock.svg" /><strong>8:00</strong> - <strong>12:30</strong></p>
+    <a href="#"><h4><?= $event->name; ?></h4></a>
+    <aside><a href="<?= base_path(); ?>/?q=Eventprofil/<?= $event->EID; ?>">
+     <img src="<?= base_path().path_to_theme(); ?>/img/location.svg" /><?= $event->veranstalter; ?> <br/>
+     <img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><?php
+$parsed = date_parse($event->start);
+$seconds = $parsed['hour'] * 3600 + $parsed['minute'] * 60 + $parsed['second']; ?><!--<strong>8:00</strong> - <strong>12:30</strong>--></p>
     </a></aside>
    </div>
 

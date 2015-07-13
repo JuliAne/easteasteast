@@ -39,12 +39,12 @@ $sliders = array(
 
  $slider2 = array(
    'image' => 'slide1.jpg',
-   'headline' => '<strong>32</strong> Projekte. <strong>50</strong> Events. Eine Plattform',
+   'headline' => '<strong>32</strong> Projekte. <strong>50</strong> Events. Eine Plattform.',
    'description' => 'Jetzt anmelden, Projekt einstellen oder einfach nur mitmischen.',
    'whiteText' => true,
    'blueButton' => array(
      'text' => 'Registrieren',
-     'link' => base_path().'/?q=user/register'
+     'link' => base_path().'?q=user/register'
    )
  )
 

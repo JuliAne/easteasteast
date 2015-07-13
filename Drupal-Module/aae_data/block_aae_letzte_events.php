@@ -27,7 +27,7 @@ function block_aae_print_letzte_events($limit = 3) {
   $resultEvents = array();
 
  foreach($letzteEvents as $row){
-    $resultEvents[] = $row; //array('AID' => $row->AID, 'name' => $row->name);
+    $resultEvents[] = $row;
   }
 
   return $resultEvents;
