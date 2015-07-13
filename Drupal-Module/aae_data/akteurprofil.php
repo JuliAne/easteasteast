@@ -68,7 +68,7 @@ $aResult[$hat_recht] = $hat_recht;
 
 foreach($resultakteur as $rId => $row){
 
-	$aResult[] = $row;
+	$aResult = $row;
 
 	$resultAdresse = db_select($tbl_adresse, 'b')
 	  ->fields('b', array(
