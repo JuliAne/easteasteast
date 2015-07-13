@@ -82,7 +82,8 @@ foreach($resultakteur as $rId => $row){
 	    'gps',
 	  ))
 	  ->condition('ADID', $row->adresse, '=')
-	  ->execute();
+	  ->execute()
+    ->fetchAll();
     // FETCH?
 
     $aResult[$rId]->$adresse = $resultAdresse; // geht?
