@@ -54,7 +54,7 @@ $resultakteur = db_select($tbl_akteur, 'a')
   ))
   ->condition('AID', $akteur_id, '=')
   ->execute()
-  ->fetchAll()
+  ->fetchAll();
 
 //-----------------------------------
 
