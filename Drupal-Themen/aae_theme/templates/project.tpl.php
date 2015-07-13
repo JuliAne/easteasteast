@@ -9,7 +9,7 @@
 
 			  <div class="pcard">
 			   <header></header>
-				 <?= $aResult->$kurzbeschreibung; ?>
+				 <?= $aResult['kurzbeschreibung']; ?>
 			  </div>
 
 			  <div id="project-info" class="pcard">
