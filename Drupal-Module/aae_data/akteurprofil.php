@@ -101,6 +101,6 @@ foreach($resultakteur as $rId => $row){
 	if($row->bild != "") {
 	  $profileHTML .= '<img src="sites/all/modules/aae_data/'.$row->bild.'" width=400 >'; } */
 
-    include $themePath . '/project.tpl.php'; // OUTPUT project.tpl
+    include_once $themePath . '/templates/project.tpl.php'; // OUTPUT project.tpl
 
-// return profileHTML???
+ return 'bla' //profileHTML;
