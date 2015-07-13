@@ -86,7 +86,7 @@ foreach($resultakteur as $rId => $row){
     ->fetchAll();
     // FETCH?
 
-    @$aResult[$rId]->$adresse = $resultAdresse; // geht?
+   //  @$aResult[$rId]->$adresse = $resultAdresse; // geht?
 	}
 
 	/* if($row->ansprechpartner != "") { $profileHTML .= $row->ansprechpartner.'<br>'; }
