@@ -16,7 +16,7 @@
       )); ?>
     </ul>
 
-    <?php print(theme_menu_link()); ?>
+    <?php //print(theme_menu_link()); ?>
   <?php endif; ?>
 
  </nav>
