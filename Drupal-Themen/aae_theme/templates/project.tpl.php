@@ -1,7 +1,8 @@
 <?php // include_once('header.tpl.php');
       // Wird eingelesen und ersetzt in aae_data/akteurprofil.php ?>
 
-			
+<?php echo 'BBBBR'; ?>
+
 			<header id="header" style="background:url(pcard_bg.jpg);"></header>
 
 			<div id="project" class="row">
@@ -37,6 +38,7 @@
 			  <ul id="next-events">
 			   <li><span><a href="#">Cosplay N&auml;h-Workshop</a></span><br />Donnerstag, 22.07.2015: 12:00 Uhr bis 15:30 Uhr</li>
 			   <li><span><a href="#">Lorem ipsum sed</a></span><br />Freitag, 18.08.2015: 18:00 bis 23:00</li>
+			</ul>
 
 			 </section>
 
