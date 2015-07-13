@@ -1,9 +1,7 @@
-<?php // include_once('header.tpl.php');
-      // Wird eingelesen und ersetzt in aae_data/akteurprofil.php ?>
+<?php // Wird eingelesen und ersetzt in aae_data/akteurprofil.php ?>
 
-<?php echo 'BBBBR'; ?>
 
-			<header id="header" style="background:url(pcard_bg.jpg);"></header>
+		<header id="header" style="background:url(<?= base_path().path_to_theme(); ?>/pcard_bg.jpg);"></header>
 
 			<div id="project" class="row">
 
@@ -11,13 +9,14 @@
 
 			  <div class="pcard">
 			   <header></header>
+				 <?= $aResult['kurzbeschreibung']; ?>
 			  </div>
 
 			  <div id="project-info" class="pcard">
-			   <p><span><img src="img/clock_white.svg" /></span>12:00 - 18:30</p>
+			   <p><span><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" /></span>12:00 - 18:30</p>
 			   <div class="divider"></div>
-			   <p><span><img src="img/location_white.svg" /></span>Dresdner Strasse 18<br /><strong>Reudnitz</strong></p>
-			   <img src="img/map_test.png" style="width: 100%;" />
+			   <p><span><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" /></span>Dresdner Strasse 18<br /><strong>Reudnitz</strong></p>
+			   <img src="<?= base_path().path_to_theme(); ?>/img/map_test.png" style="width: 100%;" />
 			  </div>
 
 			  <div id="project-contact" class="pcard">
@@ -43,9 +42,3 @@
 			 </section>
 
 			</div>
-
-	<div class="row">
-    <?php print render($page['content']); ?>
-  </div>
-
-<?php // include_once('footer.tpl.php'); ?>

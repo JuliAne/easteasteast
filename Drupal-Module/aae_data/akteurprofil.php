@@ -38,7 +38,7 @@ $resultUser = db_select($tbl_hat_user, 'u')
 
 $hat_recht = $resultUser->rowCount();
 
-//Auswahl der Daten des AKteurs
+//Auswahl der Daten des Akteurs
 $resultakteur = db_select($tbl_akteur, 'a')
   ->fields('a', array(
     'name',
@@ -62,15 +62,13 @@ $resultakteur = db_select($tbl_akteur, 'a')
 $profileHTML = <<<EOF
 EOF;
 
-$aResult = array();
-
 //Anzeige Edit Button
 
-$aResult[$rId]->$hat_recht = $hat_recht;
+$aResult[$hat_recht] = $hat_recht;
 
 foreach($resultakteur as $rId => $row){
 
-	$aResult[$rId] = $row;
+	$aResult[] = $row;
 
 	$resultAdresse = db_select($tbl_adresse, 'b')
 	  ->fields('b', array(
