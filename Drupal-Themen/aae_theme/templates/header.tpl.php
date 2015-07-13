@@ -9,6 +9,12 @@
     <ul class="large-8 small-8 columns">
       <?php print theme('links__system_main_menu', array(
         'links' => $main_menu,
+        'submenu' => array(
+  '#prefix' => '<div class="submenu">',
+  '#type' => 'markup',
+  '#markup' => $output,
+  '#suffix' => '</div>',
+),
         'attributes' => array(
           'id' => 'main-menu-links',
           'class' => array('links', 'clearfix'),
