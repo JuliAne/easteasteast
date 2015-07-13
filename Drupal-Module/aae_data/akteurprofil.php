@@ -103,4 +103,4 @@ foreach($resultakteur as $rId => $row){
 
     include_once $themePath . '/templates/project.tpl.php'; // OUTPUT project.tpl
 
- return 'bla' //profileHTML;
+ return 'bla'; //profileHTML;
