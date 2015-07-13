@@ -103,4 +103,3 @@ foreach($resultakteur as $rId => $row){
     include $themePath . '/project.tpl.php'; // OUTPUT project.tpl
 
 // return profileHTML???
-}
