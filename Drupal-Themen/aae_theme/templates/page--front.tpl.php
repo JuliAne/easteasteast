@@ -45,14 +45,15 @@
 
   <h1>Neueste <strong>Projekte</strong></h1>
 
+  <div class="row">
+
   <?php
   // Lade "letzte Akteure"-Block
 
-  require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/block_aae_letzte_akteure.php';
+  require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
 
   foreach (block_aae_print_letzte_akteure() as $akteur) : ?>
 
-  <div class="row">
    <div class="large-3 large-offset-1 columns pcard">
     <header>
       <h3><a href="#"><?= $akteur->name; ?></a></h3>
@@ -64,11 +65,13 @@
      <footer>
       <a href="#" title="Hier erscheint bei Klick eine Minimap inkl. Strassenangabe"><img src="<?= base_path().path_to_theme(); ?>/img/location.svg" /></a>
       <a href="#" title="Weiterleitung zu Terminen dieses Projektes"><img class="gimmeborder" src="<?= base_path().path_to_theme(); ?>/img/calendar.svg" /></a>
-      <a href="<?= base_path(); ?>/q=Akteurprofil/<?= $akteur->AID; ?>"><button class="button blue">&gt;</button></a>
+      <a href="<?= base_path(); ?>q=Akteurprofil/<?= $akteur->AID; ?>"><button class="button blue">&gt;</button></a>
      </footer>
     </div>
 
   <?php endforeach; ?>
+
+  </div>
 
 	<!--<div class="row">
     <?php print render($page['content']); ?>
@@ -76,31 +79,25 @@
 
   <h1>N&auml;chste <strong>Veranstaltungen</strong></h1>
 
+  <div class="row">
+
   <?php
   // Lade "letzte Events"-Block
 
-  require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/block_aae_letzte_events.php';
-
   foreach (block_aae_print_letzte_events() as $event) : ?>
-
-  <div class="row">
-
-    <?php print_r($event); ?>
 
    <div class="large-3 large-offset-1 columns event">
     <a href="#"><button class="button blue date">08<br />Sept</button></a>
     <a href="#"><h4><?= $event->name; ?></h4></a>
-    <aside><a href="<?= base_path(); ?>/?q=Eventprofil/<?= $event->EID; ?>">
+    <aside><a href="<?= base_path(); ?>?q=Eventprofil/<?= $event->EID; ?>">
      <img src="<?= base_path().path_to_theme(); ?>/img/location.svg" /><?= $event->veranstalter; ?> <br/>
-     <img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><?php
-$parsed = date_parse($event->start);
-$seconds = $parsed['hour'] * 3600 + $parsed['minute'] * 60 + $parsed['second']; ?><!--<strong>8:00</strong> - <strong>12:30</strong>--></p>
+     <img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><strong>BEGINN</strong> - <strong>ENDE</strong>--></p>
     </a></aside>
    </div>
 
- </div>
-
  <?php endforeach; ?>
+
+  </div>
 
  </section>
 

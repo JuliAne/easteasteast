@@ -393,7 +393,7 @@ header #introtext p {
  width: 16px;
  margin-right: 5px;
 }
-
+/*
 #bottom {
  overflow: hidden;
 }
@@ -424,7 +424,7 @@ header #introtext p {
  background-size: 80px;
  background-repeat: no-repeat;
  background-position: 20px 5px;
-}
+} */
 
 #footer {
  padding-top: 50px;

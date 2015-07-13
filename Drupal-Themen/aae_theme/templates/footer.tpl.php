@@ -1,13 +1,13 @@
  <div class="row">
 
  <div class="large-4 columns" id="about">
-  <h4>&Uuml;ber den Stadtteil.</h4>
-  <p>Der <strong>Leipziger Ostens</strong> besteht aus neuen Bezirken mit insgesamt 205.000 Einwohnern. Lorem ipsum sed dolor sit amet blakeks und so weiter hier kommt wohl noch was, damit der User in k&uuml;rze bescheid wei&szlig;, was wir hier machen...</p>
+  <h4>&Uuml;ber den Stadtteil:</h4>
+  <p>Der <strong>Leipziger Osten</strong> besteht aus neuen Bezirken mit insgesamt 205.000 Einwohnern. Lorem ipsum sed dolor sit amet blakeks und so weiter hier kommt wohl noch was, damit der User in k&uuml;rze bescheid wei&szlig;, was wir hier machen...</p>
   <p><strong>Weitere Informationen:</strong><br />
-  <a href="#">About</a> |
+  <a href="#">Über uns</a> |
   <a href="#">FAQ</a> |
-  <a href="#">Blog</a> |
-  <a href="#">Kontakt</a>
+  <a href="<?= base_path(); ?>/?q=journal">Journal</a> |
+  <a href="<?= base_path(); ?>/?q=kontakt">Kontakt</a>
   </p>
  </div>
 
@@ -19,12 +19,22 @@
    <li><a href="#">Projekte</a></li>
    <li><a href="#">Events</a></li>
    <li><a href="#">Leipziger Osten</a></li>
-  </ul>
 
-  <form method="post" action="#">
-   <input type="text" placeholder="Suche..."/>
-   <input type="submit" class="button secondary isSubmitButton" value="" />
-  </form>
+
+     <?php if ($main_menu): ?>
+       <ul class="large-8 small-8 columns">
+         <?php print theme('links__system_main_menu', array(
+           'links' => $main_menu,
+           'attributes' => array(
+             'id' => 'main-menu-links',
+             'class' => array('links', 'clearfix'),
+           )
+         )); ?>
+       </ul>
+     <?php endif; ?>
+
+
+  </ul>
 
  </div>
 
