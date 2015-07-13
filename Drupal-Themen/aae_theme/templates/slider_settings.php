@@ -1,6 +1,7 @@
 <?php
 
 /**
+*
 * -- Einstellungen für den Startseite-Slider --
 *
 * Ein $slider-Listenelement = Ein horizontaler Slider
@@ -28,18 +29,23 @@ $sliders = array(
    'image' => 'slide1.jpg',
    'headline' => 'Den Leipziger Osten neu entdecken',
    'description' => 'Deine Plattform für den ganzen Stadtteil: Lerne kreative Projekte aus Deiner Umgebung kennen & erfahre, wann und wo sich etwas in Deinem Bezirk bewegt!<br />
-<br />Kostenlos, offen, lokal.',
+<br /><strong>Kostenlos. Offen. Lokal.',
    'whiteText' => true,
    'blueButton' => array(
-    'text' => 'Mehr erfahren...',
-    'link' => '#'
+     'text' => 'Mehr erfahren...',
+     'link' => '#'
     )
  ),
 
  $slider2 = array(
-   'image' => 'slide2.jpg',
-   'headline' => 'Noch mehr Text...',
-   'description' => 'Deine Plattform für den ganzen Stadtteil: Lerne kreative Projekte aus Deiner Umgebung kennen & erfahre, wann und wo sich etwas in Deinem Bezirk bewegt!<br />'
+   'image' => 'slide1.jpg',
+   'headline' => '<strong>32</strong> Projekte. <strong>50</strong> Events. Eine Plattform',
+   'description' => 'Jetzt anmelden, Projekt einstellen oder einfach nur mitmischen.',
+   'whiteText' => true,
+   'blueButton' => array(
+     'text' => 'Registrieren',
+     'link' => base_path().'/?q=user/register'
+   )
  )
 
 );
