@@ -13,6 +13,11 @@
 global $user;
 $user_id = $user->uid;
 
+//Sicherheitsschutz
+if(!user_is_logged_in()){
+  drupal_access_denied();
+}
+
 //DB-Tabellen
 $tbl_hat_Sparte = "aae_data_hat_sparte";
 $tbl_adresse = "aae_data_adresse";

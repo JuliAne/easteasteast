@@ -10,12 +10,34 @@
 
 //Eingeloggter User
 global $user;
+$user_id = $user->uid;
+
+//AID holen:
+$path = current_path();
+$explodedpath = explode("/", $path);
+$akteur_id = $explodedpath[1];
 
 //DB-Tabellen
 $tbl_hat_Sparte = "aae_data_hat_sparte";
 $tbl_adresse = "aae_data_adresse";
 $tbl_akteur = "aae_data_akteur";
 $tbl_kategorie = "aae_data_kategorie";
+$tbl_hat_user = "aae_data_hat_user";
+
+//Prüfen ob Schreibrecht vorliegt
+$resultUser = db_select($tbl_hat_user, 'u')
+  ->fields('u', array(
+    'hat_UID',
+    'hat_AID',
+  ))
+  ->condition('hat_AID', $akteur_id, '=')
+  ->condition('hat_UID', $user_id, '=')
+  ->execute();
+$hat_recht = $resultUser->rowCount();
+
+if($hat_recht != 1){
+  drupal_access_denied();
+}
 
 //-----------------------------------
 
@@ -360,11 +382,6 @@ if (isset($_POST['submit'])) {
   //Erstmaliger Aufruf: Daten aus DB in Felder schreiben
   require_once $modulePath . '/database/db_connect.php';
   $db = new DB_CONNECT();
-	
-  //AID holen:
-  $path = current_path();
-  $explodedpath = explode("/", $path);
-  $akteur_id = $explodedpath[1];
 
   //Auswahl der Daten des eingeloggten Akteurs:
   $resultakteur = db_select($tbl_akteur, 'c')
