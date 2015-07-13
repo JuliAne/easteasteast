@@ -18,8 +18,7 @@
      <?php print theme('links__system_main_menu', array(
            'links' => $main_menu,
            'attributes' => array(
-             'id' => 'side-nav',
-             'class' => array('links', 'clearfix'),
+             'class' => array('links', 'clearfix', 'side-nav'),
            )
          )); ?>
   <?php endif; ?>

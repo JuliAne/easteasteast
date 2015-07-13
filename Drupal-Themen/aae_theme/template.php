@@ -26,13 +26,14 @@ function aae_preprocess_html(&$variables) {
 
     drupal_add_js(path_to_theme().'/js/home.js');
 
- } else if (drupal_get_title() == 'Akteurprofil') {
+ } else if (strpos(current_path(), 'Akteurprofil') !== FALSE) {
 
     drupal_add_css(path_to_theme().'/css/project.css');
 
  } else {
 
     drupal_add_css(path_to_theme(). '/css/subpage.css');
+    echo strpos(current_path(), 'Akteurprofil');
 
  }
 
@@ -66,7 +67,7 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
     $form['name']['#description'] = t('');
     $form['pass']['#description'] = t('');
 
-  } else  { // @TODO ELSEIF SEARCH-FORM 
+  } else  { // @TODO ELSEIF SEARCH-FORM
 
     $form['actions']['submit']['#attributes']['class'][] = 'small button';
     $form['actions']['submit']['#value'] = 'Suche...';
