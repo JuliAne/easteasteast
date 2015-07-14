@@ -59,9 +59,7 @@ $resultakteur = db_select($tbl_akteur, 'a')
 
 //-----------------------------------
 
-//Anzeige Edit Button
-
-$aResult[$hat_recht] = $hat_recht;
+$aResult[$hat_recht] = $hat_recht;  //Anzeige Edit-Button
 $aResult[$aId] = $akteur_id;
 
 foreach($resultakteur as $rId => $row){
@@ -81,7 +79,7 @@ foreach($resultakteur as $rId => $row){
     ->fetchAll();
 
     foreach($resultAdresse as $row2) {
-     $aResult['row2'] = $row2; // Kleiner Fix, damit row2 als Objekt abrufbar
+     $aResult['row2'] = $row2; // Kleiner Fix, damit $row2 als Objekt abrufbar
     }
 	}
 
@@ -89,4 +87,4 @@ foreach($resultakteur as $rId => $row){
 
  //include_once path_to_theme().'/templates/project.tpl.php'; // OUTPUT project.tpl
 
- $profileHTML = include_once path_to_theme().'/templates/project.tpl.php'; // Leer, weil der Content bereits in project.tpl.php gerendert wurde
+ return $profileHTML = include_once path_to_theme().'/templates/project.tpl.php'; // Leer, weil der Content bereits in project.tpl.php gerendert wurde
