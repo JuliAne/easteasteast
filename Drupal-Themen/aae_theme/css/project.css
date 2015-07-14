@@ -73,9 +73,11 @@
 }
 
 #footer {
- margin-top: 70px;
+ margin-top: 60px;
 }
 
 #footer .divider {
  margin-bottom: 50px;
 }
+
+#aae-content { width: 100; }

@@ -1,6 +1,6 @@
 <?php include_once('header.tpl.php'); ?>
 
-<div class="row">
+<div id="aae-content" class="row">
  <?php print render($page['content']); ?>
 </div>
 

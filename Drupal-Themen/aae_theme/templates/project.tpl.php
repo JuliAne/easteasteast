@@ -1,4 +1,4 @@
-	</div><header id="header" <?php if ($aResult['row1']->bild != '') echo 'style="background:url(sites/all/modules/aae_data/'.$row->bild.');"'; ?>></header>
+	<header id="header" <?php if ($aResult['row1']->bild != '') echo 'style="background:url(sites/all/modules/aae_data/'.$row->bild.');"'; ?>></header>
 
 			<div id="project" class="row">
 
