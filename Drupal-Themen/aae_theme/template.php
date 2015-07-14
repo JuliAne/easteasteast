@@ -41,6 +41,7 @@ function aae_preprocess_html(&$variables) {
    echo '<style type="text/css">#mainnav { margin-top: -18px !important; z-index: 20 !important; }</style>';
    echo '<!-- /IF -->';
  }
+}
 
  function aae_menu_tree($variables) {
      return '<ul class="menu KEYWORD-menu">' . $variables['tree'] . '</ul>';
