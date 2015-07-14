@@ -44,8 +44,21 @@ function aae_preprocess_html(&$variables) {
 }
 
 /* main ul */
-function aae_menu_tree($variables) {
-  return '<ul class="large-8 small-8 columns">' . $variables['tree'] . '</ul>';
+function aae_menu_link(array $variables) {
+  //unset all the classes
+  unset($variables['element']['#attributes']['class']);
+
+  $element = $variables['element'];
+
+  //if($variables['element']['#attributes'])
+
+  $sub_menu = '';
+
+  if ($element['#below']) {
+    $sub_menu = drupal_render($element['#below']);
+  }
+  $output = l($element['#title'], $element['#href'], $element['#localized_options']);
+  return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
 }
 
 function aae_process_page(&$variables) {
