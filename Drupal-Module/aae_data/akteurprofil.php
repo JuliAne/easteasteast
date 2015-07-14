@@ -104,9 +104,9 @@ foreach($resultakteur as $rId => $row){
     properties: {
         title: "Peregrine Espresso",
         description: "1718 14th St NW, Washington, DC",
-        'marker-size': "large",
-        'marker-color': "#BE9A6B",
-        'marker-symbol': "cafe"
+        "marker-size": "large",
+        "marker-color": "#BE9A6B",
+        "marker-symbol": "cafe"
     }
 }).addTo(map);', array('type' => 'inline', 'scope' => 'footer'));
 
