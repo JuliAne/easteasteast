@@ -5,11 +5,7 @@
   <a href="#nav" class="show-for-small-only" title="Show navigation">&#9776;</a>
   <a href="#" class="show-for-small-only" title="Hide navigation">&#9776;</a>
 
-  <?php // print render($main_menu); ?>
-
   <?php if ($main_menu): ?>
-
-
 
     <ul class="large-8 small-8 columns">
 
@@ -29,8 +25,7 @@
         )
       )); ?> -->
     </ul>
-
-    <?php //print(theme_menu_link()); ?>
+    
   <?php endif; ?>
 
  </nav>

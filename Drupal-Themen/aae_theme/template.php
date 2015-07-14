@@ -47,7 +47,13 @@ function aae_preprocess_html(&$variables) {
 
 function aae_process_page(&$variables) {
     $menu_tree = menu_tree_all_data('main-menu');
-    $variables['main_menu'] = menu_tree_output($menu_tree);
+    $variables['main_menu'] = menu_tree_output($menu_tree, array(
+       'links' => $main_menu,
+       'attributes' => array(
+         'id' => 'main-menu-links',
+         'class' => array('links', 'clearfix'),
+       )
+     ));
 }
 
 /**
