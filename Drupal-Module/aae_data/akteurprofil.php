@@ -91,6 +91,25 @@ foreach($resultakteur as $rId => $row){
  drupal_add_js('var map = L.mapbox.map("map", "matzelot.mn92ib5i").setView(['.$koordinaten.'], 16);',
  array('type' => 'inline', 'scope' => 'footer'));
 
+
+  drupal_add_js('L.mapbox.featureLayer({
+    type: "Feature",
+    geometry: {
+        type: "Point",
+        coordinates: [
+          -77.03221142292,
+          38.913371603574
+        ]
+    },
+    properties: {
+        title: "Peregrine Espresso",
+        description: "1718 14th St NW, Washington, DC",
+        'marker-size': "large",
+        'marker-color': "#BE9A6B",
+        'marker-symbol': "cafe"
+    }
+}).addTo(map);', array('type' => 'inline', 'scope' => 'footer'));
+
  // ADD MARKER!
 
  ob_start(); // Aktiviere "Render"-modus

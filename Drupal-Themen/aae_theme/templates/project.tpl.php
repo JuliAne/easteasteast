@@ -37,7 +37,7 @@
 
         <?= $aResult['row1']->kurzbeschreibung; ?><br />
 
-				<a href="#" javascript="onclick:alert($('#printr').html());">Zeige Print_r</a>
+				<a href="#" onclick="javascript:alert($('#printr').html());">Zeige Print_r</a>
 
 				<div id="printr" style="display:none;">
 				<?= print_r($aResult['row1']); ?>
