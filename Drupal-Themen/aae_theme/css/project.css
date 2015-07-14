@@ -80,4 +80,4 @@
  margin-bottom: 50px;
 }
 
-#aae-content { width: 100%; }
+#aae-content { max-width: 100% !important;; }
