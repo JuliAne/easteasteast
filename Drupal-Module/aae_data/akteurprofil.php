@@ -83,6 +83,6 @@ foreach($resultakteur as $rId => $row){
    $aResult['row2'] = $resultAdresse;
 	}
 
- //include_once path_to_theme().'/templates/project.tpl.php'; // OUTPUT project.tpl
+ include_once path_to_theme().'/templates/project.tpl.php'; // OUTPUT project.tpl
 
- $profileHTML = 'bla'; //profileHTML;
+ $profileHTML = ''; // Leer, weil der Content bereits in project.tpl.php gerendert wurde
