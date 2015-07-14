@@ -83,8 +83,10 @@ foreach($resultakteur as $rId => $row){
     }
 	}
 
- drupal_add_js('var map = L.mapbox.map("map", "matzelot.ke3420oc").setView(['.$aResult['row2']->gps.'], 13);', 'inline');
- ob_start();
- include_once path_to_theme().'/templates/project.tpl.php'; // OUTPUT project.tpl
+ drupal_add_js('var map = L.mapbox.map("map", "matzelot.ke3420oc").setView(['.str_replace(" ",",",$aResult['row2']->gps).'], 13);', 'inline');
 
- $profileHTML = ob_get_clean(); // Leer, weil der Content bereits in project.tpl.php gerendert wurde
+ ob_start(); // Aktiviere "Render"-modus
+
+ include_once path_to_theme().'/templates/project.tpl.php';
+
+ $profileHTML = ob_get_clean(); // Übergebe gerendertes "project.tpl"
