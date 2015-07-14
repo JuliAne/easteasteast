@@ -97,7 +97,7 @@ foreach($resultakteur as $rId => $row){
     geometry: {
         type: "Point",
         coordinates: [
-          '.$koordinaten.'
+          '.str_replace(' ',',',$aResult['row2']->gps).'
         ]
     },
     properties: {
