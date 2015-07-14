@@ -83,6 +83,8 @@ foreach($resultakteur as $rId => $row){
    $aResult['row2'] = $resultAdresse;
 	}
 
+ drupal_add_js('var map = L.mapbox.map("map", "matzelot.ke3420oc").setView(['.$aResult['row2']->gps.'], 13);');
+
  include_once path_to_theme().'/templates/project.tpl.php'; // OUTPUT project.tpl
 
  $profileHTML = ''; // Leer, weil der Content bereits in project.tpl.php gerendert wurde

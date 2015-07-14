@@ -29,6 +29,9 @@ function aae_preprocess_html(&$variables) {
  } else if (strpos(current_path(), 'Akteurprofil') !== FALSE) {
 
     drupal_add_css(path_to_theme().'/css/project.css');
+    drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
+    drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js');
+    druapal_add_js('L.mapbox.accessToken = "pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg";');
 
  } else {
 
