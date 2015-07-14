@@ -2,13 +2,7 @@
 
  <div class="large-4 columns" id="about">
   <h4>&Uuml;ber den Stadtteil.</h4>
-  <p>Der <strong>Leipziger Osten</strong> besteht aus neuen Bezirken mit insgesamt 205.000 Einwohnern. Lorem ipsum sed dolor sit amet blakeks und so weiter hier kommt wohl noch was, damit der User in k&uuml;rze bescheid wei&szlig;, was wir hier machen...</p>
-  <p><strong>Weitere Informationen:</strong><br />
-  <a href="#">Über uns</a> |
-  <a href="#">FAQ</a> |
-  <a href="<?= base_path(); ?>/?q=journal">Journal</a> |
-  <a href="<?= base_path(); ?>/?q=kontakt">Kontakt</a>
-  </p>
+  <?php print render($page['footer']); ?>
  </div>
 
  <div class="large-4 columns" id="mini-nav">

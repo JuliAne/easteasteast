@@ -61,6 +61,7 @@ $resultakteur = db_select($tbl_akteur, 'a')
 //Anzeige Edit Button
 
 $aResult[$hat_recht] = $hat_recht;
+$aResult[$aId] = $akteur_id;
 
 foreach($resultakteur as $rId => $row){
 

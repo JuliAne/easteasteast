@@ -6,8 +6,11 @@
   <a href="#" class="show-for-small-only" title="Hide navigation">&#9776;</a>
 
   <?php if ($main_menu): ?>
+
+    <?php print render($main_menu); ?>
+
     <ul class="large-8 small-8 columns">
-      <?php print theme('links__system_main_menu', array(
+     <!--  <?php print theme('links__system_main_menu', array(
         'links' => $main_menu,
         'submenu' => array(
   '#prefix' => '<div class="submenu">',
@@ -19,7 +22,7 @@
           'id' => 'main-menu-links',
           'class' => array('links', 'clearfix'),
         )
-      )); ?>
+      )); ?> -->
     </ul>
 
     <?php //print(theme_menu_link()); ?>
