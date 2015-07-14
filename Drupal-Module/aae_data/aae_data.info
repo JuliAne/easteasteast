@@ -6,7 +6,7 @@ core = 7.x
 ;configure = admin/config/development/aae_data
 
 ; Information added by Drupal.org packaging script on 2015-05-29
-version = "7.x-1.0"
+version = "7.x-1.3"
 core = "7.x"
 project = "aae_data"
 datestamp = "2015-06-17"
