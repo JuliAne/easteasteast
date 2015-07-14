@@ -25,7 +25,7 @@
 			 </aside>
 
 			 <section id="project-content" class="large-7 large-offset-1 columns">
-			  <h1><?= $aResult['row1']->name</h1>
+			  <h1><?= $aResult['row1']->name; ?></h1>
 
 				<?= print_r($aResult['row1']); ?>
 
