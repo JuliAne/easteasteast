@@ -85,4 +85,4 @@ foreach($resultakteur as $rId => $row){
 
  //include_once path_to_theme().'/templates/project.tpl.php'; // OUTPUT project.tpl
 
- return 'bla'; //profileHTML;
+ $profileHTML = 'bla'; //profileHTML;
