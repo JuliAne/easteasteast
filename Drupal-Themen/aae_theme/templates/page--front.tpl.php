@@ -101,6 +101,7 @@
  <section class="section" id="journal">
    <h2>Journal</h2>
    <?php print render($page['content']); ?>
+   <?php print render($page['footer']); ?>
  </section>
 
  <section class="section" id="footer">

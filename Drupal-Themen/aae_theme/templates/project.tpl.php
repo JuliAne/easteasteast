@@ -26,7 +26,7 @@
 			 <section id="project-content" class="large-7 large-offset-1 columns">
 			  <h1>Fiskalambitionierte Bouletten</h1>
 
-				<?= $aResult['row1']->$kurzbeschreibung; ?>
+				<?= print_r($aResult['row1']); ?>
 
 			  <h3>Beschreibung</h3>
 
