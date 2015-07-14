@@ -43,10 +43,10 @@ function aae_preprocess_html(&$variables) {
  }
 }
 
- function aae_menu_tree($variables) {
-     return '<ul class="menu KEYWORD-menu">' . $variables['tree'] . '</ul>';
- }
-
+/* main ul */
+function aae_menu_tree__main_menu($variables) {
+  return '<ul class="large-8 small-8 columns">' . $variables['tree'] . '</ul>';
+}
 
 function aae_process_page(&$variables) {
     $menu_tree = menu_tree_all_data('main-menu');

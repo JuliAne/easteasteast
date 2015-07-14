@@ -7,8 +7,6 @@
 
   <?php if ($main_menu): ?>
 
-    <ul class="large-8 small-8 columns">
-
       <?php print render($page['header']); ?>
 
      <!--  <?php print theme('links__system_main_menu', array(
@@ -24,8 +22,7 @@
           'class' => array('links', 'clearfix'),
         )
       )); ?> -->
-    </ul>
-    
+
   <?php endif; ?>
 
  </nav>
