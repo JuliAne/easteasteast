@@ -416,6 +416,10 @@ input[type=submit].isSubmitButton{
  min-height: 400px;
 }
 
+#footer .divider {
+  display: none;
+}
+
 #footer p, #bottom #footer a {
  color: #777777;
 }
