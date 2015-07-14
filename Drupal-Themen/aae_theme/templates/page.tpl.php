@@ -1,6 +1,6 @@
 <?php include_once('header.tpl.php'); ?>
 
-<?php if (strpos(current_path(), 'Akteurprofil') !== FALSE) : ?>
+<?php if (!strpos(current_path(), 'Akteurprofil') !== FALSE) : ?>
 <div class="row">
  <?php print render($page['content']); ?>
 </div>
