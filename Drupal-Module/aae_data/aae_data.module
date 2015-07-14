@@ -16,7 +16,7 @@ if (drupal_is_front_page()) {
 * Updated die LOData.js Maps-Koordinaten-Datei
 */
 
-function aae_cron() {
+function aae_data_cron() {
   //....
 }
 
@@ -348,7 +348,7 @@ function getEvents($v) {
      if(strcmp($organizer, "A1043") == 0) {
 
 	   $veranstalter = "Kinder- und Jugendkulturzentrum O.S.K.A.R.";
-     
+
 	   }
 
 	 }

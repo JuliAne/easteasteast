@@ -9,12 +9,12 @@ $(document).ready(function(){
   $('#menu li:has(ul)' ).doubleTapToGo();
  } else {
   $('#fullpage').fullpage({
-	 anchors: ['Intro', 'Projekte', 'Karte', 'UeberUns', 'Footer'],
+	 anchors: ['home', 'projekte', 'journal', 'footer'],
 	 sectionsColor: ['#FFF', '#F7F7F7', '#F7F7F7', '#FFF'],
 	 scrollBar: true,
    navigation: true,
 	 navigationPosition: 'right',
-	 navigationTooltips: ['Home', 'Projekte & Veranstaltungen', 'Interaktive Karte', '&Uuml;ber uns', 'Footer'],
+	 navigationTooltips: ['Home', 'Projekte & Veranstaltungen', 'Journal', 'Footer'],
 
    afterLoad: function(anchor, index){
       if (index == 1) {
@@ -27,7 +27,7 @@ $(document).ready(function(){
   });
  }
 
-  L.mapbox.accessToken = 'pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg';
+ L.mapbox.accessToken = 'pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg';
  var map = L.mapbox.map('map', 'matzelot.ke3420oc').setView([51.338, 12.458], 13);
  var markers = new L.MarkerClusterGroup({ showCoverageOnHover : false });
 
@@ -45,12 +45,12 @@ $(document).ready(function(){
 
  map.addLayer(markers);
 
- map.on('zoomend', function() {
+ /*map.on('zoomend', function() {
   if (map.getZoom() >= 13) {
    $('#intro').fadeOut('slow');
   } else {
    $('#intro').fadeIn('slow');
   }
- });
+}); */
 
 });

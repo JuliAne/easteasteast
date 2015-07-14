@@ -74,10 +74,6 @@
 
   </div>
 
-	<!--<div class="row">
-    <?php print render($page['content']); ?>
-  </div> -->
-
   <h1>N&auml;chste <strong>Veranstaltungen</strong></h1>
 
   <div class="row">
@@ -100,6 +96,11 @@
 
   </div>
 
+ </section>
+
+ <section class="section" id="journal">
+   <h2>Journal</h2>
+   <?php print render($page['content']); ?>
  </section>
 
  <section class="section" id="footer">

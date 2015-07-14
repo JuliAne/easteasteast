@@ -58,17 +58,13 @@ $resultakteur = db_select($tbl_akteur, 'a')
 
 //-----------------------------------
 
-//Ausgabe
-$profileHTML = <<<EOF
-EOF;
-
 //Anzeige Edit Button
 
 $aResult[$hat_recht] = $hat_recht;
 
 foreach($resultakteur as $rId => $row){
 
-	$aResult = $row;
+	$aResult['row1'] = $row;
 
 	$resultAdresse = db_select($tbl_adresse, 'b')
 	  ->fields('b', array(
@@ -83,7 +79,7 @@ foreach($resultakteur as $rId => $row){
     ->fetchAll();
     // FETCH?
 
-   //  @$aResult[$rId]->$adresse = $resultAdresse; // geht?
+   $aResult['row2'] = $resultAdresse; // geht?
 	}
 
 	/* if($row->ansprechpartner != "") { $profileHTML .= $row->ansprechpartner.'<br>'; }
