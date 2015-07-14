@@ -12,7 +12,7 @@
 
 #project {
  position: relative;
- margin-top: -60px;
+ margin-top: -70px;
 }
 
 #project .pcard header {
@@ -70,4 +70,12 @@
 
 #project #project-content p {
  padding-bottom: 0.7em;
+}
+
+#footer {
+ margin-top: 70px;
+}
+
+#footer .divider {
+ margin-bottom: 50px;
 }

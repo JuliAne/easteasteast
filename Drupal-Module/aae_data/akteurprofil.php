@@ -91,26 +91,24 @@ foreach($resultakteur as $rId => $row){
  drupal_add_js('var map = L.mapbox.map("map", "matzelot.mn92ib5i").setView(['.$koordinaten.'], 16);',
  array('type' => 'inline', 'scope' => 'footer'));
 
+ // Marker
 
-  drupal_add_js('L.mapbox.featureLayer({
-    type: "Feature",
-    geometry: {
-        type: "Point",
-        coordinates: [
-          '.str_replace(' ',',',$aResult['row2']->gps).'
-        ]
+ drupal_add_js('L.mapbox.featureLayer({
+  type: "Feature",
+  geometry: {
+      type: "Point",
+      coordinates: ['.str_replace(' ',',',$aResult['row2']->gps).']
     },
     properties: {
-        title: "'.$aResult['row1']->name.'",
-        description: "'.$aResult['row2']->strasse.' '.$aResult['row2']->nr.'",
-        "marker-size": "medium",
-        "marker-color": "#1087bf"
+      title: "'.$aResult['row1']->name.'",
+      description: "'.$aResult['row2']->strasse.' '.$aResult['row2']->nr.'",
+      "marker-size": "large",
+      "marker-color": "#1087bf"
     }
 }).addTo(map);', array('type' => 'inline', 'scope' => 'footer'));
 
- // ADD MARKER!
 
- ob_start(); // Aktiviere "Render"-modus
+ ob_start(); // Aktiviert "Render"-modus
 
  include_once path_to_theme().'/templates/project.tpl.php';
 
