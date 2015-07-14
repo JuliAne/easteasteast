@@ -14,13 +14,13 @@
 			  <div id="project-info" class="pcard">
 			   <p><span><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" /></span><?= $aResult['row1']->oeffnungszeiten; ?></p>
 			   <div class="divider"></div>
-			   <p><span><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" /></span><?= $aResult['row1']->adresse; ?><br /><strong>Reudnitz</strong></p>
+			   <p><span><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" /></span><?= $aResult['row2']->strasse; ?> <?= $aResult['row2']->nr; ?><br /><strong>Reudnitz</strong></p>
 			   <img src="<?= base_path().path_to_theme(); ?>/img/map_test.png" style="width: 100%;" />
 			  </div>
 
 			  <div id="project-contact" class="pcard">
-			   <a href="<?= base_path().'Akteuredit/'; ?>"><button class="button">Kontaktieren</button></a>
-				 <?php if ($aResult['hat_recht']): ?><a href=""><button class="button secondary">Projekt bearbeiten</button></a><?php endif; ?>
+			   <a href="<?= base_path().'akteurkontakt/'.$akteur_id; ?>"><button class="button">Kontaktieren</button></a>
+				 <?php if ($aResult['hat_recht']): ?><a href="<?= base_path().'akteuredit/'.$akteur_id; ?>"><button class="button secondary">Projekt bearbeiten</button></a><?php endif; ?>
 			  </div>
 			 </aside>
 

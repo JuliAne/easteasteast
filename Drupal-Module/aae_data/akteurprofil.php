@@ -1,6 +1,7 @@
 <?php
 /**
- * akteurprofil.php zeigt das Profil eines Akteurs an.
+ * @file akteurprofil.php
+ * Zeigt das Profil eines Akteurs an.
  *
  * Ruth, 2015-06-06
  * Felix, 2015-06-13
@@ -78,23 +79,10 @@ foreach($resultakteur as $rId => $row){
 	  ->condition('ADID', $row->adresse, '=')
 	  ->execute()
     ->fetchAll();
-    // FETCH?
 
-   $aResult['row2'] = $resultAdresse; // geht?
+   $aResult['row2'] = $resultAdresse;
 	}
 
-	/* if($row->ansprechpartner != "") { $profileHTML .= $row->ansprechpartner.'<br>'; }
-	if($row->funktion != "") { $profileHTML .= $row->funktion.'<br>'; }
-	if($row->email != "") { $profileHTML .= $row->email.'<br>'; }
-	if($row->telefon != "") { $profileHTML .= $row->telefon.'<br>'; }
-	if($row->url != "") { $profileHTML .= $row->url.'<br>'; }
-	if($row->kurzbeschreibung != "") {
-      $profileHTML .= '<h4>Beschreibung:</h4>';
-	  $profileHTML .= $row->kurzbeschreibung.'<br>';
-	}
-	if($row->bild != "") {
-	  $profileHTML .= '<img src="sites/all/modules/aae_data/'.$row->bild.'" width=400 >'; } */
-
-    include_once path_to_theme().'/templates/project.tpl.php'; // OUTPUT project.tpl
+ //include_once path_to_theme().'/templates/project.tpl.php'; // OUTPUT project.tpl
 
  return 'bla'; //profileHTML;
