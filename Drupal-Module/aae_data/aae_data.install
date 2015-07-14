@@ -17,7 +17,7 @@ function aae_data_schema() {
 	'fields' => array(
       'AID' => array('description' => 'ID für Akteur', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'name' => array('description' => 'Name des Akteurs/der Organisation', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
-	  'email' => array('description' => 'Email Adresse zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
+	  'email' => array('description' => 'Email Adresse zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	  'telefon' => array('description' => 'Telefonnummer zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	  'ansprechpartner' => array('description' => 'Öffentlicher Ansprechpartner', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
