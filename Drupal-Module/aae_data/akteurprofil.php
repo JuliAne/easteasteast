@@ -83,7 +83,7 @@ foreach($resultakteur as $rId => $row){
     }
 	}
 
- $kHelper = explode(' ', $aResult['row2']->gps, -1);
+ $kHelper = explode(' ', $aResult['row2']->gps, 2);
  $koordinaten = $kHelper[1].','.$kHelper[0];
  echo $koordinaten;
 
