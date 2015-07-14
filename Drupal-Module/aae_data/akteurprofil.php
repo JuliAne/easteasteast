@@ -83,7 +83,8 @@ foreach($resultakteur as $rId => $row){
     }
 	}
 
- drupal_add_js('var map = L.mapbox.map("map", "matzelot.ke3420oc").setView(['.str_replace(" ",",",$aResult['row2']->gps).'], 13);', 'inline');
+ drupal_add_js('var map = L.mapbox.map("map", "matzelot.ke3420oc").setView(['.str_replace(" ",",",$aResult['row2']->gps).'], 13);',
+ array('type' => 'inline', 'scope' => 'footer');
 
  ob_start(); // Aktiviere "Render"-modus
 
