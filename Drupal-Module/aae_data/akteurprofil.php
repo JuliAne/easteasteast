@@ -87,4 +87,4 @@ foreach($resultakteur as $rId => $row){
 
  include_once path_to_theme().'/templates/project.tpl.php'; // OUTPUT project.tpl
 
- $profileHTML = '' // Leer, weil der Content bereits in project.tpl.php gerendert wurde
+ $profileHTML = ''; // Leer, weil der Content bereits in project.tpl.php gerendert wurde
