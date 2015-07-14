@@ -12,11 +12,14 @@
 			  </div>
 
 			  <div id="project-info" class="pcard">
+				 <?php if ($aResult['row1']->oeffnungszeiten != '') : ?>
 			   <p><span><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" /></span><?= $aResult['row1']->oeffnungszeiten; ?></p>
-			   <div class="divider"></div>
-			   <p><span><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" /></span><?= $aResult['row2']->strasse; ?> <?= $aResult['row2']->nr; ?><br /><strong>Reudnitz</strong></p>
+				 <div class="divider"></div>
+			   <?php endif; ?>
 
-				 <div id="map" style="width: 100%; height: 200px;"></div>
+			   <p><span><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" /></span><?= $aResult['row2']->strasse; ?> <?= $aResult['row2']->nr; ?><br /><strong><?= $aResult['row2']->plz; ?></strong></p>
+
+				 <div id="map" style="width: 100%; height: 180px;"></div>
 
 				</div>
 
@@ -29,11 +32,18 @@
 			 <section id="project-content" class="large-7 large-offset-1 columns">
 			  <h1><?= $aResult['row1']->name; ?></h1>
 
-				<?= print_r($aResult['row1']); ?>
 
 			  <h3>Beschreibung</h3>
 
         <?= $aResult['row1']->kurzbeschreibung; ?><br />
+
+				<a href="#" javascript="onclick:alert($('#printr').html());">Zeige Print_r</a>
+
+				<div id="printr" style="display:none;">
+				<?= print_r($aResult['row1']); ?>
+				<?= print_r($aResult['row2']); ?>
+				</div>
+
 
 			  <!--<h3>N&auml;chste Veranstaltungen</h3>
 
@@ -42,7 +52,6 @@
 			   <li><span><a href="#">Lorem ipsum sed</a></span><br />Freitag, 18.08.2015: 18:00 bis 23:00</li>
 			</ul> -->
 
-  <?= print_r($aResult['row2']); ?>
 			 </section>
 
 			</div>

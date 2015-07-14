@@ -83,9 +83,10 @@ foreach($resultakteur as $rId => $row){
     }
 	}
 
+ // Mapbox-taugliche Koordinaten
+
  $kHelper = explode(' ', $aResult['row2']->gps, 2);
  $koordinaten = $kHelper[1].','.$kHelper[0];
- echo $koordinaten;
 
  drupal_add_js('var map = L.mapbox.map("map", "matzelot.mn92ib5i").setView(['.$koordinaten.'], 16);',
  array('type' => 'inline', 'scope' => 'footer'));
