@@ -44,7 +44,7 @@ function aae_preprocess_html(&$variables) {
 }
 
 /* main ul */
-function aae_menu_tree__main_menu($variables) {
+function aae_menu_tree($variables) {
   return '<ul class="large-8 small-8 columns">' . $variables['tree'] . '</ul>';
 }
 
