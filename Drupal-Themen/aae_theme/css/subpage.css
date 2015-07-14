@@ -3,5 +3,9 @@
 }
 
 footer {
- margin-top: 150px;
+ margin-top: 140px;
+}
+
+footer .divider {
+ margin-bottom: 40px;
 }

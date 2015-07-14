@@ -1,4 +1,7 @@
 <section class="section" id="footer">
+  
+ <div class="divider"></div>
+
  <div class="row">
 
  <div class="large-4 columns" id="about">
