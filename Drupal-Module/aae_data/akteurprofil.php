@@ -102,7 +102,7 @@ foreach($resultakteur as $rId => $row){
     },
     properties: {
         title: "'.$aResult['row1']->name.'",
-        description: "'.$aResult['row2']->strasse.''.$aResult['row2']->nr.'",
+        description: "'.$aResult['row2']->strasse.' '.$aResult['row2']->nr.'",
         "marker-size": "medium",
         "marker-color": "#1087bf"
     }

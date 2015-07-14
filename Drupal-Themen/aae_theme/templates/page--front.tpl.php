@@ -1,4 +1,4 @@
-<script src="<?= base_path().path_to_theme(); ?>/LOdata.js"></script>
+<script src="<?= base_path().drupal_get_path('module', 'aae_data'); ?>/LOdata.js"></script>
 
 <?php if (!empty($page['sidebar_first'])): ?>
 
@@ -103,8 +103,6 @@
    <?php print render($page['content']); ?>
  </section>
 
- <section class="section" id="footer">
-  <?php include_once('footer.tpl.php'); ?>
- </section>
+<?php include_once('footer.tpl.php'); ?>
 
 </div><!--/#fullpage -->

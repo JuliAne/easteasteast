@@ -1,3 +1,4 @@
+<section class="section" id="footer">
  <div class="row">
 
  <div class="large-4 columns" id="about">
@@ -170,4 +171,5 @@
 </div>
  </div>
 
-</div>
+ </div>
+</section><!-- /#footer -->
