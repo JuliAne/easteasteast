@@ -97,8 +97,7 @@ foreach($resultakteur as $rId => $row){
     geometry: {
         type: "Point",
         coordinates: [
-          -77.03221142292,
-          38.913371603574
+          '.$koordinaten.'
         ]
     },
     properties: {
