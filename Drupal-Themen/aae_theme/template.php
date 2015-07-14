@@ -42,18 +42,14 @@ function aae_preprocess_html(&$variables) {
    echo '<!-- /IF -->';
  }
 
+ function aae_menu_tree($variables) {
+     return '<ul class="menu KEYWORD-menu">' . $variables['tree'] . '</ul>';
+ }
 
-}
 
 function aae_process_page(&$variables) {
     $menu_tree = menu_tree_all_data('main-menu');
-    $variables['main_menu'] = menu_tree_output($menu_tree, array(
-       'links' => $main_menu,
-       'attributes' => array(
-         'id' => 'main-menu-links',
-         'class' => array('links', 'clearfix'),
-       )
-     ));
+    $variables['main_menu'] = menu_tree_output($menu_tree);
 }
 
 /**
