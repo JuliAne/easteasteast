@@ -126,12 +126,13 @@ input[type=submit].isSubmitButton{
 
 #mainnav ul li {
  float: left;
+ height: 60px;
  list-style: none !important;
  text-transform: uppercase;
  border-right: 1px solid #ecedec;
  margin-right: 15px;
+ padding: 0;
  padding-right: 15px;
- height: 60px;
  padding-top: 23px;
 }
 

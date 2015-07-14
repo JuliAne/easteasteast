@@ -19,7 +19,7 @@
 			  </div>
 
 			  <div id="project-contact" class="pcard">
-			   <a href="<?= base_path().'Akteuredit/'.; ?>"><button class="button">Kontaktieren</button></a>
+			   <a href="<?= base_path().'Akteuredit/'; ?>"><button class="button">Kontaktieren</button></a>
 				 <?php if ($aResult['hat_recht']): ?><a href=""><button class="button secondary">Projekt bearbeiten</button></a><?php endif; ?>
 			  </div>
 			 </aside>
