@@ -35,7 +35,7 @@ $resultUser = db_select($tbl_hat_user, 'u')
   ->execute();
 $hat_recht = $resultUser->rowCount();
 
-if(!in_array(array('redakteur','administrator'), $user->roles)){
+if(!array_intersect(array('redakteur','administrator'), $user->roles)){
   if($hat_recht != 1){
     drupal_access_denied();
   }
