@@ -45,12 +45,16 @@ function aae_preprocess_html(&$variables) {
 
 }
 
+function aae_process_page(&$variables) {
+    $menu_tree = menu_tree_all_data('main-menu');
+    $variables['main_menu'] = menu_tree_output($menu_tree);
+}
+
 /**
 * Überschreibt das Login-Form in header.tpl.php
 */
 
 function aae_form_alter(&$form, &$form_state, $form_id) {
-
 
   if ( TRUE === in_array( $form_id, array( 'user_login', 'user_login_block') ) ) {
 
