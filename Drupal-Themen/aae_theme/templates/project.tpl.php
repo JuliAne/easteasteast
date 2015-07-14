@@ -16,7 +16,7 @@
 			   <div class="divider"></div>
 			   <p><span><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" /></span><?= $aResult['row2']->strasse; ?> <?= $aResult['row2']->nr; ?><br /><strong>Reudnitz</strong></p>
 
-				 <div id="map" style="width: 100%;"></div>
+				 <div id="map" style="width: 100%; height: 200px;"></div>
 
 				</div>
 
