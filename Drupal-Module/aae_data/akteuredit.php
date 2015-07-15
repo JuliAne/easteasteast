@@ -194,18 +194,18 @@ if (isset($_POST['submit'])) {
   if($laengehatuser > 0){
 	$i = 0;
 	while($i < $laengehatuser){
-	  $explodeduser[$i] = trim($explodeduser[$i]);
-	  $explodeduser[$i] = strip_tags($explodeduser[$i]);
+	  $explodedhatuser[$i] = trim($explodedhatuser[$i]);
+	  $explodedhatuser[$i] = strip_tags($explodedhatuser[$i]);
 	  //prüfen, ob es User ID in der DB gibt:
 	  $resultuserid = db_select("users", 'u')
 	    ->fields('u', array(
 	      'uid',
 	    ))
-	    ->condition('uid', $explodeduser[$i], '=')
+	    ->condition('uid', $explodedhatuser[$i], '=')
 	    ->execute();
 	  $anzresultuserid = $resultuserid->rowCount();
 	  if($anzresultuserid == 0){
-		$fehler_hatuser = $explodeduser[$i] + " ist keine gültige UserID.";
+		$fehler_hatuser = $explodedhatuser[$i] + " ist keine gültige UserID.";
 		$freigabe = false;
 		$i = $laengehatuser;
 	  }else{
