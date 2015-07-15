@@ -62,6 +62,9 @@ $plz = "";
 $ort = "";
 $gps = "";
 
+$hatuser = "";
+$explodedhatuser = "";
+
 //$tbl_hat_Sparte
 //$kategorie = array();
 
@@ -70,7 +73,7 @@ $bildpfad = "sites/all/modules/aae_data/images/";
 
 //-----------------------------------
 
-$akteur_id = "";
+//$akteur_id = "";
 //Variable zur Kategoriebestimmung
 //$sent = "";
 
@@ -93,6 +96,7 @@ $fehler_adresszusatz = "";
 $fehler_plz = "";
 $fehler_ort = "";
 $fehler_gps = "";
+$fehler_hatuser = "";
 
 //-----------------------------------
 
@@ -114,6 +118,8 @@ $ph_adresszusatz = "Adresszusatz";
 $ph_plz = "PLZ";
 $ph_ort = "Ort";
 $ph_gps = "GPS-Addresskoordinaten";
+
+$ph_hatuser = "User ID";
 
 //$tbl_hat_Sparte
 
@@ -144,6 +150,11 @@ if (isset($_POST['submit'])) {
   $plz = $_POST['plz'];
   $ort = $_POST['ort'];
   $gps = $_POST['gps'];
+
+  $hatuser = $_POST['hatuser'];
+  if($hatuser != ""){
+	$explodedhatuser = explode(",", $hatuser);
+  }
 
   //$kategorie = $_POST['kategorie'];
 	
@@ -179,6 +190,29 @@ if (isset($_POST['submit'])) {
   $plz = trim($plz);	
   $ort = trim($ort);	
   $gps = trim($gps);
+  $laengehatuser = count($explodeduser);
+  if($laengehatuser > 0){
+	$i = 0;
+	while($i < $laengehatuser){
+	  $explodeduser[$i] = trim($explodeduser[$i]);
+	  $explodeduser[$i] = strip_tags($explodeduser[$i]);
+	  //prüfen, ob es User ID in der DB gibt:
+	  $resultuserid = db_select("users", 'u')
+	    ->fields('u', array(
+	      'uid',
+	    ))
+	    ->condition('uid', $explodeduser[$i], '=')
+	    ->execute();
+	  $anzresultuserid = $resultuserid->rowCount();
+	  if($anzresultuserid == 0){
+		$fehler_hatuser = $explodeduser[$i] + " ist keine gültige UserID.";
+		$freigabe = false;
+		$i = $laengehatuser;
+	  }else{
+	    $i = $i + 1;
+	  }
+	}
+  }
 
   //und alle Tags entfernen (Hacker)
   $name=strip_tags($name);	
@@ -196,6 +230,7 @@ if (isset($_POST['submit'])) {
   $plz = strip_tags($plz);	
   $ort = strip_tags($ort);	
   $gps = strip_tags($gps);
+  $hatuser = strip_tags($hatuser);
 	
   //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
   if (strlen($name) > 100){	
@@ -321,6 +356,21 @@ if (isset($_POST['submit'])) {
 	  ))
 	  ->condition('AID', $akteur_id, '=')
 	  ->execute();
+	
+	//tbl_hat_user
+	if ($laengehatuser != 0){
+	  $j = 0;
+	  while($j < $laengehatuser){
+		$inserthatuser = db_insert($tbl_hat_user)
+		  ->fields(array(
+		    'hat_UID' => $explodedhatuser[$j],
+			'hat_AID' => $akteur_id,
+		  ))
+		  ->execute();
+	    $j = $j + 1;
+	  }
+	}
+	
 	//Kategorien
 	/*
 	foreach ($kategorie as $row) {
@@ -454,6 +504,7 @@ $pathThisFile = $_SERVER['REQUEST_URI'];
 
 //Darstellung
 $profileHTML = <<<EOF
+<p>Akteurid: $akteur_id</p>
 <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
   <input name="akteur_id" type="hidden" id="akteurAIDInput" value="$akteur_id" />
   <!-- verstecktes Feld für bild -->
@@ -494,6 +545,8 @@ $profileHTML = <<<EOF
   <textarea name="kurzbeschreibung" class="akteur" cols="45" rows="3" placeholder="ph_kurzbeschreibung">$kurzbeschreibung</textarea>$fehler_kurzbeschreibung
   <label>Bild:</label><input type="file" class="akteur" id="akteurBildInput" name="bild" value="$bild" /><br>
   <img src="sites/all/modules/aae_data/$bild" width=200 ><br>
+  <label>Neue Schreibrechte vergeben an:</label>
+  <input type="test" class="akteur" id="akteurHatUser" name="hatuser" value="$hatuser" placeholder="$ph_hatuser">$fehler_url
   <!--<label>Sparten:</label>
   //Tags
   <input type="hidden" name="sent" value="yes">-->
