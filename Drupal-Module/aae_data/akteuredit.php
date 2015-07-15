@@ -190,7 +190,7 @@ if (isset($_POST['submit'])) {
   $plz = trim($plz);	
   $ort = trim($ort);	
   $gps = trim($gps);
-  $laengehatuser = count($explodeduser);
+  $laengehatuser = count($explodedhatuser);
   if($laengehatuser > 0){
 	$i = 0;
 	while($i < $laengehatuser){
@@ -504,7 +504,6 @@ $pathThisFile = $_SERVER['REQUEST_URI'];
 
 //Darstellung
 $profileHTML = <<<EOF
-<p>Akteurid: $akteur_id</p>
 <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
   <input name="akteur_id" type="hidden" id="akteurAIDInput" value="$akteur_id" />
   <!-- verstecktes Feld für bild -->
