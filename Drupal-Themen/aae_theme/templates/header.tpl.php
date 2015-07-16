@@ -7,21 +7,7 @@
 
   <?php if ($main_menu): ?>
 
-      <?php print render($page['header']); ?>
-
-     <!--  <?php print theme('links__system_main_menu', array(
-        'links' => $main_menu,
-        'submenu' => array(
-  '#prefix' => '<div class="submenu">',
-  '#type' => 'markup',
-  '#markup' => $output,
-  '#suffix' => '</div>',
-),
-        'attributes' => array(
-          'id' => 'main-menu-links',
-          'class' => array('links', 'clearfix'),
-        )
-      )); ?> -->
+      <?php print render($page['mainnav']); ?>
 
   <?php endif; ?>
 

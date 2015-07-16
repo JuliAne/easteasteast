@@ -24,14 +24,14 @@
 
   <?php
   $blueButton = ($content['blueButton']['text'] ? '<a href="'.$content['blueButton']['link'].'"><button class="button radius">'.$content['blueButton']['text'].'</button></a>' : '' );
-  $whiteButton = ($content['whiteButton']['text'] ? '<a href="'.$content['whiteButton']['link'].'"><button class="button radius secondary">'.$content['whiteButton']['text'].'</button></a>' : '');
+  //$whiteButton = ($content['whiteButton']['text'] ? '<a href="'.$content['whiteButton']['link'].'"><button class="button radius secondary">'.$content['whiteButton']['text'].'</button></a>' : '');
   ?>
 
   <div class="slide <?= ($content['whiteText'] == true ? 'whiteText' : ''); ?>" id="slide<?= $id; ?>" style="background-image:url(<?= base_path().path_to_theme().'/img/'.$content['image']; ?>)";>
     <h1><?= $content['headline']; ?></h1>
     <p><?= $content['description']; ?></p>
 
-    <?= $blueButton.$whiteButton; ?>
+    <?= $blueButton; ?>
   </div>
   <?php endforeach; ?>
 

@@ -12,14 +12,7 @@
  <div class="large-4 columns" id="mini-nav">
   <h4>Navigation.</h4>
 
-  <?php if ($main_menu): ?>
-     <?php print theme('links__system_main_menu', array(
-           'links' => $main_menu,
-           'attributes' => array(
-             'class' => array('links', 'clearfix', 'side-nav'),
-           )
-         )); ?>
-  <?php endif; ?>
+  <?php print render($page['mainnav']); ?>
 
  </div>
 

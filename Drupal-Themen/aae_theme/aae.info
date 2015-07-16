@@ -1,5 +1,5 @@
- name = AAE
- description = Theme für die Stadtteilplattform.
+ name = AAE Theme
+ description = Theme für die Ost-Leipziger Stadtteilplattform.
  core = 7.x
 
 
@@ -7,8 +7,7 @@
  ;; Regions
  ;;;;;;;;;;;;;;;;;;;;;
 
- ;regions[mainnav]     = 'Navigation'
- ;regions[help]           = 'Help'
+ regions[mainnav]     = 'Navigation'
  regions[content]        = 'Content'
  regions[footer]         = 'Footer'
  regions[header]          = 'Header'
