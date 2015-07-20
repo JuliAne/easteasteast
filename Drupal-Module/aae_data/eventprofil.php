@@ -55,7 +55,6 @@ foreach($resultevent as $row){
 	  ->condition('AID', $row->veranstalter, '=')
 	  ->execute();
 	foreach ($resultakteur as $row2) {
-		//$profileHTML .= $row2->name.'<br>';
 		$profileHTML .= '<a href="?q=Akteurprofil/'.$row->veranstalter.'">'.$row2->name.'</a><br>';
 	}
 	
@@ -76,16 +75,24 @@ foreach($resultevent as $row){
 		$profileHTML .= $row1->plz.' '.$row1->ort.'<br>';
 		$profileHTML .= 'GPS: '.$row1->gps.'<br>';
 	}
-	
+	//Datum
 	$profileHTML .= '<h4>Zeit:</h4>';
-	if($row->start != "") { $profileHTML .= $row->start.'<br>'; }
-	if($row->ende != "") { $profileHTML .= '- '.$row->ende.'<br>'; }
+	if($row->start != "") { 
+	  $explodedstart = explode(' ', $row->start);
+	  $profileHTML .= $explodedstart[0].'<br>';
+	  $profileHTML .= $explodedstart[1].'-'.$explodedstart[2].'<br>';
+	  if($row->ende != $explodedstart[0]){
+		$profileHTML .= '- '.$row->ende.'<br>';
+	  }
+	}
 	if($row->url != "") { $profileHTML .= '<br><a href="'.$row->url.'">'.$row->url.'</a><br>'; }
 	if($row->kurzbeschreibung != "") { 
       $profileHTML .= '<h4>Beschreibung:</h4>';
 	  $profileHTML .= $row->kurzbeschreibung.'<br>';
 	}
+	//Bild
 	if($row->bild != "") { 
 	  $profileHTML .= '<img src="sites/all/modules/aae_data/'.$row->bild.'" >'; }
 	
+  $profileHTML .= '<a href="?q=Eventloeschen/'.$event_id.'" >'.Löschen.'</a>'.'   '.'<a href="?q=Eventedit/'.$event_id.'" >'.Bearbeiten.'</a>';
 }

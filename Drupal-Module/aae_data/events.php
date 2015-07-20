@@ -29,6 +29,11 @@ $resultevents = db_select($tbl_events, 'a')
 $profileHTML = <<<EOF
 EOF;
 
+//Abfrage, ob Besucher der Seite eingeloggt ist:
+if(user_is_logged_in()){//Link für Generierung eines neuen Akteurs anzeigen
+  $profileHTML .= '<a href="?q=Eventformular">Neue Veranstaltung hinzufügen!</a><br><br>';
+}
+
 foreach($resultevents as $row){
   //$profileHTML .= '<p>'.$row->name.'</p>';
   $profileHTML .= '<a href="?q=Eventprofil/'.$row->EID.'">'.$row->name.'</a><br>';

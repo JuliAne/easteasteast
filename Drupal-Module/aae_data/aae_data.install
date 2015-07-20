@@ -17,7 +17,7 @@ function aae_data_schema() {
 	'fields' => array(
       'AID' => array('description' => 'ID für Akteur', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'name' => array('description' => 'Name des Akteurs/der Organisation', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
-	  'email' => array('description' => 'Email Adresse zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'email' => array('description' => 'Email Adresse zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE, 'default' => ''),
 	  'telefon' => array('description' => 'Telefonnummer zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	  'ansprechpartner' => array('description' => 'Öffentlicher Ansprechpartner', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
@@ -103,25 +103,7 @@ function aae_data_schema() {
  * Wird bei Installation des Moduls ausgeführt, NACH hook_schema()
  */
 function aae_data_install() {
-  akteureeinlesen();
-  /*	
-  if (easyrdf()) {
-    // Do something with EasyRdf... e.g.
-    $graph = new EasyRdf_Graph("http://www.bbc.co.uk/music/artists/70248960-cb53-4ea4-943a-edb18f7d336f.rdf");
-  }
-  */
-  //Einlesen der json-Datei in aae_data DB-Tabellen
-  /*require_once __DIR__ . '/database/db_connect.php';
 
-  $con = new DB_CONNECT();
-  $json = file_get_contents('profil.json', FILE_USE_INCLUDE_PATH);
-  $res = json_decode($json,true);
-  db_insert('aae_data_tag')
-    ->fields(array(
-      'tag' => $res['label'],
-    )
-  )
-  ->execute();*/
 }
 
 /**
