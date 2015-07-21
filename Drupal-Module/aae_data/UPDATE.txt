@@ -10,7 +10,7 @@ eventedit.php: Bearbeiten eines Events
 
 Änderungen:
 
-aae_data.module: 
+aae_data.module:
 - Funktionen zum Einlesen der JSON Dateien entfernt
 - Menuitem "eventformular" hinzugefügt + Funktion
 
@@ -41,11 +41,41 @@ eventformular.php: Formular zum Anlegen eines Events
 
 -------------------------------
 
-TODO:
+TODO
+
+Erledigt:
+
+- Akteursprofil: Events anzeigen
+
+------------------------------
+
+Offen:
+
 eventedit.php: Formular zum Bearbeiten eines Events (Ruth: sitze dran)
 eventloeschen.php: Formular zum Löschen eines Events (Ruth: sitze dran)
 
 akteurprofil.php:
-- Löschen-Button (TODO)
-- Event_hinzufügen-Button (TODO)
-- Events anzeigen (TODO)
+
+- Löschen-Button (Felix)
+- Event_hinzufügen-Button (Felix)
+- Event bearbeiten-Button [Code bisher nutzlos]
+- Beste Größe für Bild-Upload's ermitteln. Diesen Wert in akteurformular & -edit dem
+  User mitteilen, Bilder nach Upload komprimieren / ggf. skalieren
+
+Datenbank: *
+
+- Erstellen der Tabelle aae_data_akteur_hat_events mit den Attributen "EID" & "AID"
+  aae_data_event.veranstalter kann folglich raus (de facto inkonsistent).
+- Erstellen der Tabelle aae_data_bezirke mit den Attributen "BID" & "Bezirksname".
+  aae_data_akteur.bezirk als Fremdschlüssel auf data_bezirke.bid anlegen (s.u.)
+
+eventformular.php:
+
+- Die Kategorie "stadt" sollte raus. Dafür rein: Eine Auswahl von Bezirken (s.o.)
+- Tooltip zum Einstellen der Uhrzeit/Datum (Output im richtigen Format) (Felix)
+- JS zum Auflösen der Straße/Nr. in gültiges Geoformat (Felix)
+
+-----------------------------
+
+*Ggf. Datei aae_db_update.php anlegen, welche über ?q=modul_db_update abrufbar ist
+und die Änderungen in eine bestehende DB einschreibt???

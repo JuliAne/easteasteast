@@ -106,7 +106,7 @@ $ph_gps = "GPS-Addresskoordinaten";
 
 //das wird ausgeführt, wenn auf "Speichern" gedrückt wird
 if (isset($_POST['submit'])) {
-	
+
   //Wertezuweisung
   $name = $_POST['name'];
   $email = $_POST['email'];
@@ -128,10 +128,10 @@ if (isset($_POST['submit'])) {
   $gps = $_POST['gps'];
 
   //$kategorie = $_POST['kategorie'];
-	
+
 //-------------------------------------
   //Check-Klauseln
-	
+
   //Check, ob ein Name eingegeben wurde:
   if(strlen($name) == 0){
     //Feld nicht ausgefüllt
@@ -146,15 +146,15 @@ if (isset($_POST['submit'])) {
   }
 
   //überflüssige Leerzeichen am Anfang entfernen
-  $name=trim($name);  
+  $name=trim($name);
   $email = trim($email);
-  $telefon = trim($telefon); 
-  $url = trim($url); 
-  $ansprechpartner = trim($ansprechpartner); 
-  $funktion = trim($funktion); 
-  $bild = trim($bild); 
-  $kurzbeschreibung = trim($kurzbeschreibung); 
-  $oeffnungszeiten = trim($oeffnungszeiten); 
+  $telefon = trim($telefon);
+  $url = trim($url);
+  $ansprechpartner = trim($ansprechpartner);
+  $funktion = trim($funktion);
+  $bild = trim($bild);
+  $kurzbeschreibung = trim($kurzbeschreibung);
+  $oeffnungszeiten = trim($oeffnungszeiten);
   $strasse = trim($strasse);
   $nr = trim($nr);
   $adresszusatz = trim($adresszusatz);
@@ -165,13 +165,13 @@ if (isset($_POST['submit'])) {
   //und alle Tags entfernen (Hacker)
   $name=strip_tags($name);
   $email = strip_tags($email);
-  $telefon = strip_tags($telefon); 
-  $url = strip_tags($url); 
-  $ansprechpartner = strip_tags($ansprechpartner); 
-  $funktion = strip_tags($funktion); 
-  $bild = strip_tags($bild); 
-  $kurzbeschreibung = strip_tags($kurzbeschreibung); 
-  $oeffnungszeiten = strip_tags($oeffnungszeiten); 
+  $telefon = strip_tags($telefon);
+  $url = strip_tags($url);
+  $ansprechpartner = strip_tags($ansprechpartner);
+  $funktion = strip_tags($funktion);
+  $bild = strip_tags($bild);
+  $kurzbeschreibung = strip_tags($kurzbeschreibung);
+  $oeffnungszeiten = strip_tags($oeffnungszeiten);
   $strasse = strip_tags($strasse);
   $nr = strip_tags($nr);
   $adresszusatz = strip_tags($adresszusatz);
@@ -245,7 +245,7 @@ if (isset($_POST['submit'])) {
 	  $bild = "images/".$bildname;
 	}
   }
-  
+
 //---------------------------------
 
   //Wenn $goodtogo true, ab in die DB mit den Daten
@@ -254,7 +254,7 @@ if (isset($_POST['submit'])) {
 	//include $modulePath . '/templates/utils/rest_helper.php'; Ist aus dem Künstlermodul übernommen
 	$db = new DB_CONNECT();
 	//Das Ergebnis von db_insert()->...->execute(); ist die ID, von diesem Eintrag
-	
+
 	//Abfrage, ob Adresse bereits in Adresstabelle
 	//Addressdaten aus DB holen:
 	$resultadresse = db_select($tbl_adresse, 'a')
@@ -268,7 +268,7 @@ if (isset($_POST['submit'])) {
 	  ->condition('plz', $plz, '=')
 	  ->condition('ort', $ort, '=')
 	  ->execute();
-	
+
 	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
     $i = $resultadresse->rowCount();
 	if($i == 0){//Adresse nicht vorhanden
@@ -286,7 +286,7 @@ if (isset($_POST['submit'])) {
 	  foreach ($resultadresse as $row) {
 	    //Abfrage, ob GPS-Angaben gemacht wurden
 	    if(strlen($gps) != 0 && strlen($row->gps) == 0 ){//ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
-	      //Update der Adresse  
+	      //Update der Adresse
 	      $adresse_updated = db_update($tbl_adresse)
 	 	    ->fields(array(
 			  'gps' => $gps,
@@ -313,7 +313,7 @@ if (isset($_POST['submit'])) {
 		'oeffnungszeiten' => $oeffnungszeiten,
 	  ))
 	  ->execute();
-	
+
 	//tbl_hat_user insert
 	db_insert($tbl_hat_user)
 	  ->fields(array(
@@ -321,8 +321,8 @@ if (isset($_POST['submit'])) {
 	    'hat_AID' => $akteur_id,
 	  ))
 	  ->execute();
-	    
-	
+
+
 	//$tbl_hat-Sparte
     /*
 	foreach ($kategorie as $row) {
@@ -336,16 +336,16 @@ if (isset($_POST['submit'])) {
 	    ->execute();
 	}
 	*/
-		
+
 	header("Location: ?q=Akteure"); //Hier muss hin, welche Seite aufgerufen werden soll,
 	  //nach dem die Daten erfolgreich gespeichert wurden.
 	}
-	
+
 }else{
  //Formular wird zum ersten Mal aufgerufen: nichts tun
 }
 
-$pathThisFile = $_SERVER['REQUEST_URI']; 
+$pathThisFile = $_SERVER['REQUEST_URI'];
 
 //Darstellung
 $profileHTML = <<<EOF
@@ -369,7 +369,7 @@ $profileHTML = <<<EOF
   <input type="text" class="akteur" id="akteurGPSInput" name="gps" value="$gps" placeholder="$ph_gps">$fehler_gps
   <label>Öffnungszeiten:</label>
   <input type="text" class="akteur" id="akteurOeffnungszeitenInput" name="oeffnungszeiten" value="$oeffnungszeiten" placeholder="$ph_oeffnungszeiten">$fehler_oeffnungszeiten
-	
+
   <label>Kontakt:</label>
   <label>Ansprechpartner:</label>
   <input type="text" class="akteur" id="akteurAnsprechpartnerInput" name="ansprechpartner" value="$ansprechpartner" placeholder="$ph_ansprechpartner">$fehler_ansprechpartner
@@ -386,11 +386,10 @@ $profileHTML = <<<EOF
   <textarea name="kurzbeschreibung" class="akteur" cols="45" rows="3" placeholder="$ph_kurzbeschreibung">$kurzbeschreibung</textarea>$fehler_kurzbeschreibung
   <label>Bild:</label>
   <input type="file" class="akteur" id="akteurBildInput" name="bild" /><br>
-	
+
   <!--<label>Sparten:</label>
   <input type="hidden" name="sent" value="yes">-->
 
   <input type="submit" class="akteure" id="akteureSubmit" name="submit" value="Speichern">
 </form>
 EOF;
-

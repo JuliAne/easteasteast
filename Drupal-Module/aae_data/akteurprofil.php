@@ -4,7 +4,7 @@
  * Zeigt das Profil eines Akteurs an.
  *
  * Ruth, 2015-06-06
- * Felix, 2015-06-13
+ * Felix, 2015-07-21
  */
 
 //-----------------------------------
@@ -12,6 +12,7 @@
 $tbl_akteur = "aae_data_akteur";
 $tbl_adresse = "aae_data_adresse";
 $tbl_hat_user = "aae_data_hat_user";
+$tbl_event = "aae_data_event";
 
 //-----------------------------------
 
@@ -81,9 +82,23 @@ foreach($resultakteur as $rId => $row){
     foreach($resultAdresse as $row2) {
      $aResult['row2'] = $row2; // Kleiner Fix, damit $row2 als Objekt abrufbar
     }
-	}
+}
 
- // Mapbox-taugliche Koordinaten
+// Ziehe Informationen über Events vom Akteur
+
+$resultEvents = db_select($tbl_event, 'e')
+->fields('e')
+->condition('veranstalter', $akteur_id, '=')
+->execute()
+->fetchAll();
+
+foreach ($resultEvents as $eId => $row) {
+ $aResult['events'][] = $row;
+}
+
+ // Generiere Mapbox-taugliche Koordinaten, übergebe diese ans Frontend
+
+ if ($aResult['row2']->gps != '') {
 
  $kHelper = explode(' ', $aResult['row2']->gps, 2);
  $koordinaten = $kHelper[1].','.$kHelper[0];
@@ -105,11 +120,13 @@ foreach($resultakteur as $rId => $row){
       "marker-size": "large",
       "marker-color": "#1087bf"
     }
-}).addTo(map);', array('type' => 'inline', 'scope' => 'footer'));
+  }).addTo(map);', array('type' => 'inline', 'scope' => 'footer'));
+
+ }
 
 
  ob_start(); // Aktiviert "Render"-modus
 
  include_once path_to_theme().'/templates/project.tpl.php';
 
- $profileHTML = ob_get_clean(); // Übergebe gerendertes "project.tpl"
+ $profileHTML = ob_get_clean(); // Übergebe des gerenderten "project.tpl"

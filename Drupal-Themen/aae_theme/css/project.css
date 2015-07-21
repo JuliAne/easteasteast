@@ -6,6 +6,7 @@
 #header {
  height: 260px;
  padding-top: 60px;
+ background-color: #008cba;
  background-size: 130%;
  margin: 0 -10px;
  filter: blur(8px);

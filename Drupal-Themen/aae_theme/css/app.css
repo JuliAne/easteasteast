@@ -130,7 +130,7 @@ input[type=submit].isSubmitButton{
  list-style: none !important;
  text-transform: uppercase;
  border-right: 1px solid #ecedec;
- margin-right: 15px;
+ margin-right: 13px;
  padding: 0;
  padding-right: 15px;
  padding-top: 23px;
@@ -142,7 +142,7 @@ input[type=submit].isSubmitButton{
  transition: 0.3s color;
 }
 
-#mainnav ul li:hover a, nav ul li.active a {
+#mainnav ul li:hover a, nav ul li.active-trail a {
  color: #000;
 }
 
