@@ -136,6 +136,14 @@ input[type=submit].isSubmitButton{
  padding-top: 23px;
 }
 
+#mainnav ul .expanded:before {
+ content: "▾";
+ position: relative;
+ float: right;
+ margin-top: 2px;
+ margin-left: 9px;
+}
+
 #mainnav ul li a {
  color: #7b7b7b;
  font-size: 0.9em;

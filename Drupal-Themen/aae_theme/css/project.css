@@ -78,6 +78,11 @@
  padding-bottom: 0.7em;
 }
 
+#project #project-content #next-events li {
+  padding-bottom: 0.7em;
+  font-size: 0.8em;
+}
+
 #footer {
  margin-top: 60px;
 }

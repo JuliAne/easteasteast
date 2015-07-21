@@ -58,7 +58,6 @@ akteurprofil.php:
 
 - Löschen-Button (Felix)
 - Event_hinzufügen-Button (Felix)
-- Event bearbeiten-Button [Code bisher nutzlos]
 - Beste Größe für Bild-Upload's ermitteln. Diesen Wert in akteurformular & -edit dem
   User mitteilen, Bilder nach Upload komprimieren / ggf. skalieren
 

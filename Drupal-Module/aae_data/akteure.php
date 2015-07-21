@@ -14,26 +14,27 @@ $tbl_akteur = "aae_data_akteur";
 require_once $modulePath . '/database/db_connect.php';
 $db = new DB_CONNECT();
 
+// Paginator: Auf welcher Seite befinden wir uns?
+$explodedPath = explode("/", current_path());
+$pageNr = $explodedPath[1];
+
 //Auswahl aller Akteure (nur Name) in alphabetischer Reihenfolge
-$resultakteure = db_select($tbl_akteur, 'a')
+$resultAkteure = db_select($tbl_akteur, 'a')
   ->fields('a', array(
 	'AID',
-    'name',
+  'name',
+  'kurzbeschreibung',
+  'bild'
   ))
   ->orderBy('name', 'ASC')
-  ->execute();
+  ->execute(); // Limit?
 
 //-----------------------------------
 
-//Ausgabe
-$profileHTML = <<<EOF
-EOF;
+$itemsCount = $resultAkteure->rowCount();
 
-//Abfrage, ob Besucher der Seite eingeloggt ist:
-if(user_is_logged_in()){//Link für Generierung eines neuen Akteurs anzeigen
-  $profileHTML .= '<a href="?q=Akteurformular">Neuen Akteur hinzufügen!</a><br><br>';
-}
+ob_start(); // Aktiviert "Render"-modus
 
-foreach($resultakteure as $row){
-  $profileHTML .= '<a href="?q=Akteurprofil/'.$row->AID.'">'.$row->name.'</a><br>';
-}
+include_once path_to_theme().'/templates/akteure.tpl.php';
+
+$profileHTML = ob_get_clean(); // Übergebe des gerenderten "project.tpl"

@@ -49,7 +49,7 @@
 
 			  <h3>Beschreibung</h3>
 
-        <?= $aResult['row1']->kurzbeschreibung; ?><br />
+        <p><?= $aResult['row1']->kurzbeschreibung; ?><p>
 
 				<!--<a href="#" onclick="javascript:alert($('#printr').html());">Zeige Print_r</a>
 
@@ -59,7 +59,7 @@
 			</div> -->
 
         <?php if ($aResult['events'] != '') : ?>
-			  <h3>N&auml;chste Veranstaltungen</h3>
+			  <br /><h3>N&auml;chste Veranstaltungen</h3>
 
 			  <ul id="next-events">
 				 <?php foreach($aResult['events'] as $event) : ?>
