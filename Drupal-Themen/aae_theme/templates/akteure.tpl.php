@@ -1,6 +1,6 @@
 <div class="row">
 
-<h3 class="large-4 columns"><strong><?= $itemsCount; ?> Akteure</strong><?= $pageNr; ?></h3>
+<h3 class="large-4 columns"><strong><?= $itemsCount; ?></strong> Akteure<?= $pageNr; ?></h3>
 
 <?php if(user_is_logged_in()) : ?>
   <a class="small button round right" href="<?= base_path(); ?>?q=Akteurformular">+ Akteur hinzufügen</a><br />
@@ -13,7 +13,7 @@
 
 <?php foreach($resultAkteure as $akteur): ?>
   <div class="large-3 large-offset-1 columns pcard">
-   <header <?php if($akteur->bild != '') echo 'style="background:url('.base_path.$modulePath.'/'.$akteur->bild.');"'; ?>>
+   <header <?php if($akteur->bild != '') echo 'style="background:url('.base_path().$modulePath.'/'.$akteur->bild.');"'; ?>>
      <h3><a href="<?= base_path().'?q=Akteurprofil/'.$akteur->AID; ?>"><?= $akteur->name; ?></a></h3>
     </header>
     <section>
