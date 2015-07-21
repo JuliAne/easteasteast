@@ -10,16 +10,42 @@
 $tbl_akteur = "aae_data_akteur";
 $tbl_adresse = "aae_data_adresse";
 $tbl_event = "aae_data_event";
+$tbl_hat_user = "aae_data_hat_user";
 
 //-----------------------------------
 
 require_once $modulePath . '/database/db_connect.php';
 $db = new DB_CONNECT();
-
-//AID holen:
+global $user;
+//EID holen:
 $path = current_path();
 $explodedpath = explode("/", $path);
 $event_id = $explodedpath[1];
+
+$resultakteurid = db_select($tbl_event, 'e')
+  ->fields('e', array(
+    'veranstalter',
+  ))
+  ->condition('EID', $event_id, '=')
+  ->execute(); 
+$akteur_id = "";
+foreach ($resultakteurid as $row) {
+  $akteur_id = $row->veranstalter;
+}
+//Prüfen ob Schreibrecht vorliegt
+$resultUser = db_select($tbl_hat_user, 'u')
+  ->fields('u', array(
+    'hat_UID',
+    'hat_AID',
+  ))
+  ->condition('hat_AID', $akteur_id, '=')
+  ->condition('hat_UID', $user->uid, '=')
+  ->execute();
+$hat_recht = $resultUser->rowCount();
+
+if(array_intersect(array('redakteur','administrator'), $user->roles)){
+  $hat_recht = 1;
+}
 
 //Selektion der Eventinformationen
 $resultevent = db_select($tbl_event, 'a')
@@ -93,6 +119,7 @@ foreach($resultevent as $row){
 	//Bild
 	if($row->bild != "") { 
 	  $profileHTML .= '<img src="sites/all/modules/aae_data/'.$row->bild.'" >'; }
-	
-  $profileHTML .= '<a href="?q=Eventloeschen/'.$event_id.'" >'.Löschen.'</a>'.'   '.'<a href="?q=Eventedit/'.$event_id.'" >'.Bearbeiten.'</a>';
+	if($hat_recht == 1){
+      $profileHTML .= '<a href="?q=Eventloeschen/'.$event_id.'" >'.Löschen.'</a>'.'   '.'<a href="?q=Eventedit/'.$event_id.'" >'.Bearbeiten.'</a>';
+    }
 }

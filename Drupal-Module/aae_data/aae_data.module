@@ -83,6 +83,24 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
+  //Menuitem "Eventloeschen"
+  $items['Eventloeschen/%'] = array(
+    'title' => '',
+    'page callback' => 'eventloeschen_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
+
+  //Menuitem "Eventedit"
+  $items['Eventedit/%'] = array(
+    'title' => '',
+    'page callback' => 'eventedit_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
+
   //Menuitem "Eventformular"
   $items['Eventformular'] = array(
     'title' => 'Eventformular',
@@ -161,6 +179,30 @@ function events_page() {
 function eventprofil_page($eid=0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventprofil.php';
+
+  $path = current_path();
+  $path_alias = drupal_lookup_path('alias',$path);
+
+  return $profileHTML;
+}
+/**
+ * Builds page for Eventloeschen
+ */
+function eventloeschen_page($eid=0) {
+  $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/eventloeschen.php';
+
+  $path = current_path();
+  $path_alias = drupal_lookup_path('alias',$path);
+
+  return $profileHTML;
+}
+/**
+ * Builds page for Eventedit
+ */
+function eventedit_page($aid=0) {
+  $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/eventedit.php';
 
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
