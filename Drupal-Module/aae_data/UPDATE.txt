@@ -1,3 +1,11 @@
+2015-07-21 09:20 Ruth:
+Änderungen:
+aae_data.module: Hinzufügen von Menuitems für Eventbearbeitung/-löschung
+eventprofil.php: einige Fehler entfernt
+Hinzugefügt:
+eventloeschen.php: Löschen eines Events
+eventedit.php: Bearbeiten eines Events
+
 2015-07-20 14:00 Ruth:
 
 Änderungen:
