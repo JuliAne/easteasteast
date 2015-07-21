@@ -424,13 +424,19 @@ input[type=submit].isSubmitButton{
  color: #777777;
 }
 
-#footer #mini-nav ul li {
+#footer #block-system-main-menu ul li {
  text-align: left;
  border-bottom: 1px solid grey;
- padding: 6px 0;
+ margin: 0 !important;
+ padding: 8px 0;
+ list-style: none !important;
 }
 
-#footer #mini-nav ul li:last-child {
+#footer #block-system-main-menu ul .expanded .menu {
+  display: none;
+}
+
+#footer #block-system-main-menu ul li:last-child {
  border-bottom: none;
 }
 

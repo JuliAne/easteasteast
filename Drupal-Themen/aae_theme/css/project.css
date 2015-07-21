@@ -1,3 +1,8 @@
+.region-content {
+ width: 100% !important;
+ max-width: 100% !important;
+}
+
 #header {
  height: 260px;
  padding-top: 60px;

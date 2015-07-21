@@ -19,7 +19,7 @@
 			   <p><span><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" /></span><?= $aResult['row2']->strasse; ?> <?= $aResult['row2']->nr; ?><br /><strong><?= $aResult['row2']->plz; ?></strong> Leipzig</p>
 
          <?php if ($aResult['row1']->url != '') : ?>
-				 <p><span><img src="<?= base_path().path_to_theme(); ?>/img/cloud_white.svg" /></span><a href="<?= $aResult['row1']->url; ?>"><?= str_replace($aResult['row1']->url, 'http://', '');?></a></p>
+				 <p><span><img src="<?= base_path().path_to_theme(); ?>/img/cloud_white.svg" /></span><a href="<?= $aResult['row1']->url; ?>"><?= str_replace('http://', '', $aResult['row1']->url);?></a></p>
 				 <?php endif; ?>
 
 				 <div id="map" style="width: 100%; height: 180px;"></div>

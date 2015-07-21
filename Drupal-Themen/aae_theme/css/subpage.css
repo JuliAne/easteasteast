@@ -1,5 +1,7 @@
 .region-content {
- margin-top: 90px;
+ margin: 0 auto;
+ max-width: 62.5rem;
+ margin-top: 85px;
 }
 
 #footer {
