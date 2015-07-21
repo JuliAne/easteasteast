@@ -54,6 +54,10 @@ Offen:
 eventedit.php: Formular zum Bearbeiten eines Events (Ruth: sitze dran)
 eventloeschen.php: Formular zum Löschen eines Events (Ruth: sitze dran)
 
+akteure.php:
+
+- Pagination einrichten (Felix, sitze dran)
+
 akteurprofil.php:
 
 - Löschen-Button (Felix)
