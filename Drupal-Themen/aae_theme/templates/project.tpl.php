@@ -5,7 +5,9 @@
 			 <aside class="left large-4 columns">
 
 			  <div class="pcard">
-			   <header <?php if ($aResult['row1']->bild != '') echo 'style="background:url(sites/all/modules/aae_data/'.$row->bild.');"'; ?>></header>
+			   <header <?php if ($aResult['row1']->bild != '') echo 'style="background:url(sites/all/modules/aae_data/'.$row->bild.');"'; ?>>
+					<?php if ($aResult['row1']->bild != '') echo '<img src="sites/all/modules/aae_data/'.$row->bild.'" style="visbility:hidden;" />'; ?>
+				 </header>
 			  </div>
 
 			  <div id="project-info" class="pcard">
@@ -14,7 +16,11 @@
 				 <div class="divider"></div>
 			   <?php endif; ?>
 
-			   <p><span><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" /></span><?= $aResult['row2']->strasse; ?> <?= $aResult['row2']->nr; ?><br /><strong><?= $aResult['row2']->plz; ?></strong></p>
+			   <p><span><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" /></span><?= $aResult['row2']->strasse; ?> <?= $aResult['row2']->nr; ?><br /><strong><?= $aResult['row2']->plz; ?></strong> Leipzig</p>
+
+         <?php if ($aResult['row1']->url != '') : ?>
+				 <p><span><img src="<?= base_path().path_to_theme(); ?>/img/cloud_white.svg" /></span><a href="<?= $aResult['row1']->url; ?>"><?= str_replace($aResult['row1']->url, 'http://', '');?></a></p>
+				 <?php endif; ?>
 
 				 <div id="map" style="width: 100%; height: 180px;"></div>
 
@@ -22,7 +28,11 @@
 
 			  <div id="project-contact" class="pcard">
 			   <a href="<?= base_path().'akteurkontakt/'.$akteur_id; ?>"><button class="button">Kontaktieren</button></a>
-				 <?php if ($aResult['hat_recht']): ?><a href="<?= base_path().'akteuredit/'.$akteur_id; ?>"><button class="button secondary">Projekt bearbeiten</button></a><?php endif; ?>
+
+				 <?php if ($aResult['hat_recht']): ?>
+				 <a href="<?= base_path().'akteuredit/'.$akteur_id; ?>"><button class="button secondary">Projekt bearbeiten</button></a>
+				 <?php endif; ?>
+
 			  </div>
 			 </aside>
 
