@@ -7,35 +7,23 @@ eventloeschen.php: Löschen eines Events
 eventedit.php: Bearbeiten eines Events
 
 2015-07-20 14:00 Ruth:
-
 Änderungen:
-
 aae_data.module:
 - Funktionen zum Einlesen der JSON Dateien entfernt
 - Menuitem "eventformular" hinzugefügt + Funktion
-
 aae_data.install:
 - Aufruf der Funktion zum Einlesen der JSON Dateien entfernt
 - Schemaänderung: Email in Akteurtabelle als required eingestellt
-
 events.php:
 - Link zum Eventerstellen eingefügt
-
 eventprofil.php:
 - Kommentare
 - Bearbeiten-Button
 - Löschen-Button
-
--------------------------------
-
 Entfernt:
-
 - Verzeichnis "lib": wird nicht mehr benötigt
 - graphLoader.php: wird nicht mehr benötigt
 - Akteure-1.json: wird nicht mehr benötigt
-
--------------------------------
-
 Hinzugefügt:
 eventformular.php: Formular zum Anlegen eines Events
 
@@ -46,13 +34,12 @@ TODO
 Erledigt:
 
 - Akteursprofil: Events anzeigen
+- eventedit.php: Formular zum Bearbeiten eines Events
+- eventloeschen.php: Formular zum Löschen eines Events
 
 ------------------------------
 
 Offen:
-
-eventedit.php: Formular zum Bearbeiten eines Events (Ruth: sitze dran)
-eventloeschen.php: Formular zum Löschen eines Events (Ruth: sitze dran)
 
 akteure.php:
 
