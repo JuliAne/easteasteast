@@ -15,6 +15,8 @@ $tbl_adresse = "aae_data_adresse";
 $tbl_event = "aae_data_event";
 $tbl_akteur = "aae_data_akteur";
 $tbl_hat_user = "aae_data_hat_user";
+$tbl_akteur_events = "aae_data_akteur_hat_events";
+$tbl_bezirke = "aae_data_bezirke";
 
 //Eingeloggter User
 global $user;
@@ -30,32 +32,34 @@ if(!user_is_logged_in()){
   drupal_access_denied();
 }
 
-$resultakteurid = db_select($tbl_event, 'e')
+$resultakteurid = db_select($tbl_akteur_events, 'e')
   ->fields('e', array(
-    'veranstalter',
-    'name',
+    'AID',
   ))
   ->condition('EID', $event_id, '=')
   ->execute(); 
 $akteur_id = "";
-$event = "";
+$count="";
 foreach ($resultakteurid as $row) {
-  $akteur_id = $row->veranstalter;
-  $event = $row->name;
+  $akteur_id = $row->AID;
+  //Prüfen ob Schreibrecht vorliegt
+  $resultUser = db_select($tbl_hat_user, 'u')
+    ->fields('u', array(
+      'hat_UID',
+      'hat_AID',
+    ))
+    ->condition('hat_AID', $akteur_id, '=')
+    ->condition('hat_UID', $user_id, '=')
+    ->execute();
+  $hat_recht = $resultUser->rowCount();
+  if($hat_recht == 1){
+	$count = 1;
+  }
 }
-//Prüfen ob Schreibrecht vorliegt
-$resultUser = db_select($tbl_hat_user, 'u')
-  ->fields('u', array(
-    'hat_UID',
-    'hat_AID',
-  ))
-  ->condition('hat_AID', $akteur_id, '=')
-  ->condition('hat_UID', $user_id, '=')
-  ->execute();
-$hat_recht = $resultUser->rowCount();
+
 
 if(!array_intersect(array('redakteur','administrator'), $user->roles)){
-  if($hat_recht != 1){
+  if($count != 1){
     drupal_access_denied();
   }
 }
@@ -280,7 +284,7 @@ if (isset($_POST['submit'])) {
 	  ->condition('nr', $nr, '=')
 	  ->condition('adresszusatz', $adresszusatz, '=')
 	  ->condition('plz', $plz, '=')
-	  ->condition('ort', $ort, '=')
+	  ->condition('bezirk', $ort, '=')
 	  ->execute();
 	
 	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
@@ -292,7 +296,7 @@ if (isset($_POST['submit'])) {
 		  'nr' => $nr,
 		  'adresszusatz' => $adresszusatz,
 		  'plz' => $plz,
-		  'ort' => $ort,
+		  'bezirk' => $ort,
 		  'gps' => $gps,
 		))
 		->execute();
@@ -323,12 +327,18 @@ if (isset($_POST['submit'])) {
    	  ->fields(array(
 		'name' => $name,
 		'ort' => $adresse,
-		'veranstalter' => $veranstalter,
 		'start' => $start,
 		'url' => $url,
 		'ende' => $ende,
 		'bild' => $bild,
 		'kurzbeschreibung' => $kurzbeschreibung,
+	  ))
+	  ->condition('EID', $event_id, '=')
+	  ->execute();
+	//tbl_akteur_events UPDATE!!! (bei Mehrfachauswahl von Veranstaltern, muss das noch angepasst werden!!!)
+	$akteureventupdate = db_update($tbl_akteur_events)
+   	  ->fields(array(
+		'AID' => $veranstalter,
 	  ))
 	  ->condition('EID', $event_id, '=')
 	  ->execute();
@@ -342,17 +352,22 @@ if (isset($_POST['submit'])) {
   require_once $modulePath . '/database/db_connect.php';
   $db = new DB_CONNECT();
 
-    //Auswahl der Daten des ausgewählten Events
+  //Auswahl der Daten des ausgewählten Events
   $resultevent = db_select($tbl_event, 'e')
     ->fields('e', array(	
 	  'name',
-	  'veranstalter',
 	  'start',
 	  'ende',
 	  'url',
 	  'bild',
 	  'kurzbeschreibung',
 	  'ort',
+	))
+	->condition('EID', $event_id, '=')
+    ->execute();
+  $resultveranstalter = db_select($tbl_akteur_events, 'a')
+    ->fields('a', array(	
+	  'AID',
 	))
 	->condition('EID', $event_id, '=')
     ->execute();
@@ -365,7 +380,9 @@ if (isset($_POST['submit'])) {
 	$url = $row->url;
 	$bild = $row->bild;
 	$kurzbeschreibung = $row->kurzbeschreibung;
-	$veranstalter = $row->veranstalter;//Akteur-ID: Akteurinformationen muessen aus Akteurtabelle geholt werden
+  }
+  foreach ($resultveranstalter as $row) {
+	$veranstalter = $row->AID;
   }
   $akteur_id = $veranstalter;
   //Adressdaten aus DB holen:
@@ -375,7 +392,7 @@ if (isset($_POST['submit'])) {
 	  'nr',
 	  'adresszusatz',
 	  'plz',
-	  'ort',
+	  'bezirk',
 	  'gps',
 	))
 	->condition('ADID', $ort, '=')
@@ -386,11 +403,10 @@ if (isset($_POST['submit'])) {
 	$nr = $row->nr;
 	$adresszusatz = $row->adresszusatz;
 	$plz = $row->plz;
-	$ort = $row->ort;
+	$ort = $row->bezirk;
 	$gps = $row->gps;
   }
   //Akteurnamen aus DB holen:
-  //Adressdaten aus DB holen:
   $resultakteur = db_select($tbl_akteur, 'a')
     ->fields('a', array(	
 	  'name',
@@ -470,8 +486,30 @@ $profileHTML .= <<<EOF
   <input type="text" class="event" id="eventAdresszusatzInput" name="adresszusatz" value="$adresszusatz" placeholder="$ph_adresszusatz">$fehler_adresszusatz
   <label>PLZ:</label>
   <input type="text" class="event" id="eventPLZInput" name="plz" value="$plz" placeholder="$ph_plz">$fehler_plz
-  <label>Stadt:</label>
-  <input type="text" class="event" id="eventOrtInput" name="ort" value="$ort" placeholder="$ph_ort">$fehler_ort
+  <label>Bezirk:</label>
+  <!--<input type="text" class="event" id="eventOrtInput" name="ort" value="$ort" placeholder="$ph_ort">$fehler_ort-->
+EOF;
+
+//Bezirke abfragen, die in DB
+$resultbezirke = db_select($tbl_bezirke, 'b')
+  ->fields('b', array(
+    'BID',
+	'bezirksname',
+  ))
+  ->execute();
+$countbezirke = $resultbezirke->rowCount();
+//Dropdownliste zur Akteurauswahl
+$profileHTML .= '<select name="ort" size="'.$countbezirke.'" >';
+foreach ($resultbezirke as $row) {
+  if($row->BID == $ort){
+	$profileHTML .= '<option value="'.$row->BID.'" selected="selected" >'.$row->bezirksname.'</option>';
+  }else{
+	$profileHTML .= '<option value="'.$row->BID.'">'.$row->bezirksname.'</option>';
+  }
+}
+$profileHTML .= '</select>';
+
+$profileHTML .= <<<EOF
   <label>Geodaten:</label>
   <input type="text" class="event" id="eventGPSInput" name="gps" value="$gps" placeholder="$ph_gps">$fehler_gps
 	

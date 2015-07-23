@@ -12,6 +12,14 @@
  */
 function aae_data_schema() {
   $schema= array();
+  $schema ['aae_data_bezirke'] = array(
+    'description' => 'Tabelle fuer Leipziger Bezirke',
+	'fields' => array(
+	  'BID' => array('description' => 'ID für Bezirke', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'bezirksname' => array('description' => 'Bezirksname', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
+	),
+	'primary key' => array('BID'),
+  );
   $schema ['aae_data_akteur'] = array(
     'description' => 'Tabelle für Akteure',
 	'fields' => array(
@@ -36,19 +44,21 @@ function aae_data_schema() {
 	  'ADID' => array('description' => 'ID für Adressen', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'strasse' => array('description' => 'Straßenname', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	  'adresszusatz' => array('description' => 'Adresszusatz wie Hinterhof oder a', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-	  'ort' => array('description' => 'Stadtname', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'bezirk' => array('description' => 'Bezirk', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE),
 	  'nr' => array('description' => 'Hausnummer', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	  'plz' => array('description' => 'Postleitzahl', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	  'gps' => array('description' => 'GPS-Koordinaten für Karte', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	),
 	'primary key' => array('ADID'),
+	'foreign keys' => array(
+	  'Bezirk' => array('table' => 'aae_data_bezirk', 'columns' => array('bezirk' => 'BID'))
+	),
   );
   $schema ['aae_data_event'] = array(
     'description' => 'Tabelle für Events',
 	'fields' => array(
 	  'EID' => array('description' => 'ID für Events', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'name' => array('description' => 'Eventname', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
-	  'veranstalter' => array('description' => 'Ausrichter (Akteur) des Events', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'start' => array('description' => 'Startzeitpunkt', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
 	  'ende' => array('description' => 'Endzeitpunkt', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE),
 	  'kurzbeschreibung' => array('description' => 'Kurze inhaltliche Erläuterung', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => 0),
@@ -58,8 +68,7 @@ function aae_data_schema() {
 	),
 	'primary key' => array('EID'),
 	'foreign keys' => array(
-	  'Eventadresse' => array('table' => 'aae_data_adresse', 'columns' => array('ort' => 'ADID')),
-	  'Akteur' => array('table' => 'aae_data_akteur', 'columns' => array('veranstalter' => 'AID'))
+	  'Eventadresse' => array('table' => 'aae_data_adresse', 'columns' => array('ort' => 'ADID'))
 	),
   );
   $schema ['aae_data_hat_sparte'] = array(
@@ -94,6 +103,19 @@ function aae_data_schema() {
 	  'Akteur' => array('table' => 'aae_data_akteur', 'columns' => array('hat_AID' => 'AID'))
 	),
   );
+  $schema ['aae_data_akteur_hat_events'] = array(
+    'description' => 'Tabelle fuer Zuordnung aller Akteure zu einem Event',
+	'fields' => array(
+	  'EID' => array('description' => 'ID für Event', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'AID' => array('description' => 'ID für Akteur', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	),
+	'primary key' => array('EID', 'AID'),
+	'foreign keys' => array(
+	  'Event' => array('table' => 'aae_data_event', 'columns' => array('EID' => 'EID')),
+	  'Akteur' => array('table' => 'aae_data_akteur', 'columns' => array('AID' => 'AID'))
+	),
+  );
+
 
   return $schema;
 }

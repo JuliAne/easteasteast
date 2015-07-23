@@ -21,6 +21,8 @@ if(!user_is_logged_in()){
 //DB-Tabellen
 $tbl_adresse = "aae_data_adresse";
 $tbl_event = "aae_data_event";
+$tbl_akteur_events = "aae_data_akteur_hat_events";
+$tbl_bezirke = "aae_data_bezirke";
 $tbl_akteur = "aae_data_akteur";
 
 //-----------------------------------
@@ -88,7 +90,7 @@ $ph_strasse = "Strasse";
 $ph_nr = "Hausnummer";
 $ph_adresszusatz = "Adresszusatz";
 $ph_plz = "PLZ";
-$ph_ort = "Ort/Stadt";
+$ph_ort = "Bezirk";
 $ph_gps = "GPS Koordinaten (durch Leerzeichen getrennt!)";
 
 //-----------------------------------
@@ -239,7 +241,7 @@ if (isset($_POST['submit'])) {
 	  ->condition('nr', $nr, '=')
 	  ->condition('adresszusatz', $adresszusatz, '=')
 	  ->condition('plz', $plz, '=')
-	  ->condition('ort', $ort, '=')
+	  ->condition('bezirk', $ort, '=')
 	  ->execute();
 	
 	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
@@ -251,7 +253,7 @@ if (isset($_POST['submit'])) {
 		  'nr' => $nr,
 		  'adresszusatz' => $adresszusatz,
 		  'plz' => $plz,
-		  'ort' => $ort,
+		  'bezirk' => $ort,
 		  'gps' => $gps,
 		))
 		->execute();
@@ -282,12 +284,18 @@ if (isset($_POST['submit'])) {
    	  ->fields(array(
 		'name' => $name,
 		'ort' => $adresse,
-		'veranstalter' => $veranstalter,
 		'start' => $start,
 		'url' => $url,
 		'ende' => $ende,
 		'bild' => $bild,
 		'kurzbeschreibung' => $kurzbeschreibung,
+	  ))
+	  ->execute();
+	//tbl_akteur_events INSERT!!!
+	$akteurevents = db_insert($tbl_akteur_events)
+   	  ->fields(array(
+		'AID' => $veranstalter,
+		'EID' => $event_id,
 	  ))
 	  ->execute();
 		
@@ -347,8 +355,26 @@ $profileHTML .= <<<EOF
   <input type="text" class="event" id="eventAdresszusatzInput" name="adresszusatz" value="$adresszusatz" placeholder="$ph_adresszusatz">$fehler_adresszusatz
   <label>PLZ:</label>
   <input type="text" class="event" id="eventPLZInput" name="plz" value="$plz" placeholder="$ph_plz">$fehler_plz
-  <label>Stadt:</label>
-  <input type="text" class="event" id="eventOrtInput" name="ort" value="$ort" placeholder="$ph_ort">$fehler_ort
+  <label>Bezirk:</label>
+  <!--<input type="text" class="event" id="eventOrtInput" name="ort" value="$ort" placeholder="$ph_ort">$fehler_ort-->
+EOF;
+
+//Bezirke abfragen, die in DB
+$resultbezirke = db_select($tbl_bezirke, 'b')
+  ->fields('b', array(
+    'BID',
+	'bezirksname',
+  ))
+  ->execute();
+$countbezirke = $resultbezirke->rowCount();
+//Dropdownliste zur Bezirkauswahl
+$profileHTML .= '<select name="ort" size="'.$countbezirke.'" >';
+foreach ($resultbezirke as $row) {
+  $profileHTML .= '<option value="'.$row->BID.'">'.$row->bezirksname.'</option>';
+}
+$profileHTML .= '</select>';
+
+$profileHTML .= <<<EOF
   <label>Geodaten:</label>
   <input type="text" class="event" id="eventGPSInput" name="gps" value="$gps" placeholder="$ph_gps">$fehler_gps
 	
