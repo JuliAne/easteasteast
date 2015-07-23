@@ -100,6 +100,8 @@
 
  <section class="section" id="journal">
    <h2>Journal</h2>
+
+   <?php block_aae_print_letzte_artikel(); ?>
    <?php print render($page['content']); ?>
  </section>
 

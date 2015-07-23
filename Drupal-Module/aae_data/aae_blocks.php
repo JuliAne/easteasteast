@@ -6,13 +6,14 @@
 * @function block_aae_print_letzte_events
 * @function block_aae_print_letzte_events
 * @function block_aae_count_projects_events
+* @function block_aae_print_letzte_artikel
 */
 
 /**
  * Kleiner, interner(!) Block zum Anzeigen der letzten drei (=$limit) eingetragenen Events.
  * Wird in theme/page--front.tpl.php aufgerufen.
  *
- * @use Einzubinden via require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/block_aae_letzte_events.php';
+ * @use Einzubinden via require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
  */
 
 function block_aae_print_letzte_events($limit = 3) {
@@ -28,10 +29,7 @@ function block_aae_print_letzte_events($limit = 3) {
     ->execute()
     ->fetchAll();
 
-  /*   ->fields('a', array(
-      'name',
-      'EID',
-    )) */
+  // TODO Fields * durch Werte ersetzen
 
   $resultEvents = array();
 
@@ -47,7 +45,7 @@ function block_aae_print_letzte_events($limit = 3) {
  * Kleiner, interner(!) Block zum Anzeigen der letzten drei (=$limit) eingetragenen Projekte.
  * Wird in theme/page--front.tpl.php aufgerufen
  *
- * @use Einzubinden via require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/block_aae_letzte_akteure.php';
+ * @use Einzubinden via require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
  */
 
 function block_aae_print_letzte_akteure($limit = 3) {
@@ -65,6 +63,8 @@ function block_aae_print_letzte_akteure($limit = 3) {
 
   $resultakteure = array();
 
+  // TODO Fields * durch Werte ersetzen
+
  foreach($letzteakteure as $row){
     $resultakteure[] = $row; //array('AID' => $row->AID, 'name' => $row->name);
   }
@@ -73,10 +73,12 @@ function block_aae_print_letzte_akteure($limit = 3) {
 }
 
 /**
- * Kleiner, interner(!) Block zum Anzeigen der letzten drei (=$limit) eingetragenen Projekte.
- * Wird in theme/page--front.tpl.php aufgerufen
+ * Kleiner, interner(!) Block zum Aufzählen ("count") aller eingetragenen
+ * Projekte und Events. Wird im Slider in theme/page--front.tpl.php aufgerufen.
  *
- * @use Einzubinden via require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/block_aae_letzte_akteure.module';
+ * UNVOLLSTÄNDIG!
+ *
+ * @use Einzubinden via require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
  */
 
 function block_aae_count_projects_events() {
@@ -113,6 +115,42 @@ function block_aae_count_projects_events() {
   return $myCounts;
 
   // return array('akteure' => xy, 'projekte' => xy):
+}
+
+/**
+ * Kleiner, interner(!) Block zur Ausgabe der letzten xy Blog ("Journal")-Artikel
+ *
+ * Wird in theme/page--front.tpl.php aufgerufen
+ *
+ * @use Einzubinden via require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
+ */
+
+function block_aae_print_letzte_artikel($limit = 3) {
+
+  global $user;
+
+  if (user_access('access content')) {
+    $result = db_select('node', 'n')
+      ->fields('n', array('nid', 'title', 'created'))
+      ->condition('type', 'blog')
+      ->condition('status', 1)
+      ->orderBy('created', 'DESC')
+      ->range(0, variable_get('blog_block_count', 3))
+      ->addTag('node_access')
+      ->execute();
+
+    if ($node_title_list = node_title_list($result)) {
+      $block['subject'] = t('Recent blog posts');
+      $block['content']['blog_list'] = $node_title_list;
+      $block['content']['blog_more'] = array(
+        '#theme' => 'more_link',
+        '#url' => 'blog',
+        '#title' => t('Read the latest blog entries.'),
+      );
+
+      return $block;
+    }
+  }
 }
 
 ?>
