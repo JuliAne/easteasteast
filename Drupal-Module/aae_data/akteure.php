@@ -12,7 +12,7 @@ $tbl_akteur = "aae_data_akteur";
 
 // Zeige wie viele Akteure pro Seite?
 // TODO: Wert konfigurierbar machen via Filtermenü
-$maxAkteure = '3';
+$maxAkteure = '15';
 
 //-----------------------------------
 
