@@ -106,7 +106,7 @@
    // Lade "Letzte Blog-Artikel"-Block
 
    foreach (block_aae_print_letzte_artikel() as $artikel) : ?>
-
+<?= print_r($artikel); ?>
    <div class="large-3 columns">
     <a href="<?= base_path(); ?>?q=node/<?= $artikel->$nid; ?>"><h3><?= $artikel->$title; ?></h3></a>
     <p>kurzbeschreibung...</p>
