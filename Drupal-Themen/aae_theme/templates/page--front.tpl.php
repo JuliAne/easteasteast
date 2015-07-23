@@ -101,8 +101,40 @@
  <section class="section" id="journal">
    <h2>Journal</h2>
 
-   <?php block_aae_print_letzte_artikel(); ?>
+   <div class="row">
+   <?php
+   // Lade "Letzte Blog-Artikel"-Block
+
+   foreach (block_aae_print_letzte_artikel() as $artikel) : ?>
+
+   <div class="large-3 columns">
+    <a href="<?= base_path(); ?>?q=node/<?= $artikel->$nid; ?>"><h3><?= $artikel->title; ?></h3></a>
+    <p>kurzbeschreibung...</p>
+    <p>artikel.datum, artikel.bild, artikel....</p> 
+   </div>
+
+
+   <!--         (
+            [nid] => 21
+            [vid] => 21
+            [type] => article
+            [language] => und
+            [title] => My title
+            [uid] => 1
+            [status] => 1
+            [created] => 1437654914
+            [changed] => 1437654914
+            [comment] => 2
+            [promote] => 1
+            [sticky] => 0
+            [tnid] => 0
+            [translate] => 0
+        ) -->
+    <?php endforeach; ?>
+  </div>
+
    <?php print render($page['content']); ?>
+
  </section>
 
 <?php include_once('footer.tpl.php'); ?>
