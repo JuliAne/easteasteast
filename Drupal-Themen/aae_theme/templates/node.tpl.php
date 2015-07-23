@@ -3,7 +3,7 @@
 <?= print $image; ?> Autor:<?= print $author; ?>
 
 Print: <br />
-<?= print_r($content['comments']); ?>
+<? print(print_r($content['comments'])); ?>
 <br />
 
 <?php   // Remove the "Add new comment" link on the teaser page or if the comment
