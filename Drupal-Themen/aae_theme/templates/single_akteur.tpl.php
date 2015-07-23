@@ -34,10 +34,10 @@
 				</div>
 
 			  <div id="project-contact" class="pcard">
-			   <a href="<?= base_path().'akteurkontakt/'.$akteur_id; ?>"><button class="button">Kontaktieren</button></a>
+			   <a href="<?= base_path().'?q=akteurkontakt/'.$akteur_id; ?>" onclick="javscript:alert('TODO: Nun wuerde sich ein Modal-Window oeffnen mit Kontaktformular und Ansprechpartner'); return false;"><button class="button">Kontaktieren</button></a>
 
-				 <?php if ($aResult['hat_recht']): // FUNKTIONIERT NICHT... ?>
-				 <a href="<?= base_path().'akteuredit/'.$akteur_id; ?>"><button class="button secondary">Projekt bearbeiten</button></a>
+				 <?php if ($hat_recht): ?>
+				 <a href="<?= base_path().'?q=akteuredit/'.$akteur_id; ?>"><button class="button secondary">Bearbeiten</button></a>
 				 <?php endif; ?>
 
 			  </div>
@@ -46,12 +46,10 @@
 			 <section id="project-content" class="large-7 large-offset-1 columns">
 			  <h1><?= $aResult['row1']->name; ?></h1>
 
-        <?php if ($aResult['row1']->kurzbeschreibung != '') : ?>
+
 			  <h3>Beschreibung</h3>
-        <p><?= $aResult['row1']->kurzbeschreibung; ?><p>
-				<?php else : ?>
-				<p><i>Hier wurde leider noch keine Akteursbeschreibung angelegt :(</i></p>
-			  <?php endif; ?>
+
+        <?= $aResult['row1']->kurzbeschreibung; ?><br />
 
 				<!--<a href="#" onclick="javascript:alert($('#printr').html());">Zeige Print_r</a>
 
@@ -61,7 +59,7 @@
 			</div> -->
 
         <?php if ($aResult['events'] != '') : ?>
-			  <br /><h3>N&auml;chste Veranstaltungen</h3>
+			  <h3>N&auml;chste Veranstaltungen</h3>
 
 			  <ul id="next-events">
 				 <?php foreach($aResult['events'] as $event) : ?>
