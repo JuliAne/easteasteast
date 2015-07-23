@@ -127,28 +127,28 @@ function block_aae_count_projects_events() {
 
 function block_aae_print_letzte_artikel($limit = 3) {
 
-  global $user;
 
-  if (user_access('access content')) {
     $result = db_select('node', 'n')
       ->fields('n', array('nid', 'title', 'created'))
       ->condition('type', 'blog')
       ->condition('status', 1)
       ->orderBy('created', 'DESC')
-      ->range(0, variable_get('blog_block_count', 3))
+      ->range(0, $limit)
       ->addTag('node_access')
       ->execute();
 
-    if ($node_title_list = node_title_list($result)) {
+      print_r($result);
+
+  /*  if ($node_title_list = node_title_list($result)) {
       $block['subject'] = t('Recent blog posts');
       $block['content']['blog_list'] = $node_title_list;
       $block['content']['blog_more'] = array(
         '#theme' => 'more_link',
         '#url' => 'blog',
         '#title' => t('Read the latest blog entries.'),
-      );
+      ); */
 
-      return $block;
+      return $result;
     }
   }
 }
