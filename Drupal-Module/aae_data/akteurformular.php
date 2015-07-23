@@ -7,6 +7,7 @@
  * Anschließend werden die Daten in die DB-Tabellen eingetragen.
  *
  * Ruth, 2015-07-04
+ * Felix, 2015-07-21
  */
 
 //Eingeloggter User
@@ -337,11 +338,11 @@ if (isset($_POST['submit'])) {
 	}
 	*/
 
-	header("Location: ?q=Akteure"); //Hier muss hin, welche Seite aufgerufen werden soll,
-	  //nach dem die Daten erfolgreich gespeichert wurden.
-	}
+	header("Location: ?q=Akteurprofil/".$akteur_id);
+  // Leite weiter auf das neu erstellte Profil
+  }
 
-}else{
+} else {
  //Formular wird zum ersten Mal aufgerufen: nichts tun
 }
 

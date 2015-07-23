@@ -127,9 +127,9 @@ $ph_hatuser = "User ID";
 
 //das wird ausgeführt, wenn auf "Speichern" gedrückt wird
 if (isset($_POST['submit'])) {
-	
+
   $akteur_id = $_POST['akteur_id'];
-	
+
   //Wertezuweisung
   $name = $_POST['name'];
   $email = $_POST['email'];
@@ -157,13 +157,13 @@ if (isset($_POST['submit'])) {
   }
 
   //$kategorie = $_POST['kategorie'];
-	
+
 //-------------------------------------
 
   //Check-Klauseln
-	
-  //Check, ob ein Name eingegeben wurde:	
-  if(strlen($name) == 0){	
+
+  //Check, ob ein Name eingegeben wurde:
+  if(strlen($name) == 0){
     //Feld nicht ausgefüllt
 	$fehler_name = "Bitte einen Organisationsnamen eingeben!";
 	$freigabe = false;
@@ -175,20 +175,20 @@ if (isset($_POST['submit'])) {
   }
 
   //überflüssige Leerzeichen am Anfang entfernen
-  $name=trim($name);  	
-  $email = trim($email);	
-  $telefon = trim($telefon); 	
-  $url = trim($url); 	
-  $ansprechpartner = trim($ansprechpartner); 	
-  $funktion = trim($funktion); 	
-  $bild = trim($bild); 	
-  $kurzbeschreibung = trim($kurzbeschreibung); 
-  $oeffnungszeiten = trim($oeffnungszeiten); 	
-  $strasse = trim($strasse);	
-  $nr = trim($nr);	
-  $adresszusatz = trim($adresszusatz);	
-  $plz = trim($plz);	
-  $ort = trim($ort);	
+  $name=trim($name);
+  $email = trim($email);
+  $telefon = trim($telefon);
+  $url = trim($url);
+  $ansprechpartner = trim($ansprechpartner);
+  $funktion = trim($funktion);
+  $bild = trim($bild);
+  $kurzbeschreibung = trim($kurzbeschreibung);
+  $oeffnungszeiten = trim($oeffnungszeiten);
+  $strasse = trim($strasse);
+  $nr = trim($nr);
+  $adresszusatz = trim($adresszusatz);
+  $plz = trim($plz);
+  $ort = trim($ort);
   $gps = trim($gps);
   $laengehatuser = count($explodedhatuser);
   if($laengehatuser > 0){
@@ -215,76 +215,76 @@ if (isset($_POST['submit'])) {
   }
 
   //und alle Tags entfernen (Hacker)
-  $name=strip_tags($name);	
-  $email = strip_tags($email);	
-  $telefon = strip_tags($telefon); 	
-  $url = strip_tags($url); 	
-  $ansprechpartner = strip_tags($ansprechpartner); 
-  $funktion = strip_tags($funktion); 	
-  $bild = strip_tags($bild); 	
-  $kurzbeschreibung = strip_tags($kurzbeschreibung); 
-  $oeffnungszeiten = strip_tags($oeffnungszeiten); 
-  $strasse = strip_tags($strasse);	
-  $nr = strip_tags($nr);	
-  $adresszusatz = strip_tags($adresszusatz);	
-  $plz = strip_tags($plz);	
-  $ort = strip_tags($ort);	
+  $name=strip_tags($name);
+  $email = strip_tags($email);
+  $telefon = strip_tags($telefon);
+  $url = strip_tags($url);
+  $ansprechpartner = strip_tags($ansprechpartner);
+  $funktion = strip_tags($funktion);
+  $bild = strip_tags($bild);
+  $kurzbeschreibung = strip_tags($kurzbeschreibung);
+  $oeffnungszeiten = strip_tags($oeffnungszeiten);
+  $strasse = strip_tags($strasse);
+  $nr = strip_tags($nr);
+  $adresszusatz = strip_tags($adresszusatz);
+  $plz = strip_tags($plz);
+  $ort = strip_tags($ort);
   $gps = strip_tags($gps);
   $hatuser = strip_tags($hatuser);
-	
+
   //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
-  if (strlen($name) > 100){	
+  if (strlen($name) > 100){
     $fehler_name = "Bitte geben Sie einen kuerzeren Namen an oder verwenden Sie ein Kuerzel.";
 	$freigabe = false;
-  }	
-  if (strlen($email) > 100){	
+  }
+  if (strlen($email) > 100){
 	$fehler_email = "Bitte geben Sie eine kuerzere Emailadresse an.";
 	$freigabe = false;
-  }	
+  }
   if (strlen($telefon) > 100){
 	$fehler_telefon = "Bitte geben Sie eine kuerzere Telefonnummer an.";
 	$freigabe = false;
-  }	
+  }
   if (strlen($url) > 100){
 	$fehler_url = "Bitte geben Sie eine kuerzere URL an.";
 	$freigabe = false;
-  }	
+  }
   if (strlen($ansprechpartner) > 100){
 	$fehler_ansprechpartner = "Bitte geben Sie einen kuerzeren Ansprechpartner an.";
 	$freigabe = false;
-  }	
+  }
   if (strlen($funktion) > 100){
 	$fehler_funktion = "Bitte geben Sie eine kuerzere Funktion an.";
 	$freigabe = false;
-  }	
+  }
   if (strlen($kurzbeschreibung) > 500){
 	$fehler_kurzbeschreibung = "Bitte geben Sie eine kuerzere Beschreibung an.";
 	$freigabe = false;
-  }	
+  }
   if (strlen($oeffnungszeiten) > 200){
 	$fehler_oeffnungszeiten = "Bitte geben Sie kuerzere Oeffnungszeiten an.";
 	$freigabe = false;
-  }	
+  }
   if (strlen($strasse) > 100){
 	$fehler_strasse = "Bitte geben Sie einen kuerzeren Strassennamen an.";
 	$freigabe = false;
-  }	
+  }
   if (strlen($nr) > 100){
 	$fehler_nr = "Bitte geben Sie eine kuerzere Nummer an.";
 	$freigabe = false;
-  }	
+  }
   if (strlen($adresszusatz) > 100){
 	$fehler_adresszusatz = "Bitte geben Sie einen kuerzeren Adresszusatz an.";
 	$freigabe = false;
-  }	
+  }
   if (strlen($plz) > 100){
 	$fehler_plz = "Bitte geben Sie eine kuerzere PLZ an.";
 	$freigabe = false;
-  }	
+  }
   if (strlen($ort) > 100){
 	$fehler_ort = "Bitte geben Sie einen kuerzeren Ortsnamen an.";
 	$freigabe = false;
-  }	
+  }
   if (strlen($gps) > 100){
 	$fehler_gps = "Bitte geben Sie kuerzere GPS-Daten an.";
 	$freigabe = false;
@@ -356,7 +356,7 @@ if (isset($_POST['submit'])) {
 	  ))
 	  ->condition('AID', $akteur_id, '=')
 	  ->execute();
-	
+
 	//tbl_hat_user
 	if ($laengehatuser != 0){
 	  $j = 0;
@@ -370,7 +370,7 @@ if (isset($_POST['submit'])) {
 	    $j = $j + 1;
 	  }
 	}
-	
+
 	//Kategorien
 	/*
 	foreach ($kategorie as $row) {
@@ -399,7 +399,7 @@ if (isset($_POST['submit'])) {
 			))
 		    ->condition('akteur_id', $akteur_id, '=')
 		    ->execute();
-		}	
+		}
 	  }
 	}
 	//Unchecked Kategorien löschen:
@@ -425,11 +425,11 @@ if (isset($_POST['submit'])) {
 	  }
 	}
 	*/
-		
-	header("Location: ?q=Akteurprofil/$akteur_id"); //Hier muss hin, welche Seite aufgerufen werden soll,
-		//nach dem die Daten erfolgreich gespeichert wurden.
+
+	header("Location: ?q=Akteurprofil/".$akteur_id);
+  // Leite nach Abschluss auf Profil weiter
   }
-	
+
 } else{
   //Erstmaliger Aufruf: Daten aus DB in Felder schreiben
   require_once $modulePath . '/database/db_connect.php';
@@ -437,7 +437,7 @@ if (isset($_POST['submit'])) {
 
   //Auswahl der Daten des eingeloggten Akteurs:
   $resultakteur = db_select($tbl_akteur, 'c')
-    ->fields('c', array(	
+    ->fields('c', array(
 	  'name',
 	  'adresse',
 	  'email',
@@ -467,10 +467,10 @@ if (isset($_POST['submit'])) {
   if($bild == ""){
     $bild = "images/xxx.png";
   }
-	
+
   //Adressdaten aus DB holen:
   $resultadresse = db_select($tbl_adresse, 'd')
-    ->fields('d', array(	
+    ->fields('d', array(
 	  'strasse',
 	  'nr',
 	  'adresszusatz',
@@ -500,7 +500,7 @@ if (isset($_POST['submit'])) {
   */
 }
 
-$pathThisFile = $_SERVER['REQUEST_URI']; 
+$pathThisFile = $_SERVER['REQUEST_URI'];
 
 //Darstellung
 $profileHTML = <<<EOF
@@ -527,7 +527,7 @@ $profileHTML = <<<EOF
   <input type="text" class="akteur" id="akteurGPSInput" name="gps" value="$gps" placeholder="$ph_gps">$fehler_gps
   <label>Öffnungszeiten:</label>
   <input type="text" class="akteur" id="akteurOeffnungszeitenInput" name="oeffnungszeiten" value="$oeffnungszeiten" placeholder="$ph_oeffnungszeiten">$fehler_oeffnungszeiten
-	
+
   <label>Kontakt:</label>
   <label>Ansprechpartner:</label>
   <input type="text" class="akteur" id="akteurAnsprechpartnerInput" name="ansprechpartner" value="$ansprechpartner" placeholder="$ph_ansprechpartner">$fehler_ansprechpartner

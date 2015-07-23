@@ -46,10 +46,12 @@
 			 <section id="project-content" class="large-7 large-offset-1 columns">
 			  <h1><?= $aResult['row1']->name; ?></h1>
 
-
+        <?php if ($aResult['row1']->kurzbeschreibung != '') : ?>
 			  <h3>Beschreibung</h3>
-
         <p><?= $aResult['row1']->kurzbeschreibung; ?><p>
+				<?php else : ?>
+				<p><i>Hier wurde leider noch keine Akteursbeschreibung angelegt :(</i></p>
+			  <?php endif; ?>
 
 				<!--<a href="#" onclick="javascript:alert($('#printr').html());">Zeige Print_r</a>
 
