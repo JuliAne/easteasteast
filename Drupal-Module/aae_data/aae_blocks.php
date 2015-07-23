@@ -149,8 +149,6 @@ function block_aae_print_letzte_artikel($limit = 3) {
       ); */
 
       return $result;
-    }
-  }
 }
 
 ?>
