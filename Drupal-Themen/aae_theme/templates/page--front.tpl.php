@@ -104,7 +104,7 @@
    <?php
    // Lade "Letzte Blog-Artikel"-Block
 
-   foreach (block_aae_print_letzte_artikel() as $artikel) : ?>
+   /*foreach (block_aae_print_letzte_artikel() as $artikel) : ?>
 
      <div class="row artikel">
       <div class="large-2 columns"><img style="width: 50px; border-radius: 25px;" src="pcard_bg.jpg" /></div>
@@ -117,7 +117,7 @@
       </div>
     </div>
 
-    <?php endforeach; ?>
+    <?php endforeach; */ ?>
 
    <?php print render($page['content']); ?>
 

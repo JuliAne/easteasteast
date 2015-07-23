@@ -49,7 +49,7 @@ function aae_preprocess_html(&$variables) {
 
   if (user_access('administer')) {
    echo '<!-- IF IS_ADMIN -->';
-   echo '<style type="text/css">#mainnav { margin-top: -18px !important; z-index: 20 !important; }</style>';
+   echo '<style type="text/css">#mainnav { top: 65px !important; z-index: 20 !important; }</style>';
    echo '<!-- /IF -->';
  }
 }
