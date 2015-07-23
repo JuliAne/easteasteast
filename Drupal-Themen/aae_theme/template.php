@@ -37,9 +37,9 @@ function aae_preprocess_html(&$variables) {
  } else if (strpos(current_path(), 'Akteure') !== FALSE) {
 
    drupal_add_css(path_to_theme(). '/css/subpage.css');
-   drupal_add_js(path_to_theme().'/js/stalactite.min.js');
+  /* drupal_add_js(path_to_theme().'/js/stalactite.min.js');
 
-   drupal_add_js('$("#block-system-main #akteure").stalactite();', array('type' => 'inline', 'scope' => 'footer'));
+   drupal_add_js('$("#block-system-main #akteure").stalactite();', array('type' => 'inline', 'scope' => 'footer')); */
 
  } else {
 
