@@ -129,13 +129,13 @@ function block_aae_print_letzte_artikel($limit = 3) {
 
 
     $result = db_select('node', 'n')
-      ->fields('n', array('nid', 'title', 'created'))
-      ->condition('type', 'blog')
+      ->fields('n')
+      ->condition('type', 'article')
       ->condition('status', 1)
       ->orderBy('created', 'DESC')
       ->range(0, $limit)
-      ->addTag('node_access')
-      ->execute();
+      ->execute()
+      ->fetchAll();
 
       print_r($result);
 
