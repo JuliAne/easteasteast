@@ -137,8 +137,6 @@ function block_aae_print_letzte_artikel($limit = 3) {
       ->execute()
       ->fetchAll();
 
-      print_r($result);
-
   /*  if ($node_title_list = node_title_list($result)) {
       $block['subject'] = t('Recent blog posts');
       $block['content']['blog_list'] = $node_title_list;
