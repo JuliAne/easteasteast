@@ -27,6 +27,8 @@ akteurprofil.php:
 - Beste Größe für Bild-Upload's ermitteln. Diesen Wert in akteurformular & -edit dem
   User mitteilen, Bilder nach Upload komprimieren / ggf. skalieren
 - Anpassung an neues Schema
+
+akteure.php:
 - 'Beschreibung' abschneiden bei 60 Zeichen und (…) anfügen
 
 eventprofil.php:
