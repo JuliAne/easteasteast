@@ -128,7 +128,7 @@ function block_aae_count_projects_events() {
 function block_aae_print_letzte_artikel($limit = 3) {
 
 
-    $result = db_select('node', 'n')
+    $artikelResult = db_select('node', 'n')
       ->fields('n')
       ->condition('type', 'article')
       ->condition('status', 1)
@@ -145,6 +145,10 @@ function block_aae_print_letzte_artikel($limit = 3) {
         '#url' => 'blog',
         '#title' => t('Read the latest blog entries.'),
       ); */
+
+      foreach ($artikelResult as $artikel) {
+       $result[] = $artikel;
+      }
 
       return $result;
 }
