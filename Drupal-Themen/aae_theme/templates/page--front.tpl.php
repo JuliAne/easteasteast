@@ -108,9 +108,9 @@
    foreach (block_aae_print_letzte_artikel() as $artikel) : ?>
 
    <div class="large-3 columns">
-    <a href="<?= base_path(); ?>?q=node/<?= $artikel->$nid; ?>"><h3><?= $artikel->title; ?></h3></a>
+    <a href="<?= base_path(); ?>?q=node/<?= $artikel->$nid; ?>"><h3><?= $artikel->$title; ?></h3></a>
     <p>kurzbeschreibung...</p>
-    <p>artikel.datum, artikel.bild, artikel....</p> 
+    <p>artikel.datum, artikel.bild, artikel....</p>
    </div>
 
 
