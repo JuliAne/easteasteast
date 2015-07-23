@@ -1,67 +1,43 @@
-2015-07-21 09:20 Ruth:
-Änderungen:
-aae_data.module: Hinzufügen von Menuitems für Eventbearbeitung/-löschung
-eventprofil.php: einige Fehler entfernt
-Hinzugefügt:
-eventloeschen.php: Löschen eines Events
-eventedit.php: Bearbeiten eines Events
-
-2015-07-20 14:00 Ruth:
-Änderungen:
-aae_data.module:
-- Funktionen zum Einlesen der JSON Dateien entfernt
-- Menuitem "eventformular" hinzugefügt + Funktion
-aae_data.install:
-- Aufruf der Funktion zum Einlesen der JSON Dateien entfernt
-- Schemaänderung: Email in Akteurtabelle als required eingestellt
-events.php:
-- Link zum Eventerstellen eingefügt
-eventprofil.php:
-- Kommentare
-- Bearbeiten-Button
-- Löschen-Button
-Entfernt:
-- Verzeichnis "lib": wird nicht mehr benötigt
-- graphLoader.php: wird nicht mehr benötigt
-- Akteure-1.json: wird nicht mehr benötigt
-Hinzugefügt:
-eventformular.php: Formular zum Anlegen eines Events
-
--------------------------------
-
 TODO
 
 Erledigt:
 
 - Akteursprofil: Events anzeigen  (Felix, 2015-07-21)
-- eventedit.php: Formular zum Bearbeiten eines Events
-- eventloeschen.php: Formular zum Löschen eines Events
+- eventedit.php: Formular zum Bearbeiten eines Events (Ruth)
+- eventloeschen.php: Formular zum Löschen eines Events (Ruth)
 - akteure.php: Pagination einrichten, Design anpassen (Felix, 2015-07-23)
+- Datenbank: Erstellen der Tabelle aae_data_akteur_hat_events mit den Attributen "EID" & "AID"
+  aae_data_event.veranstalter kann folglich raus (de facto inkonsistent). (Ruth, 2015-07-23)
+- Datenbank: Erstellen der Tabelle aae_data_bezirke mit den Attributen "BID" & "bezirksname".
+  aae_data_adresse.bezirk als Fremdschlüssel auf data_bezirke.bid anlegen (s.u.)(Ruth, 2015-07-23)
+- eventformular.php: Die Kategorie "stadt" sollte raus. Dafür rein: Eine Auswahl von Bezirken (s.o.)(Ruth, 2015-07-23)
+- eventprofil.php, eventformular.php, eventedit.php: Anpassung an neues Schema (Ruth, 2015-07-23)
 
 ------------------------------
 
 Offen:
 
 akteurprofil.php:
-
 - Löschen-Button (Felix)
 - Event_hinzufügen-Button (Felix)
 - Beste Größe für Bild-Upload's ermitteln. Diesen Wert in akteurformular & -edit dem
   User mitteilen, Bilder nach Upload komprimieren / ggf. skalieren
+- Anpassung an neues Schema
 
-Datenbank:
+akteurformular.php:
+- Anpassung an neues Schema
 
-- Erstellen der Tabelle aae_data_akteur_hat_events mit den Attributen "EID" & "AID"
-  aae_data_event.veranstalter kann folglich raus (de facto inkonsistent).
-- Erstellen der Tabelle aae_data_bezirke mit den Attributen "BID" & "Bezirksname".
-  aae_data_akteur.bezirk als Fremdschlüssel auf data_bezirke.bid anlegen (s.u.)
+akteuredit.php
+- Anpassung an neues Schema
 
 eventprofil.php:
-
 - Funktion entwickeln zum umwandeln von Unix-Zeitformat in $date & $time
 
 eventformular.php:
-
-- Die Kategorie "stadt" sollte raus. Dafür rein: Eine Auswahl von Bezirken (s.o.)
 - Tooltip zum Einstellen der Uhrzeit/Datum (Output im richtigen Format) (Felix)
 - JS zum Auflösen der Straße/Nr. in gültiges Geoformat (Felix)
+
+eventloeschen.php:
+- Anpassung an neues Schema
+
+TESTEN, wenn alles angepasst ist, da derzeit wegen Abhängigkeiten nicht möglich!
