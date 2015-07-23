@@ -49,7 +49,11 @@
 
 			  <h3>Beschreibung</h3>
 
-        <?= $aResult['row1']->kurzbeschreibung; ?><br />
+				<?php if ($aResult['row1']->kurzbeschreibung !== ''): ?>
+				<p><?= $aResult['row1']->kurzbeschreibung; ?></p>
+			  <?php else : ?>
+				<p><i>Hier wurde leider noch keine Beschreibung angelegt :(</i></p>
+			  <?php endif; ?>
 
 				<!--<a href="#" onclick="javascript:alert($('#printr').html());">Zeige Print_r</a>
 
