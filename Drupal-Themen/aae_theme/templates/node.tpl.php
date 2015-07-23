@@ -3,15 +3,13 @@
 <?= print $image; ?> Autor:<?= print $author; ?>
 
 Print: <br />
-<? print(print_r($content['comments'])); ?>
+<? print print_r($content); ?>
 <br />
 
 <?php   // Remove the "Add new comment" link on the teaser page or if the comment
   // form is being displayed on the same page.
   if ($teaser || !empty($content['comments']['comment_form'])) {
     unset($content['links']['comment']['#links']['comment-add']);
-  }
-
-  print render($content); ?>
+  } ?>
 
 <?php endif; ?>
