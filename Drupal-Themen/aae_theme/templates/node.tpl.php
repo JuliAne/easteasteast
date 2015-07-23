@@ -1,9 +1,9 @@
 <?php if ($teaser): ?>
 <h4><a href="<?php print $node_url ?>" title="<?php print $title ?>"><?php print $title ?></a></h4>
-<?= $image; ?> Autor:<?= print $author; ?>
+<?= print $image; ?> Autor:<?= print $author; ?>
 
 Print: <br />
-<?php print_r($content['comments']); ?>
+<?= print_r($content['comments']); ?>
 <br />
 
 <?php   // Remove the "Add new comment" link on the teaser page or if the comment
