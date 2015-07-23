@@ -25,6 +25,7 @@ $tbl_adresse = "aae_data_adresse";
 $tbl_akteur = "aae_data_akteur";
 $tbl_kategorie = "aae_data_kategorie";
 $tbl_hat_user = "aae_data_hat_user";
+$tbl_bezirke = "aae_data_bezirke";
 
 //-----------------------------------
 
@@ -38,7 +39,7 @@ $url = "";
 $ansprechpartner = "";
 $funktion = "";
 $bild = "";
-$kurzbeschreibung = "";
+$beschreibung = "";
 $oeffnungszeiten = "";
 
 //$tbl_adresse
@@ -70,7 +71,7 @@ $fehler_url = "";
 $fehler_ansprechpartner = "";
 $fehler_funktion = "";
 $fehler_bild = "";
-$fehler_kurzbeschreibung = "";
+$fehler_beschreibung = "";
 $fehler_oeffnungszeiten = "";
 $fehler_strasse = "";
 $fehler_nr = "";
@@ -90,7 +91,7 @@ $ph_url = "Website";
 $ph_ansprechpartner = "Kontaktperson";
 $ph_funktion = "Funktion der Kontaktperson";
 $ph_bild = "Dateiname mit Endung";
-$ph_kurzbeschreibung = "Kurzbeschreibung";
+$ph_beschreibung = "Beschreibung";
 $ph_oeffnungszeiten = "Öffnungszeiten";
 
 //$tbl_adresse
@@ -98,7 +99,7 @@ $ph_strasse = "Strasse";
 $ph_nr = "Hausnummer";
 $ph_adresszusatz = "Adresszusatz";
 $ph_plz = "PLZ";
-$ph_ort = "Ort";
+$ph_ort = "Bezirk";
 $ph_gps = "GPS-Addresskoordinaten";
 
 //$tbl_hat_Sparte
@@ -118,7 +119,7 @@ if (isset($_POST['submit'])) {
   if(isset($_POST['bild'])){
     $bild = $_POST['bild'];
   }
-  $kurzbeschreibung = $_POST['kurzbeschreibung'];
+  $kurzbeschreibung = $_POST['beschreibung'];
   $oeffnungszeiten = $_POST['oeffnungszeiten'];
 
   $strasse = $_POST['strasse'];
@@ -154,7 +155,7 @@ if (isset($_POST['submit'])) {
   $ansprechpartner = trim($ansprechpartner);
   $funktion = trim($funktion);
   $bild = trim($bild);
-  $kurzbeschreibung = trim($kurzbeschreibung);
+  $beschreibung = trim($beschreibung);
   $oeffnungszeiten = trim($oeffnungszeiten);
   $strasse = trim($strasse);
   $nr = trim($nr);
@@ -171,7 +172,7 @@ if (isset($_POST['submit'])) {
   $ansprechpartner = strip_tags($ansprechpartner);
   $funktion = strip_tags($funktion);
   $bild = strip_tags($bild);
-  $kurzbeschreibung = strip_tags($kurzbeschreibung);
+  $beschreibung = strip_tags($beschreibung);
   $oeffnungszeiten = strip_tags($oeffnungszeiten);
   $strasse = strip_tags($strasse);
   $nr = strip_tags($nr);
@@ -205,8 +206,8 @@ if (isset($_POST['submit'])) {
 	$fehler_funktion = "Bitte geben Sie eine kuerzere Funktion an.";
 	$freigabe = false;
   }
-  if (strlen($kurzbeschreibung) > 500){
-	$fehler_kurzbeschreibung = "Bitte geben Sie eine kuerzere Beschreibung an.";
+  if (strlen($beschreibung) > 500){
+	$fehler_beschreibung = "Bitte geben Sie eine kuerzere Beschreibung an.";
 	$freigabe = false;
   }
   if (strlen($oeffnungszeiten) > 200){
@@ -227,10 +228,6 @@ if (isset($_POST['submit'])) {
   }
   if (strlen($plz) > 100){
 	$fehler_plz = "Bitte geben Sie eine kuerzere PLZ an.";
-	$freigabe = false;
-  }
-  if (strlen($ort) > 100){
-	$fehler_ort = "Bitte geben Sie einen kuerzeren Ortsnamen an.";
 	$freigabe = false;
   }
   if (strlen($gps) > 100){
@@ -267,7 +264,7 @@ if (isset($_POST['submit'])) {
 	  ->condition('nr', $nr, '=')
 	  ->condition('adresszusatz', $adresszusatz, '=')
 	  ->condition('plz', $plz, '=')
-	  ->condition('ort', $ort, '=')
+	  ->condition('bezirk', $ort, '=')
 	  ->execute();
 
 	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
@@ -279,7 +276,7 @@ if (isset($_POST['submit'])) {
 		  'nr' => $nr,
 		  'adresszusatz' => $adresszusatz,
 		  'plz' => $plz,
-		  'ort' => $ort,
+		  'bezirk' => $ort,
 		  'gps' => $gps,
 		))
 		->execute();
@@ -310,7 +307,7 @@ if (isset($_POST['submit'])) {
 		'ansprechpartner' => $ansprechpartner,
 		'funktion' => $funktion,
 		'bild' => $bild,
-		'kurzbeschreibung' => $kurzbeschreibung,
+		'beschreibung' => $beschreibung,
 		'oeffnungszeiten' => $oeffnungszeiten,
 	  ))
 	  ->execute();
@@ -364,8 +361,26 @@ $profileHTML = <<<EOF
   <input type="text" class="akteur" id="akteurAdresszusatzInput" name="adresszusatz" value="$adresszusatz" placeholder="$ph_adresszusatz">$fehler_adresszusatz
   <label>PLZ:</label>
   <input type="text" class="akteur" id="akteurPLZInput" name="plz" value="$plz" placeholder="$ph_plz">$fehler_plz
-  <label>Stadt:</label>
-  <input type="text" class="akteur" id="akteurOrtInput" name="ort" value="$ort" placeholder="$ph_ort">$fehler_ort
+  <label>Bezirk:</label>
+  <!--<input type="text" class="akteur" id="akteurOrtInput" name="ort" value="$ort" placeholder="$ph_ort">$fehler_ort-->
+EOF;
+
+//Bezirke abfragen, die in DB
+$resultbezirke = db_select($tbl_bezirke, 'b')
+  ->fields('b', array(
+    'BID',
+	'bezirksname',
+  ))
+  ->execute();
+$countbezirke = $resultbezirke->rowCount();
+//Dropdownliste zur Akteurauswahl
+$profileHTML .= '<select name="ort" size="'.$countbezirke.'" >';
+foreach ($resultbezirke as $row) {
+  $profileHTML .= '<option value="'.$row->BID.'">'.$row->bezirksname.'</option>';
+}
+$profileHTML .= '</select>';
+
+$profileHTML .= <<<EOF
   <label>Geodaten:</label>
   <input type="text" class="akteur" id="akteurGPSInput" name="gps" value="$gps" placeholder="$ph_gps">$fehler_gps
   <label>Öffnungszeiten:</label>
@@ -384,7 +399,7 @@ $profileHTML = <<<EOF
   <input type="email" class="akteur" id="akteurEmailInput" name ="email" value="$email" placeholder="$ph_email">$fehler_email<br>
 
   <label>Beschreibung:</label>
-  <textarea name="kurzbeschreibung" class="akteur" cols="45" rows="3" placeholder="$ph_kurzbeschreibung">$kurzbeschreibung</textarea>$fehler_kurzbeschreibung
+  <textarea name="beschreibung" class="akteur" cols="45" rows="3" placeholder="$ph_beschreibung">$beschreibung</textarea>$fehler_beschreibung
   <label>Bild:</label>
   <input type="file" class="akteur" id="akteurBildInput" name="bild" /><br>
 

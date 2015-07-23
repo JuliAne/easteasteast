@@ -46,7 +46,7 @@ $resultAkteure = db_select($tbl_akteur, 'a')
   ->fields('a', array(
 	'AID',
   'name',
-  'kurzbeschreibung',
+  'beschreibung',
   'bild'
   ))
   ->orderBy('name', 'ASC')
