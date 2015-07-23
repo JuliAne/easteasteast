@@ -26,6 +26,9 @@ akteurprofil.php:
 
 akteurformular.php:
 - Anpassung an neues Schema
+- Ggf. Einrichten von neuer Tabellen-Spalte in aae_data_akteur mit dem Namen "beschreibung".
+  Dann kann "kurzbeschreibung" für die Vorschau von Akteuren genutzt werden (so die ersten 60 Zeichen,
+  danach ein "..." anhängen) und "beschreibung" in den Profilseiten
 
 akteuredit.php
 - Anpassung an neues Schema

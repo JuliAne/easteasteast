@@ -92,9 +92,7 @@ input[type=submit].isSubmitButton{
  width: 100%;
  border-bottom: 1px solid #ecedec;
  transition: 0.3s all;
- /*background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #00c9e1), color-stop(50%, #5bf5e1), color-stop(100%, #22d4bd));
- background: -moz-linear-gradient(left, #00c9e1, #5bf5e1 50%, #22d4bd);
- background: -webkit-linear-gradient(top, #00c9e1, #5bf5e1 50%, #22d4bd); */
+ top: 0;
  background: linear-gradient(to bottom, #fff 90%, #f9fafa);
 }
 

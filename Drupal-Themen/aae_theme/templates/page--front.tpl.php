@@ -101,36 +101,23 @@
  <section class="section" id="journal">
    <h2>Journal</h2>
 
-   <div class="row">
    <?php
    // Lade "Letzte Blog-Artikel"-Block
 
    foreach (block_aae_print_letzte_artikel() as $artikel) : ?>
-   <div class="large-3 columns">
-    <a href="<?= base_path(); ?>?q=node/<?= $artikel->nid; ?>"><h3><?= $artikel->title; ?></h3></a>
-    <p>kurzbeschreibung...</p>
-    <p>artikel.datum, artikel.bild, artikel....</p>
-   </div>
 
+     <div class="row artikel">
+      <div class="large-2 columns"><img style="width: 50px; border-radius: 25px;" src="pcard_bg.jpg" /></div>
 
-   <!--         (
-            [nid] => 21
-            [vid] => 21
-            [type] => article
-            [language] => und
-            [title] => My title
-            [uid] => 1
-            [status] => 1
-            [created] => 1437654914
-            [changed] => 1437654914
-            [comment] => 2
-            [promote] => 1
-            [sticky] => 0
-            [tnid] => 0
-            [translate] => 0
-        ) -->
+      <div class="large-9 columns large-offset-1">
+       <a href="<?= base_path(); ?>?q=node/<?= $artikel->nid; ?>"><h3><?= $artikel->title; ?></h3></a>
+
+       <p>Lorem ipsum sed dolor sit amet Lorem ipsum sed dolor sit amet Lorem ipsum sed dolor sit amet Lorem ipsum sed dolor sit amet Lorem ipsum sed dolor sit amet Lorem ipsum sed dolor sit...</p>
+       <p>Von <i>Matthias</i> am 23.08.2015. <a href="#">2 Kommentare</a>
+      </div>
+    </div>
+
     <?php endforeach; ?>
-  </div>
 
    <?php print render($page['content']); ?>
 
