@@ -54,7 +54,7 @@ $gps = "";
 //$kategorie = array();
 
 //Speicherort fuer Bilder
-$bildpfad = "/home/swp15-aae/drupal/images/";
+$bildpfad = "drupal/images/";
 
 //-----------------------------------
 
