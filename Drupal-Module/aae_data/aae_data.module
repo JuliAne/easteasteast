@@ -64,6 +64,15 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
+  //Menuitem "Akteurloeschen"
+  $items['Akteurloeschen/%'] = array(
+    'title' => '',
+    'page callback' => 'akteurloeschen_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
+
   //Menuitem "Events"
   $items['Events'] = array(
     'title' => 'Events',
@@ -154,6 +163,18 @@ function akteurprofil_page($aid=0) {
 function akteuredit_page($aid=0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteuredit.php';
+
+  $path = current_path();
+  $path_alias = drupal_lookup_path('alias',$path);
+
+  return $profileHTML;
+}
+/**
+ * Builds page for Eventloeschen
+ */
+function akteurloeschen_page($eid=0) {
+  $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/akteurloeschen.php';
 
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
