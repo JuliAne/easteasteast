@@ -243,7 +243,7 @@ if (isset($_POST['submit'])) {
 	  //$bild = "images/".$bildname;
 
 // Upload the file as temporary
-$file = file_save_upload($bildname);
+$file = file_save_upload($_POST['bild']);
 
 // Change the status
 $file->status = 1;
