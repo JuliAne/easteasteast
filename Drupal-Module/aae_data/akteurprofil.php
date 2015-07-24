@@ -64,7 +64,7 @@ foreach($resultakteur as $rId => $row){
 
 // Ziehe Informationen über Events vom Akteur
 
-$resultEvents = db_select($tbl_event, 'e')
+$resultEvents = db_select($tbl_event, 'e');
 $resultEvents->join($tbl_akteur_hat_events, 'b', 'e.EID = b.EID')
 $resultEvents
 ->fields('e')
@@ -72,8 +72,7 @@ $resultEvents
 ->execute()
 ->fetchAll();
 
-
-foreach ($resultEvents as $eId => $row) {
+foreach ($resultEvents as $row) {
  $aResult['events'][] = $row;
 }
 
