@@ -210,8 +210,13 @@ html.fp-enabled,
   padding: 0 5%;
 }
 
+#slideSection .slide h1, #slideSection .slide p {
+  text-shadow: 0 0 2px rgb(73, 73, 73);
+}
+
 #slideSection .slide p {
   margin-bottom: 45px;
+  font-size: 0.9em;
 }
 
 #slideSection .slide.whiteText h1, #slideSection .slide.whiteText p {
