@@ -33,6 +33,17 @@ button.button, #actions {
  border-bottom: 3px solid #007095;
 }
 
+button.transparent {
+ background: none !important;
+ border: 2px #fff;
+ color: #fff;
+ transition: all 0.25s;
+}
+button.transparent:hover {
+ background: #fff;
+ color: #000;
+}
+
 .popup {
  display: none;
  position: absolute;

@@ -50,9 +50,7 @@ function aae_preprocess_html(&$variables) {
  global $user;
 
   if (array_intersect(array('redakteur','administrator'), $user->roles)) {
-   echo '<!-- IF IS_ADMIN -->';
-   echo '<style type="text/css">#mainnav { top: 65px !important; z-index: 20 !important; }</style>';
-   echo '<!-- /IF -->';
+   echo '<!-- IF IS_ADMIN --><style type="text/css">#mainnav { top: 65px !important; z-index: 20 !important; }</style><!-- /IF -->';
  }
 }
 
@@ -72,10 +70,10 @@ function aae_process_page(&$variables) {
 
 function aae_form_alter(&$form, &$form_state, $form_id) {
 
-  if ( TRUE === in_array( $form_id, array( 'user_login', 'user_login_block') ) ) {
+  if ( TRUE === in_array( $form_id, array('user_login', 'user_login_block')) ) {
 
-    $form['name']['#attributes']['placeholder'] = t( 'Benutzername' );
-    $form['pass']['#attributes']['placeholder'] = t( 'Passwort' );
+    $form['name']['#attributes']['placeholder'] = t('Benutzername');
+    $form['pass']['#attributes']['placeholder'] = t('Passwort');
     $form['name']['#title_display'] = "invisible";
     $form['pass']['#title_display'] = "invisible";
 
@@ -89,7 +87,7 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
   } else  { // @TODO ELSEIF SEARCH-FORM
 
     $form['actions']['submit']['#attributes']['class'][] = 'small button';
-    $form['actions']['submit']['#value'] = 'Suche...';
+    $form['actions']['submit']['#value'] = 'Abschicken';
 
   }
 }
