@@ -28,7 +28,8 @@ $(document).ready(function(){
  }
 
  L.mapbox.accessToken = 'pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg';
- var map = L.mapbox.map('map', 'matzelot.ke3420oc').setView([51.338, 12.458], 13);
+ // Bug: Map changes view to the left when being used in a slider :(
+ var map = L.mapbox.map('map', 'matzelot.ke3420oc').setView([51.34, 12.735], 13);
  var markers = new L.MarkerClusterGroup({ showCoverageOnHover : false });
 
  for (var i = 0; i < addressPoints.length; i++) {
