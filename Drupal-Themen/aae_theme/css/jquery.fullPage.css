@@ -211,11 +211,7 @@ html.fp-enabled,
 }
 
 #slideSection .slide h1, #slideSection .slide p {
-  text-shadow: 0 0 3px rgb(46, 46, 46);
-}
-
-#slideSection button {
-  box-shadow: 0 0 3px rgb(46, 46, 46);
+  text-shadow: 0 0 4px rgb(46, 46, 46);
 }
 
 #slideSection .slide p {
@@ -228,13 +224,13 @@ html.fp-enabled,
 }
 
 #slideSection button.transparent {
- background: rgba(255, 255, 255, 0.18);
+ background: rgba(255, 255, 255, 0.3);
  border: 2px solid #fff;
  color: #fff;
  transition: all 0.25s;
  text-transform: uppercase;
 }
 #slideSection button.transparent:hover {
- background: rgba(255, 255, 255, 0.5);
+ background: rgba(255, 255, 255, 0.6);
  color: #000;
 }
