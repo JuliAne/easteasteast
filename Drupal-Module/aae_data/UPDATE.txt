@@ -15,14 +15,15 @@ Erledigt:
 - eventloeschen.php: Anpassung an neues Schema (Ruth, 2015-07-23)
 - aae_data.install: Schemaänderung: Kurzbeschreibung -> Beschreibung (Ruth, 2015-07-23)
 - akteuredit.php, akteurformular.php, akteure.php: Anpassung an Schema (Ruth, 2015-07-23)
-
+- akteurloeschen.php hinzugefügt (Ruth, 2015-07-24)
+- aae_data.modult: Akteurloeschen Menuitem hinzugefügt (Ruth, 2015-07-24)
 
 ------------------------------
 
 Offen:
 
 akteurprofil.php:
-- Löschen-Button (Felix)
+- Löschen-Button (soll auf Akteurloeschen -neu hinzugefügt- verweisen) (Felix)
 - Event_hinzufügen-Button (Felix)
 - Beste Größe für Bild-Upload's ermitteln. Diesen Wert in akteurformular & -edit dem
   User mitteilen, Bilder nach Upload komprimieren / ggf. skalieren
