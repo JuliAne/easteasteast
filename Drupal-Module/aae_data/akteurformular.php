@@ -7,7 +7,7 @@
  * Anschließend werden die Daten in die DB-Tabellen eingetragen.
  *
  * Ruth, 2015-07-04
- * Felix, 2015-07-21
+ * Felix, 2015-07-24
  */
 
 //Eingeloggter User
@@ -54,7 +54,7 @@ $gps = "";
 //$kategorie = array();
 
 //Speicherort fuer Bilder
-$bildpfad = "sites/all/modules/aae_data/images/";
+$bildpfad = "drupal/images/";
 
 //-----------------------------------
 
@@ -119,7 +119,7 @@ if (isset($_POST['submit'])) {
   if(isset($_POST['bild'])){
     $bild = $_POST['bild'];
   }
-  $kurzbeschreibung = $_POST['beschreibung'];
+  $kurzbeschreibung = $_POST['kurzbeschreibung'];
   $oeffnungszeiten = $_POST['oeffnungszeiten'];
 
   $strasse = $_POST['strasse'];
@@ -239,8 +239,18 @@ if (isset($_POST['submit'])) {
   if($_FILES){
 	$bildname = $_FILES['bild']['name'];
 	if($bildname != ""){
-	  move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname);//Upload
-	  $bild = "images/".$bildname;
+	  //move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname); //Upload
+	  //$bild = "images/".$bildname;
+
+// Upload the file as temporary
+$file = file_save_upload($bildname);
+
+// Change the status
+$file->status = 1;
+// Update the file status into the database
+file_save($file);
+echo 'YEEHA';
+
 	}
   }
 
