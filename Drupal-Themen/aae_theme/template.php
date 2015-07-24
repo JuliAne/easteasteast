@@ -49,7 +49,7 @@ function aae_preprocess_html(&$variables) {
 
  global $user;
 
-  if (!array_intersect(array('redakteur','administrator'), $user->roles)) {
+  if (array_intersect(array('redakteur','administrator'), $user->roles)) {
    echo '<!-- IF IS_ADMIN -->';
    echo '<style type="text/css">#mainnav { top: 65px !important; z-index: 20 !important; }</style>';
    echo '<!-- /IF -->';
