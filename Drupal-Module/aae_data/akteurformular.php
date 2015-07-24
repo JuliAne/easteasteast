@@ -54,7 +54,7 @@ $gps = "";
 //$kategorie = array();
 
 //Speicherort fuer Bilder
-$bildpfad = "drupal/images/";
+$bildpfad = BASE_PATH."images/";
 
 //-----------------------------------
 
@@ -238,20 +238,12 @@ if (isset($_POST['submit'])) {
   //Wenn Bilddatei ausgewählt wurde...
   if($_FILES){
 	$bildname = $_FILES['bild']['name'];
+
 	if($bildname != ""){
-	  //move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname); //Upload
-	  //$bild = "images/".$bildname;
-
-// Upload the file as temporary
-$file = file_save_upload($_POST['bild']);
-
-// Change the status
-$file->status = 1;
-// Update the file status into the database
-file_save($file);
-echo 'YEEHA';
-
+	  move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname); //Upload
+	  $bild = "images/".$bildname;
 	}
+
   }
 
 //---------------------------------
