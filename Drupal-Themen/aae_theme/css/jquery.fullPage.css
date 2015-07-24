@@ -211,14 +211,30 @@ html.fp-enabled,
 }
 
 #slideSection .slide h1, #slideSection .slide p {
-  text-shadow: 0 0 2px rgb(73, 73, 73);
+  text-shadow: 0 0 3px rgb(46, 46, 46);
+}
+
+#slideSection button {
+  box-shadow: 0 0 3px rgb(46, 46, 46);
 }
 
 #slideSection .slide p {
   margin-bottom: 45px;
-  font-size: 0.9em;
+  font-size: 0.95em;
 }
 
 #slideSection .slide.whiteText h1, #slideSection .slide.whiteText p {
   color: #fff !important;
+}
+
+#slideSection button.transparent {
+ background: rgba(255, 255, 255, 0.18);
+ border: 2px solid #fff;
+ color: #fff;
+ transition: all 0.25s;
+ text-transform: uppercase;
+}
+#slideSection button.transparent:hover {
+ background: rgba(255, 255, 255, 0.5);
+ color: #000;
 }

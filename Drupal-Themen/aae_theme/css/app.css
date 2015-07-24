@@ -33,17 +33,6 @@ button.button, #actions {
  border-bottom: 3px solid #007095;
 }
 
-button.transparent {
- background: none;
- border: 2px solid #fff;
- color: #fff;
- transition: all 0.25s;
-}
-button.transparent:hover {
- background: rgba(255, 255, 255, 0.18);
- color: #000;
-}
-
 .popup {
  display: none;
  position: absolute;
@@ -250,7 +239,7 @@ input[type=submit].isSubmitButton{
 }
 
 .section h1 {
- font-size: 2.2em;
+ font-size: 2.25em;
  font-weight: 100;
  padding: 28px 0;
 }
