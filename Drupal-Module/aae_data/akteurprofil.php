@@ -13,6 +13,7 @@ $tbl_akteur = "aae_data_akteur";
 $tbl_adresse = "aae_data_adresse";
 $tbl_hat_user = "aae_data_hat_user";
 $tbl_event = "aae_data_event";
+$tbl_akteur_hat_events = "aae_data_akteur_hat_events";
 
 //-----------------------------------
 
@@ -64,10 +65,13 @@ foreach($resultakteur as $rId => $row){
 // Ziehe Informationen über Events vom Akteur
 
 $resultEvents = db_select($tbl_event, 'e')
+$resultEvents->join($tbl_akteur_hat_events, 'b', 'e.EID = b.EID')
+$resultEvents
 ->fields('e')
-->condition('veranstalter', $akteur_id, '=')
+->condition('b.AID', $akteur_id, '=')
 ->execute()
 ->fetchAll();
+
 
 foreach ($resultEvents as $eId => $row) {
  $aResult['events'][] = $row;
