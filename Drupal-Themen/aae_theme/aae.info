@@ -1,5 +1,5 @@
  name = AAE Theme
- description = Theme für die Ost-Leipziger Stadtteilplattform.
+ description = Theme für die Stadtteilplattform "Leipziger Ecken".
  core = 7.x
 
 
@@ -11,4 +11,4 @@
  regions[content] = 'Content'
  regions[footer]  = 'Footer'
  regions[header]  = 'Header'
- regions[blog]    = 'Startseite Blog'
+ regions[blog]    = 'Journal (Top 3)'

@@ -101,25 +101,7 @@
  <section class="section" id="journal">
    <h2>Journal</h2>
 
-   <?php
-   // Lade "Letzte Blog-Artikel"-Block
-
-   /*foreach (block_aae_print_letzte_artikel() as $artikel) : ?>
-
-     <div class="row artikel">
-      <div class="large-2 columns"><img style="width: 50px; border-radius: 25px;" src="pcard_bg.jpg" /></div>
-
-      <div class="large-9 columns large-offset-1">
-       <a href="<?= base_path(); ?>?q=node/<?= $artikel->nid; ?>"><h3><?= $artikel->title; ?></h3></a>
-
-       <p>Lorem ipsum sed dolor sit amet Lorem ipsum sed dolor sit amet Lorem ipsum sed dolor sit amet Lorem ipsum sed dolor sit amet Lorem ipsum sed dolor sit amet Lorem ipsum sed dolor sit...</p>
-       <p>Von <i>Matthias</i> am 23.08.2015. <a href="#">2 Kommentare</a>
-      </div>
-    </div>
-
-    <?php endforeach; */ ?>
-
-   <?php print render($page['content']); ?>
+   <?php print render($page['blog']); ?>
 
  </section>
 
