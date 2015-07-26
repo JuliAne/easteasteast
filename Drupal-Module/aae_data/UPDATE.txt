@@ -17,6 +17,8 @@ Erledigt:
 - akteuredit.php, akteurformular.php, akteure.php: Anpassung an Schema (Ruth, 2015-07-23)
 - akteurloeschen.php hinzugefügt (Ruth, 2015-07-24)
 - aae_data.modult: Akteurloeschen Menuitem hinzugefügt (Ruth, 2015-07-24)
+- Schemaanpassung an neue Bedürfnisse bzgl. Events (Ruth, 2015-07-26)
+- Event-Dateien Änderung bzgl. neuer Bedürfnisse (Ruth, 2015-07-26)
 
 ------------------------------
 
@@ -28,6 +30,7 @@ akteurprofil.php:
 - Beste Größe für Bild-Upload's ermitteln. Diesen Wert in akteurformular & -edit dem
   User mitteilen, Bilder nach Upload komprimieren / ggf. skalieren
 - Anpassung an neues Schema
+- Hinweis, falls eine unbefugte Person den Akteur angelegt hat, man sich an Matthias wenden soll
 
 akteure.php:
 - 'Beschreibung' abschneiden bei 60 Zeichen und (…) anfügen
@@ -39,4 +42,9 @@ eventformular.php:
 - Tooltip zum Einstellen der Uhrzeit/Datum (Output im richtigen Format) (Felix)
 - JS zum Auflösen der Straße/Nr. in gültiges Geoformat (Felix)
 
-TESTEN, wenn alles angepasst ist, da derzeit wegen Abhängigkeiten nicht möglich!
+events.php:
+- Events nach Datum sortiert anzeigen + Kurzbeschreibung
+- Sortierfunktion einbauen (Datum, Veranstalter, Bezirk, …)
+
+Allgemein noch in der Warteschlange:
+- Kalender
