@@ -9,7 +9,7 @@ $(document).ready(function(){
   $('#menu li:has(ul)' ).doubleTapToGo();
  } else {
   $('#fullpage').fullpage({
-	 anchors: ['home', 'projekte', 'journal', 'footer'],
+	 anchors: ['home', 'projekte', 'blog', 'ueberuns'],
 	 sectionsColor: ['#FFF', '#F7F7F7', '#F7F7F7', '#FFF'],
 	 scrollBar: true,
    navigation: true,
