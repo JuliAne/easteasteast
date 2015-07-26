@@ -24,6 +24,7 @@ $tbl_event = "aae_data_event";
 $tbl_akteur_events = "aae_data_akteur_hat_events";
 $tbl_bezirke = "aae_data_bezirke";
 $tbl_akteur = "aae_data_akteur";
+$tbl_hat_user = "aae_data_hat_user";
 
 //-----------------------------------
 
@@ -127,16 +128,15 @@ if (isset($_POST['submit'])) {
     $fehler_name = "Bitte einen Veranstaltungsnamen eingeben!";
 	$freigabe = false;
   }
-  //Ckeck, ob Veranstalter angegeben wurde
-  if(strlen($veranstalter) == 0){
-    //Feld nicht ausgefüllt
-    $fehler_veranstalter = "Bitte einen Veranstalter auswählen!";
-	$freigabe = false;
-  }
   //Ckeck, ob Datum angegeben wurde
   if(strlen($start) == 0){
     //Feld nicht ausgefüllt
     $fehler_start = "Bitte eine Datum angeben!";
+	$freigabe = false;
+  }
+  //Check, ob Bezirk ausgewählt wurde
+  if(strlen($ort) == 0){
+	$fehler_ort = "Bitte einen Bezirk auswählen.";
 	$freigabe = false;
   }
 
@@ -289,8 +289,11 @@ if (isset($_POST['submit'])) {
 		'ende' => $ende,
 		'bild' => $bild,
 		'kurzbeschreibung' => $kurzbeschreibung,
+		'ersteller' => $user->uid,
 	  ))
 	  ->execute();
+	//falls Akteur angegeben wurde
+	if($veranstalter != ""){
 	//tbl_akteur_events INSERT!!!
 	$akteurevents = db_insert($tbl_akteur_events)
    	  ->fields(array(
@@ -298,7 +301,8 @@ if (isset($_POST['submit'])) {
 		'EID' => $event_id,
 	  ))
 	  ->execute();
-		
+	}
+	
 	header("Location: ?q=Events"); //Hier muss hin, welche Seite aufgerufen werden soll,
 	  //nach dem die Daten erfolgreich gespeichert wurden.
 	}
@@ -315,26 +319,35 @@ $profileHTML = <<<EOF
 
   <label>Name (Pflichtfeld):</label>
   <input type="text" class="event" id="eventNameInput" name="name" value="$name" placeholder="$ph_name" required>$fehler_name
-
-  <label>Veranstalter (Pflichtfeld):</label>
-  <!--<input type="text" class="event" id="eventVeranstalterInput" name="veranstalter" value="$veranstalter" placeholder="$ph_veranstalter">$fehler_veranstalter-->
-
 EOF;
 
-//Akteure abfragen, die in DB
-$resultakteure = db_select($tbl_akteur, 'a')
-  ->fields('a', array(
-    'AID',
-	'name',
-  ))
-  ->execute();
-$countakteure = $resultakteure->rowCount();
-//Dropdownliste zur Akteurauswahl
-$profileHTML .= '<select name="veranstalter" size="'.$countakteure.'" >';
-foreach ($resultakteure as $row) {
-  $profileHTML .= '<option value="'.$row->AID.'">'.$row->name.'</option>';
+if(array_intersect(array('administrator'), $user->roles)){
+//alle Akteure abfragen, die in DB: nur Admin
+  $resultakteure = db_select($tbl_akteur, 'a')
+    ->fields('a', array(
+      'AID',
+	  'name',
+    ))
+    ->execute();
+}else{
+  //Akteure abfragen, die in DB und für welche User Schreibrechte hat
+  $res = db_select($tbl_akteur, 'a');
+  $res->join($tbl_hat_user, 'u', 'a.AID = u.hat_AID AND u.hat_UID = :uid', array(':uid' => $user->uid));
+  $res->fields('a', array('AID','name'));
+  $resultakteure=$res->execute();
 }
-$profileHTML .= '</select>';
+
+$countakteure = $resultakteure->rowCount();
+if($countakteure != 0){
+  $profileHTML .= '<label>Veranstalter:</label>';
+  //Dropdownliste zur Akteurauswahl
+  $profileHTML .= '<select name="veranstalter" size="'.$countakteure.'" >';
+  //$profileHTML .= '<select name="veranstalter" size="4" >';
+  foreach ($resultakteure as $row) {
+    $profileHTML .= '<option value="'.$row->AID.'">'.$row->name.'</option>';
+  }
+  $profileHTML .= '</select>';
+}
 
 $profileHTML .= <<<EOF
   <label>Datum (Pflichtfeld):</label>
@@ -355,7 +368,7 @@ $profileHTML .= <<<EOF
   <input type="text" class="event" id="eventAdresszusatzInput" name="adresszusatz" value="$adresszusatz" placeholder="$ph_adresszusatz">$fehler_adresszusatz
   <label>PLZ:</label>
   <input type="text" class="event" id="eventPLZInput" name="plz" value="$plz" placeholder="$ph_plz">$fehler_plz
-  <label>Bezirk:</label>
+  <label>Bezirk:</label>$fehler_ort
   <!--<input type="text" class="event" id="eventOrtInput" name="ort" value="$ort" placeholder="$ph_ort">$fehler_ort-->
 EOF;
 
@@ -369,6 +382,7 @@ $resultbezirke = db_select($tbl_bezirke, 'b')
 $countbezirke = $resultbezirke->rowCount();
 //Dropdownliste zur Bezirkauswahl
 $profileHTML .= '<select name="ort" size="'.$countbezirke.'" >';
+$profileHTML .= '<option value="" selected="selected">Bezirk auswählen</option>';
 foreach ($resultbezirke as $row) {
   $profileHTML .= '<option value="'.$row->BID.'">'.$row->bezirksname.'</option>';
 }

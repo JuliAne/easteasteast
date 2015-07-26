@@ -24,17 +24,19 @@ $path = current_path();
 $explodedpath = explode("/", $path);
 $event_id = $explodedpath[1];
 
-$resultakteurid = db_select($tbl_akteur_events, 'e')
+//Prüfen, wer Schreibrechte hat
+//Sicherheitsschutz, ob User entsprechende Rechte hat
+$resultakteurid = db_select($tbl_akteur_events, 'e')//Den Akteur zum Event aus DB holen
   ->fields('e', array(
     'AID',
   ))
   ->condition('EID', $event_id, '=')
   ->execute(); 
 $akteur_id = "";
-$count="";
+$okay="";//gibt an, ob Zugang erlaubt wird oder nicht
 foreach ($resultakteurid as $row) {
-  $akteur_id = $row->AID;
-  //Prüfen ob Schreibrecht vorliegt
+  $akteur_id = $row->AID;//Akteur speichern
+  //Prüfen ob Schreibrecht vorliegt: ob User zu dem Akteur gehört
   $resultUser = db_select($tbl_hat_user, 'u')
     ->fields('u', array(
       'hat_UID',
@@ -44,14 +46,26 @@ foreach ($resultakteurid as $row) {
     ->condition('hat_UID', $user_id, '=')
     ->execute();
   $hat_recht = $resultUser->rowCount();
-  if($hat_recht == 1){
-	$count = 1;
+  if($hat_recht == 1){//User gehört zu Akteur
+	$okay = 1;//Zugang erlaubt
   }
 }
-
-if(array_intersect(array('redakteur','administrator'), $user->roles)){
-  $count = 1;
+//Abfrage, ob User Ersteller des Events ist:
+$ersteller = db_select($tbl_event, 'e')
+  ->fields('e', array(
+    'ersteller',
+  ))
+  ->condition('ersteller', $user->uid, '=')
+  ->execute();
+$ist_ersteller = $ersteller->rowCount();
+if($ist_ersteller == 1){
+	$okay =1;
 }
+ 
+if(array_intersect(array('administrator'), $user->roles)){
+  $okay = 1;
+}
+
 
 //Selektion der Eventinformationen
 $resultevent = db_select($tbl_event, 'a')
@@ -63,6 +77,7 @@ $resultevent = db_select($tbl_event, 'a')
     'ort',
     'bild',
     'url',
+    'ersteller',
   ))
   ->condition('EID', $event_id, '=')
   ->execute();
@@ -81,7 +96,9 @@ EOF;
 
 foreach($resultevent as $row){
 	$profileHTML .= '<h1>'.$row->name.'</h1>';
+	
 	//Veranstalter
+	if($resultveranstalter->rowCount() != 0){
 	$profileHTML .= '<h4>Veranstalter:</h4>';
 	foreach ($resultveranstalter as $row1) {
 	  $resultakteur = db_select($tbl_akteur, 'b')
@@ -94,8 +111,19 @@ foreach($resultevent as $row){
 		$profileHTML .= '<a href="?q=Akteurprofil/'.$row1->AID.'">'.$row2->name.'</a><br>';
 	  }
 	}
+	}
 	
-	$profileHTML .= '<h4>Adresse:</h4>';
+	//Ersteller aus DB holen
+	$ersteller = db_select("users", 'u')
+	->fields('u', array(
+	  'name',
+	))
+	->condition('uid', $row->ersteller, '=')
+	->execute();
+	foreach ($ersteller as $row2) {
+		$profileHTML .= '<p>Erstellt von: '.$row2->name.'</p>';
+	}
+	
 	//Adresse des Akteurs
 	$resultadresse = db_select($tbl_adresse, 'b')
 	  ->fields('b', array(
@@ -107,8 +135,12 @@ foreach($resultevent as $row){
 	  ))
 	  ->condition('ADID', $row->ort, '=')
 	  ->execute();
+	if($resultadresse->rowCount() != 0){
+	$profileHTML .= '<h4>Adresse:</h4>';
 	foreach ($resultadresse as $row1) {
-		$profileHTML .= $row1->strasse.' '.$row1->nr.'<br>';
+		if($row1->strasse != "" && $row1->nr != ""){
+		  $profileHTML .= $row1->strasse.' '.$row1->nr.'<br>';
+		}
 		//Bezirksnamen holen:
 		$resultbezirk = db_select($tbl_bezirke, 'z')
 		  ->fields('z', array(
@@ -117,18 +149,30 @@ foreach($resultevent as $row){
 		  ->condition('BID', $row1->bezirk, '=')
 		  ->execute();
 		foreach ($resultbezirk as $row2) {
-		  $profileHTML .= $row1->plz.' '.$row2->bezirksname.'<br>';
+		  if($row1->plz != ""){
+		    $profileHTML .= $row1->plz.' ';
+		  }
+		  if($row2->bezirksname != ""){
+		    $profileHTML .= $row2->bezirksname;
+		  }
+		  $profileHTML .= '<br>';
 		}
-		$profileHTML .= 'GPS: '.$row1->gps.'<br>';
+		if($row1->gps != ""){
+		  $profileHTML .= 'GPS: '.$row1->gps.'<br>';
+		}
 	}
+	}
+	
 	//Datum
 	$profileHTML .= '<h4>Zeit:</h4>';
 	if($row->start != "") { 
 	  $explodedstart = explode(' ', $row->start);
-	  $profileHTML .= $explodedstart[0].'<br>';
-	  $profileHTML .= $explodedstart[1].'-'.$explodedstart[2].'<br>';
+	  $profileHTML .= $explodedstart[0];
 	  if($row->ende != $explodedstart[0]){
-		$profileHTML .= '- '.$row->ende.'<br>';
+		$profileHTML .= '- '.$row->ende;
+	  }
+	  if($explodedstart[1] != "" && $explodedstart[2] != ""){
+	    $profileHTML .= '<br>'.$explodedstart[1].'-'.$explodedstart[2].'<br>';
 	  }
 	}
 	if($row->url != "") { $profileHTML .= '<br><a href="'.$row->url.'">'.$row->url.'</a><br>'; }
@@ -138,8 +182,8 @@ foreach($resultevent as $row){
 	}
 	//Bild
 	if($row->bild != "") { 
-	  $profileHTML .= '<img src="sites/all/modules/aae_data/'.$row->bild.'" >'; }
-	if($count == 1){
-      $profileHTML .= '<a href="?q=Eventloeschen/'.$event_id.'" >'.Löschen.'</a>'.'   '.'<a href="?q=Eventedit/'.$event_id.'" >'.Bearbeiten.'</a>';
+	  $profileHTML .= '<br><img src="sites/all/modules/aae_data/'.$row->bild.'" >'; }
+	if($okay == 1){
+      $profileHTML .= '<br><a href="?q=Eventloeschen/'.$event_id.'" >'.Löschen.'</a>'.'   '.'<a href="?q=Eventedit/'.$event_id.'" >'.Bearbeiten.'</a>';
     }
 }

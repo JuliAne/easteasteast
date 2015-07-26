@@ -27,22 +27,22 @@ $path = current_path();
 $explodedpath = explode("/", $path);
 $event_id = $explodedpath[1];
 
-//Sicherheitsschutz
+//Sicherheitsschutz, falls User nicht eingeloggt ist
 if(!user_is_logged_in()){
   drupal_access_denied();
 }
-
-$resultakteurid = db_select($tbl_akteur_events, 'e')
+//Sicherheitsschutz, ob User entsprechende Rechte hat
+$resultakteurid = db_select($tbl_akteur_events, 'e')//Den Akteur zum Event aus DB holen
   ->fields('e', array(
     'AID',
   ))
   ->condition('EID', $event_id, '=')
   ->execute(); 
 $akteur_id = "";
-$count="";
+$okay="";//gibt an, ob Zugang erlaubt wird oder nicht
 foreach ($resultakteurid as $row) {
-  $akteur_id = $row->AID;
-  //Prüfen ob Schreibrecht vorliegt
+  $akteur_id = $row->AID;//Akteur speichern
+  //Prüfen ob Schreibrecht vorliegt: ob User zu dem Akteur gehört
   $resultUser = db_select($tbl_hat_user, 'u')
     ->fields('u', array(
       'hat_UID',
@@ -52,14 +52,24 @@ foreach ($resultakteurid as $row) {
     ->condition('hat_UID', $user_id, '=')
     ->execute();
   $hat_recht = $resultUser->rowCount();
-  if($hat_recht == 1){
-	$count = 1;
+  if($hat_recht == 1){//User gehört zu Akteur
+	$okay = 1;//Zugang erlaubt
   }
 }
-
-
-if(!array_intersect(array('redakteur','administrator'), $user->roles)){
-  if($count != 1){
+//Abfrage, ob User Ersteller des Events ist:
+$ersteller = db_select($tbl_event, 'e')
+  ->fields('e', array(
+    'ersteller',
+  ))
+  ->condition('ersteller', $user->uid, '=')
+  ->execute();
+$ist_ersteller = $ersteller->rowCount();
+if($ist_ersteller == 1){
+	$okay =1;
+}
+ 
+if(!array_intersect(array('administrator'), $user->roles)){
+  if($okay != 1){
     drupal_access_denied();
   }
 }
@@ -166,12 +176,6 @@ if (isset($_POST['submit'])) {
   if(strlen($name) == 0){
     //Feld nicht ausgefüllt
     $fehler_name = "Bitte einen Veranstaltungsnamen eingeben!";
-	$freigabe = false;
-  }
-  //Ckeck, ob Veranstalter angegeben wurde
-  if(strlen($veranstalter) == 0){
-    //Feld nicht ausgefüllt
-    $fehler_veranstalter = "Bitte einen Veranstalter auswählen!";
 	$freigabe = false;
   }
   //Ckeck, ob Datum angegeben wurde
@@ -442,30 +446,35 @@ $profileHTML = <<<EOF
 
   <label>Name (Pflichtfeld):</label>
   <input type="text" class="event" id="eventNameInput" name="name" value="$name" placeholder="$ph_name" required>$fehler_name
-
-  <label>Veranstalter (Pflichtfeld):</label>
-  <!--<input type="text" class="event" id="eventVeranstalterInput" name="veranstalter" value="$veranstalter" placeholder="$ph_veranstalter">$fehler_veranstalter-->
-
 EOF;
 
-//Akteure abfragen, die in DB
-$resultakteure = db_select($tbl_akteur, 'a')
-  ->fields('a', array(
-    'AID',
-	'name',
-  ))
-  ->execute();
-$countakteure = $resultakteure->rowCount();
-//Dropdownliste zur Akteurauswahl
-$profileHTML .= '<select name="veranstalter" size="'.$countakteure.'" >';
-foreach ($resultakteure as $row) {
-  if($row->AID == $akteur_id){
-	$profileHTML .= '<option value="'.$row->AID.'" selected="selected" >'.$row->name.'</option>';
-  }else{
-	$profileHTML .= '<option value="'.$row->AID.'">'.$row->name.'</option>';
-  }
+if(array_intersect(array('administrator'), $user->roles)){
+//alle Akteure abfragen, die in DB: nur Admin
+  $resultakteure = db_select($tbl_akteur, 'a')
+    ->fields('a', array(
+      'AID',
+	  'name',
+    ))
+    ->execute();
+}else{
+  //Akteure abfragen, die in DB und für welche User Schreibrechte hat
+  $res = db_select($tbl_akteur, 'a');
+  $res->join($tbl_hat_user, 'u', 'a.AID = u.hat_AID AND u.hat_UID = :uid', array(':uid' => $user->uid));
+  $res->fields('a', array('AID','name'));
+  $resultakteure=$res->execute();
 }
-$profileHTML .= '</select>';
+
+$countakteure = $resultakteure->rowCount();
+if($countakteure != 0){
+  $profileHTML .= '<label>Veranstalter:</label>';
+  //Dropdownliste zur Akteurauswahl
+  $profileHTML .= '<select name="veranstalter" size="'.$countakteure.'" >';
+  //$profileHTML .= '<select name="veranstalter" size="4" >';
+  foreach ($resultakteure as $row) {
+    $profileHTML .= '<option value="'.$row->AID.'">'.$row->name.'</option>';
+  }
+  $profileHTML .= '</select>';
+}
 
 $profileHTML .= <<<EOF
   <label>Datum (Pflichtfeld):</label>

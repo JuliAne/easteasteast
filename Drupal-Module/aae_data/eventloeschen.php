@@ -25,17 +25,18 @@ if(!user_is_logged_in()){
   drupal_access_denied();
 }
 
-$resultakteurid = db_select($tbl_akteur_events, 'e')
+//Sicherheitsschutz, ob User entsprechende Rechte hat
+$resultakteurid = db_select($tbl_akteur_events, 'e')//Den Akteur zum Event aus DB holen
   ->fields('e', array(
     'AID',
   ))
   ->condition('EID', $event_id, '=')
   ->execute(); 
 $akteur_id = "";
-$count="";
+$okay="";//gibt an, ob Zugang erlaubt wird oder nicht
 foreach ($resultakteurid as $row) {
-  $akteur_id = $row->AID;
-  //Prüfen ob Schreibrecht vorliegt
+  $akteur_id = $row->AID;//Akteur speichern
+  //Prüfen ob Schreibrecht vorliegt: ob User zu dem Akteur gehört
   $resultUser = db_select($tbl_hat_user, 'u')
     ->fields('u', array(
       'hat_UID',
@@ -45,17 +46,28 @@ foreach ($resultakteurid as $row) {
     ->condition('hat_UID', $user_id, '=')
     ->execute();
   $hat_recht = $resultUser->rowCount();
-  if($hat_recht == 1){
-	$count = 1;
+  if($hat_recht == 1){//User gehört zu Akteur
+	$okay = 1;//Zugang erlaubt
   }
 }
-
-
-if(!array_intersect(array('redakteur','administrator'), $user->roles)){
-  if($count != 1){
+//Abfrage, ob User Ersteller des Events ist:
+$ersteller = db_select($tbl_event, 'e')
+  ->fields('e', array(
+    'ersteller',
+  ))
+  ->condition('ersteller', $user->uid, '=')
+  ->execute();
+$ist_ersteller = $ersteller->rowCount();
+if($ist_ersteller == 1){
+	$okay =1;
+}
+ 
+if(!array_intersect(array('administrator'), $user->roles)){
+  if($okay != 1){
     drupal_access_denied();
   }
 }
+
 
 //-----------------------------------
 
