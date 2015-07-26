@@ -1,6 +1,6 @@
 <?php include_once('header.tpl.php'); ?>
 
-<?php if $teaser echo 'DDD'; ?>
+<?php if ($teaser) echo 'DDD'; ?>
 
 <?php print render($page['content']); ?>
 
