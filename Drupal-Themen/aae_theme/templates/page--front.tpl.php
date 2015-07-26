@@ -99,8 +99,6 @@
  </section>
 
  <section class="section" id="journal">
-   <h2>Journal</h2>
-
    <?php print render($page['blog']); ?>
 
  </section>
