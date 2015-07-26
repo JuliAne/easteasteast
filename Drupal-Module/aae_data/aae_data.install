@@ -34,9 +34,13 @@ function aae_data_schema() {
 	  'kurzbeschreibung' => array('description' => 'Kurzbeschreibung für Übersicht', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
 	  'oeffnungszeiten' => array('description' => 'Wann der Akteur erreichbar ist', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
 	  'adresse' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+	  'ersteller' => array('description' => 'ID von User, der Akteur angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
 	),
 	'primary key' => array('AID'),
-	'foreign keys' => array('Akteursadresse' => array('table' => 'aae_data_adresse', 'columns' => array('adresse' => 'ADID')))
+	'foreign keys' => array(
+	  'Akteursadresse' => array('table' => 'aae_data_adresse', 'columns' => array('adresse' => 'ADID')),
+	  'User' => array('table' => 'user', 'columns' => array('ersteller' => 'uid'))
+	)
   );
   $schema ['aae_data_adresse'] = array(
     'description' => 'Tabelle für Adressen',
@@ -65,10 +69,12 @@ function aae_data_schema() {
 	  'bild' => array('description' => 'Pfad zum Foto', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
 	  'ort' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
 	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
+	  'ersteller' => array('description' => 'ID von User, der Event angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
 	),
 	'primary key' => array('EID'),
 	'foreign keys' => array(
-	  'Eventadresse' => array('table' => 'aae_data_adresse', 'columns' => array('ort' => 'ADID'))
+	  'Eventadresse' => array('table' => 'aae_data_adresse', 'columns' => array('ort' => 'ADID')),
+	  'User' => array('table' => 'user', 'columns' => array('ersteller' => 'uid'))
 	),
   );
   $schema ['aae_data_hat_sparte'] = array(
@@ -125,13 +131,8 @@ function aae_data_schema() {
  * Wird bei Installation des Moduls ausgeführt, NACH hook_schema()
  */
 function aae_data_install() {
-  //muss raus, hier muss Funktion hin, die alle Bezirke einfügt
-  $name = "Reudnitz";
-  $adresse = db_insert("aae_data_bezirke")
-    ->fields(array(
-	  'bezirksname' => $name,
-	))
-	->execute();
+  //Funktion, die alle Bezirke einfügt
+  insert_bezirke();
 }
 
 /**

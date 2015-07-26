@@ -241,3 +241,20 @@ function eventformular_page() {
 
   return $profileHTML;
 }
+/**
+ * Funktion zum Einlesen aller Stadtteile
+ */
+function insert_bezirke() {
+  $bezirke = array('Zentrum (Mitte)', 'Zentrum-Ost (Mitte)', 'Zentrum-Südost (Mitte)', 'Seeburgviertel (Mitte)', 'Zentrum-Süd (Mitte)', 'Musikviertel (Mitte)',  'Zentrum-West (Mitte)', 'Bachviertel (Mitte)', 'Zentrum-Nordwest (Mitte)', 'Waldstraßenviertel (Mitte)', 'Zentrum-Nord (Mitte)', 'Schönefeld-Abtnaundorf (Nordost)', 'Schönefeld-Ost (Nordost)', 'Schönefeld (Nordost)', 'Mockau-Süd (Nordost)', 'Mockau-Nord (Nordost)', 'Mockau (Nordost)', 'Thekla (Nordost)', 'Plaußig-Portitz (Nordost)', 'Neustadt-Neuschönefeld (Ost)', 'Volkmarsdorf (Ost)', 'Anger-Crottendorf (Ost)', 'Sellerhausen-Stünz (Ost)', 'Paunsdorf (Ost)', 'Heiterblick (Ost)', 'Mölkau (Ost)', 'Engelsdorf (Ost)', 'Baalsdorf (Ost)', 'Althen-Kleinpösna (Ost)', 'Reudnitz-Thonberg (Südost)', 'Stötteritz (Südost)', 'Probstheida (Südost)', 'Meusdorf (Südost)', 'Liebertwolkwitz (Südost)', 'Holzhausen (Südost)', 'Südvorstadt (Süd)', 'Connewitz (Süd)', 'Marienbrunn (Süd)', 'Lößnig (Süd)', 'Dölitz-Dösen (Süd)', 'Schleußig (Südwest)', 'Plagwitz (Südwest)', 'Kleinzschocher (Südwest)', 'Großzschocher (Südwest)', 'Knautkleeberg-Knauthain (Südwest)', 'Hartmannsdorf-Knautnaundorf (Südwest)', 'Schönau (West)', 'Grünau-Ost (West)', 'Grünau-Mitte (West)', 'Grünau-Siedlung (West)', 'Lausen-Grünau (West)', 'Grünau-Nord (West)', 'Grünau (West)', 'Miltitz (West)', 'Lindenau (Alt-West)', 'Altlindenau (Alt-West)', 'Neulindenau (Alt-West)', 'Leutzsch (Alt-West)', 'Böhlitz-Ehrenberg (Alt-West)', 'Burghausen-Rückmarsdorf (Alt-West)', 'Möckern (Nordwest)', 'Wahren (Nordwest)', 'Lützschena-Stahmeln (Nordwest)', 'Lindenthal (Nordwest)', 'Gohlis-Süd (Nord)', 'Gohlis-Mitte (Nord)', 'Gohlis-Nord (Nord)', 'Gohlis (Nord)', 'Eutritzsch (Nord)', 'Seehausen (Nord)', 'Wiederitzsch (Nord)');
+  $count = count($bezirke);
+  $i = 0;
+  while ($i < $count) {
+	$insert_bezirke = db_insert("aae_data_bezirke")
+      ->fields(array(
+        'bezirksname' => $bezirke[$i],
+	  ))
+	  ->execute();
+	$i = $i+1;
+  }
+  return $insert_bezirke;
+}
