@@ -70,7 +70,8 @@ $explodedhatuser = "";
 //$kategorie = array();
 
 //Speicherort fuer Bilder
-$bildpfad = "sites/all/modules/aae_data/images/";
+$bildpfad = "/home/swp15-aae/drupal/sites/default/files/styles/large/public/field/image/";
+$short_bildpfad = "sites/default/files/styles/large/public/field/image/";
 
 //-----------------------------------
 
@@ -289,15 +290,20 @@ if (isset($_POST['submit'])) {
   }
 
   //Wenn Bilddatei ausgewählt wurde...
+  //Wenn Bilddatei ausgewählt wurde...
   if($_FILES){
-	$bildname = $_FILES['bild']['name'];
-	if($bildname != ""){
-	  move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname);//Upload
-	  $bild = "images/".$bildname;
-	}else{
+  $bildname = $_FILES['bild']['name'];
+
+  if($bildname != ""){
+    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname)) {
+      echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />'.$bildname;
+      exit();
+    }
+    $bild = base_path().$short_bildpfad.$bildname;
+	}
+  } else{
 		$bild=$bild_alt;
 	}
-  }
 
 //---------------------------------
 
