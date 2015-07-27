@@ -55,6 +55,7 @@ $gps = "";
 
 //Speicherort fuer Bilder
 $bildpfad = "/home/swp15-aae/drupal/sites/default/files/styles/large/public/field/image/";
+$short_bildpfad = "sites/default/files/styles/large/public/field/image/";
 
 //-----------------------------------
 
@@ -244,7 +245,8 @@ if (isset($_POST['submit'])) {
       echo $bildname;
       exit();
     }
-	  $bild = "images/".$bildname;
+	  $bild = base_path().$short_bildpfad.$bildname;
+    echo $bild;
 	}
 
   }

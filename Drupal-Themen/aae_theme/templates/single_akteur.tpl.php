@@ -1,13 +1,13 @@
 <header id="header"
-<?php if ($aResult['row1']->bild != '') : ?> style="background:url(<?= base_path().'sites/default/files/styles/large/public/field/image/'.$row->bild; ?>);" <?php endif; ?>></header>
+<?php if ($aResult['row1']->bild != '') : ?> style="background:url(<?= $row->bild; ?>);" <?php endif; ?>></header>
 
 			<div id="project" class="row">
 
 			 <aside class="left large-4 columns">
 
 			  <div class="pcard">
-			   <header <?php if ($aResult['row1']->bild != '') echo 'style="background:url('.base_path().'sites/default/files/styles/large/public/field/image/'.$row->bild.');"'; ?>>
-					<?php if ($aResult['row1']->bild != '') echo '<img src="'.base_path().$modulePath.'/'.$row->bild.'" style="visbility:hidden;" />';
+			   <header <?php if ($aResult['row1']->bild != '') echo 'style="background:url('.$row->bild.');"'; ?>>
+					<?php if ($aResult['row1']->bild != '') echo '<img src="'.$row->bild.'" style="visbility:hidden;" />';
 					      else echo '<img src="'.base_path().path_to_theme().'/img/project_bg.png" style="visibility:hidden;"/>';	?>
 				 </header>
 			  </div>
