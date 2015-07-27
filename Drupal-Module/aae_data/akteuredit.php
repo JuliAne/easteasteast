@@ -510,7 +510,7 @@ $basepath = base_path();
 //Darstellung
 $profileHTML = <<<EOF
 <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
-  <button class="button"><a href="$basepath?q=akteurloeschen/$akteur_id">Akteur löschen</a></button>
+<a href="$basepath?q=akteurloeschen/$akteur_id"><button class="button">Akteur löschen</button></a>
   <input name="akteur_id" type="hidden" id="akteurAIDInput" value="$akteur_id" />
   <!-- verstecktes Feld für bild -->
   <input name="bild_alt" type="hidden" id="bild_alt" value="$bild" />
@@ -572,7 +572,7 @@ $profileHTML .= <<<EOF
   <label>Beschreibung:</label>
   <textarea name="beschreibung" class="akteur" cols="45" rows="3" placeholder="ph_beschreibung">$beschreibung</textarea>$fehler_beschreibung
   <label>Bild:</label><input type="file" class="akteur" id="akteurBildInput" name="bild" value="$bild" /><br>
-  <img src="sites/all/modules/aae_data/$bild" width=200 ><br>
+  <img src="$bild" title="Bisheriges Profilbild" width=250 ><br>
   <label>Neue Schreibrechte vergeben an:</label>
   <input type="test" class="akteur" id="akteurHatUser" name="hatuser" value="$hatuser" placeholder="$ph_hatuser">$fehler_hatuser
   <!--<label>Sparten:</label>
