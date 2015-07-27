@@ -49,8 +49,8 @@
 
 			  <h3>Beschreibung</h3>
 
-				<?php if ($aResult['row1']->kurzbeschreibung !== ''): ?>
-				<p><?= $aResult['row1']->kurzbeschreibung; ?></p>
+				<?php if ($aResult['row1']->beschreibung !== ''): ?>
+				<p><?= $aResult['row1']->beschreibung; ?></p>
 			  <?php else : ?>
 				<p><i>Hier wurde leider noch keine Beschreibung angelegt :(</i></p>
 			  <?php endif; ?>

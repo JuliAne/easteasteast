@@ -13,11 +13,11 @@
 
 <?php foreach($resultAkteure as $akteur): ?>
   <div class="large-3 large-offset-1 columns pcard">
-   <header <?php if($akteur->bild != '') echo 'style="background:url('.base_path().$modulePath.'/'.$akteur->bild.');"'; ?>>
+   <header <?php if($akteur->bild != '') echo 'style="background:url('.$akteur->bild.');"'; ?>>
      <h3><a href="<?= base_path().'?q=Akteurprofil/'.$akteur->AID; ?>"><?= $akteur->name; ?></a></h3>
     </header>
     <section>
-     <p><?= $akteur->kurzbeschreibung; ?></p>
+     <p><?= $akteur->beschreibung; ?></p>
      <p><a href="<?= base_path(); ?>?q=Akteurprofil/<?= $akteur->AID; ?>">Zum Projekt...</a></p>
     </section>
    </div>

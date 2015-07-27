@@ -55,12 +55,12 @@
   foreach (block_aae_print_letzte_akteure() as $akteur) : ?>
 
    <div class="large-3 large-offset-1 columns pcard">
-    <header>
+    <header style="background:url(<?= $akteur->bild; ?>);>
       <h3><a href="#"><?= $akteur->name; ?></a></h3>
       <!--<img title="Barrierefrei" class="barrierefrei" src="img/wheelchair.svg" />-->
      </header>
      <section>
-      <p><!--<strong>Reudnitz</strong>--><?= $akteur->kurzbeschreibung; ?></p>
+      <p><!--<strong>Reudnitz</strong>--><?= $akteur->beschreibung; ?></p>
       <p><a href="?q=Akteurprofil/<?= $akteur->AID; ?>">Zum Projekt...</a></p>
      </section>
      <footer>
