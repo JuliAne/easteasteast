@@ -505,10 +505,12 @@ if (isset($_POST['submit'])) {
 }
 
 $pathThisFile = $_SERVER['REQUEST_URI'];
+$basepath = base_path();
 
 //Darstellung
 $profileHTML = <<<EOF
 <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
+  <button class="button"><a href="$basepath?q=akteurloeschen/$akteur_id">Akteur löschen</a></button>
   <input name="akteur_id" type="hidden" id="akteurAIDInput" value="$akteur_id" />
   <!-- verstecktes Feld für bild -->
   <input name="bild_alt" type="hidden" id="bild_alt" value="$bild" />
