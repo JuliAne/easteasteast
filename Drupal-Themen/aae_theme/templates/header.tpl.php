@@ -31,8 +31,8 @@
 
      <div class="divider"></div>
 
-     <p>Neu hier? <a href="/drupal/?q=user/register">Registrieren</a></p>
-     <p><a href="/drupal/?q=user/password">Passwort vergessen?</a></p>
+     <p>Neu hier? <a href="<?= base_path(); ?>?q=user/register">Registrieren</a></p>
+     <p><a href="<?= base_path(); ?>?q=user/password">Passwort vergessen?</a></p>
 
      <div class="divider"></div>
     </div>

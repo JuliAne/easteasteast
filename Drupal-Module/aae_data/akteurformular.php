@@ -242,11 +242,10 @@ if (isset($_POST['submit'])) {
 
 	if($bildname != ""){
 	  if (!move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname)) {
-      echo $bildname;
+      echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />'.$bildname;
       exit();
     }
 	  $bild = base_path().$short_bildpfad.$bildname;
-    echo $bild;
 	}
 
   }
