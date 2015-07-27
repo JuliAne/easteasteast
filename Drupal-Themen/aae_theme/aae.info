@@ -12,3 +12,4 @@
  regions[footer]  = 'Footer'
  regions[header]  = 'Header'
  regions[blog]    = 'Journal (Top 3)'
+ regions[user]    = 'Userregion'

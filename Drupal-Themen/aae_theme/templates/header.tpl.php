@@ -35,6 +35,7 @@
      <p><a href="<?= base_path(); ?>?q=user/password">Passwort vergessen?</a></p>
 
      <div class="divider"></div>
+     <?= print render($page['user']); ?>
     </div>
   </aside>
 

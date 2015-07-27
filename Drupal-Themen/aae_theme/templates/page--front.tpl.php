@@ -43,7 +43,7 @@
 
  <section class="section" id="projects">
 
-  <h1>Neueste <strong>Projekte</strong></h1>
+  <h1>Neueste <strong>Akteure</strong></h1>
 
   <div class="row">
 
@@ -55,7 +55,7 @@
   foreach (block_aae_print_letzte_akteure() as $akteur) : ?>
 
    <div class="large-3 large-offset-1 columns pcard">
-    <header style="background:url(<?= $akteur->bild; ?>);>
+    <header style="background:url(<?= $akteur->bild; ?>);">
       <h3><a href="#"><?= $akteur->name; ?></a></h3>
       <!--<img title="Barrierefrei" class="barrierefrei" src="img/wheelchair.svg" />-->
      </header>
