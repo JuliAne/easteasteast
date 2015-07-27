@@ -54,7 +54,7 @@ $gps = "";
 //$kategorie = array();
 
 //Speicherort fuer Bilder
-$bildpfad = "/home/swp15-aae/public_html/";
+$bildpfad = "/home/swp15-aae/drupal/images";
 
 //-----------------------------------
 
@@ -242,7 +242,6 @@ if (isset($_POST['submit'])) {
 	if($bildname != ""){
 	  if (!move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname)) {
       echo $bildname;
-      echo $_FILES['bild']['error'];
       exit();
     }
 	  $bild = "images/".$bildname;
