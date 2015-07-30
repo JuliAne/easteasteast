@@ -89,6 +89,18 @@ function aae_data_schema() {
 	  'Akteur' => array('table' => 'aae_data_akteur', 'columns' => array('hat_AID' => 'AID'))
 	),
   );
+  $schema ['aae_data_event_hat_sparte'] = array(
+    'description' => 'Hilfstabelle für Sparten/Zielgruppen',
+	'fields' => array(
+	  'hat_EID' => array('description' => 'ID für Event', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'hat_KID' => array('description' => 'ID für Kategorien', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	),
+	'primary key' => array('hat_EID', 'hat_KID'),
+	'foreign keys' => array(
+	  'Kategorie' => array('table' => 'aae_data_kategorie', 'columns' => array('hat_KID' => 'KID')),
+	  'Event' => array('table' => 'aae_data_event', 'columns' => array('hat_EID' => 'EID'))
+	),
+  );
   $schema ['aae_data_kategorie'] = array(
     'description' => 'Tabelle für Sparten/Zielgruppen',
 	'fields' => array(
@@ -124,6 +136,27 @@ function aae_data_schema() {
 
 
   return $schema;
+}
+
+/**
+ * Implements hook_update_N().
+ * Create a new database table {aae_data_event_hat_sparte}.
+ */
+function aae_data_update_7103(){
+  $schema ['aae_data_event_hat_sparte'] = array(
+    'description' => 'Hilfstabelle für Sparten/Zielgruppen',
+	'fields' => array(
+      'hat_EID' => array('description' => 'ID für Event', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'hat_KID' => array('description' => 'ID für Kategorien', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	),
+	'primary key' => array('hat_EID', 'hat_KID'),
+	'foreign keys' => array(
+      'Kategorie' => array('table' => 'aae_data_kategorie', 'columns' => array('hat_KID' => 'KID')),
+      'Event' => array('table' => 'aae_data_event', 'columns' => array('hat_EID' => 'EID'))
+	),
+  );
+  db_create_table('aae_data_event_hat_sparte', $schema['aae_data_event_hat_sparte']);
+	
 }
 
 /**
