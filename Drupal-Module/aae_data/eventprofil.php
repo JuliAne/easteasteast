@@ -13,8 +13,6 @@ $tbl_event = "aae_data_event";
 $tbl_hat_user = "aae_data_hat_user";
 $tbl_akteur_events = "aae_data_akteur_hat_events";
 $tbl_bezirke = "aae_data_bezirke";
-$tbl_sparte = "aae_data_kategorie";
-$tbl_event_sparte = "aae_data_event_hat_sparte";
 
 //-----------------------------------
 
@@ -89,32 +87,6 @@ $resultveranstalter = db_select($tbl_akteur_events, 'e')
   ))
   ->condition('EID', $event_id, '=')
   ->execute();
-
-//Selektion der Tags
-$resultsparten = db_select($tbl_event_sparte, 's')
-  ->fields('s', array(
-    'hat_KID',
-  ))
-  ->condition('hat_EID', $event_id, '=')
-  ->execute();
-$countsparten = $resultsparten->rowCount();
-$sparten = array();
-$i = 0;
-if($countsparten != 0){
-	foreach ($resultsparten as $row) {
-	  $resultspartenname = db_select($tbl_sparte, 'p')
-	  ->fields('p', array(
-	    'kategorie',
-	  ))
-	  ->condition('KID', $row->hat_KID, '=')
-	  ->execute();
-	  foreach ($resultspartenname as $row1) {
-		$sparten[$i] = $row1->kategorie;
-	  }
-	  $i = $i+1;
-	}
-	
-}
 
 //-----------------------------------
 
@@ -211,21 +183,7 @@ foreach($resultevent as $row){
 	//Bild
 	if($row->bild != "") { 
 	  $profileHTML .= '<br><img src="'.$row->bild.'" >'; }
-	
-	//Sparten:
-    if(count($sparten) != 0){
-	  $profileHTML .= '<br>Sparten:<br>';
-	  $laenge = count($sparten);
-	  $j = 0;
-	  while($j < $laenge){
-	    $profileHTML .= '<p>'.$sparten[$j].'</p>';
-	    $j = $j+1;
-	  }
-	}	
-	
 	if($okay == 1){
       $profileHTML .= '<br><a href="?q=Eventloeschen/'.$event_id.'" >'.Löschen.'</a>'.'   '.'<a href="?q=Eventedit/'.$event_id.'" >'.Bearbeiten.'</a>';
     }
-
-
 }
