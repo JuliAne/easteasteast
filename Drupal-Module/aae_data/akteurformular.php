@@ -20,10 +20,10 @@ if(!user_is_logged_in()){
 }
 
 //DB-Tabellen
-$tbl_hat_Sparte = "aae_data_hat_sparte";
+$tbl_hat_sparte = "aae_data_hat_sparte";
 $tbl_adresse = "aae_data_adresse";
 $tbl_akteur = "aae_data_akteur";
-$tbl_kategorie = "aae_data_kategorie";
+$tbl_sparte = "aae_data_kategorie";
 $tbl_hat_user = "aae_data_hat_user";
 $tbl_bezirke = "aae_data_bezirke";
 
@@ -50,8 +50,8 @@ $plz = "";
 $ort = "";
 $gps = "";
 
-//$tbl_hat_Sparte
-//$kategorie = array();
+//Tags:
+$sparten="";
 
 //Speicherort fuer Bilder
 $bildpfad = "/home/swp15-aae/drupal/sites/default/files/styles/large/public/field/image/";
@@ -59,8 +59,6 @@ $short_bildpfad = "sites/default/files/styles/large/public/field/image/";
 
 //-----------------------------------
 
-//Variable zur Kategoriebestimmung
-//$sent = "";
 //Variable zur Freigabe: muss true sein
 $freigabe = true;
 
@@ -80,6 +78,7 @@ $fehler_adresszusatz = "";
 $fehler_plz = "";
 $fehler_ort = "";
 $fehler_gps = "";
+$fehler_sparten = "";
 
 //-----------------------------------
 
@@ -104,6 +103,7 @@ $ph_ort = "Bezirk";
 $ph_gps = "GPS-Addresskoordinaten";
 
 //$tbl_hat_Sparte
+$ph_sparten = "Tags kommasepariert eingeben!";
 
 //-----------------------------------
 
@@ -130,7 +130,11 @@ if (isset($_POST['submit'])) {
   $ort = $_POST['ort'];
   $gps = $_POST['gps'];
 
-  //$kategorie = $_POST['kategorie'];
+  $sparten = $_POST['sparten'];
+  $explodedsparten = "";
+  if($sparten != ""){
+	$explodedsparten = explode(",", $sparten);
+  }
 
 //-------------------------------------
   //Check-Klauseln
@@ -181,6 +185,17 @@ if (isset($_POST['submit'])) {
   $plz = strip_tags($plz);
   $ort = strip_tags($ort);
   $gps = strip_tags($gps);
+
+  //Tags:
+  if($sparten != ""){
+	$countsparten = count($explodedsparten);
+	$i = 0;
+	while($i < $countsparten){
+	  $explodedsparten[$i] = trim($explodedsparten[$i]);
+	  $explodedsparten[$i] = strip_tags($explodedsparten[$i]);
+	  $i = $i+1;	
+	}
+  }
 
   //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
   if (strlen($name) > 100){
@@ -315,6 +330,7 @@ if (isset($_POST['submit'])) {
 		'bild' => $bild,
 		'beschreibung' => $beschreibung,
 		'oeffnungszeiten' => $oeffnungszeiten,
+		'ersteller' => $user->uid,
 	  ))
 	  ->execute();
 
@@ -326,20 +342,41 @@ if (isset($_POST['submit'])) {
 	  ))
 	  ->execute();
 
-
-	//$tbl_hat-Sparte
-    /*
-	foreach ($kategorie as $row) {
-	  //Kategorie noch nicht zugeordnet
-	  //tbl_hat_Sparte INSERT!!!
-	  $hat_sparte_insert = db_insert($tbl_hat_Sparte)
-	 	->fields(array(
-	      'kategorie' => $row1->kategorie_id,
-		))
-		->condition('akteur_id', $akteur_id, '=')
-	    ->execute();
+	//falls Tags angegeben wurden
+	if($sparten != ""){
+	  $sparte_id = "";
+      $countsparten = count($explodedsparten);
+	  $i = 0;
+	  while($i < $countsparten){
+		//1. Prüfen, ob Tag bereits in Tabelle $tbl_sparte
+		$resultsparte = db_select($tbl_sparte, 's')
+		  ->fields('s', array(
+		    'KID',
+		  ))
+		  ->condition('kategorie', $explodedsparten[$i], '=')
+		  ->execute();
+		$countresult = $resultsparte->rowCount();
+		if($countresult == 0){//nein: Tag in $tbl_sparte einfügen
+		  $sparte_id = db_insert($tbl_sparte)
+		    ->fields(array(
+		      'kategorie' => $explodedsparten[$i],
+			))
+			->execute();
+		}else{//ja: KID des Tags holen
+		  foreach ($resultsparte as $row) {
+			$sparte_id = $row->KID;
+		  }
+		}
+		//2. Akteur+Tag in Tabelle $tbl_hat_sparte einfügen
+		$insertakteursparte = db_insert($tbl_hat_sparte)
+		  ->fields(array(
+		    'hat_AID' => $akteur_id,
+		    'hat_KID' => $sparte_id,
+		  ))
+		  ->execute();
+	    $i = $i+1;	
+	  }
 	}
-	*/
 
 	header("Location: ?q=Akteurprofil/".$akteur_id);
   // Leite weiter auf das neu erstellte Profil
@@ -379,7 +416,7 @@ $resultbezirke = db_select($tbl_bezirke, 'b')
   ))
   ->execute();
 $countbezirke = $resultbezirke->rowCount();
-//Dropdownliste zur Akteurauswahl
+//Dropdownliste zur Bezirksauswahl
 $profileHTML .= '<select name="ort" size="'.$countbezirke.'" >';
 foreach ($resultbezirke as $row) {
   $profileHTML .= '<option value="'.$row->BID.'">'.$row->bezirksname.'</option>';
@@ -409,8 +446,8 @@ $profileHTML .= <<<EOF
   <label>Bild:</label>
   <input type="file" class="akteur" id="akteurBildInput" name="bild" /><br>
 
-  <!--<label>Sparten:</label>
-  <input type="hidden" name="sent" value="yes">-->
+  <label>Tags:</label>
+  <input type="text" class="akteur" id="akteurSpartenInput" name="sparten" value="$sparten" placeholder="$ph_sparten">$fehler_sparten
 
   <input type="submit" class="akteure" id="akteureSubmit" name="submit" value="Speichern">
 </form>

@@ -25,6 +25,8 @@ $tbl_akteur_events = "aae_data_akteur_hat_events";
 $tbl_bezirke = "aae_data_bezirke";
 $tbl_akteur = "aae_data_akteur";
 $tbl_hat_user = "aae_data_hat_user";
+$tbl_event_sparte = "aae_data_event_hat_sparte";
+$tbl_sparte = "aae_data_kategorie";
 
 //-----------------------------------
 
@@ -48,6 +50,9 @@ $plz = "";
 $ort = "";
 $gps = "";
 $adresse = "";
+
+//Tags:
+$sparten="";
 
 //Speicherort fuer Bilder
 $bildpfad = "/home/swp15-aae/drupal/sites/default/files/styles/large/public/field/image/";
@@ -74,6 +79,7 @@ $fehler_adresszusatz = "";
 $fehler_plz = "";
 $fehler_ort = "";
 $fehler_gps = "";
+$fehler_sparten = "";
 
 //-----------------------------------
 
@@ -94,6 +100,7 @@ $ph_adresszusatz = "Adresszusatz";
 $ph_plz = "PLZ";
 $ph_ort = "Bezirk";
 $ph_gps = "GPS Koordinaten (durch Leerzeichen getrennt!)";
+$ph_sparten = "Tags kommasepariert eingeben!";
 
 //-----------------------------------
 
@@ -119,6 +126,12 @@ if (isset($_POST['submit'])) {
   $plz = $_POST['plz'];
   $ort = $_POST['ort'];
   $gps = $_POST['gps'];
+
+  $sparten = $_POST['sparten'];
+  $explodedsparten = "";
+  if($sparten != ""){
+	$explodedsparten = explode(",", $sparten);
+  }
 	
 //-------------------------------------
   //Check-Klauseln
@@ -157,6 +170,16 @@ if (isset($_POST['submit'])) {
   $plz = trim($plz);
   $ort = trim($ort);
   $gps = trim($gps);
+  //Tags:
+  if($sparten != ""){
+	$countsparten = count($explodedsparten);
+	$i = 0;
+	while($i < $countsparten){
+	  $explodedsparten[$i] = trim($explodedsparten[$i]);
+	  $explodedsparten[$i] = strip_tags($explodedsparten[$i]);
+	  $i = $i+1;	
+	}
+  }
 
   //und alle Tags entfernen (Hacker)
   $name=strip_tags($name);
@@ -308,6 +331,41 @@ if (isset($_POST['submit'])) {
 	  ))
 	  ->execute();
 	}
+	//falls Tags angegeben wurden
+	if($sparten != ""){
+	  $sparte_id = "";
+      $countsparten = count($explodedsparten);
+	  $i = 0;
+	  while($i < $countsparten){
+		//1. Prüfen, ob Tag bereits in Tabelle $tbl_sparte
+		$resultsparte = db_select($tbl_sparte, 's')
+		  ->fields('s', array(
+		    'KID',
+		  ))
+		  ->condition('kategorie', $explodedsparten[$i], '=')
+		  ->execute();
+		$countresult = $resultsparte->rowCount();
+		if($countresult == 0){//nein: Tag in $tbl_sparte einfügen
+		  $sparte_id = db_insert($tbl_sparte)
+		    ->fields(array(
+		      'kategorie' => $explodedsparten[$i],
+			))
+			->execute();
+		}else{//ja: KID des Tags holen
+		  foreach ($resultsparte as $row) {
+			$sparte_id = $row->KID;
+		  }
+		}
+		//2. Event+Tag in Tabelle $tbl_event_sparte einfügen
+		$inserteventsparte = db_insert($tbl_event_sparte)
+		  ->fields(array(
+		    'hat_EID' => $event_id,
+		    'hat_KID' => $sparte_id,
+		  ))
+		  ->execute();
+	    $i = $i+1;	
+	  }
+	}
 	
 	header("Location: ?q=Events"); //Hier muss hin, welche Seite aufgerufen werden soll,
 	  //nach dem die Daten erfolgreich gespeichert wurden.
@@ -400,16 +458,18 @@ $profileHTML .= <<<EOF
 	
 
   <label>Website:</label>
-  <input type="text" class="event" id="akteurURLInput" name="url" value="$url" placeholder="$ph_url">$fehler_url
+  <input type="text" class="event" id="eventURLInput" name="url" value="$url" placeholder="$ph_url">$fehler_url
 
 
   <label>Beschreibung:</label>
   <textarea name="kurzbeschreibung" class="event" cols="45" rows="3" placeholder="$ph_kurzbeschreibung">$kurzbeschreibung</textarea>$fehler_kurzbeschreibung
   <label>Bild:</label>
-  <input type="file" class="event" id="akteurBildInput" name="bild" /><br>
+  <input type="file" class="event" id="eventBildInput" name="bild" /><br>
 
+  <label>Tags:</label>
+  <input type="text" class="event" id="eventSpartenInput" name="sparten" value="$sparten" placeholder="$ph_sparten">$fehler_sparten
 
-  <input type="submit" class="event" id="akteureSubmit" name="submit" value="Speichern">
+  <input type="submit" class="event" id="eventSubmit" name="submit" value="Speichern">
 </form>
 <a href="javascript:history.go(-1)">Abbrechen/Zurück</a>
 EOF;
