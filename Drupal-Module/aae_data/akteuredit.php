@@ -294,16 +294,16 @@ if (isset($_POST['submit'])) {
   if($_FILES){
   $bildname = $_FILES['bild']['name'];
 
-  if($bildname != ""){
-    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname)) {
-      echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />'.$bildname;
-      exit();
+    if($bildname != ""){
+      if (!move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname)) {
+        echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />'.$bildname;
+        exit();
+      }
+        $bild = base_path().$short_bildpfad.$bildname;
+	}else{
+      $bild=$bild_alt;
     }
-    $bild = base_path().$short_bildpfad.$bildname;
-	}
-  } else{
-		$bild=$bild_alt;
-	}
+  }
 
 //---------------------------------
 
