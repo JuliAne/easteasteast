@@ -120,7 +120,7 @@ if (isset($_POST['submit'])) {
   if(isset($_POST['bild'])){
     $bild = $_POST['bild'];
   }
-  $kurzbeschreibung = $_POST['kurzbeschreibung'];
+  $beschreibung = $_POST['beschreibung'];
   $oeffnungszeiten = $_POST['oeffnungszeiten'];
 
   $strasse = $_POST['strasse'];

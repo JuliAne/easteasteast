@@ -72,6 +72,7 @@ $explodedhatuser = "";
 //Speicherort fuer Bilder
 $bildpfad = "/home/swp15-aae/drupal/sites/default/files/styles/large/public/field/image/";
 $short_bildpfad = "sites/default/files/styles/large/public/field/image/";
+$bild_alt = "";
 
 //-----------------------------------
 
