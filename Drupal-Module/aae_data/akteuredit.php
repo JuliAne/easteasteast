@@ -291,7 +291,6 @@ if (isset($_POST['submit'])) {
   }
 
   //Wenn Bilddatei ausgewählt wurde...
-  //Wenn Bilddatei ausgewählt wurde...
   if($_FILES){
   $bildname = $_FILES['bild']['name'];
 
@@ -469,9 +468,6 @@ if (isset($_POST['submit'])) {
 	$beschreibung = $row->beschreibung;
 	$oeffnungszeiten = $row->oeffnungszeiten;
   }
-  if($bild == ""){
-    $bild = "images/xxx.png";
-  }
 
   //Adressdaten aus DB holen:
   $resultadresse = db_select($tbl_adresse, 'd')
@@ -572,7 +568,7 @@ $profileHTML .= <<<EOF
 
   <label>Beschreibung:</label>
   <textarea name="beschreibung" class="akteur" cols="45" rows="3" placeholder="ph_beschreibung">$beschreibung</textarea>$fehler_beschreibung
-  <label>Bild:</label><input type="file" class="akteur" id="akteurBildInput" name="bild" value="$bild" /><br>
+  <label>Bild:</label><input type="file" class="akteur" id="akteurBildInput" name="bild" value="" /><br>
   <img src="$bild" title="Bisheriges Profilbild" width=250 ><br>
   <label>Neue Schreibrechte vergeben an:</label>
   <input type="test" class="akteur" id="akteurHatUser" name="hatuser" value="$hatuser" placeholder="$ph_hatuser">$fehler_hatuser
