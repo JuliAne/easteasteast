@@ -182,7 +182,7 @@ foreach($resultevent as $row){
 	}
 	//Bild
 	if($row->bild != "") { 
-	  $profileHTML .= '<br><img src="sites/all/modules/aae_data/'.$row->bild.'" >'; }
+	  $profileHTML .= '<br><img src="'.$row->bild.'" >'; }
 	if($okay == 1){
       $profileHTML .= '<br><a href="?q=Eventloeschen/'.$event_id.'" >'.Löschen.'</a>'.'   '.'<a href="?q=Eventedit/'.$event_id.'" >'.Bearbeiten.'</a>';
     }

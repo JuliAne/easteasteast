@@ -529,16 +529,16 @@ $profileHTML .= <<<EOF
 	
 
   <label>Website:</label>
-  <input type="text" class="event" id="akteurURLInput" name="url" value="$url" placeholder="$ph_url">$fehler_url
+  <input type="text" class="event" id="eventURLInput" name="url" value="$url" placeholder="$ph_url">$fehler_url
 
 
   <label>Beschreibung:</label>
   <textarea name="kurzbeschreibung" class="event" cols="45" rows="3" placeholder="$ph_kurzbeschreibung">$kurzbeschreibung</textarea>$fehler_kurzbeschreibung
-  <label>Bild:</label>
-  <input type="file" class="event" id="akteurBildInput" name="bild" /><br>
+  <label>Bild:</label><input type="file" class="event" id="eventBildInput" name="bild" value="$bild"/><br>
+  <img src="$bild" title="Bisheriges Profilbild" width=250 ><br>
 
 
-  <input type="submit" class="event" id="akteureSubmit" name="submit" value="Speichern">
+  <input type="submit" class="event" id="eventSubmit" name="submit" value="Speichern">
 </form>
 <a href="javascript:history.go(-1)">Abbrechen/Zurück</a>
 EOF;
