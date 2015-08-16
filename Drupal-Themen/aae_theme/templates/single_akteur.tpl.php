@@ -71,7 +71,7 @@
 		     <?php endforeach; ?>
 		  	</ul>
 			  <?php endif; ?>
-
+			<p>Dieses Profil wurde unbefugt erstellt? Melde dies <a href="Link zum Kontaktformular">hier</a>!</p>
 			 </section>
 
 			</div>

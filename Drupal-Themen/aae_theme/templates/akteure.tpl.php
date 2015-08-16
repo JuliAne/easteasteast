@@ -17,7 +17,9 @@
      <h3><a href="<?= base_path().'?q=Akteurprofil/'.$akteur->AID; ?>"><?= $akteur->name; ?></a></h3>
     </header>
     <section>
-     <p><?= $akteur->beschreibung; ?></p>
+     <?php if ($akteur->beschreibung !== ''): ?>
+     <p><?= $kurzbeschreibung = substr ( $akteur->beschreibung , 0 , 50 )."..."; ?></p>
+     <?php endif; ?>
      <p><a href="<?= base_path(); ?>?q=Akteurprofil/<?= $akteur->AID; ?>">Zum Projekt...</a></p>
     </section>
    </div>
