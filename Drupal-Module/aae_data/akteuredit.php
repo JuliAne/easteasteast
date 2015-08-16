@@ -576,6 +576,9 @@ $profileHTML .= <<<EOF
   //Tags
   <input type="hidden" name="sent" value="yes">-->
   <br>
+  <p>Mit der Freigabe ihrer Daten auf leipzigerecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.<br>
+Wir veröffentlichen alle Inhalte unter der Free cultural Licence „CC-By 4.0 international“ Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefeldern zu beschreiben.“ Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte.<br>
+Bildmaterial sollte abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
   <input type="submit" class="akteure" id="akteureSubmit" name="submit" value="Übernehmen">
 </form>
 EOF;
