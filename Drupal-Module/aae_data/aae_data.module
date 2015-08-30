@@ -1,19 +1,9 @@
 <?php
 
-/**
- * Updates Drupal to be way ruther.
- * @TODO Aktiviere diese Funktion nur, wenn sich Drupal im
- * Development-Modus befindet.
- */
-
-if (drupal_is_front_page()) {
-  $GLOBALS['conf']['cache'] = FALSE;
-}
-
 /** @function hook_cron()
 *
 * Cronjob, der von Drupal automatisch aufgerufen wird.
-* Updated die LOData.js Maps-Koordinaten-Datei
+* TODO: Update der LOData.js Maps-Koordinaten-Datei
 */
 
 function aae_data_cron() {

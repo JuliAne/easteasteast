@@ -31,9 +31,12 @@ akteurprofil.php:
   User mitteilen, Bilder nach Upload komprimieren / ggf. skalieren
 - Anpassung an neues Schema
 - Hinweis, falls eine unbefugte Person den Akteur angelegt hat, man sich an Matthias wenden soll
+- Einbinden von "Teilen"-Feldern für soziale Netzwerke (FB, G+, Friendica), entsprechend im 
+  HTML-Header Description-Felder anlegen, welche den anzuzeigenden Text definieren.
 
 akteure.php:
 - 'Beschreibung' abschneiden bei 60 Zeichen und (…) anfügen
+- 'Akteur hinzufügen'-Button grau machen, falls nicht eingeloggt
 
 eventprofil.php:
 - Funktion entwickeln zum umwandeln von Unix-Zeitformat in $date & $time
@@ -47,4 +50,5 @@ events.php:
 - Sortierfunktion einbauen (Datum, Veranstalter, Bezirk, …)
 
 Allgemein noch in der Warteschlange:
-- Kalender
+- Kalender (Ggf. Verwendung des "calendar"-Modul's, welches auf unsere im Date-Format
+  vorliegenden Events zugreift.
