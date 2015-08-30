@@ -193,7 +193,7 @@ if (isset($_POST['submit'])) {
 	while($i < $countsparten){
 	  $explodedsparten[$i] = trim($explodedsparten[$i]);
 	  $explodedsparten[$i] = strip_tags($explodedsparten[$i]);
-	  $i = $i+1;	
+	  $i = $i+1;
 	}
   }
 
@@ -374,7 +374,7 @@ if (isset($_POST['submit'])) {
 		    'hat_KID' => $sparte_id,
 		  ))
 		  ->execute();
-	    $i = $i+1;	
+	    $i = $i+1;
 	  }
 	}
 
@@ -454,3 +454,17 @@ Bildmaterial sollte abgeklärt werden mit erkennbaren Menschen. Haftung übern
   <input type="submit" class="akteure" id="akteureSubmit" name="submit" value="Speichern">
 </form>
 EOF;
+
+
+/*-----------------------------------
+
+FELIX: Die folgenden drei Zeilen sorgen dafür, dass die Theme-Datei zur Ausgabe des
+       Akteursformulars eingebunden wird. Dort sind alle Variablen wie hier
+       verfügbar. Bitte auskommentieren, sobald eine Methode zur einheitlichen Auswertung
+       der POST-Daten gefunden wurde :)
+
+ob_start(); // Aktiviert "Render"-modus
+
+include_once path_to_theme().'/templates/akteurformular.tpl.php';
+
+$profileHTML = ob_get_clean(); // Übergabe des gerenderten "project.tpl" */
