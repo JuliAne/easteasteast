@@ -22,7 +22,7 @@ function aae_preprocess_html(&$variables) {
     $og_title = array( '#tag' => 'meta', '#attributes' => array( 'property' => 'og:title', 'content' => 'TITLE' ));
     $og_description = array( '#tag' => 'meta', '#attributes' => array( 'property' => 'og:description', 'content' => 'TEXT' ));
 
-    drupal_add_html_head($element, 'og_url');
+    drupal_add_html_head($og_url, 'og_url');
 
 /*<meta property="og:url" content="https://www.mathnuggets.com/" />
 <meta property="og:image" content="https://www.mathnuggets.com/images/fb-logo.jpg" />
