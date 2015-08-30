@@ -72,6 +72,11 @@
 		  	</ul>
 			  <?php endif; ?>
 			<p>Dieses Profil wurde unbefugt erstellt? Melde dies <a href="Link zum Kontaktformular">hier</a>!</p>
+			
+			<a href="javascript:;" onclick="window.open('http://sharetodiaspora.github.io/?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title),'das','location=no,links=no,scrollbars=no,toolbar=no,width=620,height=550'); return false;" rel="nofollow" target="_blank"
+				style="padding: 3px 4px 2px; background: #fafafa; border: 1px solid #ddd; font-size: 13px; color: #222; text-decoration: none;">
+					<img src="http://sharetodiaspora.github.io/favicon.png" style="border: 0px solid;display: inline-block;vertical-align: top;" /> diaspora*
+				</a>
 			 </section>
 
 			</div>

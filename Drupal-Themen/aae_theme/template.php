@@ -17,6 +17,18 @@ function aae_preprocess_html(&$variables) {
 
   if (drupal_is_front_page()) {
 
+    $og_url = array( '#tag' => 'meta', '#attributes' => array( 'property' => 'og:url', 'content' => base_path() ));
+    $og_image = array( '#tag' => 'meta', '#attributes' => array( 'property' => 'og:image', 'content' => path_to_theme().'logo.png' ));
+    $og_title = array( '#tag' => 'meta', '#attributes' => array( 'property' => 'og:title', 'content' => 'TITLE' ));
+    $og_description = array( '#tag' => 'meta', '#attributes' => array( 'property' => 'og:description', 'content' => 'TEXT' ));
+
+    drupal_add_html_head($element, 'og_url');
+
+/*<meta property="og:url" content="https://www.mathnuggets.com/" />
+<meta property="og:image" content="https://www.mathnuggets.com/images/fb-logo.jpg" />
+<meta property="og:title" content="Math website for your gifted student" />
+<meta property="og:description" content="Challenging word problems for gifted elementary students" /> */
+
     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css', array('type' => 'external'));
     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css', array('type' => 'external'));
