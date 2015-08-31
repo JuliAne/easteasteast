@@ -25,15 +25,25 @@ function aae_data_schema() {
 	'fields' => array(
       'AID' => array('description' => 'ID für Akteur', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'name' => array('description' => 'Name des Akteurs/der Organisation', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
+		'nameAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'email' => array('description' => 'Email Adresse zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE, 'default' => ''),
+	  'emailAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'telefon' => array('description' => 'Telefonnummer zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'telefonAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'urlAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'ansprechpartner' => array('description' => 'Öffentlicher Ansprechpartner', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'ansprechpartnerAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'funktion' => array('description' => 'Funktion des Ansprechpartners', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'funktionAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'bild' => array('description' => 'Pfad zum hinterlegten Bild', 'type' => 'varchar', 'length' => 400, 'not null' => FALSE, 'default' => ''),
+	  'bildAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'beschreibung' => array('description' => 'Kurzbeschreibung für Übersicht', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
+	  'beschreibungAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'oeffnungszeiten' => array('description' => 'Wann der Akteur erreichbar ist', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
+	  'oeffnungszeitenAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'adresse' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+	  'adresseAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'ersteller' => array('description' => 'ID von User, der Akteur angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
 	),
 	'primary key' => array('AID'),
@@ -156,7 +166,29 @@ function aae_data_update_7103(){
 	),
   );
   db_create_table('aae_data_event_hat_sparte', $schema['aae_data_event_hat_sparte']);
-	
+}
+/**
+ * Implements hook_update_N().
+ * Create new columns in aae_data_akteur.
+ */
+function aae_data_update_7104(){
+  $columns = array(
+    'nameAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
+    'emailAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
+    'telefonAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
+    'urlAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
+    'ansprechpartnerAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
+    'funktionAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
+    'bildAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
+    'beschreibungAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
+    'oeffnungszeitenAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
+    'adresseAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
+  );
+  foreach ($columns as $key => $column) {
+	if(!db_field_exists('aae_data_akteur', $key)){
+	  db_add_field('aae_data_akteur', $key, $column);
+	}
+  }
 }
 
 /**

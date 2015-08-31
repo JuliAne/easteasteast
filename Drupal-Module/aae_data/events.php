@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
 	  'kurzbeschreibung',
 	  'start',
     ))
-    ->orderBy('name', 'ASC')
+    ->orderBy('start', 'ASC')
     ->execute();
 }
 
@@ -87,5 +87,5 @@ EOF;
 
 //Ausgabe der Events
 foreach($resultevents as $row){
-  $profileHTML .= '<p><a href="?q=Eventprofil/'.$row->EID.'">'.$row->name.'</a>: '.$row->kurzbeschreibung.'</p><br>';
+  $profileHTML .= '<p>'.$row->start.' <a href="?q=Eventprofil/'.$row->EID.'">'.$row->name.'</a>: '.$row->kurzbeschreibung.'</p><br>';
 }

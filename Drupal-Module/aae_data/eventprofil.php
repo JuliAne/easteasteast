@@ -195,12 +195,13 @@ foreach($resultevent as $row){
 	$profileHTML .= '<h4>Zeit:</h4>';
 	if($row->start != "") { 
 	  $explodedstart = explode(' ', $row->start);
+	  $explodedende = explode(' ', $row->ende);
 	  $profileHTML .= $explodedstart[0];
 	  if($row->ende != $explodedstart[0]){
-		$profileHTML .= '- '.$row->ende;
+		$profileHTML .= '- '.$explodedende[0];
 	  }
-	  if($explodedstart[1] != "" && $explodedstart[2] != ""){
-	    $profileHTML .= '<br>'.$explodedstart[1].'-'.$explodedstart[2].'<br>';
+	  if($explodedstart[1] != "" && $explodedende[1] != ""){
+	    $profileHTML .= '<br>'.$explodedstart[1].'-'.$explodedende[1].'<br>';
 	  }
 	}
 	if($row->url != "") { $profileHTML .= '<br><a href="'.$row->url.'">'.$row->url.'</a><br>'; }

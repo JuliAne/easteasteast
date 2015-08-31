@@ -86,10 +86,10 @@ $fehler_sparten = "";
 //Variablen, welche Texte in den Formularfeldern halten
 $ph_name = "Veranstaltungsname";
 $ph_veranstalter = "Veranstalter";
-$ph_start = "Starttag (dd.mm.yyyy)";
+$ph_start = "Starttag (yyyy-mm-dd)";
 $ph_zeit_von = "von (Uhrzeit: hh:mm)";
 $ph_zeit_bis = "bis (Uhrzeit: hh:mm)";
-$ph_ende = "Endtag (dd:mm:yyyy)";
+$ph_ende = "Endtag (yyyy-mm-dd)";
 $ph_bild = "Bild";
 $ph_kurzbeschreibung = "Beschreibung";
 $ph_ort = "Ort der Veranstaltung";
@@ -304,9 +304,11 @@ if (isset($_POST['submit'])) {
 	
 	//Zeitformatierung
 	if(strlen($ende) == 0){
-	  $ende = $start;
+	  $ende = $start.' '.$zeit_bis;
+	}else{
+	  $ende = $ende.' '.$zeit_bis;
 	}
-	$start = $start.' '.$zeit_von.' '.$zeit_bis;
+	$start = $start.' '.$zeit_von;
 
     //tbl_event INSERT!!!
 	$event_id = db_insert($tbl_event)

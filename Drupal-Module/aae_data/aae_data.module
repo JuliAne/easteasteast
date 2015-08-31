@@ -107,59 +107,9 @@ function aae_data_menu() {
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
   );
-/*-----------*/
-  $items['Kontakt'] = array(
-    'title' => t('Kontaktformular'),
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('aae_data_kontaktform'),
-    'access arguments' => array('access content'),
-    'access callback' => TRUE,
-    'description' => t('Kontaktformular'),
-    'type' => MENU_NORMAL_ITEM,
-    'file' => 'forms/kontaktformular.inc',
-  );
-/*-----------------*/
 
   return $items;
 }
-/*---------*/
-/**
- * Implementation of hook_mail().
- * 
- * A very simple hook_mail() implementation, for module "mymodule".
- * This implementation expects to receive a $body, $subject, and $headers 
- * inside the $params sent from drupal_mail(), rather than construct
- * those here in the hook.
- * @see drupal_mail()
- */
-function aae_data_mail($key, &$message, $params) {
-  if (isset($params['subject'])) {
-    $message['subject'] = $params['subject'];
-  } 
-  if (isset($params['body'])) {
-    $message['body'][] = $params['body']; 
-  }
-  if (isset($params['headers']) && is_array($params['headers'])) {   
-    $message['headers'] += $params['headers'];
-  }
-  
-  // You should really have hook_mail() doing most of the formatting, 
-  // rather than pass in a complete $body or a $subject from drupal_mail().  
-  // To accomplish that, you'd branch this formatting based on the value of
-  // $key sent with drupal_mail(), and using code like this:
-  // switch ($key) {
-  //  case 'key1':
-  //    // do something specific for mails of type key1
-  //    break;      
-  //  case 'key2':
-  //    // do something specific for mails of type key2
-  //    break;
-  // }
-  
-  // That's it - You don't do anything in your hook_mail() to actually
-  // send the mail, that is taken care of by the mail system automatically. 
-}
-/*---------*/
 
 
 /**

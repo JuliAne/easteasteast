@@ -129,10 +129,10 @@ $fehler_gps = "";
 //Variablen, welche Texte in den Formularfeldern halten
 $ph_name = "Veranstaltungsname";
 $ph_veranstalter = "Veranstalter";
-$ph_start = "Starttag (dd.mm.yyyy)";
+$ph_start = "Starttag (yyyy-mm-dd)";
 $ph_zeit_von = "von (Uhrzeit: hh:mm)";
 $ph_zeit_bis = "bis (Uhrzeit: hh:mm)";
-$ph_ende = "Endtag (dd:mm:yyyy)";
+$ph_ende = "Endtag (yyyy-mm-dd)";
 $ph_bild = "Bild";
 $ph_kurzbeschreibung = "Beschreibung";
 $ph_ort = "Ort der Veranstaltung";
@@ -182,7 +182,7 @@ if (isset($_POST['submit'])) {
   //Ckeck, ob Datum angegeben wurde
   if(strlen($start) == 0){
     //Feld nicht ausgefüllt
-    $fehler_start = "Bitte eine Datum angeben!";
+    $fehler_start = "Bitte ein Datum angeben!";
 	$freigabe = false;
   }
 
@@ -328,8 +328,10 @@ if (isset($_POST['submit'])) {
 	//Zeitformatierung
 	if(strlen($ende) == 0){
 	  $ende = $start;
+	}else{
+	  $ende = $ende.' '.$zeit_bis;
 	}
-	$start = $start.' '.$zeit_von.' '.$zeit_bis;
+	$start = $start.' '.$zeit_von;
 
     //tbl_event UPDATE!!!
 	$eventupdate = db_update($tbl_event)
@@ -428,16 +430,17 @@ if (isset($_POST['submit'])) {
   }
   //Zeit auflösen
   $explodedstart=explode(' ', $start);
+  $explodedende=explode(' ', $ende);
+  $ende=$explodedende[0];
   $start=$explodedstart[0];
   $zeit_von="";
   $zeit_bis="";
   if(count($explodedstart) == 2){
 	$zeit_von=$explodedstart[1];
-  }else if (count($explodedstart)==3) {
-	$zeit_von=$explodedstart[1];
-	$zeit_bis=$explodedstart[2];
   }
-
+  if(count($explodedende) == 2){
+	$zeit_bis=$explodedende[1];
+  }
 }
 
 $pathThisFile = $_SERVER['REQUEST_URI']; 
