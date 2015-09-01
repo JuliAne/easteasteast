@@ -37,19 +37,16 @@
 
 <div class="divider"></div>
 
-<!--
 <div class="row">
   <ul class="pagination large-4 columns large-offset-5" style="padding-top:15px;">
-    <li class="arrow"><a href="<?= base_path(); ?>Akteure/1">&laquo;</a></li>
+    <li class="arrow"><a href="<?= base_path(); ?>Events/1">&laquo;</a></li>
 
     <?php for ($i=1; $i<=$maxPages; $i++) {
      if ($i == $currentPageNr) echo '<li class="current"><a href="#">'.$i.'</a></li>';
-     else echo '<li><a href="'.base_path().'Akteure/'.$i.'">'.$i.'</a></li>';
+     else echo '<li><a href="'.base_path().'Events/'.$i.'">'.$i.'</a></li>';
      //<!-- <li class="unavailable"><a href="">&hellip;</a></li>-->
      } ?>
 
-    <li class="arrow"><a href="<?= base_path(); ?>Akteure/<?= $maxPages ?>">&raquo;</a></li>
+    <li class="arrow"><a href="<?= base_path(); ?>Events/<?= $maxPages ?>">&raquo;</a></li>
  </ul>
 </div>
-
--->
