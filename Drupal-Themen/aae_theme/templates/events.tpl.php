@@ -11,8 +11,8 @@
 </div>
 <div class="divider"></div>
 
-<h5>Filter</h5>
-<form action='<?= $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
+<h4 class="large-3 columns">Filter</h4>
+<form class="large-4 large-offset-1 columns" action='<?= $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
 
   <select name="tag" size="<?= $counttags; ?>">
   <option value="0" selected="selected" >Tags</option>
@@ -20,7 +20,7 @@
     <option value="<?= $row->KID; ?>"><?= $row->kategorie; ?></option>
   <?php endforeach; ?>
   </select>
-  <input type="submit" class="button" id="eventSubmit" name="submit" value="Nach Tags filtern">
+  <input type="submit" class="small button right" id="eventSubmit" name="submit" value="Nach Tags filtern">
 
 </form>
 
