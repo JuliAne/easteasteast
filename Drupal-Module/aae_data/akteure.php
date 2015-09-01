@@ -31,7 +31,7 @@ $maxPages = ceil($itemsCount / $maxAkteure);
 
 if ($currentPageNr > $maxPages) {
   // Diese URL gibt es nicht, daher zurück...
-  header("Location: ?q=Akteure/".$maxPages);
+  header("Location: Akteure/".$maxPages);
 } elseif ($currentPageNr > 1) {
  $start = $maxAkteure * ($currentPageNr - 1);
  $ende = $maxAkteure * $currentPageNr;

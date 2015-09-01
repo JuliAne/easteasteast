@@ -3,6 +3,9 @@
  * events.php listet alle Events auf.
  *
  * Ruth, 2015-07-10
+ * Felix, 2015-09-01
+ * TODO: Einrichtung des Paginators, s. akteure.php
+ * TODO: Vereinheitlichung des Filter abrufens
  */
 
 //-----------------------------------
@@ -16,7 +19,7 @@ $tbl_tags = "aae_data_kategorie";
 require_once $modulePath . '/database/db_connect.php';
 $db = new DB_CONNECT();
 
-$pathThisFile = $_SERVER['REQUEST_URI']; 
+$pathThisFile = $_SERVER['REQUEST_URI'];
 
 $resulttags = db_select($tbl_tags, 't')
   ->fields('t', array(
@@ -38,17 +41,19 @@ if (isset($_POST['submit'])) {
   }else{
 	//Auswahl aller Events in alphabetischer Reihenfolge
     $resultevents = db_select($tbl_events, 'a')
-    ->fields('a', array(	
+    ->fields('a', array(
       'name',
       'EID',
 	  'kurzbeschreibung',
 	  'start',
 	))
-    ->orderBy('name', 'ASC')	
+    ->orderBy('name', 'ASC')
     ->execute();
   }
-}else{
-  //Auswahl aller Events in alphabetischer Reihenfolge
+} else {
+
+  // Auswahl aller Events in alphabetischer Reihenfolge
+
   $resultevents = db_select($tbl_events, 'a')
     ->fields('a', array(
       'name',
@@ -60,32 +65,10 @@ if (isset($_POST['submit'])) {
     ->execute();
 }
 
-//Ausgabe
-$profileHTML = <<<EOF
-EOF;
+// Ausgabe der Events
 
-//Abfrage, ob Besucher der Seite eingeloggt ist:
-if(user_is_logged_in()){//Link für Generierung eines neuen Akteurs anzeigen
-  $profileHTML .= '<a href="?q=Eventformular">Neue Veranstaltung hinzufügen!</a><br><br>';
-}
+ob_start(); // Aktiviert "Render"-modus
 
-$profileHTML .= <<<EOF
-<form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
-EOF;
-//Auswahl eines Tags
-$profileHTML .= '<select name="tag" size="'.$counttags.'" >';
-$profileHTML .= '<option value="0" selected="selected" >keine Auswahl</option>';
-foreach ($resulttags as $row) {
-  $profileHTML .= '<option value="'.$row->KID.'">'.$row->kategorie.'</option>';
-}
-$profileHTML .= '</select>';
-$profileHTML .= '<input type="submit" class="event" id="eventSubmit" name="submit" value="OK">';
+include_once path_to_theme().'/templates/events.tpl.php';
 
-$profileHTML .= <<<EOF
-</form>
-EOF;
-
-//Ausgabe der Events
-foreach($resultevents as $row){
-  $profileHTML .= '<p>'.$row->start.' <a href="?q=Eventprofil/'.$row->EID.'">'.$row->name.'</a>: '.$row->kurzbeschreibung.'</p><br>';
-}
+$profileHTML = ob_get_clean(); // Übergabe des gerenderten "events.tpl"
