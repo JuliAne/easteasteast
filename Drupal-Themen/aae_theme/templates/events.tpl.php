@@ -11,8 +11,8 @@
 </div>
 <div class="divider"></div>
 
-<h4 class="large-3 columns">Filter</h4>
-<form class="large-4 large-offset-1 columns" action='<?= $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
+<h4 class="">Filter</h4>
+<form class="" action='<?= $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
 
   <select name="tag" size="<?= $counttags; ?>">
   <option value="0" selected="selected" >Tags</option>
