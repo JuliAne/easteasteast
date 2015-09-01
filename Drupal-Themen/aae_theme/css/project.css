@@ -16,6 +16,53 @@
  -ms-filter: blur(8px);
 }
 
+#akteurActions {
+ height: 50px;
+ border-bottom: 1px solid #fff;
+ margin-top: -200px;
+ position: relative;
+ z-index: 50;
+ margin-bottom: 190px;
+ padding-top: 16px;
+ background: rgba(27, 27, 27, 0.61);
+}
+
+#akteurActions img {
+ width: 19px;
+ padding-right: 6px;
+}
+
+#akteurActions a {
+ border-right: 1px solid #fff;
+ padding: 13px 18px;
+ color: #fff;
+}
+
+#akteurActions a:hover {
+ text-decoration: underline;
+}
+
+#akteurActions #share {
+ padding-top: 10px;
+ margin-top: -10px;
+}
+
+#akteurActions #share:before {
+ margin-top: -22px;
+ margin-left: 120px;
+}
+
+#akteurActions #share a {
+ padding: 16px 32px;
+ float: left;
+ height: 44px;
+}
+
+#akteurActions #share a img {
+ width: 19px;
+ padding: 0;
+}
+
 #project {
  position: relative;
  margin-top: -70px;

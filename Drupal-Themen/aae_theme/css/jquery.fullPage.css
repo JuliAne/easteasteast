@@ -210,13 +210,18 @@ html.fp-enabled,
   padding: 0 5%;
 }
 
+#slideSection h1 {
+  font-weight: 400;
+  font-size: 3.5em;
+}   
+
 #slideSection .slide h1, #slideSection .slide p {
   text-shadow: 0 0 4px rgb(46, 46, 46);
 }
 
 #slideSection .slide p {
   margin-bottom: 45px;
-  font-size: 0.95em;
+  font-size: 1.2em;
 }
 
 #slideSection .slide.whiteText h1, #slideSection .slide.whiteText p {
@@ -224,14 +229,15 @@ html.fp-enabled,
 }
 
 #slideSection button.transparent {
- background: rgba(255, 255, 255, 0.3);
+ background: rgba(255, 255, 255, 0.4);
  border: 2px solid #fff;
  color: #2f2f2f;
  transition: all 0.25s;
  text-transform: uppercase;
- font-size: 0.85em;
+ font-size: 1em;
+ font-weight: 700;
 }
 #slideSection button.transparent:hover {
- background: rgba(255, 255, 255, 0.6);
+ background: rgba(255, 255, 255, 0.7);
  color: #000;
 }

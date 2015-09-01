@@ -48,25 +48,24 @@
   <div class="row">
 
   <?php
-  // Lade "letzte Akteure"-Block
+  // Lade "Meine Akteure"-Block
 
   require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
 
   foreach (block_aae_print_letzte_akteure() as $akteur) : ?>
 
    <div class="large-3 large-offset-1 columns pcard">
-    <header style="background:url(<?= $akteur->bild; ?>);">
-      <h3><a href="#"><?= $akteur->name; ?></a></h3>
+    <header<?php if($akteur->bild != '') echo ' style="background:url('.$akteur->bild.');"'; ?>>
+      <h3><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>"><?= $akteur->name; ?></a></h3>
       <!--<img title="Barrierefrei" class="barrierefrei" src="img/wheelchair.svg" />-->
      </header>
      <section>
-      <p><!--<strong>Reudnitz</strong>--><?= $akteur->beschreibung; ?></p>
-      <p><a href="?q=Akteurprofil/<?= $akteur->AID; ?>">Zum Projekt...</a></p>
+      <p><!--<strong>Reudnitz</strong>--><?= substr($akteur->beschreibung, 0, 120); ?>...</p>
      </section>
      <footer>
       <a href="#" title="Hier erscheint bei Klick eine Minimap inkl. Strassenangabe"><img src="<?= base_path().path_to_theme(); ?>/img/location.svg" /></a>
       <a href="#" title="Weiterleitung zu Terminen dieses Projektes"><img class="gimmeborder" src="<?= base_path().path_to_theme(); ?>/img/calendar.svg" /></a>
-      <a href="<?= base_path(); ?>q=Akteurprofil/<?= $akteur->AID; ?>"><button class="button blue">&gt;</button></a>
+      <a href="<?= base_path(); ?>Akteurprofil/<?= $akteur->AID; ?>" title="Profil besuchen"><button class="button blue">&gt;</button></a>
      </footer>
     </div>
 

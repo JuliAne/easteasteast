@@ -28,23 +28,23 @@ $sliders = array(
  $slider1 = array(
    'image' => 'slider_bg.jpg',
    'headline' => 'Den Leipziger Osten neu entdecken',
-   'description' => 'Deine Plattform für den ganzen Stadtteil: Lerne kreative Projekte aus Deiner Umgebung kennen & erfahre, wann und wo sich etwas in Deinem Bezirk bewegt!<br />
-<br /><strong>Kostenlos. Offen. Lokal.',
+   'description' => 'Deine Plattform für den ganzen Stadtteil: Lerne Akteure aus Deiner Umgebung kennen & erfahre, wann und wo sich etwas in Deinem Bezirk bewegt.<br />
+<br /><strong>Kostenlos. Offen. Lokal.</strong>',
    'whiteText' => true,
    'blueButton' => array(
      'text' => 'Mehr erfahren...',
-     'link' => '#'
+     'link' => base_path().'leipziger-osten'
     )
  ),
 
  $slider2 = array(
-   'image' => 'slide1.jpg',
-   'headline' => '<strong>32</strong> Projekte. <strong>50</strong> Events. Eine Plattform.',
+   'image' => 'slider_2_min.jpg',
+   'headline' => '<strong>32</strong> Akteure. <strong>50</strong> Events. Eine Plattform.',
    'description' => 'Jetzt anmelden, Projekt einstellen oder einfach nur mitmischen.',
    'whiteText' => true,
    'blueButton' => array(
-     'text' => 'Registrieren',
-     'link' => base_path().'?q=user/register'
+     'text' => '<span style="color:white;">Jetzt registrieren!</span>',
+     'link' => base_path().'user/register'
    )
  )
 

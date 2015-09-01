@@ -12,9 +12,9 @@ $(document).ready(function(){
 	 anchors: ['home', 'projekte', 'blog', 'ueberuns'],
 	 sectionsColor: ['#FFF', '#F7F7F7', '#F7F7F7', '#FFF'],
 	 scrollBar: true,
-   navigation: true,
+         navigation: true,
 	 navigationPosition: 'right',
-	 navigationTooltips: ['Home', 'Projekte & Veranstaltungen', 'Journal', 'Footer'],
+	 navigationTooltips: ['Start', 'Projekte & Veranstaltungen', 'Journal', 'Footer'],
 
    afterLoad: function(anchor, index){
       if (index == 1) {

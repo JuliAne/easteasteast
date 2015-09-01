@@ -1,6 +1,30 @@
 <header id="header"
 <?php if ($aResult['row1']->bild != '') : ?> style="background:url(<?= $row->bild; ?>);" <?php endif; ?>></header>
 
+<div id="akteurActions">
+ <div class="row">
+ <?php if ($hat_recht): ?>
+  <div class="large-3 large-offset-1 columns"><a href="<?= base_path; ?>akteuredit/<?= $akteur_id; ?>" title="Akteur bearbeiten"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" />Bearbeiten</a></div>
+  <?php endif; ?>
+  <div class="large-3 columns right" style="text-align: right;">
+   <a href="https://leipziger-ecken.de/contact" title="Das Profil wurde unbefugt erstellt? Melden Sie sich hier."><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" />Melden</a>
+   <a href="#share" class="popup-link" title="Akteursseite in den sozialen Netzwerken posten"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" />Teilen</a>
+   <div id="share" class="popup large-3 columns">
+     
+     <a target="_blank" href="https://twitter.com/intent/tweet?text=<?php global $base_url;
+ echo $base_url.'/'.current_path(); ?>" title="Auf Twitter teilen" class="twitter button"><img alt="icons/twitter.png" src="http://fadeco.info/system/cms/themes/defaults/img/icons/twitter.png"><span></span></a>
+     
+     <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= $base_url.'/'.current_path(); ?>" title="Auf Facebook teilen" class="fb button"><img alt="icons/fb.png" src="http://fadeco.info/system/cms/themes/defaults/img/icons/fb.png"><span></span></a>
+     
+     <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="Share on Google Plus" class="g_plus button"><img alt="icons/g_plus.png" src="http://fadeco.info/system/cms/themes/defaults/img/icons/g_plus.png"><span></span></a>
+     
+     <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $aResult['row1']->name; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="Teile auf Diaspora / Friendica"><img alt="" src="https://sharetodiaspora.github.io/favicon.png"></a>
+    
+   </div>
+  </div>
+ </div>
+</div>
+
 			<div id="project" class="row">
 
 			 <aside class="left large-4 columns">
@@ -36,9 +60,6 @@
 			  <div id="project-contact" class="pcard">
 			   <a href="<?= base_path().'?q=akteurkontakt/'.$akteur_id; ?>" onclick="javscript:alert('TODO: Nun wuerde sich ein Modal-Window oeffnen mit Kontaktformular und Ansprechpartner'); return false;"><button class="button">Kontaktieren</button></a>
 
-				 <?php if ($hat_recht): ?>
-				 <a href="<?= base_path().'?q=akteuredit/'.$akteur_id; ?>"><button class="button secondary">Bearbeiten</button></a>
-				 <?php endif; ?>
 
 			  </div>
 			 </aside>
@@ -67,16 +88,10 @@
 
 			  <ul id="next-events">
 				 <?php foreach($aResult['events'] as $event) : ?>
-			   <li><span><a href="<?= base_path(); ?>?q=Eventprofil/<?= $event->EID; ?>"><?= $event->name; ?> </a></span><br /><?= $event->start; ?> bis <?= $event->ende; ?></li>
+			   <li><span><a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>"><?= $event->name; ?> </a></span><br /><?= $event->start; ?> bis <?= $event->ende; ?></li>
 		     <?php endforeach; ?>
 		  	</ul>
 			  <?php endif; ?>
-			<p>Dieses Profil wurde unbefugt erstellt? Melde dies <a href="Link zum Kontaktformular">hier</a>!</p>
-			
-			<a href="javascript:;" onclick="window.open('http://sharetodiaspora.github.io/?url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title),'das','location=no,links=no,scrollbars=no,toolbar=no,width=620,height=550'); return false;" rel="nofollow" target="_blank"
-				style="padding: 3px 4px 2px; background: #fafafa; border: 1px solid #ddd; font-size: 13px; color: #222; text-decoration: none;">
-					<img src="http://sharetodiaspora.github.io/favicon.png" style="border: 0px solid;display: inline-block;vertical-align: top;" /> diaspora*
-				</a>
 			 </section>
 
 			</div>

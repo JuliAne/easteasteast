@@ -19,24 +19,20 @@ Erledigt:
 - aae_data.modult: Akteurloeschen Menuitem hinzugefügt (Ruth, 2015-07-24)
 - Schemaanpassung an neue Bedürfnisse bzgl. Events (Ruth, 2015-07-26)
 - Event-Dateien Änderung bzgl. neuer Bedürfnisse (Ruth, 2015-07-26)
+- Hinweis, falls eine unbefugte Person den Akteur angelegt hat, man sich an Matthias wenden soll (Felix)
+- Einbinden von "Teilen"-Feldern für soziale Netzwerke (FB, G+, Friendica), entsprechend im 
+  HTML-Header Description-Felder anlegen, welche den anzuzeigenden Text definieren. (Felix)
 
 ------------------------------
 
 Offen:
 
 akteurprofil.php:
-- Löschen-Button (soll auf Akteurloeschen -neu hinzugefügt- verweisen) (Felix)
 - Event_hinzufügen-Button (Felix)
 - Beste Größe für Bild-Upload's ermitteln. Diesen Wert in akteurformular & -edit dem
   User mitteilen, Bilder nach Upload komprimieren / ggf. skalieren
+  -> s. https://api.drupal.org/api/drupal/modules!image!image.module/7
 - Anpassung an neues Schema
-- Hinweis, falls eine unbefugte Person den Akteur angelegt hat, man sich an Matthias wenden soll
-- Einbinden von "Teilen"-Feldern für soziale Netzwerke (FB, G+, Friendica), entsprechend im 
-  HTML-Header Description-Felder anlegen, welche den anzuzeigenden Text definieren.
-
-akteure.php:
-- 'Beschreibung' abschneiden bei 60 Zeichen und (…) anfügen
-- 'Akteur hinzufügen'-Button grau machen, falls nicht eingeloggt
 
 eventprofil.php:
 - Funktion entwickeln zum umwandeln von Unix-Zeitformat in $date & $time

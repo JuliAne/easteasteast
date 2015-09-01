@@ -86,7 +86,7 @@ input[type=submit].isSubmitButton{
 
 #mainnav {
  position: fixed;
- z-index: 99999;
+ z-index: 51;
  background-color: #fff;
  height: 60px;
  width: 100%;
@@ -120,6 +120,21 @@ input[type=submit].isSubmitButton{
 
 #mainnav ul {
  list-style: none !important; /* Overwrites Drupal-CSS */
+}
+
+#mainnav #logo {
+ width: 100px;
+ margin-top: -10px;
+ transition: all 0.25s;
+ padding-right: 15px;
+ position: relative;
+ z-index: 999;
+}
+
+#mainnav #logo:hover {
+ width: 110px;
+ margin-top: 0;
+ padding-right: 0;
 }
 
 #mainnav ul li {
@@ -239,9 +254,9 @@ input[type=submit].isSubmitButton{
 }
 
 .section h1 {
- font-size: 2.25em;
+ font-size: 1.9em;
  font-weight: 100;
- padding: 28px 0;
+ padding: 24px 0;
 }
 
 .section h1 strong {
