@@ -1,5 +1,15 @@
 <h3><?= $resultEvent->name; ?></h3>
 
+<?php if($row->kurzbeschreibung != "") : ?>
+  <h4>Beschreibung</h4>
+  <p><?= $row->kurzbeschreibung; ?></p>
+<?php endif; ?>
+
+<?php if($row->bild != "") : ?>
+  <img src="<?= $row->bild; ?>">
+<?php endif; ?>
+
+
 	<?php //Veranstalter
 	if($resultveranstalter->rowCount() != 0){
 
@@ -68,7 +78,7 @@
 		}
 	}
 	}
-
+ 
 	//Datum
 	$profileHTML .= '<h4>Zeit:</h4>';
 	if($row->start != "") {
@@ -83,13 +93,6 @@
 	  }
 	}
 	if($row->url != "") { $profileHTML .= '<br><a href="'.$row->url.'">'.$row->url.'</a><br>'; }
-	if($row->kurzbeschreibung != "") {
-      $profileHTML .= '<h4>Beschreibung:</h4>';
-	  $profileHTML .= $row->kurzbeschreibung.'<br>';
-	}
-	//Bild
-	if($row->bild != "") {
-	  $profileHTML .= '<br><img src="'.$row->bild.'" >'; }
 
 	//Sparten:
     if(count($sparten) != 0){

@@ -79,7 +79,7 @@ $resultEvent = db_select($tbl_event, 'a')
   ->fetchAll();
 
  foreach($resultEvent as $event) {
-  $resultEvent = $event; // Kleiner Fix
+  $resultEvent = $event; // Kleiner Fix, um EIN Objekt zu generieren
  }
 
 $resultveranstalter = db_select($tbl_akteur_events, 'e')
@@ -108,7 +108,7 @@ if($countsparten != 0){
 	  foreach ($resultspartenname as $row1) {
 	  	$sparten[$i] = $row1->kategorie;
 	  }
-	  $i = $i+1;
+	  $i++;
 	}
 }
 
