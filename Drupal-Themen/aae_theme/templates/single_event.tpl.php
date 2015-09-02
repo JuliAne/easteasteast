@@ -93,16 +93,16 @@ if(!empty($resultVeranstalter)) {
 	}
 	}
 
-  if(count($sparten) != 0) : ?>
+  if(count($sparten) != 0) { ?>
 	  <p><strong>Tags:</strong>
 	<?php  $laenge = count($sparten);
 	  $j = 0;
 	  while($j < $laenge){
 	    echo $sparten[$j];
-	    $j++
+	    $j++;
 	  }
     echo '</p>';
-	endif; ?>
+	} ?>
 
   <?= $profileHTML; ?>
 
