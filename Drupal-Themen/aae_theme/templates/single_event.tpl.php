@@ -52,25 +52,23 @@
    <?php if(!empty($resultAdresse)) : ?>
    <p>Ort:
 
-   <?php if($row1->strasse != "" && $row1->nr != "") : ?>
-       <?= $row1->strasse.' '.$row1->nr; ?>
+   <?php if($resultAdresse->strasse != "" && $resultAdresse->nr != "") : ?>
+       <?= $resultAdresse->strasse.' '.$resultAdresse->nr; ?>
    <?php endif; ?>
 
+  <?php if($resultAdresse->plz != "") : ?>
+      <?= $resultAdresse->plz; ?>
+  <?php endif; ?>
 
-     foreach ($resultBezirk as $row2) {
-       if($row1->plz != ""){
-         $profileHTML .= $row1->plz.' ';
-       }
-       if($row2->bezirksname != ""){
-         $profileHTML .= $row2->bezirksname;
-       }
-       $profileHTML .= '<br>';
-     }
-     if($row1->gps != ""){
-       $profileHTML .= 'GPS: '.$row1->gps.'<br>';
-     }
-   }
-   }
+  <?php  if($resultBezirk->bezirksname != "") : ?>
+      <?= $resultBezirk->bezirksname; ?>
+  <?php endif; ?>
+
+  <?php if($resultAdresse->gps != "") : ?>
+       GPS (MAP HIER): <?= $resultAdresse->gps; ?>
+  <?php endif; ?>
+
+  </p><?php endif; ?>
 
   <?php if($resultEvent->url != "") : ?>
     <p>Weitere Informationen: <a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>

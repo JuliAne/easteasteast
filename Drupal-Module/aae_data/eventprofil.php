@@ -165,16 +165,16 @@ $resultAdresse = db_select($tbl_adresse, 'b')
    $resultAdresse = $adresse; // Kleiner Fix, um EIN Objekt zu generieren
   }
 
-  print_r($resultAdresse);
+//Bezirksnamen
 
-  //Bezirksnamen holen:
+ $resultBezirk = db_select($tbl_bezirke, 'z')
+ ->fields('z', array( 'bezirksname' ))
+ ->condition('BID', $resultAdresse->bezirk, '=')
+ ->execute();
 
-  $resultBezirk = db_select($tbl_bezirke, 'z')
-    ->fields('z', array(
-      'bezirksname',
-    ))
-    ->condition('BID', $resultAdresse->bezirk, '=')
-    ->execute();
+ foreach($resultBezirk as $bezirk) {
+  $resultBezirk = $bezirk; // Kleiner Fix, um EIN Objekt zu generieren
+ }
 
 // Ausgabe des Events
 
