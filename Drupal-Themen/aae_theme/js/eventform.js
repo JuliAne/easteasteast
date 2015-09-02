@@ -13,7 +13,7 @@ $(document).ready(function(){
           $('#eventNrInput')
           $('#eventPLZInput') */
 
-          alert($('#eventNrInput').value());
+          alert($('#eventNrInput').val());
 
           });
   });
