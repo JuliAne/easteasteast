@@ -109,9 +109,9 @@ function aae_data_menu() {
   );
 
   //Ajaxitem "Eventformular/ajaxGetTags"
-  $items['Eventformular/ajaxGetTags'] = array(
+  $items['ajax/gettags'] = array(
     'title' => '',
-    'page callback' => 'eventformular_ajaxGetTags',
+    'page callback' => 'ajaxGetTags',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
@@ -173,7 +173,7 @@ function akteuredit_page($aid=0) {
  * Ajax-code which returns all Tags in JSON-format
  */
 
-function eventformular_ajaxGetTags() {
+function ajaxGetTags() {
 
   require_once $modulePath . '/database/db_connect.php';
   $db = new DB_CONNECT();
