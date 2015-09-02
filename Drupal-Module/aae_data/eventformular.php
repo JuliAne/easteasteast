@@ -7,6 +7,7 @@
  * Anschließend werden die Daten in die DB-Tabellen eingetragen.
  *
  * Ruth, 2015-07-20
+ * Felix, 2015-09-02
  */
 
 //Eingeloggter User
@@ -104,9 +105,12 @@ $ph_sparten = "Tags kommasepariert eingeben!";
 
 //-----------------------------------
 
-//das wird ausgeführt, wenn auf "Speichern" gedrückt wird
+// Wird ausgeführt, wenn auf "Speichern" gedrückt wird
+// TODO: Werte Filtern - entweder durch Drupal-interne Funktionen zur
+// Absicherung von POST-Data oder Einsatz von PHP-Bibliothek "phpsec"
+
 if (isset($_POST['submit'])) {
-	
+
   //Wertezuweisung
   $name = $_POST['name'];
   $veranstalter = $_POST['veranstalter'];
@@ -132,10 +136,10 @@ if (isset($_POST['submit'])) {
   if($sparten != ""){
 	$explodedsparten = explode(",", $sparten);
   }
-	
+
 //-------------------------------------
   //Check-Klauseln
-	
+
   //Check, ob ein Name eingegeben wurde:
   if(strlen($name) == 0){
     //Feld nicht ausgefüllt
@@ -145,7 +149,7 @@ if (isset($_POST['submit'])) {
   //Ckeck, ob Datum angegeben wurde
   if(strlen($start) == 0){
     //Feld nicht ausgefüllt
-    $fehler_start = "Bitte eine Datum angeben!";
+    $fehler_start = "Bitte ein Datum angeben!";
 	$freigabe = false;
   }
   //Check, ob Bezirk ausgewählt wurde
@@ -155,30 +159,31 @@ if (isset($_POST['submit'])) {
   }
 
   //überflüssige Leerzeichen am Anfang entfernen
-  $name=trim($name);  
+  $name=trim($name);
   $veranstalter = trim($veranstalter);
   $start = trim($start);
   $zeit_von = trim($zeit_von);
   $zeit_bis = trim($zeit_bis);
   $ende = trim($ende);
-  $url = trim($url); 
-  $bild = trim($bild); 
-  $kurzbeschreibung = trim($kurzbeschreibung); 
+  $url = trim($url);
+  $bild = trim($bild);
+  $kurzbeschreibung = trim($kurzbeschreibung);
   $strasse = trim($strasse);
   $nr = trim($nr);
   $adresszusatz = trim($adresszusatz);
   $plz = trim($plz);
   $ort = trim($ort);
   $gps = trim($gps);
-  //Tags:
+
+  // Tags
   if($sparten != ""){
 	$countsparten = count($explodedsparten);
 	$i = 0;
-	while($i < $countsparten){
+	while($i < $countsparten) {
 	  $explodedsparten[$i] = trim($explodedsparten[$i]);
 	  $explodedsparten[$i] = strip_tags($explodedsparten[$i]);
-	  $i = $i+1;	
-	}
+	  $i++;
+	 }
   }
 
   //und alle Tags entfernen (Hacker)
@@ -188,9 +193,9 @@ if (isset($_POST['submit'])) {
   $zeit_von = strip_tags($zeit_von);
   $zeit_bis = strip_tags($zeit_bis);
   $ende = strip_tags($ende);
-  $url = strip_tags($url);  
-  $bild = strip_tags($bild); 
-  $kurzbeschreibung = strip_tags($kurzbeschreibung); 
+  $url = strip_tags($url);
+  $bild = strip_tags($bild);
+  $kurzbeschreibung = strip_tags($kurzbeschreibung);
   $strasse = strip_tags($strasse);
   $nr = strip_tags($nr);
   $adresszusatz = strip_tags($adresszusatz);
@@ -200,15 +205,15 @@ if (isset($_POST['submit'])) {
 
   //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
   if (strlen($name) > 100){
-	$fehler_name = "Bitte geben Sie einen kuerzeren Namen an oder verwenden Sie ein Kuerzel.";
+	$fehler_name = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
 	$freigabe = false;
   }
   if (strlen($url) > 200){
-	$fehler_url = "Bitte geben Sie eine kuerzere URL an.";
+	$fehler_url = "Bitte geben Sie eine kürzere URL an.";
 	$freigabe = false;
   }
   if (strlen($kurzbeschreibung) > 500){
-	$fehler_kurzbeschreibung = "Bitte geben Sie eine kuerzere Beschreibung an.";
+	$fehler_kurzbeschreibung = "Bitte geben Sie eine kürzere Beschreibung an.";
 	$freigabe = false;
   }
   if (strlen($strasse) > 100){
@@ -242,23 +247,23 @@ if (isset($_POST['submit'])) {
 
 	if($bildname != ""){
 	  if (!move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname)) {
-      echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />'.$bildname;
+      echo 'Error: Konnte Bild nicht hochladen. Bitte <a href="'.base_path.'contact">informieren Sie den Administrator</a>. Bildname: <br />'.$bildname;
       exit();
     }
 	  $bild = base_path().$short_bildpfad.$bildname;
 	}
 
   }
-  
+
 //---------------------------------
 
   //Wenn $goodtogo true, ab in die DB mit den Daten
-  if($freigabe == true){
+  if ($freigabe == true) {
 	require_once $modulePath . '/database/db_connect.php';
 	//include $modulePath . '/templates/utils/rest_helper.php'; Ist aus dem Künstlermodul übernommen
 	$db = new DB_CONNECT();
 	//Das Ergebnis von db_insert()->...->execute(); ist die ID, von diesem Eintrag
-	
+
 	//Abfrage, ob Adresse bereits in Adresstabelle
 	//Addressdaten aus DB holen:
 	$resultadresse = db_select($tbl_adresse, 'a')
@@ -272,7 +277,7 @@ if (isset($_POST['submit'])) {
 	  ->condition('plz', $plz, '=')
 	  ->condition('bezirk', $ort, '=')
 	  ->execute();
-	
+
 	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
     $i = $resultadresse->rowCount();
 	if($i == 0){//Adresse nicht vorhanden
@@ -290,7 +295,7 @@ if (isset($_POST['submit'])) {
 	  foreach ($resultadresse as $row) {
 	    //Abfrage, ob GPS-Angaben gemacht wurden
 	    if(strlen($gps) != 0 && strlen($row->gps) == 0 ){//ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
-	      //Update der Adresse  
+	      //Update der Adresse
 	      $adresse_updated = db_update($tbl_adresse)
 	 	    ->fields(array(
 			  'gps' => $gps,
@@ -301,7 +306,7 @@ if (isset($_POST['submit'])) {
 	    $adresse = $row->ADID;//Adress-ID merken
 	  }
 	}
-	
+
 	//Zeitformatierung
 	if(strlen($ende) == 0){
 	  $ende = $start.' '.$zeit_bis;
@@ -365,116 +370,24 @@ if (isset($_POST['submit'])) {
 		    'hat_KID' => $sparte_id,
 		  ))
 		  ->execute();
-	    $i = $i+1;	
+	    $i = $i+1;
 	  }
 	}
-	
-	header("Location: ?q=Events"); //Hier muss hin, welche Seite aufgerufen werden soll,
+
+	header("Location: Event/".$event_id); //Hier muss hin, welche Seite aufgerufen werden soll,
 	  //nach dem die Daten erfolgreich gespeichert wurden.
 	}
-	
-}else{
+
+} else {
  //Formular wird zum ersten Mal aufgerufen: nichts tun
 }
 
-$pathThisFile = $_SERVER['REQUEST_URI']; 
+$pathThisFile = $_SERVER['REQUEST_URI'];
 
-//Darstellung
-$profileHTML = <<<EOF
-<form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
+// Ausgabe des Eventformulars
 
-  <label>Name (Pflichtfeld):</label>
-  <input type="text" class="event" id="eventNameInput" name="name" value="$name" placeholder="$ph_name" required>$fehler_name
-EOF;
+ob_start(); // Aktiviert "Render"-modus
 
-if(array_intersect(array('administrator'), $user->roles)){
-//alle Akteure abfragen, die in DB: nur Admin
-  $resultakteure = db_select($tbl_akteur, 'a')
-    ->fields('a', array(
-      'AID',
-	  'name',
-    ))
-    ->execute();
-}else{
-  //Akteure abfragen, die in DB und für welche User Schreibrechte hat
-  $res = db_select($tbl_akteur, 'a');
-  $res->join($tbl_hat_user, 'u', 'a.AID = u.hat_AID AND u.hat_UID = :uid', array(':uid' => $user->uid));
-  $res->fields('a', array('AID','name'));
-  $resultakteure=$res->execute();
-}
+include_once path_to_theme().'/templates/eventformular.tpl.php';
 
-$countakteure = $resultakteure->rowCount();
-if($countakteure != 0){
-  $profileHTML .= '<label>Veranstalter:</label>';
-  //Dropdownliste zur Akteurauswahl
-  $profileHTML .= '<select name="veranstalter" size="'.$countakteure.'" >';
-  //$profileHTML .= '<select name="veranstalter" size="4" >';
-  foreach ($resultakteure as $row) {
-    $profileHTML .= '<option value="'.$row->AID.'">'.$row->name.'</option>';
-  }
-  $profileHTML .= '</select>';
-}
-
-$profileHTML .= <<<EOF
-  <label>Datum (Pflichtfeld):</label>
-  <input type="text" class="event" id="eventStartdatumInput" name="start" value="$start" placeholder="$ph_start">$fehler_start
-  <label>von (Uhrzeit; ganztägig: keine Uhrzeit angeben):</label>
-  <input type="text" class="event" id="eventZeitvonInput" name="zeit_von" value="$zeit_von" placeholder="$ph_zeit_von">$zeit_von
-  <label>bis (Uhrzeit; ganztägig: keine Uhrzeit angeben):</label>
-  <input type="text" class="event" id="eventZeitbisInput" name="zeit_bis" value="$zeit_bis" placeholder="$ph_zeit_bis">$zeit_bis
-  <label>Ende (Datum):</label>
-  <input type="text" class="event" id="eventEnddatumInput" name="ende" value="$ende" placeholder="$ph_ende">$fehler_ende
-
-  <label>Addresse:</label>
-  <label>Straße:</label>
-  <input type="text" class="event" id="eventStrasseInput" name="strasse" value="$strasse" placeholder="$ph_strasse">$fehler_strasse
-  <label>Nr.:</label>
-  <input type="text" class="event" id="eventNrInput" name="nr" value="$nr" placeholder="$ph_nr">$fehler_nr
-  <label>Adresszusatz:</label>
-  <input type="text" class="event" id="eventAdresszusatzInput" name="adresszusatz" value="$adresszusatz" placeholder="$ph_adresszusatz">$fehler_adresszusatz
-  <label>PLZ:</label>
-  <input type="text" class="event" id="eventPLZInput" name="plz" value="$plz" placeholder="$ph_plz">$fehler_plz
-  <label>Bezirk:</label>$fehler_ort
-  <!--<input type="text" class="event" id="eventOrtInput" name="ort" value="$ort" placeholder="$ph_ort">$fehler_ort-->
-EOF;
-
-//Bezirke abfragen, die in DB
-$resultbezirke = db_select($tbl_bezirke, 'b')
-  ->fields('b', array(
-    'BID',
-	'bezirksname',
-  ))
-  ->execute();
-$countbezirke = $resultbezirke->rowCount();
-//Dropdownliste zur Bezirkauswahl
-$profileHTML .= '<select name="ort" size="'.$countbezirke.'" >';
-$profileHTML .= '<option value="" selected="selected">Bezirk auswählen</option>';
-foreach ($resultbezirke as $row) {
-  $profileHTML .= '<option value="'.$row->BID.'">'.$row->bezirksname.'</option>';
-}
-$profileHTML .= '</select>';
-
-$profileHTML .= <<<EOF
-  <label>Geodaten:</label>
-  <input type="text" class="event" id="eventGPSInput" name="gps" value="$gps" placeholder="$ph_gps">$fehler_gps
-	
-
-  <label>Website:</label>
-  <input type="text" class="event" id="eventURLInput" name="url" value="$url" placeholder="$ph_url">$fehler_url
-
-
-  <label>Beschreibung:</label>
-  <textarea name="kurzbeschreibung" class="event" cols="45" rows="3" placeholder="$ph_kurzbeschreibung">$kurzbeschreibung</textarea>$fehler_kurzbeschreibung
-  <label>Bild:</label>
-  <input type="file" class="event" id="eventBildInput" name="bild" /><br>
-
-  <label>Tags:</label>
-  <input type="text" class="event" id="eventSpartenInput" name="sparten" value="$sparten" placeholder="$ph_sparten">$fehler_sparten
-  <p>Mit der Freigabe ihrer Daten auf leipzigerecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.<br>
-Wir veröffentlichen alle Inhalte unter der Free cultural Licence „CC-By 4.0 international“ Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefeldern zu beschreiben.“ Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte.<br>
-Bildmaterial sollte abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
-  <input type="submit" class="event" id="eventSubmit" name="submit" value="Speichern">
-</form>
-<a href="javascript:history.go(-1)">Abbrechen/Zurück</a>
-EOF;
-
+$profileHTML = ob_get_clean(); // Übergabe des gerenderten "eventformular.tpl.php"

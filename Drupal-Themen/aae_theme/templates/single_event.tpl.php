@@ -31,7 +31,7 @@ if(count($sparten) != 0) { ?>
 <?php  $laenge = count($sparten);
   $j = 0;
   while($j < $laenge){
-    echo $sparten[$j];
+    echo $sparten[$j].' ';
     $j++;
   }
   echo '</p>';
@@ -71,7 +71,7 @@ if(count($sparten) != 0) { ?>
   </p><?php endif; ?>
 
   <?php if($resultEvent->url != "") : ?>
-    <br /><p>Weitere Informationen: <a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
+    <br /><p><strong>Weitere Informationen: </strong><a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
   <?php endif; ?>
 
 <?php if($okay == 1) : ?>
