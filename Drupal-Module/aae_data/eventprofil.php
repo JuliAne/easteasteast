@@ -140,7 +140,7 @@ if($countSparten != 0){
 
 //Veranstalter
 
-if($resultVeranstalter->rowCount() != 0){
+if(!empty($resultVeranstalter)){
 
   foreach ($resultAkteur as $row2) : ?>
     <h5>Veranstalter</h5>
