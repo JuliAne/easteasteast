@@ -7,27 +7,15 @@
   <p><?= $resultEvent->kurzbeschreibung; ?></p>
 <?php endif; ?>
 
-<?php if($resultEvent->bild != "") : ?>
-  <img src="<?= $resultEvent->bild; ?>">
+<?php if($resultEvent->url != "") : ?>
+  <p>Url: <a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
 <?php endif; ?>
 
-	<?php //Veranstalter
-	if($resultVeranstalter->rowCount() != 0){
+<?php if($resultEvent->bild != "") : ?>
+  <img src="<?= $resultEvent->bild; ?>">
+<?php endif; 
 
-	foreach ($resultVeranstalter as $row1) {
-	  $resultAkteur = db_select($tbl_akteur, 'b')
-	  ->fields('b', array(
-	    'name',
-	  ))
-	  ->condition('AID', $row1->AID, '=')
-	  ->execute();
 
-	  foreach ($resultAkteur as $row2) : ?>
-      <h5>Veranstalter</h5>
-	  	<a href="?q=Akteurprofil/<?= $row1->AID; ?>"><?= $row2->name; ?></a><br>
-    <?php endforeach;
-	}
- }
 
 	//Ersteller aus DB holen
 	$ersteller = db_select("users", 'u')
@@ -83,8 +71,8 @@
 	//Datum
 	$profileHTML .= '<h4>Zeit:</h4>';
 	if($resultEvent->start != "") {
-	  $explodedstart = explode(' ', $row->start);
-	  $explodedende = explode(' ', $row->ende);
+	  $explodedstart = explode(' ', $resultEvent->start);
+	  $explodedende = explode(' ', $resultEvent->ende);
 	  $profileHTML .= $explodedstart[0];
 	  if($row->ende != $explodedstart[0]){
 		$profileHTML .= '- '.$explodedende[0];
@@ -93,7 +81,7 @@
 	    $profileHTML .= '<br>'.$explodedstart[1].'-'.$explodedende[1].'<br>';
 	  }
 	}
-	if($row->url != "") { $profileHTML .= '<br><a href="'.$row->url.'">'.$row->url.'</a><br>'; }
+
 
 	//Sparten:
     if(count($sparten) != 0){

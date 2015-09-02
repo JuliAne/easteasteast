@@ -81,15 +81,36 @@ $resultEvent = db_select($tbl_event, 'a')
  foreach($resultEvent as $event) {
   $resultEvent = $event; // Kleiner Fix, um EIN Objekt zu generieren
  }
-
-$resultVeranstalter = db_select($tbl_akteur_events, 'e')
-  ->fields('e', array( 'AID' ))
-  ->condition('EID', $event_id, '=')
+// AID = akteurid
+$resultVeranstalter = db_select($tbl_akteur_events, 'e');
+$resultVeranstalter->join($tbl_akteur, 'a', 'a.AID = e.AID');
+$resultVeranstalter
+  ->fields('e')
+  ->condition('e.EID', $eventId, '=')
+  ->condition('a.AID', $akteurID, '=')
   ->execute();
 
-  foreach($resultVeranstalter as $veranstalter) {
-   $resultVeranstalter = $veranstalter; // Kleiner Fix, um EIN Objekt zu generieren
-  }
+print_r($resultVeranstalter);
+
+
+/*  $resultAkteur = db_select($tbl_akteur, 'b')
+  ->fields('b', array(
+    'name',
+  ))
+  ->condition('AID', $row1->AID, '=')
+
+
+$query = db_select('node', 'n');
+$query->join('field_data_body', 'b', 'n.nid = b.entity_id');
+$query
+  ->fields('n', array('nid', 'title'))
+  ->condition('n.type', 'page')
+  ->condition('n.status', '1')
+  ->orderBy('n.created', 'DESC') */
+
+foreach($resultVeranstalter as $veranstalter) {
+ $resultVeranstalter = $veranstalter; // Kleiner Fix, um EIN Objekt zu generieren
+}
 
 //Selektion der Tags
 $resultSparten = db_select($tbl_event_sparte, 's')
@@ -114,6 +135,25 @@ if($countSparten != 0){
 	  }
 	  $i++;
 	}
+}
+
+//Veranstalter
+
+if($resultVeranstalter->rowCount() != 0){
+
+foreach ($resultVeranstalter as $veranstalter) {
+  $resultAkteur = db_select($tbl_akteur, 'b')
+  ->fields('b', array(
+    'name',
+  ))
+  ->condition('AID', $row1->AID, '=')
+  ->execute();
+
+  foreach ($resultAkteur as $row2) : ?>
+    <h5>Veranstalter</h5>
+    <a href="?q=Akteurprofil/<?= $row1->AID; ?>"><?= $row2->name; ?></a><br>
+  <?php endforeach;
+ }
 }
 
 // Ausgabe des Events
