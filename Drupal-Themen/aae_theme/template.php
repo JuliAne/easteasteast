@@ -33,6 +33,13 @@ function aae_preprocess_html(&$variables) {
     drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js');
     drupal_add_js('L.mapbox.accessToken = "pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg";', 'inline');
 
+ } else if (strpos(current_path(), 'Eventformular') !== FALSE) {
+
+   drupal_add_css(path_to_theme().'/css/token-input.css');
+   drupal_add_js(path_to_theme().'/js/jquery.tokeninput.js');
+   drupal_add_js('$(document).ready(function(){$("#eventSpartenInput").tokenInput("'.base_path().'Eventformular/ajaxGetTags/");', 'inline');
+
+});
 
  } else if (strpos(current_path(), 'Akteure') !== FALSE) {
 
