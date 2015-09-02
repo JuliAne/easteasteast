@@ -147,7 +147,6 @@ if($resultVeranstalter->rowCount() != 0){
     <a href="?q=Akteurprofil/<?= $row1->AID; ?>"><?= $row2->name; ?></a><br>
   <?php endforeach;
  }
-}
 
 // Ausgabe des Events
 
