@@ -44,13 +44,13 @@ if(count($sparten) != 0) { ?>
  <h4 style="padding: 10px 0;">Veranstalter</h4>
 
  <?php foreach ($ersteller as $row2) : ?>
-   <p>Erstellt von: <?= $row2->name; ?></p>
+   <p><strong>Erstellt von:</strong> <?= $row2->name; ?></p>
  <?php endforeach; ?>
 
    <p>Akteur: <a href="<?= base_path(); ?>Akteurprofil/<?= $resultVeranstalter->AID; ?>"><?= $resultVeranstalter->name; ?></a></p>
 
    <?php if(!empty($resultAdresse)) : ?>
-   <p>Ort:
+   <p><strong>Ort:</strong>
 
    <?php if($resultAdresse->strasse != "" && $resultAdresse->nr != "") : ?>
        <?= $resultAdresse->strasse.' '.$resultAdresse->nr; ?>
@@ -71,7 +71,7 @@ if(count($sparten) != 0) { ?>
   </p><?php endif; ?>
 
   <?php if($resultEvent->url != "") : ?>
-    <p>Weitere Informationen: <a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
+    <br /><p>Weitere Informationen: <a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
   <?php endif; ?>
 
 <?php if($okay == 1) : ?>
