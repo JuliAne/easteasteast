@@ -109,7 +109,7 @@ function aae_data_menu() {
   );
 
   //Ajaxitem "Eventformular/ajaxGetTags"
-  $items['ajax'] = array(
+  $items['ajax?q='] = array(
     'title' => '',
     'page callback' => 'ajaxGetTags',
     'access arguments' => array('access content'),
