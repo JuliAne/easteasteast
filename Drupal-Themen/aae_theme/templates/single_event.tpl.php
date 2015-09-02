@@ -19,10 +19,10 @@
 } ?>
 </p>
 
-<div class="divider" style="padding: 20px 0 25px;"></div>
+<div class="divider" style="padding: 20px 0;"></div>
 
 <?php if($resultEvent->kurzbeschreibung != "") : ?>
-  <h4>Beschreibung</h4>
+  <h4 style="margin-top: 10px;">Beschreibung</h4>
   <p><?= $resultEvent->kurzbeschreibung; ?></p>
 <?php endif; ?>
 
