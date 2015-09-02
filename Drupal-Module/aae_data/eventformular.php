@@ -356,7 +356,6 @@ function eventSpeichern () {
     // Hier muss hin, welche Seite aufgerufen werden soll,
 	  // nachdem die Daten erfolgreich gespeichert wurden.
 	}
- }
 } // END function event_speichern()
 
 public function eventDisplay() {
