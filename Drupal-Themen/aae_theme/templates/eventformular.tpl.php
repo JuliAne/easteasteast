@@ -3,7 +3,7 @@
 
 <?php if (!$freigabe) : ?>
 <div class="alert-box" data-alert>
- <strong>Ihr Event konnte nicht gespeichert werden, da folgende Fehler vorliegen:</strong>
+ <p><strong>Ihr Event konnte nicht gespeichert werden, da folgende Fehler vorliegen:</strong></p><br />
  <ul>
   <?php foreach($fehler as $f) : ?>
     <li><?= $f; ?></li>
@@ -17,7 +17,7 @@
  <div class="row">
     <div class="large-7 columns">
       <?= $fehler['name']; ?>
-      <label>Name (Pflichtfeld):
+      <label>Name <span class="pflichtfeld">(Pflichtfeld)</span>:
         <input type="text" id="eventNameInput" name="name" value="<?= $name; ?>" placeholder="<?= $ph_name; ?>" required/>
       </label>
     </div>
@@ -39,7 +39,7 @@ if($resultakteure->rowCount() != 0) : ?>
   <div class="row">
 
    <div class="large-3 columns">
-    <label>Datum (Pflichtfeld): <?= $fehler['start']; ?>
+    <label>Datum <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $fehler['start']; ?>
      <input type="text" id="eventStartdatumInput" name="start" value="<?= $start; ?>" placeholder="<?= $ph_start; ?>">
     </label>
    </div>

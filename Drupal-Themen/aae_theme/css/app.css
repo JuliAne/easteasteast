@@ -21,7 +21,11 @@ ol, ul {
 
 fieldset {
  padding: 8px;
- margin: 10px 0;
+ margin: 16px 0 !important;
+}
+
+span.pflichtfeld {
+  color: #8e1b1e;
 }
 
 h1 {

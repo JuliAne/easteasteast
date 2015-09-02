@@ -354,31 +354,38 @@ if (isset($_POST['submit'])) {
 	  ))
 	  ->execute();
 	}
-	//falls Tags angegeben wurden
+
+	// Falls Tags angegeben wurden
+
 	if($sparten != ""){
-	  $sparte_id = "";
-      $countsparten = count($explodedsparten);
+
+    $sparte_id = "";
+    $countsparten = count($explodedsparten);
 	  $i = 0;
+
 	  while($i < $countsparten){
 		//1. Prüfen, ob Tag bereits in Tabelle $tbl_sparte
 		$resultsparte = db_select($tbl_sparte, 's')
-		  ->fields('s', array(
-		    'KID',
-		  ))
-		  ->condition('kategorie', $explodedsparten[$i], '=')
-		  ->execute();
+		->fields('s', array( 'KID' ))
+		->condition('kategorie', $explodedsparten[$i], '=')
+		->execute();
+
 		$countresult = $resultsparte->rowCount();
-		if($countresult == 0){//nein: Tag in $tbl_sparte einfügen
+
+		if($countresult == 0){
+      //nein: Tag in $tbl_sparte einfügen
+
 		  $sparte_id = db_insert($tbl_sparte)
-		    ->fields(array(
-		      'kategorie' => $explodedsparten[$i],
-			))
+		  ->fields(array( 'kategorie' => $explodedsparten[$i] ))
 			->execute();
-		}else{//ja: KID des Tags holen
+
+		} else {
+      // ja: KID des Tags holen
 		  foreach ($resultsparte as $row) {
-			$sparte_id = $row->KID;
+		   $sparte_id = $row->KID;
 		  }
 		}
+
 		//2. Event+Tag in Tabelle $tbl_event_sparte einfügen
 		$inserteventsparte = db_insert($tbl_event_sparte)
 		  ->fields(array(
@@ -390,8 +397,9 @@ if (isset($_POST['submit'])) {
 	  }
 	}
 
-	header("Location: Event/".$event_id); //Hier muss hin, welche Seite aufgerufen werden soll,
-	  //nach dem die Daten erfolgreich gespeichert wurden.
+	header("Location: Event/".$event_id);
+    // Hier muss hin, welche Seite aufgerufen werden soll,
+	  // nachdem die Daten erfolgreich gespeichert wurden.
 	}
 
 } else {
@@ -401,7 +409,7 @@ if (isset($_POST['submit'])) {
  if(array_intersect(array('administrator'), $user->roles)){
 //alle Akteure abfragen, die in DB: nur Admin
   $resultakteure = db_select($tbl_akteur, 'a')
-    ->fields('a', array(
+  ->fields('a', array(
     'AID',
 	  'name',
     ))
@@ -416,11 +424,18 @@ if (isset($_POST['submit'])) {
 
 $resultbezirke = db_select($tbl_bezirke, 'b')
   ->fields('b', array(
-    'BID',
+  'BID',
 	'bezirksname',
   ))
   ->execute();
 $countbezirke = $resultbezirke->rowCount();
+
+$resulttags = db_select($tbl_sparte, 's')
+  ->fields('s')
+  ->execute()
+  ->fetchAll();
+
+print_r($resulttags);
 
 $pathThisFile = $_SERVER['REQUEST_URI'];
 
