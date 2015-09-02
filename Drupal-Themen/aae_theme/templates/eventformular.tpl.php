@@ -1,5 +1,5 @@
 <h3>Event anlegen</h3>
-<div class="divider" style="margin-bottom: 20px;"></div>
+<div class="divider" style="margin-bottom: 25px;"></div>
 
 <?php if (!$freigabe) : ?>
 <div class="alert-box" data-alert>
@@ -40,66 +40,78 @@ if($resultakteure->rowCount() != 0) : ?>
 
    <div class="large-3 columns">
     <label>Datum (Pflichtfeld): <?= $fehler['start']; ?>
-     <input type="text" class="event" id="eventStartdatumInput" name="start" value="<?= $start; ?>" placeholder="<?= $ph_start; ?>">
+     <input type="text" id="eventStartdatumInput" name="start" value="<?= $start; ?>" placeholder="<?= $ph_start; ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
     <label>Ende (Datum): <?= $fehler['ende']; ?>
-     <input type="text" class="event" id="eventEnddatumInput" name="ende" value="<?= $ende; ?>" placeholder="<?= $ph_ende; ?>">
+     <input type="text" id="eventEnddatumInput" name="ende" value="<?= $ende; ?>" placeholder="<?= $ph_ende; ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
     <label>von (Uhrzeit; ganztägig: keine Uhrzeit angeben): <?= $fehler['zeit_von']; ?>
-     <input type="text" class="event" id="eventZeitvonInput" name="zeit_von" value="<?= $zeit_von; ?>" placeholder="<?= $ph_zeit_von; ?>">
+     <input type="text" id="eventZeitvonInput" name="zeit_von" value="<?= $zeit_von; ?>" placeholder="<?= $ph_zeit_von; ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
     <label>bis (Uhrzeit; ganztägig: keine Uhrzeit angeben): <?= $fehler['zeit_bis']; ?>
-     <input type="text" class="event" id="eventZeitbisInput" name="zeit_bis" value="<?= $zeit_bis; ?>" placeholder="<?= $ph_zeit_bis; ?>">
+     <input type="text" id="eventZeitbisInput" name="zeit_bis" value="<?= $zeit_bis; ?>" placeholder="<?= $ph_zeit_bis; ?>">
     </label>
    </div>
 
   </div><!-- /.row -->
 
-  <fieldset>
+  <fieldset class="row">
    <legend>Adresse</legend>
 
-  <label>Straße: <?= $fehler['strasse']; ?>
-   <input type="text" class="event" id="eventStrasseInput" name="strasse" value="<?= $strasse; ?>" placeholder="<?= $ph_strasse; ?>">7
-  </label>
+   <div class="large-3 columns"
+    <label>Straße: <?= $fehler['strasse']; ?>
+     <input type="text" id="eventStrasseInput" name="strasse" value="<?= $strasse; ?>" placeholder="<?= $ph_strasse; ?>">7
+    </label>
+   </div>
 
-  <label>Nr.: <?= $fehler['nr']; ?>
-   <input type="text" class="event" id="eventNrInput" name="nr" value="<?= $nr; ?>" placeholder="<?= $ph_nr; ?>">
-  </label>
+   <div class="large-2 columns">
+    <label>Nr.: <?= $fehler['nr']; ?>
+     <input type="text" id="eventNrInput" name="nr" value="<?= $nr; ?>" placeholder="<?= $ph_nr; ?>">
+    </label>
+   </div>
 
-  <label>Adresszusatz: <?= $fehler['adresszusatz']; ?>
-   <input type="text" class="event" id="eventAdresszusatzInput" name="adresszusatz" value="<?= $adresszusatz; ?>" placeholder="<?= $ph_adresszusatz; ?>">
-  </label>
+   <div class="large-3 columns">
+    <label>Adresszusatz: <?= $fehler['adresszusatz']; ?>
+     <input type="text" id="eventAdresszusatzInput" name="adresszusatz" value="<?= $adresszusatz; ?>" placeholder="<?= $ph_adresszusatz; ?>">
+    </label>
+   </div>
 
-  <label>PLZ: <?= $fehler['plz']; ?>
-   <input type="text" class="event" id="eventPLZInput" name="plz" value="<?= $plz; ?>" placeholder="<?= $ph_plz; ?>">
-  </label>
+   <div class="large-4 columns">
+    <label>PLZ: <?= $fehler['plz']; ?>
+      <input type="text" id="eventPLZInput" name="plz" value="<?= $plz; ?>" placeholder="<?= $ph_plz; ?>">
+    </label>
+   </div>
 
+   <div class="large-4 columns">
   <label>Bezirk: <?= $fehler['ort']; ?>
 
-  <select name="ort" size="<?= $countbezirke; ?>" >
+  <select name="ort">
    <option value="" selected="selected">Bezirk auswählen</option>
    <?php foreach ($resultbezirke as $bezirk) : ?>
    <option value="<?= $bezirk->BID; ?>"><?= $bezirk->bezirksname; ?></option>
    <?php endforeach; ?>
   </select>
  </label>
+ </div>
 
-  <label>Geodaten: <?= $fehler['gps']; ?>
+  <div class="large-3 columns">
+  <label>Geodaten (Karte): <?= $fehler['gps']; ?>
    <input type="text" class="event" id="eventGPSInput" name="gps" value="<?= $gps; ?>" placeholder="<?= $ph_gps; ?>">
   </label>
+</div>
 
 </fieldset>
 
-  <label>Website: <?= $fehler['url']; ?>
+  <label>Eventwebsite: <?= $fehler['url']; ?>
    <input type="text" class="event" id="eventURLInput" name="url" value="<?= $url; ?>" placeholder="<?= $ph_url; ?>">
   </label>
 
