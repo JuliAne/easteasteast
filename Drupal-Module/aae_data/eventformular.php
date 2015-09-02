@@ -355,7 +355,7 @@ function eventSpeichern () {
 	header("Location: Event/".$event_id);
     // Hier muss hin, welche Seite aufgerufen werden soll,
 	  // nachdem die Daten erfolgreich gespeichert wurden.
-	}
+
 } // END function event_speichern()
 
 public function eventDisplay() {
