@@ -102,6 +102,8 @@
 
  <?php endif;
 
+ print_r($resultEvent);
+
    if($resultEvent->url != "") : ?>
     <p>Url: <a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
   <?php endif; ?>
