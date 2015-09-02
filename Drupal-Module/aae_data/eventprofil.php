@@ -39,7 +39,7 @@ $resultAkteurId = db_select($tbl_akteur_events, 'e')
   ->execute();
 
 $akteurId = "";
-$okay = ""; //gibt an, ob Zugang erlaubt wird oder nicht
+$okay = ""; // Gibt an, ob Zugang erlaubt wird oder nicht
 
 foreach ($resultAkteurId as $row) {
 
@@ -52,7 +52,7 @@ foreach ($resultAkteurId as $row) {
       'hat_AID',
     ))
     ->condition('hat_AID', $akteurId, '=')
-    ->condition('hat_UID', $user->uid, '=') // WTF?! Es gibt kein $user_id... Funktioniert's so?
+    ->condition('hat_UID', $user->uid, '=')
     ->execute();
 
   if($resultUser->rowCount() == 1) $okay = 1; //Zugang erlaubt
@@ -81,7 +81,7 @@ $resultEvent = db_select($tbl_event, 'a')
  foreach($resultEvent as $event) {
   $resultEvent = $event; // Kleiner Fix, um EIN Objekt zu generieren
  }
-// AID = akteurid
+
 $resultVeranstalter = db_select($tbl_akteur_events, 'e');
 $resultVeranstalter->join($tbl_akteur, 'a', 'a.AID = e.AID');
 $resultVeranstalter
@@ -111,8 +111,6 @@ foreach($resultVeranstalter as $veranstalter) {
  $resultVeranstalter = $veranstalter; // Kleiner Fix, um EIN Objekt zu generieren
 }
 
-print_r($resultVeranstalter);
-
 //Selektion der Tags
 $resultSparten = db_select($tbl_event_sparte, 's')
   ->fields('s', array( 'hat_KID' ))
@@ -137,16 +135,6 @@ if($countSparten != 0){
 	  $i++;
 	}
 }
-
-//Veranstalter
-
-if(!empty($resultVeranstalter)){
-
-  foreach ($resultAkteur as $row2) : ?>
-    <h5>Veranstalter</h5>
-    <a href="?q=Akteurprofil/<?= $row1->AID; ?>"><?= $row2->name; ?></a><br>
-  <?php endforeach;
- }
 
 // Ausgabe des Events
 

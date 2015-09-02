@@ -1,6 +1,24 @@
 <h3><?= $resultEvent->name; ?></h3>
 
-<?= print_r($resultEvent); ?>
+<p class="right">
+<strong>Zeit:</strong>
+
+<?php if($resultEvent->start != "") {
+  $explodedstart = explode(' ', $resultEvent->start);
+  $explodedende = explode(' ', $resultEvent->ende);
+  echo $explodedstart[0];
+
+  if($resultEvent->ende != $explodedstart[0]){
+   echo '- '.$explodedende[0];
+  }
+
+  if($explodedstart[1] != "" && $explodedende[1] != ""){
+   echo '<br>'.$explodedstart[1].'-'.$explodedende[1].'<br>';
+  }
+} ?>
+</p>
+
+<?= //print_r($resultEvent); ?>
 
 <?php if($resultEvent->kurzbeschreibung != "") : ?>
   <h4>Beschreibung</h4>
@@ -13,9 +31,17 @@
 
 <?php if($resultEvent->bild != "") : ?>
   <img src="<?= $resultEvent->bild; ?>">
-<?php endif; 
+<?php endif;
 
+//Veranstalter
 
+if(!empty($resultVeranstalter)) {
+
+  foreach ($resultVeranstalter as $veranstalter) : ?>
+    <h5>Veranstalter</h5>
+    <a href="<?= base_path(); ?>Akteurprofil/<?= $veranstalter->AID; ?>"><?= $veranstalter->name; ?></a><br>
+  <?php endforeach;
+ }
 
 	//Ersteller aus DB holen
 	$ersteller = db_select("users", 'u')
@@ -29,7 +55,7 @@
 	<?php endforeach;
 
 	//Adresse des Akteurs
-	$resultadresse = db_select($tbl_adresse, 'b')
+	$resultAdresse = db_select($tbl_adresse, 'b')
 	  ->fields('b', array(
 	    'strasse',
 	    'nr',
@@ -40,20 +66,21 @@
 	  ->condition('ADID', $resultEvent->ort, '=')
 	  ->execute();
 
-	if($resultadresse->rowCount() != 0){
-	foreach ($resultadresse as $row1) {
+	if($resultAdresse->rowCount() != 0){
+	foreach ($resultAdresse as $row1) {
 
 		if($row1->strasse != "" && $row1->nr != ""){
 		  echo $row1->strasse.' '.$row1->nr.'<br>';
 		}
 		//Bezirksnamen holen:
-		$resultbezirk = db_select($tbl_bezirke, 'z')
+		$resultBezirk = db_select($tbl_bezirke, 'z')
 		  ->fields('z', array(
 		    'bezirksname',
 		  ))
 		  ->condition('BID', $row1->bezirk, '=')
 		  ->execute();
-		foreach ($resultbezirk as $row2) {
+      
+		foreach ($resultBezirk as $row2) {
 		  if($row1->plz != ""){
 		    $profileHTML .= $row1->plz.' ';
 		  }
@@ -68,35 +95,20 @@
 	}
 	}
 
-	//Datum
-	$profileHTML .= '<h4>Zeit:</h4>';
-	if($resultEvent->start != "") {
-	  $explodedstart = explode(' ', $resultEvent->start);
-	  $explodedende = explode(' ', $resultEvent->ende);
-	  $profileHTML .= $explodedstart[0];
-	  if($row->ende != $explodedstart[0]){
-		$profileHTML .= '- '.$explodedende[0];
-	  }
-	  if($explodedstart[1] != "" && $explodedende[1] != ""){
-	    $profileHTML .= '<br>'.$explodedstart[1].'-'.$explodedende[1].'<br>';
-	  }
-	}
-
-
-	//Sparten:
-    if(count($sparten) != 0){
-	  $profileHTML .= '<br>Tags:<br>';
-	  $laenge = count($sparten);
+  if(count($sparten) != 0) : ?>
+	  <p><strong>Tags:</strong>
+	<?php  $laenge = count($sparten);
 	  $j = 0;
 	  while($j < $laenge){
-	    $profileHTML .= '<p>'.$sparten[$j].'</p>';
-	    $j = $j+1;
+	    echo $sparten[$j];
+	    $j++
 	  }
-	} ?>
+    echo '</p>';
+	endif; ?>
 
   <?= $profileHTML; ?>
 
 <?php if($okay == 1) : ?>
-  <a class="small secondary button" href="?q=Eventloeschen/<?= $eventId; ?>" >Event Löschen</a>
-  <a class="small button" href="?q=Eventedit/<?= $eventId; ?>" >Event bearbeiten</a>
+  <a class="small secondary button" href="<?= base_path(); ?>Eventloeschen/<?= $eventId; ?>" >Event Löschen</a>
+  <a class="small button" href="<?= base_path(); ?>Eventedit/<?= $eventId; ?>" >Event bearbeiten</a>
 <?php endif; ?>
