@@ -30,16 +30,6 @@
   <img style="padding: 10px 0;" src="<?= $resultEvent->bild; ?>">
 <?php endif;
 
-	//Ersteller aus DB holen
-	$ersteller = db_select("users", 'u')
-	->fields('u', array(
-	  'name',
-	))
-	->condition('uid', $resultEvent->ersteller, '=')
-	->execute();
-	foreach ($ersteller as $row2) : ?>
-		<p>Erstellt von: <?= $row2->name; ?></p>
-	<?php endforeach;
 
 	//Adresse des Akteurs
 	$resultAdresse = db_select($tbl_adresse, 'b')
@@ -82,8 +72,6 @@
 	}
 	}
 
-  print_r($sparten);
-
   if(count($sparten) != 0) { ?>
 	  <p><strong>Tags:</strong>
 	<?php  $laenge = count($sparten);
@@ -95,19 +83,19 @@
     echo '</p>';
 	} ?>
 
-  <?= $profileHTML; ?>
-
  <h4>Veranstalter</h4>
 
- <?php if(!empty($resultVeranstalter)) : ?>
+ <?php foreach ($ersteller as $row2) : ?>
+   <p>Erstellt von: <?= $row2->name; ?></p>
+ <?php endforeach; ?>
 
-     <a href="<?= base_path(); ?>Akteurprofil/<?= $resultVeranstalter->AID; ?>"><?= $resultVeranstalter->name; ?></a></p>
+   <p>Akteur: <a href="<?= base_path(); ?>Akteurprofil/<?= $resultVeranstalter->AID; ?>"><?= $resultVeranstalter->name; ?></a></p>
 
- <?php endif;
-
-   if($resultEvent->url != "") : ?>
+  <?php if($resultEvent->url != "") : ?>
     <p>Weitere Informationen: <a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
   <?php endif; ?>
+
+  <?= $profileHTML; ?>
 
 <?php if($okay == 1) : ?>
   <a class="small secondary button" href="<?= base_path(); ?>Eventloeschen/<?= $eventId; ?>" >Event Löschen</a>

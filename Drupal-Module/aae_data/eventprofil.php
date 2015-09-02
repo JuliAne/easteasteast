@@ -4,7 +4,8 @@
  *
  * Ruth, 2015-07-10
  * Felix, 2015-09-01
- * TODO (Felix): Hier scheint einiges durch den Einsatz von DB-Join's vereinfachbar...
+ * TODO (Felix): Hier scheint einiges durch den Einsatz von DB-Join's vereinfachbar,
+ *       siehe etwa "Sparten-Query"...
  *       Vlt. kann das mal jemand für sich später auf die TODO-Liste setzen?
  */
 
@@ -135,6 +136,15 @@ if($countSparten != 0){
 	  $i++;
 	}
 }
+
+//Ersteller (USER!) aus DB holen
+
+$ersteller = db_select("users", 'u')
+->fields('u', array(
+  'name',
+))
+->condition('uid', $resultEvent->ersteller, '=')
+->execute();
 
 // Ausgabe des Events
 
