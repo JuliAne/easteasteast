@@ -91,7 +91,7 @@ $resultVeranstalter
   ->execute()
   ->fetchAll();
 
-print_r($resultVeranstalter);
+
 
 
 /*  $resultAkteur = db_select($tbl_akteur, 'b')
@@ -112,6 +112,8 @@ $query
 foreach($resultVeranstalter as $veranstalter) {
  $resultVeranstalter = $veranstalter; // Kleiner Fix, um EIN Objekt zu generieren
 }
+
+print_r($resultVeranstalter);
 
 //Selektion der Tags
 $resultSparten = db_select($tbl_event_sparte, 's')
