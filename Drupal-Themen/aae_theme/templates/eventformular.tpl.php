@@ -65,7 +65,7 @@ if($resultakteure->rowCount() != 0) : ?>
 
   </div><!-- /.row -->
 
-  <fieldset class="row">
+  <fieldset class="eventAdresse row">
    <legend>Adresse</legend>
 
    <div class="large-4 columns">
