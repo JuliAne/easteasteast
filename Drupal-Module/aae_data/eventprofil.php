@@ -92,8 +92,6 @@ $resultVeranstalter
   ->fetchAll();
 
 
-
-
 /*  $resultAkteur = db_select($tbl_akteur, 'b')
   ->fields('b', array(
     'name',
@@ -143,14 +141,6 @@ if($countSparten != 0){
 //Veranstalter
 
 if($resultVeranstalter->rowCount() != 0){
-
-foreach ($resultVeranstalter as $veranstalter) {
-  $resultAkteur = db_select($tbl_akteur, 'b')
-  ->fields('b', array(
-    'name',
-  ))
-  ->condition('AID', $row1->AID, '=')
-  ->execute();
 
   foreach ($resultAkteur as $row2) : ?>
     <h5>Veranstalter</h5>
