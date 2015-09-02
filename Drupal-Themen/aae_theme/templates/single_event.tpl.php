@@ -34,7 +34,7 @@
 	->fields('u', array(
 	  'name',
 	))
-	->condition('uid', $row->ersteller, '=')
+	->condition('uid', $resultEvent->ersteller, '=')
 	->execute();
 	foreach ($ersteller as $row2) : ?>
 		<p>Erstellt von: <?= $row2->name; ?></p>
@@ -49,7 +49,7 @@
 	    'bezirk',
 	    'gps',
 	  ))
-	  ->condition('ADID', $row->ort, '=')
+	  ->condition('ADID', $resultEvent->ort, '=')
 	  ->execute();
 
 	if($resultadresse->rowCount() != 0){
@@ -82,7 +82,7 @@
 
 	//Datum
 	$profileHTML .= '<h4>Zeit:</h4>';
-	if($row->start != "") {
+	if($resultEvent->start != "") {
 	  $explodedstart = explode(' ', $row->start);
 	  $explodedende = explode(' ', $row->ende);
 	  $profileHTML .= $explodedstart[0];
@@ -106,7 +106,9 @@
 	  }
 	} ?>
 
+  <?= profileHTML; ?>
+
 <?php if($okay == 1) : ?>
-  <a class="small secondary button" href="?q=Eventloeschen/<?= $event_id; ?>" >Event Löschen</a>
-  <a class="small button" href="?q=Eventedit/<?= $event_id; ?>" >Event bearbeiten</a>
+  <a class="small secondary button" href="?q=Eventloeschen/<?= $eventId; ?>" >Event Löschen</a>
+  <a class="small button" href="?q=Eventedit/<?= $eventId; ?>" >Event bearbeiten</a>
 <?php endif; ?>

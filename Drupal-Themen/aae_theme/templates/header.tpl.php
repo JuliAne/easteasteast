@@ -24,7 +24,7 @@
 
      <?php if(!user_is_logged_in()) print render($page['user']);
            else { ?>
-        <h5>Hallo, <strong><?php global $user; echo $user->name; ?></strong>.</h5>
+        <h5 style="padding-top: 8px;">Hallo, <strong><?php global $user; echo $user->name; ?></strong>.</h5>
         <div class="divider"></div>
         
         <?php //require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
@@ -34,7 +34,7 @@
         
         <?php // endforeach; ?>
         
-        <a href="<?= base_path(); ?>akteursformular" class="button">+ Akteur erstellen</a>
+        <a href="<?= base_path(); ?>akteursformular" class="small button">+ Akteur erstellen</a>
      <?php } ?>
 
      <div class="divider"></div>
@@ -43,7 +43,7 @@
      <p>Neu hier? <a href="<?= base_path(); ?>user/register">Registrieren</a></p>
      <p><a href="<?= base_path(); ?>user/password">Passwort vergessen?</a></p>
      <?php else : ?>
-     <p><a href="<?= base_path(); ?>user">Einstellungen</a></p>
+     <p><a href="<?= base_path(); ?>user">Profileinstellungen</a></p>
      <p><a href="<?= base_path(); ?>user/logout">Logout</a></p>
      <?php endif; ?>
 
