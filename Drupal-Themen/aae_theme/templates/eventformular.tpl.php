@@ -120,8 +120,9 @@ if($resultakteure->rowCount() != 0) : ?>
       <span class="prefix">http://</span>
     </div>
 
-    <input class="large-10 columns" type="text" id="eventURLInput" name="url" value="<?= $url; ?>" placeholder="<?= $ph_url; ?>">
-
+    <div class="large-10 columns">
+    <input type="text" id="eventURLInput" name="url" value="<?= $url; ?>" placeholder="<?= $ph_url; ?>">
+</div>
   </div>
 
   <div class="large-12 columns">
