@@ -175,12 +175,12 @@ function akteuredit_page($aid=0) {
 
 function ajaxGetTags() {
 
-  require_once $modulePath . '/database/db_connect.php';
+  /*require_once $modulePath . '/database/db_connect.php';
   $db = new DB_CONNECT();
   $resulttags = db_select($tbl_sparte, 's')
     ->fields('s')
     ->execute()
-    ->fetchAll();
+    ->fetchAll(); */
 
  //  return $resulttags;
  return   '[{"id":"856","name":"House"},
