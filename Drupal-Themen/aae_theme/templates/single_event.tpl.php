@@ -22,12 +22,12 @@
 <div class="divider" style="padding: 20px 0;"></div>
 
 <?php if($resultEvent->kurzbeschreibung != "") : ?>
-  <h4 style="padding: 0 10px;">Beschreibung</h4>
+  <h4 style="padding: 10px 0;">Beschreibung</h4>
   <p><?= $resultEvent->kurzbeschreibung; ?></p>
 <?php endif;
 
 if(count($sparten) != 0) { ?>
-  <p><strong>Tags:</strong>
+  <br /><p><strong>Tags:</strong>
 <?php  $laenge = count($sparten);
   $j = 0;
   while($j < $laenge){
@@ -41,7 +41,7 @@ if(count($sparten) != 0) { ?>
   <img style="padding: 10px 0;" src="<?= $resultEvent->bild; ?>">
 <?php endif; ?>
 
- <h4 style="padding: 0 10px;">Veranstalter</h4>
+ <h4 style="padding: 10px 0;">Veranstalter</h4>
 
  <?php foreach ($ersteller as $row2) : ?>
    <p>Erstellt von: <?= $row2->name; ?></p>
@@ -73,8 +73,6 @@ if(count($sparten) != 0) { ?>
   <?php if($resultEvent->url != "") : ?>
     <p>Weitere Informationen: <a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
   <?php endif; ?>
-
-  <?= $profileHTML; ?>
 
 <?php if($okay == 1) : ?>
   <a class="right small secondary button" href="<?= base_path(); ?>Eventloeschen/<?= $eventId; ?>" >Event Löschen</a>
