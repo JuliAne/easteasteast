@@ -1,4 +1,4 @@
-<h3><?= $resultEvent->name; ?></h3>
+<h3 class="left"><?= $resultEvent->name; ?></h3>
 
 <p class="right">
 <strong>Zeit:</strong>
@@ -18,13 +18,11 @@
 } ?>
 </p>
 
+<div class="divider"></div>
+
 <?php if($resultEvent->kurzbeschreibung != "") : ?>
   <h4>Beschreibung</h4>
   <p><?= $resultEvent->kurzbeschreibung; ?></p>
-<?php endif; ?>
-
-<?php if($resultEvent->url != "") : ?>
-  <p>Url: <a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
 <?php endif; ?>
 
 <?php if($resultEvent->bild != "") : ?>
@@ -33,13 +31,12 @@
 
 //Veranstalter
 
-if(!empty($resultVeranstalter)) {
+if(!empty($resultVeranstalter)) : ?>
 
-  foreach ($resultVeranstalter as $veranstalter) : ?>
-    <h5>Veranstalter</h5>
-    <a href="<?= base_path(); ?>Akteurprofil/<?= $veranstalter->AID; ?>"><?= $veranstalter->name; ?></a><br>
-  <?php endforeach;
- }
+    <p><strong>Veranstalter: </strong>
+    <a href="<?= base_path(); ?>Akteurprofil/<?= $resultVeranstalter->AID; ?>"><?= $resultVeranstalter->name; ?></a></p>
+
+<?php endif;
 
 	//Ersteller aus DB holen
 	$ersteller = db_select("users", 'u')
@@ -105,6 +102,12 @@ if(!empty($resultVeranstalter)) {
 	} ?>
 
   <?= $profileHTML; ?>
+
+ <h4>Veranstalter</h4>
+
+  <?php if($resultEvent->url != "") : ?>
+    <p>Url: <a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
+  <?php endif; ?>
 
 <?php if($okay == 1) : ?>
   <a class="small secondary button" href="<?= base_path(); ?>Eventloeschen/<?= $eventId; ?>" >Event Löschen</a>
