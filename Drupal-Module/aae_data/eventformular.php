@@ -358,7 +358,7 @@ function eventSpeichern () {
 
 } // END function event_speichern()
 
-public function eventDisplay() {
+function eventDisplay() {
  // Ausgabe des Eventformulars:
 
  if (array_intersect(array('administrator'), $user->roles)) {
