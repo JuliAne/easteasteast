@@ -37,7 +37,7 @@ function aae_preprocess_html(&$variables) {
 
    drupal_add_css(path_to_theme().'/css/token-input.css');
    drupal_add_js(path_to_theme().'/js/jquery.tokeninput.js');
-   drupal_add_js('$(document).ready(function(){$("#eventSpartenInput").tokenInput("'.base_path().'ajax/");});', 'inline');
+   drupal_add_js('$(document).ready(function(){$("#eventSpartenInput").tokenInput("'.base_path().'?q=ajax/");});', 'inline');
 
 
  } else if (strpos(current_path(), 'Akteure') !== FALSE) {
