@@ -1,7 +1,7 @@
 @CHARSET "ISO-8859-1";
 /* Reset CSS
  * --------------------------------------- */
-*,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
+*,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,input,textarea,p,blockquote,th,td {
   font-family: "Open Sans", sans-serif;
   letter-spacing: normal;
   padding: 0px;
@@ -17,6 +17,10 @@ ol, ul {
  list-style: none;
  margin: 0;
  padding: 0;
+}
+
+fieldset {
+ padding: 10px;
 }
 
 h1 {

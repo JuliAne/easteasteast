@@ -69,7 +69,7 @@ if($resultakteure->rowCount() != 0) : ?>
 
    <div class="large-3 columns"
     <label>Straße: <?= $fehler['strasse']; ?>
-     <input type="text" id="eventStrasseInput" name="strasse" value="<?= $strasse; ?>" placeholder="<?= $ph_strasse; ?>">7
+     <input type="text" id="eventStrasseInput" name="strasse" value="<?= $strasse; ?>" placeholder="<?= $ph_strasse; ?>">
     </label>
    </div>
 
@@ -105,25 +105,25 @@ if($resultakteure->rowCount() != 0) : ?>
 
   <div class="large-3 columns">
   <label>Geodaten (Karte): <?= $fehler['gps']; ?>
-   <input type="text" class="event" id="eventGPSInput" name="gps" value="<?= $gps; ?>" placeholder="<?= $ph_gps; ?>">
+   <input type="text" id="eventGPSInput" name="gps" value="<?= $gps; ?>" placeholder="<?= $ph_gps; ?>">
   </label>
 </div>
 
 </fieldset>
 
   <label>Eventwebsite: <?= $fehler['url']; ?>
-   <input type="text" class="event" id="eventURLInput" name="url" value="<?= $url; ?>" placeholder="<?= $ph_url; ?>">
+   <input type="text" id="eventURLInput" name="url" value="<?= $url; ?>" placeholder="<?= $ph_url; ?>">
   </label>
 
   <label>Beschreibung: <?= $fehler['kurzbeschreibung']; ?>
-   <textarea name="kurzbeschreibung" class="event" cols="45" rows="3" placeholder="<?= $ph_kurzbeschreibung; ?>"><?= $kurzbeschreibung; ?></textarea>
+   <textarea name="kurzbeschreibung" cols="45" rows="3" placeholder="<?= $ph_kurzbeschreibung; ?>"><?= $kurzbeschreibung; ?></textarea>
   </label>
 
   <fieldset>
    <legend>Eventbild</legend>
 
    <label>Bild:
-    <input type="file" class="event" id="eventBildInput" name="bild" />
+    <input type="file" id="eventBildInput" name="bild" />
    </label>
    <p><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf leipzigerecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
  <p>Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefeldern zu beschreiben.“</p>
@@ -132,7 +132,7 @@ if($resultakteure->rowCount() != 0) : ?>
   </fieldset>
 
   <label>Tags: <?= $fehler['sparten']; ?>
-   <input type="text" class="event" id="eventSpartenInput" name="sparten" value="<?= $sparten; ?>" placeholder="<?= $ph_sparten; ?>">
+   <input type="text" id="eventSpartenInput" name="sparten" value="<?= $sparten; ?>" placeholder="<?= $ph_sparten; ?>">
   </label>
 
   <input type="submit" class="left button" id="eventSubmit" name="submit" value="Speichern">
