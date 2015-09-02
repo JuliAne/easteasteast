@@ -74,7 +74,7 @@ $ersteller = db_select($tbl_event, 'e')
 //Selektion der Eventinformationen
 $resultEvent = db_select($tbl_event, 'a')
   ->fields('a')
-  ->condition('EID', $event_id, '=')
+  ->condition('EID', $eventId, '=')
   ->execute()
   ->fetchAll();
 
