@@ -182,7 +182,7 @@ function eventformular_ajaxGetTags() {
     ->execute()
     ->fetchAll();
 
-  result $resulttags;
+  return $resulttags;
 }
 
 /**
