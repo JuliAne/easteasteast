@@ -93,7 +93,9 @@ $resultVeranstalter
   ->fetchAll();
 
 
-/*  $resultAkteur = db_select($tbl_akteur, 'b')
+/* VOR DEM JOIN SAH DAS GANZE SO AUS:
+
+  $resultAkteur = db_select($tbl_akteur, 'b')
   ->fields('b', array(
     'name',
   ))
@@ -145,6 +147,34 @@ $ersteller = db_select("users", 'u')
 ))
 ->condition('uid', $resultEvent->ersteller, '=')
 ->execute();
+
+//Adresse des Akteurs
+
+$resultAdresse = db_select($tbl_adresse, 'b')
+  ->fields('b', array(
+    'strasse',
+    'nr',
+    'plz',
+    'bezirk',
+    'gps',
+  ))
+  ->condition('ADID', $resultEvent->ort, '=')
+  ->execute();
+
+  foreach($resultAdresse as $adresse) {
+   $resultAdresse = $adresse; // Kleiner Fix, um EIN Objekt zu generieren
+  }
+
+  print_r($resultAdresse);
+
+  //Bezirksnamen holen:
+
+  $resultBezirk = db_select($tbl_bezirke, 'z')
+    ->fields('z', array(
+      'bezirksname',
+    ))
+    ->condition('BID', $resultAdresse->bezirk, '=')
+    ->execute();
 
 // Ausgabe des Events
 

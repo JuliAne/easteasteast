@@ -30,48 +30,6 @@
   <img style="padding: 10px 0;" src="<?= $resultEvent->bild; ?>">
 <?php endif;
 
-
-	//Adresse des Akteurs
-	$resultAdresse = db_select($tbl_adresse, 'b')
-	  ->fields('b', array(
-	    'strasse',
-	    'nr',
-	    'plz',
-	    'bezirk',
-	    'gps',
-	  ))
-	  ->condition('ADID', $resultEvent->ort, '=')
-	  ->execute();
-
-	if($resultAdresse->rowCount() != 0){
-	foreach ($resultAdresse as $row1) {
-
-		if($row1->strasse != "" && $row1->nr != ""){
-		  echo $row1->strasse.' '.$row1->nr.'<br>';
-		}
-		//Bezirksnamen holen:
-		$resultBezirk = db_select($tbl_bezirke, 'z')
-		  ->fields('z', array(
-		    'bezirksname',
-		  ))
-		  ->condition('BID', $row1->bezirk, '=')
-		  ->execute();
-
-		foreach ($resultBezirk as $row2) {
-		  if($row1->plz != ""){
-		    $profileHTML .= $row1->plz.' ';
-		  }
-		  if($row2->bezirksname != ""){
-		    $profileHTML .= $row2->bezirksname;
-		  }
-		  $profileHTML .= '<br>';
-		}
-		if($row1->gps != ""){
-		  $profileHTML .= 'GPS: '.$row1->gps.'<br>';
-		}
-	}
-	}
-
   if(count($sparten) != 0) { ?>
 	  <p><strong>Tags:</strong>
 	<?php  $laenge = count($sparten);
@@ -87,10 +45,32 @@
 
  <?php foreach ($ersteller as $row2) : ?>
    <p>Erstellt von: <?= $row2->name; ?></p>
-   <?= print_r($resultVeranstalter); ?>
  <?php endforeach; ?>
 
    <p>Akteur: <a href="<?= base_path(); ?>Akteurprofil/<?= $resultVeranstalter->AID; ?>"><?= $resultVeranstalter->name; ?></a></p>
+
+   <?php if(!empty($resultAdresse)) : ?>
+   <p>Ort:
+
+   <?php if($row1->strasse != "" && $row1->nr != "") : ?>
+       <?= $row1->strasse.' '.$row1->nr; ?>
+   <?php endif; ?>
+
+
+     foreach ($resultBezirk as $row2) {
+       if($row1->plz != ""){
+         $profileHTML .= $row1->plz.' ';
+       }
+       if($row2->bezirksname != ""){
+         $profileHTML .= $row2->bezirksname;
+       }
+       $profileHTML .= '<br>';
+     }
+     if($row1->gps != ""){
+       $profileHTML .= 'GPS: '.$row1->gps.'<br>';
+     }
+   }
+   }
 
   <?php if($resultEvent->url != "") : ?>
     <p>Weitere Informationen: <a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
