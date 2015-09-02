@@ -102,7 +102,7 @@
 
  <?php endif;
 
-  <?php if($resultEvent->url != "") : ?>
+   if($resultEvent->url != "") : ?>
     <p>Url: <a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
   <?php endif; ?>
 
