@@ -84,7 +84,8 @@ $fehler_sparten = "";
 
 //-----------------------------------
 
-//Variablen, welche Texte in den Formularfeldern halten
+//Variablen, welche Texte in den Formularfeldern beschreiben ("placeholder")
+
 $ph_name = "Veranstaltungsname";
 $ph_veranstalter = "Veranstalter";
 $ph_start = "Starttag (yyyy-mm-dd)";
@@ -140,22 +141,24 @@ if (isset($_POST['submit'])) {
 //-------------------------------------
   //Check-Klauseln
 
+  $fehler = array(); // In diesem Array werden alle Fehler gespeichert
+
   //Check, ob ein Name eingegeben wurde:
-  if(strlen($name) == 0){
-    //Feld nicht ausgefüllt
-    $fehler_name = "Bitte einen Veranstaltungsnamen eingeben!";
-	$freigabe = false;
+  if(strlen($name) == 0) {
+   $fehler['name'] = "Bitte einen Veranstaltungsnamen eingeben!";
+	 $freigabe = false;
   }
+
   //Ckeck, ob Datum angegeben wurde
-  if(strlen($start) == 0){
-    //Feld nicht ausgefüllt
-    $fehler_start = "Bitte ein Datum angeben!";
-	$freigabe = false;
+  if(strlen($start) == 0) {
+   $fehler['start'] = "Bitte ein Datum angeben!";
+  	$freigabe = false;
   }
+
   //Check, ob Bezirk ausgewählt wurde
   if(strlen($ort) == 0){
-	$fehler_ort = "Bitte einen Bezirk auswählen.";
-	$freigabe = false;
+  	$fehler['ort'] = "Bitte einen Bezirk auswählen!";
+  	$freigabe = false;
   }
 
   //überflüssige Leerzeichen am Anfang entfernen
@@ -204,55 +207,66 @@ if (isset($_POST['submit'])) {
   $gps = strip_tags($gps);
 
   //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
-  if (strlen($name) > 100){
-	$fehler_name = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
-	$freigabe = false;
+
+  // TODO (Felix): Vlt. sollten wir die Länge der Werte im 32/64/128/... - Abstand
+  // gestalten; habe gehört, das sei besser für die DB-Performance...
+
+  if (strlen($name) > 100) {
+	 $fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
+   $freigabe = false;
   }
-  if (strlen($url) > 200){
-	$fehler_url = "Bitte geben Sie eine kürzere URL an.";
-	$freigabe = false;
+
+  if (strlen($url) > 200) {
+	 $fehler['url'] = "Bitte geben Sie eine kürzere URL an.";
+	 $freigabe = false;
   }
-  if (strlen($kurzbeschreibung) > 500){
-	$fehler_kurzbeschreibung = "Bitte geben Sie eine kürzere Beschreibung an.";
-	$freigabe = false;
+
+  if (strlen($kurzbeschreibung) > 500) {
+   $fehler['kurzbeschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
+	 $freigabe = false;
   }
-  if (strlen($strasse) > 100){
-	$fehler_strasse = "Bitte geben Sie einen kuerzeren Strassennamen an.";
-	$freigabe = false;
+
+  if (strlen($strasse) > 100) {
+	 $fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
+	 $freigabe = false;
   }
-  if (strlen($nr) > 100){
-	$fehler_nr = "Bitte geben Sie eine kuerzere Nummer an.";
-	$freigabe = false;
+
+  if (strlen($nr) > 100) {
+	 $fehler['nr'] = "Bitte geben Sie eine kuerzere Nummer an.";
+	 $freigabe = false;
   }
-  if (strlen($adresszusatz) > 100){
-	$fehler_adresszusatz = "Bitte geben Sie einen kuerzeren Adresszusatz an.";
-	$freigabe = false;
+
+  if (strlen($adresszusatz) > 100) {
+	 $fehler['adresszusatz'] = "Bitte geben Sie einen kuerzeren Adresszusatz an.";
+   $freigabe = false;
   }
-  if (strlen($plz) > 100){
-	$fehler_plz = "Bitte geben Sie eine kuerzere PLZ an.";
-	$freigabe = false;
+
+  if (strlen($plz) > 100) {
+	 $fehler['plz'] = "Bitte geben Sie eine kürzere PLZ an.";
+   $freigabe = false;
   }
-  if (strlen($ort) > 100){
-	$fehler_ort = "Bitte geben Sie einen kuerzeren Ortsnamen an.";
-	$freigabe = false;
+
+  if (strlen($ort) > 100) {
+   $fehler['ort'] = "Bitte geben Sie einen kürzeren Ortsnamen an.";
+	 $freigabe = false;
   }
-  if (strlen($gps) > 100){
-	$fehler_gps = "Bitte geben Sie kuerzere GPS-Daten an.";
-	$freigabe = false;
+
+  if (strlen($gps) > 100) {
+   $fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
+	 $freigabe = false;
   }
 
   //Wenn Bilddatei ausgewählt wurde...
   if($_FILES){
-	$bildname = $_FILES['bild']['name'];
+	 $bildname = $_FILES['bild']['name'];
 
-	if($bildname != ""){
+	 if($bildname != ""){
 	  if (!move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname)) {
       echo 'Error: Konnte Bild nicht hochladen. Bitte <a href="'.base_path.'contact">informieren Sie den Administrator</a>. Bildname: <br />'.$bildname;
       exit();
     }
 	  $bild = base_path().$short_bildpfad.$bildname;
-	}
-
+	 }
   }
 
 //---------------------------------
@@ -278,10 +292,10 @@ if (isset($_POST['submit'])) {
 	  ->condition('bezirk', $ort, '=')
 	  ->execute();
 
-	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
-    $i = $resultadresse->rowCount();
-	if($i == 0){//Adresse nicht vorhanden
-	  $adresse = db_insert($tbl_adresse)
+ 	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
+   	if($resultadresse->rowCount() == 0) {
+    //Adresse nicht vorhanden
+	   $adresse = db_insert($tbl_adresse)
 	    ->fields(array(
 		  'strasse' => $strasse,
 		  'nr' => $nr,
@@ -291,10 +305,12 @@ if (isset($_POST['submit'])) {
 		  'gps' => $gps,
 		))
 		->execute();
-	}else {//Adresse bereits vorhanden
+	} else {
+    //Adresse bereits vorhanden
 	  foreach ($resultadresse as $row) {
 	    //Abfrage, ob GPS-Angaben gemacht wurden
-	    if(strlen($gps) != 0 && strlen($row->gps) == 0 ){//ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
+	    if(strlen($gps) != 0 && strlen($row->gps) == 0 ){
+        //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
 	      //Update der Adresse
 	      $adresse_updated = db_update($tbl_adresse)
 	 	    ->fields(array(
@@ -317,7 +333,7 @@ if (isset($_POST['submit'])) {
 
     //tbl_event INSERT!!!
 	$event_id = db_insert($tbl_event)
-   	  ->fields(array(
+   	->fields(array(
 		'name' => $name,
 		'ort' => $adresse,
 		'start' => $start,
@@ -381,6 +397,30 @@ if (isset($_POST['submit'])) {
 } else {
  //Formular wird zum ersten Mal aufgerufen: nichts tun
 }
+
+ if(array_intersect(array('administrator'), $user->roles)){
+//alle Akteure abfragen, die in DB: nur Admin
+  $resultakteure = db_select($tbl_akteur, 'a')
+    ->fields('a', array(
+    'AID',
+	  'name',
+    ))
+    ->execute();
+} else {
+  //Akteure abfragen, die in DB und für welche User Schreibrechte hat
+  $res = db_select($tbl_akteur, 'a');
+  $res->join($tbl_hat_user, 'u', 'a.AID = u.hat_AID AND u.hat_UID = :uid', array(':uid' => $user->uid));
+  $res->fields('a', array('AID','name'));
+  $resultakteure=$res->execute();
+}
+
+$resultbezirke = db_select($tbl_bezirke, 'b')
+  ->fields('b', array(
+    'BID',
+	'bezirksname',
+  ))
+  ->execute();
+$countbezirke = $resultbezirke->rowCount();
 
 $pathThisFile = $_SERVER['REQUEST_URI'];
 
