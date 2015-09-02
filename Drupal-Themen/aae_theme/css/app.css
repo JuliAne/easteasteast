@@ -20,7 +20,8 @@ ol, ul {
 }
 
 fieldset {
- padding: 10px;
+ padding: 8px;
+ margin: 10px 0;
 }
 
 h1 {

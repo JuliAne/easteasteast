@@ -67,13 +67,13 @@ if($resultakteure->rowCount() != 0) : ?>
   <fieldset class="row">
    <legend>Adresse</legend>
 
-   <div class="large-3 columns"
+   <div class="large-4 columns">
     <label>Straße: <?= $fehler['strasse']; ?>
      <input type="text" id="eventStrasseInput" name="strasse" value="<?= $strasse; ?>" placeholder="<?= $ph_strasse; ?>">
     </label>
    </div>
 
-   <div class="large-2 columns">
+   <div class="large-1 columns">
     <label>Nr.: <?= $fehler['nr']; ?>
      <input type="text" id="eventNrInput" name="nr" value="<?= $nr; ?>" placeholder="<?= $ph_nr; ?>">
     </label>
@@ -103,7 +103,7 @@ if($resultakteure->rowCount() != 0) : ?>
  </label>
  </div>
 
-  <div class="large-3 columns">
+  <div class="large-4 columns">
   <label>Geodaten (Karte): <?= $fehler['gps']; ?>
    <input type="text" id="eventGPSInput" name="gps" value="<?= $gps; ?>" placeholder="<?= $ph_gps; ?>">
   </label>
@@ -111,30 +111,47 @@ if($resultakteure->rowCount() != 0) : ?>
 
 </fieldset>
 
-  <label>Eventwebsite: <?= $fehler['url']; ?>
-   <input type="text" id="eventURLInput" name="url" value="<?= $url; ?>" placeholder="<?= $ph_url; ?>">
-  </label>
+ <div class="row">
 
+  <div class="large-12 columns">
+   <label>Eventwebsite: <?= $fehler['url']; ?>
+    <input type="text" id="eventURLInput" name="url" value="<?= $url; ?>" placeholder="<?= $ph_url; ?>">
+   </label>
+  </div>
+
+  <div class="large-12 columns">
   <label>Beschreibung: <?= $fehler['kurzbeschreibung']; ?>
    <textarea name="kurzbeschreibung" cols="45" rows="3" placeholder="<?= $ph_kurzbeschreibung; ?>"><?= $kurzbeschreibung; ?></textarea>
   </label>
+ </div>
 
-  <fieldset>
+ </div>
+
+  <fieldset class="row">
    <legend>Eventbild</legend>
 
-   <label>Bild:
     <input type="file" id="eventBildInput" name="bild" />
-   </label>
+
    <p><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf leipzigerecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
- <p>Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefeldern zu beschreiben.“</p>
+ <p>Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefeldern zu beschreiben.</p><br />
  <p>Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte.</p>
  <p>Bildmaterial sollte abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
   </fieldset>
 
+  <div class="row">
+
+  <div class="large-12 columns">
   <label>Tags: <?= $fehler['sparten']; ?>
    <input type="text" id="eventSpartenInput" name="sparten" value="<?= $sparten; ?>" placeholder="<?= $ph_sparten; ?>">
   </label>
+  </div>
+
+ </div>
+
+ <div class="row">
 
   <input type="submit" class="left button" id="eventSubmit" name="submit" value="Speichern">
+  <a class="secondary right button" href="<?= base_path(); ?>Events">Abbrechen</a>
+
+ </div>
 </form>
-<a class="secondary right button" href="<?= base_path(); ?>Events">Abbrechen</a>
