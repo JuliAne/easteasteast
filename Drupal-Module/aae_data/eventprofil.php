@@ -97,19 +97,19 @@ $resultSparten = db_select($tbl_event_sparte, 's')
   ->condition('hat_EID', $event_id, '=')
   ->execute();
 
-$countsparten = $resultsparten->rowCount();
+$countSparten = $resultSparten->rowCount();
 $sparten = array();
 $i = 0;
 
-if($countsparten != 0){
-	foreach ($resultsparten as $row) {
-	  $resultspartenname = db_select($tbl_sparte, 'p')
+if($countSparten != 0){
+	foreach ($resultSparten as $row) {
+	  $resultSpartenName = db_select($tbl_sparte, 'p')
 	  ->fields('p', array(
 	    'kategorie',
 	  ))
 	  ->condition('KID', $row->hat_KID, '=')
 	  ->execute();
-	  foreach ($resultspartenname as $row1) {
+	  foreach ($resultSpartenName as $row1) {
 	  	$sparten[$i] = $row1->kategorie;
 	  }
 	  $i++;
