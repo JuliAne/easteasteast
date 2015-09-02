@@ -28,8 +28,8 @@ if($resultakteure->rowCount() != 0) : ?>
   <div class="large-4 large-offset-1 columns">
   <label>Veranstalter:</label>
   <select name="veranstalter" size="<?= $countakteure; ?>">
+  <option value="0">Privat</option>
   <?php foreach ($resultakteure as $akteur) : ?>
-    <option value="privat">Privat</option>
     <option value="<?= $akteur->AID; ?>"><?= $akteur->name; ?></option>
   <?php endforeach; ?>
   </select>
@@ -114,10 +114,14 @@ if($resultakteure->rowCount() != 0) : ?>
 
  <div class="row">
 
-  <div class="large-12 columns">
-   <label>Eventwebsite: <?= $fehler['url']; ?>
-    <input type="text" id="eventURLInput" name="url" value="<?= $url; ?>" placeholder="<?= $ph_url; ?>">
-   </label>
+  <div class="large-12 columns collapse">
+
+    <div class="small-3 large-2 columns">
+      <span class="prefix">http://</span>
+    </div>
+
+    <input class="large-10 columns" type="text" id="eventURLInput" name="url" value="<?= $url; ?>" placeholder="<?= $ph_url; ?>">
+
   </div>
 
   <div class="large-12 columns">
