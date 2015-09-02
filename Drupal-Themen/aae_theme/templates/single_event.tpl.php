@@ -18,8 +18,6 @@
 } ?>
 </p>
 
-<?= //print_r($resultEvent); ?>
-
 <?php if($resultEvent->kurzbeschreibung != "") : ?>
   <h4>Beschreibung</h4>
   <p><?= $resultEvent->kurzbeschreibung; ?></p>
@@ -79,7 +77,7 @@ if(!empty($resultVeranstalter)) {
 		  ))
 		  ->condition('BID', $row1->bezirk, '=')
 		  ->execute();
-      
+
 		foreach ($resultBezirk as $row2) {
 		  if($row1->plz != ""){
 		    $profileHTML .= $row1->plz.' ';
