@@ -182,7 +182,9 @@ function eventformular_ajaxGetTags() {
     ->execute()
     ->fetchAll();
 
-  return $resulttags;
+ //  return $resulttags;
+ return   '[{"id":"856","name":"House"},
+    {"id":"1035","name":"Desperate Housewives"}]';
 }
 
 /**
