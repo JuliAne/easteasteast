@@ -29,6 +29,7 @@ if($resultakteure->rowCount() != 0) : ?>
   <label>Veranstalter:</label>
   <select name="veranstalter" size="<?= $countakteure; ?>">
   <?php foreach ($resultakteure as $akteur) : ?>
+    <option value="privat">Privat</option>
     <option value="<?= $akteur->AID; ?>"><?= $akteur->name; ?></option>
   <?php endforeach; ?>
   </select>
