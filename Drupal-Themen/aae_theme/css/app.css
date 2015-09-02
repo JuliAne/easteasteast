@@ -21,7 +21,8 @@ ol, ul {
 
 fieldset {
  padding: 8px;
- margin: 16px 0 !important;
+ margin-top: 16px !important;
+ margin-bottom: 16px !important;
 }
 
 span.pflichtfeld {
