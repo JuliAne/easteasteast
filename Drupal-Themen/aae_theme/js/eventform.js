@@ -9,8 +9,13 @@ $(document).ready(function(){
     })
       .done(function( data ) {
           console.log( "Sample of data:", data.features[0].center );
+        /*  $('#eventGPSInput')
+          $('#eventNrInput')
+          $('#eventPLZInput') */
 
-      });
+          alert($('#eventNrInput').value());
+
+          });
   });
 
 });
