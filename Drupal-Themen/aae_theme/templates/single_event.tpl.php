@@ -1,4 +1,4 @@
-<h3 class="left"><?= $resultEvent->name; ?></h3>
+<h3><?= $resultEvent->name; ?></h3>
 
 <p class="right">
 <strong>Zeit:</strong>
@@ -26,16 +26,7 @@
 <?php endif; ?>
 
 <?php if($resultEvent->bild != "") : ?>
-  <img src="<?= $resultEvent->bild; ?>">
-<?php endif;
-
-//Veranstalter
-
-if(!empty($resultVeranstalter)) : ?>
-
-    <p><strong>Veranstalter: </strong>
-    <a href="<?= base_path(); ?>Akteurprofil/<?= $resultVeranstalter->AID; ?>"><?= $resultVeranstalter->name; ?></a></p>
-
+  <img style="padding: 10px 0;" src="<?= $resultEvent->bild; ?>">
 <?php endif;
 
 	//Ersteller aus DB holen
@@ -104,6 +95,12 @@ if(!empty($resultVeranstalter)) : ?>
   <?= $profileHTML; ?>
 
  <h4>Veranstalter</h4>
+
+ <?php if(!empty($resultVeranstalter)) : ?>
+
+     <a href="<?= base_path(); ?>Akteurprofil/<?= $resultVeranstalter->AID; ?>"><?= $resultVeranstalter->name; ?></a></p>
+
+ <?php endif;
 
   <?php if($resultEvent->url != "") : ?>
     <p>Url: <a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
