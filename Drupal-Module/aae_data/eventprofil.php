@@ -4,8 +4,8 @@
  *
  * Ruth, 2015-07-10
  * Felix, 2015-09-01
- * TODO: Hier scheint einiges durch den Einsatz von DB-Join's vereinfachbar...
- *       Vlt. kann das mal jemand für später auf die TODO-Liste setzen?
+ * TODO (Felix): Hier scheint einiges durch den Einsatz von DB-Join's vereinfachbar...
+ *       Vlt. kann das mal jemand für sich später auf die TODO-Liste setzen?
  */
 
 //-----------------------------------
@@ -70,8 +70,8 @@ $ersteller = db_select($tbl_event, 'e')
   $okay = 1;
  }
 
-
 //Selektion der Eventinformationen
+
 $resultEvent = db_select($tbl_event, 'a')
   ->fields('a')
   ->condition('EID', $eventId, '=')
@@ -114,7 +114,7 @@ foreach($resultVeranstalter as $veranstalter) {
 //Selektion der Tags
 $resultSparten = db_select($tbl_event_sparte, 's')
   ->fields('s', array( 'hat_KID' ))
-  ->condition('hat_EID', $event_id, '=')
+  ->condition('hat_EID', $eventId, '=')
   ->execute();
 
 $countSparten = $resultSparten->rowCount();
@@ -142,4 +142,4 @@ ob_start(); // Aktiviert "Render"-modus
 
 include_once path_to_theme().'/templates/single_event.tpl.php';
 
-$profileHTML = ob_get_clean(); // Übergabe des gerenderten "events.tpl"
+$profileHTML = ob_get_clean(); // Übergabe des gerenderten "events.tpl.php"

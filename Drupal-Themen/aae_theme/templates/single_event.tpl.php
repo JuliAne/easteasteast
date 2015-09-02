@@ -19,7 +19,7 @@
 } ?>
 </p>
 
-<div class="divider" style="padding: 20px 0;"></div>
+<div class="divider" style="padding: 20px 0 25px;"></div>
 
 <?php if($resultEvent->kurzbeschreibung != "") : ?>
   <h4>Beschreibung</h4>
@@ -83,7 +83,7 @@
 	}
 
   print_r($sparten);
-  
+
   if(count($sparten) != 0) { ?>
 	  <p><strong>Tags:</strong>
 	<?php  $laenge = count($sparten);
