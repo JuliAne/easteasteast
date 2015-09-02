@@ -106,7 +106,7 @@ if($resultakteure->rowCount() != 0) : ?>
 
   <div class="large-4 columns">
   <label>Geodaten (Karte): <?= $fehler['gps']; ?>
-   <input type="text" id="eventGPSInput" name="gps" value="<?= $gps; ?>" placeholder="<?= $ph_gps; ?>">
+   <input type="text" id="eventGPSInput" name="gps" value="<?= $gps; ?>" placeholder="<?= $ph_gps; ?>" disabled>
   </label>
 </div>
 
@@ -114,15 +114,11 @@ if($resultakteure->rowCount() != 0) : ?>
 
  <div class="row">
 
-  <div class="large-12 columns collapse">
+  <div class="large-12 columns">
 
-    <div class="small-3 large-2 columns">
-      <span class="prefix">http://</span>
-    </div>
-
-    <div class="large-10 columns">
+   <label>Eventwebsite: <?= $fehler['url']; ?>
     <input type="text" id="eventURLInput" name="url" value="<?= $url; ?>" placeholder="<?= $ph_url; ?>">
-</div>
+   </label>
   </div>
 
   <div class="large-12 columns">

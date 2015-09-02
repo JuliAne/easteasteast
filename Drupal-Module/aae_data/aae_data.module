@@ -262,6 +262,17 @@ function eventformular_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventformular.php';
 
+  eventPageInit();
+
+  if (isset($_POST['submit'])) {
+    if (eventCheckPost()) eventSpeichern();
+    else eventDisplay();
+  } else {
+    eventDisplay();
+  }
+
+  eventDisplay();
+
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
 
