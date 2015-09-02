@@ -106,7 +106,7 @@
 	  }
 	} ?>
 
-  <?= profileHTML; ?>
+  <?= $profileHTML; ?>
 
 <?php if($okay == 1) : ?>
   <a class="small secondary button" href="?q=Eventloeschen/<?= $eventId; ?>" >Event Löschen</a>
