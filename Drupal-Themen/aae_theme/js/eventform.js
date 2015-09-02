@@ -12,7 +12,7 @@ $(document).ready(function(){
     .done(function( data ) {
       console.log( "Ermittelte Geo-Koordinaten", data.features[0].center );
 
-      alert($('#eventNrInput').val());
+      $('#eventGPSInput').val(data.features[0].center[1] + ',' + data.features[0].center[0]);
 
       });
     }
