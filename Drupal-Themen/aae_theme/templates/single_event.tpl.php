@@ -1,4 +1,4 @@
-<h3><?= $resultEvent->name; ?></h3>
+<h3 class="left"><?= $resultEvent->name; ?></h3>
 
 <p class="right">
 <strong>Zeit:</strong>
@@ -6,6 +6,7 @@
 <?php if($resultEvent->start != "") {
   $explodedstart = explode(' ', $resultEvent->start);
   $explodedende = explode(' ', $resultEvent->ende);
+
   echo $explodedstart[0];
 
   if($resultEvent->ende != $explodedstart[0]){
@@ -18,7 +19,7 @@
 } ?>
 </p>
 
-<div class="divider"></div>
+<div class="divider" style="padding: 20px 0;"></div>
 
 <?php if($resultEvent->kurzbeschreibung != "") : ?>
   <h4>Beschreibung</h4>
@@ -81,6 +82,8 @@
 	}
 	}
 
+  print_r($sparten);
+  
   if(count($sparten) != 0) { ?>
 	  <p><strong>Tags:</strong>
 	<?php  $laenge = count($sparten);
@@ -102,10 +105,8 @@
 
  <?php endif;
 
- print_r($resultEvent);
-
    if($resultEvent->url != "") : ?>
-    <p>Url: <a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
+    <p>Weitere Informationen: <a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
   <?php endif; ?>
 
 <?php if($okay == 1) : ?>
