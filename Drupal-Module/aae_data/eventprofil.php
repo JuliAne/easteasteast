@@ -84,7 +84,7 @@ $resultEvent = db_select($tbl_event, 'a')
  }
 
 $resultVeranstalter = db_select($tbl_akteur_events, 'e');
-$resultVeranstalter->join($tbl_akteur, 'a', 'a.AID = e.AID');
+$resultVeranstalter->join($tbl_akteur, 'a', 'e.EID = e.EID');
 $resultVeranstalter
   ->fields('e')
   ->condition('e.EID', $eventId, '=')
