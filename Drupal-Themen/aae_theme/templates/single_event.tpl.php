@@ -87,6 +87,7 @@
 
  <?php foreach ($ersteller as $row2) : ?>
    <p>Erstellt von: <?= $row2->name; ?></p>
+   <?= print_r($resultVeranstalter); ?>
  <?php endforeach; ?>
 
    <p>Akteur: <a href="<?= base_path(); ?>Akteurprofil/<?= $resultVeranstalter->AID; ?>"><?= $resultVeranstalter->name; ?></a></p>
