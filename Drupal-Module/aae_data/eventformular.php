@@ -345,7 +345,7 @@ if (isset($_POST['submit'])) {
 	  ))
 	  ->execute();
 	//falls Akteur angegeben wurde
-	if($veranstalter != ""){
+	if ($veranstalter != "") {
 	//tbl_akteur_events INSERT!!!
 	$akteurevents = db_insert($tbl_akteur_events)
    	  ->fields(array(
@@ -357,7 +357,7 @@ if (isset($_POST['submit'])) {
 
 	// Falls Tags angegeben wurden
 
-	if($sparten != ""){
+	if ($sparten != "") {
 
     $sparte_id = "";
     $countsparten = count($explodedsparten);
@@ -406,7 +406,7 @@ if (isset($_POST['submit'])) {
  //Formular wird zum ersten Mal aufgerufen: nichts tun
 }
 
- if(array_intersect(array('administrator'), $user->roles)){
+ if (array_intersect(array('administrator'), $user->roles)) {
 //alle Akteure abfragen, die in DB: nur Admin
   $resultakteure = db_select($tbl_akteur, 'a')
   ->fields('a', array(

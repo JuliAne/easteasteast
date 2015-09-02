@@ -240,6 +240,10 @@ function eventloeschen_page($eid=0) {
  * Builds page for Eventedit
  */
 function eventedit_page($aid=0) {
+  // 1. Init
+  // 2. (Einlesen ggf. vorhandener Werte)
+  // 4. Speicherung ?!
+  // 3. Ausgabe
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventedit.php';
 
@@ -252,6 +256,9 @@ function eventedit_page($aid=0) {
  * Builds page for Eventformular
  */
 function eventformular_page() {
+  // 1. Init
+  // 4. Speicherung ?!
+  // 3. Ausgabe
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventformular.php';
 
@@ -274,7 +281,7 @@ function insert_bezirke() {
         'bezirksname' => $bezirke[$i],
 	  ))
 	  ->execute();
-	$i = $i+1;
+	$i++;
   }
   return $insert_bezirke;
 }

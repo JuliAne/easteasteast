@@ -40,7 +40,7 @@ if($resultakteure->rowCount() != 0) : ?>
 
    <div class="large-3 columns">
     <label>Datum <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $fehler['start']; ?>
-     <input type="text" id="eventStartdatumInput" name="start" value="<?= $start; ?>" placeholder="<?= $ph_start; ?>">
+     <input type="text" id="eventStartdatumInput" name="start" value="<?= $start; ?>" placeholder="<?= $ph_start; ?>" required/>
     </label>
    </div>
 

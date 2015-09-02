@@ -4,7 +4,8 @@
  *
  * Ruth, 2015-07-10
  * Felix, 2015-09-01
- * TODO: Vereinheitlichung des Filter abrufens
+ * TODO: Vereinheitlichung des Filter abrufens bzw. Anpassung des
+ * Paginator's an (beidingt durch Filter) veränderte Eventanzahlen
  */
 
 //-----------------------------------
@@ -14,7 +15,7 @@ $tbl_event_tags = "aae_data_event_hat_sparte";
 $tbl_tags = "aae_data_kategorie";
 
 // Zeige wie viele Events pro Seite?
-// TODO: Wert konfigurierbar machen via Filtermenü
+// TODO: Wert konfigurierbar machen via Filtermenü (Darstellung: 15 - 25 - Alle)
 $maxEvents = '15';
 
 //-----------------------------------
