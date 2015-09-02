@@ -1,27 +1,28 @@
 <h3><?= $resultEvent->name; ?></h3>
 
-<?php if($row->kurzbeschreibung != "") : ?>
+<?= print_r($resultEvent); ?>
+
+<?php if($resultEvent->kurzbeschreibung != "") : ?>
   <h4>Beschreibung</h4>
-  <p><?= $row->kurzbeschreibung; ?></p>
+  <p><?= $resultEvent->kurzbeschreibung; ?></p>
 <?php endif; ?>
 
-<?php if($row->bild != "") : ?>
-  <img src="<?= $row->bild; ?>">
+<?php if($resultEvent->bild != "") : ?>
+  <img src="<?= $resultEvent->bild; ?>">
 <?php endif; ?>
-
 
 	<?php //Veranstalter
-	if($resultveranstalter->rowCount() != 0){
+	if($resultVeranstalter->rowCount() != 0){
 
-	foreach ($resultveranstalter as $row1) {
-	  $resultakteur = db_select($tbl_akteur, 'b')
+	foreach ($resultVeranstalter as $row1) {
+	  $resultAkteur = db_select($tbl_akteur, 'b')
 	  ->fields('b', array(
 	    'name',
 	  ))
 	  ->condition('AID', $row1->AID, '=')
 	  ->execute();
 
-	  foreach ($resultakteur as $row2) : ?>
+	  foreach ($resultAkteur as $row2) : ?>
       <h5>Veranstalter</h5>
 	  	<a href="?q=Akteurprofil/<?= $row1->AID; ?>"><?= $row2->name; ?></a><br>
     <?php endforeach;
@@ -78,7 +79,7 @@
 		}
 	}
 	}
- 
+
 	//Datum
 	$profileHTML .= '<h4>Zeit:</h4>';
 	if($row->start != "") {
