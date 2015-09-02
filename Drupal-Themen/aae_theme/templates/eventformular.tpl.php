@@ -25,15 +25,15 @@
 <?php
 
 if($resultakteure->rowCount() != 0) : ?>
+  <div class="large-4 large-offset-1 columns">
   <label>Veranstalter:</label>
   <select name="veranstalter" size="<?= $countakteure; ?>">
-  <select name="veranstalter" size="4" >
   <?php foreach ($resultakteure as $akteur) : ?>
     <option value="<?= $akteur->AID; ?>"><?= $akteur->name; ?></option>
   <?php endforeach; ?>
   </select>
 <?php endif; ?>
-
+ </div>
 </div><!-- /.row -->
 
 
@@ -94,13 +94,14 @@ if($resultakteure->rowCount() != 0) : ?>
    <label>Bild:</label>
    <input type="file" class="event" id="eventBildInput" name="bild" />
    <p><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf leipzigerecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
- <p>Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefeldern zu beschreiben.“ Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte.<br>
- Bildmaterial sollte abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
+ <p>Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefeldern zu beschreiben.“</p>
+ <p>Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte.</p>
+ <p>Bildmaterial sollte abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
   </fieldset>
 
   <label>Tags: <?= $fehler['sparten']; ?></label>
   <input type="text" class="event" id="eventSpartenInput" name="sparten" value="<?= $sparten; ?>" placeholder="<?= $ph_sparten; ?>">
 
-  <input type="submit" class="button event" id="eventSubmit" name="submit" value="Speichern">
+  <input type="submit" class="left button" id="eventSubmit" name="submit" value="Speichern">
 </form>
-<a class="secondary right button" href="<?= base_path(); ?>Akteure">Abbrechen</a>
+<a class="secondary right button" href="<?= base_path(); ?>Events">Abbrechen</a>
