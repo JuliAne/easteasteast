@@ -87,8 +87,9 @@ $resultVeranstalter->join($tbl_akteur, 'a', 'a.AID = e.AID');
 $resultVeranstalter
   ->fields('e')
   ->condition('e.EID', $eventId, '=')
-  ->condition('a.AID', $akteurID, '=')
-  ->execute();
+  ->condition('a.AID', $akteurId, '=')
+  ->execute()
+  ->fetchAll();
 
 print_r($resultVeranstalter);
 
