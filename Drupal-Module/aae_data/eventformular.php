@@ -430,13 +430,6 @@ $resultbezirke = db_select($tbl_bezirke, 'b')
   ->execute();
 $countbezirke = $resultbezirke->rowCount();
 
-$resulttags = db_select($tbl_sparte, 's')
-  ->fields('s')
-  ->execute()
-  ->fetchAll();
-
-print_r($resulttags);
-
 $pathThisFile = $_SERVER['REQUEST_URI'];
 
 // Ausgabe des Eventformulars

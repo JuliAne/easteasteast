@@ -108,9 +108,17 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
+  //Ajaxitem "Eventformular/ajaxGetTags"
+  $items['Eventformular/ajaxGetTags'] = array(
+    'title' => '',
+    'page callback' => 'eventformular_ajaxGetTags',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
+
   return $items;
 }
-
 
 /**
  * Builds page for Akteurliste
@@ -160,6 +168,23 @@ function akteuredit_page($aid=0) {
 
   return $profileHTML;
 }
+
+/**
+ * Ajax-code which returns all Tags in JSON-format
+ */
+
+function eventformular_ajaxGetTags() {
+
+  require_once $modulePath . '/database/db_connect.php';
+  $db = new DB_CONNECT();
+  $resulttags = db_select($tbl_sparte, 's')
+    ->fields('s')
+    ->execute()
+    ->fetchAll();
+
+  result $resulttags;
+}
+
 /**
  * Builds page for Eventloeschen
  */
@@ -232,6 +257,7 @@ function eventformular_page() {
 
   return $profileHTML;
 }
+
 /**
  * Funktion zum Einlesen aller Stadtteile
  */
