@@ -95,21 +95,21 @@ public function eventCheckPost() {
 
   //Wertezuweisung
   $name = $this->clearContent($_POST['name']);
-  $veranstalter = clearContent($_POST['veranstalter']);
-  $start = clearContent($_POST['start']);
-  $url = clearContent($_POST['url']);
-  $ende = clearContent($_POST['ende']);
-  $zeit_von = clearContent($_POST['zeit_von']);
-  $zeit_bis = clearContent($_POST['zeit_bis']);
+  $veranstalter = $this->clearContent($_POST['veranstalter']);
+  $start = $this->clearContent($_POST['start']);
+  $url = $this->clearContent($_POST['url']);
+  $ende = $this->clearContent($_POST['ende']);
+  $zeit_von = $this->clearContent($_POST['zeit_von']);
+  $zeit_bis = $this->clearContent($_POST['zeit_bis']);
   if(isset($_POST['bild'])) $bild = $_POST['bild'];
-  $kurzbeschreibung = clearContent($_POST['kurzbeschreibung']);
-  $strasse = clearContent($_POST['strasse']);
-  $nr = clearContent($_POST['nr']);
-  $adresszusatz = clearContent($_POST['adresszusatz']);
-  $plz = clearContent($_POST['plz']);
-  $ort = clearContent($_POST['ort']);
-  $gps = clearContent($_POST['gps']);
-  $sparten = clearContent($_POST['sparten']);
+  $kurzbeschreibung = $this->clearContent($_POST['kurzbeschreibung']);
+  $strasse = $this->clearContent($_POST['strasse']);
+  $nr = $this->clearContent($_POST['nr']);
+  $adresszusatz = $this->clearContent($_POST['adresszusatz']);
+  $plz = $this->clearContent($_POST['plz']);
+  $ort = $this->clearContent($_POST['ort']);
+  $gps = $this->clearContent($_POST['gps']);
+  $sparten = $this->clearContent($_POST['sparten']);
   $explodedsparten = "";
 
   if($sparten != "") $explodedsparten = explode(",", $sparten);
@@ -121,7 +121,7 @@ public function eventCheckPost() {
    $i = 0;
 
    while($i < $countsparten) {
-    $explodedsparten[$i] = clearContent($explodedsparten[$i]);
+    $explodedsparten[$i] = $this->clearContent($explodedsparten[$i]);
     $i++;
    }
   }
