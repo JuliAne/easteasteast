@@ -17,7 +17,59 @@
 
 Class eventformular {
 
- /* Einfache, globale Funktion zum Filtern von POST-Daten. Gerne erweiterbar. */
+  //Variablen zum Speichern von Werten, welche in die DB-Tabellen eingefügt werden sollen
+  //$tbl_event
+  var $name = "";
+  var $veranstalter = "";
+  var $start = "";
+  var $zeit_von = "";
+  var $zeit_bis = "";
+  var $ende = "";
+  var $bild = "";
+  var $kurzbeschreibung = "";
+  var $url = "";
+
+  //$tbl_adresse
+  var $strasse = "";
+  var $nr = "";
+  var $adresszusatz = "";
+  var $plz = "";
+  var $ort = "";
+  var $gps = "";
+  var $adresse = "";
+
+  //Tags:
+  var $sparten="";
+
+  //Speicherort fuer Bilder
+  var $bildpfad = "/home/swp15-aae/drupal/sites/default/files/styles/large/public/field/image/";
+  var $short_bildpfad = "sites/default/files/styles/large/public/field/image/";
+
+  //Variable zur Freigabe: muss true sein
+  var $freigabe = true;
+  var $fehler = array(); // In diesem Array werden alle Fehler gespeichert
+
+  //Variablen, welche Texte in den Formularfeldern beschreiben ("placeholder")
+
+  var $ph_name = "Veranstaltungsname";
+  var $ph_veranstalter = "Veranstalter";
+  var $ph_start = "Starttag (yyyy-mm-dd)";
+  var $ph_zeit_von = "von (Uhrzeit: hh:mm)";
+  var $ph_zeit_bis = "bis (Uhrzeit: hh:mm)";
+  var $ph_ende = "Endtag (yyyy-mm-dd)";
+  var $ph_bild = "Bild";
+  var $ph_kurzbeschreibung = "Beschreibung";
+  var $ph_ort = "Ort der Veranstaltung";
+  var $ph_url = "URL";
+  var $ph_strasse = "Strasse";
+  var $ph_nr = "Hausnummer";
+  var $ph_adresszusatz = "Adresszusatz";
+  var $ph_plz = "PLZ";
+  var $ph_ort = "Bezirk";
+  var $ph_gps = "GPS Koordinaten";
+  var $ph_sparten = "Tags kommasepariert eingeben!";
+
+ /* Einfache Funktion zum Filtern von POST-Daten. Gerne erweiterbar. */
 
  private function clearContent($trimTag) {
   $clear = trim($trimTag);
@@ -34,56 +86,7 @@ Class eventformular {
 
 //-----------------------------------
 
- //Variablen zum Speichern von Werten, welche in die DB-Tabellen eingefügt werden sollen
- //$tbl_event
- $name = "";
- $veranstalter = "";
- $start = "";
- $zeit_von = "";
- $zeit_bis = "";
- $ende = "";
- $bild = "";
- $kurzbeschreibung = "";
- $url = "";
 
- //$tbl_adresse
- $strasse = "";
- $nr = "";
- $adresszusatz = "";
- $plz = "";
- $ort = "";
- $gps = "";
- $adresse = "";
-
- //Tags:
- $sparten="";
-
- //Speicherort fuer Bilder
- $bildpfad = "/home/swp15-aae/drupal/sites/default/files/styles/large/public/field/image/";
- $short_bildpfad = "sites/default/files/styles/large/public/field/image/";
-
- //Variable zur Freigabe: muss true sein
- $freigabe = true;
-
- //Variablen, welche Texte in den Formularfeldern beschreiben ("placeholder")
-
- $ph_name = "Veranstaltungsname";
- $ph_veranstalter = "Veranstalter";
- $ph_start = "Starttag (yyyy-mm-dd)";
- $ph_zeit_von = "von (Uhrzeit: hh:mm)";
- $ph_zeit_bis = "bis (Uhrzeit: hh:mm)";
- $ph_ende = "Endtag (yyyy-mm-dd)";
- $ph_bild = "Bild";
- $ph_kurzbeschreibung = "Beschreibung";
- $ph_ort = "Ort der Veranstaltung";
- $ph_url = "URL";
- $ph_strasse = "Strasse";
- $ph_nr = "Hausnummer";
- $ph_adresszusatz = "Adresszusatz";
- $ph_plz = "PLZ";
- $ph_ort = "Bezirk";
- $ph_gps = "GPS Koordinaten";
- $ph_sparten = "Tags kommasepariert eingeben!";
 
 } // END function eventPageInit()
 
@@ -94,22 +97,22 @@ public function eventCheckPost() {
 // Wird ausgeführt, wenn auf "Speichern" gedrückt wird
 
   //Wertezuweisung
-  $name = $this->clearContent($_POST['name']);
-  $veranstalter = $this->clearContent($_POST['veranstalter']);
-  $start = $this->clearContent($_POST['start']);
-  $url = $this->clearContent($_POST['url']);
-  $ende = $this->clearContent($_POST['ende']);
-  $zeit_von = $this->clearContent($_POST['zeit_von']);
-  $zeit_bis = $this->clearContent($_POST['zeit_bis']);
-  if(isset($_POST['bild'])) $bild = $_POST['bild'];
-  $kurzbeschreibung = $this->clearContent($_POST['kurzbeschreibung']);
-  $strasse = $this->clearContent($_POST['strasse']);
-  $nr = $this->clearContent($_POST['nr']);
-  $adresszusatz = $this->clearContent($_POST['adresszusatz']);
-  $plz = $this->clearContent($_POST['plz']);
-  $ort = $this->clearContent($_POST['ort']);
-  $gps = $this->clearContent($_POST['gps']);
-  $sparten = $this->clearContent($_POST['sparten']);
+  $this->name = $this->clearContent($_POST['name']);
+  $this->veranstalter = $this->clearContent($_POST['veranstalter']);
+  $this->start = $this->clearContent($_POST['start']);
+  $this->url = $this->clearContent($_POST['url']);
+  $this->ende = $this->clearContent($_POST['ende']);
+  $this->zeit_von = $this->clearContent($_POST['zeit_von']);
+  $this->zeit_bis = $this->clearContent($_POST['zeit_bis']);
+  if(isset($_POST['bild'])) $this->bild = $_POST['bild'];
+  $this->kurzbeschreibung = $this->clearContent($_POST['kurzbeschreibung']);
+  $this->strasse = $this->clearContent($_POST['strasse']);
+  $this->nr = $this->clearContent($_POST['nr']);
+  $this->adresszusatz = $this->clearContent($_POST['adresszusatz']);
+  $this->plz = $this->clearContent($_POST['plz']);
+  $this->ort = $this->clearContent($_POST['ort']);
+  $this->gps = $this->clearContent($_POST['gps']);
+  $this->sparten = $this->clearContent($_POST['sparten']);
   $explodedsparten = "";
 
   if($sparten != "") $explodedsparten = explode(",", $sparten);
@@ -128,24 +131,22 @@ public function eventCheckPost() {
 
   //Check-Klauseln
 
-  $fehler = array(); // In diesem Array werden alle Fehler gespeichert
-
   //Check, ob ein Name eingegeben wurde:
   if(strlen($name) == 0) {
-   $fehler['name'] = "Bitte einen Veranstaltungsnamen eingeben!";
-	 $freigabe = false;
+   $this->fehler['name'] = "Bitte einen Veranstaltungsnamen eingeben!";
+	 $this->freigabe = false;
   }
 
   //Ckeck, ob Datum angegeben wurde
   if(strlen($start) == 0) {
-   $fehler['start'] = "Bitte ein Datum angeben!";
-   $freigabe = false;
+   $this->fehler['start'] = "Bitte ein Datum angeben!";
+   $this->freigabe = false;
   }
 
   //Check, ob Bezirk ausgewählt wurde
   if(strlen($ort) == 0){
-  	$fehler['ort'] = "Bitte einen Bezirk auswählen!";
-  	$freigabe = false;
+  	$this->fehler['ort'] = "Bitte einen Bezirk auswählen!";
+  	$this->freigabe = false;
   }
 
   //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
@@ -154,51 +155,51 @@ public function eventCheckPost() {
   // gestalten; habe gehört, das sei besser für die DB-Performance...
 
   if (strlen($name) > 100) {
-	 $fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
-   $freigabe = false;
+	 $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
+   $this->freigabe = false;
   }
 
   if (strlen($url) > 200) {
-	 $fehler['url'] = "Bitte geben Sie eine kürzere URL an.";
-	 $freigabe = false;
+	 $this->fehler['url'] = "Bitte geben Sie eine kürzere URL an.";
+	 $this->freigabe = false;
   }
 
   if (strlen($kurzbeschreibung) > 500) {
-   $fehler['kurzbeschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
-	 $freigabe = false;
+   $this->fehler['kurzbeschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
+	 $this->freigabe = false;
   }
 
   if (strlen($strasse) > 100) {
-	 $fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
-	 $freigabe = false;
+	 $this->fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
+	 $this->freigabe = false;
   }
 
   if (strlen($nr) > 100) {
-	 $fehler['nr'] = "Bitte geben Sie eine kürzere Nummer an.";
-	 $freigabe = false;
+	 $this->fehler['nr'] = "Bitte geben Sie eine kürzere Nummer an.";
+	 $this->freigabe = false;
   }
 
   if (strlen($adresszusatz) > 100) {
-	 $fehler['adresszusatz'] = "Bitte geben Sie einen kürzeren Adresszusatz an.";
-   $freigabe = false;
+	 $this->fehler['adresszusatz'] = "Bitte geben Sie einen kürzeren Adresszusatz an.";
+   $this->freigabe = false;
   }
 
   if (strlen($plz) > 100) {
-	 $fehler['plz'] = "Bitte geben Sie eine kürzere PLZ an.";
-   $freigabe = false;
+	 $this->fehler['plz'] = "Bitte geben Sie eine kürzere PLZ an.";
+   $this->freigabe = false;
   }
 
   if (strlen($ort) > 100) {
-   $fehler['ort'] = "Bitte geben Sie einen kürzeren Ortsnamen an.";
-	 $freigabe = false;
+   $this->fehler['ort'] = "Bitte geben Sie einen kürzeren Ortsnamen an.";
+	 $this->freigabe = false;
   }
 
   if (strlen($gps) > 100) {
-   $fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
-	 $freigabe = false;
+   $this->fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
+	 $this->freigabe = false;
   }
 
-  return $freigabe;
+  return $this->freigabe;
  } // END function eventCheckPost()
 
 
