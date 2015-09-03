@@ -234,7 +234,7 @@ private function eventCheckPost() {
 
 private function eventSpeichern () {
 
-	require_once '/database/db_connect.php';
+	require_once 'database/db_connect.php';
 	$db = new DB_CONNECT();
 
   //Wenn Bilddatei ausgewählt wurde...
