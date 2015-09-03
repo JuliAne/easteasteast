@@ -276,7 +276,7 @@ function eventformular_page() {
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
 
-  return $profileHTML;
+  return 'E'.$profileHTML;
 }
 
 /**
