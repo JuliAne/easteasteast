@@ -31,7 +31,7 @@ $resultakteurid = db_select($tbl_akteur_events, 'e')//Den Akteur zum Event aus D
     'AID',
   ))
   ->condition('EID', $event_id, '=')
-  ->execute(); 
+  ->execute();
 $akteur_id = "";
 $okay="";//gibt an, ob Zugang erlaubt wird oder nicht
 foreach ($resultakteurid as $row) {
@@ -61,7 +61,7 @@ $ist_ersteller = $ersteller->rowCount();
 if($ist_ersteller == 1){
 	$okay =1;
 }
- 
+
 if(!array_intersect(array('administrator'), $user->roles)){
   if($okay != 1){
     drupal_access_denied();
@@ -73,7 +73,7 @@ if(!array_intersect(array('administrator'), $user->roles)){
 
 //das wird ausgeführt, wenn auf "Löschen" gedrückt wird
 if (isset($_POST['submit'])) {
-	
+
   $event_id = $_POST['event_id'];
   require_once $modulePath . '/database/db_connect.php';
   //include $modulePath . '/templates/utils/rest_helper.php'; Ist aus dem Künstlermodul übernommen
@@ -91,19 +91,22 @@ if (isset($_POST['submit'])) {
 
   header("Location: ?q=Events"); //Hier muss hin, welche Seite aufgerufen werden soll,
 		//nach dem die Daten erfolgreich gespeichert wurden.
-	
+
 } else{
-	
+
 }
 
-$pathThisFile = $_SERVER['REQUEST_URI']; 
+$pathThisFile = $_SERVER['REQUEST_URI'];
 
 //Darstellung
 $profileHTML = <<<EOF
-  <p>Möchten Sie das Event $event wirklich löschen?</p><br>
-  <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
-    <input name="event_id" type="hidden" id="eventEIDInput" value="$event_id" />
-    <a href="javascript:history.go(-1)">Abbrechen</a>
-    <input type="submit" class="event" id="eventSubmit" name="submit" value="Loeschen">
-  </form>
+
+<div class="alert-box" data-alert>
+ <p><strong>Möchten Sie dieses Event wirklich löschen?</strong></p><br />
+ <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
+   <input name="event_id" type="hidden" id="eventEIDInput" value="$event_id" />
+   <a href="javascript:history.go(-1)">Abbrechen</a>
+   <input type="submit" class="event" id="eventSubmit" name="submit" value="Loeschen">
+ </form>
+<a href="#" class="close">&times;</a></div>
 EOF;
