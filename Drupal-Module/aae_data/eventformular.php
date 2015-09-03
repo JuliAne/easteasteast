@@ -16,8 +16,6 @@
  */
 
  // Eingeloggter User
- global $user;
- $user_id = $user->uid;
 
  /* Einfache, globale Funktion zum Filtern von POST-Daten. Gerne erweiterbar. */
 
@@ -27,6 +25,9 @@
  }
 
  function eventPageInit() {
+
+   global $user;
+   $user_id = $user->uid;
 
  // Sicherheitsschutz
  if(!user_is_logged_in()) drupal_access_denied();
@@ -360,6 +361,9 @@ function eventSpeichern () {
 
 function eventDisplay() {
  // Ausgabe des Eventformulars:
+
+ global $user;
+ $user_id = $user->uid;
 
  if (array_intersect(array('administrator'), $user->roles)) {
  //alle Akteure abfragen, die in DB: nur Admin
