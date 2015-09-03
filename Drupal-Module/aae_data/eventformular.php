@@ -310,7 +310,7 @@ private function eventSpeichern () {
 	$event_id = db_insert($this->tbl_event)
    	->fields(array(
 		'name' => $this->name,
-		'ort' => $this->adresse,
+		'ort' => $adresse,
 		'start' => $this->start,
 		'url' => $this->url,
 		'ende' => $this->ende,
