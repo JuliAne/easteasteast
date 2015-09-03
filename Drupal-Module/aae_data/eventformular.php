@@ -15,7 +15,7 @@
  * TODO: "Privat" miteinbringen
  */
 
-Class eventformular($action) {
+Class eventformular() {
 
   //Variablen zum Speichern von Werten, welche in die DB-Tabellen eingefügt werden sollen
   //$tbl_event
@@ -81,7 +81,7 @@ Class eventformular($action) {
   var $user_id;
   var $action = '';
 
- function __construct() {
+ function __construct($action) {
 
    global $user;
    $this->user_id = $user->uid;
