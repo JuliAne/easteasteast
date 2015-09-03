@@ -15,7 +15,7 @@
  * TODO: "Privat" miteinbringen
  */
 
-Class eventformular() {
+Class eventformular {
 
   //Variablen zum Speichern von Werten, welche in die DB-Tabellen eingefügt werden sollen
   //$tbl_event
