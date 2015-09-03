@@ -18,8 +18,8 @@
  Class eventformular {
 
  // Eingeloggter User
- global $user;
- global $user_id = $user->uid;
+ var global $user;
+ var $user_id = $user->uid;
 
  /* Einfache, globale Funktion zum Filtern von POST-Daten. Gerne erweiterbar. */
 
