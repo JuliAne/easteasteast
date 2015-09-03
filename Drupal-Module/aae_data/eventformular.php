@@ -15,11 +15,9 @@
  * TODO: "Privat" miteinbringen
  */
 
- Class eventformular {
-
  // Eingeloggter User
- var global $user;
- var $user_id = $user->uid;
+ global $user;
+ $user_id = $user->uid;
 
  /* Einfache, globale Funktion zum Filtern von POST-Daten. Gerne erweiterbar. */
 
@@ -397,4 +395,3 @@ function eventDisplay() {
  $profileHTML = ob_get_clean(); // Übergabe des gerenderten "eventformular.tpl.php"
 
 } // END function eventDisplay()
-} // END CLASS
