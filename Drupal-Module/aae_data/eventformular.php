@@ -15,16 +15,16 @@
  * TODO: "Privat" miteinbringen
  */
 
- // Eingeloggter User
+Class eventformular {
 
  /* Einfache, globale Funktion zum Filtern von POST-Daten. Gerne erweiterbar. */
 
- function clearContent($trimTag) {
+ private function clearContent($trimTag) {
   $clear = trim($trimTag);
   return strip_tags($clear);
  }
 
- function eventPageInit() {
+ public function eventPageInit() {
 
    global $user;
    $user_id = $user->uid;
@@ -89,7 +89,7 @@
 
 //-----------------------------------
 
-function eventCheckPost() {
+public function eventCheckPost() {
 
 // Wird ausgeführt, wenn auf "Speichern" gedrückt wird
 
@@ -202,7 +202,7 @@ function eventCheckPost() {
  } // END function eventCheckPost()
 
 
-function eventSpeichern () {
+public function eventSpeichern () {
 
   // DB-Tabellen
   $tbl_adresse = "aae_data_adresse";
@@ -359,7 +359,7 @@ function eventSpeichern () {
 
 } // END function event_speichern()
 
-function eventDisplay() {
+public function eventDisplay() {
  // Ausgabe des Eventformulars:
 
  // DB-Tabellen
@@ -408,4 +408,5 @@ function eventDisplay() {
 
  $profileHTML = ob_get_clean(); // Übergabe des gerenderten "eventformular.tpl.php"
 
-} // END function eventDisplay()
+ } // END function eventDisplay()
+}
