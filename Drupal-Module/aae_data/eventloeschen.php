@@ -105,8 +105,8 @@ $profileHTML = <<<EOF
  <p><strong>Möchten Sie dieses Event wirklich löschen?</strong></p><br />
  <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
    <input name="event_id" type="hidden" id="eventEIDInput" value="$event_id" />
-   <a href="javascript:history.go(-1)">Abbrechen</a>
-   <input type="submit" class="event" id="eventSubmit" name="submit" value="Loeschen">
+   <a class="secondary button" href="javascript:history.go(-1)">Abbrechen</a>
+   <input type="button submit"  id="eventSubmit" name="submit" value="Loeschen">
  </form>
 <a href="#" class="close">&times;</a></div>
 EOF;
