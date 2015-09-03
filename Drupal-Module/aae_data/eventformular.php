@@ -79,11 +79,15 @@ Class eventformular {
   var $tbl_sparte = "aae_data_kategorie";
 
   var $user_id;
+  var $action = '';
 
- function __construct() {
+ function __construct($action='') {
 
    global $user;
    $this->user_id = $user->uid;
+
+   // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
+   if($action == 'update') $this->action == 'update';
 
    // Sicherheitsschutz
    if(!user_is_logged_in()) drupal_access_denied();
@@ -99,12 +103,17 @@ Class eventformular {
    if (isset($_POST['submit'])) {
 
      if ($this->eventCheckPost()) {
-       $this->eventSpeichern();
+       if ($this->action == 'update') $this->eventUpdaten();
+       else $this->eventSpeichern();
+
        $output = $this->eventDisplay();
      } else {
        $output = $this->eventDisplay();
     }
   } else {
+    // Was passiert, wenn Seite zum ersten mal gezeigt wird?
+
+    if ($this->action == 'update') $this->eventGetFields();
     $output = $this->eventDisplay();
  }
 
@@ -232,7 +241,183 @@ private function eventCheckPost() {
  } // END function eventCheckPost()
 
 
-private function eventSpeichern () {
+private function eventUpdaten() {
+
+  require_once $modulePath . '/database/db_connect.php';
+	$db = new DB_CONNECT();
+
+	//Abfrage, ob Adresse bereits in Adresstabelle
+	//Addressdaten aus DB holen:
+	$resultadresse = db_select($this->tbl_adresse, 'a')
+	  ->fields('a', array( 'ADID', 'gps' ))
+	  ->condition('strasse', $this->strasse, '=')
+	  ->condition('nr', $this->nr, '=')
+	  ->condition('adresszusatz', $this->adresszusatz, '=')
+	  ->condition('plz', $this->plz, '=')
+	  ->condition('bezirk', $this->ort, '=')
+	  ->execute();
+
+	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
+  $i = $resultadresse->rowCount();
+
+	if($i == 0) {
+    //Adresse nicht vorhanden
+	  $this->adresse = db_insert($this->tbl_adresse)
+	    ->fields(array(
+		  'strasse' => $this->strasse,
+		  'nr' => $this->nr,
+		  'adresszusatz' => $this->adresszusatz,
+		  'plz' => $this->plz,
+		  'bezirk' => $this->ort,
+		  'gps' => $this->gps,
+		))
+		->execute();
+
+	} else {
+    //Adresse bereits vorhanden
+
+	  foreach ($resultadresse as $row) {
+	    //Abfrage, ob GPS-Angaben gemacht wurden
+
+	    if(strlen($this->gps) != 0 && strlen($row->gps) == 0 ){
+        //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
+	      //Update der Adresse
+	      $adresse_updated = db_update($this->tbl_adresse)
+	 	    ->fields(array(
+			  'gps' => $this->gps,
+	        ))
+	        ->condition('ADID', $row->ADID, '=')
+	        ->execute();
+	    }
+	    $this->adresse = $row->ADID;//Adress-ID merken
+	  }
+	}
+
+	//Zeitformatierung
+	if(strlen($this->ende) == 0) $this->ende = $this->start;
+	else $this->ende = $this->ende.' '.$this->zeit_bis;
+
+	$this->start = $this->start.' '.$this->zeit_von;
+
+  //tbl_event UPDATE!!!
+	$eventupdate = db_update($this->tbl_event)
+   	->fields(array(
+		'name' => $this->name,
+		'ort' => $this->adresse,
+		'start' => $this->start,
+		'url' => $this->url,
+		'ende' => $this->ende,
+		'bild' => $this->bild,
+		'kurzbeschreibung' => $this->kurzbeschreibung,
+	  ))
+	  ->condition('EID', $this->event_id, '=')
+	  ->execute();
+
+	//tbl_akteur_events UPDATE!!! (bei Mehrfachauswahl von Veranstaltern, muss das noch angepasst werden!!!)
+	$akteureventupdate = db_update($this->tbl_akteur_events)
+   	->fields(array(
+		'AID' => $this->veranstalter,
+	  ))
+	  ->condition('EID', $this->event_id, '=')
+	  ->execute();
+
+	header("Location: Eventprofil/$event_id");
+  // Event erstellt uuuund.... tschüss ;)
+
+} // END function eventUpdaten()
+
+private function eventGetFields() {
+
+  //Erstmaliger Aufruf: Daten aus DB in Felder schreiben
+
+  require_once $modulePath . '/database/db_connect.php';
+  $db = new DB_CONNECT();
+
+  //Auswahl der Daten des ausgewählten Events
+  $resultevent = db_select($this->tbl_event, 'e')
+    ->fields('e', array(
+	  'name',
+	  'start',
+	  'ende',
+	  'url',
+	  'bild',
+	  'kurzbeschreibung',
+	  'ort',
+	))
+	->condition('EID', $this->event_id, '=')
+  ->execute();
+
+  $resultveranstalter = db_select($this->tbl_akteur_events, 'a')
+   ->fields('a', array( 'AID' ))
+	 ->condition('EID', $this->event_id, '=')
+   ->execute();
+
+  //Speichern der Daten in den Arbeitsvariablen
+  foreach($resultevent as $row){
+	 $this->name = $row->name;
+	 $ths->ort = $row->ort;
+	 $this->start = $row->start;
+	 $this->ende = $row->ende;
+	 $this->url = $row->url;
+	 $this->bild = $row->bild;
+	 $this->kurzbeschreibung = $row->kurzbeschreibung;
+  }
+
+  foreach ($resultveranstalter as $row) {
+	 $this->veranstalter = $row->AID;
+  }
+
+  $akteur_id = $this->veranstalter;
+
+  //Adressdaten aus DB holen:
+  $resultadresse = db_select($this->tbl_adresse, 'd')
+    ->fields('d', array(
+	  'strasse',
+	  'nr',
+	  'adresszusatz',
+	  'plz',
+	  'bezirk',
+	  'gps',
+	))
+	->condition('ADID', $this->ort, '=')
+    ->execute();
+
+  //Speichern der Adressdaten in den Arbeitsvariablen
+  foreach ($resultadresse as $row) {
+	 $this->strasse = $row->strasse;
+	 $this->nr = $row->nr;
+	 $this->adresszusatz = $row->adresszusatz;
+	 $this->plz = $row->plz;
+	 $this->ort = $row->bezirk;
+	 $this->gps = $row->gps;
+  }
+
+  //Akteurnamen aus DB holen:
+  $resultakteur = db_select($this->tbl_akteur, 'a')
+   ->fields('a', array( 'name' ))
+	 ->condition('AID', $this->veranstalter, '=')
+   ->execute();
+
+  //Speichern der Adressdaten in den Arbeitsvariablen
+  foreach ($resultakteur as $row) {
+	 $this->veranstalter = $row->name;
+  }
+  //Zeit auflösen
+  $explodedstart=explode(' ', $this->start);
+  $explodedende=explode(' ', $this->ende);
+  $this->ende=$explodedende[0];
+  $this->start=$explodedstart[0];
+
+  if(count($explodedstart) == 2){
+	 $this->zeit_von = $explodedstart[1];
+  }
+
+  if(count($explodedende) == 2){
+	 $this->zeit_bis = $explodedende[1];
+  }
+} // END function eventUpdaten()
+
+private function eventSpeichern() {
 
 	require_once 'database/db_connect.php';
 	$db = new DB_CONNECT();
@@ -373,14 +558,15 @@ private function eventSpeichern () {
 	  }
 	}
 
-	header("Location: Event/".$event_id);
+	header("Location: Eventprofil/".$event_id);
     // Hier muss hin, welche Seite aufgerufen werden soll,
 	  // nachdem die Daten erfolgreich gespeichert wurden.
 
 } // END function event_speichern()
 
 private function eventDisplay() {
- // Ausgabe des Eventformulars:
+
+ // Ausgabe des Eventformulars
 
  if (array_intersect(array('administrator'), $user->roles)) {
  //alle Akteure abfragen, die in DB: nur Admin
@@ -416,4 +602,4 @@ private function eventDisplay() {
  return ob_get_clean(); // Übergabe des gerenderten "eventformular.tpl.php"
 
  } // END function eventDisplay()
-}
+} // END class eventformular()

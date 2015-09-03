@@ -242,12 +242,14 @@ function eventloeschen_page($eid=0) {
 function eventedit_page($aid=0) {
 
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/eventedit.php';
+  include $modulePath . '/eventformular.php';
+
+  $event = new eventformular('update');
 
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
 
-  return $profileHTML;
+  return $event->run();
 }
 /**
  * Builds page for Eventformular
