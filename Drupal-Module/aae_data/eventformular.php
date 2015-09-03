@@ -15,7 +15,7 @@
  * TODO: "Privat" miteinbringen
  */
 
- Class eventformular() {
+ Class eventformular {
 
  // Eingeloggter User
  global $user;
