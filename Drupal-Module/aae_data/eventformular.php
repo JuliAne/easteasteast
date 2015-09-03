@@ -85,8 +85,8 @@ Class eventformular {
    global $user;
    $this->user_id = $user->uid;
 
- // Sicherheitsschutz
- if(!user_is_logged_in()) drupal_access_denied();
+   // Sicherheitsschutz
+   if(!user_is_logged_in()) drupal_access_denied();
 
  } // END Constructor
 
@@ -144,7 +144,7 @@ private function eventCheckPost() {
   $this->sparten = $this->clearContent($_POST['sparten']);
   $explodedsparten = "";
 
-  if($sparten != "") $explodedsparten = explode(",", $sparten);
+  if($this->sparten != "") $explodedsparten = explode(",", $this->sparten);
 
   //überflüssige Leerzeichen am Anfang entfernen
 
