@@ -59,7 +59,6 @@ Class eventformular {
   var $ph_ende = "Endtag (yyyy-mm-dd)";
   var $ph_bild = "Bild";
   var $ph_kurzbeschreibung = "Beschreibung";
-  var $ph_ort = "Ort der Veranstaltung";
   var $ph_url = "URL";
   var $ph_strasse = "Strasse";
   var $ph_nr = "Hausnummer";
