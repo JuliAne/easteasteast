@@ -94,7 +94,7 @@ public function eventCheckPost() {
 // Wird ausgeführt, wenn auf "Speichern" gedrückt wird
 
   //Wertezuweisung
-  $name = clearContent($_POST['name']);
+  $name = $this->clearContent($_POST['name']);
   $veranstalter = clearContent($_POST['veranstalter']);
   $start = clearContent($_POST['start']);
   $url = clearContent($_POST['url']);
