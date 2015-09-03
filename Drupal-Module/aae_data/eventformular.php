@@ -271,7 +271,7 @@ private function eventSpeichern () {
    if($resultadresse->rowCount() == 0) {
 
     //Adresse nicht vorhanden
-	  $adresse = db_insert($this->tbl_adresse)
+	  $this->adresse = db_insert($this->tbl_adresse)
 	    ->fields(array(
 		  'strasse' => $this->strasse,
 		  'nr' => $this->nr,
@@ -310,7 +310,7 @@ private function eventSpeichern () {
 	$event_id = db_insert($this->tbl_event)
    	->fields(array(
 		'name' => $this->name,
-		'ort' => $adresse,
+		'ort' => $this->adresse,
 		'start' => $this->start,
 		'url' => $this->url,
 		'ende' => $this->ende,
