@@ -81,7 +81,7 @@ Class eventformular {
   var $user_id;
   var $action = '';
 
- function __construct($action) {
+  function __construct($action) {
 
    global $user;
    $this->user_id = $user->uid;
@@ -92,11 +92,13 @@ Class eventformular {
    // Sicherheitsschutz
    if(!user_is_logged_in()) drupal_access_denied();
 
- } // END Constructor
+  } // END Constructor
 
- /* Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt */
 
- public function run() {
+  public function run() {
+  /** Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
+  *   @returns $profileHTML;
+  */
 
    $output = '';
 
@@ -121,9 +123,8 @@ Class eventformular {
 
 }
 
- /* Einfache Funktion zum Filtern von POST-Daten. Gerne erweiterbar. */
-
  private function clearContent($trimTag) {
+  /* Einfache Funktion zum Filtern von POST-Daten. Gerne erweiterbar. */
   $clear = trim($trimTag);
   return strip_tags($clear);
  }
@@ -133,6 +134,7 @@ Class eventformular {
 private function eventCheckPost() {
 
 // Wird ausgeführt, wenn auf "Speichern" gedrückt wird
+// @returns $this->freigabe;
 
   //Wertezuweisung
   $this->name = $this->clearContent($_POST['name']);
@@ -321,13 +323,14 @@ private function eventUpdaten() {
 	  ->condition('EID', $this->event_id, '=')
 	  ->execute();
 
-	header("Location: Eventprofil/$event_id");
+	header("Location: Eventprofil/$this->event_id");
   // Event erstellt uuuund.... tschüss ;)
 
 } // END function eventUpdaten()
 
 private function eventGetFields() {
 
+  // Wird aufgerufen, wenn "Akteur bearbeiten" ausgewählt wurde
   //Erstmaliger Aufruf: Daten aus DB in Felder schreiben
 
   require_once $modulePath . '/database/db_connect.php';

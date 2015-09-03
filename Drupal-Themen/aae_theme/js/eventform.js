@@ -2,7 +2,7 @@ $(document).ready(function(){
 
   $("#eventSpartenInput").tokenInput("?q=ajax");
 
-  $('.eventAdresse input').click(function(){
+  $('.eventAdresse').click(function(){
 
     if ($('#eventNrInput').val() != '' && $('#eventPLZInput').val() != '' && $('#eventStrasseInput').val() != '') {
 
