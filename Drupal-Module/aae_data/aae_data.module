@@ -267,16 +267,16 @@ function eventformular_page() {
 
   if (isset($_POST['submit'])) {
     if ($event->eventCheckPost()) $event->eventSpeichern();
-    else $event->eventDisplay();
+    else $profileHTML = $event->eventDisplay();
   } else {
 
-    $event->eventDisplay();
+    $profileHTML = $event->eventDisplay();
   }
 
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
 
-  return 'E'.$profileHTML;
+  return $profileHTML;
 }
 
 /**

@@ -406,7 +406,7 @@ public function eventDisplay() {
 
  include_once path_to_theme().'/templates/eventformular.tpl.php';
 
- $profileHTML = ob_get_clean(); // Übergabe des gerenderten "eventformular.tpl.php"
+ return ob_get_clean(); // Übergabe des gerenderten "eventformular.tpl.php"
 
  } // END function eventDisplay()
 }
