@@ -15,6 +15,10 @@
  * TODO: "Privat" miteinbringen
  */
 
+ // Eingeloggter User
+ global $user;
+ $user_id = $user->uid;
+
  /* Einfache, globale Funktion zum Filtern von POST-Daten. Gerne erweiterbar. */
 
  function clearContent($trimTag) {
@@ -23,10 +27,6 @@
  }
 
  function eventPageInit() {
-
- // Eingeloggter User
- global $user;
- $user_id = $user->uid;
 
  // Sicherheitsschutz
  if(!user_is_logged_in()) drupal_access_denied();
