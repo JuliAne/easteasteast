@@ -262,7 +262,8 @@ function eventformular_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventformular.php';
 
-  eventformular->eventPageInit();
+  $event = new eventformular();
+  $event->eventPageInit();
 
   if (isset($_POST['submit'])) {
     if (eventCheckPost()) eventSpeichern();
