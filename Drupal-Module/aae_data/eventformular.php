@@ -19,6 +19,16 @@
 
  /* Einfache, globale Funktion zum Filtern von POST-Daten. Gerne erweiterbar. */
 
+ // DB-Tabellen
+ $tbl_adresse = "aae_data_adresse";
+ $tbl_event = "aae_data_event";
+ $tbl_akteur_events = "aae_data_akteur_hat_events";
+ $tbl_bezirke = "aae_data_bezirke";
+ $tbl_akteur = "aae_data_akteur";
+ $tbl_hat_user = "aae_data_hat_user";
+ $tbl_event_sparte = "aae_data_event_hat_sparte";
+ $tbl_sparte = "aae_data_kategorie";
+
  function clearContent($trimTag) {
   $clear = trim($trimTag);
   return strip_tags($clear);
@@ -31,16 +41,6 @@
 
  // Sicherheitsschutz
  if(!user_is_logged_in()) drupal_access_denied();
-
- // DB-Tabellen
- $tbl_adresse = "aae_data_adresse";
- $tbl_event = "aae_data_event";
- $tbl_akteur_events = "aae_data_akteur_hat_events";
- $tbl_bezirke = "aae_data_bezirke";
- $tbl_akteur = "aae_data_akteur";
- $tbl_hat_user = "aae_data_hat_user";
- $tbl_event_sparte = "aae_data_event_hat_sparte";
- $tbl_sparte = "aae_data_kategorie";
 
 //-----------------------------------
 
