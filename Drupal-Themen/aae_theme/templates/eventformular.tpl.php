@@ -1,11 +1,11 @@
 <h3>Event anlegen</h3>
 <div class="divider" style="margin-bottom: 25px;"></div>
 
-<?php if (!$freigabe) : ?>
+<?php if (!$this->freigabe) : ?>
 <div class="alert-box" data-alert>
  <p><strong>Ihr Event konnte nicht gespeichert werden, da folgende Fehler vorliegen:</strong></p><br />
  <ul>
-  <?php foreach($fehler as $f) : ?>
+  <?php foreach($this->fehler as $f) : ?>
     <li><?= $f; ?></li>
   <?php endforeach; ?>
  </ul>
@@ -16,9 +16,9 @@
 
  <div class="row">
     <div class="large-7 columns">
-      <?= $fehler['name']; ?>
+      <?= $this->fehler['name']; ?>
       <label>Name <span class="pflichtfeld">(Pflichtfeld)</span>:
-        <input type="text" id="eventNameInput" name="name" value="<?= $name; ?>" placeholder="<?= $ph_name; ?>" required/>
+        <input type="text" id="eventNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= $this->ph_name; ?>" required/>
       </label>
     </div>
 
@@ -40,26 +40,26 @@ if($resultakteure->rowCount() != 0) : ?>
   <div class="row">
 
    <div class="large-3 columns">
-    <label>Datum <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $fehler['start']; ?>
-     <input type="text" id="eventStartdatumInput" name="start" value="<?= $start; ?>" placeholder="<?= $ph_start; ?>" required/>
+    <label>Datum <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['start']; ?>
+     <input type="text" id="eventStartdatumInput" name="start" value="<?= $this->start; ?>" placeholder="<?= $this->ph_start; ?>" required/>
     </label>
    </div>
 
    <div class="large-3 columns">
-    <label>Ende (Datum): <?= $fehler['ende']; ?>
-     <input type="text" id="eventEnddatumInput" name="ende" value="<?= $ende; ?>" placeholder="<?= $ph_ende; ?>">
+    <label>Ende (Datum): <?= $this->fehler['ende']; ?>
+     <input type="text" id="eventEnddatumInput" name="ende" value="<?= $this->ende; ?>" placeholder="<?= $this->ph_ende; ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
-    <label>von (Uhrzeit; ganztägig: keine Uhrzeit angeben): <?= $fehler['zeit_von']; ?>
-     <input type="text" id="eventZeitvonInput" name="zeit_von" value="<?= $zeit_von; ?>" placeholder="<?= $ph_zeit_von; ?>">
+    <label>von (Uhrzeit; ganztägig: keine Uhrzeit angeben): <?= $this->fehler['zeit_von']; ?>
+     <input type="text" id="eventZeitvonInput" name="zeit_von" value="<?= $this->zeit_von; ?>" placeholder="<?= $this->ph_zeit_von; ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
-    <label>bis (Uhrzeit; ganztägig: keine Uhrzeit angeben): <?= $fehler['zeit_bis']; ?>
-     <input type="text" id="eventZeitbisInput" name="zeit_bis" value="<?= $zeit_bis; ?>" placeholder="<?= $ph_zeit_bis; ?>">
+    <label>bis (Uhrzeit; ganztägig: keine Uhrzeit angeben): <?= $this->fehler['zeit_bis']; ?>
+     <input type="text" id="eventZeitbisInput" name="zeit_bis" value="<?= $this->zeit_bis; ?>" placeholder="<?= $this->ph_zeit_bis; ?>">
     </label>
    </div>
 
@@ -69,31 +69,31 @@ if($resultakteure->rowCount() != 0) : ?>
    <legend>Adresse</legend>
 
    <div class="large-4 columns">
-    <label>Straße: <?= $fehler['strasse']; ?>
-     <input type="text" id="eventStrasseInput" name="strasse" value="<?= $strasse; ?>" placeholder="<?= $ph_strasse; ?>">
+    <label>Straße: <?= $this->fehler['strasse']; ?>
+     <input type="text" id="eventStrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= $this->ph_strasse; ?>">
     </label>
    </div>
 
    <div class="large-1 columns">
-    <label>Nr.: <?= $fehler['nr']; ?>
-     <input type="text" id="eventNrInput" name="nr" value="<?= $nr; ?>" placeholder="<?= $ph_nr; ?>">
+    <label>Nr.: <?= $this->fehler['nr']; ?>
+     <input type="text" id="eventNrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= $this->ph_nr; ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
-    <label>Adresszusatz: <?= $fehler['adresszusatz']; ?>
-     <input type="text" id="eventAdresszusatzInput" name="adresszusatz" value="<?= $adresszusatz; ?>" placeholder="<?= $ph_adresszusatz; ?>">
+    <label>Adresszusatz: <?= $this->fehler['adresszusatz']; ?>
+     <input type="text" id="eventAdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= $this->ph_adresszusatz; ?>">
     </label>
    </div>
 
    <div class="large-4 columns">
-    <label>PLZ: <?= $fehler['plz']; ?>
-      <input type="text" id="eventPLZInput" name="plz" value="<?= $plz; ?>" placeholder="<?= $ph_plz; ?>">
+    <label>PLZ: <?= $this->fehler['plz']; ?>
+      <input type="text" id="eventPLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= $this->ph_plz; ?>">
     </label>
    </div>
 
    <div class="large-4 columns">
-  <label>Bezirk: <?= $fehler['ort']; ?>
+  <label>Bezirk: <?= $this->fehler['ort']; ?>
 
   <select name="ort">
    <option value="" selected="selected">Bezirk auswählen</option>
@@ -105,8 +105,8 @@ if($resultakteure->rowCount() != 0) : ?>
  </div>
 
   <div class="large-4 columns">
-  <label>Geodaten (Karte): <?= $fehler['gps']; ?>
-   <input type="text" id="eventGPSInput" name="gps" value="<?= $gps; ?>" placeholder="<?= $ph_gps; ?>" disabled>
+  <label>Geodaten (Karte): <?= $this->fehler['gps']; ?>
+   <input type="text" id="eventGPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= $this->ph_gps; ?>" disabled>
   </label>
 </div>
 
@@ -116,14 +116,14 @@ if($resultakteure->rowCount() != 0) : ?>
 
   <div class="large-12 columns">
 
-   <label>Eventwebsite: <?= $fehler['url']; ?>
-    <input type="text" id="eventURLInput" name="url" value="<?= $url; ?>" placeholder="<?= $ph_url; ?>">
+   <label>Eventwebsite: <?= $this->fehler['url']; ?>
+    <input type="text" id="eventURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= $this->ph_url; ?>">
    </label>
   </div>
 
   <div class="large-12 columns">
-  <label>Beschreibung: <?= $fehler['kurzbeschreibung']; ?>
-   <textarea name="kurzbeschreibung" cols="45" rows="3" placeholder="<?= $ph_kurzbeschreibung; ?>"><?= $kurzbeschreibung; ?></textarea>
+  <label>Beschreibung: <?= $this->fehler['kurzbeschreibung']; ?>
+   <textarea name="kurzbeschreibung" cols="45" rows="3" placeholder="<?= $this->ph_kurzbeschreibung; ?>"><?= $this->kurzbeschreibung; ?></textarea>
   </label>
  </div>
 
@@ -143,8 +143,8 @@ if($resultakteure->rowCount() != 0) : ?>
   <div class="row">
 
   <div class="large-12 columns">
-  <label>Tags: <?= $fehler['sparten']; ?>
-   <input type="text" id="eventSpartenInput" name="sparten" value="<?= $sparten; ?>" placeholder="<?= $ph_sparten; ?>">
+  <label>Tags: <?= $this->fehler['sparten']; ?>
+   <input type="text" id="eventSpartenInput" name="sparten" value="<?= $this->sparten; ?>" placeholder="<?= $this->ph_sparten; ?>">
   </label>
   </div>
 

@@ -240,10 +240,7 @@ function eventloeschen_page($eid=0) {
  * Builds page for Eventedit
  */
 function eventedit_page($aid=0) {
-  // 1. Init
-  // 2. (Einlesen ggf. vorhandener Werte)
-  // 4. Speicherung ?!
-  // 3. Ausgabe
+
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventedit.php';
 
@@ -256,27 +253,16 @@ function eventedit_page($aid=0) {
  * Builds page for Eventformular
  */
 function eventformular_page() {
-  // 1. Init
-  // 4. Speicherung ?!
-  // 3. Ausgabe
+
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventformular.php';
 
   $event = new eventformular();
-  $event->eventPageInit();
-
-  if (isset($_POST['submit'])) {
-    if ($event->eventCheckPost()) $event->eventSpeichern();
-    else $profileHTML = $event->eventDisplay();
-  } else {
-
-    $profileHTML = $event->eventDisplay();
-  }
 
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
 
-  return $profileHTML;
+  return $event->run();
 }
 
 /**
