@@ -12,7 +12,7 @@
 
 /**
  * FUNKTIONEN: ...
- *
+ * TODO: "Privat" miteinbringen
  */
 
  /* Einfache, globale Funktion zum Filtern von POST-Daten. Gerne erweiterbar. */

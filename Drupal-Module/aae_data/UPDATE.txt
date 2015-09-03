@@ -20,15 +20,17 @@ Erledigt:
 - Schemaanpassung an neue Bedürfnisse bzgl. Events (Ruth, 2015-07-26)
 - Event-Dateien Änderung bzgl. neuer Bedürfnisse (Ruth, 2015-07-26)
 - Hinweis, falls eine unbefugte Person den Akteur angelegt hat, man sich an Matthias wenden soll (Felix)
-- Einbinden von "Teilen"-Feldern für soziale Netzwerke (FB, G+, Friendica), entsprechend im 
+- Einbinden von "Teilen"-Feldern für soziale Netzwerke (FB, G+, Friendica), entsprechend im
   HTML-Header Description-Felder anlegen, welche den anzuzeigenden Text definieren. (Felix)
+- Event_hinzufügen-Button (Felix)
+- Events: JS zum Auflösen der Straße/Nr. in gültiges Geoformat (Felix)
 
 ------------------------------
 
 Offen:
 
 akteurprofil.php:
-- Event_hinzufügen-Button (Felix)
+
 - Beste Größe für Bild-Upload's ermitteln. Diesen Wert in akteurformular & -edit dem
   User mitteilen, Bilder nach Upload komprimieren / ggf. skalieren
   -> s. https://api.drupal.org/api/drupal/modules!image!image.module/7
@@ -39,7 +41,6 @@ eventprofil.php:
 
 eventformular.php:
 - Tooltip zum Einstellen der Uhrzeit/Datum (Output im richtigen Format) (Felix)
-- JS zum Auflösen der Straße/Nr. in gültiges Geoformat (Felix)
 
 events.php:
 - Events nach Datum sortiert anzeigen + Kurzbeschreibung
