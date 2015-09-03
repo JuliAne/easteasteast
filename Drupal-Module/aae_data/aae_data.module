@@ -266,13 +266,12 @@ function eventformular_page() {
   $event->eventPageInit();
 
   if (isset($_POST['submit'])) {
-    if (eventCheckPost()) eventSpeichern();
-    else eventDisplay();
+    if ($event->eventCheckPost()) $event->eventSpeichern();
+    else $event->eventDisplay();
   } else {
-    eventDisplay();
-  }
 
-  eventDisplay();
+    $event->eventDisplay();
+  }
 
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
