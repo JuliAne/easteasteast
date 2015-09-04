@@ -337,6 +337,7 @@ private function eventGetFields() {
   require_once $modulePath . 'database/db_connect.php';
   $db = new DB_CONNECT();
 
+
   //Auswahl der Daten des ausgewählten Events
   $resultevent = db_select($this->tbl_event, 'e')
     ->fields('e', array(
