@@ -26,7 +26,7 @@ if(!user_is_logged_in()){
 }
 
 //Prüfen ob Schreibrecht vorliegt
-$resultUser = db_select($tbl_hat_user, 'u') 
+$resultUser = db_select($tbl_hat_user, 'u')
  ->fields('u', array(
     'hat_UID',
     'hat_AID',
@@ -43,7 +43,7 @@ if(!array_intersect(array('redakteur','administrator'), $user->roles)){
 }
 //AKteurnamen ermitteln
 $akteur = "";
-$resultakteur = db_select($tbl_akteur, 'a') 
+$resultakteur = db_select($tbl_akteur, 'a')
  ->fields('a', array(
     'name',
   ))
@@ -58,7 +58,7 @@ foreach ($resultakteur as $row) {
 
 //das wird ausgeführt, wenn auf "Löschen" gedrückt wird
 if (isset($_POST['submit'])) {
-	
+
   $akteur_id = $_POST['akteur_id'];
   require_once $modulePath . '/database/db_connect.php';
   //include $modulePath . '/templates/utils/rest_helper.php'; Ist aus dem Künstlermodul übernommen
@@ -80,19 +80,21 @@ if (isset($_POST['submit'])) {
 
   header("Location: ?q=Akteure"); //Hier muss hin, welche Seite aufgerufen werden soll,
 		//nach dem die Daten erfolgreich gespeichert wurden.
-	
+
 } else{
-	
+
 }
 
-$pathThisFile = $_SERVER['REQUEST_URI']; 
+$pathThisFile = $_SERVER['REQUEST_URI'];
 
 //Darstellung
 $profileHTML = <<<EOF
-  <p>Möchten Sie den Akteur $akteur wirklich löschen?</p><br>
-  <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
-    <input name="akteur_id" type="hidden" id="akteurAIDInput" value="$akteur_id" />
-    <a href="javascript:history.go(-1)">Abbrechen</a>
-    <input type="submit" class="akteur" id="akteurSubmit" name="submit" value="Loeschen">
-  </form>
+<div class="alert-box" data-alert>
+ <p><strong>Möchten Sie den Akteur "$akteur" wirklich löschen?</strong></p><br />
+ <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
+   <input name="akteur_id" type="hidden" id="eventEIDInput" value="$akteur_id" />
+   <a class="secondary button" href="javascript:history.go(-1)">Abbrechen</a>
+   <input type="submit" class="button" id="akteurSubmit" name="submit" value="Löschen">
+ </form>
+</div>
 EOF;
