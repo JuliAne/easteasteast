@@ -245,7 +245,6 @@ function eventedit_page($aid = 0) {
   include $modulePath . '/eventformular.php';
 
   $event = new eventformular('update');
-  $event->event_id = $aid;
 
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
