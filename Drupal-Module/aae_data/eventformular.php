@@ -245,7 +245,7 @@ private function eventCheckPost() {
 
 private function eventUpdaten() {
 
-  require_once $modulePath . '/database/db_connect.php';
+  require_once $modulePath . 'database/db_connect.php';
 	$db = new DB_CONNECT();
 
 	//Abfrage, ob Adresse bereits in Adresstabelle
