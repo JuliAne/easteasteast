@@ -333,7 +333,7 @@ private function eventGetFields() {
   // Wird aufgerufen, wenn "Akteur bearbeiten" ausgewählt wurde
   //Erstmaliger Aufruf: Daten aus DB in Felder schreiben
 
-  require_once $modulePath . '/database/db_connect.php';
+  require_once $modulePath . 'database/db_connect.php';
   $db = new DB_CONNECT();
 
   //Auswahl der Daten des ausgewählten Events
