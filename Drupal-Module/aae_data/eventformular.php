@@ -79,6 +79,7 @@ Class eventformular {
   var $tbl_sparte = "aae_data_kategorie";
 
   var $user_id;
+  var $event_id;
   var $target = 'update';
 
   function __construct($action) {
@@ -495,7 +496,7 @@ private function eventSpeichern() {
 	$this->start = $this->start.' '.$this->zeit_von;
 
   //tbl_event INSERT!!!
-	$event_id = db_insert($this->tbl_event)
+	$this->event_id = db_insert($this->tbl_event)
    	->fields(array(
 		'name' => $this->name,
 		'ort' => $this->adresse,
@@ -553,7 +554,7 @@ private function eventSpeichern() {
 		//2. Event+Tag in Tabelle $tbl_event_sparte einfügen
 		$inserteventsparte = db_insert($this->tbl_event_sparte)
 		  ->fields(array(
-		    'hat_EID' => $event_id,
+		    'hat_EID' => $this->event_id,
 		    'hat_KID' => $sparte_id,
 		  ))
 		  ->execute();
@@ -561,7 +562,7 @@ private function eventSpeichern() {
 	  }
 	}
 
-	header("Location: Eventprofil/".$event_id);
+	header("Location: Eventprofil/".$this->event_id);
     // Hier muss hin, welche Seite aufgerufen werden soll,
 	  // nachdem die Daten erfolgreich gespeichert wurden.
 
