@@ -79,7 +79,7 @@ Class eventformular {
   var $tbl_sparte = "aae_data_kategorie";
 
   var $user_id;
-  var $target = '';
+  var $target = 'update';
 
   function __construct($action) {
 

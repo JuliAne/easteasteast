@@ -1,4 +1,4 @@
-<h3>Event <?php echo ($this->action == 'update' ? 'bearbeiten' : 'anlegen'); ?></h3>
+<h3>Event <?php echo ($this->target == 'update' ? 'bearbeiten' : 'anlegen'); ?></h3>
 <div class="divider" style="margin-bottom: 25px;"></div>
 
 <?php if (!$this->freigabe) : ?>
