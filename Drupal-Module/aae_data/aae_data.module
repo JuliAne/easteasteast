@@ -144,14 +144,14 @@ function akteurformular_page() {
   $path = current_path();
   $path_alias = drupal_lookup_path('alias', $path);
 
-  $akteur->run();
-
-  return $profileHTML;
+  return $akteur->run();
 }
+
 /**
  * Builds page for Akteurprofil
  */
-function akteurprofil_page($aid=0) {
+
+function akteurprofil_page($aid = 0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurprofil.php';
 
