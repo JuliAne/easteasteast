@@ -122,7 +122,7 @@ if (isset($_POST['submit'])) {
   // Lade Feld-Werte via ID (akteurGetFields) und gebe diese aus
 
   if ($this->target == 'update') $this->akteurGetFields();
-  $output = $this->eventDisplay();
+  $output = $this->akteurDisplay();
 }
 
 return $output;
