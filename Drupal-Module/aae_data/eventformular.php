@@ -80,7 +80,7 @@ Class eventformular {
 
   var $user_id;
   var $event_id;
-  var $target = 'update';
+  var $target = '';
 
   function __construct($action) {
 
@@ -88,7 +88,7 @@ Class eventformular {
    $this->user_id = $user->uid;
 
    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
-   if($action == 'update') $this->target == 'update';
+   if($action == 'update') echo 'blaaa'; $this->target == 'update';
 
    // Sicherheitsschutz
    if(!user_is_logged_in()) drupal_access_denied();
@@ -328,7 +328,7 @@ private function eventUpdaten() {
 	  ->condition('EID', $this->event_id, '=')
 	  ->execute();
 
-	header("Location: Eventprofil/$this->event_id");
+	header("Location: Eventprofil/".$this->event_id);
   // Event erstellt uuuund.... tschüss ;)
 
 } // END function eventUpdaten()
