@@ -183,7 +183,7 @@ private function akteurCheckPost() {
 	 $i = 0;
 
 	 while($i < $this->countsparten){
-	  $this->explodedsparten[$i] = clearContent($explodedsparten[$i]);
+	  $this->explodedsparten[$i] = $this->clearContent($explodedsparten[$i]);
 	  $i++;
 	 }
   }
@@ -388,6 +388,10 @@ private function akteurSpeichern() {
   // Beamen wir dich mal auf die neue Seite...
 
 } // END function akteurSpeichern()
+
+private function akteurUpdaten() {
+
+} // END function akteurUpdaten()
 
 private function akteurDisplay() {
 
