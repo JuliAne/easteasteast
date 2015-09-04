@@ -90,7 +90,7 @@ $pathThisFile = $_SERVER['REQUEST_URI'];
 //Darstellung
 $profileHTML = <<<EOF
 <div class="alert-box" data-alert>
- <p><strong>Möchten Sie den Akteur "$akteur" wirklich löschen?</strong></p><br />
+ <p>Möchten Sie den Akteur <strong>$akteur</strong> wirklich löschen?</p><br />
  <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
    <input name="akteur_id" type="hidden" id="eventEIDInput" value="$akteur_id" />
    <a class="secondary button" href="javascript:history.go(-1)">Abbrechen</a>
