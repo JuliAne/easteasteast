@@ -79,7 +79,7 @@ Class eventformular {
   var $tbl_sparte = "aae_data_kategorie";
 
   var $user_id;
-  var $action = '';
+  var $target = '';
 
   function __construct($action) {
 
@@ -87,7 +87,7 @@ Class eventformular {
    $this->user_id = $user->uid;
 
    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
-   if($action == 'update') $this->action == 'update';
+   if($action == 'update') $this->target == 'update';
 
    // Sicherheitsschutz
    if(!user_is_logged_in()) drupal_access_denied();
@@ -105,7 +105,7 @@ Class eventformular {
    if (isset($_POST['submit'])) {
 
      if ($this->eventCheckPost()) {
-       if ($this->action == 'update') $this->eventUpdaten();
+       if ($this->target == 'update') $this->eventUpdaten();
        else $this->eventSpeichern();
 
        $output = $this->eventDisplay();
@@ -115,7 +115,7 @@ Class eventformular {
   } else {
     // Was passiert, wenn Seite zum ersten mal gezeigt wird?
 
-    if ($this->action == 'update') $this->eventGetFields();
+    if ($this->target == 'update') $this->eventGetFields();
     $output = $this->eventDisplay();
  }
 
