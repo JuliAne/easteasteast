@@ -148,7 +148,7 @@ private function akteurCheckPost() {
  $this->url = clearContent($_POST['url']);
  $this->ansprechpartner = clearContent($_POST['ansprechpartner']);
  $this->funktion = clearContent($_POST['funktion']);
- if(isset($_POST['bild'])) $this->bild = $_POST['bild']);
+ if(isset($_POST['bild'])) $this->bild = $_POST['bild'];
  $this->beschreibung = clearContent($_POST['beschreibung']);
  $this->oeffnungszeiten = clearContent($_POST['oeffnungszeiten']);
 
