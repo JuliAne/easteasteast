@@ -380,7 +380,7 @@ private function akteurSpeichern() {
 		    'hat_KID' => $this->sparte_id,
 		  ))
 		  ->execute();
-	    $i++1;
+	    $i++;
 	  }
 	}
 
