@@ -88,7 +88,7 @@ Class eventformular {
    $this->user_id = $user->uid;
 
    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
-   if($action == 'update') echo 'blaaa'; $this->target == 'update';
+   if($action == 'update') $this->target = 'update';
 
    // Sicherheitsschutz
    if(!user_is_logged_in()) drupal_access_denied();
