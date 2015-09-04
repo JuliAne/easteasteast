@@ -101,6 +101,10 @@ Class eventformular {
   *   @returns $profileHTML;
   */
 
+  $path = current_path();
+  $explodedpath = explode("/", $path);
+  $this->event_id = $explodedpath[1];
+
    $output = '';
 
    if (isset($_POST['submit'])) {
@@ -336,10 +340,6 @@ private function eventGetFields() {
 
   require_once $modulePath . 'database/db_connect.php';
   $db = new DB_CONNECT();
-
-  $path = current_path();
-  $explodedpath = explode("/", $path);
-  $this->event_id = $explodedpath[1];
 
   //Auswahl der Daten des ausgewählten Events
   $resultevent = db_select($this->tbl_event, 'e')
