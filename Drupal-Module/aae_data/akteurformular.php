@@ -142,23 +142,23 @@ private function akteurCheckPost() {
  // @returns $this->freigabe;
 
  //Wertezuweisung
- $this->name = clearContent($_POST['name']);
- $this->email = clearContent($_POST['email']);
- $this->telefon = clearContent($_POST['telefon']);
- $this->url = clearContent($_POST['url']);
- $this->ansprechpartner = clearContent($_POST['ansprechpartner']);
- $this->funktion = clearContent($_POST['funktion']);
+ $this->name = $this->clearContent($_POST['name']);
+ $this->email = $this->clearContent($_POST['email']);
+ $this->telefon = $this->clearContent($_POST['telefon']);
+ $this->url = $this->clearContent($_POST['url']);
+ $this->ansprechpartner = $this->clearContent($_POST['ansprechpartner']);
+ $this->funktion = $this->clearContent($_POST['funktion']);
  if(isset($_POST['bild'])) $this->bild = $_POST['bild'];
- $this->beschreibung = clearContent($_POST['beschreibung']);
- $this->oeffnungszeiten = clearContent($_POST['oeffnungszeiten']);
+ $this->beschreibung = $this->clearContent($_POST['beschreibung']);
+ $this->oeffnungszeiten = $this->clearContent($_POST['oeffnungszeiten']);
 
- $this->strasse = clearContent($_POST['strasse']);
- $this->nr = clearContent($_POST['nr']);
- $this->adresszusatz = clearContent($_POST['adresszusatz']);
- $this->plz = clearContent($_POST['plz']);
- $this->ort = clearContent($_POST['ort']);
- $this->gps = clearContent($_POST['gps']);
- $this->sparten = clearContent($_POST['sparten']);
+ $this->strasse = $this->clearContent($_POST['strasse']);
+ $this->nr = $this->clearContent($_POST['nr']);
+ $this->adresszusatz = $this->clearContent($_POST['adresszusatz']);
+ $this->plz = $this->clearContent($_POST['plz']);
+ $this->ort = $this->clearContent($_POST['ort']);
+ $this->gps = $this->clearContent($_POST['gps']);
+ $this->sparten = $this->clearContent($_POST['sparten']);
 
  $this->explodedsparten = "";
  if ($this->sparten != "") $this->explodedsparten = explode(",", $this->sparten);
