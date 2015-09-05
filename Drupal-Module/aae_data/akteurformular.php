@@ -391,7 +391,191 @@ private function akteurSpeichern() {
 
 private function akteurUpdaten() {
 
+
+	require_once $modulePath . 'database/db_connect.php';
+	$db = new DB_CONNECT();
+
+	//Abfrage, ob Adresse bereits in Adresstabelle
+	//Addressdaten aus DB holen:
+	$resultadresse = db_select($this->tbl_adresse, 'a')
+    ->fields('a', array(  'ADID' ))
+	  ->condition('strasse', $this->strasse, '=')
+	  ->condition('nr', $this->nr, '=')
+	  ->condition('adresszusatz', $this->adresszusatz, '=')
+	  ->condition('plz', $this->plz, '=')
+	  ->condition('bezirk', $this->ort, '=')
+	  ->execute();
+
+	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
+
+	if ($resultadresse->rowCount() == 0) {
+    //Adresse nicht vorhanden
+	  $this->adresse = db_insert($this->tbl_adresse)
+		->fields(array(
+		  'strasse' => $this->strasse,
+		  'nr' => $this->nr,
+		  'adresszusatz' => $this->adresszusatz,
+		  'plz' => $this->plz,
+		  'bezirk' => $this->ort,
+		  'gps' => $this->gps,
+		))
+		->execute();
+	} else {
+	  foreach ($resultadresse as $row) {
+		 $this->adresse = $row->ADID;
+	  }
+	}
+
+	//tbl_akteur UPDATE!!!
+	$akteur_updated = db_update($this->tbl_akteur)
+    ->fields(array(
+		'name' => $this->name,
+		'adresse' => $this->adresse,
+		'email' => $this->email,
+		'telefon' => $this->telefon,
+		'url' => $this->url,
+		'ansprechpartner' => $this->ansprechpartner,
+		'funktion' => $this->funktion,
+		'bild' => $this->bild,
+		'beschreibung' => $this->beschreibung,
+		'oeffnungszeiten' => $this->oeffnungszeiten,
+	  ))
+	  ->condition('AID', $this->akteur_id, '=')
+	  ->execute();
+
+	//tbl_hat_user
+	/*if ($laengehatuser != 0){
+	  $j = 0;
+	  while($j < $laengehatuser){
+		$inserthatuser = db_insert($this->tbl_hat_user)
+		  ->fields(array(
+		    'hat_UID' => $explodedhatuser[$j],
+			'hat_AID' => $this->akteur_id,
+		  ))
+		  ->execute();
+	    $j++;
+	  }
+	}*/
+
+	//Kategorien
+	/*
+	foreach ($kategorie as $row) {
+	  $result_kategorie_id = db_select($tbl_kategorie)//ID der ausgewählten Kategorie holen
+		->fields(array(
+		  'kategorie_id'
+		))
+		->condition('kategorie', $row, '=')
+		->execute();
+	  foreach ($result_kategorie_id as $row1) {
+		//Abfragen, ob Kategorie bereits zu dem Akteur vorhanden ist:
+		$result_kategorie_akteur = db_select($tbl_hat_Sparte)
+		  ->fields(array(
+			'akteur',
+			'kategorie',
+		  ))
+		  ->condition('akteur', $akteur_id, '=')
+		  ->condition('kategorie', $row1->kategorie_id)
+		  ->execute();
+		$count1 = $result_kategorie_akteur->rowCount();
+		if($count1 == 0){//Kategorie noch nicht zugeordnet
+		  //tbl_hat_Sparte INSERT!!!
+		  $hat_sparte_insert = db_insert($tbl_hat_Sparte)
+		 	->fields(array(
+		  	  'kategorie' => $row1->kategorie_id,
+			))
+		    ->condition('akteur_id', $akteur_id, '=')
+		    ->execute();
+		}
+	  }
+	}
+	//Unchecked Kategorien löschen:
+	//Alle markierten Kategorien holen:
+	$result_alle_kategorien = db_select($tbl_hat_Sparte)
+	  ->fields(array(
+		'kategorie',
+	  ))
+	  ->condition('akteur', $akteur_id, '=')
+	  ->execute();
+	foreach ($result_alle_kategorien as $row) {
+	  $zaehler = 0;
+	  foreach ($kategorie as $row1) {
+		if($row->kategorie == $row1){//Kategorie markiert
+		  $zaehler = $zaehler + 1;
+		}
+	  }
+	  if(zaehler == 0){//Kategorie wurde unchecked
+		$kat_deleted = db_delete($tbl_hat_Sparte)//Aus Tabelle loeschen!
+		  ->condition('akteur', $akteur_id, '=')
+		  ->condition('kategorie', $row->kategorie, '=')
+		  ->execute();
+	  }
+	}
+	*/
+
+	header("Location: Akteurprofil/".$this->akteur_id);
+  // Leite nach Abschluss auf Profil weiter
+
 } // END function akteurUpdaten()
+
+private function akteurGetFields() {
+
+  require_once $modulePath . 'database/db_connect.php';
+  $db = new DB_CONNECT();
+
+  //Auswahl der Daten des eingeloggten Akteurs:
+  $resultakteur = db_select($ths->tbl_akteur, 'c')
+    ->fields('c', array(
+	  'name',
+	  'adresse',
+	  'email',
+	  'telefon',
+	  'url',
+	  'ansprechpartner',
+	  'funktion',
+	  'bild',
+	  'beschreibung',
+	  'oeffnungszeiten',
+	))
+	 ->condition('AID', $this->akteur_id, '=')
+   ->execute();
+
+  //Speichern der Daten in den Arbeitsvariablen
+  foreach ($resultakteur as $row) {
+	 $this->name = $row->name;
+   $this->adresse = $row->adresse;
+	 $this->email = $row->email;
+	 $this->telefon = $row->telefon;
+	 $this->url = $row->url;
+	 $this->ansprechpartner = $row->ansprechpartner;
+	 $this->funktion = $row->funktion;
+	 $this->bild = $row->bild;
+	 $this->beschreibung = $row->beschreibung;
+	 $this->oeffnungszeiten = $row->oeffnungszeiten;
+  }
+
+  //Adressdaten aus DB holen:
+  $resultadresse = db_select($this->tbl_adresse, 'd')
+    ->fields('d', array(
+	  'strasse',
+	  'nr',
+	  'adresszusatz',
+	  'plz',
+	  'bezirk',
+	  'gps',
+	))
+	->condition('ADID', $this->adresse, '=')
+  ->execute();
+
+  //Speichern der Adressdaten in den Arbeitsvariablen
+  foreach ($resultadresse as $row) {
+	 $this->strasse = $row->strasse;
+	 $this->nr = $row->nr;
+	 $this->adresszusatz = $row->adresszusatz;
+	 $this->plz = $row->plz;
+	 $this->ort = $row->bezirk;
+	 $this->gps = $row->gps;
+  }
+} // END function akteurGetFields()
 
 private function akteurDisplay() {
 

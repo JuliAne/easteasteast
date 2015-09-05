@@ -16,7 +16,7 @@
 
      <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= $base_url.'/'.current_path(); ?>" title="Auf Facebook teilen" class="fb button"><img alt="icons/fb.png" src="http://fadeco.info/system/cms/themes/defaults/img/icons/fb.png"><span></span></a>
 
-     <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="Share on Google Plus" class="g_plus button"><img alt="icons/g_plus.png" src="http://fadeco.info/system/cms/themes/defaults/img/icons/g_plus.png"><span></span></a>
+     <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="Auf Google+ teilen" class="g_plus button"><img alt="icons/g_plus.png" src="http://fadeco.info/system/cms/themes/defaults/img/icons/g_plus.png"><span></span></a>
 
      <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $aResult['row1']->name; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="Teile auf Diaspora / Friendica"><img alt="" src="https://sharetodiaspora.github.io/favicon.png"></a>
 
