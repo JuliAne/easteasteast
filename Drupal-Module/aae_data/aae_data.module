@@ -163,14 +163,16 @@ function akteurprofil_page($aid = 0) {
 /**
  * Builds page for Akteuredit
  */
-function akteuredit_page($aid=0) {
+function akteuredit_page($aid = 0) {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/akteuredit.php';
+  include $modulePath . '/akteurformular.php';
+
+  $akteur = new akteurformular('update');
 
   $path = current_path();
   $path_alias = drupal_lookup_path('alias',$path);
 
-  return $profileHTML;
+  return $akteur->run();
 }
 
 /**
