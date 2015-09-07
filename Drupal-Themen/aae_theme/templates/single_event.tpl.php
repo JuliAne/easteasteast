@@ -1,3 +1,12 @@
+<?php if (!empty($_SESSION['sysmsg'])) : ?>
+<div id="alert">
+  <?php foreach ($_SESSION['sysmsg'] as $msg): ?>
+    <?= $msg; ?>
+  <?php endforeach; ?>
+  <a href="#" class="close">x</a>
+</div>
+<?php unset($_SESSION['sysmsg']); endif; ?>
+
 <h3 class="left"><?= $resultEvent->name; ?></h3>
 
 <p class="right">

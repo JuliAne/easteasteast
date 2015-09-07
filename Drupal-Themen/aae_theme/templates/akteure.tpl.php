@@ -1,3 +1,12 @@
+<?php if (!empty($_SESSION['sysmsg'])) : ?>
+<div id="alert">
+  <?php foreach ($_SESSION['sysmsg'] as $msg): ?>
+    <?= $msg; ?>
+  <?php endforeach; ?>
+  <a href="#" class="close">x</a>
+</div>
+<?php unset($_SESSION['sysmsg']); endif; ?>
+
 <div class="row">
 
 <h3 class="large-4 columns"><strong><?= $itemsCount; ?></strong> Akteure</h3>
