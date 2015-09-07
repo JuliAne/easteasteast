@@ -328,6 +328,10 @@ private function eventUpdaten() {
 	  ->condition('EID', $this->event_id, '=')
 	  ->execute();
 
+  // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
+  session_start();
+  $_SESSION['sysmsg'][] = 'Das Event wurde erfolgreich bearbeitet!';
+
 	header("Location: Eventprofil/".$this->event_id);
   // Event erstellt uuuund.... tschüss ;)
 
@@ -565,6 +569,10 @@ private function eventSpeichern() {
 	    $i++;
 	  }
 	}
+
+  // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
+  session_start();
+  $_SESSION['sysmsg'][] = 'Das Event wurde erfolgreich erstellt!';
 
 	header("Location: Eventprofil/".$this->event_id);
     // Hier muss hin, welche Seite aufgerufen werden soll,

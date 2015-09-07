@@ -78,7 +78,11 @@ if (isset($_POST['submit'])) {
     ->condition('AID', $akteur_id, '=')
     ->execute();
 
-  header("Location: ?q=Akteure"); //Hier muss hin, welche Seite aufgerufen werden soll,
+  // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
+  session_start();
+  $_SESSION['sysmsg'][] = 'Der Akteur wurde gelöscht.';
+
+  header("Location: Akteure"); //Hier muss hin, welche Seite aufgerufen werden soll,
 		//nach dem die Daten erfolgreich gespeichert wurden.
 
 } else{

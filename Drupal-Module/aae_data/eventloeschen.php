@@ -89,8 +89,12 @@ if (isset($_POST['submit'])) {
     ->condition('EID', $event_id, '=')
     ->execute();
 
-  header("Location: ?q=Events"); //Hier muss hin, welche Seite aufgerufen werden soll,
-		//nach dem die Daten erfolgreich gespeichert wurden.
+  // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
+  session_start();
+  $_SESSION['sysmsg'][] = 'Das Event wurde gelöscht.';
+
+  header("Location: Events");
+  // Und "Tschö mit ö..."!
 
 } else{
 
