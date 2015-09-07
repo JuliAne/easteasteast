@@ -386,6 +386,10 @@ private function akteurSpeichern() {
 	  }
 	}
 
+  // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
+  session_start();
+  $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich erstellt!';
+
 	header("Location: Akteurprofil/".$this->akteur_id);
   // Beamen wir dich mal auf die neue Seite...
 
@@ -513,6 +517,10 @@ private function akteurUpdaten() {
 	  }
 	}
 	*/
+
+  // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
+  session_start();
+  $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich bearbeitet!';
 
 	header("Location: Akteurprofil/".$this->akteur_id);
   // Leite nach Abschluss auf Profil weiter

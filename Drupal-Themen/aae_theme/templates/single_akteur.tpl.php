@@ -25,6 +25,14 @@
  </div>
 </div>
 
+<?php if (!empty($_SESSION['sysmsg'])) : ?>
+<div class="alert" style="position:absolute;background:blue;color:#fff;">
+  <?php foreach ($_SESSION['sysmsg'] as $msg): ?>
+    <?= $msg; ?>
+  <?php endforeach; ?>
+</div>
+<?php unset($_SESSION['sysmsg']); endif; ?>
+
 			<div id="project" class="row">
 
 			 <aside class="left large-4 columns">
