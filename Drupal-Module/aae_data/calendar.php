@@ -14,7 +14,7 @@ class Calendar {
     }
      
     /********************* PROPERTY ********************/  
-    private $dayLabels = array("Mon","Tue","Wed","Thu","Fri","Sat","Sun");
+    private $dayLabels = array("Mon","Die","Mit","Don","Fre","Sam","Son");
      
     private $currentYear=0;
      
