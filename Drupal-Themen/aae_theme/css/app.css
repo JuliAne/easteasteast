@@ -55,10 +55,11 @@ button.button, #actions {
   padding: 6px;
   font-size: 0.8em;
   left: 30%;
+  top: 0;
   border-radius: 0 0 4px 4px;
 }
 
-#alert .close-slider {
+#alert .close {
   float: right;
   color: #fff;
   margin-top: -13px;

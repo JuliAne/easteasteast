@@ -30,7 +30,7 @@
   <?php foreach ($_SESSION['sysmsg'] as $msg): ?>
     <?= $msg; ?>
   <?php endforeach; ?>
-  <a href="#" class="close"></a>
+  <a href="#" class="close">x</a>
 </div>
 <?php unset($_SESSION['sysmsg']); endif; ?>
 

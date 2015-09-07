@@ -179,6 +179,12 @@ private function akteurCheckPost() {
 	 $this->freigabe = false;
   }
 
+  //Check, ob Bezirk angegeben wurde
+  if (strlen($this->ort) == 0) {
+   $this->fehler['ort'] = "Bitte einen Bezirk auswählen!";
+	 $this->freigabe = false;
+  }
+
   //Tags:
   if ($this->sparten != "") {
    $this->countsparten = count($this->explodedsparten);
@@ -196,62 +202,62 @@ private function akteurCheckPost() {
 	 $this->freigabe = false;
   }
 
-  if (strlen($email) > 100) {
+  if (strlen($this->email) > 100) {
 	 $this->fehler['email'] = "Bitte geben Sie eine kürzere Emailadresse an.";
 	 $this->freigabe = false;
   }
 
-  if (strlen($telefon) > 100) {
+  if (strlen($this->telefon) > 100) {
  	 $this->fehler['telefon'] = "Bitte geben Sie eine kürzere Telefonnummer an.";
 	 $this->freigabe = false;
   }
 
-  if (strlen($url) > 100) {
+  if (strlen($this->url) > 100) {
 	 $this->fehler['url'] = "Bitte geben Sie eine kürzere URL an.";
 	 $this->freigabe = false;
   }
 
-  if (strlen($ansprechpartner) > 100){
+  if (strlen($this->ansprechpartner) > 100){
 	 $this->fehler['ansprechpartner'] = "Bitte geben Sie einen kürzeren Ansprechpartner an.";
 	 $this->freigabe = false;
   }
 
-  if (strlen($funktion) > 100) {
+  if (strlen($this->funktion) > 100) {
 	 $this->fehler['funktion'] = "Bitte geben Sie eine kürzere Funktion an.";
    $this->freigabe = false;
   }
 
-  if (strlen($beschreibung) > 500) {
+  if (strlen($this->beschreibung) > 500) {
 	 $this->fehler['beschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
 	 $this->freigabe = false;
   }
 
-  if (strlen($oeffnungszeiten) > 200) {
+  if (strlen($this->oeffnungszeiten) > 200) {
 	 $this->fehler['oeffnungszeiten'] = "Bitte geben Sie kürzere Oeffnungszeiten an.";
 	 $this->freigabe = false;
   }
 
-  if (strlen($strasse) > 100) {
+  if (strlen($this->strasse) > 100) {
  	 $this->fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
 	 $this->freigabe = false;
   }
 
-  if (strlen($nr) > 100) {
+  if (strlen($this->nr) > 100) {
 	 $this->fehler['nr'] = "Bitte geben Sie eine kürzere Nummer an.";
 	 $this->freigabe = false;
   }
 
-  if (strlen($adresszusatz) > 100) {
+  if (strlen($this->adresszusatz) > 100) {
 	 $this->fehler['adresszusatz'] = "Bitte geben Sie einen kürzeren Adresszusatz an.";
 	 $this->freigabe = false;
   }
 
-  if (strlen($plz) > 100) {
+  if (strlen($this->plz) > 100) {
 	 $this->fehler['plz '] = "Bitte geben Sie eine kürzere PLZ an.";
 	 $this->freigabe = false;
   }
 
-  if (strlen($gps) > 100) {
+  if (strlen($this->gps) > 100) {
 	 $this->fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
 	 $this->freigabe = false;
   }
