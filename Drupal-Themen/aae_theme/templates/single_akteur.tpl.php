@@ -26,10 +26,11 @@
 </div>
 
 <?php if (!empty($_SESSION['sysmsg'])) : ?>
-<div class="alert" style="position:absolute;background:blue;color:#fff;">
+<div id="alert">
   <?php foreach ($_SESSION['sysmsg'] as $msg): ?>
     <?= $msg; ?>
   <?php endforeach; ?>
+  <a href="#" class="close"></a>
 </div>
 <?php unset($_SESSION['sysmsg']); endif; ?>
 

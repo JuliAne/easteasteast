@@ -118,6 +118,9 @@
 
     <input type="file" id="akteurBildInput" name="bild" />
 
+    <?php if ($this->bild != '') : ?>
+      <img src="<?= $this->bild; ?>" title="Bisheriges Profilbild" width=200 style="float:right; margin: 6px;">
+
    <p><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf leipzigerecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
  <p>Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefeldern zu beschreiben.</p><br />
  <p>Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte.</p>
