@@ -113,7 +113,7 @@ public function run() {
 
 $path = current_path();
 $explodedpath = explode("/", $path);
-$this->akteur_id = clearContent($explodedpath[1]);
+$this->akteur_id = $this->clearContent($explodedpath[1]);
 
 $output = '';
 
