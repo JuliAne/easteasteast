@@ -333,11 +333,11 @@ private function akteurSpeichern() {
    $bildname = $_FILES['bild']['name'];
 
    if($bildname != "") {
-    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname)) {
+    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $this->bildpfad.$bildname)) {
       echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />'.$bildname;
       exit();
     }
-    $this->bild = base_path().$short_bildpfad.$bildname;
+    $this->bild = base_path().$this->short_bildpfad.$bildname;
    }
 
   }
@@ -425,11 +425,11 @@ private function akteurUpdaten() {
    $bildname = $_FILES['bild']['name'];
 
    if($bildname != "") {
-    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname)) {
+    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $this->bildpfad.$bildname)) {
       echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />'.$bildname;
       exit();
     }
-    $this->bild = base_path().$short_bildpfad.$bildname;
+    $this->bild = base_path().$this->short_bildpfad.$bildname;
    }
 
   }
