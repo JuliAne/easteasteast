@@ -79,7 +79,7 @@ var $countsparten = "";
 var $sparte_id = "";
 var $resultbezirke = "";
 var $target = "";
-var $modulePath = drupal_get_path('module', 'aae_data');
+var $modulePath;
 
 //-----------------------------------
 
@@ -88,6 +88,7 @@ function __construct($action) {
  //Sicherheitsschutz
  if(!user_is_logged_in()) drupal_access_denied();
 
+ $this->modulePath = drupal_get_path('module', 'aae_data');
  global $user;
  $this->user_id = $user->uid;
 
