@@ -283,7 +283,6 @@ function eventedit_page($aid = 0) {
  */
 function eventformular_page() {
 
-  $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventformular.php';
 
   $event = new eventformular();
