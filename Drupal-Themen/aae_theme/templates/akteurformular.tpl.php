@@ -62,8 +62,12 @@
   <select name="ort">
    <option value="" selected="selected">Bezirk auswählen</option>
    <?php foreach ($this->resultbezirke as $bezirk) : ?>
-   <option value="<?= $bezirk->BID; ?>"><?= $bezirk->bezirksname; ?></option>
-   <?php endforeach; ?>
+    <?php if ($bezirk->BID == $this->ort) : ?>
+    <option value="<?= $bezirk->BID; ?>" selected="selected"><?= $bezirk->bezirksname; ?></option>
+    <?php else : ?>
+    <option value="<?= $bezirk->BID; ?>"><?= $bezirk->bezirksname; ?></option>
+    <?php endif; ?>
+   <?php endforeach; ?>   
   </select>
  </label>
  </div>

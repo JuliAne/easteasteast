@@ -2,12 +2,19 @@
 /**
  * akteurformular.php stellt ein Formular dar,
  * in welches alle Informationen über einen Akteur
- * eingetragen werden können.
- * Einziges Pflichtfeld ist bisher der Name und die Emailadresse.
- * Anschließend werden die Daten in die DB-Tabellen eingetragen.
+ * eingetragen UND bearbeitet werden können.
+ * Einziges Pflichtfeld ist bisher der Name, Emailadresse und Bezirk.
+ *
+ * Die Klasse akteurformular wird in aae_data.module initialisiert (s. __construct)
+ * und via ->run() aufgerufen.
  *
  * Ruth, 2015-07-04
  * Felix, 2015-09-04
+ *
+ * TODO: - In der Funktion akteurUpdaten ist noch viel ausgeklammerter Code.
+ *         So lassen sich bspw. Tags nicht richtig speichern bzw. ausgeben
+ *       - Mehr Security-Stuff muss hier rein, ggf. "phpsec" einbinden
+ *
  */
 
 Class akteurformular {
@@ -99,13 +106,14 @@ function __construct($action) {
 
 
 public function run() {
+
 /** Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
-*   @returns $profileHTML;
-*/
+ *  @returns $profileHTML;
+ */
 
 $path = current_path();
 $explodedpath = explode("/", $path);
-$this->akteur_id = $explodedpath[1];
+$this->akteur_id = clearContent($explodedpath[1]);
 
 $output = '';
 
@@ -116,10 +124,13 @@ if (isset($_POST['submit'])) {
      else $this->akteurSpeichern();
 
      $output = $this->akteurDisplay();
+
    } else {
+
      $output = $this->akteurDisplay();
+
   }
-} else {
+ } else {
   // Was passiert, wenn Seite zum ersten mal gezeigt wird?
   // Lade Feld-Werte via ID (akteurGetFields) und gebe diese aus
 
@@ -134,6 +145,7 @@ return $output;
 
 private function clearContent($trimTag) {
  /* Einfache Funktion zum Filtern von POST-Daten. Gerne erweiterbar. */
+
  $clear = trim($trimTag);
  return strip_tags($clear);
 }
@@ -407,6 +419,21 @@ private function akteurUpdaten() {
 	require_once $this->modulePath . '/database/db_connect.php';
 	$db = new DB_CONNECT();
 
+  //Wenn Bilddatei ausgewählt wurde...
+  if ($_FILES) {
+
+   $bildname = $_FILES['bild']['name'];
+
+   if($bildname != "") {
+    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $bildpfad.$bildname)) {
+      echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />'.$bildname;
+      exit();
+    }
+    $this->bild = base_path().$short_bildpfad.$bildname;
+   }
+
+  }
+
 	//Abfrage, ob Adresse bereits in Adresstabelle
 	//Addressdaten aus DB holen:
 	$resultadresse = db_select($this->tbl_adresse, 'a')
@@ -438,7 +465,6 @@ private function akteurUpdaten() {
 	  }
 	}
 
-	//tbl_akteur UPDATE!!!
 	$akteur_updated = db_update($this->tbl_akteur)
     ->fields(array(
 		'name' => $this->name,
@@ -529,7 +555,6 @@ private function akteurUpdaten() {
   $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich bearbeitet!';
 
 	header("Location: Akteurprofil/".$this->akteur_id);
-  // Leite nach Abschluss auf Profil weiter
 
 } // END function akteurUpdaten()
 
