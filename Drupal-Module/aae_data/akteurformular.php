@@ -263,7 +263,7 @@ private function akteurCheckPost() {
 
 private function akteurSpeichern() {
 
- require_once $this->modulePath . 'database/db_connect.php';
+ require_once $this->modulePath . '/database/db_connect.php';
  $db = new DB_CONNECT();
 
 	//Abfrage, ob Adresse bereits in Adresstabelle
@@ -394,7 +394,7 @@ private function akteurSpeichern() {
 private function akteurUpdaten() {
 
 
-	require_once $this->modulePath . 'database/db_connect.php';
+	require_once $this->modulePath . '/database/db_connect.php';
 	$db = new DB_CONNECT();
 
 	//Abfrage, ob Adresse bereits in Adresstabelle
@@ -521,7 +521,7 @@ private function akteurUpdaten() {
 
 private function akteurGetFields() {
 
-  require_once $this->modulePath . 'database/db_connect.php';
+  require_once $this->modulePath . '/database/db_connect.php';
   $db = new DB_CONNECT();
 
   //Auswahl der Daten des eingeloggten Akteurs:
