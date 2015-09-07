@@ -14,6 +14,7 @@ function aae_preprocess_html(&$variables) {
   drupal_add_css(path_to_theme().'/css/pace.css');
   drupal_add_css(path_to_theme().'/css/app.css');
 
+  echo current_path();
 
   if (drupal_is_front_page()) {
 

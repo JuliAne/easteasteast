@@ -374,7 +374,7 @@ private function akteurSpeichern() {
    $this->countsparten = count($explodedsparten);
 	 $i = 0;
 
-   while($i < $this->countsparten) {
+   while ($i < $this->countsparten) {
 		//1. Prüfen, ob Tag bereits in Tabelle $tbl_sparte
 		$resultsparte = db_select($this->tbl_sparte, 's')
 		  ->fields('s', array( 'KID' ))
