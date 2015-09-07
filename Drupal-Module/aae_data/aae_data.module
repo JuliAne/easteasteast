@@ -116,8 +116,29 @@ function aae_data_menu() {
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
   );
+  //Menuitem "Kalenderanzeige"
+  $items['Kalender/%'] = array(
+    'title' => 'Kalender',
+    'page callback' => 'kalender_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
 
   return $items;
+}
+/**
+ * Builds page for Kalender
+ */
+function kalender_page() {
+drupal_add_css("sites/all/modules/aae_data/calendar.css");
+  $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/kalender.php';
+
+  $path = current_path();
+  $path_alias = drupal_lookup_path('alias',$path);
+
+  return $profileHTML;
 }
 
 /**
