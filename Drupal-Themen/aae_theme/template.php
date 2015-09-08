@@ -16,10 +16,9 @@ function aae_preprocess_html(&$variables) {
 
   // Checke Seitentyp, hänge entsprechendes CSS/JS an den Header
 
-  $explodedpath = explode("/", current_path());
-  echo trim($explodedpath[0]);
+  $path = explode("/", current_path());
 
-  switch(current_path()) {
+  switch(trim($path[0])) {
 
   case ('node') :
 
