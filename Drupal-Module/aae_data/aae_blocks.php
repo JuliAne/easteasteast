@@ -144,6 +144,9 @@ function block_aae_count_projects_events() {
   ->fetchAll();
 
   foreach ($myAkteure as $akteur) {
+
+   // We don't need no Join's, masafakkaaa...
+
    $results[] = db_select($tbl_akteur, 'a')
    ->fields('a', array('AID','name'))
    ->condition('AID', $akteur->hat_AID, '=')
