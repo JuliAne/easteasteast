@@ -134,13 +134,20 @@ function block_aae_count_projects_events() {
 
   require_once 'database/db_connect.php';
   $db = new DB_CONNECT();
-
+/*
   $results = db_select($tbl_akteur, 'a');
   $results->join($tbl_hat_akteur, 'ha', 'ha.hat_AID = a.AID');
   $results->fields('a')
    ->condition('ha.hat_UID', $user->uid, '=')
    ->execute()
-   ->fetchAll();
+   ->fetchAll(); */
+
+  $results = db_select($tbl_hat_akteur, 'ha')
+  ->fields('ha')
+  ->condition('hat_UID', $user->uid, '=')
+  ->execute()
+  ->fetchAll();
+
 
    /*$query->join('field_data_body', 'b', 'n.nid = b.entity_id');
 $query
