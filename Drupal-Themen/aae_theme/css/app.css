@@ -166,15 +166,15 @@ input[type=submit].isSubmitButton{
 }
 
 #mainnav #logo:hover {
- width: 110px;
+ width: 108px;
  margin-top: 0;
  padding-right: 0;
- -moz-transform: rotate(30deg);
+ -moz-transform: rotate(-10deg);
 -ms-transform: rotate(30deg);
 -o-transform: rotate(30deg);
 -webkit-transform: rotate(30deg);
 
-transform: rotate(30deg);
+transform: rotate(-10deg);
 }
 
 #mainnav ul li {
