@@ -30,7 +30,7 @@
         <?php require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
               foreach(block_aae_print_my_akteure() as $my_akteur) : ?>
 
-        <p><a href=""><?= print_r($my_akteur); ?></a></p>
+        <p><a href=""><?php print_r($my_akteur); ?></a></p>
 
         <?php endforeach; ?>
 
