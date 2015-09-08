@@ -28,11 +28,11 @@
         <div class="divider"></div>
 
         <?php require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
-              print_r(block_aae_print_my_akteure()); ?>
+              foreach(block_aae_print_my_akteure() as $my_akteur) : ?>
 
-        <p><a href=""><?php // print_r($akteur); ?></a></p>
+        <p><a href=""><?= print_r($my_akteur); ?></a></p>
 
-        <?php // endforeach; ?>
+        <?php endforeach; ?>
 
         <a href="<?= base_path(); ?>Akteurformular" class="small button">+ Akteur erstellen</a>
      <?php } ?>
