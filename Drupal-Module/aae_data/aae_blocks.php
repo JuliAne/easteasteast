@@ -130,32 +130,26 @@ function block_aae_count_projects_events() {
 
   $tbl_akteur = "aae_data_akteur";
   $tbl_hat_akteur = "aae_data_hat_user";
+  $results = array();
+
   global $user;
 
   require_once 'database/db_connect.php';
   $db = new DB_CONNECT();
-/*
-  $results = db_select($tbl_akteur, 'a');
-  $results->join($tbl_hat_akteur, 'ha', 'ha.hat_AID = a.AID');
-  $results->fields('a')
-   ->condition('ha.hat_UID', $user->uid, '=')
-   ->execute()
-   ->fetchAll(); */
 
-  $results = db_select($tbl_hat_akteur, 'ha')
+  $myAkteure = db_select($tbl_hat_akteur, 'ha')
   ->fields('ha')
   ->condition('hat_UID', $user->uid, '=')
   ->execute()
   ->fetchAll();
 
-
-   /*$query->join('field_data_body', 'b', 'n.nid = b.entity_id');
-$query
-  ->fields('n', array('nid', 'title'))
-  ->condition('n.type', 'page')
-  ->condition('n.status', '1')
-  ->orderBy('n.created', 'DESC')
-  ->addTag('node_access'); */
+  foreach ($myAkteure as $akteur) {
+   $results[] = db_select($tbl_akteur, 'a')
+   ->fields('a')
+   ->condition('AID', $akteur->hat_AID, '=')
+   ->execute()
+   ->fetchAll();
+  }
 
   return $results;
 
