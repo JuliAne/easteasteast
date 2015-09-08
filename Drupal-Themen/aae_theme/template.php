@@ -16,7 +16,7 @@ function aae_preprocess_html(&$variables) {
 
   // Checke Seitentyp, hänge entsprechendes CSS/JS an den Header
 
-  echo current_path();
+  echo request_path();
 
   switch(current_path()) {
 
