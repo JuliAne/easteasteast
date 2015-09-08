@@ -21,9 +21,9 @@
 <div class="divider"></div>
 
 <h4 class="">Filter</h4>
-<form class="" action='<?= $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
+<form action='<?= $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
 
-  <select name="tag" size="<?= $counttags; ?>">
+  <select name="tag">
   <option value="0" selected="selected" >Tags</option>
   <?php foreach ($resulttags as $row) : ?>
     <option value="<?= $row->KID; ?>"><?= $row->kategorie; ?></option>
