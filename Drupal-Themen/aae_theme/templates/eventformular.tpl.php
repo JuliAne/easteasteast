@@ -3,7 +3,7 @@
 
 <?php if (!$this->freigabe) : ?>
 <div class="alert-box" data-alert>
- <p><strong>Ihr Event konnte nicht gespeichert werden, da folgende Fehler vorliegen:</strong></p><br />
+ <p>Ihr Event konnte nicht gespeichert werden, da folgende Fehler vorliegen:</p><br />
  <ul>
   <?php foreach($this->fehler as $f) : ?>
     <li><?= $f; ?></li>
@@ -133,6 +133,10 @@ if($resultakteure->rowCount() != 0) : ?>
    <legend>Eventbild</legend>
 
     <input type="file" id="eventBildInput" name="bild" />
+
+    <?php if ($this->bild != '') : ?>
+      <img src="<?= $this->bild; ?>" title="Bisheriges Eventbild" width=250 style="float:right;margin:8px;" />
+    <?php endif; ?>
 
    <p><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf leipzigerecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
  <p>Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefeldern zu beschreiben.</p><br />
