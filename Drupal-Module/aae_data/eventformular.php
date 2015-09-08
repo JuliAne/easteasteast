@@ -13,7 +13,9 @@
 
 /**
  * FUNKTIONEN: ...
- * TODO: Ersteller = "Privat" (ID = 0) miteinbringen
+ * TODO: - Ersteller = "Privat" (ID = 0) miteinbringen
+ *       - Im "Update/Bearbeiten"-Modus werden die Select-Felder nicht
+ *         automatisch ausgewählt.
  */
 
 Class eventformular {
@@ -51,7 +53,7 @@ Class eventformular {
   var $freigabe = true;
   var $fehler = array(); // In diesem Array werden alle Fehler gespeichert
 
-  //Variablen, welche Texte in den Formularfeldern beschreiben ("placeholder")
+  //Variablen, welche Texte in den Formularfeldern beschreiben ("placeholder"):
 
   var $ph_name = "Veranstaltungsname";
   var $ph_veranstalter = "Veranstalter";
@@ -586,6 +588,8 @@ private function eventSpeichern() {
 private function eventDisplay() {
 
  // Ausgabe des Eventformulars
+
+ // TODO: Ggf. kann die $resultbezirke-Abfrage woanders hin wandern...
 
  if (array_intersect(array('administrator'), $user->roles)) {
  //alle Akteure abfragen, die in DB: nur Admin

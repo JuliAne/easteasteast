@@ -2,21 +2,21 @@
 
 function aae_preprocess_html(&$variables) {
 
-  drupal_add_js('https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
+  drupal_add_js('https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'); // TODO: Auslagern in local-repo
 
   drupal_add_js(path_to_theme().'/js/jquery.fullPage.min.js');
   drupal_add_js(path_to_theme().'/js/pace.min.js');
-  drupal_add_js(path_to_theme().'/js/doubletaptogo.min.js');
+  drupal_add_js(path_to_theme().'/js/doubletaptogo.min.js'); // Mobile-Menü
   drupal_add_js(path_to_theme().'/js/app.js');
 
   drupal_add_css(path_to_theme().'/css/foundation.css');
-  drupal_add_css('https://fonts.googleapis.com/css?family=Open+Sans:400,300', array('type' => 'external'));
+  drupal_add_css('https://fonts.googleapis.com/css?family=Open+Sans:400,300', array('type' => 'external')); // TODO: Auslagern in local-repo
   drupal_add_css(path_to_theme().'/css/pace.css');
   drupal_add_css(path_to_theme().'/css/app.css');
 
   // Checke Seitentyp, hänge entsprechendes CSS/JS an den Header
 
-  $path = explode("/", current_path());
+  $path = explode("/", current_path()); // Welcome URL-Injection :D TODO: Call ClearContent()
 
   switch(trim($path[0])) {
 
@@ -31,7 +31,7 @@ function aae_preprocess_html(&$variables) {
     drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js');
     drupal_add_js(path_to_theme().'/js/home.js');
 
-    break;
+  break;
 
   case ('Akteurprofil') :
 
@@ -40,17 +40,19 @@ function aae_preprocess_html(&$variables) {
     drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js');
     drupal_add_js('L.mapbox.accessToken = "pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg";', 'inline');
 
-    break;
+  break;
 
+  case ('Akteurformular'):
+  case ('Akteuredit') :
   case ('Eventformular') :
+  case ('Eventedit') :
 
    drupal_add_css(path_to_theme(). '/css/subpage.css');
    drupal_add_css(path_to_theme().'/css/token-input.css');
    drupal_add_js(path_to_theme().'/js/jquery.tokeninput.js');
    drupal_add_js(path_to_theme().'/js/eventform.js');
 
-   break;
-
+  break;
 
   case ('Akteure') :
 
@@ -58,12 +60,13 @@ function aae_preprocess_html(&$variables) {
    // drupal_add_js(path_to_theme().'/js/stalactite.min.js');
    //drupal_add_js('$("#block-system-main #akteure").stalactite();', array('type' => 'inline', 'scope' => 'footer'));
 
-   break;
+  break;
 
   default:
 
     drupal_add_css(path_to_theme(). '/css/subpage.css');
-    break;
+
+  break;
 
  }
 
