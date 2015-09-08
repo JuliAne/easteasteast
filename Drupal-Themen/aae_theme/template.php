@@ -16,7 +16,8 @@ function aae_preprocess_html(&$variables) {
 
   // Checke Seitentyp, hänge entsprechendes CSS/JS an den Header
 
-  echo drupal_get_path_alias(current_path());
+  $explodedpath = explode("/", current_path());
+  echo trim($explodedpath[0]);
 
   switch(current_path()) {
 
