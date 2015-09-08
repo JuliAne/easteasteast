@@ -22,14 +22,12 @@
       </label>
     </div>
 
-<?php
-
-if($resultakteure->rowCount() != 0) : ?>
+<?php if ($this->resultakteure->rowCount() != 0) : ?>
   <div class="large-4 large-offset-1 columns">
   <label>Veranstalter:</label>
   <select name="veranstalter" size="<?= $countakteure; ?>">
   <option value="0">Privat</option>
-  <?php foreach ($resultakteure as $akteur) : ?>
+  <?php foreach ($this->resultakteure as $akteur) : ?>
     <option value="<?= $akteur->AID; ?>"><?= $akteur->name; ?></option>
   <?php endforeach; ?>
   </select>
@@ -95,9 +93,9 @@ if($resultakteure->rowCount() != 0) : ?>
    <div class="large-4 columns">
   <label>Bezirk: <?= $this->fehler['ort']; ?>
 
-  <select name="ort">
+  <select name="ort"><?= $this->bezirk; ?>
    <option value="" selected="selected">Bezirk auswählen</option>
-   <?php foreach ($resultbezirke as $bezirk) : ?>
+   <?php foreach ($this->resultbezirke as $bezirk) : ?>
    <option value="<?= $bezirk->BID; ?>"><?= $bezirk->bezirksname; ?></option>
    <?php endforeach; ?>
   </select>

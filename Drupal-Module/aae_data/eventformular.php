@@ -3,8 +3,9 @@
  * eventformular.php stellt ein Formular dar,
  * in welches alle Informationen über eine Veranstaltung
  * eingetragen werden können.
- * Pflichtfelder sind: Name, Veranstalter, Datum.
- * Anschließend werden die Daten in die DB-Tabellen eingetragen.
+ * Pflichtfelder sind (bisher): Name, Veranstalter, Datum.
+ * Anschließend werden die Daten gefiltert in die DB-Tabellen eingetragen
+ * oder geupdated
  *
  * Ruth, 2015-07-20
  * Felix, 2015-09-02
@@ -18,6 +19,7 @@
 Class eventformular {
 
   //Variablen zum Speichern von Werten, welche in die DB-Tabellen eingefügt werden sollen
+
   //$tbl_event
   var $name = "";
   var $veranstalter = "";
@@ -80,6 +82,8 @@ Class eventformular {
 
   var $user_id;
   var $event_id;
+  var $resultakteure;
+  var $resultbezirke;
   var $target = '';
 
   function __construct($action) {
@@ -97,7 +101,7 @@ Class eventformular {
 
 
   public function run() {
-  /** Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
+  /* Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
   *   @returns $profileHTML;
   */
 
@@ -129,7 +133,8 @@ Class eventformular {
 }
 
  private function clearContent($trimTag) {
-  /* Einfache Funktion zum Filtern von POST-Daten. Gerne erweiterbar. */
+  /* Einfache Funktion zum Filtern von POST-Daten. Gerne erweiterbar, bspw.
+     durch Einbindung von "phpsec". */
   $clear = trim($trimTag);
   return strip_tags($clear);
  }
@@ -255,7 +260,7 @@ private function eventUpdaten() {
 
 	//Abfrage, ob Adresse bereits in Adresstabelle
 	//Addressdaten aus DB holen:
-	$resultadresse = db_select($this->tbl_adresse, 'a')
+	$this->resultadresse = db_select($this->tbl_adresse, 'a')
 	  ->fields('a', array( 'ADID', 'gps' ))
 	  ->condition('strasse', $this->strasse, '=')
 	  ->condition('nr', $this->nr, '=')
@@ -265,7 +270,7 @@ private function eventUpdaten() {
 	  ->execute();
 
 	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
-  $i = $resultadresse->rowCount();
+  $i = $this->resultadresse->rowCount();
 
 	if($i == 0) {
     //Adresse nicht vorhanden
@@ -283,7 +288,7 @@ private function eventUpdaten() {
 	} else {
     //Adresse bereits vorhanden
 
-	  foreach ($resultadresse as $row) {
+	  foreach ($this->resultadresse as $row) {
 	    //Abfrage, ob GPS-Angaben gemacht wurden
 
 	    if(strlen($this->gps) != 0 && strlen($row->gps) == 0 ){
@@ -296,7 +301,7 @@ private function eventUpdaten() {
 	        ->condition('ADID', $row->ADID, '=')
 	        ->execute();
 	    }
-	    $this->adresse = $row->ADID;//Adress-ID merken
+	    $this->adresse = $row->ADID; //Adress-ID merken
 	  }
 	}
 
@@ -382,7 +387,7 @@ private function eventGetFields() {
   $akteur_id = $this->veranstalter;
 
   //Adressdaten aus DB holen:
-  $resultadresse = db_select($this->tbl_adresse, 'd')
+  $this->resultadresse = db_select($this->tbl_adresse, 'd')
     ->fields('d', array(
 	  'strasse',
 	  'nr',
@@ -392,10 +397,10 @@ private function eventGetFields() {
 	  'gps',
 	))
 	->condition('ADID', $this->ort, '=')
-    ->execute();
+  ->execute();
 
   //Speichern der Adressdaten in den Arbeitsvariablen
-  foreach ($resultadresse as $row) {
+  foreach ($this->resultadresse as $row) {
 	 $this->strasse = $row->strasse;
 	 $this->nr = $row->nr;
 	 $this->adresszusatz = $row->adresszusatz;
@@ -405,13 +410,13 @@ private function eventGetFields() {
   }
 
   //Akteurnamen aus DB holen:
-  $resultakteur = db_select($this->tbl_akteur, 'a')
+  $this->resultakteur = db_select($this->tbl_akteur, 'a')
    ->fields('a', array( 'name' ))
 	 ->condition('AID', $this->veranstalter, '=')
    ->execute();
 
   //Speichern der Adressdaten in den Arbeitsvariablen
-  foreach ($resultakteur as $row) {
+  foreach ($this->resultakteur as $row) {
 	 $this->veranstalter = $row->name;
   }
   //Zeit auflösen
@@ -453,11 +458,8 @@ private function eventSpeichern() {
 
 	//Abfrage, ob Adresse bereits in Adresstabelle
 	//Addressdaten aus DB holen:
-	$resultadresse = db_select($this->tbl_adresse, 'a')
-	  ->fields('a', array(
-	    'ADID',
-	   	'gps',
-	  ))
+	$this->resultadresse = db_select($this->tbl_adresse, 'a')
+	  ->fields('a', array( 'ADID', 'gps' ))
 	  ->condition('strasse', $this->strasse, '=')
 	  ->condition('nr', $this->nr, '=')
 	  ->condition('adresszusatz', $this->adresszusatz, '=')
@@ -466,7 +468,7 @@ private function eventSpeichern() {
 	  ->execute();
 
  	 //wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
-   if($resultadresse->rowCount() == 0) {
+   if($this->resultadresse->rowCount() == 0) {
 
     //Adresse nicht vorhanden
 	  $this->adresse = db_insert($this->tbl_adresse)
@@ -482,7 +484,7 @@ private function eventSpeichern() {
 	} else {
 
     //Adresse bereits vorhanden
-	  foreach ($resultadresse as $row) {
+	  foreach ($this->resultadresse as $row) {
 	    //Abfrage, ob GPS-Angaben gemacht wurden
 	    if (strlen($this->gps) != 0 && strlen($row->gps) == 0 ) {
         //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
@@ -587,28 +589,24 @@ private function eventDisplay() {
 
  if (array_intersect(array('administrator'), $user->roles)) {
  //alle Akteure abfragen, die in DB: nur Admin
-  $resultakteure = db_select($this->tbl_akteur, 'a')
-  ->fields('a', array(
-    'AID',
-    'name',
-    ))
-    ->execute();
+  $this->resultakteure = db_select($this->tbl_akteur, 'a')
+  ->fields('a', array( 'AID', 'name' ))
+  ->execute();
+
  } else {
+
   //Akteure abfragen, die in DB und für welche User Schreibrechte hat
   $res = db_select($this->tbl_akteur, 'a');
   $res->join($this->tbl_hat_user, 'u', 'a.AID = u.hat_AID AND u.hat_UID = :uid', array(':uid' => $this->user_id));
   $res->fields('a', array('AID','name'));
-  $resultakteure=$res->execute();
+  $this->resultakteure = $res->execute();
  } // GGF. ALLES HIER DRÜBER ANPASSEN
 
- $resultbezirke = db_select($this->tbl_bezirke, 'b')
-  ->fields('b', array(
-  'BID',
-  'bezirksname',
-  ))
+ $this->resultbezirke = db_select($this->tbl_bezirke, 'b')
+  ->fields('b', array( 'BID', 'bezirksname' ))
   ->execute();
 
- $countbezirke = $resultbezirke->rowCount();
+ $countbezirke = $this->resultbezirke->rowCount();
 
  $pathThisFile = $_SERVER['REQUEST_URI'];
 
