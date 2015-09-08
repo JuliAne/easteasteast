@@ -93,7 +93,7 @@
    <div class="large-4 columns">
   <label>Bezirk: <?= $this->fehler['ort']; ?>
 
-  <select name="ort"><?= $this->bezirk; ?>
+  <select name="ort"><?= $this->adresse; ?>
    <option value="" selected="selected">Bezirk auswählen</option>
    <?php foreach ($this->resultbezirke as $bezirk) : ?>
    <option value="<?= $bezirk->BID; ?>"><?= $bezirk->bezirksname; ?></option>
