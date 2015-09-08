@@ -136,8 +136,8 @@ function block_aae_count_projects_events() {
   $db = new DB_CONNECT();
 
   $results = db_select($tbl_akteur, 'a');
-  $results->join($tbl_hat_akteur, 'ha', 'ha.hat_AID = a.AID')
-   ->fields('a')
+  $results->join($tbl_hat_akteur, 'ha', 'ha.hat_AID = a.AID');
+  $results->fields('a')
    ->condition('ha.hat_UID', $user->uid, '=')
    ->execute()
    ->fetchAll();
