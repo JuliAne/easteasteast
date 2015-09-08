@@ -447,7 +447,7 @@ private function eventSpeichern() {
       echo 'Error: Konnte Bild nicht hochladen. Bitte <a href="'.base_path.'contact">informieren Sie den Administrator</a>. Bildname: <br />'.$bildname;
       exit();
     }
-    $this->bild = base_path().$short_bildpfad.$bildname;
+    $this->bild = base_path().$this->short_bildpfad.$bildname;
    }
   }
 
