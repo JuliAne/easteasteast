@@ -126,16 +126,17 @@ function block_aae_count_projects_events() {
  * @use Einzubinden via require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
  */
 
- function block_aae_print_my_akteure($id) {
+ function block_aae_print_my_akteure() {
 
   $tbl_akteur = "aae_data_hat_user";
+  global $user;
 
   require_once 'database/db_connect.php';
   $db = new DB_CONNECT();
 
   $results = db_select($tbl_akteur, 'a')
    ->fields('a')
-   ->condition('hat_UID', $id, '=')
+   ->condition('hat_UID', $user->id, '=')
    ->orderBy('name', 'ASC')
    ->execute()
    ->fetchAll();
