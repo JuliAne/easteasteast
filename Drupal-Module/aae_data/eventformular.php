@@ -12,7 +12,7 @@
 
 /**
  * FUNKTIONEN: ...
- * TODO: "Privat" miteinbringen
+ * TODO: Ersteller = "Privat" (ID = 0) miteinbringen
  */
 
 Class eventformular {
@@ -439,10 +439,11 @@ private function eventSpeichern() {
   // https://api.drupal.org/api/drupal/modules!image!image.module/7
 
   if ($_FILES) {
+
    $bildname = $_FILES['bild']['name'];
 
    if ($bildname != "") {
-    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $this->bildpfad.$this->bildname)) {
+    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $this->bildpfad.$bildname)) {
       echo 'Error: Konnte Bild nicht hochladen. Bitte <a href="'.base_path.'contact">informieren Sie den Administrator</a>. Bildname: <br />'.$bildname;
       exit();
     }
