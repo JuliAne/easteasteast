@@ -124,28 +124,8 @@ function aae_data_menu() {
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
   );
-  //Menuitem "Tag"
-  $items['Tag/%'] = array(
-    'title' => '',
-    'page callback' => 'tag_page',
-    'access arguments' => array('access content'),
-    'type' => MENU_NORMAL_ITEM,
-    'access callback' => TRUE,
-  );
 
   return $items;
-}
-/**
- * Builds page for Tag
- */
-function tag_page() {
-  $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/tag.php';
-
-  $path = current_path();
-  $path_alias = drupal_lookup_path('alias',$path);
-
-  return $profileHTML;
 }
 /**
  * Builds page for Kalender
