@@ -8,6 +8,15 @@
   <div class="large-3 large-offset-1 columns">
    <p>2 Kommentare</p>
    <p>Von Autorname</p>
+   <?php if ($display_submitted): ?>
+       <?php print $user_picture; ?>
+       <?php
+         print t('Von !username am !datetime', array(
+           '!username' => $name,
+           '!datetime' => '<span class="time pubdate" title="' . $datetime . '">' . $date . '</span>',
+         ));
+       ?>
+   <?php endif; ?>
   </div>
 
  </div>
@@ -19,17 +28,7 @@
 </div><!-- /#content -->
 
 
-  <?php if ($display_submitted): ?>
-    <div class="footer submitted">
-      <?php print $user_picture; ?>
-      <?php
-        print t('Submitted by !username on !datetime', array(
-          '!username' => $name,
-          '!datetime' => '<span class="time pubdate" title="' . $datetime . '">' . $date . '</span>',
-        ));
-      ?>
-    </div>
-  <?php endif; ?>
+
 
 
 kopiert:

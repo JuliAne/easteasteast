@@ -8,14 +8,15 @@
  width: 100%;
  background-size: 100%;
  height: 100%;
- padding-top: 150px;
+ padding-top: 100px;
 }
 
 #headline {
- background: #fff;
- padding: 6px;
- color: blue;
+ background: #008CBA;
+ padding: 8px;
+ color: #fff;
  text-transform: uppercase;
+ display: table;
 }
 
 #content {
