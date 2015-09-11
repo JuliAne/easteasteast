@@ -23,10 +23,14 @@
 }
 
 #content {
- background: rgba(255, 0, 0, 0.5);
- padding: 12px;
+ background: rgba(255, 255, 255, 0.5);
+ padding: 15px;
  position: relative;
- margin-top: -30px;
+ margin-top: -50px;
+}
+
+#content p {
+ line-height: 1em;
 }
 
 
