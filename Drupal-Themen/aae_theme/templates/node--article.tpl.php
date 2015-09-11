@@ -6,17 +6,9 @@
   </div>
 
   <div class="large-3 large-offset-1 columns">
+   <?php print $user_picture; ?>
    <p>2 Kommentare</p>
-   <p>Von Autorname</p>
-   <?php if ($display_submitted): ?>
-       <?php print $user_picture; ?>
-       <?php
-         print t('Von !username am !datetime', array(
-           '!username' => $name,
-           '!datetime' => '<span class="time pubdate" title="' . $datetime . '">' . $date . '</span>',
-         ));
-       ?>
-   <?php endif; ?>
+   <p>Von <strong><?= $name; ?></strong> am <?= $date; ?></p>
   </div>
 
  </div>

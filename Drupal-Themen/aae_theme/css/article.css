@@ -7,20 +7,26 @@
 #article-image {
  width: 100%;
  background-size: 100%;
- height: 100%;
+ height: 350px;
  padding-top: 100px;
 }
 
 #headline {
  background: #008CBA;
- padding: 8px;
- color: #fff;
+ padding: 10px;
  text-transform: uppercase;
  display: table;
 }
 
-#content {
+#headline a {
+ color: #fff;
+}
 
+#content {
+ background: rgba(255, 0, 0, 0.5);
+ padding: 12px;
+ position: relative;
+ margin-top: -30px;
 }
 
 
