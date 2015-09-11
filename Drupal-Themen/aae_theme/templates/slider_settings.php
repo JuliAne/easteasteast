@@ -25,7 +25,7 @@
 
 require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
 
-print_r(block_aae_count_projects_events());
+$counts = block_aae_count_projects_events();
 
 $sliders = array(
 
@@ -43,7 +43,7 @@ $sliders = array(
 
  $slider2 = array(
    'image' => 'slider_2_min.jpg',
-   'headline' => '<strong>32</strong> Akteure. <strong>50</strong> Events. Eine Plattform.',
+   'headline' => '<strong>'.$counts['akteure'].'</strong> Akteure. <strong>'.$counts['events'].'</strong> Events. Eine Plattform.',
    'description' => 'Jetzt anmelden, Projekt einstellen oder einfach nur mitmischen.',
    'whiteText' => true,
    'blueButton' => array(
