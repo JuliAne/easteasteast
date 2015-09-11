@@ -7,7 +7,7 @@
 
   <div class="large-3 large-offset-1 columns">
    <?php print $user_picture; ?>
-   <p>2 Kommentare</p>
+   <p>2<?= $comment_count; ?> Kommentare</p>
    <p>Von <strong><?= $name; ?></strong> am <?= $date; ?></p>
   </div>
 
@@ -16,16 +16,12 @@
 
 <div id="content" class="row">
  <?php print render($content['body']); ?>
- LINKS: <div class="links"><?php print $links ?></div>
+ <div class="divider"></div>
+ <div class="links"><?php print $links ?></div>
+ <div class="info"><?php print $submitted ?><span class="terms"><?php print $terms ?></span></div>
+ <?php print $content_attributes; ?>
 </div><!-- /#content -->
 
-
-
-
-
-kopiert:
-
-
-  <div class="info"><?php print $submitted ?><span class="terms"><?php print $terms ?></span></div>
-
-  <?php print $content_attributes; ?>
+<div id="comments" class="row">
+ <?php print render($content['comments']); ?>
+</div>
