@@ -7,8 +7,8 @@
 
   <div class="large-3 large-offset-1 columns">
    <?php print $user_picture; ?>
-   <p>2<?= $comment_count; ?> Kommentare</p>
-   <p>Von <strong><?= $name; ?></strong> am <?= $date; ?></p>
+   <p><strong><?= $comment_count; ?></strong> Kommentar(e)</p>
+   <p>Von <strong><?= $name; ?></strong><br />am <?= $date; ?></p>
   </div>
 
  </div>
@@ -22,6 +22,9 @@
  <?php print $content_attributes; ?>
 </div><!-- /#content -->
 
-<div id="comments" class="row">
- <?php print render($content['comments']); ?>
+<div id="comments">
+  <div class="divider"></div>
+  <div class="row">
+   <?php print render($content['comments']); ?>
+  </div>
 </div>
