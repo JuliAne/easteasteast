@@ -23,6 +23,10 @@
 *
 */
 
+require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
+
+print_r(block_aae_count_projects_events());
+
 $sliders = array(
 
  $slider1 = array(

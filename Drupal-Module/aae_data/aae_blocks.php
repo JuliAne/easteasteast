@@ -85,38 +85,27 @@ function block_aae_print_letzte_akteure($limit = 3) {
 
 function block_aae_count_projects_events() {
 
-/*  $tbl_akteur = "aae_data_akteur";
+  $tbl_akteur = "aae_data_akteur";
+  $tbl_events = "aae_data_events";
+
+  $count = array();
 
   require_once 'database/db_connect.php';
   $db = new DB_CONNECT();
 
-  $letzteakteure = db_select($tbl_akteur, 'a')
-    ->fields('a')
-    ->range(0, $limit)
-    ->execute()
-    ->fetchAll();
+  $countAkteure = db_select($tbl_akteur, 'a')
+  ->fields('a', array('AID'))
+  ->execute();
 
-  $resultakteure = array();
+  $countEvents = db_select($tbl_events, 'e')
+  ->fields('e', array('EID'))
+  ->execute();
 
- foreach($letzteakteure as $row){
-    $resultakteure[] = $row; //array('AID' => $row->AID, 'name' => $row->name);
-  } */
+  $count['akteure'] = $countAkteure->rowCount();
+  $count['events'] = $countEvents->rowCount();
 
-  $resultadresse = db_select($tbl_adresse, 'b')
-    ->fields('b', array(
-      'ADID',
-    ))
-    ->condition('strasse', $strasse, '=')
-    ->condition('nr', $nr, '=')
-    ->condition('plz', $plz, '=')
-    ->condition('ort', $ort, '=')
-    ->execute();
-  $count = $resultadresse->rowCount();
-  $adid = "";
+  return $count;
 
-  return $myCounts;
-
-  // return array('akteure' => xy, 'projekte' => xy):
 }
 
 /**
