@@ -43,7 +43,7 @@ $sliders = array(
 
  $slider2 = array(
    'image' => 'slider_2_min.jpg',
-   'headline' => '<strong>'.$counts['akteure'].'</strong> Akteure. <strong>'.$counts['events'].'</strong> Events. Eine Plattform.',
+   'headline' => '<strong>'.$counts['akteure'].'</strong> Akteure. <strong>'.$counts['events'].'</strong> Events:<br /> Eine Plattform.',
    'description' => 'Jetzt anmelden, Projekt einstellen oder einfach nur mitmischen.',
    'whiteText' => true,
    'blueButton' => array(

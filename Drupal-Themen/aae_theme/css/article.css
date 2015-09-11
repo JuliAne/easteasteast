@@ -11,10 +11,13 @@
 }
 
 #headline {
+ background: #fff;
+ padding: 6px;
+ color: blue;
 }
 
 #content {
- 
+
 }
 
 
