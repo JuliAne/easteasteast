@@ -8,12 +8,14 @@
  width: 100%;
  background-size: 100%;
  height: 100%;
+ padding-top: 150px;
 }
 
 #headline {
  background: #fff;
  padding: 6px;
  color: blue;
+ text-transform: uppercase;
 }
 
 #content {
