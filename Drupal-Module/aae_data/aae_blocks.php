@@ -86,7 +86,7 @@ function block_aae_print_letzte_akteure($limit = 3) {
 function block_aae_count_projects_events() {
 
   $tbl_akteur = "aae_data_akteur";
-  $tbl_events = "aae_data_events";
+  $tbl_events = "aae_data_event";
 
   $count = array();
 
