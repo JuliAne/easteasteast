@@ -109,7 +109,7 @@ function aae_data_menu() {
   );
 
   //Ajaxitem "Eventformular/ajaxGetTags"
-  $items['ajax?q='] = array(
+  $items['ajax/%'] = array(
     'title' => '',
     'page callback' => 'ajaxGetTags',
     'access arguments' => array('access content'),
@@ -128,6 +128,14 @@ function aae_data_menu() {
   $items['Tag/%'] = array(
     'title' => '',
     'page callback' => 'tag_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
+  //Menuitem "Kalenderanzeige"
+  $items['Kalender'] = array(
+    'title' => 'Kalender',
+    'page callback' => 'kalender_page',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,

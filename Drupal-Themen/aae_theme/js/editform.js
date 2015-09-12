@@ -2,6 +2,9 @@ $(document).ready(function(){
 
   $("#eventSpartenInput").tokenInput("?q=ajax");
 
+  $("#eventStartdatumInput").Zebra_DatePicker({ 'readonly_element' : false });
+  $("#eventEnddatumInput").Zebra_DatePicker({ 'readonly_element' : false });
+
   $('.eventAdresse').click(function(){
 
     if ($('#eventNrInput').val() != '' && $('#eventPLZInput').val() != '' && $('#eventStrasseInput').val() != '') {

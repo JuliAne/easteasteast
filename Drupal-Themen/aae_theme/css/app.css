@@ -571,3 +571,6 @@ transform: rotate(-10deg);
         position: static;
     }
 }
+
+#change-style li {}
+#change-style li img {width:20px;}

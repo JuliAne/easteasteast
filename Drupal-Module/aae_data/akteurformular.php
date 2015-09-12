@@ -51,7 +51,7 @@ var $gps = "";
 var $sparten = "";
 
 //Speicherort fuer Bilder
-var $bildpfad = "/home/swp15-aae/drupal/sites/default/files/styles/large/public/field/image/";
+var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/styles/large/public/field/image/";
 var $short_bildpfad = "sites/default/files/styles/large/public/field/image/";
 
 var $akteur_id = "";

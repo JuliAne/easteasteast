@@ -11,18 +11,16 @@
 
  <div class="large-4 columns" id="mini-nav">
   <h4>Navigation.</h4>
-
   <?php print render($page['mainnav']); ?>
-
  </div>
 
  <div id="mini-calendar" class="large-4 columns">
-  <h4>Kalender.</h4>
+  <h4>Events.</h4>
   <div class="month-view">
    <div class="date-nav-wrapper clear-block">
     <div class="date-nav">
      <div class="date-heading">
-     <a href="http://pcai042.informatik.uni-leipzig.de/~swp15-aae/drupal/?q=calendar-node-field-datum/month/2015-06" title="View full page month">Juni 2015</a>
+     <a href="<?= base_path(); ?>Kalender" title="">Echter Kalender</a>
      </div>
     </div>
    </div>

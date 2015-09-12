@@ -20,18 +20,38 @@
 </div>
 <div class="divider"></div>
 
-<h4 class="">Filter</h4>
-<form action='<?= $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
+<div id="filter" class="row" style="padding-top:22px;margin-bottom:5px;">
 
-  <select name="tag">
-  <option value="0" selected="selected" >Tags</option>
-  <?php foreach ($resulttags as $row) : ?>
-    <option value="<?= $row->KID; ?>"><?= $row->kategorie; ?></option>
-  <?php endforeach; ?>
-  </select>
-  <input type="submit" class="small button right" id="eventSubmit" name="submit" value="Nach Tags filtern">
+<div class="large-2 columns" style="padding-top:8px;">
+  <h4 class="left">Filter</h4>
+  <a class="small secondary button round right" style="padding:4px 10px;" href="#" title="Alle Filter löschen">x</a>
+ </div>
+
+ <div class="large-3 large-offset-2 columns">
+
+ <form action='<?=  $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
+
+   <select name="tag">
+   <option value="0" selected="selected" >Tag-Filter</option>
+   <?php foreach ($resulttags as $row) : ?>
+     <option value="<?= $row->KID; ?>"><?= $row->kategorie; ?></option>
+   <?php endforeach; ?>
+   </select>
+
+ </div>
+
+<div id="change-style" class="button-bar large-5 columns">
+  <ul class="button-group round">
+    <li><a href="#" class="small button success" title="Darstellung in Timeline"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
+    <li><a href="#" class="small button secondary" title="Darstellung im Kalender"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
+    <li><a href="#" class="small button secondary" title="Darstellung auf Karte"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
+  </ul>
+  <input type="submit" class="small button right" id="eventSubmit" name="submit" value="OK">
+</div>
 
 </form>
+
+</div>
 
 <div class="divider"></div>
 
@@ -39,7 +59,8 @@
 
 
 <?php foreach($resultevents as $event): ?>
-  <p><?= $event->start; ?><a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>"><?= $event->name; ?></a>: <?= $event->kurzbeschreibung; ?></p><br>
+  <p><?= $event->start; ?><a style="line-height:1.6em;" href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>"> <strong><?= $event->name; ?></strong></a>
+  <?php if ($event->kurzbeschreibung!=''): ?>: <?= $event->kurzbeschreibung; ?><?php endif; ?></p><br />
 <?php endforeach; ?>
 
 </div>
