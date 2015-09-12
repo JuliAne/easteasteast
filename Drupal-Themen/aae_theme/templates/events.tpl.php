@@ -20,9 +20,9 @@
 </div>
 <div class="divider"></div>
 
-<div id="filter" class="row" style="padding-top:8px;">
+<div id="filter" class="row" style="padding-top:22px;">
 
-<div class="large-2 columns">
+<div class="large-2 columns" style="padding-top:5px;">
   <h4 class="left">Filter</h4>
   <a class="small secondary button round right" style="padding:4px 10px;" href="#" title="Alle Filter löschen">x</a>
  </div>
