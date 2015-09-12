@@ -20,9 +20,9 @@
 </div>
 <div class="divider"></div>
 
-<div id="filter" class="row" style="padding-top:22px;">
+<div id="filter" class="row" style="padding-top:22px;margin-bottom:5px;">
 
-<div class="large-2 columns" style="padding-top:5px;">
+<div class="large-2 columns" style="padding-top:8px;">
   <h4 class="left">Filter</h4>
   <a class="small secondary button round right" style="padding:4px 10px;" href="#" title="Alle Filter löschen">x</a>
  </div>
@@ -32,7 +32,7 @@
  <form action='<?=  $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
 
    <select name="tag">
-   <option value="0" selected="selected" >Tags</option>
+   <option value="0" selected="selected" >Tag-Filter</option>
    <?php foreach ($resulttags as $row) : ?>
      <option value="<?= $row->KID; ?>"><?= $row->kategorie; ?></option>
    <?php endforeach; ?>
@@ -59,7 +59,8 @@
 
 
 <?php foreach($resultevents as $event): ?>
-  <p><?= $event->start; ?><a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>"><?= $event->name; ?></a>: <?= $event->kurzbeschreibung; ?></p><br>
+  <p><?= $event->start; ?><a style="line-height:1.6em;" href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>"> <strong><?= $event->name; ?></strong></a>
+  <?php if ($event->kurzbeschreibung!=''): ?>: <?= $event->kurzbeschreibung; ?><?php endif; ?></p><br />
 <?php endforeach; ?>
 
 </div>
