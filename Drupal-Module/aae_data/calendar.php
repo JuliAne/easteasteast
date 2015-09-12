@@ -10,7 +10,7 @@ class Calendar {
      * Constructor
      */
     public function __construct(){     
-        $this->naviHref = htmlentities($_SERVER['PHP_SELF']);
+        //$this->naviHref = htmlentities($_SERVER['PHP_SELF']);
     }
      
     /********************* PROPERTY ********************/  
@@ -34,6 +34,7 @@ class Calendar {
     * print out the calendar
     */
     public function show() {
+	
         $year  == null;
          
         $month == null;
@@ -46,7 +47,7 @@ class Calendar {
  
             $year = date("Y",time());  
          
-        }          
+        }         
          
         if(null==$month&&isset($_GET['month'])){
  
@@ -56,7 +57,8 @@ class Calendar {
  
             $month = date("m",time());
          
-        }                  
+        }      
+          
          
         $this->currentYear=$year;
          
@@ -115,7 +117,36 @@ class Calendar {
             $this->currentDate = date('Y-m-d',strtotime($this->currentYear.'-'.$this->currentMonth.'-'.($this->currentDay)));
              
             $cellContent = $this->currentDay;
-             
+
+$events = null;
+//DB-Abfrage des Tages
+require_once 'sites/all/modules/aae_data/database/db_connect.php';//---r
+$db = new DB_CONNECT();//---r
+$tbl_event = "aae_data_event";//---r
+//DB-Abfrage aller Events, die an diesem Tag stattfinden---r
+$resultEvents = db_select($tbl_event, 'e')
+  ->fields('e', array( 
+	'start',
+	'name',
+	'EID', 
+  ))
+  //->condition('start', db_like($this->currentDate.'%'), 'LIKE')
+  ->condition('start', $this->currentDate.'%', 'LIKE')
+  ->orderBy('name', 'ASC')
+  ->execute(); 
+foreach ($resultEvents as $row) {
+	$events .= '<a href="?q=Eventprofil/'.$row->EID.'">'.$row->name.'</a>';	
+	//$cellContent .= 'uiuiui';
+}
+$countrows = $resultEvents->rowCount();
+/*if($countrows == 0){
+	$countrows="";
+}else{
+	$countrows=' ('.$countrows.')';
+}
+*/
+//$cellContent .= $this->currentDate;             
+
             $this->currentDay++;   
              
         }else{
@@ -125,9 +156,13 @@ class Calendar {
             $cellContent=null;
         }
              
-         
+         if($countrows == 0){
         return '<li id="li-'.$this->currentDate.'" class="'.($cellNumber%7==1?' start ':($cellNumber%7==0?' end ':' ')).
                 ($cellContent==null?'mask':'').'">'.$cellContent.'</li>';
+}else{
+	        return '<li id="event" class="'.($cellNumber%7==1?' start ':($cellNumber%7==0?' end ':' ')).
+	                ($cellContent==null?'mask':'').'"><a href="?q=Tag/'.$this->currentDate.'">'.$cellContent.' ('.$countrows.')</a></li>';
+}
     }
      
     /**

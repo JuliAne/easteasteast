@@ -51,7 +51,7 @@ div#calendar div.header a.next{
 }
  
  
- 
+
  
 /*******************************Calendar Content Cells*********************************/
 div#calendar div.box-content{
@@ -110,6 +110,10 @@ div#calendar ul.dates li{
     background-color: #DDD;
     color:#000;
     text-align:center; 
+}
+
+div#calendar ul.dates li#event{
+	background-color: #F0F;
 }
  
 :focus{
