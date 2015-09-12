@@ -23,13 +23,13 @@
 <div id="filter" class="row">
 
 <div class="large-2 columns">
-  <h4>Filter</h4>
-  <a class="small secondary button round" href="#" title="Alle Filter löschen">x</a>
+  <h4 class="left">Filter</h4>
+  <a class="small secondary button round right" style="padding:4px 10px;" href="#" title="Alle Filter löschen">x</a>
  </div>
 
- <div class="large-6 large-offset-2 columns">
+ <div class="large-5 large-offset-2 columns">
 
- <form action='<?=  $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
+ <form action='<?=  $pathThisFile; ?>' method='POST' enctype='multipart/form-data' class="large-5 columns">
 
    <select name="tag">
    <option value="0" selected="selected" >Tags</option>
@@ -37,7 +37,8 @@
      <option value="<?= $row->KID; ?>"><?= $row->kategorie; ?></option>
    <?php endforeach; ?>
    </select>
-   <input type="submit" class="small button right" id="eventSubmit" name="submit" value="Nach Tags filtern">
+
+   <input type="submit" class="small button right" id="eventSubmit" name="submit" value="OK">
 
  </form>
 
