@@ -23,11 +23,9 @@
   </div>
 
   <div class="large-4 columns">
-
    <label>Eventwebsite: <?= $this->fehler['url']; ?>
     <input type="text" id="eventURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= $this->ph_url; ?>">
    </label>
-
   </div>
 
   <div class="large-4 columns">
@@ -38,9 +36,10 @@
     foreach ($this->resultakteure as $akteur) : ?>
     <option value="<?= $akteur->AID; ?>"><?= $akteur->name; ?></option>
   <?php endforeach; ?>
-  </select>
 <?php endif; ?>
+ </select>
  </div>
+
  </div><!-- /.row -->
 
   <div class="row">
