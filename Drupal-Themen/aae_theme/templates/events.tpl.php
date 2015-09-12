@@ -27,9 +27,9 @@
   <a class="small secondary button round right" style="padding:4px 10px;" href="#" title="Alle Filter löschen">x</a>
  </div>
 
- <div class="large-5 large-offset-2 columns">
+ <div class="large-3 large-offset-4 columns">
 
- <form action='<?=  $pathThisFile; ?>' method='POST' enctype='multipart/form-data' class="large-5 columns">
+ <form action='<?=  $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
 
    <select name="tag">
    <option value="0" selected="selected" >Tags</option>
@@ -44,7 +44,7 @@
 
  </div>
 
-<div class="button-bar large-2 columns">
+<div class="button-bar large-3 columns">
   <ul class="button-group round">
     <li><a href="#" class="small button success" title="Darstellung in Timeline">T</a></li>
     <li><a href="#" class="small button secondary" title="Darstellung im Kalender">K</a></li>
