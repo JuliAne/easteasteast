@@ -57,13 +57,13 @@
    </div>
 
    <div class="large-3 columns">
-    <label>von (Uhrzeit; ganztägig: keine Uhrzeit angeben): <?= $this->fehler['zeit_von']; ?>
+    <label>Von... (Uhrzeit): <?= $this->fehler['zeit_von']; ?>
      <input type="text" id="eventZeitvonInput" name="zeit_von" value="<?= $this->zeit_von; ?>" placeholder="<?= $this->ph_zeit_von; ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
-    <label>bis (Uhrzeit; ganztägig: keine Uhrzeit angeben): <?= $this->fehler['zeit_bis']; ?>
+    <label>...Bis (Uhrzeit): <?= $this->fehler['zeit_bis']; ?>
      <input type="text" id="eventZeitbisInput" name="zeit_bis" value="<?= $this->zeit_bis; ?>" placeholder="<?= $this->ph_zeit_bis; ?>">
     </label>
    </div>
