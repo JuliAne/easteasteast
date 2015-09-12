@@ -20,14 +20,14 @@
 </div>
 <div class="divider"></div>
 
-<div id="filter" class="row">
+<div id="filter" class="row" style="padding:5px;">
 
 <div class="large-2 columns">
   <h4 class="left">Filter</h4>
   <a class="small secondary button round right" style="padding:4px 10px;" href="#" title="Alle Filter löschen">x</a>
  </div>
 
- <div class="large-3 large-offset-4 columns">
+ <div class="large-2 large-offset-4 columns">
 
  <form action='<?=  $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
 
@@ -40,7 +40,7 @@
 
  </div>
 
-<div class="button-bar large-3 columns">
+<div class="button-bar large-4 columns">
   <ul class="button-group round">
     <li><a href="#" class="small button success" title="Darstellung in Timeline">T</a></li>
     <li><a href="#" class="small button secondary" title="Darstellung im Kalender">K</a></li>
