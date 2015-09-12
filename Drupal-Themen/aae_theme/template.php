@@ -57,7 +57,9 @@ function aae_preprocess_html(&$variables) {
    drupal_add_css(path_to_theme(). '/css/subpage.css');
    drupal_add_css(path_to_theme().'/css/token-input.css');
    drupal_add_js(path_to_theme().'/js/jquery.tokeninput.js');
-   drupal_add_js(path_to_theme().'/js/eventform.js');
+   drupal_add_css(path_to_theme().'/css/default.css');
+   drupal_add_js(path_to_theme().'/js/zebra_datepicker.js');
+   drupal_add_js(path_to_theme().'/js/editform.js');
 
   break;
 

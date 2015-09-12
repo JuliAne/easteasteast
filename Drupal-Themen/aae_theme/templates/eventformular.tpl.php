@@ -38,7 +38,7 @@
   <div class="row">
 
    <div class="large-3 columns">
-    <label>Datum <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['start']; ?>
+    <label>Start (Datum, <span class="pflichtfeld">Pflichtfeld</span>): <?= $this->fehler['start']; ?>
      <input type="text" id="eventStartdatumInput" name="start" value="<?= $this->start; ?>" placeholder="<?= $this->ph_start; ?>" required/>
     </label>
    </div>
