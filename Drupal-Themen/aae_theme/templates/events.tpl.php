@@ -42,9 +42,9 @@
 
 <div class="button-bar large-4 columns">
   <ul class="button-group round">
-    <li><a href="#" class="small button success" title="Darstellung in Timeline">T</a></li>
-    <li><a href="#" class="small button secondary" title="Darstellung im Kalender">K</a></li>
-    <li><a href="#" class="small button secondary" title="Darstellung auf Karte">M</a></li>
+    <li><a href="#" class="small button success" title="Darstellung in Timeline"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
+    <li><a href="#" class="small button secondary" title="Darstellung im Kalender"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
+    <li><a href="#" class="small button secondary" title="Darstellung auf Karte"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
   </ul>
   <input type="submit" class="small button right" id="eventSubmit" name="submit" value="OK">
 </div>
