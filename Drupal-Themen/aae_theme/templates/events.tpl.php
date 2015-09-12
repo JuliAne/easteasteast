@@ -20,18 +20,38 @@
 </div>
 <div class="divider"></div>
 
-<h4 class="">Filter</h4>
-<form action='<?= $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
+<div id="filter" class="row">
 
-  <select name="tag">
-  <option value="0" selected="selected" >Tags</option>
-  <?php foreach ($resulttags as $row) : ?>
-    <option value="<?= $row->KID; ?>"><?= $row->kategorie; ?></option>
-  <?php endforeach; ?>
-  </select>
-  <input type="submit" class="small button right" id="eventSubmit" name="submit" value="Nach Tags filtern">
+<div class="large-2 columns">
+  <h4>Filter</h4>
+  <a class="small secondary button round" href="#" title="Alle Filter löschen">x</a>
+ </div>
 
-</form>
+ <div class="large-6 large-offset-2 columns">
+
+ <form action='<?=  $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
+
+   <select name="tag">
+   <option value="0" selected="selected" >Tags</option>
+   <?php foreach ($resulttags as $row) : ?>
+     <option value="<?= $row->KID; ?>"><?= $row->kategorie; ?></option>
+   <?php endforeach; ?>
+   </select>
+   <input type="submit" class="small button right" id="eventSubmit" name="submit" value="Nach Tags filtern">
+
+ </form>
+
+ </div>
+
+<div class="button-bar large-2 columns">
+  <ul class="button-group round">
+    <li><a href="#" class="small button success" title="Darstellung in Timeline">T</a></li>
+    <li><a href="#" class="small button secondary" title="Darstellung im Kalender">K</a></li>
+    <li><a href="#" class="small button secondary" title="Darstellung auf Karte">M</a></li>
+  </ul>
+</div>
+
+</div>
 
 <div class="divider"></div>
 
