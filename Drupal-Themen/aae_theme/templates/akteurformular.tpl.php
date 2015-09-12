@@ -15,18 +15,20 @@
 <form action='<?= $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
 
  <div class="row">
-    <div class="large-7 columns">
+    <div class="large-6 columns">
       <?= $this->fehler['name']; ?>
       <label>Name <span class="pflichtfeld">(Pflichtfeld)</span>:
         <input type="text" id="akteurNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= $this->ph_name; ?>" required/>
       </label>
     </div>
+
+    <div class="large-6 columns">
+     <label>Emailaddresse <span class="Pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['email']; ?>
+      <input type="email" id="akteurEmailInput" name ="email" value="<?= $this->email; ?>" placeholder="<?= $this->ph_email; ?>">
+     </label>
+    </div>
+
  </div><!-- /.row -->
-
-  <div class="row">
-
-
-  </div><!-- /.row -->
 
   <fieldset class="eventAdresse row">
    <legend>Adresse</legend>
@@ -67,7 +69,7 @@
     <?php else : ?>
     <option value="<?= $bezirk->BID; ?>"><?= $bezirk->bezirksname; ?></option>
     <?php endif; ?>
-   <?php endforeach; ?>   
+   <?php endforeach; ?>
   </select>
  </label>
  </div>
@@ -80,34 +82,47 @@
 
 </fieldset>
 
-<label>Öffnungszeiten: <?= $this->fehler['oeffnungszeiten']; ?>
- <input type="text" id="akteurOeffnungszeitenInput" name="oeffnungszeiten" value="<?= $this->oeffnungszeiten; ?>" placeholder="<?= $this->ph_oeffnungszeiten; ?>">
-</label>
+<fieldset class="row">
 
-<label>Ansprechpartner: <?= $this->fehler['ansprechpartner']; ?>
- <input type="text" id="akteurAnsprechpartnerInput" name="ansprechpartner" value="<?= $this->ansprechpartner; ?>" placeholder="<?= $this->ph_ansprechpartner; ?>">
-</label>
+ <legend>Sonstiges</legend>
 
-<label>Rolle des Ansprechpartners: <?= $this->fehler['funktion']; ?>
- <input type="text" id="akteurFunktionInput" name="funktion" value="<?= $this->funktion; ?>" placeholder="<?= $this->ph_funktion; ?>">
-</label>
+ <div class="large-4 columns">
+  <label>Öffnungszeiten: <?= $this->fehler['oeffnungszeiten']; ?>
+   <input type="text" id="akteurOeffnungszeitenInput" name="oeffnungszeiten" value="<?= $this->oeffnungszeiten; ?>" placeholder="<?= $this->ph_oeffnungszeiten; ?>">
+  </label>
+ </div>
 
-<label>Telefonnummer: <?= $this->fehler['telefon']; ?>
- <input type="text" id="akteurTelefonInput" name="telefon" value="<?= $this->telefon; ?>" placeholder="<?= $this->ph_telefon; ?>">
-</label>
+ <div class="large-4 columns">
+  <label>Projektwebsite: <?= $this->fehler['url']; ?>
+   <input type="text" id="akteurURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= $this->ph_url; ?>">
+  </label>
+ </div>
 
-<label>Emailaddresse <span class="Pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['email']; ?>
-<input type="email" id="akteurEmailInput" name ="email" value="<?= $this->email; ?>" placeholder="<?= $this->ph_email; ?>">
-</label>
+ <div class="large-4 columns">
+  <label>Telefonnummer: <?= $this->fehler['telefon']; ?>
+   <input type="text" id="akteurTelefonInput" name="telefon" value="<?= $this->telefon; ?>" placeholder="<?= $this->ph_telefon; ?>">
+  </label>
+ </div>
 
- <div class="row">
+</fieldset>
 
-  <div class="large-12 columns">
+<div class="row">
 
-   <label>Projektwebsite: <?= $this->fehler['url']; ?>
-    <input type="text" id="akteurURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= $this->ph_url; ?>">
-   </label>
+ <div class="large-6 columns">
+  <label>Ansprechpartner: <?= $this->fehler['ansprechpartner']; ?>
+   <input type="text" id="akteurAnsprechpartnerInput" name="ansprechpartner" value="<?= $this->ansprechpartner; ?>" placeholder="<?= $this->ph_ansprechpartner; ?>">
+  </label>
+ </div>
+
+ <div class="large-6 columns">
+  <label>Rolle des Ansprechpartners: <?= $this->fehler['funktion']; ?>
+   <input type="text" id="akteurFunktionInput" name="funktion" value="<?= $this->funktion; ?>" placeholder="<?= $this->ph_funktion; ?>">
+  </label>
   </div>
+
+</div>
+
+<div class="row">
 
   <div class="large-12 columns">
   <label>Beschreibung: <?= $this->fehler['beschreibung']; ?>
@@ -118,7 +133,7 @@
  </div>
 
   <fieldset class="row">
-   <legend>Bild</legend>
+   <legend>Akteurbild</legend>
 
     <input type="file" id="akteurBildInput" name="bild" />
 
