@@ -15,19 +15,27 @@
 <form action='<?= $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
 
  <div class="row">
-    <div class="large-7 columns">
-      <?= $this->fehler['name']; ?>
-      <label>Name <span class="pflichtfeld">(Pflichtfeld)</span>:
-        <input type="text" id="eventNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= $this->ph_name; ?>" required/>
-      </label>
-    </div>
 
-<?php if ($this->resultakteure->rowCount() != 0) : ?>
-  <div class="large-4 large-offset-1 columns">
+  <div class="large-4 columns">
+   <label>Name <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['name']; ?>
+    <input type="text" id="eventNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= $this->ph_name; ?>" required/>
+   </label>
+  </div>
+
+  <div class="large-4 columns">
+
+   <label>Eventwebsite: <?= $this->fehler['url']; ?>
+    <input type="text" id="eventURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= $this->ph_url; ?>">
+   </label>
+
+  </div>
+
+  <div class="large-4 columns">
   <label>Veranstalter:</label>
   <select name="veranstalter" size="<?= $countakteure; ?>">
   <option value="0">Privat</option>
-  <?php foreach ($this->resultakteure as $akteur) : ?>
+  <?php if ($this->resultakteure->rowCount() != 0) :
+    foreach ($this->resultakteure as $akteur) : ?>
     <option value="<?= $akteur->AID; ?>"><?= $akteur->name; ?></option>
   <?php endforeach; ?>
   </select>
@@ -113,16 +121,10 @@
  <div class="row">
 
   <div class="large-12 columns">
-
-   <label>Eventwebsite: <?= $this->fehler['url']; ?>
-    <input type="text" id="eventURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= $this->ph_url; ?>">
-   </label>
-  </div>
-
-  <div class="large-12 columns">
   <label>Beschreibung: <?= $this->fehler['kurzbeschreibung']; ?>
-   <textarea name="kurzbeschreibung" cols="45" rows="3" placeholder="<?= $this->ph_kurzbeschreibung; ?>"><?= $this->kurzbeschreibung; ?></textarea>
+   <textarea name="kurzbeschreibung" id="kurzbeschreibung" cols="45" rows="3" placeholder="<?= $this->ph_kurzbeschreibung; ?>"><?= $this->kurzbeschreibung; ?></textarea>
   </label>
+  <script>CKEDITOR.replace('kurzbeschreibung');</script>
  </div>
 
  </div>

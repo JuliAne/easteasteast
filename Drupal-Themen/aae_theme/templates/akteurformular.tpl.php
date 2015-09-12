@@ -18,13 +18,13 @@
     <div class="large-6 columns">
       <?= $this->fehler['name']; ?>
       <label>Name <span class="pflichtfeld">(Pflichtfeld)</span>:
-        <input type="text" id="akteurNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= $this->ph_name; ?>" required/>
+        <input type="text" id="akteurNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= $this->ph_name; ?>" required>
       </label>
     </div>
 
     <div class="large-6 columns">
      <label>Emailaddresse <span class="Pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['email']; ?>
-      <input type="email" id="akteurEmailInput" name ="email" value="<?= $this->email; ?>" placeholder="<?= $this->ph_email; ?>">
+      <input type="email" id="akteurEmailInput" name ="email" value="<?= $this->email; ?>" placeholder="<?= $this->ph_email; ?>" required>
      </label>
     </div>
 
