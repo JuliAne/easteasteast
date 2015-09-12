@@ -20,7 +20,7 @@
 </div>
 <div class="divider"></div>
 
-<div id="filter" class="row" style="padding:5px;">
+<div id="filter" class="row" style="padding-top:8px;">
 
 <div class="large-2 columns">
   <h4 class="left">Filter</h4>
