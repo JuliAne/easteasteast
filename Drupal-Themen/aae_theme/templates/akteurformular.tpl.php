@@ -59,7 +59,7 @@
 
    <div class="large-4 columns">
 
-  <label>Bezirk: <?= $this->fehler['ort']; ?>
+  <label>Bezirk <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['ort']; ?>
 
   <select name="ort">
    <option value="" selected="selected">Bezirk auswählen</option>
@@ -126,8 +126,9 @@
 
   <div class="large-12 columns">
   <label>Beschreibung: <?= $this->fehler['beschreibung']; ?>
-   <textarea name="beschreibung" cols="45" rows="3" placeholder="<?= $this->ph_beschreibung; ?>"><?= $this->beschreibung; ?></textarea>
+   <textarea name="beschreibung" id="beschreibung" cols="45" rows="3" placeholder="<?= $this->ph_beschreibung; ?>"><?= $this->beschreibung; ?></textarea>
   </label>
+  <script>CKEDITOR.replace('beschreibung');</script>
  </div>
 
  </div>
