@@ -40,9 +40,9 @@
 
  </div>
 
-<div class="button-bar large-4 columns">
+<div id="change-style" class="button-bar large-4 columns">
   <ul class="button-group round">
-    <li><a href="#" class="small button success" title="Darstellung in Timeline"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
+    <li><a href="#" class="small button success" title="Darstellung in Timeline"><img widtsrc="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
     <li><a href="#" class="small button secondary" title="Darstellung im Kalender"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
     <li><a href="#" class="small button secondary" title="Darstellung auf Karte"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
   </ul>
