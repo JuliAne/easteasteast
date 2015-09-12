@@ -38,10 +38,6 @@
    <?php endforeach; ?>
    </select>
 
-   <input type="submit" class="small button right" id="eventSubmit" name="submit" value="OK">
-
- </form>
-
  </div>
 
 <div class="button-bar large-3 columns">
@@ -50,7 +46,10 @@
     <li><a href="#" class="small button secondary" title="Darstellung im Kalender">K</a></li>
     <li><a href="#" class="small button secondary" title="Darstellung auf Karte">M</a></li>
   </ul>
+  <input type="submit" class="small button right" id="eventSubmit" name="submit" value="OK">
 </div>
+
+</form>
 
 </div>
 
