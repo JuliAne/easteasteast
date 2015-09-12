@@ -27,7 +27,7 @@
   <a class="small secondary button round right" style="padding:4px 10px;" href="#" title="Alle Filter löschen">x</a>
  </div>
 
- <div class="large-2 large-offset-4 columns">
+ <div class="large-3 large-offset-2 columns">
 
  <form action='<?=  $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
 
@@ -40,9 +40,9 @@
 
  </div>
 
-<div id="change-style" class="button-bar large-4 columns">
+<div id="change-style" class="button-bar large-5 columns">
   <ul class="button-group round">
-    <li><a href="#" class="small button success" title="Darstellung in Timeline"><img widtsrc="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
+    <li><a href="#" class="small button success" title="Darstellung in Timeline"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
     <li><a href="#" class="small button secondary" title="Darstellung im Kalender"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
     <li><a href="#" class="small button secondary" title="Darstellung auf Karte"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
   </ul>
