@@ -67,9 +67,7 @@ $ersteller = db_select($tbl_event, 'e')
 
  if($ersteller->rowCount() == 1) $okay = 1;
 
- if(array_intersect(array('administrator'), $user->roles)){
-  $okay = 1;
- }
+ if(array_intersect(array('administrator'), $user->roles)) $okay = 1;
 
 //Selektion der Eventinformationen
 

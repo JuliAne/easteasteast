@@ -43,7 +43,7 @@ Class eventformular {
   var $adresse = "";
 
   //Tags:
-  var $sparten= "";
+  var $sparten = "";
 
   //Speicherort fuer Bilder
   var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/styles/large/public/field/image/";

@@ -38,6 +38,8 @@ $resultUser = db_select($tbl_hat_user, 'u')
 // Anzeige Edit-Button?
 $hat_recht = $resultUser->rowCount();
 
+if(array_intersect(array('administrator'), $user->roles)) $hat_recht = 1;
+
 //Auswahl der Daten des Akteurs
 $resultakteur = db_select($tbl_akteur, 'a')
   ->fields('a')
