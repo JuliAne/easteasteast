@@ -1,4 +1,7 @@
 <h3>Akteur <?php echo ($this->target == 'update' ? 'bearbeiten' : 'anlegen'); ?></h3>
+<?php if ($this->target != 'update') : ?>
+<a href="<?= base_path(); ?>akteurloeschen/<?= $this->akteur_id; ?>" class="small secondary button round right">Löschen</a>
+<?php endif; ?>
 <div class="divider" style="margin-bottom: 25px;"></div>
 
 <?php if (!$this->freigabe) : ?>
