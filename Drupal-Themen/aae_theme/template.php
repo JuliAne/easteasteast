@@ -2,19 +2,19 @@
 
 function aae_preprocess_html(&$variables) {
 
-  drupal_add_js('https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'); // TODO: Auslagern in local-repo
+  drupal_add_js(path_to_theme().'/js/jquery-1.11.3.min.js'); // Wenn Du das siehst, check mal, ob's ne neue Version gibt
 
   drupal_add_js(path_to_theme().'/js/jquery.fullPage.min.js');
   drupal_add_js(path_to_theme().'/js/pace.min.js');
   drupal_add_js(path_to_theme().'/js/doubletaptogo.min.js'); // Mobile-Menü
   drupal_add_js(path_to_theme().'/js/app.js');
 
-  drupal_add_css(path_to_theme().'/css/foundation.css');
+  drupal_add_css(path_to_theme().'/css/foundation.min.css');
   drupal_add_css('https://fonts.googleapis.com/css?family=Open+Sans:400,300', array('type' => 'external')); // TODO: Auslagern in local-repo
   drupal_add_css(path_to_theme().'/css/pace.css');
   drupal_add_css(path_to_theme().'/css/app.css');
 
-  // Checke Seitentyp, hänge entsprechendes CSS/JS an den Header
+  /* Checke Seitentyp, hänge entsprechendes CSS/JS an den Header: */
 
   $path = explode("/", current_path()); // Welcome URL-Injection :D TODO: Call ClearContent()
 
@@ -63,7 +63,7 @@ function aae_preprocess_html(&$variables) {
    drupal_add_css(base_path().'sites/all/modules/ckeditor/css/ckeditor.css');
    drupal_add_css(base_path().'sites/all/modules/ckeditor/css/ckeditor.editor.css');
    drupal_add_js(path_to_theme().'/js/editform.js');
-   
+
   break;
 
   case ('Akteure') :
