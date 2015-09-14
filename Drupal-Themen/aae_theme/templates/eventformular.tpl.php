@@ -123,7 +123,7 @@
   <label>Beschreibung: <?= $this->fehler['kurzbeschreibung']; ?>
    <textarea name="kurzbeschreibung" id="kurzbeschreibung" cols="45" rows="3" placeholder="<?= $this->ph_kurzbeschreibung; ?>"><?= $this->kurzbeschreibung; ?></textarea>
   </label>
-  <script>CKEDITOR.replace('kurzbeschreibung');</script>
+  <script>CKEDITOR.replace('kurzbeschreibung', { toolbar : 'Basic' });</script>
  </div>
 
  </div>
@@ -146,9 +146,22 @@
   <div class="row">
 
   <div class="large-12 columns">
+    
+    <label>Tags: <?= $this->fehler['sparten']; ?></label>
+    
+    <select id="eventSpartenInput" multiple="multiple" class="tokenize">
+    <option value="1">Dave</option>
+    <option value="2">Paul</option>
+    <option value="3">Michel</option>
+    <option value="4">Anna</option>
+    <option value="5">Eleanor</option>
+</select>
+
+  <!--
   <label>Tags: <?= $this->fehler['sparten']; ?>
    <input type="text" id="eventSpartenInput" name="sparten" value="<?= $this->sparten; ?>" placeholder="<?= $this->ph_sparten; ?>">
-  </label>
+  </label> -->
+  
   </div>
 
  </div>

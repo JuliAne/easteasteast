@@ -108,14 +108,15 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
-  //Ajaxitem "Eventformular/ajaxGetTags"
-  $items['ajax/%'] = array(
+  //Menuitem "Ajax"
+  /*$items['ajax/%'] = array(
     'title' => '',
-    'page callback' => 'ajaxGetTags',
+    'page callback' => 'ajax',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
-  );
+  );*/
+  
   //Menuitem "Kalenderanzeige"
   $items['Kalender/%'] = array(
     'title' => 'Kalender',
@@ -225,23 +226,12 @@ function akteuredit_page($aid = 0) {
 }
 
 /**
- * Ajax-code which returns all Tags in JSON-format
- */
+ * Includes the AJAX-Class (TODO)
+ 
 
-function ajaxGetTags() {
+function ajax() {
 
-  /*require_once $modulePath . '/database/db_connect.php';
-  $db = new DB_CONNECT();
-  $resulttags = db_select($tbl_sparte, 's')
-    ->fields('s')
-    ->execute()
-    ->fetchAll(); */
-
- //  return $resulttags;
- echo   '[{"id":"856","name":"House"},
-    {"id":"1035","name":"Desperate Housewives"}]';
-    exit;
-}
+} */
 
 /**
  * Builds page for Eventloeschen

@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-  $("#eventSpartenInput").tokenInput("?q=ajax");
+  $('#eventSpartenInput').tokenize();
 
   $("#eventStartdatumInput").Zebra_DatePicker({ 'readonly_element' : false });
   $("#eventEnddatumInput").Zebra_DatePicker({ 'readonly_element' : false });
