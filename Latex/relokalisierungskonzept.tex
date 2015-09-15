@@ -1,0 +1,20 @@
+\documentclass{swp}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\begin{document}
+
+\maketitle{Relokalisierungskonzept}{15.09.2015}{Paul Eisenhuth}
+\\\\\\\\\\
+
+\section{Relokalisierung}
+F\"ur den Umzug der Stadtteilplattform auf einen anderen Server sind folgende Schritte durchzuf\"uhren:
+\begin{enumerate}
+\item Installation von Drupal auf dem neuen Server.
+\item Durchf\"uhren aller Installationsschritte der separaten Installationsanleitung.
+\item Migration der Daten aus den aae\_{}data\_{}xx Tabellen, sowie aus der Drupaltabellen users aus der alten Datenbank in die neue Datenbank (mit der Exportfunktion von phpMyAdmin oder direkt auf dem Server mit mysqldump).
+\item Eventuell auftretende Datenkollisionen manuell beheben.
+\item Anschlie{\ss}end m\"ussen den Usern im Adminbereich noch die Rollen zugewiesen werden.
+\end{enumerate}
+\end{document}
