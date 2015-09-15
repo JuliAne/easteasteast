@@ -38,8 +38,6 @@ $resultUser = db_select($tbl_hat_user, 'u')
 // Anzeige Edit-Button?
 $hat_recht = $resultUser->rowCount();
 
-if(array_intersect(array('administrator'), $user->roles)) $hat_recht = 1;
-
 //Auswahl der Daten des Akteurs
 $resultakteur = db_select($tbl_akteur, 'a')
   ->fields('a')
@@ -49,66 +47,54 @@ $resultakteur = db_select($tbl_akteur, 'a')
 
 //-----------------------------------
 
-foreach($resultakteur as $rId => $row){
-
-	$aResult['row1'] = $row;
-
-	$resultAdresse = db_select($tbl_adresse, 'b')
-	  ->fields('b')
-	  ->condition('ADID', $row->adresse, '=')
-	  ->execute()
+foreach ($resultakteur as $rId => $row) {
+  $aResult['row1'] = $row;
+  $resultAdresse = db_select($tbl_adresse, 'b')
+    ->fields('b')
+	->condition('ADID', $row->adresse, '=')
+	->execute()
     ->fetchAll();
-
-    foreach($resultAdresse as $row2) {
-     $aResult['row2'] = $row2; // Kleiner Fix, damit $row2 als Objekt abrufbar
-    }
+  foreach ($resultAdresse as $row2) {
+    $aResult['row2'] = $row2; // Kleiner Fix, damit $row2 als Objekt abrufbar
+  }
 }
 
 // Ziehe Informationen über Events vom Akteur
-
 $resultEvents = db_select($tbl_event, 'e');
 $resultEvents->join($tbl_akteur_hat_events, 'b', 'e.EID = b.EID');
 $resultEvents
-->fields('e')
-->condition('b.AID', $akteur_id, '=')
-->execute()
-->fetchAll();
+  ->fields('e')
+  ->condition('b.AID', $akteur_id, '=')
+  ->execute()
+  ->fetchAll();
 
 foreach ($resultEvents as $row) {
- $aResult['events'][] = $row;
+  $aResult['events'][] = $row;
 }
 
- // Generiere Mapbox-taugliche Koordinaten, übergebe diese ans Frontend
+// Generiere Mapbox-taugliche Koordinaten, übergebe diese ans Frontend
+if ($aResult['row2']->gps != '') {
+  $kHelper = explode(' ', $aResult['row2']->gps, 2);
+  $koordinaten = $kHelper[1] . ',' . $kHelper[0];
 
- if ($aResult['row2']->gps != '') {
+  drupal_add_js('var map = L.mapbox.map("map", "matzelot.mn92ib5i").setView([' . $koordinaten . '], 16);', array('type' => 'inline', 'scope' => 'footer'));
 
- $kHelper = explode(' ', $aResult['row2']->gps, 2);
- $koordinaten = $kHelper[1].','.$kHelper[0];
-
- drupal_add_js('var map = L.mapbox.map("map", "matzelot.mn92ib5i").setView(['.$koordinaten.'], 16);',
- array('type' => 'inline', 'scope' => 'footer'));
-
- // Marker
-
- drupal_add_js('L.mapbox.featureLayer({
-  type: "Feature",
-  geometry: {
+  // Marker
+  drupal_add_js('L.mapbox.featureLayer({
+    type: "Feature",
+    geometry: {
       type: "Point",
-      coordinates: ['.str_replace(' ',',',$aResult['row2']->gps).']
+      coordinates: [' . str_replace(' ',',',$aResult['row2']->gps) . ']
     },
     properties: {
-      title: "'.$aResult['row1']->name.'",
-      description: "'.$aResult['row2']->strasse.' '.$aResult['row2']->nr.'",
+      title: "' . $aResult['row1']->name . '",
+      description: "' . $aResult['row2']->strasse . ' ' . $aResult['row2']->nr . '",
       "marker-size": "large",
       "marker-color": "#1087bf"
     }
   }).addTo(map);', array('type' => 'inline', 'scope' => 'footer'));
+}
 
- }
-
-
- ob_start(); // Aktiviert "Render"-modus
-
- include_once path_to_theme().'/templates/single_akteur.tpl.php';
-
- $profileHTML = ob_get_clean(); // Übergebe des gerenderten "project.tpl"
+ob_start(); // Aktiviert "Render"-modus
+include_once path_to_theme() . '/templates/single_akteur.tpl.php';
+$profileHTML = ob_get_clean(); // Übergebe des gerenderten "project.tpl"

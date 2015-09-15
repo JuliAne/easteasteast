@@ -35,7 +35,7 @@ function block_aae_print_letzte_events($limit = 3) {
 
   $resultEvents = array();
 
- foreach($letzteEvents as $row){
+  foreach($letzteEvents as $row){
     $resultEvents[] = $row;
   }
 
@@ -67,7 +67,7 @@ function block_aae_print_letzte_akteure($limit = 3) {
 
   // TODO Fields * durch Werte ersetzen
 
- foreach($letzteakteure as $row){
+  foreach($letzteakteure as $row){
     $resultakteure[] = $row; //array('AID' => $row->AID, 'name' => $row->name);
   }
 
@@ -134,13 +134,13 @@ function block_aae_count_projects_events() {
 
   foreach ($myAkteure as $akteur) {
 
-   // We don't need no Join's, masafakkaaa...
+    // We don't need no Join's, masafakkaaa...
 
-   $results[] = db_select($tbl_akteur, 'a')
-   ->fields('a', array('AID','name'))
-   ->condition('AID', $akteur->hat_AID, '=')
-   ->execute()
-   ->fetchAll();
+    $results[] = db_select($tbl_akteur, 'a')
+    ->fields('a', array('AID','name'))
+    ->condition('AID', $akteur->hat_AID, '=')
+    ->execute()
+    ->fetchAll();
   }
 
   return $results;

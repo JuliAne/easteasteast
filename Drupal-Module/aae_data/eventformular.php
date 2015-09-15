@@ -43,7 +43,7 @@ Class eventformular {
   var $adresse = "";
 
   //Tags:
-  var $sparten = "";
+  var $sparten= "";
 
   //Speicherort fuer Bilder
   var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/styles/large/public/field/image/";
@@ -54,7 +54,6 @@ Class eventformular {
   var $fehler = array(); // In diesem Array werden alle Fehler gespeichert
 
   //Variablen, welche Texte in den Formularfeldern beschreiben ("placeholder"):
-
   var $ph_name = "Veranstaltungsname";
   var $ph_veranstalter = "Veranstalter";
   var $ph_start = "Starttag (yyyy-mm-dd)";
@@ -90,174 +89,173 @@ Class eventformular {
 
   function __construct($action) {
 
-   global $user;
-   $this->user_id = $user->uid;
+    global $user;
+    $this->user_id = $user->uid;
 
-   // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
-   if($action == 'update') $this->target = 'update';
+    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
+    if ($action == 'update') {
+	  $this->target = 'update';
+    }
 
-   // Sicherheitsschutz
-   if(!user_is_logged_in()) drupal_access_denied();
-
+    // Sicherheitsschutz
+    if (!user_is_logged_in()) {
+	  drupal_access_denied();
+    }
   } // END Constructor
 
-
+  /**
+   * Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
+   * @returns $profileHTML;
+   */
   public function run() {
-  /* Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
-  *   @returns $profileHTML;
-  */
-
-  $path = current_path();
-  $explodedpath = explode("/", $path);
-  $this->event_id = $explodedpath[1];
-
-   $output = '';
-
-   if (isset($_POST['submit'])) {
-
-     if ($this->eventCheckPost()) {
-       if ($this->target == 'update') $this->eventUpdaten();
-       else $this->eventSpeichern();
-
-       $output = $this->eventDisplay();
-     } else {
-       $output = $this->eventDisplay();
+    $path = current_path();
+    $explodedpath = explode("/", $path);
+    $this->event_id = $explodedpath[1];
+    $output = '';
+    if (isset($_POST['submit'])) {
+      if ($this->eventCheckPost()) {
+        if ($this->target == 'update') {
+	      $this->eventUpdaten();
+        } else {
+	      $this->eventSpeichern();
+        }
+        $output = $this->eventDisplay();
+      } else {
+        $output = $this->eventDisplay();
+      }
+    } else {
+      // Was passiert, wenn Seite zum ersten mal gezeigt wird?
+      if ($this->target == 'update') {
+	    $this->eventGetFields();
+      }
+      $output = $this->eventDisplay();
     }
-  } else {
-    // Was passiert, wenn Seite zum ersten mal gezeigt wird?
-
-    if ($this->target == 'update') $this->eventGetFields();
-    $output = $this->eventDisplay();
- }
-
- return $output;
-
-}
-
- private function clearContent($trimTag) {
-  /* Einfache Funktion zum Filtern von POST-Daten. Gerne erweiterbar, bspw.
-     durch Einbindung von "phpsec". */
-  $clear = trim($trimTag);
-  return strip_tags($clear);
- }
-
-//-----------------------------------
-
-private function eventCheckPost() {
-
-// Wird ausgeführt, wenn auf "Speichern" gedrückt wird
-// @returns $this->freigabe;
-
-  //Wertezuweisung
-  $this->name = $this->clearContent($_POST['name']);
-  $this->veranstalter = $this->clearContent($_POST['veranstalter']);
-  $this->start = $this->clearContent($_POST['start']);
-  $this->url = $this->clearContent($_POST['url']);
-  $this->ende = $this->clearContent($_POST['ende']);
-  $this->zeit_von = $this->clearContent($_POST['zeit_von']);
-  $this->zeit_bis = $this->clearContent($_POST['zeit_bis']);
-  if(isset($_POST['bild'])) $this->bild = $_POST['bild'];
-  $this->kurzbeschreibung = $this->clearContent($_POST['kurzbeschreibung']);
-  $this->strasse = $this->clearContent($_POST['strasse']);
-  $this->nr = $this->clearContent($_POST['nr']);
-  $this->adresszusatz = $this->clearContent($_POST['adresszusatz']);
-  $this->plz = $this->clearContent($_POST['plz']);
-  $this->ort = $this->clearContent($_POST['ort']);
-  $this->gps = $this->clearContent($_POST['gps']);
-  $this->sparten = $this->clearContent($_POST['sparten']);
-  $explodedsparten = "";
-
-  if($this->sparten != "") $explodedsparten = explode(",", $this->sparten);
-
-  //überflüssige Leerzeichen am Anfang entfernen
-
-  if ($this->sparten != "") {
-   $countsparten = count($explodedsparten);
-   $i = 0;
-
-   while($i < $countsparten) {
-    $explodedsparten[$i] = $this->clearContent($explodedsparten[$i]);
-    $i++;
-   }
+    return $output;
+  }
+  
+  /**
+   * Einfache Funktion zum Filtern von POST-Daten. Gerne erweiterbar, bspw.
+   * durch Einbindung von "phpsec".
+   */
+  private function clearContent($trimTag) {
+    $clear = trim($trimTag);
+    return strip_tags($clear);
   }
 
-  //Check-Klauseln
+  /**
+   * Wird ausgeführt, wenn auf "Speichern" gedrückt wird
+   * @returns $this->freigabe;
+   */
+  private function eventCheckPost() {
+    //Wertezuweisung
+    $this->name = $this->clearContent($_POST['name']);
+    $this->veranstalter = $this->clearContent($_POST['veranstalter']);
+    $this->start = $this->clearContent($_POST['start']);
+    $this->url = $this->clearContent($_POST['url']);
+    $this->ende = $this->clearContent($_POST['ende']);
+    $this->zeit_von = $this->clearContent($_POST['zeit_von']);
+    $this->zeit_bis = $this->clearContent($_POST['zeit_bis']);
+    if (isset($_POST['bild'])) {
+	  $this->bild = $_POST['bild'];
+    }
+    $this->kurzbeschreibung = $this->clearContent($_POST['kurzbeschreibung']);
+    $this->strasse = $this->clearContent($_POST['strasse']);
+    $this->nr = $this->clearContent($_POST['nr']);
+    $this->adresszusatz = $this->clearContent($_POST['adresszusatz']);
+    $this->plz = $this->clearContent($_POST['plz']);
+    $this->ort = $this->clearContent($_POST['ort']);
+    $this->gps = $this->clearContent($_POST['gps']);
+    $this->sparten = $this->clearContent($_POST['sparten']);
+    $explodedsparten = "";
+    if ($this->sparten != "") {
+	  $explodedsparten = explode(",", $this->sparten);
+    }
+    //überflüssige Leerzeichen am Anfang entfernen
+    if ($this->sparten != "") {
+      $countsparten = count($explodedsparten);
+      $i = 0;
+      while ($i < $countsparten) {
+        $explodedsparten[$i] = $this->clearContent($explodedsparten[$i]);
+        $i++;
+      }
+    }
+    //Check-Klauseln
+    //Check, ob ein Name eingegeben wurde:
+    if (strlen($this->name) == 0) {
+      $this->fehler['name'] = "Bitte einen Veranstaltungsnamen eingeben!";
+	  $this->freigabe = false;
+    }
 
-  //Check, ob ein Name eingegeben wurde:
-  if(strlen($this->name) == 0) {
-   $this->fehler['name'] = "Bitte einen Veranstaltungsnamen eingeben!";
-	 $this->freigabe = false;
-  }
+    //Ckeck, ob Datum angegeben wurde
+    if (strlen($this->start) == 0) {
+      $this->fehler['start'] = "Bitte ein Datum angeben!";
+      $this->freigabe = false;
+    }
 
-  //Ckeck, ob Datum angegeben wurde
-  if(strlen($this->start) == 0) {
-   $this->fehler['start'] = "Bitte ein Datum angeben!";
-   $this->freigabe = false;
-  }
+    //Check, ob Bezirk ausgewählt wurde
+    if (strlen($this->ort) == 0) {
+  	  $this->fehler['ort'] = "Bitte einen Bezirk auswählen!";
+  	  $this->freigabe = false;
+    }
 
-  //Check, ob Bezirk ausgewählt wurde
-  if(strlen($this->ort) == 0){
-  	$this->fehler['ort'] = "Bitte einen Bezirk auswählen!";
-  	$this->freigabe = false;
-  }
+    //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
 
-  //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
+    // TODO (Felix): Vlt. sollten wir die max. Länge der Werte im 32/64/128/256/... - Abstand
+    // gestalten; habe gehört, das sei besser für die DB-Performance...
+    
+    if (strlen($this->name) > 100) {
+	  $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
+      $this->freigabe = false;
+    }
 
-  // TODO (Felix): Vlt. sollten wir die max. Länge der Werte im 32/64/128/256/... - Abstand
-  // gestalten; habe gehört, das sei besser für die DB-Performance...
+    if (strlen($this->url) > 200) {
+	  $this->fehler['url'] = "Bitte geben Sie eine kürzere URL an.";
+	  $this->freigabe = false;
+    }
 
-  if (strlen($this->name) > 100) {
-	 $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
-   $this->freigabe = false;
-  }
+    if (strlen($this->kurzbeschreibung) > 500) {
+      $this->fehler['kurzbeschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
+	  $this->freigabe = false;
+    }
 
-  if (strlen($this->url) > 200) {
-	 $this->fehler['url'] = "Bitte geben Sie eine kürzere URL an.";
-	 $this->freigabe = false;
-  }
+    if (strlen($this->strasse) > 100) {
+	  $this->fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
+	  $this->freigabe = false;
+    }
 
-  if (strlen($this->kurzbeschreibung) > 500) {
-   $this->fehler['kurzbeschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
-	 $this->freigabe = false;
-  }
+    if (strlen($this->nr) > 100) {
+	  $this->fehler['nr'] = "Bitte geben Sie eine kürzere Nummer an.";
+	  $this->freigabe = false;
+    }
 
-  if (strlen($this->strasse) > 100) {
-	 $this->fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
-	 $this->freigabe = false;
-  }
+    if (strlen($this->adresszusatz) > 100) {
+	  $this->fehler['adresszusatz'] = "Bitte geben Sie einen kürzeren Adresszusatz an.";
+      $this->freigabe = false;
+    }
 
-  if (strlen($this->nr) > 100) {
-	 $this->fehler['nr'] = "Bitte geben Sie eine kürzere Nummer an.";
-	 $this->freigabe = false;
-  }
+    if (strlen($this->plz) > 100) {
+	  $this->fehler['plz'] = "Bitte geben Sie eine kürzere PLZ an.";
+      $this->freigabe = false;
+    }
 
-  if (strlen($this->adresszusatz) > 100) {
-	 $this->fehler['adresszusatz'] = "Bitte geben Sie einen kürzeren Adresszusatz an.";
-   $this->freigabe = false;
-  }
+    if (strlen($this->ort) > 100) {
+      $this->fehler['ort'] = "Bitte geben Sie einen kürzeren Ortsnamen an.";
+	  $this->freigabe = false;
+    }
 
-  if (strlen($this->plz) > 100) {
-	 $this->fehler['plz'] = "Bitte geben Sie eine kürzere PLZ an.";
-   $this->freigabe = false;
-  }
+    if (strlen($this->gps) > 100) {
+      $this->fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
+	  $this->freigabe = false;
+    }
+  
+    return $this->freigabe;
+  } // END function eventCheckPost()
 
-  if (strlen($this->ort) > 100) {
-   $this->fehler['ort'] = "Bitte geben Sie einen kürzeren Ortsnamen an.";
-	 $this->freigabe = false;
-  }
-
-  if (strlen($this->gps) > 100) {
-   $this->fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
-	 $this->freigabe = false;
-  }
-
-  return $this->freigabe;
- } // END function eventCheckPost()
-
-
-private function eventUpdaten() {
-
-  require_once $modulePath . 'database/db_connect.php';
+  /**
+   * Wird ausgefuehrt, wenn Update der Daten verlangt ist
+   */
+  private function eventUpdaten() {
+    require_once $modulePath . 'database/db_connect.php';
 	$db = new DB_CONNECT();
 
 	//Abfrage, ob Adresse bereits in Adresstabelle
@@ -271,11 +269,10 @@ private function eventUpdaten() {
 	  ->condition('bezirk', $this->ort, '=')
 	  ->execute();
 
-	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
-  $i = $this->resultadresse->rowCount();
-
-	if($i == 0) {
-    //Adresse nicht vorhanden
+    //wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
+    $i = $this->resultadresse->rowCount();
+    if ($i == 0) {
+      //Adresse nicht vorhanden
 	  $this->adresse = db_insert($this->tbl_adresse)
 	    ->fields(array(
 		  'strasse' => $this->strasse,
@@ -286,15 +283,12 @@ private function eventUpdaten() {
 		  'gps' => $this->gps,
 		))
 		->execute();
-
-	} else {
-    //Adresse bereits vorhanden
-
-	  foreach ($this->resultadresse as $row) {
+    } else {
+      //Adresse bereits vorhanden
+      foreach ($this->resultadresse as $row) {
 	    //Abfrage, ob GPS-Angaben gemacht wurden
-
-	    if(strlen($this->gps) != 0 && strlen($row->gps) == 0 ){
-        //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
+        if (strlen($this->gps) != 0 && strlen($row->gps) == 0 ) {
+          //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
 	      //Update der Adresse
 	      $adresse_updated = db_update($this->tbl_adresse)
 	 	    ->fields(array(
@@ -308,14 +302,16 @@ private function eventUpdaten() {
 	}
 
 	//Zeitformatierung
-	if(strlen($this->ende) == 0) $this->ende = $this->start;
-	else $this->ende = $this->ende.' '.$this->zeit_bis;
+	if (strlen($this->ende) == 0) {
+      $this->ende = $this->start;
+	} else {
+	  $this->ende = $this->ende . ' ' . $this->zeit_bis;
+	}
+	$this->start = $this->start . ' ' . $this->zeit_von;
 
-	$this->start = $this->start.' '.$this->zeit_von;
-
-  //tbl_event UPDATE!!!
+    //tbl_event UPDATE!!!
 	$eventupdate = db_update($this->tbl_event)
-   	->fields(array(
+   	  ->fields(array(
 		'name' => $this->name,
 		'ort' => $this->adresse,
 		'start' => $this->start,
@@ -329,134 +325,132 @@ private function eventUpdaten() {
 
 	//tbl_akteur_events UPDATE!!! (bei Mehrfachauswahl von Veranstaltern, muss das noch angepasst werden!!!)
 	$akteureventupdate = db_update($this->tbl_akteur_events)
-   	->fields(array(
+   	  ->fields(array(
 		'AID' => $this->veranstalter,
 	  ))
 	  ->condition('EID', $this->event_id, '=')
 	  ->execute();
 
-  // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
-  session_start();
-  $_SESSION['sysmsg'][] = 'Das Event wurde erfolgreich bearbeitet!';
+    // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
+    session_start();
+    $_SESSION['sysmsg'][] = 'Das Event wurde erfolgreich bearbeitet!';
 
-	header("Location: Eventprofil/".$this->event_id);
-  // Event erstellt uuuund.... tschüss ;)
+	header("Location: Eventprofil/" . $this->event_id);
+    // Event erstellt uuuund.... tschüss ;)
+  } // END function eventUpdaten()
 
-} // END function eventUpdaten()
+  /**
+   * Wird aufgerufen, wenn "Akteur bearbeiten" ausgewählt wurde
+   * Daten aus DB in Felder schreiben
+   */
+  private function eventGetFields() {
+    require_once $modulePath . 'database/db_connect.php';
+    $db = new DB_CONNECT();
 
-private function eventGetFields() {
+    //Auswahl der Daten des ausgewählten Events
+    $resultevent = db_select($this->tbl_event, 'e')
+      ->fields('e', array(
+	    'name',
+	    'start',
+	    'ende',
+	    'url',
+	    'bild',
+	    'kurzbeschreibung',
+	    'ort',
+	  ))
+	  ->condition('EID', $this->event_id, '=')
+      ->execute();
 
-  // Wird aufgerufen, wenn "Akteur bearbeiten" ausgewählt wurde
-  //Erstmaliger Aufruf: Daten aus DB in Felder schreiben
+    $resultveranstalter = db_select($this->tbl_akteur_events, 'a')
+      ->fields('a', array( 'AID' ))
+	  ->condition('EID', $this->event_id, '=')
+      ->execute();
 
-  require_once $modulePath . 'database/db_connect.php';
-  $db = new DB_CONNECT();
+    //Speichern der Daten in den Arbeitsvariablen
+    foreach ($resultevent as $row) {
+	  $this->name = $row->name;
+	  $ths->ort = $row->ort;
+	  $this->start = $row->start;
+	  $this->ende = $row->ende;
+	  $this->url = $row->url;
+	  $this->bild = $row->bild;
+	  $this->kurzbeschreibung = $row->kurzbeschreibung;
+	}
 
-  //Auswahl der Daten des ausgewählten Events
-  $resultevent = db_select($this->tbl_event, 'e')
-    ->fields('e', array(
-	  'name',
-	  'start',
-	  'ende',
-	  'url',
-	  'bild',
-	  'kurzbeschreibung',
-	  'ort',
-	))
-	->condition('EID', $this->event_id, '=')
-  ->execute();
+    foreach ($resultveranstalter as $row) {
+	  $this->veranstalter = $row->AID;
+    }
 
-  $resultveranstalter = db_select($this->tbl_akteur_events, 'a')
-   ->fields('a', array( 'AID' ))
-	 ->condition('EID', $this->event_id, '=')
-   ->execute();
+    $akteur_id = $this->veranstalter;
 
-  //Speichern der Daten in den Arbeitsvariablen
-  foreach($resultevent as $row){
-	 $this->name = $row->name;
-	 $ths->ort = $row->ort;
-	 $this->start = $row->start;
-	 $this->ende = $row->ende;
-	 $this->url = $row->url;
-	 $this->bild = $row->bild;
-	 $this->kurzbeschreibung = $row->kurzbeschreibung;
-  }
+    //Adressdaten aus DB holen:
+    $this->resultadresse = db_select($this->tbl_adresse, 'd')
+      ->fields('d', array(
+	    'strasse',
+	    'nr',
+	    'adresszusatz',
+	    'plz',
+	    'bezirk',
+	    'gps',
+	  ))
+	  ->condition('ADID', $this->ort, '=')
+      ->execute();
 
-  foreach ($resultveranstalter as $row) {
-	 $this->veranstalter = $row->AID;
-  }
+    //Speichern der Adressdaten in den Arbeitsvariablen
+    foreach ($this->resultadresse as $row) {
+	  $this->strasse = $row->strasse;
+	  $this->nr = $row->nr;
+	  $this->adresszusatz = $row->adresszusatz;
+	  $this->plz = $row->plz;
+	  $this->ort = $row->bezirk;
+	  $this->gps = $row->gps;
+    }
 
-  $akteur_id = $this->veranstalter;
+    //Akteurnamen aus DB holen:
+    $this->resultakteur = db_select($this->tbl_akteur, 'a')
+      ->fields('a', array( 'name' ))
+	  ->condition('AID', $this->veranstalter, '=')
+      ->execute();
 
-  //Adressdaten aus DB holen:
-  $this->resultadresse = db_select($this->tbl_adresse, 'd')
-    ->fields('d', array(
-	  'strasse',
-	  'nr',
-	  'adresszusatz',
-	  'plz',
-	  'bezirk',
-	  'gps',
-	))
-	->condition('ADID', $this->ort, '=')
-  ->execute();
+    //Speichern der Adressdaten in den Arbeitsvariablen
+    foreach ($this->resultakteur as $row) {
+	  $this->veranstalter = $row->name;
+    }
+    //Zeit auflösen
+    $explodedstart = explode(' ', $this->start);
+    $explodedende = explode(' ', $this->ende);
+    $this->ende = $explodedende[0];
+    $this->start = $explodedstart[0];
 
-  //Speichern der Adressdaten in den Arbeitsvariablen
-  foreach ($this->resultadresse as $row) {
-	 $this->strasse = $row->strasse;
-	 $this->nr = $row->nr;
-	 $this->adresszusatz = $row->adresszusatz;
-	 $this->plz = $row->plz;
-	 $this->ort = $row->bezirk;
-	 $this->gps = $row->gps;
-  }
+    if (count($explodedstart) == 2) {
+	  $this->zeit_von = $explodedstart[1];
+    }
+    if (count($explodedende) == 2) {
+	  $this->zeit_bis = $explodedende[1];
+    }
+  } // END function eventUpdaten()
 
-  //Akteurnamen aus DB holen:
-  $this->resultakteur = db_select($this->tbl_akteur, 'a')
-   ->fields('a', array( 'name' ))
-	 ->condition('AID', $this->veranstalter, '=')
-   ->execute();
-
-  //Speichern der Adressdaten in den Arbeitsvariablen
-  foreach ($this->resultakteur as $row) {
-	 $this->veranstalter = $row->name;
-  }
-  //Zeit auflösen
-  $explodedstart=explode(' ', $this->start);
-  $explodedende=explode(' ', $this->ende);
-  $this->ende=$explodedende[0];
-  $this->start=$explodedstart[0];
-
-  if(count($explodedstart) == 2){
-	 $this->zeit_von = $explodedstart[1];
-  }
-
-  if(count($explodedende) == 2){
-	 $this->zeit_bis = $explodedende[1];
-  }
-} // END function eventUpdaten()
-
-private function eventSpeichern() {
-
-	require_once 'database/db_connect.php';
+  /**
+   * Schreibt die Eventdaten in die DB
+   */
+  private function eventSpeichern() {
+    require_once 'database/db_connect.php';
 	$db = new DB_CONNECT();
 
-  //Wenn Bilddatei ausgewählt wurde...
-  // TODO: Bild skalieren (Beste Breite???) bzw. komprimieren, s.
-  // https://api.drupal.org/api/drupal/modules!image!image.module/7
+    //Wenn Bilddatei ausgewählt wurde...
+    // TODO: Bild skalieren (Beste Breite???) bzw. komprimieren, s.
+    // https://api.drupal.org/api/drupal/modules!image!image.module/7
 
-  if ($_FILES) {
-
-   $bildname = $_FILES['bild']['name'];
-
-   if ($bildname != "") {
-    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $this->bildpfad.$bildname)) {
-      echo 'Error: Konnte Bild nicht hochladen. Bitte <a href="'.base_path.'contact">informieren Sie den Administrator</a>. Bildname: <br />'.$bildname;
-      exit();
+    if ($_FILES) {
+      $bildname = $_FILES['bild']['name'];
+      if ($bildname != "") {
+        if (!move_uploaded_file($_FILES['bild']['tmp_name'], $this->bildpfad.$bildname)) {
+          echo 'Error: Konnte Bild nicht hochladen. Bitte <a href="' . base_path . 'contact">informieren Sie den Administrator</a>. Bildname: <br />' . $bildname;
+          exit();
+        }
+        $this->bild = base_path() . $this->short_bildpfad . $bildname;
+      }
     }
-    $this->bild = base_path().$this->short_bildpfad.$bildname;
-   }
-  }
 
 	//Abfrage, ob Adresse bereits in Adresstabelle
 	//Addressdaten aus DB holen:
@@ -469,10 +463,9 @@ private function eventSpeichern() {
 	  ->condition('bezirk', $this->ort, '=')
 	  ->execute();
 
- 	 //wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
-   if($this->resultadresse->rowCount() == 0) {
-
-    //Adresse nicht vorhanden
+    //wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
+    if ($this->resultadresse->rowCount() == 0) {
+      //Adresse nicht vorhanden
 	  $this->adresse = db_insert($this->tbl_adresse)
 	    ->fields(array(
 		  'strasse' => $this->strasse,
@@ -484,12 +477,11 @@ private function eventSpeichern() {
 		))
 		->execute();
 	} else {
-
-    //Adresse bereits vorhanden
+      //Adresse bereits vorhanden
 	  foreach ($this->resultadresse as $row) {
 	    //Abfrage, ob GPS-Angaben gemacht wurden
 	    if (strlen($this->gps) != 0 && strlen($row->gps) == 0 ) {
-        //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
+          //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
 	      //Update der Adresse
 	      $adresse_updated = db_update($this->tbl_adresse)
 	 	    ->fields(array(
@@ -503,14 +495,16 @@ private function eventSpeichern() {
 	}
 
 	//Zeitformatierung
-	if (strlen($this->ende) == 0) $this->ende = $this->start.' '.$this->zeit_bis;
-	else $this->ende = $this->ende.' '.$this->zeit_bis;
+	if (strlen($this->ende) == 0) {
+      $this->ende = $this->start . ' ' . $this->zeit_bis;
+	} else {
+	  $this->ende = $this->ende . ' ' . $this->zeit_bis;
+	}
+	$this->start = $this->start . ' ' . $this->zeit_von;
 
-	$this->start = $this->start.' '.$this->zeit_von;
-
-  //tbl_event INSERT!!!
+    //tbl_event INSERT!!!
 	$this->event_id = db_insert($this->tbl_event)
-   	->fields(array(
+   	  ->fields(array(
 		'name' => $this->name,
 		'ort' => $this->adresse,
 		'start' => $this->start,
@@ -522,45 +516,38 @@ private function eventSpeichern() {
 	  ))
 	  ->execute();
 	//falls Akteur angegeben wurde
-
-	if ($this->veranstalter != "") {
-	//tbl_akteur_events INSERT!!!
-	$akteurevents = db_insert($this->tbl_akteur_events)
-   	  ->fields(array(
-		'AID' => $this->veranstalter,
-		'EID' => $this->event_id,
-	  ))
-	  ->execute();
+    if ($this->veranstalter != "") {
+	  //tbl_akteur_events INSERT!!!
+	  $akteurevents = db_insert($this->tbl_akteur_events)
+   	    ->fields(array(
+		  'AID' => $this->veranstalter,
+		  'EID' => $this->event_id,
+	    ))
+	    ->execute();
 	}
 
 	// Falls Tags angegeben wurden
-
 	if ($this->sparten != "") {
-
-    $sparte_id = "";
-    $countsparten = count($explodedsparten);
+      $sparte_id = "";
+      $countsparten = count($explodedsparten);
 	  $i = 0;
-
-	  while($i < $countsparten){
-		//1. Prüfen, ob Tag bereits in Tabelle $tbl_sparte
+      while ($i < $countsparten) {
+	    //1. Prüfen, ob Tag bereits in Tabelle $tbl_sparte
 		$resultsparte = db_select($this->tbl_sparte, 's')
-		->fields('s', array( 'KID' ))
-		->condition('kategorie', $explodedsparten[$i], '=')
-		->execute();
-
-		$countresult = $resultsparte->rowCount();
-
-		if($countresult == 0){
-      //nein: Tag in $tbl_sparte einfügen
-
-		  $sparte_id = db_insert($this->tbl_sparte)
-		  ->fields(array( 'kategorie' => $explodedsparten[$i] ))
-			->execute();
-
+		  ->fields('s', array( 'KID' ))
+		  ->condition('kategorie', $explodedsparten[$i], '=')
+		  ->execute();
+		
+        $countresult = $resultsparte->rowCount();
+        if ($countresult == 0) {
+          //nein: Tag in $tbl_sparte einfügen
+          $sparte_id = db_insert($this->tbl_sparte)
+		    ->fields(array( 'kategorie' => $explodedsparten[$i] ))
+		    ->execute();
 		} else {
-      // ja: KID des Tags holen
+          // ja: KID des Tags holen
 		  foreach ($resultsparte as $row) {
-		   $sparte_id = $row->KID;
+		    $sparte_id = $row->KID;
 		  }
 		}
 
@@ -575,50 +562,42 @@ private function eventSpeichern() {
 	  }
 	}
 
-  // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
-  session_start();
-  $_SESSION['sysmsg'][] = 'Das Event wurde erfolgreich erstellt!';
+    // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
+    session_start();
+    $_SESSION['sysmsg'][] = 'Das Event wurde erfolgreich erstellt!';
 
-	header("Location: Eventprofil/".$this->event_id);
+	header("Location: Eventprofil/" . $this->event_id);
     // Hier muss hin, welche Seite aufgerufen werden soll,
-	  // nachdem die Daten erfolgreich gespeichert wurden.
+    // nachdem die Daten erfolgreich gespeichert wurden.
+  } // END function event_speichern()
 
-} // END function event_speichern()
+  /**
+   * Darstellung der Formularinformationen
+   */
+  private function eventDisplay() {
+    // Ausgabe des Eventformulars
+    // TODO: Ggf. kann die $resultbezirke-Abfrage woanders hin wandern...
+    if (array_intersect(array('administrator'), $user->roles)) {
+      //alle Akteure abfragen, die in DB: nur Admin
+      $this->resultakteure = db_select($this->tbl_akteur, 'a')
+        ->fields('a', array( 'AID', 'name' ))
+        ->execute();
+    } else {
+      //Akteure abfragen, die in DB und für welche User Schreibrechte hat
+      $res = db_select($this->tbl_akteur, 'a');
+      $res->join($this->tbl_hat_user, 'u', 'a.AID = u.hat_AID AND u.hat_UID = :uid', array(':uid' => $this->user_id));
+      $res->fields('a', array('AID','name'));
+      $this->resultakteure = $res->execute();
+    } // GGF. ALLES HIER DRÜBER ANPASSEN
 
-private function eventDisplay() {
+    $this->resultbezirke = db_select($this->tbl_bezirke, 'b')
+      ->fields('b', array( 'BID', 'bezirksname' ))
+      ->execute();
+    $countbezirke = $this->resultbezirke->rowCount();
 
- // Ausgabe des Eventformulars
-
- // TODO: Ggf. kann die $resultbezirke-Abfrage woanders hin wandern...
-
- if (array_intersect(array('administrator'), $user->roles)) {
- //alle Akteure abfragen, die in DB: nur Admin
-  $this->resultakteure = db_select($this->tbl_akteur, 'a')
-  ->fields('a', array( 'AID', 'name' ))
-  ->execute();
-
- } else {
-
-  //Akteure abfragen, die in DB und für welche User Schreibrechte hat
-  $res = db_select($this->tbl_akteur, 'a');
-  $res->join($this->tbl_hat_user, 'u', 'a.AID = u.hat_AID AND u.hat_UID = :uid', array(':uid' => $this->user_id));
-  $res->fields('a', array('AID','name'));
-  $this->resultakteure = $res->execute();
- } // GGF. ALLES HIER DRÜBER ANPASSEN
-
- $this->resultbezirke = db_select($this->tbl_bezirke, 'b')
-  ->fields('b', array( 'BID', 'bezirksname' ))
-  ->execute();
-
- $countbezirke = $this->resultbezirke->rowCount();
-
- $pathThisFile = $_SERVER['REQUEST_URI'];
-
- ob_start(); // Aktiviert "Render"-modus
-
- include_once path_to_theme().'/templates/eventformular.tpl.php';
-
- return ob_get_clean(); // Übergabe des gerenderten "eventformular.tpl.php"
-
- } // END function eventDisplay()
+    $pathThisFile = $_SERVER['REQUEST_URI'];
+    ob_start(); // Aktiviert "Render"-modus
+    include_once path_to_theme() . '/templates/eventformular.tpl.php';
+    return ob_get_clean(); // Übergabe des gerenderten "eventformular.tpl.php"
+  } // END function eventDisplay()
 } // END class eventformular()

@@ -5,7 +5,6 @@
 * Cronjob, der von Drupal automatisch aufgerufen wird.
 * TODO: Update der LOData.js Maps-Koordinaten-Datei
 */
-
 function aae_data_cron() {
   //....
 }
@@ -15,7 +14,6 @@ function aae_data_cron() {
  *
  * Verlinkt URL-Pfade auf die entsprechende Funktion.
  */
-
 function aae_data_menu() {
   $items = array();
   //Menuitem "Akteure"
@@ -108,16 +106,16 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
-  //Menuitem "Ajax"
-  /*$items['ajax/%'] = array(
+  //Ajaxitem "Eventformular/ajaxGetTags"
+  $items['ajax/%'] = array(
     'title' => '',
-    'page callback' => 'ajax',
+    'page callback' => 'ajaxGetTags',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
-  );*/
-  
-  //Menuitem "Kalenderanzeige"
+  );
+
+  //Menuitem "Kalender/%"
   $items['Kalender/%'] = array(
     'title' => 'Kalender',
     'page callback' => 'kalender_page',
@@ -125,7 +123,8 @@ function aae_data_menu() {
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
   );
-  //Menuitem "Taganzeige"
+
+  //Menuitem "Tag"
   $items['Tag/%'] = array(
     'title' => '',
     'page callback' => 'tag_page',
@@ -133,7 +132,8 @@ function aae_data_menu() {
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
   );
-  //Menuitem "Kalenderanzeige"
+
+  //Menuitem "Kalender"
   $items['Kalender'] = array(
     'title' => 'Kalender',
     'page callback' => 'kalender_page',
@@ -144,46 +144,49 @@ function aae_data_menu() {
 
   return $items;
 }
+
 /**
- * Builds page for Tagansicht
+ * Baut die Seite fuer die Tagansicht des Kalenders
  */
 function tag_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/tag.php';
 
   $path = current_path();
-  $path_alias = drupal_lookup_path('alias',$path);
+  $path_alias = drupal_lookup_path('alias', $path);
 
   return $profileHTML;
 }
+
 /**
- * Builds page for Kalender
+ * Baut die Seite fuer den Kalender
  */
 function kalender_page() {
-drupal_add_css("sites/all/modules/aae_data/calendar.css");
+  drupal_add_css("sites/all/modules/aae_data/calendar.css");
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/kalender.php';
 
   $path = current_path();
-  $path_alias = drupal_lookup_path('alias',$path);
+  $path_alias = drupal_lookup_path('alias', $path);
 
   return $profileHTML;
 }
 
 /**
- * Builds page for Akteurliste
+ * Baut die Seite fuer die Akteurliste
  */
 function akteure_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteure.php';
 
   $path = current_path();
-  $path_alias = drupal_lookup_path('alias',$path);
+  $path_alias = drupal_lookup_path('alias', $path);
 
   return $profileHTML;
 }
+
 /**
- * Builds page for Akteurformular
+ * Baut die Seite fuer das Akteurformular
  */
 function akteurformular_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
@@ -198,20 +201,20 @@ function akteurformular_page() {
 }
 
 /**
- * Builds page for Akteurprofil
+ * Baut die Seite fuer das Akteurprofil
  */
-
 function akteurprofil_page($aid = 0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurprofil.php';
 
   $path = current_path();
-  $path_alias = drupal_lookup_path('alias',$path);
+  $path_alias = drupal_lookup_path('alias', $path);
 
   return $profileHTML;
 }
+
 /**
- * Builds page for Akteuredit
+ * Baut die Seite fuer den Akteuredit
  */
 function akteuredit_page($aid = 0) {
   $modulePath = drupal_get_path('module', 'aae_data');
@@ -220,69 +223,82 @@ function akteuredit_page($aid = 0) {
   $akteur = new akteurformular('update');
 
   $path = current_path();
-  $path_alias = drupal_lookup_path('alias',$path);
+  $path_alias = drupal_lookup_path('alias', $path);
 
   return $akteur->run();
 }
 
 /**
- * Includes the AJAX-Class (TODO)
- 
+ * Ajax-code welcher alle Tags im JSON-Format zurueck gibt
+ */
+function ajaxGetTags() {
 
-function ajax() {
+  /*require_once $modulePath . '/database/db_connect.php';
+  $db = new DB_CONNECT();
+  $resulttags = db_select($tbl_sparte, 's')
+    ->fields('s')
+    ->execute()
+    ->fetchAll(); */
 
-} */
+  //return $resulttags;
+  echo '[{"id":"856","name":"House"}, {"id":"1035","name":"Desperate Housewives"}]';
+  exit;
+}
 
 /**
- * Builds page for Eventloeschen
+ * Baut die Seite fuer das Eventloeschen
  */
 function akteurloeschen_page($eid=0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurloeschen.php';
 
   $path = current_path();
-  $path_alias = drupal_lookup_path('alias',$path);
+  $path_alias = drupal_lookup_path('alias', $path);
 
   return $profileHTML;
 }
+
 /**
- * Builds page for Events
+ * Baut die Seite fuer die Events
  */
 function events_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/events.php';
 
   $path = current_path();
-  $path_alias = drupal_lookup_path('alias',$path);
+  $path_alias = drupal_lookup_path('alias', $path);
 
   return $profileHTML;
 }
+
 /**
- * Builds page for Eventprofil
+ * Baut die Seite fuer das Eventprofil
  */
 function eventprofil_page($eid = 0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventprofil.php';
 
   $path = current_path();
-  $path_alias = drupal_lookup_path('alias',$path);
+  $path_alias = drupal_lookup_path('alias', $path);
 
   return $profileHTML;
 }
+
 /**
- * Builds page for Eventloeschen
+ * Baut die Seite fuer das Eventloeschen
  */
 function eventloeschen_page($eid = 0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventloeschen.php';
 
   $path = current_path();
-  $path_alias = drupal_lookup_path('alias',$path);
+  $path_alias = drupal_lookup_path('alias', $path);
 
   return $profileHTML;
 }
+
 /**
- * Builds page for Eventedit
+ * Baut die Seite fuer das Eventedit
  */
 function eventedit_page($aid = 0) {
 
@@ -296,8 +312,9 @@ function eventedit_page($aid = 0) {
 
   return $event->run();
 }
+
 /**
- * Builds page for Eventformular
+ * Baut die Seite fuer das Eventformular
  */
 function eventformular_page() {
 
@@ -316,7 +333,80 @@ function eventformular_page() {
  * Funktion zum Einlesen aller Stadtteile
  */
 function insert_bezirke() {
-  $bezirke = array('Zentrum (Mitte)', 'Zentrum-Ost (Mitte)', 'Zentrum-Südost (Mitte)', 'Seeburgviertel (Mitte)', 'Zentrum-Süd (Mitte)', 'Musikviertel (Mitte)',  'Zentrum-West (Mitte)', 'Bachviertel (Mitte)', 'Zentrum-Nordwest (Mitte)', 'Waldstraßenviertel (Mitte)', 'Zentrum-Nord (Mitte)', 'Schönefeld-Abtnaundorf (Nordost)', 'Schönefeld-Ost (Nordost)', 'Schönefeld (Nordost)', 'Mockau-Süd (Nordost)', 'Mockau-Nord (Nordost)', 'Mockau (Nordost)', 'Thekla (Nordost)', 'Plaußig-Portitz (Nordost)', 'Neustadt-Neuschönefeld (Ost)', 'Volkmarsdorf (Ost)', 'Anger-Crottendorf (Ost)', 'Sellerhausen-Stünz (Ost)', 'Paunsdorf (Ost)', 'Heiterblick (Ost)', 'Mölkau (Ost)', 'Engelsdorf (Ost)', 'Baalsdorf (Ost)', 'Althen-Kleinpösna (Ost)', 'Reudnitz-Thonberg (Südost)', 'Stötteritz (Südost)', 'Probstheida (Südost)', 'Meusdorf (Südost)', 'Liebertwolkwitz (Südost)', 'Holzhausen (Südost)', 'Südvorstadt (Süd)', 'Connewitz (Süd)', 'Marienbrunn (Süd)', 'Lößnig (Süd)', 'Dölitz-Dösen (Süd)', 'Schleußig (Südwest)', 'Plagwitz (Südwest)', 'Kleinzschocher (Südwest)', 'Großzschocher (Südwest)', 'Knautkleeberg-Knauthain (Südwest)', 'Hartmannsdorf-Knautnaundorf (Südwest)', 'Schönau (West)', 'Grünau-Ost (West)', 'Grünau-Mitte (West)', 'Grünau-Siedlung (West)', 'Lausen-Grünau (West)', 'Grünau-Nord (West)', 'Grünau (West)', 'Miltitz (West)', 'Lindenau (Alt-West)', 'Altlindenau (Alt-West)', 'Neulindenau (Alt-West)', 'Leutzsch (Alt-West)', 'Böhlitz-Ehrenberg (Alt-West)', 'Burghausen-Rückmarsdorf (Alt-West)', 'Möckern (Nordwest)', 'Wahren (Nordwest)', 'Lützschena-Stahmeln (Nordwest)', 'Lindenthal (Nordwest)', 'Gohlis-Süd (Nord)', 'Gohlis-Mitte (Nord)', 'Gohlis-Nord (Nord)', 'Gohlis (Nord)', 'Eutritzsch (Nord)', 'Seehausen (Nord)', 'Wiederitzsch (Nord)');
+  $bezirke = array(
+    'Zentrum (Mitte)',
+    'Zentrum-Ost (Mitte)',
+    'Zentrum-Südost (Mitte)',
+    'Seeburgviertel (Mitte)',
+    'Zentrum-Süd (Mitte)',
+    'Musikviertel (Mitte)',
+    'Zentrum-West (Mitte)',
+    'Bachviertel (Mitte)',
+    'Zentrum-Nordwest (Mitte)',
+    'Waldstraßenviertel (Mitte)',
+    'Zentrum-Nord (Mitte)',
+    'Schönefeld-Abtnaundorf (Nordost)',
+    'Schönefeld-Ost (Nordost)',
+    'Schönefeld (Nordost)',
+    'Mockau-Süd (Nordost)',
+    'Mockau-Nord (Nordost)',
+    'Mockau (Nordost)',
+    'Thekla (Nordost)',
+    'Plaußig-Portitz (Nordost)',
+    'Neustadt-Neuschönefeld (Ost)',
+    'Volkmarsdorf (Ost)',
+    'Anger-Crottendorf (Ost)',
+    'Sellerhausen-Stünz (Ost)',
+    'Paunsdorf (Ost)',
+    'Heiterblick (Ost)',
+    'Mölkau (Ost)',
+    'Engelsdorf (Ost)',
+    'Baalsdorf (Ost)',
+    'Althen-Kleinpösna (Ost)',
+    'Reudnitz-Thonberg (Südost)',
+    'Stötteritz (Südost)',
+    'Probstheida (Südost)',
+    'Meusdorf (Südost)',
+    'Liebertwolkwitz (Südost)',
+    'Holzhausen (Südost)',
+    'Südvorstadt (Süd)',
+    'Connewitz (Süd)',
+    'Marienbrunn (Süd)',
+    'Lößnig (Süd)',
+    'Dölitz-Dösen (Süd)',
+    'Schleußig (Südwest)',
+    'Plagwitz (Südwest)',
+    'Kleinzschocher (Südwest)',
+    'Großzschocher (Südwest)',
+    'Knautkleeberg-Knauthain (Südwest)',
+    'Hartmannsdorf-Knautnaundorf (Südwest)',
+    'Schönau (West)',
+    'Grünau-Ost (West)',
+    'Grünau-Mitte (West)',
+    'Grünau-Siedlung (West)',
+    'Lausen-Grünau (West)',
+    'Grünau-Nord (West)',
+    'Grünau (West)',
+    'Miltitz (West)',
+    'Lindenau (Alt-West)',
+    'Altlindenau (Alt-West)',
+    'Neulindenau (Alt-West)',
+    'Leutzsch (Alt-West)',
+    'Böhlitz-Ehrenberg (Alt-West)',
+    'Burghausen-Rückmarsdorf (Alt-West)',
+    'Möckern (Nordwest)',
+    'Wahren (Nordwest)',
+    'Lützschena-Stahmeln (Nordwest)',
+    'Lindenthal (Nordwest)',
+    'Gohlis-Süd (Nord)',
+    'Gohlis-Mitte (Nord)',
+    'Gohlis-Nord (Nord)',
+    'Gohlis (Nord)',
+    'Eutritzsch (Nord)',
+    'Seehausen (Nord)',
+    'Wiederitzsch (Nord)',
+  );
+
   $i = 0;
   while ($i < count($bezirke)) {
 	$insert_bezirke = db_insert("aae_data_bezirke")
