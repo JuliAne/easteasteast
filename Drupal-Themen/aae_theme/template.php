@@ -59,7 +59,8 @@ function aae_preprocess_html(&$variables) {
    drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');
    drupal_add_css(path_to_theme().'/css/default.css');
    drupal_add_js(path_to_theme().'/js/zebra_datepicker.js');
-   drupal_add_js('https://cdn.ckeditor.com/4.4.3/full-all/ckeditor.js');
+   drupal_add_js('https://cdn.ckeditor.com/4.4.3/basic/ckeditor.js');
+   // sites/all/modules/ckeditor/ckeditor.js
    drupal_add_css(base_path().'sites/all/modules/ckeditor/css/ckeditor.css');
    drupal_add_css(base_path().'sites/all/modules/ckeditor/css/ckeditor.editor.css');
    drupal_add_js(path_to_theme().'/js/editform.js');
