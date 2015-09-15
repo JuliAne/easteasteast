@@ -2,8 +2,8 @@
 /**
  * akteurformular.php stellt ein Formular dar,
  * in welches alle Informationen über einen Akteur
- * eingetragen UND bearbeitet werden können.
- * Einziges Pflichtfeld ist bisher der Name, Emailadresse und Bezirk.
+ * eingetragen UND bearbeitet werden koennen.
+ * Einzige Pflichtfelder sind bisher Name, Emailadresse und Bezirk.
  *
  * Die Klasse akteurformular wird in aae_data.module initialisiert (s. __construct)
  * und via ->run() aufgerufen.
@@ -11,278 +11,279 @@
  * Ruth, 2015-07-04
  * Felix, 2015-09-04
  *
- * TODO: - In der Funktion akteurUpdaten ist noch viel ausgeklammerter Code.
- *         So lassen sich bspw. Tags nicht richtig speichern bzw. ausgeben
+ * TODO: - Tagspeicherung+User hinzufuegen funktioniert nach Umbau nicht mehr -> neu implementieren
  *       - Mehr Security-Stuff muss hier rein, ggf. "phpsec" einbinden
  *
  */
 
 Class akteurformular {
 
-//DB-Tabellen
-var $tbl_hat_sparte = "aae_data_hat_sparte";
-var $tbl_adresse = "aae_data_adresse";
-var $tbl_akteur = "aae_data_akteur";
-var $tbl_sparte = "aae_data_kategorie";
-var $tbl_hat_user = "aae_data_hat_user";
-var $tbl_bezirke = "aae_data_bezirke";
+  //DB-Tabellen
+  var $tbl_hat_sparte = "aae_data_hat_sparte";
+  var $tbl_adresse = "aae_data_adresse";
+  var $tbl_akteur = "aae_data_akteur";
+  var $tbl_sparte = "aae_data_kategorie";
+  var $tbl_hat_user = "aae_data_hat_user";
+  var $tbl_bezirke = "aae_data_bezirke";
 
-//$tbl_akteur
-var $name = "";
-var $adresse = ""; //Address-ID: Addressinformationen muessen aus Addressdbtabelle geholt werden
-var $email = "";
-var $telefon = "";
-var $url = "";
-var $ansprechpartner = "";
-var $funktion = "";
-var $bild = "";
-var $beschreibung = "";
-var $oeffnungszeiten = "";
+  //$tbl_akteur
+  var $name = "";
+  var $adresse = ""; //Address-ID: Addressinformationen muessen aus Addressdbtabelle geholt werden
+  var $email = "";
+  var $telefon = "";
+  var $url = "";
+  var $ansprechpartner = "";
+  var $funktion = "";
+  var $bild = "";
+  var $beschreibung = "";
+  var $oeffnungszeiten = "";
 
-//$tbl_adresse
-var $strasse = "";
-var $nr = "";
-var $adresszusatz = "";
-var $plz = "";
-var $ort = "";
-var $gps = "";
-
-//Tags:
-var $sparten = "";
-
-//Speicherort fuer Bilder
-var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/styles/large/public/field/image/";
-var $short_bildpfad = "sites/default/files/styles/large/public/field/image/";
-
-var $akteur_id = "";
-var $user_id = "";
-var $fehler = array();
-var $freigabe = true; // Variable zur Freigabe: muss true sein
-
-//Variablen, welche Texte in den Formularfeldern halten ("Placeholder")
-//$tbl_akteur
-var $ph_name = "Name des Vereins/ der Organisation";
-var $ph_email = "E-mail Addresse";
-var $ph_telefon = "Telefonnummer";
-var $ph_url = "Website";
-var $ph_ansprechpartner = "Kontaktperson";
-var $ph_funktion = "Funktion der Kontaktperson";
-var $ph_bild = "Dateiname mit Endung";
-var $ph_beschreibung = "Beschreibung";
-var $ph_oeffnungszeiten = "Öffnungszeiten";
-
-//$tbl_adresse
-var $ph_strasse = "Strasse";
-var $ph_nr = "Hausnummer";
-var $ph_adresszusatz = "Adresszusatz";
-var $ph_plz = "PLZ";
-var $ph_ort = "Bezirk";
-var $ph_gps = "GPS-Addresskoordinaten";
-
-//$tbl_hat_Sparte
-var $ph_sparten = "Tags kommasepariert eingeben!";
-var $explodedsparten = "";
-var $countsparten = "";
-var $sparte_id = "";
-var $resultbezirke = "";
-var $target = "";
-var $modulePath;
-
-//-----------------------------------
-
-function __construct($action) {
-
- //Sicherheitsschutz
- if(!user_is_logged_in()) drupal_access_denied();
-
- $this->modulePath = drupal_get_path('module', 'aae_data');
- global $user;
- $this->user_id = $user->uid;
-
- // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
- if($action == 'update') $this->target = 'update';
-
-} // END Constructor
-
-
-public function run() {
-
-/** Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
- *  @returns $profileHTML;
- */
-
-$path = current_path();
-$explodedpath = explode("/", $path);
-$this->akteur_id = $this->clearContent($explodedpath[1]);
-
-$output = '';
-
-if (isset($_POST['submit'])) {
-
-   if ($this->akteurCheckPost()) {
-     if ($this->target == 'update') $this->akteurUpdaten();
-     else $this->akteurSpeichern();
-
-     $output = $this->akteurDisplay();
-
-   } else {
-
-     $output = $this->akteurDisplay();
-
-  }
- } else {
-  // Was passiert, wenn Seite zum ersten mal gezeigt wird?
-  // Lade Feld-Werte via ID (akteurGetFields) und gebe diese aus
-
-  if ($this->target == 'update') $this->akteurGetFields();
-  $output = $this->akteurDisplay();
-}
-
-return $output;
-
-}
-
-
-private function clearContent($trimTag) {
- /* Einfache Funktion zum Filtern von POST-Daten. Gerne erweiterbar. */
-
- $clear = trim($trimTag);
- return strip_tags($clear);
-}
-
-private function akteurCheckPost() {
-
- // Wird ausgeführt, wenn auf "Speichern" gedrückt wird
- // @returns $this->freigabe;
-
- //Wertezuweisung
- $this->name = $this->clearContent($_POST['name']);
- $this->email = $this->clearContent($_POST['email']);
- $this->telefon = $this->clearContent($_POST['telefon']);
- $this->url = $this->clearContent($_POST['url']);
- $this->ansprechpartner = $this->clearContent($_POST['ansprechpartner']);
- $this->funktion = $this->clearContent($_POST['funktion']);
- if(isset($_POST['bild'])) $this->bild = $_POST['bild'];
- $this->beschreibung = $this->clearContent($_POST['beschreibung']);
- $this->oeffnungszeiten = $this->clearContent($_POST['oeffnungszeiten']);
-
- $this->strasse = $this->clearContent($_POST['strasse']);
- $this->nr = $this->clearContent($_POST['nr']);
- $this->adresszusatz = $this->clearContent($_POST['adresszusatz']);
- $this->plz = $this->clearContent($_POST['plz']);
- $this->ort = $this->clearContent($_POST['ort']);
- $this->gps = $this->clearContent($_POST['gps']);
- $this->sparten = $this->clearContent($_POST['sparten']);
-
- $this->explodedsparten = "";
- if ($this->sparten != "") $this->explodedsparten = explode(",", $this->sparten);
-
-//-------------------------------------
-  //Check-Klauseln
-
-  //Check, ob ein Name eingegeben wurde:
-  if (strlen($this->name) == 0) {
-   $this->fehler['name'] = "Bitte einen Organisationsnamen eingeben!";
-   $this->freigabe = false;
-  }
-  //Check, ob Email angegeben wurde
-  if (strlen($this->email) == 0) {
-   $this->fehler['email'] = "Bitte eine Emailadresse eingeben!";
-	 $this->freigabe = false;
-  }
-
-  //Check, ob Bezirk angegeben wurde
-  if (strlen($this->ort) == 0) {
-   $this->fehler['ort'] = "Bitte einen Bezirk auswählen!";
-	 $this->freigabe = false;
-  }
+  //$tbl_adresse
+  var $strasse = "";
+  var $nr = "";
+  var $adresszusatz = "";
+  var $plz = "";
+  var $ort = "";
+  var $gps = "";
 
   //Tags:
-  if ($this->sparten != "") {
-   $this->countsparten = count($this->explodedsparten);
-	 $i = 0;
+  var $sparten = "";
 
-	 while($i < $this->countsparten){
-	  $this->explodedsparten[$i] = $this->clearContent($explodedsparten[$i]);
-	  $i++;
-	 }
+  //Speicherort fuer Bilder
+  var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/styles/large/public/field/image/";
+  var $short_bildpfad = "sites/default/files/styles/large/public/field/image/";
+
+  var $akteur_id = "";
+  var $user_id = "";
+  var $fehler = array();
+  var $freigabe = true; // Variable zur Freigabe: muss true sein
+
+  //Variablen, welche Texte in den Formularfeldern halten ("Placeholder")
+  //$tbl_akteur
+  var $ph_name = "Name des Vereins/ der Organisation";
+  var $ph_email = "E-mail Addresse";
+  var $ph_telefon = "Telefonnummer";
+  var $ph_url = "Website";
+  var $ph_ansprechpartner = "Kontaktperson";
+  var $ph_funktion = "Funktion der Kontaktperson";
+  var $ph_bild = "Dateiname mit Endung";
+  var $ph_beschreibung = "Beschreibung";
+  var $ph_oeffnungszeiten = "Öffnungszeiten";
+
+  //$tbl_adresse
+  var $ph_strasse = "Strasse";
+  var $ph_nr = "Hausnummer";
+  var $ph_adresszusatz = "Adresszusatz";
+  var $ph_plz = "PLZ";
+  var $ph_ort = "Bezirk";
+  var $ph_gps = "GPS-Addresskoordinaten";
+
+  //$tbl_hat_Sparte
+  var $ph_sparten = "Tags kommasepariert eingeben!";
+  var $explodedsparten = "";
+  var $countsparten = "";
+  var $sparte_id = "";
+
+  var $resultbezirke = "";
+  var $target = "";
+  var $modulePath;
+
+  //-----------------------------------
+
+  function __construct($action) {
+
+    //Sicherheitsschutz
+    if (!user_is_logged_in()) {
+      drupal_access_denied();
+    } 
+
+    $this->modulePath = drupal_get_path('module', 'aae_data');
+    global $user;
+    $this->user_id = $user->uid;
+
+    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
+    if ($action == 'update') {
+      $this->target = 'update';
+    } 
+  } // END Constructor
+
+  /** 
+   *  Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
+   *  @returns $profileHTML;
+   */
+  public function run() {
+
+    $path = current_path();
+    $explodedpath = explode("/", $path);
+    $this->akteur_id = $this->clearContent($explodedpath[1]);
+
+    $output = '';
+
+    if (isset($_POST['submit'])) {
+      if ($this->akteurCheckPost()) {
+	    if ($this->target == 'update') {
+	      $this->akteurUpdaten();
+	    } else {
+		  $this->akteurSpeichern();
+	    }
+        $output = $this->akteurDisplay();
+      } else {
+	    $output = $this->akteurDisplay();
+      }
+    } else {
+      // Was passiert, wenn Seite zum ersten mal gezeigt wird?
+      // Lade Feld-Werte via ID (akteurGetFields) und gebe diese aus
+      if ($this->target == 'update') {
+	    $this->akteurGetFields();
+      }
+      $output = $this->akteurDisplay();
+    }
+
+    return $output;
   }
 
-  //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
-  if (strlen($this->name) > 100) {
-	 $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
-	 $this->freigabe = false;
+  /**
+   *  Einfache Funktion zum Filtern von POST-Daten. Gerne erweiterbar.
+   */
+  private function clearContent($trimTag) {
+    $clear = trim($trimTag);
+    return strip_tags($clear);
   }
 
-  if (strlen($this->email) > 100) {
-	 $this->fehler['email'] = "Bitte geben Sie eine kürzere Emailadresse an.";
-	 $this->freigabe = false;
-  }
+  /**
+   * Wird ausgefuehrt, wenn auf "Speichern" geklickt wird
+   * @return $this->freigabe
+   */
+  private function akteurCheckPost() {
+    //Wertezuweisung
+    $this->name = $this->clearContent($_POST['name']);
+    $this->email = $this->clearContent($_POST['email']);
+    $this->telefon = $this->clearContent($_POST['telefon']);
+    $this->url = $this->clearContent($_POST['url']);
+    $this->ansprechpartner = $this->clearContent($_POST['ansprechpartner']);
+    $this->funktion = $this->clearContent($_POST['funktion']);
+    if (isset($_POST['bild'])) {
+	  $this->bild = $_POST['bild'];
+    }
+    $this->beschreibung = $this->clearContent($_POST['beschreibung']);
+    $this->oeffnungszeiten = $this->clearContent($_POST['oeffnungszeiten']);
+    $this->strasse = $this->clearContent($_POST['strasse']);
+    $this->nr = $this->clearContent($_POST['nr']);
+    $this->adresszusatz = $this->clearContent($_POST['adresszusatz']);
+    $this->plz = $this->clearContent($_POST['plz']);
+    $this->ort = $this->clearContent($_POST['ort']);
+    $this->gps = $this->clearContent($_POST['gps']);
+    $this->sparten = $this->clearContent($_POST['sparten']);
+    $this->explodedsparten = "";
+    if ($this->sparten != "") {
+	  $this->explodedsparten = explode(",", $this->sparten);
+    }
 
-  if (strlen($this->telefon) > 100) {
- 	 $this->fehler['telefon'] = "Bitte geben Sie eine kürzere Telefonnummer an.";
-	 $this->freigabe = false;
-  }
+    //-------------------------------------
+    //Check-Klauseln
 
-  if (strlen($this->url) > 100) {
-	 $this->fehler['url'] = "Bitte geben Sie eine kürzere URL an.";
-	 $this->freigabe = false;
-  }
+    //Check, ob ein Name eingegeben wurde:
+    if (strlen($this->name) == 0) {
+      $this->fehler['name'] = "Bitte einen Organisationsnamen eingeben!";
+      $this->freigabe = false;
+    }
+    //Check, ob Email angegeben wurde
+    if (strlen($this->email) == 0) {
+      $this->fehler['email'] = "Bitte eine Emailadresse eingeben!";
+	   $this->freigabe = false;
+    }
+    //Check, ob Bezirk angegeben wurde
+    if (strlen($this->ort) == 0) {
+      $this->fehler['ort'] = "Bitte einen Bezirk auswählen!";
+	  $this->freigabe = false;
+    }
 
-  if (strlen($this->ansprechpartner) > 100){
-	 $this->fehler['ansprechpartner'] = "Bitte geben Sie einen kürzeren Ansprechpartner an.";
-	 $this->freigabe = false;
-  }
+    //Tags:
+    if ($this->sparten != "") {
+      $this->countsparten = count($this->explodedsparten);
+	  $i = 0;
+      while ($i < $this->countsparten) {
+	    $this->explodedsparten[$i] = $this->clearContent($explodedsparten[$i]);
+	    $i++;
+	  }
+    }
 
-  if (strlen($this->funktion) > 100) {
-	 $this->fehler['funktion'] = "Bitte geben Sie eine kürzere Funktion an.";
-   $this->freigabe = false;
-  }
+    //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
+    if (strlen($this->name) > 100) {
+	  $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
+	  $this->freigabe = false;
+    }
 
-  if (strlen($this->beschreibung) > 500) {
-	 $this->fehler['beschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
-	 $this->freigabe = false;
-  }
+    if (strlen($this->email) > 100) {
+	  $this->fehler['email'] = "Bitte geben Sie eine kürzere Emailadresse an.";
+	  $this->freigabe = false;
+    }
 
-  if (strlen($this->oeffnungszeiten) > 200) {
-	 $this->fehler['oeffnungszeiten'] = "Bitte geben Sie kürzere Oeffnungszeiten an.";
-	 $this->freigabe = false;
-  }
+    if (strlen($this->telefon) > 100) {
+ 	  $this->fehler['telefon'] = "Bitte geben Sie eine kürzere Telefonnummer an.";
+	  $this->freigabe = false;
+    }
 
-  if (strlen($this->strasse) > 100) {
- 	 $this->fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
-	 $this->freigabe = false;
-  }
+    if (strlen($this->url) > 100) {
+	  $this->fehler['url'] = "Bitte geben Sie eine kürzere URL an.";
+	  $this->freigabe = false;
+    }
 
-  if (strlen($this->nr) > 100) {
-	 $this->fehler['nr'] = "Bitte geben Sie eine kürzere Nummer an.";
-	 $this->freigabe = false;
-  }
+    if (strlen($this->ansprechpartner) > 100){
+	  $this->fehler['ansprechpartner'] = "Bitte geben Sie einen kürzeren Ansprechpartner an.";
+	  $this->freigabe = false;
+    }
 
-  if (strlen($this->adresszusatz) > 100) {
-	 $this->fehler['adresszusatz'] = "Bitte geben Sie einen kürzeren Adresszusatz an.";
-	 $this->freigabe = false;
-  }
+    if (strlen($this->funktion) > 100) {
+	  $this->fehler['funktion'] = "Bitte geben Sie eine kürzere Funktion an.";
+      $this->freigabe = false;
+    }
 
-  if (strlen($this->plz) > 100) {
-	 $this->fehler['plz '] = "Bitte geben Sie eine kürzere PLZ an.";
-	 $this->freigabe = false;
-  }
+    if (strlen($this->beschreibung) > 500) {
+	  $this->fehler['beschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
+	  $this->freigabe = false;
+    }
 
-  if (strlen($this->gps) > 100) {
-	 $this->fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
-	 $this->freigabe = false;
-  }
+    if (strlen($this->oeffnungszeiten) > 200) {
+	  $this->fehler['oeffnungszeiten'] = "Bitte geben Sie kürzere Oeffnungszeiten an.";
+	  $this->freigabe = false;
+    }
 
-  return $this->freigabe;
-} // END akteurCheckPost
+    if (strlen($this->strasse) > 100) {
+ 	  $this->fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
+	  $this->freigabe = false;
+    }
 
-//---------------------------------
+    if (strlen($this->nr) > 100) {
+	  $this->fehler['nr'] = "Bitte geben Sie eine kürzere Nummer an.";
+	  $this->freigabe = false;
+    }
 
-private function akteurSpeichern() {
+    if (strlen($this->adresszusatz) > 100) {
+	  $this->fehler['adresszusatz'] = "Bitte geben Sie einen kürzeren Adresszusatz an.";
+	  $this->freigabe = false;
+    }
 
- require_once $this->modulePath . '/database/db_connect.php';
- $db = new DB_CONNECT();
+    if (strlen($this->plz) > 100) {
+	  $this->fehler['plz '] = "Bitte geben Sie eine kürzere PLZ an.";
+	  $this->freigabe = false;
+    }
+
+    if (strlen($this->gps) > 100) {
+	  $this->fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
+	  $this->freigabe = false;
+    }
+
+    return $this->freigabe;
+  } // END akteurCheckPost
+
+
+  /**
+   * Schreibt Daten in DB
+   */
+  private function akteurSpeichern() {
+    require_once $this->modulePath . '/database/db_connect.php';
+    $db = new DB_CONNECT();
 
 	//Abfrage, ob Adresse bereits in Adresstabelle
 	$resultadresse = db_select($this->tbl_adresse, 'a')
@@ -295,57 +296,50 @@ private function akteurSpeichern() {
 	  ->execute();
 
 	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
-
 	if ($resultadresse->rowCount() == 0) {
-
-   //Adresse nicht vorhanden
-	 $this->adresse = db_insert($this->tbl_adresse)
-	  ->fields(array(
-	  'strasse' => $this->strasse,
-	  'nr' => $this->nr,
-	  'adresszusatz' => $this->adresszusatz,
-	  'plz' => $this->plz,
-	  'bezirk' => $this->ort,
-	  'gps' => $this->gps,
-	 ))
-	 ->execute();
+      //Adresse nicht vorhanden
+	  $this->adresse = db_insert($this->tbl_adresse)
+	    ->fields(array(
+	      'strasse' => $this->strasse,
+	      'nr' => $this->nr,
+	      'adresszusatz' => $this->adresszusatz,
+	      'plz' => $this->plz,
+	      'bezirk' => $this->ort,
+	      'gps' => $this->gps,
+	   ))
+	   ->execute();
 	} else {
-
-   //Adresse bereits vorhanden
-	 foreach ($resultadresse as $row) {
+      //Adresse bereits vorhanden
+	  foreach ($resultadresse as $row) {
 	    //Abfrage, ob GPS-Angaben gemacht wurden
 	    if (strlen($this->gps) != 0 && strlen($row->gps) == 0 ) {
-        //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
+          //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
 	      //Update der Adresse
 	      $adresse_updated = db_update($this->tbl_adresse)
 	 	    ->fields(array( 'gps' => $this->gps ))
-	      ->condition('ADID', $row->ADID, '=')
-	      ->execute();
+	        ->condition('ADID', $row->ADID, '=')
+	        ->execute();
 	    }
-
 	    $this->adresse = $row->ADID; //Adress-ID merken
 	  }
 	}
 
-  //Wenn Bilddatei ausgewählt wurde...
-  if ($_FILES) {
-
-   $bildname = $_FILES['bild']['name'];
-
-   if($bildname != "") {
-    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $this->bildpfad.$bildname)) {
-      echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />'.$bildname;
-      exit();
+    //Wenn Bilddatei ausgewählt wurde...
+    if ($_FILES) {
+      $bildname = $_FILES['bild']['name'];
+      if ($bildname != "") {
+	    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $this->bildpfad . $bildname)) {
+          echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />' . $bildname;
+          exit();
+        }
+        $this->bild = base_path() . $this->short_bildpfad . $bildname;
+      }
     }
-    $this->bild = base_path().$this->short_bildpfad.$bildname;
-   }
 
-  }
-
-  //tbl_akteur INSERT!!!
+    //tbl_akteur INSERT!!!
 	$this->akteur_id = db_insert($this->tbl_akteur)
-   	->fields(array(
-		'name' => $this->name,
+   	  ->fields(array(
+	    'name' => $this->name,
 		'adresse' => $this->adresse,
 		'email' => $this->email,
 		'telefon' => $this->telefon,
@@ -359,7 +353,7 @@ private function akteurSpeichern() {
 	  ))
 	  ->execute();
 
-	//tbl_hat_user insert
+    //tbl_hat_user insert
 	db_insert($this->tbl_hat_user)
 	  ->fields(array(
 	    'hat_UID' => $this->user_id,
@@ -369,12 +363,10 @@ private function akteurSpeichern() {
 
 	//falls Tags angegeben wurden
 	if ($this->sparten != "") {
-
-	 $this->sparte_id = "";
-   $this->countsparten = count($explodedsparten);
-	 $i = 0;
-
-   while ($i < $this->countsparten) {
+	  $this->sparte_id = "";
+      $this->countsparten = count($explodedsparten);
+	  $i = 0;
+      while ($i < $this->countsparten) {
 		//1. Prüfen, ob Tag bereits in Tabelle $tbl_sparte
 		$resultsparte = db_select($this->tbl_sparte, 's')
 		  ->fields('s', array( 'KID' ))
@@ -382,14 +374,14 @@ private function akteurSpeichern() {
 		  ->execute();
 
 		if ($resultsparte->rowCount() == 0) {
-      //nein: Tag in $tbl_sparte einfügen
+          //nein: Tag in $tbl_sparte einfügen
 		  $this->sparte_id = db_insert($tbl_sparte)
-		   ->fields(array( 'kategorie' => $this->explodedsparten[$i] ))
-			 ->execute();
+		    ->fields(array( 'kategorie' => $this->explodedsparten[$i] ))
+			->execute();
 		} else {
-      //ja: KID des Tags holen
+          //ja: KID des Tags holen
 		  foreach ($resultsparte as $row) {
-			 $this->sparte_id = $row->KID;
+		    $this->sparte_id = $row->KID;
 		  }
 		}
 
@@ -404,35 +396,32 @@ private function akteurSpeichern() {
 	  }
 	}
 
-  // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
-  session_start();
-  $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich erstellt!';
+    // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
+    session_start();
+    $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich erstellt!';
 
-	header("Location: Akteurprofil/".$this->akteur_id);
-  // Beamen wir dich mal auf die neue Seite...
+	header("Location: Akteurprofil/" . $this->akteur_id);
+    // Beamen wir dich mal auf die neue Seite...
+  } // END function akteurSpeichern()
 
-} // END function akteurSpeichern()
-
-private function akteurUpdaten() {
-
-
-	require_once $this->modulePath . '/database/db_connect.php';
+  /**
+   * Akteurinformationen aktualisieren in DB
+   */
+  private function akteurUpdaten() {
+    require_once $this->modulePath . '/database/db_connect.php';
 	$db = new DB_CONNECT();
 
-  //Wenn Bilddatei ausgewählt wurde...
-  if ($_FILES) {
-
-   $bildname = $_FILES['bild']['name'];
-
-   if($bildname != "") {
-    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $this->bildpfad.$bildname)) {
-      echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />'.$bildname;
-      exit();
+    //Wenn Bilddatei ausgewählt wurde...
+    if ($_FILES) {
+      $bildname = $_FILES['bild']['name'];
+      if ($bildname != "") {
+        if (!move_uploaded_file($_FILES['bild']['tmp_name'], $this->bildpfad.$bildname)) {
+          echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />' . $bildname;
+          exit();
+        }
+        $this->bild = base_path() . $this->short_bildpfad . $bildname;
+      }
     }
-    $this->bild = base_path().$this->short_bildpfad.$bildname;
-   }
-
-  }
 
 	//Abfrage, ob Adresse bereits in Adresstabelle
 	//Addressdaten aus DB holen:
@@ -446,9 +435,8 @@ private function akteurUpdaten() {
 	  ->execute();
 
 	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
-
 	if ($resultadresse->rowCount() == 0) {
-    //Adresse nicht vorhanden
+      //Adresse nicht vorhanden
 	  $this->adresse = db_insert($this->tbl_adresse)
 		->fields(array(
 		  'strasse' => $this->strasse,
@@ -461,12 +449,12 @@ private function akteurUpdaten() {
 		->execute();
 	} else {
 	  foreach ($resultadresse as $row) {
-		 $this->adresse = $row->ADID;
+	    $this->adresse = $row->ADID;
 	  }
 	}
 
 	$akteur_updated = db_update($this->tbl_akteur)
-    ->fields(array(
+      ->fields(array(
 		'name' => $this->name,
 		'adresse' => $this->adresse,
 		'email' => $this->email,
@@ -481,158 +469,94 @@ private function akteurUpdaten() {
 	  ->condition('AID', $this->akteur_id, '=')
 	  ->execute();
 
-	//tbl_hat_user
-	/*if ($laengehatuser != 0){
-	  $j = 0;
-	  while($j < $laengehatuser){
-		$inserthatuser = db_insert($this->tbl_hat_user)
-		  ->fields(array(
-		    'hat_UID' => $explodedhatuser[$j],
-			'hat_AID' => $this->akteur_id,
-		  ))
-		  ->execute();
-	    $j++;
-	  }
-	}*/
+    // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
+    session_start();
+    $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich bearbeitet!';
 
-	//Kategorien
-	/*
-	foreach ($kategorie as $row) {
-	  $result_kategorie_id = db_select($tbl_kategorie)//ID der ausgewählten Kategorie holen
-		->fields(array(
-		  'kategorie_id'
-		))
-		->condition('kategorie', $row, '=')
-		->execute();
-	  foreach ($result_kategorie_id as $row1) {
-		//Abfragen, ob Kategorie bereits zu dem Akteur vorhanden ist:
-		$result_kategorie_akteur = db_select($tbl_hat_Sparte)
-		  ->fields(array(
-			'akteur',
-			'kategorie',
-		  ))
-		  ->condition('akteur', $akteur_id, '=')
-		  ->condition('kategorie', $row1->kategorie_id)
-		  ->execute();
-		$count1 = $result_kategorie_akteur->rowCount();
-		if($count1 == 0){//Kategorie noch nicht zugeordnet
-		  //tbl_hat_Sparte INSERT!!!
-		  $hat_sparte_insert = db_insert($tbl_hat_Sparte)
-		 	->fields(array(
-		  	  'kategorie' => $row1->kategorie_id,
-			))
-		    ->condition('akteur_id', $akteur_id, '=')
-		    ->execute();
-		}
-	  }
-	}
-	//Unchecked Kategorien löschen:
-	//Alle markierten Kategorien holen:
-	$result_alle_kategorien = db_select($tbl_hat_Sparte)
-	  ->fields(array(
-		'kategorie',
+	header("Location: Akteurprofil/" . $this->akteur_id);
+
+  } // END function akteurUpdaten()
+
+  /**
+   * Holen der Akteurattribute aus DB
+   */
+  private function akteurGetFields() {
+    require_once $this->modulePath . '/database/db_connect.php';
+    $db = new DB_CONNECT();
+
+    //Auswahl der Daten des eingeloggten Akteurs:
+    $resultakteur = db_select($this->tbl_akteur, 'c')
+      ->fields('c', array(
+	    'name',
+	    'adresse',
+	    'email',
+	    'telefon',
+	    'url',
+	    'ansprechpartner',
+	    'funktion',
+	    'bild',
+	    'beschreibung',
+	    'oeffnungszeiten',
 	  ))
-	  ->condition('akteur', $akteur_id, '=')
-	  ->execute();
-	foreach ($result_alle_kategorien as $row) {
-	  $zaehler = 0;
-	  foreach ($kategorie as $row1) {
-		if($row->kategorie == $row1){//Kategorie markiert
-		  $zaehler = $zaehler + 1;
-		}
-	  }
-	  if(zaehler == 0){//Kategorie wurde unchecked
-		$kat_deleted = db_delete($tbl_hat_Sparte)//Aus Tabelle loeschen!
-		  ->condition('akteur', $akteur_id, '=')
-		  ->condition('kategorie', $row->kategorie, '=')
-		  ->execute();
-	  }
-	}
-	*/
+	  ->condition('AID', $this->akteur_id, '=')
+      ->execute();
 
-  // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
-  session_start();
-  $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich bearbeitet!';
+    //Speichern der Daten in den Arbeitsvariablen
+    foreach ($resultakteur as $row) {
+	  $this->name = $row->name;
+      $this->adresse = $row->adresse;
+	  $this->email = $row->email;
+	  $this->telefon = $row->telefon;
+	  $this->url = $row->url;
+	  $this->ansprechpartner = $row->ansprechpartner;
+	  $this->funktion = $row->funktion;
+	  $this->bild = $row->bild;
+	  $this->beschreibung = $row->beschreibung;
+	  $this->oeffnungszeiten = $row->oeffnungszeiten;
+    }
 
-	header("Location: Akteurprofil/".$this->akteur_id);
+    //Adressdaten aus DB holen:
+    $resultadresse = db_select($this->tbl_adresse, 'd')
+      ->fields('d', array(
+	    'strasse',
+	    'nr',
+	    'adresszusatz',
+	    'plz',
+	    'bezirk',
+	    'gps',
+	  ))
+	  ->condition('ADID', $this->adresse, '=')
+      ->execute();
 
-} // END function akteurUpdaten()
+    //Speichern der Adressdaten in den Arbeitsvariablen
+    foreach ($resultadresse as $row) {
+	  $this->strasse = $row->strasse;
+	  $this->nr = $row->nr;
+	  $this->adresszusatz = $row->adresszusatz;
+	  $this->plz = $row->plz;
+	  $this->ort = $row->bezirk;
+	  $this->gps = $row->gps;
+    }
+  } // END function akteurGetFields()
 
-private function akteurGetFields() {
 
-  require_once $this->modulePath . '/database/db_connect.php';
-  $db = new DB_CONNECT();
+  /**
+   * Darstellung des Formulars
+   */
+  private function akteurDisplay() {
+    $this->resultbezirke = db_select($this->tbl_bezirke, 'b')
+      ->fields('b', array( 'BID', 'bezirksname' ))
+      ->execute();
 
-  //Auswahl der Daten des eingeloggten Akteurs:
-  $resultakteur = db_select($this->tbl_akteur, 'c')
-    ->fields('c', array(
-	  'name',
-	  'adresse',
-	  'email',
-	  'telefon',
-	  'url',
-	  'ansprechpartner',
-	  'funktion',
-	  'bild',
-	  'beschreibung',
-	  'oeffnungszeiten',
-	))
-	 ->condition('AID', $this->akteur_id, '=')
-   ->execute();
+    $pathThisFile = $_SERVER['REQUEST_URI'];
 
-  //Speichern der Daten in den Arbeitsvariablen
-  foreach ($resultakteur as $row) {
-	 $this->name = $row->name;
-   $this->adresse = $row->adresse;
-	 $this->email = $row->email;
-	 $this->telefon = $row->telefon;
-	 $this->url = $row->url;
-	 $this->ansprechpartner = $row->ansprechpartner;
-	 $this->funktion = $row->funktion;
-	 $this->bild = $row->bild;
-	 $this->beschreibung = $row->beschreibung;
-	 $this->oeffnungszeiten = $row->oeffnungszeiten;
-  }
+    //Darstellung
+    ob_start(); // Aktiviert "Render"-modus
 
-  //Adressdaten aus DB holen:
-  $resultadresse = db_select($this->tbl_adresse, 'd')
-    ->fields('d', array(
-	  'strasse',
-	  'nr',
-	  'adresszusatz',
-	  'plz',
-	  'bezirk',
-	  'gps',
-	))
-	->condition('ADID', $this->adresse, '=')
-  ->execute();
+    include_once path_to_theme() . '/templates/akteurformular.tpl.php';
 
-  //Speichern der Adressdaten in den Arbeitsvariablen
-  foreach ($resultadresse as $row) {
-	 $this->strasse = $row->strasse;
-	 $this->nr = $row->nr;
-	 $this->adresszusatz = $row->adresszusatz;
-	 $this->plz = $row->plz;
-	 $this->ort = $row->bezirk;
-	 $this->gps = $row->gps;
-  }
-} // END function akteurGetFields()
+    return ob_get_clean(); // Übergabe des gerenderten "akteurformular.tpl"
 
-private function akteurDisplay() {
+  } // END function akteurDisplay()
 
- $this->resultbezirke = db_select($this->tbl_bezirke, 'b')
- ->fields('b', array( 'BID', 'bezirksname' ))
- ->execute();
-
- $pathThisFile = $_SERVER['REQUEST_URI'];
-
- //Darstellung
-
- ob_start(); // Aktiviert "Render"-modus
-
- include_once path_to_theme().'/templates/akteurformular.tpl.php';
-
- return ob_get_clean(); // Übergabe des gerenderten "akteurformular.tpl"
-
- } // END function akteurDisplay()
 } // END class akteurformular

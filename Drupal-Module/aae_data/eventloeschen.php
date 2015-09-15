@@ -21,7 +21,7 @@ $tbl_hat_user = "aae_data_hat_user";
 $tbl_akteur_events = "aae_data_akteur_hat_events";
 
 //Sicherheitsschutz
-if(!user_is_logged_in()){
+if (!user_is_logged_in()) {
   drupal_access_denied();
 }
 
@@ -33,7 +33,7 @@ $resultakteurid = db_select($tbl_akteur_events, 'e')//Den Akteur zum Event aus D
   ->condition('EID', $event_id, '=')
   ->execute();
 $akteur_id = "";
-$okay="";//gibt an, ob Zugang erlaubt wird oder nicht
+$okay = "";//gibt an, ob Zugang erlaubt wird oder nicht
 foreach ($resultakteurid as $row) {
   $akteur_id = $row->AID;//Akteur speichern
   //Prüfen ob Schreibrecht vorliegt: ob User zu dem Akteur gehört
@@ -46,7 +46,7 @@ foreach ($resultakteurid as $row) {
     ->condition('hat_UID', $user_id, '=')
     ->execute();
   $hat_recht = $resultUser->rowCount();
-  if($hat_recht == 1){//User gehört zu Akteur
+  if ($hat_recht == 1) {//User gehört zu Akteur
 	$okay = 1;//Zugang erlaubt
   }
 }
@@ -58,22 +58,20 @@ $ersteller = db_select($tbl_event, 'e')
   ->condition('ersteller', $user->uid, '=')
   ->execute();
 $ist_ersteller = $ersteller->rowCount();
-if($ist_ersteller == 1){
-	$okay =1;
+if ($ist_ersteller == 1) {
+  $okay =1;
 }
 
-if(!array_intersect(array('administrator'), $user->roles)){
-  if($okay != 1){
+if (!array_intersect(array('administrator'), $user->roles)) {
+  if ($okay != 1) {
     drupal_access_denied();
   }
 }
-
 
 //-----------------------------------
 
 //das wird ausgeführt, wenn auf "Löschen" gedrückt wird
 if (isset($_POST['submit'])) {
-
   $event_id = $_POST['event_id'];
   require_once $modulePath . '/database/db_connect.php';
   //include $modulePath . '/templates/utils/rest_helper.php'; Ist aus dem Künstlermodul übernommen
@@ -95,8 +93,7 @@ if (isset($_POST['submit'])) {
 
   header("Location: Events");
   // Und "Tschö mit ö..."!
-
-} else{
+} else {
 
 }
 
@@ -104,7 +101,6 @@ $pathThisFile = $_SERVER['REQUEST_URI'];
 
 //Darstellung
 $profileHTML = <<<EOF
-
 <div class="alert-box" data-alert>
  <p><strong>Möchten Sie dieses Event wirklich löschen?</strong></p><br />
  <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>

@@ -27,7 +27,7 @@ if(!user_is_logged_in()){
 
 //Prüfen ob Schreibrecht vorliegt
 $resultUser = db_select($tbl_hat_user, 'u')
- ->fields('u', array(
+  ->fields('u', array(
     'hat_UID',
     'hat_AID',
   ))
@@ -36,15 +36,15 @@ $resultUser = db_select($tbl_hat_user, 'u')
   ->execute();
 $hat_recht = $resultUser->rowCount();
 
-if(!array_intersect(array('redakteur','administrator'), $user->roles)){
-  if($hat_recht != 1){
+if (!array_intersect(array('redakteur','administrator'), $user->roles)) {
+  if ($hat_recht != 1) {
     drupal_access_denied();
   }
 }
 //AKteurnamen ermitteln
 $akteur = "";
 $resultakteur = db_select($tbl_akteur, 'a')
- ->fields('a', array(
+  ->fields('a', array(
     'name',
   ))
   ->condition('AID', $akteur_id, '=')
@@ -52,7 +52,6 @@ $resultakteur = db_select($tbl_akteur, 'a')
 foreach ($resultakteur as $row) {
   $akteur = $row->name;
 }
-
 
 //-----------------------------------
 
@@ -85,7 +84,7 @@ if (isset($_POST['submit'])) {
   header("Location: Akteure"); //Hier muss hin, welche Seite aufgerufen werden soll,
 		//nach dem die Daten erfolgreich gespeichert wurden.
 
-} else{
+} else {
 
 }
 
@@ -94,11 +93,11 @@ $pathThisFile = $_SERVER['REQUEST_URI'];
 //Darstellung
 $profileHTML = <<<EOF
 <div class="alert-box" data-alert>
- <p>Möchten Sie den Akteur <strong>$akteur</strong> wirklich löschen?</p><br />
- <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
-   <input name="akteur_id" type="hidden" id="eventEIDInput" value="$akteur_id" />
-   <a class="secondary button" href="javascript:history.go(-1)">Abbrechen</a>
-   <input type="submit" class="button" id="akteurSubmit" name="submit" value="Löschen">
- </form>
+  <p>Möchten Sie den Akteur <strong>$akteur</strong> wirklich löschen?</p><br />
+  <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
+    <input name="akteur_id" type="hidden" id="eventEIDInput" value="$akteur_id" />
+    <a class="secondary button" href="javascript:history.go(-1)">Abbrechen</a>
+    <input type="submit" class="button" id="akteurSubmit" name="submit" value="Löschen">
+  </form>
 </div>
 EOF;

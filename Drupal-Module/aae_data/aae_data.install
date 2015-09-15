@@ -11,7 +11,7 @@
  * welche automatisch bei Deinstallation wieder entfernt werden.
  */
 function aae_data_schema() {
-  $schema= array();
+  $schema = array();
   $schema ['aae_data_bezirke'] = array(
     'description' => 'Tabelle fuer Leipziger Bezirke',
 	'fields' => array(
@@ -25,7 +25,7 @@ function aae_data_schema() {
 	'fields' => array(
       'AID' => array('description' => 'ID für Akteur', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'name' => array('description' => 'Name des Akteurs/der Organisation', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
-		'nameAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
+	  'nameAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'email' => array('description' => 'Email Adresse zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE, 'default' => ''),
 	  'emailAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'telefon' => array('description' => 'Telefonnummer zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
@@ -153,15 +153,14 @@ function aae_data_schema() {
 	),
   );
 
-
   return $schema;
 }
 
 /**
  * Implements hook_update_N().
- * Create a new database table {aae_data_event_hat_sparte}.
+ * Create a new database table aae_data_event_hat_sparte.
  */
-function aae_data_update_7103(){
+function aae_data_update_7103() {
   $schema ['aae_data_event_hat_sparte'] = array(
     'description' => 'Hilfstabelle für Sparten/Zielgruppen',
 	'fields' => array(
@@ -174,13 +173,14 @@ function aae_data_update_7103(){
       'Event' => array('table' => 'aae_data_event', 'columns' => array('hat_EID' => 'EID'))
 	),
   );
+
   db_create_table('aae_data_event_hat_sparte', $schema['aae_data_event_hat_sparte']);
 }
 /**
  * Implements hook_update_N().
- * Create new columns in aae_data_akteur.
+ * Create new columns in aae_data_akteur und aae_data_event.
  */
-function aae_data_update_7104(){
+function aae_data_update_7104() {
   $columnsakteur = array(
     'nameAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
     'emailAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
@@ -195,12 +195,12 @@ function aae_data_update_7104(){
     'erstellerAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
   );
   foreach ($columnsakteur as $key => $column) {
-	if(!db_field_exists('aae_data_akteur', $key)){
+	if (!db_field_exists('aae_data_akteur', $key)) {
 	  db_add_field('aae_data_akteur', $key, $column);
 	}
   }
 
-$columnsevents = array(
+  $columnsevents = array(
     'nameAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
     'startAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
     'endeAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
@@ -211,7 +211,7 @@ $columnsevents = array(
     'erstellerAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
   );
   foreach ($columnsevents as $key => $column) {
-	if(!db_field_exists('aae_data_event', $key)){
+	if (!db_field_exists('aae_data_event', $key)) {
 	  db_add_field('aae_data_event', $key, $column);
 	}
   }
@@ -239,7 +239,6 @@ function aae_data_uninstall() {
 /**
  * Implements hook_disable().
  * Wird bei Deaktivierung des Moduls ausgeführt.
- * Löschen aller Tabellen, die das Modul angelegt hat.
  */
 function aae_data_disable() {
   //drupal_uninstall_schema('aae_data');
