@@ -4,7 +4,7 @@
  * Database Connection Variables
  */
 //Put your DB User Name here
- define('DB_USER', "###");
+ define('DB_USER', "###111");
  //Put your DB password here
  define('DB_PASSWORD', "###");
  //Put your DB for Drupal in here
