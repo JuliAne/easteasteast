@@ -95,7 +95,7 @@ Class akteurformular {
     //Sicherheitsschutz
     if (!user_is_logged_in()) {
       drupal_access_denied();
-    } 
+    }
 
     $this->modulePath = drupal_get_path('module', 'aae_data');
     global $user;
@@ -104,10 +104,10 @@ Class akteurformular {
     // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
     if ($action == 'update') {
       $this->target = 'update';
-    } 
+    }
   } // END Constructor
 
-  /** 
+  /**
    *  Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
    *  @returns $profileHTML;
    */
@@ -282,8 +282,6 @@ Class akteurformular {
    * Schreibt Daten in DB
    */
   private function akteurSpeichern() {
-    require_once $this->modulePath . '/database/db_connect.php';
-    $db = new DB_CONNECT();
 
 	//Abfrage, ob Adresse bereits in Adresstabelle
 	$resultadresse = db_select($this->tbl_adresse, 'a')
@@ -408,8 +406,6 @@ Class akteurformular {
    * Akteurinformationen aktualisieren in DB
    */
   private function akteurUpdaten() {
-    require_once $this->modulePath . '/database/db_connect.php';
-	$db = new DB_CONNECT();
 
     //Wenn Bilddatei ausgewählt wurde...
     if ($_FILES) {
@@ -481,8 +477,6 @@ Class akteurformular {
    * Holen der Akteurattribute aus DB
    */
   private function akteurGetFields() {
-    require_once $this->modulePath . '/database/db_connect.php';
-    $db = new DB_CONNECT();
 
     //Auswahl der Daten des eingeloggten Akteurs:
     $resultakteur = db_select($this->tbl_akteur, 'c')

@@ -4,12 +4,10 @@
  * Moeglichkeit die einzelnen Events als .ics-Datei (iCal-Format)
  * herunterzuladen.
  */
-	
-require_once $modulePath . '/database/db_connect.php';
-$db = new DB_CONNECT();
+
 global $user;
 
-$pathThisFile = $_SERVER['REQUEST_URI']; 
+$pathThisFile = $_SERVER['REQUEST_URI'];
 
 //EID holen:
 $path = current_path();
@@ -20,15 +18,15 @@ $tbl_adresse = "aae_data_adresse";
 
 //DB-Abfrage aller Events, die an diesem Tag stattfinden
 $resultEvents = db_select($tbl_event, 'e')
-  ->fields('e', array( 
+  ->fields('e', array(
     'start',
 	'ende',
 	'name',
-	'EID', 
+	'EID',
   ))
   ->condition('start', $tag.'%', 'LIKE')
   ->orderBy('name', 'ASC')
-  ->execute(); 
+  ->execute();
 foreach ($resultEvents as $row) {
   $events .= $row->start . ' - ' . $row->ende . ' ' . '<a href="?q=Eventprofil/' . $row->EID . '">' . $row->name . '</a><form action=' . $pathThisFile . ' method="POST" enctype="multipart/form-data"><input type="hidden" name="eventid" value="' . $row->EID . '"><input type="submit" class="event" id="icalSubmit" name="submit" value="Download"></form><br>';
 }
@@ -42,20 +40,20 @@ if (isset($_POST['submit'])) {
   $var .= "PRODID;X-RICAL-TZSOURCE=TZINFO:-//com.denhaven2/NONSGML ri_cal gem//EN\r\n";
   $var .= "CALSCALE:GREGORIAN\n";
   $var .= "VERSION:2.0\n";
-	
+
   $var .= "BEGIN:VEVENT\n";
-	
+
   $eventID = $_POST['eventid'];
   $resultEvent = db_select($tbl_event, 'e')
-    ->fields('e', array( 
+    ->fields('e', array(
 	  'start',
 	  'ende',
 	  'name',
-	  'EID', 
+	  'EID',
 	  'ort',
 	))
 	->condition('EID', $eventID, '=')
-	->execute(); 
+	->execute();
 
   foreach ($resultEvent as $row) {
     $start = $row->start;
@@ -74,7 +72,7 @@ if (isset($_POST['submit'])) {
 	))
     ->condition('ADID', $ort, "=")
     ->execute();
-	
+
   $var .= "UID:" . makeiCalFormat($start) . makeiCalFormat($ende) . $eid . "@leipziger-ecken.de\n";
   $var .= "DTSTART:" . makeiCalFormat($start) . "\n";
   $var .= "DTEND:" . makeiCalFormat($ende) . "\n";
@@ -85,11 +83,11 @@ if (isset($_POST['submit'])) {
   }
   $var .= "LOCATION:" . $ad . "\n";
   $var .= "END:VEVENT\n";
-	
+
   header('Content-Type: text/plain');
   header('Content-Length: ' . strlen($var));
   header('Content-Disposition: attachment; filename="' . $event . '.ics"');
-  print $var;	
+  print $var;
 }
 
 /**
@@ -108,4 +106,3 @@ function makeiCalFormat($datum) {
 $profileHTML = <<<EOF
 <p>$events</p>
 EOF;
-

@@ -72,10 +72,8 @@ if (!array_intersect(array('administrator'), $user->roles)) {
 
 //das wird ausgeführt, wenn auf "Löschen" gedrückt wird
 if (isset($_POST['submit'])) {
+  
   $event_id = $_POST['event_id'];
-  require_once $modulePath . '/database/db_connect.php';
-  //include $modulePath . '/templates/utils/rest_helper.php'; Ist aus dem Künstlermodul übernommen
-  $db = new DB_CONNECT();
 
   //Event aus $tbl_akteur_events loeschen
   $eventloeschen = db_delete($tbl_akteur_events)

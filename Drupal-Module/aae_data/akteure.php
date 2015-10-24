@@ -5,10 +5,6 @@
 
 //-----------------------------------
 
-// DB-Informationen:
-require_once $modulePath . '/database/db_connect.php';
-$db = new DB_CONNECT();
-// benutzte Tabellen:
 $tbl_akteur = "aae_data_akteur";
 
 //-----------------------------------
@@ -56,7 +52,5 @@ $resultAkteure = db_select($tbl_akteur, 'a')
 //-----------------------------------
 
 ob_start(); // Aktiviert "Render"-modus
-
 include_once path_to_theme() . '/templates/akteure.tpl.php';
-
-$profileHTML = ob_get_clean(); // UEbergabe des gerenderten "project.tpl"
+$profileHTML = ob_get_clean(); // Uebergabe des gerenderten "akteure.tpl"

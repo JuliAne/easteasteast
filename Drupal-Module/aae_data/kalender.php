@@ -2,11 +2,11 @@
 /**
  * Stellt einen Kalender fuer die Events dar
  */
-include 'calendar.php';
+include 'kalendarKlasse.php';
 $calendar = new Calendar();
 $content = $calendar->show();
 
 $profileHTML = <<<EOF
 EOF;
-	
+
 $profileHTML .= $content;

@@ -42,20 +42,18 @@ if ($currentPageNr > $maxPages) {
 
 //-----------------------------------
 
-require_once $modulePath . '/database/db_connect.php';
-$db = new DB_CONNECT();
-
 $pathThisFile = $_SERVER['REQUEST_URI'];
 
 $resulttags = db_select($tbl_tags, 't')
   ->fields('t', array(
     'KID',
-	'kategorie',
+	  'kategorie',
   ))
   ->execute();
 $counttags = $resulttags->rowCount();
 
 //-----------------------------------
+
 if (isset($_POST['submit'])) {
   $tag = $_POST['tag'];
   if ($tag != 0) {

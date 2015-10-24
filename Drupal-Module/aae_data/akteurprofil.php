@@ -17,9 +17,6 @@ $tbl_akteur_hat_events = "aae_data_akteur_hat_events";
 
 //-----------------------------------
 
-require_once $modulePath . '/database/db_connect.php';
-$db = new DB_CONNECT();
-
 //AID holen
 $explodedpath = explode("/", current_path());
 $akteur_id = $explodedpath[1];

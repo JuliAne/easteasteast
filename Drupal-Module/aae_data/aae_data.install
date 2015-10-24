@@ -2,7 +2,8 @@
 
 /**
  * @file
- * Installiert alles, was unser AAE Data Modul benötigt, insbesondere Tabellen.
+ * Installiert alles, was unser AAE Data Modul benötigt.
+ * TODO: xyAktiv kann raus...
  */
 
 /**
