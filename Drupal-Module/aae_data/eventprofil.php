@@ -22,8 +22,6 @@ $tbl_event_sparte = "aae_data_event_hat_sparte";
 
 //-----------------------------------
 
-require_once $modulePath . '/database/db_connect.php';
-$db = new DB_CONNECT();
 global $user;
 
 //EID holen:

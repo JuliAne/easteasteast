@@ -18,9 +18,8 @@ $tbl_event_sparte = "aae_data_event_hat_sparte";
 
 //-----------------------------------
 
-require_once $modulePath . '/database/db_connect.php';
-$db = new DB_CONNECT();
 global $user;
+
 //EID holen:
 $path = current_path();
 $explodedpath = explode("/", $path);
@@ -33,7 +32,7 @@ $resultakteurid = db_select($tbl_akteur_events, 'e')//Den Akteur zum Event aus D
     'AID',
   ))
   ->condition('EID', $event_id, '=')
-  ->execute(); 
+  ->execute();
 $akteur_id = "";
 $okay="";//gibt an, ob Zugang erlaubt wird oder nicht
 foreach ($resultakteurid as $row) {
@@ -63,7 +62,7 @@ $ist_ersteller = $ersteller->rowCount();
 if($ist_ersteller == 1){
 	$okay =1;
 }
- 
+
 if(array_intersect(array('administrator'), $user->roles)){
   $okay = 1;
 }
@@ -113,7 +112,7 @@ if($countsparten != 0){
 	  }
 	  $i = $i+1;
 	}
-	
+
 }
 
 //-----------------------------------
@@ -124,7 +123,7 @@ EOF;
 
 foreach($resultevent as $row){
 	$profileHTML .= '<h1>'.$row->name.'</h1>';
-	
+
 	//Veranstalter
 	if($resultveranstalter->rowCount() != 0){
 	$profileHTML .= '<h4>Veranstalter:</h4>';
@@ -140,7 +139,7 @@ foreach($resultevent as $row){
 	  }
 	}
 	}
-	
+
 	//Ersteller aus DB holen
 	$ersteller = db_select("users", 'u')
 	->fields('u', array(
@@ -151,7 +150,7 @@ foreach($resultevent as $row){
 	foreach ($ersteller as $row2) {
 		$profileHTML .= '<p>Erstellt von: '.$row2->name.'</p>';
 	}
-	
+
 	//Adresse des Akteurs
 	$resultadresse = db_select($tbl_adresse, 'b')
 	  ->fields('b', array(
@@ -190,10 +189,10 @@ foreach($resultevent as $row){
 		}
 	}
 	}
-	
+
 	//Datum
 	$profileHTML .= '<h4>Zeit:</h4>';
-	if($row->start != "") { 
+	if($row->start != "") {
 	  $explodedstart = explode(' ', $row->start);
 	  $profileHTML .= $explodedstart[0];
 	  if($row->ende != $explodedstart[0]){
@@ -204,14 +203,14 @@ foreach($resultevent as $row){
 	  }
 	}
 	if($row->url != "") { $profileHTML .= '<br><a href="'.$row->url.'">'.$row->url.'</a><br>'; }
-	if($row->kurzbeschreibung != "") { 
+	if($row->kurzbeschreibung != "") {
       $profileHTML .= '<h4>Beschreibung:</h4>';
 	  $profileHTML .= $row->kurzbeschreibung.'<br>';
 	}
 	//Bild
-	if($row->bild != "") { 
+	if($row->bild != "") {
 	  $profileHTML .= '<br><img src="'.$row->bild.'" >'; }
-	
+
 	//Sparten:
     if(count($sparten) != 0){
 	  $profileHTML .= '<br>Sparten:<br>';
@@ -221,8 +220,8 @@ foreach($resultevent as $row){
 	    $profileHTML .= '<p>'.$sparten[$j].'</p>';
 	    $j = $j+1;
 	  }
-	}	
-	
+	}
+
 	if($okay == 1){
       $profileHTML .= '<br><a href="?q=Eventloeschen/'.$event_id.'" >'.Löschen.'</a>'.'   '.'<a href="?q=Eventedit/'.$event_id.'" >'.Bearbeiten.'</a>';
     }

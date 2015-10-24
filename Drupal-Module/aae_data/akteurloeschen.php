@@ -59,9 +59,6 @@ foreach ($resultakteur as $row) {
 if (isset($_POST['submit'])) {
 
   $akteur_id = $_POST['akteur_id'];
-  require_once $modulePath . '/database/db_connect.php';
-  //include $modulePath . '/templates/utils/rest_helper.php'; Ist aus dem Künstlermodul übernommen
-  $db = new DB_CONNECT();
 
   //Akteur aus $tbl_akteur_events loeschen
   $akteureventloeschen = db_delete($tbl_akteur_events)

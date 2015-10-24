@@ -132,7 +132,7 @@ Class eventformular {
     }
     return $output;
   }
-  
+
   /**
    * Einfache Funktion zum Filtern von POST-Daten. Gerne erweiterbar, bspw.
    * durch Einbindung von "phpsec".
@@ -202,7 +202,7 @@ Class eventformular {
 
     // TODO (Felix): Vlt. sollten wir die max. Länge der Werte im 32/64/128/256/... - Abstand
     // gestalten; habe gehört, das sei besser für die DB-Performance...
-    
+
     if (strlen($this->name) > 100) {
 	  $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
       $this->freigabe = false;
@@ -247,7 +247,7 @@ Class eventformular {
       $this->fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
 	  $this->freigabe = false;
     }
-  
+
     return $this->freigabe;
   } // END function eventCheckPost()
 
@@ -255,8 +255,6 @@ Class eventformular {
    * Wird ausgefuehrt, wenn Update der Daten verlangt ist
    */
   private function eventUpdaten() {
-    require_once $modulePath . 'database/db_connect.php';
-	$db = new DB_CONNECT();
 
 	//Abfrage, ob Adresse bereits in Adresstabelle
 	//Addressdaten aus DB holen:
@@ -537,7 +535,7 @@ Class eventformular {
 		  ->fields('s', array( 'KID' ))
 		  ->condition('kategorie', $explodedsparten[$i], '=')
 		  ->execute();
-		
+
         $countresult = $resultsparte->rowCount();
         if ($countresult == 0) {
           //nein: Tag in $tbl_sparte einfügen
