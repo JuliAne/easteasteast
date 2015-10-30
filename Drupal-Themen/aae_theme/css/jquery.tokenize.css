@@ -1,7 +1,6 @@
 div.TokenizeMeasure,
 div.Tokenize ul li span,
 div.Tokenize ul.TokensContainer li.TokenSearch input {
-    font-family: Arial, Helvetica, sans-serif;
     font-size: 12px;
 }
 
@@ -9,6 +8,7 @@ div.Tokenize {
     position: relative;
     display: inline-block;
     zoom: 1;
+    width: 100%;
 }
 
 div.Tokenize ul {
@@ -24,7 +24,7 @@ div.Tokenize ul li {
 div.Tokenize ul.TokensContainer {
     cursor: text;
     padding: 0 5px 5px 0;
-    height: 100px;
+    margin-bottom: 15px;
     overflow-y: auto;
     background-color: white;
     -webkit-touch-callout: none;

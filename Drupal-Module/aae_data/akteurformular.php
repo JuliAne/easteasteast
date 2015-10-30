@@ -48,6 +48,7 @@ Class akteurformular {
 
   //Tags:
   var $sparten = "";
+  var $all_sparten = ''; // Ermöglicht Tokenizer-plugin im Frontend
 
   //Speicherort fuer Bilder
   var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/styles/large/public/field/image/";
@@ -538,9 +539,15 @@ Class akteurformular {
    * Darstellung des Formulars
    */
   private function akteurDisplay() {
+
     $this->resultbezirke = db_select($this->tbl_bezirke, 'b')
-      ->fields('b', array( 'BID', 'bezirksname' ))
-      ->execute();
+     ->fields('b', array( 'BID', 'bezirksname' ))
+     ->execute();
+
+    $this->all_sparten = db_select($this->tbl_sparte, 's')
+     ->fields('s')
+     ->execute()
+     ->fetchAll();
 
     $pathThisFile = $_SERVER['REQUEST_URI'];
 

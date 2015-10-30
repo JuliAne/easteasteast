@@ -44,6 +44,7 @@ Class eventformular {
 
   //Tags:
   var $sparten= "";
+  var $all_sparten = ''; // Zur Darstellung des tokenizer (#akteurSpartenInput)
 
   //Speicherort fuer Bilder
   var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/styles/large/public/field/image/";
@@ -87,17 +88,16 @@ Class eventformular {
   var $resultbezirke;
   var $target = '';
 
-  function __construct($action) {
+  function __construct($action = false) {
 
     global $user;
     $this->user_id = $user->uid;
 
     // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
     if ($action == 'update') {
-	  $this->target = 'update';
+	   $this->target = 'update';
     }
 
-    // Sicherheitsschutz
     if (!user_is_logged_in()) {
 	  drupal_access_denied();
     }
@@ -108,10 +108,12 @@ Class eventformular {
    * @returns $profileHTML;
    */
   public function run() {
+
     $path = current_path();
     $explodedpath = explode("/", $path);
     $this->event_id = $explodedpath[1];
     $output = '';
+
     if (isset($_POST['submit'])) {
       if ($this->eventCheckPost()) {
         if ($this->target == 'update') {
@@ -126,7 +128,7 @@ Class eventformular {
     } else {
       // Was passiert, wenn Seite zum ersten mal gezeigt wird?
       if ($this->target == 'update') {
-	    $this->eventGetFields();
+	     $this->eventGetFields();
       }
       $output = $this->eventDisplay();
     }
@@ -255,6 +257,9 @@ Class eventformular {
    * Wird ausgefuehrt, wenn Update der Daten verlangt ist
    */
   private function eventUpdaten() {
+
+   require_once $modulePath . 'database/db_connect.php';
+   $db = new DB_CONNECT();
 
 	//Abfrage, ob Adresse bereits in Adresstabelle
 	//Addressdaten aus DB holen:
@@ -569,9 +574,11 @@ Class eventformular {
     // nachdem die Daten erfolgreich gespeichert wurden.
   } // END function event_speichern()
 
+
   /**
    * Darstellung der Formularinformationen
    */
+
   private function eventDisplay() {
     // Ausgabe des Eventformulars
     // TODO: Ggf. kann die $resultbezirke-Abfrage woanders hin wandern...
@@ -593,9 +600,19 @@ Class eventformular {
       ->execute();
     $countbezirke = $this->resultbezirke->rowCount();
 
+    $all_sparten = db_select($this->tbl_sparte, 's')
+      ->fields('s')
+      ->execute()
+      ->fetchAll();
+
+    foreach ($all_sparten as $id => $sparte) {
+     $this->all_sparten[$id] = $sparte;
+    }
+
     $pathThisFile = $_SERVER['REQUEST_URI'];
     ob_start(); // Aktiviert "Render"-modus
     include_once path_to_theme() . '/templates/eventformular.tpl.php';
     return ob_get_clean(); // Übergabe des gerenderten "eventformular.tpl.php"
+
   } // END function eventDisplay()
 } // END class eventformular()

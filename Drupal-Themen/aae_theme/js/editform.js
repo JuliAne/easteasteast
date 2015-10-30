@@ -5,17 +5,19 @@ $(document).ready(function(){
   $("#eventStartdatumInput").Zebra_DatePicker({ 'readonly_element' : false });
   $("#eventEnddatumInput").Zebra_DatePicker({ 'readonly_element' : false });
 
-  $('.eventAdresse').click(function(){
+  $('.Adresse input').focusout(function(){
 
-    if ($('#eventNrInput').val() != '' && $('#eventPLZInput').val() != '' && $('#eventStrasseInput').val() != '') {
+    if ($('#NrInput').val() != '' && $('#PLZInput').val() != '' && $('#StrasseInput').val() != '') {
+
+    $('#GPSInput').val('Ermittle Geo-Koordinaten...');
 
     $.ajax({
-      url: "https://api.mapbox.com/v4/geocode/mapbox.places/"+ $('#eventPLZInput').val() +"Leipzig+" + $('#eventStrasseInput').val() + "+"+ $('#eventNrInput').val() +".json?access_token=pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg",
+      url: "https://api.mapbox.com/v4/geocode/mapbox.places/"+ $('#PLZInput').val() +"Leipzig+" + $('#StrasseInput').val() + "+"+ $('#NrInput').val() +".json?access_token=pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg",
     })
     .done(function( data ) {
-      console.log( "Ermittelte Geo-Koordinaten", data.features[0].center );
+      console.log( "Ermittelte Geo-Koordinaten: ", data.features[0].center );
 
-      $('#eventGPSInput').val(data.features[0].center[1] + ',' + data.features[0].center[0]);
+      $('#GPSInput').val(data.features[0].center[1] + ',' + data.features[0].center[0]);
 
       });
     }
