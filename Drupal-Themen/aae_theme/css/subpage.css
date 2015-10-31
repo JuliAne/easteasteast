@@ -12,3 +12,44 @@
  margin-bottom: 50px;
  display: block;
 }
+
+fieldset p {
+  font-size: 0.7em;
+  line-height: 1.7em;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+
+fieldset p:hover {
+   opacity: 1;
+}
+
+#filter {
+  padding-top: 15px;
+  background: #F1EFEF;
+}
+
+#filter div.columns {
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+#filter div.columns:hover{
+  opacity: 1;
+}
+
+#removeFilter {
+  padding-top: 19px;
+}
+
+#removeFilter .button {
+  padding: 4px 10px;
+}
+
+#change-style {
+  margin-top: 12px;
+}
+
+.button-group a.button {
+  padding: 0.6rem 1.2rem
+}

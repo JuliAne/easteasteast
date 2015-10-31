@@ -6,6 +6,7 @@
 //-----------------------------------
 
 $tbl_akteur = "aae_data_akteur";
+$tbl_tags = "aae_data_kategorie";
 
 //-----------------------------------
 
@@ -47,6 +48,13 @@ $resultAkteure = db_select($tbl_akteur, 'a')
   ))
   ->orderBy('name', 'ASC')
   ->range($start, $ende) // Limit Query
+  ->execute();
+
+  $resulttags = db_select($tbl_tags, 't')
+    ->fields('t', array(
+      'KID',
+  	  'kategorie',
+    ))
   ->execute();
 
 //-----------------------------------

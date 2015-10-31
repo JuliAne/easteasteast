@@ -50,6 +50,7 @@ $resulttags = db_select($tbl_tags, 't')
 	  'kategorie',
   ))
   ->execute();
+
 $counttags = $resulttags->rowCount();
 
 //-----------------------------------

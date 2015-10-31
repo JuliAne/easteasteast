@@ -33,30 +33,30 @@
 
  </div><!-- /.row -->
 
-  <fieldset class="eventAdresse row">
+  <fieldset class="Adresse row">
    <legend>Adresse</legend>
 
    <div class="large-4 columns">
     <label>Straße: <?= $this->fehler['strasse']; ?>
-     <input type="text" id="akteurStrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= $this->ph_strasse; ?>">
+     <input type="text" id="StrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= $this->ph_strasse; ?>">
     </label>
    </div>
 
    <div class="large-1 columns">
     <label>Nr.: <?= $this->fehler['nr']; ?>
-     <input type="text" id="akteurNrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= $this->ph_nr; ?>">
+     <input type="text" id="NrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= $this->ph_nr; ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
     <label>Adresszusatz: <?= $this->fehler['adresszusatz']; ?>
-     <input type="text" id="akteurAdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= $this->ph_adresszusatz; ?>">
+     <input type="text" id="AdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= $this->ph_adresszusatz; ?>">
     </label>
    </div>
 
    <div class="large-4 columns">
     <label>PLZ: <?= $this->fehler['plz']; ?>
-      <input type="text" id="akteurPLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= $this->ph_plz; ?>">
+      <input type="text" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= $this->ph_plz; ?>">
     </label>
    </div>
 
@@ -79,7 +79,7 @@
 
   <div class="large-4 columns">
   <label>Geodaten (Karte): <?= $this->fehler['gps']; ?>
-   <input type="text" id="akteurGPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= $this->ph_gps; ?>" disabled>
+   <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= $this->ph_gps; ?>" disabled>
   </label>
 </div>
 
@@ -154,9 +154,20 @@
   <div class="row">
 
   <div class="large-12 columns">
+
+    <label>Kategorien: <?= $this->fehler['sparten']; ?></label>
+
+    <select id="eventSpartenInput" multiple="multiple" class="tokenize">
+    <?php foreach ($this->all_sparten as $sparte) : ?>
+     <option value="<?php echo $sparte->KID; ?>"><?php echo $sparte->kategorie; ?></option>
+    <?php endforeach;?>
+    </select>
+
+  <!--
   <label>Tags: <?= $this->fehler['sparten']; ?>
-   <input type="text" id="akteurSpartenInput" name="sparten" value="<?= $this->sparten; ?>" placeholder="<?= $this->ph_sparten; ?>">
-  </label>
+   <input type="text" id="eventSpartenInput" name="sparten" value="<?= $this->sparten; ?>" placeholder="<?= $this->ph_sparten; ?>">
+  </label> -->
+
   </div>
 
  </div>
