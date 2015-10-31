@@ -18,7 +18,7 @@ function aae_preprocess_html(&$variables) {
 
   $path = explode("/", current_path()); // Welcome URL-Injection :D TODO: Call ClearContent()
 
-  switch(trim($path[0])) {
+  switch(strtolower(trim($path[0]))) {
 
   case ('node') :
 
@@ -40,7 +40,7 @@ function aae_preprocess_html(&$variables) {
 
   break;
 
-  case ('Akteurprofil') :
+  case ('akteurprofil') :
 
     drupal_add_css(path_to_theme().'/css/project.css');
     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
@@ -49,10 +49,10 @@ function aae_preprocess_html(&$variables) {
 
   break;
 
-  case ('Akteurformular'):
-  case ('Akteuredit') :
-  case ('Eventformular') :
-  case ('Eventedit') :
+  case ('akteurformular'):
+  case ('akteuredit') :
+  case ('eventformular') :
+  case ('eventedit') :
 
    drupal_add_css(path_to_theme(). '/css/subpage.css');
    drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
@@ -67,9 +67,25 @@ function aae_preprocess_html(&$variables) {
 
   break;
 
-  case ('Akteure') :
+  case ('events') :
+
+   $js = '$(window).ready(function(){$(".tokenize").tokenize({displayDropdownOnFocus:true,newElements:false});});';
 
    drupal_add_css(path_to_theme(). '/css/subpage.css');
+   drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
+   drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');
+   drupal_add_js($js, 'inline');
+
+  break;
+
+  case ('akteure') :
+
+   $js = '$(window).ready(function(){$(".tokenize").tokenize({displayDropdownOnFocus:true,newElements:false});});';
+
+   drupal_add_css(path_to_theme(). '/css/subpage.css');
+   drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
+   drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');
+   drupal_add_js($js, 'inline');
    // drupal_add_js(path_to_theme().'/js/stalactite.min.js');
    //drupal_add_js('$("#block-system-main #akteure").stalactite();', array('type' => 'inline', 'scope' => 'footer'));
 

@@ -20,6 +20,39 @@
 </div>
 <div class="divider"></div>
 
+<div id="filter" class="row">
+
+ <div class="large-1 columns" id="removeFilter">
+  <a class="small secondary button round right" style="padding:4px 10px;" href="#" title="Alle Filter entfernen">x</a>
+ </div>
+
+ <div class="large-6 large-offset-1 columns">
+
+ <form action='<?=  $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
+
+   <label for="tag">Nach Tags filtern:</label>
+   <select name="tag" id="eventSpartenInput" multiple="multiple" class="tokenize">
+   <?php foreach ($resulttags as $row) : ?>
+     <option value="<?= $row->KID; ?>"><?= $row->kategorie; ?></option>
+   <?php endforeach; ?>
+   </select>
+
+ </div>
+
+<div id="change-style" class="button-bar large-4 columns">
+  <ul class="button-group round">
+    <li><a href="#" class="small button" title="Darstellung als Boxen"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
+    <!--<li><a href="#" class="small button secondary" title="Darstellung im Kalender"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>-->
+    <li><a href="#" class="small button secondary" title="Darstellung auf Karte"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
+  </ul>
+  <input type="submit" class="small button right" id="akteurSubmit" name="submit" value="Filter anwenden">
+</div>
+
+</form>
+
+</div>
+<div class="divider"></div>
+
 <div id="akteure" class="row" style="padding: 15px 0;">
 
 <?php foreach($resultAkteure as $akteur): ?>
