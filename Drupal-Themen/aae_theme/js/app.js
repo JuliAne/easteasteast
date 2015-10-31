@@ -49,6 +49,10 @@ $(document).ready(function() {
 
  });
 
+ $('#alert .close').click(function(){
+  $('#alert').fadeUp('fast');
+ });
+
  $('#presentationFilter li a').click(function(){
   var that = $(this);
   $('#presentationFilter').find('.active').removeClass('active').addClass('secondary');

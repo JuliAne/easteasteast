@@ -62,7 +62,7 @@ button.button, #actions {
 #alert .close {
   float: right;
   color: #fff;
-  margin-top: -13px;
+  margin-top: -1px;
   margin-right: 5px;
   position: relative;
 }

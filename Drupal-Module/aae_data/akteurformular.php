@@ -156,7 +156,6 @@ Class akteurformular {
    * @return $this->freigabe
    */
   private function akteurCheckPost() {
-    //Wertezuweisung
     $this->name = $this->clearContent($_POST['name']);
     $this->email = $this->clearContent($_POST['email']);
     $this->telefon = $this->clearContent($_POST['telefon']);
@@ -284,44 +283,24 @@ Class akteurformular {
    */
   private function akteurSpeichern() {
 
-	//Abfrage, ob Adresse bereits in Adresstabelle
-	$resultadresse = db_select($this->tbl_adresse, 'a')
-	  ->fields('a', array( 'ADID', 'gps' ))
-	  ->condition('strasse', $this->strasse, '=')
-	  ->condition('nr', $this->nr, '=')
-	  ->condition('adresszusatz', $this->adresszusatz, '=')
-	  ->condition('plz', $this->plz, '=')
-	  ->condition('bezirk', $this->ort, '=')
-	  ->execute();
+	$this->adresse = db_insert($this->tbl_adresse)
+	 ->fields(array(
+	'strasse' => $this->strasse,
+	'nr' => $this->nr,
+	'adresszusatz' => $this->adresszusatz,
+	'plz' => $this->plz,
+	'bezirk' => $this->ort,
+	'gps' => $this->gps
+  ))
+	 ->execute();
 
-	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
-	if ($resultadresse->rowCount() == 0) {
-      //Adresse nicht vorhanden
-	  $this->adresse = db_insert($this->tbl_adresse)
-	    ->fields(array(
-	      'strasse' => $this->strasse,
-	      'nr' => $this->nr,
-	      'adresszusatz' => $this->adresszusatz,
-	      'plz' => $this->plz,
-	      'bezirk' => $this->ort,
-	      'gps' => $this->gps,
-	   ))
-	   ->execute();
-	} else {
-      //Adresse bereits vorhanden
-	  foreach ($resultadresse as $row) {
-	    //Abfrage, ob GPS-Angaben gemacht wurden
-	    if (strlen($this->gps) != 0 && strlen($row->gps) == 0 ) {
-          //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
 	      //Update der Adresse
-	      $adresse_updated = db_update($this->tbl_adresse)
+	    /*  $adresse_updated = db_update($this->tbl_adresse)
 	 	    ->fields(array( 'gps' => $this->gps ))
-	        ->condition('ADID', $row->ADID, '=')
-	        ->execute();
-	    }
-	    $this->adresse = $row->ADID; //Adress-ID merken
-	  }
-	}
+	      ->condition('ADID', $row->ADID, '=')
+	      ->execute(); */
+
+	  //  $this->adresse = $row->ADID; //Adress-ID merken
 
     //Wenn Bilddatei ausgewählt wurde...
     if ($_FILES) {
@@ -335,10 +314,9 @@ Class akteurformular {
       }
     }
 
-    //tbl_akteur INSERT!!!
 	$this->akteur_id = db_insert($this->tbl_akteur)
-   	  ->fields(array(
-	    'name' => $this->name,
+   	->fields(array(
+	  'name' => $this->name,
 		'adresse' => $this->adresse,
 		'email' => $this->email,
 		'telefon' => $this->telefon,
@@ -346,19 +324,20 @@ Class akteurformular {
 		'ansprechpartner' => $this->ansprechpartner,
 		'funktion' => $this->funktion,
 		'bild' => $this->bild,
-		'beschreibung' => $beschreibung,
-		'oeffnungszeiten' => $oeffnungszeiten,
-		'ersteller' => $this->user_uid,
+		'beschreibung' => $this->beschreibung,
+		'oeffnungszeiten' => $this->oeffnungszeiten,
+		'ersteller' => $this->user_id,
 	  ))
 	  ->execute();
 
-    //tbl_hat_user insert
 	db_insert($this->tbl_hat_user)
 	  ->fields(array(
 	    'hat_UID' => $this->user_id,
 	    'hat_AID' => $this->akteur_id,
 	  ))
 	  ->execute();
+
+    print_r($this->sparten);
 
 	//falls Tags angegeben wurden
 	if ($this->sparten != "") {
@@ -401,8 +380,8 @@ Class akteurformular {
 
     $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich erstellt!';
 
-	  header("Location: Akteurprofil/" . $this->akteur_id);
-    
+   header("Location: Akteurprofil/" . $this->akteur_id);
+
   } // END function akteurSpeichern()
 
   /**
@@ -469,10 +448,9 @@ Class akteurformular {
 	  ->execute();
 
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
-    session_start();
+    if (session_status() == PHP_SESSION_NONE) session_start();
     $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich bearbeitet!';
-
-	header("Location: Akteurprofil/" . $this->akteur_id);
+   	header("Location: ".base_path()."Akteurprofil/" . $this->akteur_id);
 
   } // END function akteurUpdaten()
 
