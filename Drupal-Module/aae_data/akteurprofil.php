@@ -11,9 +11,9 @@
 
 $tbl_akteur = "aae_data_akteur";
 $tbl_adresse = "aae_data_adresse";
-$tbl_hat_user = "aae_data_hat_user";
+$tbl_hat_user = "aae_data_akteur_hat_user";
 $tbl_event = "aae_data_event";
-$tbl_akteur_hat_events = "aae_data_akteur_hat_events";
+$tbl_akteur_hat_events = "aae_data_akteur_hat_event";
 
 //-----------------------------------
 

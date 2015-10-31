@@ -16,8 +16,8 @@ $explodedpath = explode("/", $path);
 $akteur_id = $explodedpath[1];
 
 //DB-Tabellen
-$tbl_hat_user = "aae_data_hat_user";
-$tbl_akteur_events = "aae_data_akteur_hat_events";
+$tbl_hat_user = "aae_data_akteur_hat_user";
+$tbl_akteur_events = "aae_data_akteur_hat_event";
 $tbl_akteur = "aae_data_akteur";
 
 //Sicherheitsschutz

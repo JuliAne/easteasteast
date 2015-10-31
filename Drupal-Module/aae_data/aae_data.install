@@ -121,7 +121,7 @@ function aae_data_schema() {
 	  'Akteur' => array('table' => 'aae_data_akteur', 'columns' => array('hat_AID' => 'AID'))
 	),
   );
-  $schema ['aae_data_akteur_hat_events'] = array(
+  $schema ['aae_data_akteur_hat_event'] = array(
     'description' => 'Tabelle fuer Zuordnung aller Akteure zu einem Event',
 	'fields' => array(
 	  'EID' => array('description' => 'ID für Event', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),

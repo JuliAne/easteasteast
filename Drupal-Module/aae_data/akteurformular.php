@@ -19,11 +19,11 @@
 Class akteurformular {
 
   //DB-Tabellen
-  var $tbl_hat_sparte = "aae_data_hat_sparte";
+  var $tbl_hat_sparte = "aae_data_akteur_hat_sparte";
   var $tbl_adresse = "aae_data_adresse";
   var $tbl_akteur = "aae_data_akteur";
-  var $tbl_sparte = "aae_data_kategorie";
-  var $tbl_hat_user = "aae_data_hat_user";
+  var $tbl_sparte = "aae_data_sparte";
+  var $tbl_hat_user = "aae_data_akteur_hat_user";
   var $tbl_bezirke = "aae_data_bezirke";
 
   //$tbl_akteur
