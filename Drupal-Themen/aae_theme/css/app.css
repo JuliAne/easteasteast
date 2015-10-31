@@ -348,10 +348,11 @@ transform: rotate(-10deg);
 .pcard header h3 {
  margin: 0;
  padding: 5px;
- padding-top: 60px;
+ padding-top: 35px;
  text-shadow: 0 2px 2px #353535;
  text-transform: uppercase;
  font-size: 1.5em;
+ text-align: center;
 }
 
 .pcard section {

@@ -22,6 +22,16 @@ $tbl_event_sparte = "aae_data_event_hat_sparte";
 
 //-----------------------------------
 
+/*if (empty($resultakteur)) { <-- Einbauen um leere Eventsseiten zu vermeiden!
+  // Akteur nicht vorhanden, beame ihn zur Akteure-Seite
+
+  if (session_status() == PHP_SESSION_NONE) session_start();
+
+  $_SESSION['sysmsg'][] = 'Akteurprofil konnte nicht gefunden werden...';
+
+  header("Location: ".$base_path."/Akteure");
+} */
+
 global $user;
 
 //EID holen:

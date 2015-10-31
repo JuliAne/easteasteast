@@ -10,6 +10,7 @@ $tbl_tags = "aae_data_kategorie";
 
 //-----------------------------------
 
+$presentationMode = "boxen"; // available: "boxen" & "map"
 // Zeige wie viele Akteure pro Seite?
 // TODO: Wert konfigurierbar machen via Filtermenü
 $maxAkteure = '15';
@@ -26,7 +27,7 @@ $itemsCount = db_query("SELECT COUNT(AID) AS count FROM " . $tbl_akteur)->fetchF
 $maxPages = ceil($itemsCount / $maxAkteure);
 
 if ($currentPageNr > $maxPages) {
-  // Diese URL gibt es nicht, daher zurueck...
+// Diese URL gibt es nicht, daher zurueck...
   header("Location: Akteure/" . $maxPages);
 } elseif ($currentPageNr > 1) {
  $start = $maxAkteure * ($currentPageNr - 1);
@@ -35,6 +36,11 @@ if ($currentPageNr > $maxPages) {
  $start = 0;
  $ende = $maxAkteure;
 }
+
+//-----------------------------------
+
+if (isset($_GET['submit'])) $presentationMode = $_GET['presentation'];
+// -> Clear with ClearContent()
 
 //-----------------------------------
 

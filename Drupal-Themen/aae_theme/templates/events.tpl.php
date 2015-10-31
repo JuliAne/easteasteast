@@ -21,6 +21,7 @@
 <div class="divider"></div>
 
 <div id="filter" class="row">
+<form method="get" action="<?= base_path(); ?>/Events">
 
  <div class="large-1 columns" id="removeFilter">
   <a class="small secondary button round right" style="padding:4px 10px;" href="#" title="Alle Filter entfernen">x</a>

@@ -42,6 +42,16 @@ $resultakteur = db_select($tbl_akteur, 'a')
   ->execute()
   ->fetchAll();
 
+if (empty($resultakteur)) {
+  // Akteur nicht vorhanden, beame ihn zur Akteure-Seite
+
+  if (session_status() == PHP_SESSION_NONE) session_start();
+
+  $_SESSION['sysmsg'][] = 'Akteurprofil konnte nicht gefunden werden...';
+
+  header("Location: ".$base_path."/Akteure");
+}
+
 //-----------------------------------
 
 foreach ($resultakteur as $rId => $row) {

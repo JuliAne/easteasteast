@@ -395,12 +395,14 @@ Class akteurformular {
 	  }
 	}
 
-    // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
-    session_start();
+    // Gebe auf der nächsten Seite eine Erfolgsmeldung aus...
+
+    if (session_status() == PHP_SESSION_NONE) session_start();
+
     $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich erstellt!';
 
-	header("Location: Akteurprofil/" . $this->akteur_id);
-    // Beamen wir dich mal auf die neue Seite...
+	  header("Location: Akteurprofil/" . $this->akteur_id);
+    
   } // END function akteurSpeichern()
 
   /**
