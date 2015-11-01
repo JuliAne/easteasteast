@@ -3,7 +3,6 @@
 /**
  * @file
  * Installiert alles, was unser AAE Data Modul benötigt.
- * TODO: xyAktiv kann raus...
  */
 
 /**
@@ -14,7 +13,7 @@
 function aae_data_schema() {
   $schema = array();
   $schema ['aae_data_bezirke'] = array(
-    'description' => 'Tabelle fuer Leipziger Bezirke',
+  'description' => 'Tabelle fuer Leipziger Bezirke',
 	'fields' => array(
 	  'BID' => array('description' => 'ID für Bezirke', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'bezirksname' => array('description' => 'Bezirksname', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
@@ -22,31 +21,20 @@ function aae_data_schema() {
 	'primary key' => array('BID'),
   );
   $schema ['aae_data_akteur'] = array(
-    'description' => 'Tabelle für Akteure',
+  'description' => 'Tabelle für Akteure',
 	'fields' => array(
-      'AID' => array('description' => 'ID für Akteur', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+    'AID' => array('description' => 'ID für Akteur', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'name' => array('description' => 'Name des Akteurs/der Organisation', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
-	  'nameAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'email' => array('description' => 'Email Adresse zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE, 'default' => ''),
-	  'emailAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'telefon' => array('description' => 'Telefonnummer zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-	  'telefonAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-	  'urlAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'ansprechpartner' => array('description' => 'Öffentlicher Ansprechpartner', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-	  'ansprechpartnerAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'funktion' => array('description' => 'Funktion des Ansprechpartners', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-	  'funktionAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'bild' => array('description' => 'Pfad zum hinterlegten Bild', 'type' => 'varchar', 'length' => 400, 'not null' => FALSE, 'default' => ''),
-	  'bildAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'beschreibung' => array('description' => 'Kurzbeschreibung für Übersicht', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
-	  'beschreibungAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'oeffnungszeiten' => array('description' => 'Wann der Akteur erreichbar ist', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
-	  'oeffnungszeitenAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'adresse' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
-	  'adresseAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'ersteller' => array('description' => 'ID von User, der Akteur angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
-	  'erstellerAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	),
 	'primary key' => array('AID'),
 	'foreign keys' => array(
@@ -55,7 +43,7 @@ function aae_data_schema() {
 	)
   );
   $schema ['aae_data_adresse'] = array(
-    'description' => 'Tabelle für Adressen',
+  'description' => 'Tabelle für Adressen',
 	'fields' => array(
 	  'ADID' => array('description' => 'ID für Adressen', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'strasse' => array('description' => 'Straßenname', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
@@ -71,25 +59,17 @@ function aae_data_schema() {
 	),
   );
   $schema ['aae_data_event'] = array(
-    'description' => 'Tabelle für Events',
+  'description' => 'Tabelle für Events',
 	'fields' => array(
 	  'EID' => array('description' => 'ID für Events', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'name' => array('description' => 'Eventname', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
-	  'nameAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'start' => array('description' => 'Startzeitpunkt', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
-	  'startAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'ende' => array('description' => 'Endzeitpunkt', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
-	  'endeAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'kurzbeschreibung' => array('description' => 'Kurze inhaltliche Erläuterung', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => 0),
-	  'kurzbeschreibungAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'bild' => array('description' => 'Pfad zum Foto', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
-	  'bildAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'ort' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
-	  'ortAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
-	  'urlAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	  'ersteller' => array('description' => 'ID von User, der Event angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
-	  'erstellerAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1),
 	),
 	'primary key' => array('EID'),
 	'foreign keys' => array(
@@ -97,8 +77,8 @@ function aae_data_schema() {
 	  'User' => array('table' => 'user', 'columns' => array('ersteller' => 'uid'))
 	),
   );
-  $schema ['aae_data_hat_sparte'] = array(
-    'description' => 'Hilfstabelle für Sparten/Zielgruppen',
+  $schema ['aae_data_akteur_hat_sparte'] = array(
+  'description' => 'Hilfstabelle für Sparten/Zielgruppen',
 	'fields' => array(
 	  'hat_AID' => array('description' => 'ID für Akteur', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'hat_KID' => array('description' => 'ID für Kategorien', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
@@ -121,16 +101,16 @@ function aae_data_schema() {
 	  'Event' => array('table' => 'aae_data_event', 'columns' => array('hat_EID' => 'EID'))
 	),
   );
-  $schema ['aae_data_kategorie'] = array(
-    'description' => 'Tabelle für Sparten/Zielgruppen',
+  $schema ['aae_data_sparte'] = array(
+  'description' => 'Tabelle für Sparten/Zielgruppen',
 	'fields' => array(
 	  'KID' => array('description' => 'ID für Kategorien', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'kategorie' => array('description' => 'Kategorie für Sparte oder Zielgruppe', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
 	),
 	'primary key' => array('KID'),
   );
-  $schema ['aae_data_hat_user'] = array(
-    'description' => 'Hilfstabelle für Schreibrechte auf Akteursseiten',
+  $schema ['aae_data_akteur_hat_user'] = array(
+  'description' => 'Hilfstabelle für Schreibrechte auf Akteursseiten',
 	'fields' => array(
 	  'hat_UID' => array('description' => 'ID für User', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'hat_AID' => array('description' => 'ID für Akteure', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
@@ -141,7 +121,7 @@ function aae_data_schema() {
 	  'Akteur' => array('table' => 'aae_data_akteur', 'columns' => array('hat_AID' => 'AID'))
 	),
   );
-  $schema ['aae_data_akteur_hat_events'] = array(
+  $schema ['aae_data_akteur_hat_event'] = array(
     'description' => 'Tabelle fuer Zuordnung aller Akteure zu einem Event',
 	'fields' => array(
 	  'EID' => array('description' => 'ID für Event', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
@@ -163,9 +143,9 @@ function aae_data_schema() {
  */
 function aae_data_update_7103() {
   $schema ['aae_data_event_hat_sparte'] = array(
-    'description' => 'Hilfstabelle für Sparten/Zielgruppen',
+  'description' => 'Hilfstabelle für Sparten/Zielgruppen',
 	'fields' => array(
-      'hat_EID' => array('description' => 'ID für Event', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+    'hat_EID' => array('description' => 'ID für Event', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'hat_KID' => array('description' => 'ID für Kategorien', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
 	),
 	'primary key' => array('hat_EID', 'hat_KID'),
@@ -176,47 +156,6 @@ function aae_data_update_7103() {
   );
 
   db_create_table('aae_data_event_hat_sparte', $schema['aae_data_event_hat_sparte']);
-}
-/**
- * Implements hook_update_N().
- * Create new columns in aae_data_akteur und aae_data_event.
- */
-function aae_data_update_7104() {
-  $columnsakteur = array(
-    'nameAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'emailAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'telefonAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'urlAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'ansprechpartnerAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'funktionAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'bildAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'beschreibungAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'oeffnungszeitenAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'adresseAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'erstellerAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-  );
-  foreach ($columnsakteur as $key => $column) {
-	if (!db_field_exists('aae_data_akteur', $key)) {
-	  db_add_field('aae_data_akteur', $key, $column);
-	}
-  }
-
-  $columnsevents = array(
-    'nameAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'startAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'endeAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'kurzbeschreibungAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'ortAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'bildAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'urlAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-    'erstellerAktiv' => array('description' => '1 - wird dargestellt, 0 - nicht dargestellt', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1,),
-  );
-  foreach ($columnsevents as $key => $column) {
-	if (!db_field_exists('aae_data_event', $key)) {
-	  db_add_field('aae_data_event', $key, $column);
-	}
-  }
-
 }
 
 /**

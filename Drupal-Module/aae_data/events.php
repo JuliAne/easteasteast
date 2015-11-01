@@ -12,7 +12,7 @@
 
 $tbl_events = "aae_data_event";
 $tbl_event_tags = "aae_data_event_hat_sparte";
-$tbl_tags = "aae_data_kategorie";
+$tbl_sparte = "aae_data_sparte";
 
 // Zeige wie viele Events pro Seite?
 // TODO: Wert konfigurierbar machen via Filtermenü (Darstellung: 15 - 25 - Alle)
@@ -44,7 +44,7 @@ if ($currentPageNr > $maxPages) {
 
 $pathThisFile = $_SERVER['REQUEST_URI'];
 
-$resulttags = db_select($tbl_tags, 't')
+$resulttags = db_select($tbl_sparte, 't')
   ->fields('t', array(
     'KID',
 	  'kategorie',

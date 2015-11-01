@@ -16,8 +16,8 @@ $explodedpath = explode("/", $path);
 $akteur_id = $explodedpath[1];
 
 //DB-Tabellen
-$tbl_hat_user = "aae_data_hat_user";
-$tbl_akteur_events = "aae_data_akteur_hat_events";
+$tbl_hat_user = "aae_data_akteur_hat_user";
+$tbl_akteur_events = "aae_data_akteur_hat_event";
 $tbl_akteur = "aae_data_akteur";
 
 //Sicherheitsschutz
@@ -75,12 +75,10 @@ if (isset($_POST['submit'])) {
     ->execute();
 
   // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
-  session_start();
+  if (session_status() == PHP_SESSION_NONE) session_start();
   $_SESSION['sysmsg'][] = 'Der Akteur wurde gelöscht.';
-
-  header("Location: Akteure"); //Hier muss hin, welche Seite aufgerufen werden soll,
-		//nach dem die Daten erfolgreich gespeichert wurden.
-
+  header("Location: ".base_path()."Akteure");
+  
 } else {
 
 }

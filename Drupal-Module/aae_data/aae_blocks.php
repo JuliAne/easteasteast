@@ -22,9 +22,6 @@ function block_aae_print_letzte_events($limit = 3) {
 
   $tbl_event = "aae_data_event";
 
-  require_once 'database/db_connect.php';
-  $db = new DB_CONNECT();
-
   $letzteEvents = db_select($tbl_event, 'a')
     ->fields('a')
     ->range(0, $limit)
@@ -53,9 +50,6 @@ function block_aae_print_letzte_events($limit = 3) {
 function block_aae_print_letzte_akteure($limit = 3) {
 
   $tbl_akteur = "aae_data_akteur";
-
-  require_once 'database/db_connect.php';
-  $db = new DB_CONNECT();
 
   $letzteakteure = db_select($tbl_akteur, 'a')
     ->fields('a')
@@ -90,9 +84,6 @@ function block_aae_count_projects_events() {
 
   $count = array();
 
-  require_once 'database/db_connect.php';
-  $db = new DB_CONNECT();
-
   $countAkteure = db_select($tbl_akteur, 'a')
   ->fields('a', array('AID'))
   ->execute();
@@ -118,7 +109,7 @@ function block_aae_count_projects_events() {
  function block_aae_print_my_akteure() {
 
   $tbl_akteur = "aae_data_akteur";
-  $tbl_hat_akteur = "aae_data_hat_user";
+  $tbl_hat_akteur = "aae_data_akteur_hat_user";
   $results = array();
 
   global $user;

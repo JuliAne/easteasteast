@@ -14,13 +14,23 @@
 $tbl_akteur = "aae_data_akteur";
 $tbl_adresse = "aae_data_adresse";
 $tbl_event = "aae_data_event";
-$tbl_hat_user = "aae_data_hat_user";
-$tbl_akteur_events = "aae_data_akteur_hat_events";
+$tbl_hat_user = "aae_data_akteur_hat_user";
+$tbl_akteur_events = "aae_data_akteur_hat_event";
 $tbl_bezirke = "aae_data_bezirke";
-$tbl_sparte = "aae_data_kategorie";
+$tbl_sparte = "aae_data_sparte";
 $tbl_event_sparte = "aae_data_event_hat_sparte";
 
 //-----------------------------------
+
+/*if (empty($resultakteur)) { <-- Einbauen um leere Eventsseiten zu vermeiden!
+  // Akteur nicht vorhanden, beame ihn zur Akteure-Seite
+
+  if (session_status() == PHP_SESSION_NONE) session_start();
+
+  $_SESSION['sysmsg'][] = 'Akteurprofil konnte nicht gefunden werden...';
+
+  header("Location: ".$base_path."/Akteure");
+} */
 
 global $user;
 

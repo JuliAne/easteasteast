@@ -1,9 +1,16 @@
 $(document).ready(function(){
 
   $('#eventSpartenInput').tokenize();
+  $('#eventSpartenInput').tokenize().remap();
+
+
 
   $("#eventStartdatumInput").Zebra_DatePicker({ 'readonly_element' : false });
   $("#eventEnddatumInput").Zebra_DatePicker({ 'readonly_element' : false });
+
+  $('form').submit(function(){
+    $('#beschreibung').html(CKEDITOR.instances.beschreibung.getData());
+  });
 
   $('.Adresse input').focusout(function(){
 

@@ -46,7 +46,9 @@ function aae_preprocess_html(&$variables) {
     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
     drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js');
     drupal_add_js('L.mapbox.accessToken = "pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg";', 'inline');
-
+    drupal_add_js(path_to_theme().'/js/foundation.min.js');
+    drupal_add_js(path_to_theme().'/js/foundation/foundation.reveal.js');
+    drupal_add_js('$(document).foundation();$("#kontaktModal").foundation("reveal", "open");', 'inline');
   break;
 
   case ('akteurformular'):
@@ -88,6 +90,33 @@ function aae_preprocess_html(&$variables) {
    drupal_add_js($js, 'inline');
    // drupal_add_js(path_to_theme().'/js/stalactite.min.js');
    //drupal_add_js('$("#block-system-main #akteure").stalactite();', array('type' => 'inline', 'scope' => 'footer'));
+
+   if (isset($_GET['submit']) && $_GET['presentation'] == 'map') {
+    drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
+    drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css', array('type' => 'external'));
+    drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css', array('type' => 'external'));
+
+    drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js');
+    drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js');
+    drupal_add_js('L.mapbox.accessToken = "pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg";', 'inline');
+    drupal_add_js(base_path().drupal_get_path('module', 'aae_data').'/LOdata.js');
+    drupal_add_js('$(window).ready(function(){var map = L.mapbox.map("map", "matzelot.ke3420oc").setView([51.336, 12.433], 12);var markers = new L.MarkerClusterGroup({ showCoverageOnHover : false });
+
+     for (var i = 0; i < addressPoints.length; i++) {
+      var a = addressPoints[i];
+      var title = a[2];
+      var marker = L.marker(new L.LatLng(a[0], a[1]), {
+          icon: L.mapbox.marker.icon({"marker-symbol": "pitch", "marker-color": "0044FF"}),
+          title: title
+      });
+
+      marker.bindPopup(title);
+      markers.addLayer(marker);
+     }
+
+     map.addLayer(markers);});', 'inline');
+
+ }
 
   break;
 

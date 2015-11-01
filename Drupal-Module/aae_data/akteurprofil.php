@@ -11,9 +11,11 @@
 
 $tbl_akteur = "aae_data_akteur";
 $tbl_adresse = "aae_data_adresse";
-$tbl_hat_user = "aae_data_hat_user";
+$tbl_hat_user = "aae_data_akteur_hat_user";
 $tbl_event = "aae_data_event";
-$tbl_akteur_hat_events = "aae_data_akteur_hat_events";
+$tbl_akteur_hat_events = "aae_data_akteur_hat_event";
+$tbl_sparte = "aae_data_sparte";
+$tbl_akteur_hat_sparte = "aae_data_akteur_hat_sparte";
 
 //-----------------------------------
 
@@ -41,6 +43,16 @@ $resultakteur = db_select($tbl_akteur, 'a')
   ->condition('AID', $akteur_id, '=')
   ->execute()
   ->fetchAll();
+
+if (empty($resultakteur)) {
+  // Akteur nicht vorhanden, beame ihn zur Akteure-Seite
+
+  if (session_status() == PHP_SESSION_NONE) session_start();
+
+  $_SESSION['sysmsg'][] = 'Akteurprofil konnte nicht gefunden werden...';
+
+  header("Location: ".$base_path."/Akteure");
+}
 
 //-----------------------------------
 
@@ -92,6 +104,27 @@ if ($aResult['row2']->gps != '') {
   }).addTo(map);', array('type' => 'inline', 'scope' => 'footer'));
 }
 
+$kategorien = db_select($tbl_akteur_hat_sparte, 'a')
+ ->fields('a', array('hat_KID'))
+ ->condition('hat_AID', $akteur_id, '=')
+ ->execute()
+ ->fetchAll();
+
+if (!empty($kategorien)) {
+
+ foreach($kategorien as $kategorie) {
+
+  $results[] = db_select($tbl_sparte, 't')
+  ->fields('t')
+  ->condition('KID', $kategorie->hat_KID, '=')
+  ->execute()
+  ->fetchAll();
+
+ }
+
+ //print_r($results);
+}
+
 ob_start(); // Aktiviert "Render"-modus
 include_once path_to_theme() . '/templates/single_akteur.tpl.php';
-$profileHTML = ob_get_clean(); // Übergebe des gerenderten "project.tpl"
+$profileHTML = ob_get_clean(); // Übergebe des gerenderten "single_akteur.tpl"

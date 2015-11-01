@@ -19,16 +19,16 @@
 Class akteurformular {
 
   //DB-Tabellen
-  var $tbl_hat_sparte = "aae_data_hat_sparte";
+  var $tbl_hat_sparte = "aae_data_akteur_hat_sparte";
   var $tbl_adresse = "aae_data_adresse";
   var $tbl_akteur = "aae_data_akteur";
-  var $tbl_sparte = "aae_data_kategorie";
-  var $tbl_hat_user = "aae_data_hat_user";
+  var $tbl_sparte = "aae_data_sparte";
+  var $tbl_hat_user = "aae_data_akteur_hat_user";
   var $tbl_bezirke = "aae_data_bezirke";
 
   //$tbl_akteur
   var $name = "";
-  var $adresse = ""; //Address-ID: Addressinformationen muessen aus Addressdbtabelle geholt werden
+  var $adresse = "";
   var $email = "";
   var $telefon = "";
   var $url = "";
@@ -79,9 +79,7 @@ Class akteurformular {
   var $ph_ort = "Bezirk";
   var $ph_gps = "GPS-Addresskoordinaten";
 
-  //$tbl_hat_Sparte
-  var $ph_sparten = "Tags kommasepariert eingeben!";
-  var $explodedsparten = "";
+  //$tbl_akteur_hat_Sparte
   var $countsparten = "";
   var $sparte_id = "";
 
@@ -152,20 +150,19 @@ Class akteurformular {
   }
 
   /**
-   * Wird ausgefuehrt, wenn auf "Speichern" geklickt wird
-   * @return $this->freigabe
+   * Wird ausgeführt, wenn auf "Speichern" geklickt wird
+   * @return $this->freigabe [boolean]
    */
+
   private function akteurCheckPost() {
-    //Wertezuweisung
+
     $this->name = $this->clearContent($_POST['name']);
     $this->email = $this->clearContent($_POST['email']);
     $this->telefon = $this->clearContent($_POST['telefon']);
     $this->url = $this->clearContent($_POST['url']);
     $this->ansprechpartner = $this->clearContent($_POST['ansprechpartner']);
     $this->funktion = $this->clearContent($_POST['funktion']);
-    if (isset($_POST['bild'])) {
-	  $this->bild = $_POST['bild'];
-    }
+    if (isset($_POST['bild'])) $this->bild = $_POST['bild']; // EXTEND!
     $this->beschreibung = $this->clearContent($_POST['beschreibung']);
     $this->oeffnungszeiten = $this->clearContent($_POST['oeffnungszeiten']);
     $this->strasse = $this->clearContent($_POST['strasse']);
@@ -174,108 +171,123 @@ Class akteurformular {
     $this->plz = $this->clearContent($_POST['plz']);
     $this->ort = $this->clearContent($_POST['ort']);
     $this->gps = $this->clearContent($_POST['gps']);
-    $this->sparten = $this->clearContent($_POST['sparten']);
-    $this->explodedsparten = "";
-    if ($this->sparten != "") {
-	  $this->explodedsparten = explode(",", $this->sparten);
-    }
+    $this->sparten = $_POST['sparten'];
 
     //-------------------------------------
-    //Check-Klauseln
 
     //Check, ob ein Name eingegeben wurde:
     if (strlen($this->name) == 0) {
-      $this->fehler['name'] = "Bitte einen Organisationsnamen eingeben!";
-      $this->freigabe = false;
+     $this->fehler['name'] = "Bitte einen Organisationsnamen eingeben!";
+     $this->freigabe = false;
     }
     //Check, ob Email angegeben wurde
     if (strlen($this->email) == 0) {
-      $this->fehler['email'] = "Bitte eine Emailadresse eingeben!";
+     $this->fehler['email'] = "Bitte eine Emailadresse eingeben!";
 	   $this->freigabe = false;
     }
     //Check, ob Bezirk angegeben wurde
     if (strlen($this->ort) == 0) {
-      $this->fehler['ort'] = "Bitte einen Bezirk auswählen!";
-	  $this->freigabe = false;
-    }
-
-    //Tags:
-    if ($this->sparten != "") {
-      $this->countsparten = count($this->explodedsparten);
-	  $i = 0;
-      while ($i < $this->countsparten) {
-	    $this->explodedsparten[$i] = $this->clearContent($explodedsparten[$i]);
-	    $i++;
-	  }
+     $this->fehler['ort'] = "Bitte einen Bezirk auswählen!";
+     $this->freigabe = false;
     }
 
     //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
     if (strlen($this->name) > 100) {
-	  $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
-	  $this->freigabe = false;
+	   $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
+	   $this->freigabe = false;
     }
 
     if (strlen($this->email) > 100) {
-	  $this->fehler['email'] = "Bitte geben Sie eine kürzere Emailadresse an.";
-	  $this->freigabe = false;
+	   $this->fehler['email'] = "Bitte geben Sie eine kürzere Emailadresse an.";
+	   $this->freigabe = false;
     }
 
     if (strlen($this->telefon) > 100) {
- 	  $this->fehler['telefon'] = "Bitte geben Sie eine kürzere Telefonnummer an.";
-	  $this->freigabe = false;
+ 	   $this->fehler['telefon'] = "Bitte geben Sie eine kürzere Telefonnummer an.";
+	   $this->freigabe = false;
     }
 
     if (strlen($this->url) > 100) {
-	  $this->fehler['url'] = "Bitte geben Sie eine kürzere URL an.";
-	  $this->freigabe = false;
+	   $this->fehler['url'] = "Bitte geben Sie eine kürzere URL an.";
+	   $this->freigabe = false;
     }
 
     if (strlen($this->ansprechpartner) > 100){
-	  $this->fehler['ansprechpartner'] = "Bitte geben Sie einen kürzeren Ansprechpartner an.";
-	  $this->freigabe = false;
+	   $this->fehler['ansprechpartner'] = "Bitte geben Sie einen kürzeren Ansprechpartner an.";
+	   $this->freigabe = false;
     }
 
     if (strlen($this->funktion) > 100) {
-	  $this->fehler['funktion'] = "Bitte geben Sie eine kürzere Funktion an.";
-      $this->freigabe = false;
+	   $this->fehler['funktion'] = "Bitte geben Sie eine kürzere Funktion an.";
+     $this->freigabe = false;
     }
 
     if (strlen($this->beschreibung) > 500) {
-	  $this->fehler['beschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
-	  $this->freigabe = false;
+	   $this->fehler['beschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
+	   $this->freigabe = false;
     }
 
     if (strlen($this->oeffnungszeiten) > 200) {
-	  $this->fehler['oeffnungszeiten'] = "Bitte geben Sie kürzere Oeffnungszeiten an.";
-	  $this->freigabe = false;
+	   $this->fehler['oeffnungszeiten'] = "Bitte geben Sie kürzere Oeffnungszeiten an.";
+	   $this->freigabe = false;
     }
 
     if (strlen($this->strasse) > 100) {
- 	  $this->fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
-	  $this->freigabe = false;
+ 	   $this->fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
+	   $this->freigabe = false;
     }
 
     if (strlen($this->nr) > 100) {
-	  $this->fehler['nr'] = "Bitte geben Sie eine kürzere Nummer an.";
-	  $this->freigabe = false;
+	   $this->fehler['nr'] = "Bitte geben Sie eine kürzere Nummer an.";
+	   $this->freigabe = false;
     }
 
     if (strlen($this->adresszusatz) > 100) {
-	  $this->fehler['adresszusatz'] = "Bitte geben Sie einen kürzeren Adresszusatz an.";
-	  $this->freigabe = false;
+	   $this->fehler['adresszusatz'] = "Bitte geben Sie einen kürzeren Adresszusatz an.";
+	   $this->freigabe = false;
     }
 
     if (strlen($this->plz) > 100) {
-	  $this->fehler['plz '] = "Bitte geben Sie eine kürzere PLZ an.";
-	  $this->freigabe = false;
+	   $this->fehler['plz '] = "Bitte geben Sie eine kürzere PLZ an.";
+	   $this->freigabe = false;
     }
 
     if (strlen($this->gps) > 100) {
-	  $this->fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
-	  $this->freigabe = false;
+	   $this->fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
+	   $this->freigabe = false;
     }
 
+    // Um die bereits gewählten Tag's anzuzeigen benötigen wir deren Namen...
+    if ($this->freigabe == false) {
+
+     $neueSparten = array();
+
+     foreach($this->sparten as $sparte) {
+
+      $sparte = strtolower($this->clearContent($sparte));
+
+      if (is_numeric($sparte)) {
+
+      $spartenName = db_select($this->tbl_sparte, 's')
+       ->fields('s', array('kategorie'))
+       ->condition('KID', $sparte, '=')
+       ->execute()
+       ->fetchAll();
+
+       $neueSparten[$sparte] = $spartenName[0]->kategorie;
+
+     } else {
+
+      $neueSparten[] = $sparte;
+
+     }
+    }
+     $this->sparten = $neueSparten;
+
+   }
+
     return $this->freigabe;
+
   } // END akteurCheckPost
 
 
@@ -284,61 +296,32 @@ Class akteurformular {
    */
   private function akteurSpeichern() {
 
-	//Abfrage, ob Adresse bereits in Adresstabelle
-	$resultadresse = db_select($this->tbl_adresse, 'a')
-	  ->fields('a', array( 'ADID', 'gps' ))
-	  ->condition('strasse', $this->strasse, '=')
-	  ->condition('nr', $this->nr, '=')
-	  ->condition('adresszusatz', $this->adresszusatz, '=')
-	  ->condition('plz', $this->plz, '=')
-	  ->condition('bezirk', $this->ort, '=')
-	  ->execute();
-
-	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
-	if ($resultadresse->rowCount() == 0) {
-      //Adresse nicht vorhanden
-	  $this->adresse = db_insert($this->tbl_adresse)
-	    ->fields(array(
-	      'strasse' => $this->strasse,
-	      'nr' => $this->nr,
-	      'adresszusatz' => $this->adresszusatz,
-	      'plz' => $this->plz,
-	      'bezirk' => $this->ort,
-	      'gps' => $this->gps,
-	   ))
-	   ->execute();
-	} else {
-      //Adresse bereits vorhanden
-	  foreach ($resultadresse as $row) {
-	    //Abfrage, ob GPS-Angaben gemacht wurden
-	    if (strlen($this->gps) != 0 && strlen($row->gps) == 0 ) {
-          //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
-	      //Update der Adresse
-	      $adresse_updated = db_update($this->tbl_adresse)
-	 	    ->fields(array( 'gps' => $this->gps ))
-	        ->condition('ADID', $row->ADID, '=')
-	        ->execute();
-	    }
-	    $this->adresse = $row->ADID; //Adress-ID merken
-	  }
-	}
+	$this->adresse = db_insert($this->tbl_adresse)
+	 ->fields(array(
+	'strasse' => $this->strasse,
+	'nr' => $this->nr,
+	'adresszusatz' => $this->adresszusatz,
+	'plz' => $this->plz,
+	'bezirk' => $this->ort,
+	'gps' => $this->gps
+  ))
+	 ->execute();
 
     //Wenn Bilddatei ausgewählt wurde...
     if ($_FILES) {
       $bildname = $_FILES['bild']['name'];
       if ($bildname != "") {
-	    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $this->bildpfad . $bildname)) {
+	    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $this->bildpfad . md5($bildname))) {
           echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />' . $bildname;
           exit();
         }
-        $this->bild = base_path() . $this->short_bildpfad . $bildname;
+        $this->bild = base_path() . $this->short_bildpfad . md5($bildname);
       }
     }
 
-    //tbl_akteur INSERT!!!
 	$this->akteur_id = db_insert($this->tbl_akteur)
-   	  ->fields(array(
-	    'name' => $this->name,
+   	->fields(array(
+	  'name' => $this->name,
 		'adresse' => $this->adresse,
 		'email' => $this->email,
 		'telefon' => $this->telefon,
@@ -346,13 +329,12 @@ Class akteurformular {
 		'ansprechpartner' => $this->ansprechpartner,
 		'funktion' => $this->funktion,
 		'bild' => $this->bild,
-		'beschreibung' => $beschreibung,
-		'oeffnungszeiten' => $oeffnungszeiten,
-		'ersteller' => $this->user_uid,
+		'beschreibung' => $this->beschreibung,
+		'oeffnungszeiten' => $this->oeffnungszeiten,
+		'ersteller' => $this->user_id,
 	  ))
 	  ->execute();
 
-    //tbl_hat_user insert
 	db_insert($this->tbl_hat_user)
 	  ->fields(array(
 	    'hat_UID' => $this->user_id,
@@ -360,47 +342,51 @@ Class akteurformular {
 	  ))
 	  ->execute();
 
-	//falls Tags angegeben wurden
-	if ($this->sparten != "") {
-	  $this->sparte_id = "";
-      $this->countsparten = count($explodedsparten);
-	  $i = 0;
-      while ($i < $this->countsparten) {
-		//1. Prüfen, ob Tag bereits in Tabelle $tbl_sparte
+	 if (is_array($this->sparten) && $this->sparten != "") {
+
+    foreach ($this->sparten as $id => $sparte) {
+		// Tag bereits in DB?
+
+    $sparte_id = '';
+
 		$resultsparte = db_select($this->tbl_sparte, 's')
 		  ->fields('s', array( 'KID' ))
-		  ->condition('kategorie', $this->explodedsparten[$i], '=')
+		  ->condition('kategorie', $sparte, '=')
 		  ->execute();
 
 		if ($resultsparte->rowCount() == 0) {
-          //nein: Tag in $tbl_sparte einfügen
-		  $this->sparte_id = db_insert($tbl_sparte)
-		    ->fields(array( 'kategorie' => $this->explodedsparten[$i] ))
-			->execute();
+     // Tag in DB einfügen
+		 $sparte_id = db_insert($this->tbl_sparte)
+		  ->fields(array('kategorie' => $sparte))
+		  ->execute();
+
 		} else {
-          //ja: KID des Tags holen
+
 		  foreach ($resultsparte as $row) {
-		    $this->sparte_id = $row->KID;
+		    $sparte_id = $row->KID;
 		  }
+
 		}
 
-		//2. Akteur+Tag in Tabelle $tbl_hat_sparte einfügen
-		$insertakteursparte = db_insert($this->tbl_hat_sparte)
+		// Akteur & Tag in Tabelle $tbl_hat_sparte einfügen
+
+		$insertAkteurSparte = db_insert($this->tbl_hat_sparte)
 		  ->fields(array(
 		    'hat_AID' => $this->akteur_id,
-		    'hat_KID' => $this->sparte_id,
+		    'hat_KID' => $sparte_id,
 		  ))
 		  ->execute();
-	    $i++;
 	  }
-	}
+	 }
 
-    // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
-    session_start();
-    $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich erstellt!';
+  // Gebe auf der nächsten Seite eine Erfolgsmeldung aus...
 
-	header("Location: Akteurprofil/" . $this->akteur_id);
-    // Beamen wir dich mal auf die neue Seite...
+  if (session_status() == PHP_SESSION_NONE) session_start();
+
+  $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich erstellt!';
+
+   header("Location: Akteurprofil/" . $this->akteur_id);
+
   } // END function akteurSpeichern()
 
   /**
@@ -420,22 +406,14 @@ Class akteurformular {
       }
     }
 
-	//Abfrage, ob Adresse bereits in Adresstabelle
-	//Addressdaten aus DB holen:
-	$resultadresse = db_select($this->tbl_adresse, 'a')
-    ->fields('a', array(  'ADID' ))
-	  ->condition('strasse', $this->strasse, '=')
-	  ->condition('nr', $this->nr, '=')
-	  ->condition('adresszusatz', $this->adresszusatz, '=')
-	  ->condition('plz', $this->plz, '=')
-	  ->condition('bezirk', $this->ort, '=')
-	  ->execute();
+    $akteurAdresse = db_select($this->tbl_akteur, 'a')
+     ->fields('a', array('adresse'))
+     ->condition('AID', $this->akteur_id, '=')
+     ->execute()
+     ->fetchAll();
 
-	//wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
-	if ($resultadresse->rowCount() == 0) {
-      //Adresse nicht vorhanden
-	  $this->adresse = db_insert($this->tbl_adresse)
-		->fields(array(
+	  $updateAdresse = db_update($this->tbl_adresse)
+	  	->fields(array(
 		  'strasse' => $this->strasse,
 		  'nr' => $this->nr,
 		  'adresszusatz' => $this->adresszusatz,
@@ -443,39 +421,83 @@ Class akteurformular {
 		  'bezirk' => $this->ort,
 		  'gps' => $this->gps,
 		))
+    ->condition('ADID', $akteurAdresse[0]->adresse, '=')
 		->execute();
-	} else {
-	  foreach ($resultadresse as $row) {
-	    $this->adresse = $row->ADID;
-	  }
-	}
 
-	$akteur_updated = db_update($this->tbl_akteur)
-      ->fields(array(
-		'name' => $this->name,
-		'adresse' => $this->adresse,
-		'email' => $this->email,
-		'telefon' => $this->telefon,
-		'url' => $this->url,
-		'ansprechpartner' => $this->ansprechpartner,
-		'funktion' => $this->funktion,
-		'bild' => $this->bild,
-		'beschreibung' => $this->beschreibung,
-		'oeffnungszeiten' => $this->oeffnungszeiten,
-	  ))
+	  $updateAkteur = db_update($this->tbl_akteur)
+     ->fields(array(
+	   'name' => $this->name,
+		 'email' => $this->email,
+		 'telefon' => $this->telefon,
+		 'url' => $this->url,
+		 'ansprechpartner' => $this->ansprechpartner,
+		 'funktion' => $this->funktion,
+		 'bild' => $this->bild,
+		 'beschreibung' => $this->beschreibung,
+		 'oeffnungszeiten' => $this->oeffnungszeiten,
+	   ))
 	  ->condition('AID', $this->akteur_id, '=')
 	  ->execute();
 
-    // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
-    session_start();
-    $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich bearbeitet!';
+     // Update Tags
 
-	header("Location: Akteurprofil/" . $this->akteur_id);
+     if (is_array($this->sparten) && $this->sparten != "") {
+
+      foreach ($this->sparten as $id => $sparte) {
+    	// Tag bereits in DB?
+
+      $sparte_id = '';
+
+    	$resultsparte = db_select($this->tbl_sparte, 's')
+    	 ->fields('s', array( 'KID' ))
+    	 ->condition('kategorie', $sparte, '=')
+    	 ->execute();
+
+    	 if ($resultsparte->rowCount() == 0) {
+         // Tag in DB einfügen
+    	  $sparte_id = db_insert($this->tbl_sparte)
+    	   ->fields(array('kategorie' => $sparte))
+    	 	 ->execute();
+
+    		} else {
+
+    		  foreach ($resultsparte as $row) {
+    		    $sparte_id = $row->KID;
+    		  }
+
+    		}
+
+    		// Hat der Akteur dieses Tag bereits zugeteilt?
+
+    		$hatAkteurSparte = db_select($this->tbl_hat_sparte, 'hs')
+    		 ->fields('hs')
+         ->condition('hat_KID', $sparte_id, '=')
+    		 ->execute();
+
+         if ($hatAkteurSparte->rowCount() == 0) {
+          // Nein, daher rein damit
+
+          db_insert($this->tbl_hat_sparte)
+          ->fields(array(
+            'hat_AID' => $this->akteur_id,
+            'hat_KID' => $sparte_id
+          ))
+          ->execute();
+
+         }
+
+    	  }
+    	 }
+
+    // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
+    if (session_status() == PHP_SESSION_NONE) session_start();
+    $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich bearbeitet!';
+   	header("Location: ".base_path()."Akteurprofil/" . $this->akteur_id);
 
   } // END function akteurUpdaten()
 
   /**
-   * Holen der Akteurattribute aus DB
+   * Holen der Akteursattribute aus DB (Aufgerufen bei akteuredit/)
    */
   private function akteurGetFields() {
 
@@ -494,12 +516,12 @@ Class akteurformular {
 	    'oeffnungszeiten',
 	  ))
 	  ->condition('AID', $this->akteur_id, '=')
-      ->execute();
+    ->execute();
 
     //Speichern der Daten in den Arbeitsvariablen
     foreach ($resultakteur as $row) {
 	  $this->name = $row->name;
-      $this->adresse = $row->adresse;
+    $this->adresse = $row->adresse;
 	  $this->email = $row->email;
 	  $this->telefon = $row->telefon;
 	  $this->url = $row->url;
@@ -518,10 +540,10 @@ Class akteurformular {
 	    'adresszusatz',
 	    'plz',
 	    'bezirk',
-	    'gps',
+	    'gps'
 	  ))
 	  ->condition('ADID', $this->adresse, '=')
-      ->execute();
+    ->execute();
 
     //Speichern der Adressdaten in den Arbeitsvariablen
     foreach ($resultadresse as $row) {
@@ -551,11 +573,8 @@ Class akteurformular {
 
     $pathThisFile = $_SERVER['REQUEST_URI'];
 
-    //Darstellung
     ob_start(); // Aktiviert "Render"-modus
-
     include_once path_to_theme() . '/templates/akteurformular.tpl.php';
-
     return ob_get_clean(); // Übergabe des gerenderten "akteurformular.tpl"
 
   } // END function akteurDisplay()

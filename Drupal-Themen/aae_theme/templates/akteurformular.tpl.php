@@ -79,7 +79,7 @@
 
   <div class="large-4 columns">
   <label>Geodaten (Karte): <?= $this->fehler['gps']; ?>
-   <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= $this->ph_gps; ?>" disabled>
+   <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= $this->ph_gps; ?>">
   </label>
 </div>
 
@@ -147,8 +147,7 @@
 
    <p><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf leipzigerecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
  <p>Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefeldern zu beschreiben.</p><br />
- <p>Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte.</p>
- <p>Bildmaterial sollte abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
+ <p>Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte. Bildmaterial sollte abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
   </fieldset>
 
   <div class="row">
@@ -157,7 +156,11 @@
 
     <label>Kategorien: <?= $this->fehler['sparten']; ?></label>
 
-    <select id="eventSpartenInput" multiple="multiple" class="tokenize">
+    <select id="eventSpartenInput" multiple="multiple" class="tokenize" name="sparten[]">
+    <?php foreach ($this->sparten as $kategorie) : ?>
+     <option selected value="<?= $kategorie; ?>"><?php echo $kategorie; ?></option>
+    <?php endforeach;?>
+
     <?php foreach ($this->all_sparten as $sparte) : ?>
      <option value="<?php echo $sparte->KID; ?>"><?php echo $sparte->kategorie; ?></option>
     <?php endforeach;?>

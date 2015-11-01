@@ -75,12 +75,12 @@ Class eventformular {
   // DB-Tabellen
   var $tbl_adresse = "aae_data_adresse";
   var $tbl_event = "aae_data_event";
-  var $tbl_akteur_events = "aae_data_akteur_hat_events";
+  var $tbl_akteur_events = "aae_data_akteur_hat_event";
   var $tbl_bezirke = "aae_data_bezirke";
   var $tbl_akteur = "aae_data_akteur";
-  var $tbl_hat_user = "aae_data_hat_user";
+  var $tbl_hat_user = "aae_data_akteur_hat_user";
   var $tbl_event_sparte = "aae_data_event_hat_sparte";
-  var $tbl_sparte = "aae_data_kategorie";
+  var $tbl_sparte = "aae_data_sparte";
 
   var $user_id;
   var $event_id;

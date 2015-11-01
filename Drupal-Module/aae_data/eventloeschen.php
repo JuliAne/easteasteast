@@ -17,8 +17,8 @@ $event_id = $explodedpath[1];
 
 //DB-Tabellen
 $tbl_event = "aae_data_event";
-$tbl_hat_user = "aae_data_hat_user";
-$tbl_akteur_events = "aae_data_akteur_hat_events";
+$tbl_hat_user = "aae_data_akteur_hat_user";
+$tbl_akteur_events = "aae_data_akteur_hat_event";
 
 //Sicherheitsschutz
 if (!user_is_logged_in()) {
@@ -72,7 +72,7 @@ if (!array_intersect(array('administrator'), $user->roles)) {
 
 //das wird ausgeführt, wenn auf "Löschen" gedrückt wird
 if (isset($_POST['submit'])) {
-  
+
   $event_id = $_POST['event_id'];
 
   //Event aus $tbl_akteur_events loeschen
@@ -86,10 +86,9 @@ if (isset($_POST['submit'])) {
     ->execute();
 
   // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
-  session_start();
+  if (session_status() == PHP_SESSION_NONE) session_start();
   $_SESSION['sysmsg'][] = 'Das Event wurde gelöscht.';
-
-  header("Location: Events");
+  header("Location: ".base_path()."Events");
   // Und "Tschö mit ö..."!
 } else {
 
