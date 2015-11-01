@@ -67,14 +67,26 @@
 				</div>
 
 			  <div id="project-contact" class="pcard">
-			   <a href="<?= base_path().'?q=akteurkontakt/'.$akteur_id; ?>" onclick="javscript:alert('TODO: Nun wuerde sich ein Modal-Window oeffnen mit Kontaktformular und Ansprechpartner'); return false;"><button class="button">Kontaktieren</button></a>
-
-
+			   <a href="#" data-reveal-id="kontaktModal"><button class="button">Kontaktieren</button></a>
 			  </div>
+
+<div id="kontaktModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <h2 id="modalTitle">Awesome. I have it.</h2>
+  <p class="lead">Your couch.  It is mine.</p>
+  <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+
 			 </aside>
 
 			 <section id="project-content" class="large-7 large-offset-1 columns">
-			  <h1><?= $aResult['row1']->name; ?></h1>
+			  <h1><?= $aResult['row1']->name; ?><br />
+          <?php if (!empty($resulttags)) : ?>
+            <!--<h4>Tags:</h4>-->
+            <?php foreach ($resulttags as $row) : ?>
+              <a style="font-size:0.4em;" href="#" title="TODO: Weiterleitung auf /akteure/?$tags=row->KID">#<?= strtolower($row[0]->kategorie); ?></a>
+            <?php endforeach; ?>
+            <?php endif; ?></h1>
 
 
 			  <h3>Beschreibung</h3>

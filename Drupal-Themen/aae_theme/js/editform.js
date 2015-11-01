@@ -1,6 +1,9 @@
 $(document).ready(function(){
 
   $('#eventSpartenInput').tokenize();
+  $('#eventSpartenInput').tokenize().remap();
+
+
 
   $("#eventStartdatumInput").Zebra_DatePicker({ 'readonly_element' : false });
   $("#eventEnddatumInput").Zebra_DatePicker({ 'readonly_element' : false });

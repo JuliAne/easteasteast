@@ -86,10 +86,9 @@ if (isset($_POST['submit'])) {
     ->execute();
 
   // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
-  session_start();
+  if (session_status() == PHP_SESSION_NONE) session_start();
   $_SESSION['sysmsg'][] = 'Das Event wurde gelöscht.';
-
-  header("Location: Events");
+  header("Location: ".base_path()."Events");
   // Und "Tschö mit ö..."!
 } else {
 
