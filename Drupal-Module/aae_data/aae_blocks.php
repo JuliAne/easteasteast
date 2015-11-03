@@ -114,9 +114,6 @@ function block_aae_count_projects_events() {
 
   global $user;
 
-  require_once 'database/db_connect.php';
-  $db = new DB_CONNECT();
-
   $myAkteure = db_select($tbl_hat_akteur, 'ha')
   ->fields('ha')
   ->condition('hat_UID', $user->uid, '=')

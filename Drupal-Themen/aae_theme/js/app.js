@@ -64,4 +64,20 @@ $(document).ready(function() {
   var presentationValue = $('#presentationFilter').find('.active').attr('name');
    $('<input />').attr('type', 'hidden').attr('name', 'presentation').attr('value', presentationValue).appendTo('#filterForm');
  });
+
+ $('#project-contact a').click(function(){
+  $('.aaeModal .content').html('<p style="padding:15px 0;text-align:center;">Lade Kontaktinformationen...</p>')
+  $('.aaeModal').fadeIn('slow');
+
+  var segments = $(location).attr('href').split('/')
+  var actionUrl = segments[4];
+
+  $.get("../Akteurkontakt/" + actionUrl, function(data) {
+   $('.aaeModal .content').html(data);
+   $('.aaeModal .button').click(function(){
+    $('.aaeModal').fadeOut('slow');
+   });
+  });
+ });
+
 });

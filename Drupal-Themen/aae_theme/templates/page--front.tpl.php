@@ -35,9 +35,9 @@
   </div>
   <?php endforeach; ?>
 
-  <div class="slide">
+  <!--<div class="slide">
     <div id="map"></div>
-  </div>
+  </div>-->
 
   </div>
 
