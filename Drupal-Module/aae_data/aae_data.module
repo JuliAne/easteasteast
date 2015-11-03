@@ -106,15 +106,6 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
-  //Ajaxitem "Eventformular/ajaxGetTags"
-  $items['ajax/%'] = array(
-    'title' => '',
-    'page callback' => 'ajaxGetTags',
-    'access arguments' => array('access content'),
-    'type' => MENU_NORMAL_ITEM,
-    'access callback' => TRUE,
-  );
-
   //Menuitem "Kalender/%"
   $items['Kalender/%'] = array(
     'title' => 'Kalender',
@@ -142,6 +133,15 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
+  //AJAXitem "Akteurkontakt"
+  $items['Akteurkontakt/%'] = array(
+    'title' => 'Akteurkontakt',
+    'page callback' => 'akteurkontakt_layer',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+    'access callback' => TRUE,
+  );
+
   return $items;
 }
 
@@ -152,14 +152,10 @@ function aae_data_menu() {
 function tag_page() {
 
   $modulePath = drupal_get_path('module', 'aae_data');
-
   include $modulePath . '/tag.php';
 
-
   $path = current_path();
-
   $path_alias = drupal_lookup_path('alias', $path);
-
 
   return $profileHTML;
 
@@ -173,16 +169,12 @@ function tag_page() {
 function kalender_page() {
 
   drupal_add_css("sites/all/modules/aae_data/calendar.css");
-
   $modulePath = drupal_get_path('module', 'aae_data');
-
   include $modulePath . '/kalender.php';
 
 
   $path = current_path();
-
   $path_alias = drupal_lookup_path('alias', $path);
-
 
   return $profileHTML;
 
@@ -242,23 +234,6 @@ function akteuredit_page($aid = 0) {
   $path_alias = drupal_lookup_path('alias', $path);
 
   return $akteur->run();
-}
-
-/**
- * Ajax-code welcher alle Tags im JSON-Format zurueck gibt
- */
-function ajaxGetTags() {
-
-  /*require_once $modulePath . '/database/db_connect.php';
-  $db = new DB_CONNECT();
-  $resulttags = db_select($tbl_sparte, 's')
-    ->fields('s')
-    ->execute()
-    ->fetchAll(); */
-
-  //return $resulttags;
-  echo '[{"id":"856","name":"House"}, {"id":"1035","name":"Desperate Housewives"}]';
-  exit;
 }
 
 /**
@@ -343,6 +318,20 @@ function eventformular_page() {
   $path_alias = drupal_lookup_path('alias', $path);
 
   return $event->run();
+}
+
+/**
+ * Wird via AJAX-request aufgerufen und gibt div wider, welcher
+ * Kontaktinformationen zum Akteur beinhaltet.
+ */
+
+function akteurkontakt_layer($aid) {
+
+  $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/ajax.akteurkontakt.php';
+  
+  $path = current_path();
+  $path_alias = drupal_lookup_path('alias', $path);
 }
 
 /**

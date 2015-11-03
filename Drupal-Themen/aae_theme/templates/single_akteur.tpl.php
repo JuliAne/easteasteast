@@ -1,3 +1,8 @@
+<aside class="aaeModal">
+ <div class="content">
+ </div>
+</aside>
+
 <header id="header"
 <?php if ($aResult['row1']->bild != '') : ?> style="background:url(<?= $row->bild; ?>);" <?php endif; ?>></header>
 
@@ -67,15 +72,8 @@
 				</div>
 
 			  <div id="project-contact" class="pcard">
-			   <a href="#" data-reveal-id="kontaktModal"><button class="button">Kontaktieren</button></a>
+			   <a href="#"><button class="button">Kontaktieren</button></a>
 			  </div>
-
-<div id="kontaktModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-  <h2 id="modalTitle">Awesome. I have it.</h2>
-  <p class="lead">Your couch.  It is mine.</p>
-  <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
-  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-</div>
 
 			 </aside>
 
