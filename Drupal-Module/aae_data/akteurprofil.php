@@ -69,16 +69,25 @@ foreach ($resultakteur as $rId => $row) {
 }
 
 // Ziehe Informationen über Events vom Akteur
-$resultEvents = db_select($tbl_event, 'e');
-$resultEvents->join($tbl_akteur_hat_events, 'b', 'e.EID = b.EID');
-$resultEvents
-  ->fields('e')
-  ->condition('b.AID', $akteur_id, '=')
+$events = db_select($tbl_akteur_hat_events, 'ae')
+  ->fields('ae')
+  ->condition('AID', $akteur_id, '=')
   ->execute()
   ->fetchAll();
 
-foreach ($resultEvents as $row) {
-  $aResult['events'][] = $row;
+foreach ($events as $event) {
+
+ $aResult['events'][] = db_select($tbl_event, 'e')
+  ->fields('e', array(
+   'EID',
+   'name',
+   'kurzbeschreibung',
+   'start',
+   'ende'
+  ))
+  ->condition('EID', $event->EID, '=')
+  ->execute()
+  ->fetchAll();
 }
 
 // Generiere Mapbox-taugliche Koordinaten, übergebe diese ans Frontend
@@ -114,15 +123,13 @@ if (!empty($kategorien)) {
 
  foreach($kategorien as $kategorie) {
 
-  $results[] = db_select($tbl_sparte, 't')
+  $resulttags[] = db_select($tbl_sparte, 't')
   ->fields('t')
   ->condition('KID', $kategorie->hat_KID, '=')
   ->execute()
   ->fetchAll();
 
  }
-
- //print_r($results);
 }
 
 ob_start(); // Aktiviert "Render"-modus

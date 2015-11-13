@@ -35,6 +35,7 @@ function aae_preprocess_html(&$variables) {
 
    } else {
     // Node--article.tpl.php
+    drupal_add_css(path_to_theme(). '/css/subpage.css');
     drupal_add_css(path_to_theme(). '/css/article.css');
    }
 

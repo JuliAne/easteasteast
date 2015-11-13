@@ -1,9 +1,12 @@
 ﻿<?php
 
+ $modulePath = drupal_get_path('module', 'aae_data');
+ include_once $modulePath . '/aae_data_helper.php';
+
 /** @function hook_cron()
 *
 * Cronjob, der von Drupal automatisch aufgerufen wird.
-* TODO: Update der LOData.js Maps-Koordinaten-Datei
+* TODO: Update der LOData.js Maps-Koordinaten-Datei???
 */
 function aae_data_cron() {
   //....
@@ -172,7 +175,6 @@ function kalender_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/kalender.php';
 
-
   $path = current_path();
   $path_alias = drupal_lookup_path('alias', $path);
 
@@ -329,17 +331,17 @@ function akteurkontakt_layer($aid) {
 
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/ajax.akteurkontakt.php';
-  
+
   $path = current_path();
   $path_alias = drupal_lookup_path('alias', $path);
 }
 
 /**
  * Funktion zum Einlesen aller Stadtteile
+ * Wird einmalig aufgerufen in aae_data_install.php
  */
 function insert_bezirke() {
   $bezirke = array(
-
     'Zentrum (Mitte)',
     'Zentrum-Ost (Mitte)',
     'Zentrum-Südost (Mitte)',

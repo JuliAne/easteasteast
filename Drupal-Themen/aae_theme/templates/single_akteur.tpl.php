@@ -84,8 +84,7 @@
             <?php foreach ($resulttags as $row) : ?>
               <a style="font-size:0.4em;" href="#" title="TODO: Weiterleitung auf /akteure/?$tags=row->KID">#<?= strtolower($row[0]->kategorie); ?></a>
             <?php endforeach; ?>
-            <?php endif; ?></h1>
-
+          <?php endif; ?></h1>
 
 			  <h3>Beschreibung</h3>
 
@@ -95,19 +94,14 @@
 				<p><i>Hier wurde leider noch keine Beschreibung angelegt :(</i></p>
 			  <?php endif; ?>
 
-				<!--<a href="#" onclick="javascript:alert($('#printr').html());">Zeige Print_r</a>
-
-				<div id="printr" style="display:none;">
-				<?= print_r($aResult['row1']); ?>
-				<?= print_r($aResult['row2']); ?>
-			</div> -->
-
         <?php if ($aResult['events'] != '') : ?>
 			  <h3>N&auml;chste Veranstaltungen</h3>
 
 			  <ul id="next-events">
 				 <?php foreach($aResult['events'] as $event) : ?>
-			   <li><span><a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>"><?= $event->name; ?> </a></span><br /><?= $event->start; ?> bis <?= $event->ende; ?></li>
+			   <li><span><a href="<?= base_path(); ?>Eventprofil/<?= $event[0]->EID; ?>"><?= $event[0]->name; ?></a></span><br />
+         <p><?= $event[0]->kurzbeschreibung; ?></p>
+         <?= $event[0]->start; ?> - <?= $event[0]->ende; ?></li>
 		     <?php endforeach; ?>
 		  	</ul>
 			  <?php endif; ?>

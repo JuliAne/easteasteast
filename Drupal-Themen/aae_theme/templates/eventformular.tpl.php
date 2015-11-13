@@ -34,7 +34,7 @@
   <option value="0">Privat</option>
   <?php if ($this->resultakteure->rowCount() != 0) :
     foreach ($this->resultakteure as $akteur) : ?>
-    <option value="<?= $akteur->AID; ?>"><?= $akteur->name; ?></option>
+    <option value="<?= $akteur->AID; ?>" <?php echo ($akteur->AID == $this->veranstalter ? 'selected="selected"' : '') ?>><?= $akteur->name; ?></option>
   <?php endforeach; ?>
 <?php endif; ?>
  </select>
@@ -100,10 +100,10 @@
    <div class="large-4 columns">
   <label>Bezirk: <?= $this->fehler['ort']; ?>
 
-  <select name="ort"><?= $this->adresse.$this->veranstalter; ?>
+  <select name="ort">
    <option value="" selected="selected">Bezirk auswählen</option>
    <?php foreach ($this->resultbezirke as $bezirk) : ?>
-   <option value="<?= $bezirk->BID; ?>"><?= $bezirk->bezirksname; ?></option>
+    <option value="<?= $bezirk->BID; ?>" <?php echo ($bezirk->BID == $this->ort ? 'selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
    <?php endforeach; ?>
   </select>
  </label>
@@ -111,7 +111,7 @@
 
   <div class="large-4 columns">
   <label>Geodaten (Karte): <?= $this->fehler['gps']; ?>
-   <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= $this->ph_gps; ?>" disabled>
+   <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= $this->ph_gps; ?>">
   </label>
 </div>
 
@@ -134,6 +134,7 @@
     <input type="file" id="eventBildInput" name="bild" />
 
     <?php if ($this->bild != '') : ?>
+      <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
       <img src="<?= $this->bild; ?>" title="Bisheriges Eventbild" width=250 style="float:right;margin:8px;" />
     <?php endif; ?>
 
@@ -149,16 +150,20 @@
 
     <label>Kategorien: <?= $this->fehler['sparten']; ?></label>
 
-    <select id="eventSpartenInput" multiple="multiple" class="tokenize">
+    <select id="eventSpartenInput" multiple="multiple" class="tokenize" name="sparten[]">
+    <?php foreach ($this->sparten as $sparte) : ?>
+     <?php if (is_array($sparte)) : ?>
+      <option selected value="<?= $sparte[0]->KID; ?>"><?php echo $sparte[0]->kategorie; ?></option>
+     <?php else : ?>
+      <option selected value="<?= $sparte; ?>"><?= $sparte; ?></option>
+      <?php endif; ?>
+    <?php endforeach;?>
+
     <?php foreach ($this->all_sparten as $sparte) : ?>
      <option value="<?php echo $sparte->KID; ?>"><?php echo $sparte->kategorie; ?></option>
     <?php endforeach;?>
     </select>
 
-  <!--
-  <label>Tags: <?= $this->fehler['sparten']; ?>
-   <input type="text" id="eventSpartenInput" name="sparten" value="<?= $this->sparten; ?>" placeholder="<?= $this->ph_sparten; ?>">
-  </label> -->
 
   </div>
 
