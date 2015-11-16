@@ -1,14 +1,31 @@
 $(document).ready(function(){
 
-  $('#eventSpartenInput').tokenize();
+  $('#eventSpartenInput').tokenize({displayDropdownOnFocus:true});
   //$('#eventSpartenInput').tokenize().remap();
 
-  $("#eventStartdatumInput").Zebra_DatePicker({ 'readonly_element' : false });
-  $("#eventEnddatumInput").Zebra_DatePicker({ 'readonly_element' : false });
+  $("#eventStartdatumInput").Zebra_DatePicker({'readonly_element' : false});
+  $("#eventEnddatumInput").Zebra_DatePicker({'readonly_element' : false});
 
   $('form').submit(function(){
     $('#beschreibung').html(CKEDITOR.instances.beschreibung.getData());
     $('#kurzbeschreibung').html(CKEDITOR.instances.kurzbeschreibung.getData());
+  });
+
+  $('#veranstalter').change(function(){
+
+    var actionUrl = $(this).find('option:selected').attr('value');
+    // maybe: var option = $('option:selected', this).attr('mytag');
+
+    alert(actionUrl);
+
+    if (actionUrl !== 0) {
+
+    $.get("../ajax/getAkteurAdresse/" + actionUrl, function(data) {
+     alert(data);
+    });
+
+    }
+
   });
 
   $('.Adresse input').focusout(function(){

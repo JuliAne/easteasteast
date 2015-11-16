@@ -114,7 +114,6 @@ function aae_preprocess_html(&$variables) {
      }
 
      map.addLayer(markers);});', 'inline');
-
  }
 
   break;

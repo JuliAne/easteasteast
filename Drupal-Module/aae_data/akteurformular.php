@@ -8,11 +8,6 @@
  * Die Klasse akteurformular wird in aae_data.module initialisiert (s. __construct)
  * und via ->run() aufgerufen.
  *
- * Ruth, 2015-07-04
- * Felix, 2015-09-04
- *
- *       - Mehr Security-Stuff muss hier rein, ggf. "phpsec" einbinden
- *
  */
 
 Class akteurformular extends aae_data_helper {
@@ -97,6 +92,7 @@ Class akteurformular extends aae_data_helper {
    *  Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
    *  @returns $profileHTML;
    */
+   
   public function run() {
 
     $path = current_path();

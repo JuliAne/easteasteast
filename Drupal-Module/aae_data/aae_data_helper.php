@@ -1,7 +1,11 @@
 <?php
 
- /* Kleine Helferklasse (!=model) für wiederkehrende Funktionen, Variablen
-  * & Pfade. Gerne erweiterbar :) */
+ /**
+  * Kleine Helferklasse (!=model) für wiederkehrende Funktionen, Variablen
+  *  & Pfade. Gerne erweiterbar :)
+  *
+  * @function ...
+  */
 
  Class aae_data_helper {
 
@@ -39,6 +43,17 @@
      }
    }
 
+   /**
+    * Dickes fettes TODO...
+    */
+
+   protected function render($tpl) {
+
+    ob_start(); // Aktiviert "Render"-modus
+    include_once path_to_theme().$tpl;
+    return ob_get_clean(); // Uebergabe des gerenderten Template's
+
+  }
  }
 
 ?>

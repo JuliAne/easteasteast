@@ -3,19 +3,9 @@
  * eventformular.php stellt ein Formular dar,
  * in welches alle Informationen über eine Veranstaltung
  * eingetragen werden können.
- * Pflichtfelder sind (bisher): Name, Veranstalter, Datum.
+ * Pflichtfelder sind (bisher): Name, Veranstalter, Datum (Anfang) & Beschreibung
  * Anschließend werden die Daten gefiltert in die DB-Tabellen eingetragen
  * oder geupdated
- *
- * Ruth, 2015-07-20
- * Felix, 2015-09-02
- */
-
-/**
- * FUNKTIONEN: ...
- * TODO: - Ersteller = "Privat" (ID = 0) miteinbringen
- *       - Im "Update/Bearbeiten"-Modus werden die Select-Felder nicht
- *         automatisch ausgewählt.
  */
 
 Class eventformular extends aae_data_helper {
@@ -378,14 +368,16 @@ Class eventformular extends aae_data_helper {
 
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     session_start();
+
     $_SESSION['sysmsg'][] = 'Das Event wurde erfolgreich bearbeitet!';
+
   	header("Location: Eventprofil/" . $this->event_id);
     // Event erstellt uuuund.... tschüss ;)
 
   } // END function eventUpdaten()
 
   /**
-   * Wird aufgerufen, wenn "Akteur bearbeiten" ausgewählt wurde
+   * Wird aufgerufen, wenn "Event bearbeiten" ausgewählt wurde
    * Daten aus DB in Felder schreiben
    */
   private function eventGetFields() {
@@ -402,27 +394,28 @@ Class eventformular extends aae_data_helper {
 	    'ort',
 	  ))
 	  ->condition('EID', $this->event_id, '=')
-      ->execute();
+    ->execute();
+
+    //Speichern der Daten in den Arbeitsvariablen
+    foreach ($resultevent as $row) {
+     $this->name = $row->name;
+     $this->ort = $row->ort;
+     $this->start = $row->start;
+     $this->ende = $row->ende;
+     $this->url = $row->url;
+     $this->bild = $row->bild;
+     $this->kurzbeschreibung = $row->kurzbeschreibung;
+    }
 
     $resultveranstalter = db_select($this->tbl_akteur_events, 'a')
      ->fields('a', array( 'AID' ))
 	   ->condition('EID', $this->event_id, '=')
      ->execute();
 
-    //Speichern der Daten in den Arbeitsvariablen
-    foreach ($resultevent as $row) {
-	  $this->name = $row->name;
-	  $ths->ort = $row->ort;
-	  $this->start = $row->start;
-	  $this->ende = $row->ende;
-	  $this->url = $row->url;
-	  $this->bild = $row->bild;
-	  $this->kurzbeschreibung = $row->kurzbeschreibung;
-	}
-
-    foreach ($resultveranstalter as $row) {
-	   $this->veranstalter = $row->AID;
-    }
+     foreach ($resultveranstalter as $row) {
+      $this->veranstalter = $row->AID;
+      echo $this->veranstalter;
+     }
 
     $akteur_id = $this->veranstalter;
 
@@ -435,7 +428,7 @@ Class eventformular extends aae_data_helper {
 	    'plz',
 	    'bezirk',
 	    'gps',
-	  ))
+	   ))
 	   ->condition('ADID', $this->ort, '=')
      ->execute();
 
@@ -449,17 +442,28 @@ Class eventformular extends aae_data_helper {
 	   $this->gps = $row->gps;
     }
 
-    //Akteurnamen aus DB holen:
-    $this->resultakteur = db_select($this->tbl_akteur, 'a')
-     ->fields('a', array( 'name' ))
-	   ->condition('AID', $this->veranstalter, '=')
-     ->execute();
+    $resultsparten = db_select($this->tbl_event_sparte, 'es')
+     ->fields('es')
+     ->condition('hat_EID', $this->event_id, '=')
+     ->execute()
+     ->fetchAll();
 
-    //Speichern der Adressdaten in den Arbeitsvariablen
-    foreach ($this->resultakteur as $row) {
-	   $this->veranstalter = $row->name;
+    $sparten = array();
+
+    foreach($resultsparten as $sparte) {
+
+     $sparten[] = db_select($this->tbl_sparte, 's')
+     ->fields('s')
+     ->condition('KID', $sparte->hat_KID, '=')
+     ->execute()
+     ->fetchAll();
+
     }
+
+    $this->sparten = $sparten;
+
     //Zeit auflösen
+    // I have no idea what this does...
     $explodedstart = explode(' ', $this->start);
     $explodedende = explode(' ', $this->ende);
     $this->ende = $explodedende[0];
@@ -471,6 +475,7 @@ Class eventformular extends aae_data_helper {
     if (count($explodedende) == 2) {
 	   $this->zeit_bis = $explodedende[1];
     }
+
   } // END function eventUpdaten()
 
   /**
@@ -484,8 +489,7 @@ Class eventformular extends aae_data_helper {
     }
 
 	//Abfrage, ob Adresse bereits in Adresstabelle
-	//Addressdaten aus DB holen:
-	$this->resultadresse = db_select($this->tbl_adresse, 'a')
+	 $this->resultadresse = db_select($this->tbl_adresse, 'a')
 	  ->fields('a', array( 'ADID', 'gps' ))
 	  ->condition('strasse', $this->strasse, '=')
 	  ->condition('nr', $this->nr, '=')
@@ -610,24 +614,35 @@ Class eventformular extends aae_data_helper {
 
   private function eventDisplay() {
     // Ausgabe des Eventformulars
-    
+
     if (array_intersect(array('administrator'), $user->roles)) {
       //alle Akteure abfragen, die in DB: nur Admin
       $this->resultakteure = db_select($this->tbl_akteur, 'a')
         ->fields('a', array( 'AID', 'name' ))
         ->execute();
     } else {
+
       //Akteure abfragen, die in DB und für welche User Schreibrechte hat
-      $res = db_select($this->tbl_akteur, 'a');
-      $res->join($this->tbl_hat_user, 'u', 'a.AID = u.hat_AID AND u.hat_UID = :uid', array(':uid' => $this->user_id));
-      $res->fields('a', array('AID','name'));
-      $this->resultakteure = $res->execute();
-    } // GGF. ALLES HIER DRÜBER ANPASSEN
+      $user_hat_akteure = db_select($this->tbl_hat_user, 'hu')
+       ->fields('hu')
+       ->condition('hat_UID', $this->user_id, '=')
+       ->execute()
+       ->fetchAll();
+
+      foreach($user_hat_akteure as $akteur) {
+
+       $this->resultakteure[] = db_select($this->tbl_akteur, 'a')
+       ->fields('a', array('AID', 'name'))
+       ->condition('AID', $akteur->hat_AID, '=')
+       ->execute()
+       ->fetchAll();
+
+     }
+    }
 
     $this->resultbezirke = db_select($this->tbl_bezirke, 'b')
-      ->fields('b', array( 'BID', 'bezirksname' ))
-      ->execute();
-    $countbezirke = $this->resultbezirke->rowCount();
+     ->fields('b', array( 'BID', 'bezirksname' ))
+     ->execute();
 
     $all_sparten = db_select($this->tbl_sparte, 's')
       ->fields('s')
@@ -639,9 +654,12 @@ Class eventformular extends aae_data_helper {
     }
 
     $pathThisFile = $_SERVER['REQUEST_URI'];
-    ob_start(); // Aktiviert "Render"-modus
-    include_once path_to_theme() . '/templates/eventformular.tpl.php';
-    return ob_get_clean(); // Übergabe des gerenderten "eventformular.tpl.php"
+
+    return $this->render('/templates/eventformular.tpl.php');
+
+   //  ob_start(); // Aktiviert "Render"-modus
+  //  include_once path_to_theme() . '/templates/eventformular.tpl.php';
+ //    return ob_get_clean(); // Übergabe des gerenderten "eventformular.tpl.php"
 
   } // END function eventDisplay()
 } // END class eventformular()

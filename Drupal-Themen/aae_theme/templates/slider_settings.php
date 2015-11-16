@@ -25,14 +25,15 @@
 
 require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
 
-$counts = block_aae_count_projects_events();
+$blocks = new aae_blocks();
+$counts = $blocks->count_projects_events();
 
 $sliders = array(
 
  $slider1 = array(
    'image' => 'slider_bg.jpg',
    'headline' => 'Den Leipziger Osten neu entdecken',
-   'description' => 'Deine Plattform für den ganzen Stadtteil: Lerne Akteure aus Deiner Umgebung kennen & erfahre, wann und wo sich etwas in Deinem Bezirk bewegt.<br />
+   'description' => 'Die Plattform für den ganzen Stadtteil: Lerne Akteure aus Deiner Umgebung kennen & erfahre, wann und wo sich etwas in Deinem Bezirk bewegt.<br />
 <br /><strong>Kostenlos. Offen. Lokal.</strong>',
    'whiteText' => true,
    'blueButton' => array(

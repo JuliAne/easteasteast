@@ -28,7 +28,9 @@
         <div class="divider"></div>
 
         <?php require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
-              foreach(block_aae_print_my_akteure() as $myAkteur) : ?>
+              $blocks = new aae_blocks();
+
+              foreach($blocks->print_my_akteure() as $myAkteur) : ?>
 
         <p><a href="<?= base_path(); ?>Akteurprofil/<?= $myAkteur[0]->AID; ?>"><?= $myAkteur[0]->name; ?></a></p>
 

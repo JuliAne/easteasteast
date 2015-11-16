@@ -30,11 +30,11 @@
 
   <div class="large-4 columns">
   <label>Veranstalter:</label>
-  <select name="veranstalter" size="<?= $countakteure; ?>">
+  <select name="veranstalter" id="veranstalter">
   <option value="0">Privat</option>
-  <?php if ($this->resultakteure->rowCount() != 0) :
+  <?php if (is_array($this->resultakteure) && !empty($this->resultakteure)) :
     foreach ($this->resultakteure as $akteur) : ?>
-    <option value="<?= $akteur->AID; ?>" <?php echo ($akteur->AID == $this->veranstalter ? 'selected="selected"' : '') ?>><?= $akteur->name; ?></option>
+    <option value="<?= $akteur[0]->AID; ?>" <?php echo ($akteur[0]->AID == $this->veranstalter ? 'selected="selected"' : '') ?>><?= $akteur[0]->name; ?></option>
   <?php endforeach; ?>
 <?php endif; ?>
  </select>
@@ -120,7 +120,7 @@
  <div class="row">
 
   <div class="large-12 columns">
-  <label>Beschreibung: <?= $this->fehler['kurzbeschreibung']; ?>
+  <label>Beschreibung <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['kurzbeschreibung']; ?>
    <textarea name="kurzbeschreibung" id="kurzbeschreibung" cols="45" rows="3" placeholder="<?= $this->ph_kurzbeschreibung; ?>"><?= $this->kurzbeschreibung; ?></textarea>
   </label>
   <script>CKEDITOR.replace('kurzbeschreibung', { toolbar : 'Basic' });</script>
@@ -133,7 +133,7 @@
 
     <input type="file" id="eventBildInput" name="bild" />
 
-    <?php if ($this->bild != '') : ?>
+    <?php if (isset($this->bild)) : ?>
       <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
       <img src="<?= $this->bild; ?>" title="Bisheriges Eventbild" width=250 style="float:right;margin:8px;" />
     <?php endif; ?>
@@ -152,6 +152,7 @@
 
     <select id="eventSpartenInput" multiple="multiple" class="tokenize" name="sparten[]">
     <?php foreach ($this->sparten as $sparte) : ?>
+      <?php print_r($sparte); ?>
      <?php if (is_array($sparte)) : ?>
       <option selected value="<?= $sparte[0]->KID; ?>"><?php echo $sparte[0]->kategorie; ?></option>
      <?php else : ?>
@@ -163,7 +164,6 @@
      <option value="<?php echo $sparte->KID; ?>"><?php echo $sparte->kategorie; ?></option>
     <?php endforeach;?>
     </select>
-
 
   </div>
 

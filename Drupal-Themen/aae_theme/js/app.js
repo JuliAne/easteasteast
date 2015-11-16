@@ -53,6 +53,10 @@ $(document).ready(function() {
   $('#alert').fadeUp('fast');
  });
 
+ $('#alert-box .close').click(function(){
+  $('#alert-box').fadeUp('fast');
+ });
+
  $('#presentationFilter li a').click(function(){
   var that = $(this);
   $('#presentationFilter').find('.active').removeClass('active').addClass('secondary');
@@ -62,6 +66,7 @@ $(document).ready(function() {
 
  $('#filterForm').submit(function(){
   var presentationValue = $('#presentationFilter').find('.active').attr('name');
+  //var displayNumber
    $('<input />').attr('type', 'hidden').attr('name', 'presentation').attr('value', presentationValue).appendTo('#filterForm');
  });
 
@@ -72,7 +77,7 @@ $(document).ready(function() {
   var segments = $(location).attr('href').split('/')
   var actionUrl = segments[4];
 
-  $.get("../Akteurkontakt/" + actionUrl, function(data) {
+  $.get("../ajax/getAkteurKontakt/" + actionUrl, function(data) {
    $('.aaeModal .content').html(data);
    $('.aaeModal .button').click(function(){
     $('.aaeModal').fadeOut('slow');

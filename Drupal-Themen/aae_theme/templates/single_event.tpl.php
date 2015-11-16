@@ -74,7 +74,7 @@ if(count($sparten) != 0) { ?>
   <?php endif; ?>
 
   <?php if($resultAdresse->gps != "") : ?>
-       GPS (MAP HIER): <?= $resultAdresse->gps; ?>
+       GPS: <?= $resultAdresse->gps; ?>
   <?php endif; ?>
 
   </p><?php endif; ?>
