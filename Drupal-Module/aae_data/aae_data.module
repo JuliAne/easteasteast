@@ -1,9 +1,12 @@
 ﻿<?php
 
+ $modulePath = drupal_get_path('module', 'aae_data');
+ include_once $modulePath . '/aae_data_helper.php';
+
 /** @function hook_cron()
 *
 * Cronjob, der von Drupal automatisch aufgerufen wird.
-* TODO: Update der LOData.js Maps-Koordinaten-Datei
+* TODO: Update der LOData.js Maps-Koordinaten-Datei???
 */
 function aae_data_cron() {
   //....
@@ -133,10 +136,10 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
-  //AJAXitem "Akteurkontakt"
-  $items['Akteurkontakt/%'] = array(
-    'title' => 'Akteurkontakt',
-    'page callback' => 'akteurkontakt_layer',
+  // Fetch AJAX-requests
+  $items['ajax/%'] = array(
+    'title' => 'ajax request',
+    'page callback' => 'ajax_requests',
     'access arguments' => array('access content'),
     'type' => MENU_SUGGESTED_ITEM,
     'access callback' => TRUE,
@@ -172,7 +175,6 @@ function kalender_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/kalender.php';
 
-
   $path = current_path();
   $path_alias = drupal_lookup_path('alias', $path);
 
@@ -187,10 +189,8 @@ function akteure_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteure.php';
 
-  $path = current_path();
-  $path_alias = drupal_lookup_path('alias', $path);
-
-  return $profileHTML;
+  $akteur = new akteure();
+  return $akteur->run();
 }
 
 /**
@@ -202,9 +202,6 @@ function akteurformular_page() {
 
   $akteur = new akteurformular();
 
-  $path = current_path();
-  $path_alias = drupal_lookup_path('alias', $path);
-
   return $akteur->run();
 }
 
@@ -214,9 +211,6 @@ function akteurformular_page() {
 function akteurprofil_page($aid = 0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurprofil.php';
-
-  $path = current_path();
-  $path_alias = drupal_lookup_path('alias', $path);
 
   return $profileHTML;
 }
@@ -321,25 +315,44 @@ function eventformular_page() {
 }
 
 /**
- * Wird via AJAX-request aufgerufen und gibt div wider, welcher
- * Kontaktinformationen zum Akteur beinhaltet.
+ * Gibt ajax-request's an entsprechende Klasse/Funktino weiter
  */
 
-function akteurkontakt_layer($aid) {
+function ajax_requests($id) {
 
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/ajax.akteurkontakt.php';
-  
+  include $modulePath . '/aae_data_ajax_requests.php';
+
+  $request = new aae_data_ajax_requests();
+
   $path = current_path();
-  $path_alias = drupal_lookup_path('alias', $path);
-}
+  $explodedpath = explode("/", $path);
+  $function_called = $request->clearContent($explodedpath[1]);
+
+  switch($function_called) {
+
+   case ('getAkteurKontakt') :
+    $request->getAkteurKontakt($id);
+   break;
+
+   case ('getAkteurAdresse') :
+    $request->getAkteurAdresse($id);
+   break;
+
+   default :
+    // U mad? Unbekannter Funktionsaufruf, weg damit...
+    exit();
+   break;
+
+  }
+ }
 
 /**
  * Funktion zum Einlesen aller Stadtteile
+ * Wird einmalig aufgerufen in aae_data_install.php
  */
 function insert_bezirke() {
   $bezirke = array(
-
     'Zentrum (Mitte)',
     'Zentrum-Ost (Mitte)',
     'Zentrum-Südost (Mitte)',

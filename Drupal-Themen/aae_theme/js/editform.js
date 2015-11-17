@@ -1,15 +1,37 @@
 $(document).ready(function(){
 
-  $('#eventSpartenInput').tokenize();
-  $('#eventSpartenInput').tokenize().remap();
+  $('#eventSpartenInput').tokenize({displayDropdownOnFocus:true});
 
-
-
-  $("#eventStartdatumInput").Zebra_DatePicker({ 'readonly_element' : false });
-  $("#eventEnddatumInput").Zebra_DatePicker({ 'readonly_element' : false });
+  $("#eventStartdatumInput").Zebra_DatePicker({'readonly_element' : false});
+  $("#eventEnddatumInput").Zebra_DatePicker({'readonly_element' : false});
 
   $('form').submit(function(){
     $('#beschreibung').html(CKEDITOR.instances.beschreibung.getData());
+    $('#kurzbeschreibung').html(CKEDITOR.instances.kurzbeschreibung.getData());
+  });
+
+  $('#veranstalter').change(function(){
+
+    var actionUrl = $(this).find('option:selected').attr('value');
+
+    if (actionUrl !== 0) {
+
+    $.get("../ajax/getAkteurAdresse/" + actionUrl, function(data) {
+
+     if (data.substring(2) !== '') {
+      var obj = jQuery.parseJSON(data.substring(2));
+      $('#StrasseInput').attr('value',obj.strasse);
+      $('#NrInput').attr('value',obj.nr);
+      $('#AdresszusatzInput').attr('value',obj.adresszusatz);
+      $('#PLZInput').attr('value',obj.plz);
+      $('.Adresse select option[value='+obj.bezirk+']').attr('selected','selected');
+      $('#GPSInput').attr('value',obj.gps);
+     }
+
+    });
+
+    }
+
   });
 
   $('.Adresse input').focusout(function(){

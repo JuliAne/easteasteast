@@ -8,23 +8,9 @@
  * Die Klasse akteurformular wird in aae_data.module initialisiert (s. __construct)
  * und via ->run() aufgerufen.
  *
- * Ruth, 2015-07-04
- * Felix, 2015-09-04
- *
- * TODO: - Tagspeicherung+User hinzufuegen funktioniert nach Umbau nicht mehr -> neu implementieren
- *       - Mehr Security-Stuff muss hier rein, ggf. "phpsec" einbinden
- *
  */
 
-Class akteurformular {
-
-  //DB-Tabellen
-  var $tbl_hat_sparte = "aae_data_akteur_hat_sparte";
-  var $tbl_adresse = "aae_data_adresse";
-  var $tbl_akteur = "aae_data_akteur";
-  var $tbl_sparte = "aae_data_sparte";
-  var $tbl_hat_user = "aae_data_akteur_hat_user";
-  var $tbl_bezirke = "aae_data_bezirke";
+Class akteurformular extends aae_data_helper {
 
   //$tbl_akteur
   var $name = "";
@@ -49,10 +35,6 @@ Class akteurformular {
   //Tags:
   var $sparten = "";
   var $all_sparten = ''; // Ermöglicht Tokenizer-plugin im Frontend
-
-  //Speicherort fuer Bilder
-  var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/styles/large/public/field/image/";
-  var $short_bildpfad = "sites/default/files/styles/large/public/field/image/";
 
   var $akteur_id = "";
   var $user_id = "";
@@ -110,6 +92,7 @@ Class akteurformular {
    *  Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
    *  @returns $profileHTML;
    */
+   
   public function run() {
 
     $path = current_path();
@@ -139,14 +122,6 @@ Class akteurformular {
     }
 
     return $output;
-  }
-
-  /**
-   *  Einfache Funktion zum Filtern von POST-Daten. Gerne erweiterbar.
-   */
-  private function clearContent($trimTag) {
-    $clear = trim($trimTag);
-    return strip_tags($clear);
   }
 
   /**
@@ -283,7 +258,6 @@ Class akteurformular {
      }
     }
      $this->sparten = $neueSparten;
-
    }
 
     return $this->freigabe;
@@ -298,28 +272,21 @@ Class akteurformular {
 
 	$this->adresse = db_insert($this->tbl_adresse)
 	 ->fields(array(
-	'strasse' => $this->strasse,
-	'nr' => $this->nr,
-	'adresszusatz' => $this->adresszusatz,
-	'plz' => $this->plz,
-	'bezirk' => $this->ort,
-	'gps' => $this->gps
-  ))
+	 'strasse' => $this->strasse,
+	 'nr' => $this->nr,
+	 'adresszusatz' => $this->adresszusatz,
+	 'plz' => $this->plz,
+	 'bezirk' => $this->ort,
+	 'gps' => $this->gps
+   ))
 	 ->execute();
 
-    //Wenn Bilddatei ausgewählt wurde...
-    if ($_FILES) {
-      $bildname = $_FILES['bild']['name'];
-      if ($bildname != "") {
-	    if (!move_uploaded_file($_FILES['bild']['tmp_name'], $this->bildpfad . md5($bildname))) {
-          echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />' . $bildname;
-          exit();
-        }
-        $this->bild = base_path() . $this->short_bildpfad . md5($bildname);
-      }
-    }
+   //Wenn Bilddatei ausgewählt wurde...
+   if ($_FILES) {
+    $this->bild = $this->upload_image($_FILES['bild']['name'], $this->clearContent($_POST['oldPic']));
+   }
 
-	$this->akteur_id = db_insert($this->tbl_akteur)
+	 $this->akteur_id = db_insert($this->tbl_akteur)
    	->fields(array(
 	  'name' => $this->name,
 		'adresse' => $this->adresse,
@@ -346,6 +313,8 @@ Class akteurformular {
 
     foreach ($this->sparten as $id => $sparte) {
 		// Tag bereits in DB?
+
+    $sparte = strtolower($this->clearContent($sparte));
 
     $sparte_id = '';
 
@@ -447,10 +416,11 @@ Class akteurformular {
     	// Tag bereits in DB?
 
       $sparte_id = '';
+      $sparte = strtolower($this->clearContent($sparte));
 
     	$resultsparte = db_select($this->tbl_sparte, 's')
-    	 ->fields('s', array( 'KID' ))
-    	 ->condition('kategorie', $sparte, '=')
+    	 ->fields('s')
+    	 ->condition('KID', $sparte, '=')
     	 ->execute();
 
     	 if ($resultsparte->rowCount() == 0) {
@@ -478,11 +448,11 @@ Class akteurformular {
           // Nein, daher rein damit
 
           db_insert($this->tbl_hat_sparte)
-          ->fields(array(
+           ->fields(array(
             'hat_AID' => $this->akteur_id,
             'hat_KID' => $sparte_id
-          ))
-          ->execute();
+           ))
+           ->execute();
 
          }
 
@@ -501,7 +471,7 @@ Class akteurformular {
    */
   private function akteurGetFields() {
 
-    //Auswahl der Daten des eingeloggten Akteurs:
+    //Auswahl der Daten des ausgewählten Akteurs:
     $resultakteur = db_select($this->tbl_akteur, 'c')
       ->fields('c', array(
 	    'name',
@@ -520,16 +490,16 @@ Class akteurformular {
 
     //Speichern der Daten in den Arbeitsvariablen
     foreach ($resultakteur as $row) {
-	  $this->name = $row->name;
-    $this->adresse = $row->adresse;
-	  $this->email = $row->email;
-	  $this->telefon = $row->telefon;
-	  $this->url = $row->url;
-	  $this->ansprechpartner = $row->ansprechpartner;
-	  $this->funktion = $row->funktion;
-	  $this->bild = $row->bild;
-	  $this->beschreibung = $row->beschreibung;
-	  $this->oeffnungszeiten = $row->oeffnungszeiten;
+	   $this->name = $row->name;
+     $this->adresse = $row->adresse;
+	   $this->email = $row->email;
+	   $this->telefon = $row->telefon;
+	   $this->url = $row->url;
+	   $this->ansprechpartner = $row->ansprechpartner;
+	   $this->funktion = $row->funktion;
+	   $this->bild = $row->bild;
+	   $this->beschreibung = $row->beschreibung;
+	   $this->oeffnungszeiten = $row->oeffnungszeiten;
     }
 
     //Adressdaten aus DB holen:
@@ -547,13 +517,34 @@ Class akteurformular {
 
     //Speichern der Adressdaten in den Arbeitsvariablen
     foreach ($resultadresse as $row) {
-	  $this->strasse = $row->strasse;
-	  $this->nr = $row->nr;
-	  $this->adresszusatz = $row->adresszusatz;
-	  $this->plz = $row->plz;
-	  $this->ort = $row->bezirk;
-	  $this->gps = $row->gps;
+	   $this->strasse = $row->strasse;
+	   $this->nr = $row->nr;
+	   $this->adresszusatz = $row->adresszusatz;
+	   $this->plz = $row->plz;
+	   $this->ort = $row->bezirk;
+	   $this->gps = $row->gps;
     }
+
+    $resultsparten = db_select($this->tbl_hat_sparte, 'hs')
+     ->fields('hs')
+     ->condition('hat_AID', $this->akteur_id, '=')
+     ->execute()
+     ->fetchAll();
+
+    $sparten = array();
+
+    foreach($resultsparten as $sparte) {
+
+     $sparten[] = db_select($this->tbl_sparte, 's')
+     ->fields('s')
+     ->condition('KID', $sparte->hat_KID, '=')
+     ->execute()
+     ->fetchAll();
+
+    }
+
+    $this->sparten = $sparten;
+
   } // END function akteurGetFields()
 
 

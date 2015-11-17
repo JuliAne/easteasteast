@@ -142,6 +142,7 @@
     <input type="file" id="akteurBildInput" name="bild" />
 
     <?php if ($this->bild != '') : ?>
+      <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
       <img src="<?= $this->bild; ?>" title="Bisheriges Profilbild" width=200 style="float:right; margin: 6px;">
     <?php endif; ?>
 
@@ -157,19 +158,19 @@
     <label>Kategorien: <?= $this->fehler['sparten']; ?></label>
 
     <select id="eventSpartenInput" multiple="multiple" class="tokenize" name="sparten[]">
-    <?php foreach ($this->sparten as $kategorie) : ?>
-     <option selected value="<?= $kategorie; ?>"><?php echo $kategorie; ?></option>
+
+    <?php foreach ($this->sparten as $sparte) : ?>
+     <?php if (is_array($sparte)) : ?>
+     <option selected value="<?= $sparte[0]->KID; ?>"><?php echo $sparte[0]->kategorie; ?></option>
+     <?php else : ?>
+     <option selected value="<?= $sparte; ?>"><?= $sparte; ?></option>
+     <?php endif; ?>
     <?php endforeach;?>
 
     <?php foreach ($this->all_sparten as $sparte) : ?>
      <option value="<?php echo $sparte->KID; ?>"><?php echo $sparte->kategorie; ?></option>
     <?php endforeach;?>
     </select>
-
-  <!--
-  <label>Tags: <?= $this->fehler['sparten']; ?>
-   <input type="text" id="eventSpartenInput" name="sparten" value="<?= $this->sparten; ?>" placeholder="<?= $this->ph_sparten; ?>">
-  </label> -->
 
   </div>
 

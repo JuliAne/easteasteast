@@ -1,8 +1,0 @@
-<Analyse von="2015-07-13" bis="2015-09-15" gruppe="swp15-aae" createdBy="RB" createdAt="2015-09-15">
-<done who="CS,PE,RB" A="3" S="3" Zeit="12">Kalender</done>
-<done who="CS,RB" A="3" S="3" Zeit="2">DB-Schemaaktualisierung</done>
-<done who="CS,PE" A="3" S="3" Zeit="2">Datenmigration</done>
-<done who="PE,RB" A="3" S="2" Zeit="8">Dokumentation</done>
-<done who="RB" A="3" S="3" Zeit="2">Formatierung</done>
-<done who="CS,PE,RB" A="3" S="3" Zeit="2">Organisatorisches</done>
-</Analyse>

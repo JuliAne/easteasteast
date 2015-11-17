@@ -25,13 +25,14 @@
  <form id="filterForm" method="get" action="<?= base_path(); ?>Akteure/<?= $currentPageNr; ?>">
 
  <div class="large-1 columns" id="removeFilter">
-  <a class="small secondary button round right" style="padding:4px 10px;" href="#" title="Alle Filter entfernen">x</a>
+  <a class="small secondary button round right" style="padding:4px 10px;" href="/Akteure" title="Alle Filter entfernen">x</a>
  </div>
 
- <div class="large-6 large-offset-1 columns">
+ <div class="large-4 large-offset-1 columns">
 
    <label for="tag">Nach Tags filtern:</label>
-   <select name="tag" id="eventSpartenInput" multiple="multiple" class="tokenize">
+   <select name="tags[]" id="eventSpartenInput" multiple="multiple" class="tokenize">
+   <?php // show $this->sparten ?>
    <?php foreach ($resulttags as $row) : ?>
      <option value="<?= $row->KID; ?>"><?= $row->kategorie; ?></option>
    <?php endforeach; ?>
@@ -39,13 +40,24 @@
 
  </div>
 
-<div id="change-style" class="button-bar large-4 columns">
+ <div class="large-2 columns">
+  <label for="display_number">Ergebnisse:</label>
+  <select name="display_number" id="displayNumber">
+   <option value="10">10</option>
+   <option value="15" selected="selected">15</option>
+   <option value="20">20</option>
+   <option value="alle">Alle</option>
+  </select>
+ </div>
+
+
+ <div id="change-style" class="button-bar large-4 columns">
   <ul id="presentationFilter" class="button-group round">
     <li><a href="#" name="boxen" class="small button <?php echo ($presentationMode == 'boxen' ? 'active' : 'secondary'); ?>" title="Darstellung als Boxen"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
     <li><a href="#" name="map" class="small button <?php echo ($presentationMode == 'map' ? 'active' : 'secondary'); ?>" title="Darstellung auf Karte"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
   </ul>
   <input type="submit" class="small button right" id="sendFilters" name="submit" value="Filter anwenden">
-</div>
+ </div>
 
 </form>
 

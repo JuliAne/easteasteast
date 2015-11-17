@@ -5,7 +5,7 @@ function aae_preprocess_html(&$variables) {
   drupal_add_js(path_to_theme().'/js/jquery-1.11.3.min.js'); // Wenn Du das siehst, check mal, ob's ne neue Version gibt
 
   drupal_add_js(path_to_theme().'/js/pace.min.js');
-  drupal_add_js(path_to_theme().'/js/doubletaptogo.min.js'); // Mobile-Menü
+  drupal_add_js(path_to_theme().'/js/doubletaptogo.min.js'); // Mobile-Menü, bisher ungenutzt
   drupal_add_js(path_to_theme().'/js/app.js');
 
   drupal_add_css(path_to_theme().'/css/foundation.min.css');
@@ -35,6 +35,7 @@ function aae_preprocess_html(&$variables) {
 
    } else {
     // Node--article.tpl.php
+    drupal_add_css(path_to_theme(). '/css/subpage.css');
     drupal_add_css(path_to_theme(). '/css/article.css');
    }
 
@@ -113,7 +114,6 @@ function aae_preprocess_html(&$variables) {
      }
 
      map.addLayer(markers);});', 'inline');
-
  }
 
   break;
@@ -166,7 +166,7 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
   } else  { // @TODO ELSEIF SEARCH-FORM
 
     $form['actions']['submit']['#attributes']['class'][] = 'small button';
-    $form['actions']['submit']['#value'] = 'Abschicken';
+    $form['actions']['submit']['#value'] = 'Absenden';
 
   }
 }

@@ -1,5 +1,3 @@
-<script src="<?= base_path().drupal_get_path('module', 'aae_data'); ?>/LOdata.js"></script>
-
 <?php if (!empty($page['sidebar_first'])): ?>
 
   <aside class="col-sm-3" role="complementary">
@@ -50,9 +48,11 @@
   <?php
   // Lade "Meine Akteure"-Block
 
-  require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
+  include_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
 
-  foreach (block_aae_print_letzte_akteure() as $akteur) : ?>
+  $blocks = new aae_blocks();
+
+  foreach ($blocks->print_letzte_akteure() as $akteur) : ?>
 
    <div class="large-3 large-offset-1 columns pcard">
     <header<?php if($akteur->bild != '') echo ' style="background:url('.$akteur->bild.');"'; ?>>
@@ -80,7 +80,7 @@
   <?php
   // Lade "letzte Events"-Block
 
-  foreach (block_aae_print_letzte_events() as $event) : ?>
+  foreach ($blocks->print_letzte_events() as $event) : ?>
 
    <div class="large-3 large-offset-1 columns event">
     <a href="#"><button class="button blue date">08<br />Sept</button></a>
@@ -99,7 +99,6 @@
 
  <section class="section" id="journal">
    <?php print render($page['blog']); ?>
-
  </section>
 
 <?php include_once('footer.tpl.php'); ?>

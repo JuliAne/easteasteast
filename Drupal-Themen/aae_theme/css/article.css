@@ -4,6 +4,11 @@
  margin-top: 40px;
 }
 
+.article {
+  padding-top: 65px !important;
+}
+
+
 #article-image {
  width: 100%;
  background-size: 100%;

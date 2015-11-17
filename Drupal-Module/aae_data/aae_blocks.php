@@ -1,28 +1,32 @@
 <?php
 
 /**
-* @file aae_blocks
+* @file aae_blocks.php
 *
 * Ein paar Hilfsfunktion für das Theme...
+* @use require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
+*      aae_blocks::FUNKTION
 *
-* @function block_aae_print_letzte_events
-* @function block_aae_print_letzte_akteure
-* @function block_aae_count_projects_events
-* @function block_aae_print_my_akteure
+* @function print_letzte_events
+* @function print_letzte_akteure
+* @function count_projects_events
+* @function print_my_akteure
+* @function tagcloud
 */
+
+$modulePath = drupal_get_path('module', 'aae_data');
+include_once $modulePath . '/aae_data_helper.php';
+
+Class aae_blocks extends aae_data_helper {
 
 /**
  * Kleiner, interner(!) Block zum Anzeigen der letzten drei (=$limit) eingetragenen Events.
- * Wird in theme/page--front.tpl.php aufgerufen.
- *
- * @use Einzubinden via require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
+ * Wird in templates/page--front.tpl.php aufgerufen.
  */
 
-function block_aae_print_letzte_events($limit = 3) {
+public function print_letzte_events($limit = 3) {
 
-  $tbl_event = "aae_data_event";
-
-  $letzteEvents = db_select($tbl_event, 'a')
+  $letzteEvents = db_select($this->tbl_event, 'a')
     ->fields('a')
     ->range(0, $limit)
     ->execute()
@@ -43,15 +47,11 @@ function block_aae_print_letzte_events($limit = 3) {
 /**
  * Kleiner, interner(!) Block zum Anzeigen der letzten drei (=$limit) eingetragenen Projekte.
  * Wird in theme/page--front.tpl.php aufgerufen
- *
- * @use Einzubinden via require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
  */
 
-function block_aae_print_letzte_akteure($limit = 3) {
+public function print_letzte_akteure($limit = 3) {
 
-  $tbl_akteur = "aae_data_akteur";
-
-  $letzteakteure = db_select($tbl_akteur, 'a')
+  $letzteakteure = db_select($this->tbl_akteur, 'a')
     ->fields('a')
     ->range(0, $limit)
     ->execute()
@@ -71,24 +71,17 @@ function block_aae_print_letzte_akteure($limit = 3) {
 /**
  * Kleiner, interner(!) Block zum Aufzählen ("count") aller eingetragenen
  * Projekte und Events. Wird im Slider in theme/page--front.tpl.php aufgerufen.
- *
- * UNVOLLSTÄNDIG!
- *
- * @use Einzubinden via require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
  */
 
-function block_aae_count_projects_events() {
-
-  $tbl_akteur = "aae_data_akteur";
-  $tbl_events = "aae_data_event";
+public function count_projects_events() {
 
   $count = array();
 
-  $countAkteure = db_select($tbl_akteur, 'a')
+  $countAkteure = db_select($this->tbl_akteur, 'a')
   ->fields('a', array('AID'))
   ->execute();
 
-  $countEvents = db_select($tbl_events, 'e')
+  $countEvents = db_select($this->tbl_event, 'e')
   ->fields('e', array('EID'))
   ->execute();
 
@@ -102,19 +95,15 @@ function block_aae_count_projects_events() {
 /**
  * Kleiner, interner(!) Block zum Anzeigen aller mit dem eigenen Account verknüften Akteure.
  * Wird in theme/header.tpl.php aufgerufen.
- *
- * @use Einzubinden via require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
  */
 
- function block_aae_print_my_akteure() {
+ public function print_my_akteure() {
 
-  $tbl_akteur = "aae_data_akteur";
-  $tbl_hat_akteur = "aae_data_akteur_hat_user";
   $results = array();
 
   global $user;
 
-  $myAkteure = db_select($tbl_hat_akteur, 'ha')
+  $myAkteure = db_select($this->tbl_hat_user, 'ha')
   ->fields('ha')
   ->condition('hat_UID', $user->uid, '=')
   ->execute()
@@ -124,7 +113,7 @@ function block_aae_count_projects_events() {
 
     // We don't need no Join's, masafakkaaa...
 
-    $results[] = db_select($tbl_akteur, 'a')
+    $results[] = db_select($this->tbl_akteur, 'a')
     ->fields('a', array('AID','name'))
     ->condition('AID', $akteur->hat_AID, '=')
     ->execute()
@@ -134,5 +123,18 @@ function block_aae_count_projects_events() {
   return $results;
 
  }
+
+ /**
+ * @function tagcloud()
+ *
+ * ...
+ */
+
+ public function tagcloud() {
+
+
+
+ }
+} // end class aae_block
 
 ?>
