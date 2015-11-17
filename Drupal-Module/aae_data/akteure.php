@@ -5,12 +5,17 @@
 
 Class akteure extends aae_data_helper {
 
+ var $presentationMode;
+ var $maxAkteure;
+ var $sparten;
+
  public function run(){
 
- $presentationMode = "boxen"; // available: "boxen" & "map"
+ $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) ? $this->clearContent($_GET['presentation']) : 'boxen');
+ // available actions: "boxen" & "map"
+
  // Zeige wie viele Akteure pro Seite?
- // TODO: Wert konfigurierbar machen via Filtermenü
- $maxAkteure = '15';
+ $this->maxAkteure = (isset($_GET['display_number']) && !empty($_GET['display_number']) ? $this->clearContent($_GET['display_number']) : '15' );
 
  //-----------------------------------
 
@@ -21,23 +26,46 @@ Class akteure extends aae_data_helper {
  $itemsCount = db_query("SELECT COUNT(AID) AS count FROM " . $this->tbl_akteur)->fetchField();
 
  // Paginator: Wie viele Seiten gibt es?
- $maxPages = ceil($itemsCount / $maxAkteure);
+ $maxPages = ceil($itemsCount / $this->maxAkteure);
 
  if ($currentPageNr > $maxPages) {
  // Diese URL gibt es nicht, daher zurueck...
   header("Location: Akteure/" . $maxPages);
  } elseif ($currentPageNr > 1) {
-  $start = $maxAkteure * ($currentPageNr - 1);
-  $ende = $maxAkteure * $currentPageNr;
+  $start = $this->maxAkteure * ($currentPageNr - 1);
+  $ende = $this->maxAkteure * $currentPageNr;
  } else {
   $start = 0;
-  $ende = $maxAkteure;
+  $ende = $this->maxAkteure;
  }
 
 //-----------------------------------
 
-if (isset($_GET['submit'])) $presentationMode = $_GET['presentation'];
-// -> Clear with ClearContent()
+if (isset($_GET['tags']) && !empty($_GET['tags'])){
+
+  $filterSparten = db_select($this->tbl_hat_sparte, 'hs')
+   ->fields('hs');
+
+   $db_or = db_or();
+
+foreach($_GET['tags'] as $tag) {
+
+  $tag = $this->clearContent($tag);
+  $db_or->condition('hat_KID', $tag, '=');
+
+ }
+
+ $filterSparten->condition($db_or)
+  ->execute()
+  ->fetchAssoc();
+
+  //print_r($filterSparten);
+
+ foreach($filterSparten as $sparte) {
+
+ }
+
+}
 
 //-----------------------------------
 

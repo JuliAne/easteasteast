@@ -13,11 +13,9 @@ Class aae_data_ajax_requests extends aae_data_helper {
  * Aufgerufen über das Akteurprofil
  */
 
- public function getAkteurKontakt() {
+ public function getAkteurKontakt($id) {
 
-  $path = current_path();
-  $explodedpath = explode("/", $path);
-  $akteur_id = $this->clearContent($explodedpath[2]);
+  $akteur_id = $this->clearContent($id);
 
   if (!is_numeric($akteur_id)) exit();
 
@@ -38,11 +36,9 @@ Class aae_data_ajax_requests extends aae_data_helper {
   * dynamischen Anzeige dient
   */
 
- public function getAkteurAdresse() {
+ public function getAkteurAdresse($id) {
 
-   $path = current_path();
-   $explodedpath = explode("/", $path);
-   $akteur_id = $this->clearContent($explodedpath[2]);
+   $akteur_id = $this->clearContent($id);
 
    if (!is_numeric($akteur_id) || $akteur_id == 0) exit();
 
@@ -54,13 +50,11 @@ Class aae_data_ajax_requests extends aae_data_helper {
 
    $resultAdresse = db_select($this->tbl_adresse, 'ad')
     ->fields('ad')
-    ->condition('', $akteurAdresse->adresse, '=')
+    ->condition('ADID', $akteurAdresse[0]->adresse, '=')
     ->execute()
     ->fetchAll();
 
-    // Get bezirk...
-
-   echo $resultAdresse;
+    echo json_encode($resultAdresse[0]);
 
  }
 }

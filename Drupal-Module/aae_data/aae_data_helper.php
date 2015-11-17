@@ -25,11 +25,12 @@
    var $short_bildpfad = "sites/default/files/styles/large/public/field/image/";
 
    /**
-    *  Einfache Funktion zum Filtern von POST-Daten. Gerne erweiterbar.
+    *  Einfache Funktion zum Filtern von POST- und GET-Daten. Gerne erweiterbar.
     */
-   protected function clearContent($trimTag) {
+   public function clearContent($trimTag) {
      $clear = trim($trimTag);
      return strip_tags($clear);
+     //return mysql_real_escape_string($clear);
    }
 
    protected function upload_image($bildname, $oldpic = '') {
@@ -44,7 +45,7 @@
    }
 
    /**
-    * Dickes fettes TODO...
+    * Dickes fettes TODO... (bisher ungenutzte Funktion)
     */
 
    protected function render($tpl) {
@@ -54,6 +55,19 @@
     return ob_get_clean(); // Uebergabe des gerenderten Template's
 
   }
+
+  protected function addMapContent($geocord) {
+
+    drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
+    drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js');
+    drupal_add_js('L.mapbox.accessToken = "pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg";', 'inline');
+
+    drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css', array('type' => 'external'));
+    drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css', array('type' => 'external'));
+    drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js');
+
+  }
+
  }
 
 ?>

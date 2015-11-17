@@ -325,20 +325,18 @@ function ajax_requests($id) {
 
   $request = new aae_data_ajax_requests();
 
-  echo $id;
-
   $path = current_path();
   $explodedpath = explode("/", $path);
-  $function_called = $explodedpath[1]; // maybe run a "clearContent()" first?!
+  $function_called = $request->clearContent($explodedpath[1]);
 
   switch($function_called) {
 
    case ('getAkteurKontakt') :
-    $request->getAkteurKontakt();
+    $request->getAkteurKontakt($id);
    break;
 
    case ('getAkteurAdresse') :
-    $request->getAkteurAdresse();
+    $request->getAkteurAdresse($id);
    break;
 
    default :

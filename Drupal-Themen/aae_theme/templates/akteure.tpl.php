@@ -31,7 +31,7 @@
  <div class="large-4 large-offset-1 columns">
 
    <label for="tag">Nach Tags filtern:</label>
-   <select name="tag[]" id="eventSpartenInput" multiple="multiple" class="tokenize">
+   <select name="tags[]" id="eventSpartenInput" multiple="multiple" class="tokenize">
    <?php // show $this->sparten ?>
    <?php foreach ($resulttags as $row) : ?>
      <option value="<?= $row->KID; ?>"><?= $row->kategorie; ?></option>
