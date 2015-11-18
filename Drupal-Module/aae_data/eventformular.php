@@ -257,6 +257,7 @@ Class eventformular extends aae_data_helper {
 	  ->execute();
 
     $i = $this->resultadresse->rowCount();
+
     if ($i == 0) {
       //Adresse nicht vorhanden
 	  $this->adresse = db_insert($this->tbl_adresse)
@@ -294,6 +295,12 @@ Class eventformular extends aae_data_helper {
 	  $this->ende = $this->ende . ' ' . $this->zeit_bis;
 	}
 	$this->start = $this->start . ' ' . $this->zeit_von;
+
+  if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
+   $this->bild = $this->upload_image($_FILES['bild']);
+  } else if (isset($_POST['oldPic'])) {
+   $this->bild = $this->clearContent($_POST['oldPic']);
+  }
 
 	$eventupdate = db_update($this->tbl_event)
    	->fields(array(
@@ -371,7 +378,7 @@ Class eventformular extends aae_data_helper {
 
     $_SESSION['sysmsg'][] = 'Das Event wurde erfolgreich bearbeitet!';
 
-  	header("Location: Eventprofil/" . $this->event_id);
+  	header("Location: ".base_path()."Eventprofil/" . $this->event_id);
     // Event erstellt uuuund.... tschüss ;)
 
   } // END function eventUpdaten()
@@ -414,7 +421,6 @@ Class eventformular extends aae_data_helper {
 
      foreach ($resultveranstalter as $row) {
       $this->veranstalter = $row->AID;
-      echo $this->veranstalter;
      }
 
     $akteur_id = $this->veranstalter;
@@ -484,8 +490,8 @@ Class eventformular extends aae_data_helper {
   private function eventSpeichern() {
 
     //Wenn Bilddatei ausgewählt wurde...
-    if ($_FILES) {
-     $this->bild = $this->upload_image($_FILES['bild']['name'], $this->clearContent($_POST['oldPic']));
+    if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
+     $this->bild = $this->upload_image($_FILES['bild']);
     }
 
 	//Abfrage, ob Adresse bereits in Adresstabelle
@@ -571,15 +577,15 @@ Class eventformular extends aae_data_helper {
      $sparte_id = '';
 
  		 $resultsparte = db_select($this->tbl_sparte, 's')
- 		  ->fields('s', array( 'KID' ))
- 		  ->condition('kategorie', $sparte, '=')
+ 		  ->fields('s')
+ 		  ->condition('KID', $sparte, '=')
  		  ->execute();
 
   		if ($resultsparte->rowCount() == 0) {
       // Tag in DB einfügen
- 		 $sparte_id = db_insert($this->tbl_sparte)
- 		  ->fields(array('kategorie' => $sparte))
- 		  ->execute();
+ 	  	 $sparte_id = db_insert($this->tbl_sparte)
+ 		   ->fields(array('kategorie' => $sparte))
+ 		   ->execute();
 
  		} else {
 

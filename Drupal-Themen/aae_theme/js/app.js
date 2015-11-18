@@ -50,11 +50,11 @@ $(document).ready(function() {
  });
 
  $('#alert .close').click(function(){
-  $('#alert').fadeUp('fast');
+  $('#alert').fadeOut('fast');
  });
 
  $('#alert-box .close').click(function(){
-  $('#alert-box').fadeUp('fast');
+  $('#alert-box').fadeOut('fast');
  });
 
  $('#presentationFilter li a').click(function(){

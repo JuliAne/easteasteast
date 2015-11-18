@@ -3,7 +3,8 @@
  * eventloeschen.php löscht ein Event aus der DB
  * (nach vorheriger Abfrage).
  *
- * Ruth, 2015-07-20
+ * TODO: Integration in Klassen-Modell
+ * TODO: Eventbild löschen
  */
 
 //Eingeloggter User
@@ -19,6 +20,7 @@ $event_id = $explodedpath[1];
 $tbl_event = "aae_data_event";
 $tbl_hat_user = "aae_data_akteur_hat_user";
 $tbl_akteur_events = "aae_data_akteur_hat_event";
+$tbl_event_hat_sparte = "aae_data_event_hat_sparte";
 
 //Sicherheitsschutz
 if (!user_is_logged_in()) {
@@ -85,6 +87,10 @@ if (isset($_POST['submit'])) {
     ->condition('EID', $event_id, '=')
     ->execute();
 
+  $eventloeschen = db_delete($tbl_event_hat_sparte)
+   ->condition('hat_EID', $event_id, '=')
+   ->execute();
+
   // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
   if (session_status() == PHP_SESSION_NONE) session_start();
   $_SESSION['sysmsg'][] = 'Das Event wurde gelöscht.';
@@ -99,7 +105,7 @@ $pathThisFile = $_SERVER['REQUEST_URI'];
 //Darstellung
 $profileHTML = <<<EOF
 <div class="alert-box" data-alert>
- <p><strong>Möchten Sie dieses Event wirklich löschen?</strong></p><br />
+ <h4><strong>Möchten Sie dieses Event wirklich löschen?</strong></h4><br />
  <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
    <input name="event_id" type="hidden" id="eventEIDInput" value="$event_id" />
    <a class="secondary button" href="javascript:history.go(-1)">Abbrechen</a>

@@ -21,8 +21,8 @@
    var $tbl_event_sparte = "aae_data_event_hat_sparte";
 
    //Speicherort fuer Bilder
-   var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/styles/large/public/field/image/";
-   var $short_bildpfad = "sites/default/files/styles/large/public/field/image/";
+   var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/pictures/aae/";
+   var $short_bildpfad = "sites/default/files/pictures/aae/";
 
    /**
     *  Einfache Funktion zum Filtern von POST- und GET-Daten. Gerne erweiterbar.
@@ -33,15 +33,14 @@
      //return mysql_real_escape_string($clear);
    }
 
-   protected function upload_image($bildname, $oldpic = '') {
+   protected function upload_image($bild) {
 
-     if (!empty($bildname)) {
-      if (!move_uploaded_file($_FILES['bild']['tmp_name'], $this->bildpfad . md5($bildname))) {
-         echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />' . $bildname;
-         exit();
-       }
-       return base_path() . $this->short_bildpfad . md5($bildname);
-     }
+$image = new Imagick($bild['tmp_name']);
+$image->thumbnailImage(400, 400);
+$image->writeImage($this->bildpfad.$bild['name']);
+
+       return base_path() . $this->short_bildpfad . $bild['name'];
+
    }
 
    /**

@@ -1,10 +1,6 @@
 <?php
 /**
- * @file akteurprofil.php
  * Zeigt das Profil eines Akteurs an.
- *
- * Ruth, 2015-06-06
- * Felix, 2015-07-23
  */
 
 //-----------------------------------
