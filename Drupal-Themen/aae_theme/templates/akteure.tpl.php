@@ -53,7 +53,7 @@
 
  <div id="change-style" class="button-bar large-4 columns">
   <ul id="presentationFilter" class="button-group round">
-    <li><a href="#" name="boxen" class="small button <?php echo ($presentationMode !== 'map' ? 'active' : 'secondary'); ?>" title="Darstellung als Boxen"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
+    <li><a href="#" name="boxen" class="small button <?php echo ($presentationMode !== 'map' ? 'active' : 'secondary'); ?>" title="Darstellung als Boxen"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
     <li><a href="#" name="map" class="small button <?php echo ($presentationMode == 'map' ? 'active' : 'secondary'); ?>" title="Darstellung auf Karte"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
   </ul>
   <input type="submit" class="small button right" id="sendFilters" name="submit" value="Filter anwenden">
