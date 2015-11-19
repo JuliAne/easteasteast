@@ -14,7 +14,7 @@
 <?php if(user_is_logged_in()) : ?>
   <a class="small button round right" href="<?= base_path(); ?>Eventformular">+ Event hinzufügen</a><br />
 <?php else : ?>
-  <a class="small secondary button round right" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Event hinzufügen (Login)</a><br />
+  <a class="login_first small secondary button round right" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Event hinzufügen (Login)</a><br />
 <?php endif; ?>
 
 </div>

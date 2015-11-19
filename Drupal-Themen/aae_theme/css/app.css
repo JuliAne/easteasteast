@@ -154,6 +154,7 @@ input[type=submit].isSubmitButton{
 
 #mainnav ul {
  list-style: none !important; /* Overwrites Drupal-CSS */
+ margin-left: 100px;
 }
 
 #mainnav #logo {
@@ -161,12 +162,12 @@ input[type=submit].isSubmitButton{
  margin-top: -10px;
  transition: all 0.25s;
  padding-right: 15px;
- position: relative;
+ position: absolute;
  z-index: 999;
 }
 
 #mainnav #logo:hover {
- width: 108px;
+ width: 107px;
  margin-top: 0;
  padding-right: 0;
  -moz-transform: rotate(-10deg);
@@ -316,19 +317,18 @@ transform: rotate(-10deg);
 }
 
 .pcard:hover, .event:hover {
- box-shadow: 0 0 5px #353535;
+ box-shadow: 0 0 4px #5e5e5e;
 }
 
 .pcard:hover header {
- background-size: 105%;
+ background-size: 110%;
 }
 
 .pcard header {
  height: 150px;
- background: url(../img/project_bg.png);
- background-size: 100%;
- border: 1px solid #fff;
- transition: 0.5s background-size;
+ background-image: url(../img/project_bg.png);
+ background-size: 105%;
+ transition: 0.4s background-size;
 }
 
 .pcard header a {
@@ -348,15 +348,28 @@ transform: rotate(-10deg);
 .pcard header h3 {
  margin: 0;
  padding: 5px;
- padding-top: 35px;
- text-shadow: 0 2px 2px #353535;
- text-transform: uppercase;
- font-size: 1.5em;
+ padding-top: 45px;
+ text-shadow: 0 1px 2px #353535;
+ font-size: 1.4em;
  text-align: center;
 }
 
+.pcard section .plocation {
+ text-align: center;
+}
+
+.pcard section .plocation img {
+  width: 18px;
+  margin-right: 6px;
+}
+
+.pcard section .divider {
+  margin-top: 8px;
+  margin-bottom: 5px;
+}
+
 .pcard section {
- padding: 15px 4px;
+ padding: 11px 9px;
 }
 
 .pcard section p strong {

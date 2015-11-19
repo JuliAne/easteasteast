@@ -14,7 +14,7 @@
 <?php if(user_is_logged_in()) : ?>
   <a class="small button round right" href="<?= base_path(); ?>Akteurformular">+ Akteur hinzufügen</a><br />
 <?php else : ?>
-  <a class="small secondary button round right" href="<?= base_path(); ?>user/register" title="Bitte zunächst einloggen.">+ Akteur hinzufügen (Login)</a><br />
+  <a class="login_first small secondary button round right" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Akteur hinzufügen (Login)</a><br />
 <?php endif; ?>
 
 </div>
@@ -41,7 +41,7 @@
  </div>
 
  <div class="large-2 columns">
-  <label for="display_number">Ergebnisse:</label>
+  <label for="display_number">Anzahl:</label>
   <select name="display_number" id="displayNumber">
    <option value="10">10</option>
    <option value="15" selected="selected">15</option>
@@ -53,7 +53,7 @@
 
  <div id="change-style" class="button-bar large-4 columns">
   <ul id="presentationFilter" class="button-group round">
-    <li><a href="#" name="boxen" class="small button <?php echo ($presentationMode == 'boxen' ? 'active' : 'secondary'); ?>" title="Darstellung als Boxen"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
+    <li><a href="#" name="boxen" class="small button <?php echo ($presentationMode !== 'map' ? 'active' : 'secondary'); ?>" title="Darstellung als Boxen"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
     <li><a href="#" name="map" class="small button <?php echo ($presentationMode == 'map' ? 'active' : 'secondary'); ?>" title="Darstellung auf Karte"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
   </ul>
   <input type="submit" class="small button right" id="sendFilters" name="submit" value="Filter anwenden">
@@ -72,14 +72,15 @@
 
 <?php foreach($resultAkteure as $akteur): ?>
   <div class="large-3 large-offset-1 columns pcard" style="margin-top:10px;">
-   <header <?php if($akteur->bild != '') echo 'style="background:url('.$akteur->bild.');"'; ?>>
+   <header <?php if($akteur->bild != '') echo 'style="background-image:url('.$akteur->bild.');"'; ?>>
      <h3><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>"><?= $akteur->name; ?></a></h3>
     </header>
     <section>
-     <?php if ($akteur->beschreibung !== ''): ?>
-     <p><?= $kurzbeschreibung = substr ($akteur->beschreibung, 0, 120)."..."; ?></p>
+      <p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" />Leipzig, Reudnitz</strong></p>
+      <?php if (!empty($akteur->beschreibung)): ?>
+      <div class="divider"></div>
+      <p><?= substr($akteur->beschreibung, 0, 145)."..."; ?></p>
      <?php endif; ?>
-     <p><a href="<?= base_path(); ?>Akteurprofil/<?= $akteur->AID; ?>">Zum Projekt...</a></p>
     </section>
    </div>
  <?php endforeach; ?>

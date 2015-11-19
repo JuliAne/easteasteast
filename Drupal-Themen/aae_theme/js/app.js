@@ -11,6 +11,11 @@ $(document).ready(function() {
   }
  });
 
+ $('.login_first').click(function(){
+  $('#login-button').trigger('click');
+  return false;
+ });
+
  $('.popup-link').click(function(){
 
    var popupCaller = $(this);
