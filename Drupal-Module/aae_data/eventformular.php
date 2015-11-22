@@ -16,9 +16,9 @@ Class eventformular extends aae_data_helper {
   var $name = "";
   var $veranstalter = "";
   var $start = "";
+  var $ende = "";
   var $zeit_von = "";
   var $zeit_bis = "";
-  var $ende = "";
   var $bild = "";
   var $kurzbeschreibung = "";
   var $url = "";
@@ -124,7 +124,7 @@ Class eventformular extends aae_data_helper {
     $this->ende = $this->clearContent($_POST['ende']);
     $this->zeit_von = $this->clearContent($_POST['zeit_von']);
     $this->zeit_bis = $this->clearContent($_POST['zeit_bis']);
-    if (isset($_POST['bild'])) $this->bild = $_POST['bild']; // Extend!
+    if (isset($_POST['bild'])) $this->bild = $_POST['bild'];
     $this->kurzbeschreibung = $this->clearContent($_POST['kurzbeschreibung']);
     $this->strasse = $this->clearContent($_POST['strasse']);
     $this->nr = $this->clearContent($_POST['nr']);
@@ -143,12 +143,11 @@ Class eventformular extends aae_data_helper {
     }
 
     //Ckeck, ob Datum angegeben wurde
-    if (strlen($this->start) == 0) {
-      $this->fehler['start'] = "Bitte ein Startdatum angeben!";
+    if (strlen($this->start) == 0 || DateTime::createFromFormat('Y-m-d', $this->start) == false) {
+      $this->fehler['start'] = "Bitte ein (gültiges) Startdatum angeben!";
       $this->freigabe = false;
     }
 
-    //Check, ob Bezirk ausgewählt wurde
     if (strlen($this->ort) == 0) {
   	  $this->fehler['ort'] = "Bitte einen Bezirk auswählen!";
   	  $this->freigabe = false;
@@ -159,10 +158,17 @@ Class eventformular extends aae_data_helper {
      $this->freigabe = false;
     }
 
-    //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
+    if (empty($this->zeit_von) || DateTime::createFromFormat('H:i', $this->zeit_von) == false) {
+     $this->fehler['zeit_von'] = "Bitte eine (gültige) Start-Uhrzeit angeben!";
+     $this->freigabe = false;
+    }
 
-    // TODO (Felix): Vlt. sollten wir die max. Länge der Werte im 32/64/128/256/... - Abstand
-    // gestalten; habe gehört, das sei besser für die DB-Performance...
+    if (!empty($this->zeit_bis) && DateTime::createFromFormat('H:i', $this->zeit_bis) == false) {
+     $this->fehler['zeit_bis'] = "Bitte eine (gültige) End-Uhrzeit angeben!";
+     $this->freigabe = false;
+    }
+
+    //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
 
     if (strlen($this->name) > 100) {
 	  $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
@@ -288,14 +294,6 @@ Class eventformular extends aae_data_helper {
 	  }
 	}
 
-	//Zeitformatierung
-	if (strlen($this->ende) == 0) {
-      $this->ende = $this->start;
-	} else {
-	  $this->ende = $this->ende . ' ' . $this->zeit_bis;
-	}
-	$this->start = $this->start . ' ' . $this->zeit_von;
-
   if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
    $this->bild = $this->upload_image($_FILES['bild']);
   } else if (isset($_POST['oldPic'])) {
@@ -399,11 +397,12 @@ Class eventformular extends aae_data_helper {
 	    'bild',
 	    'kurzbeschreibung',
 	    'ort',
+      'zeit_von',
+      'zeit_bis'
 	  ))
 	  ->condition('EID', $this->event_id, '=')
     ->execute();
 
-    //Speichern der Daten in den Arbeitsvariablen
     foreach ($resultevent as $row) {
      $this->name = $row->name;
      $this->ort = $row->ort;
@@ -412,6 +411,8 @@ Class eventformular extends aae_data_helper {
      $this->url = $row->url;
      $this->bild = $row->bild;
      $this->kurzbeschreibung = $row->kurzbeschreibung;
+     $this->zeit_von = $row->zeit_von;
+     $this->zeit_bis = $row->zeit_bis;
     }
 
     $resultveranstalter = db_select($this->tbl_akteur_events, 'a')
@@ -469,7 +470,7 @@ Class eventformular extends aae_data_helper {
     $this->sparten = $sparten;
 
     //Zeit auflösen
-    // I have no idea what this does...
+    /* I have no idea what this does...
     $explodedstart = explode(' ', $this->start);
     $explodedende = explode(' ', $this->ende);
     $this->ende = $explodedende[0];
@@ -480,7 +481,7 @@ Class eventformular extends aae_data_helper {
     }
     if (count($explodedende) == 2) {
 	   $this->zeit_bis = $explodedende[1];
-    }
+   } */
 
   } // END function eventUpdaten()
 
@@ -525,23 +526,13 @@ Class eventformular extends aae_data_helper {
           //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
 	      //Update der Adresse
 	      $adresse_updated = db_update($this->tbl_adresse)
-	 	    ->fields(array(
-			  'gps' => $this->gps,
-	        ))
+	 	     ->fields(array( 'gps' => $this->gps ))
 	        ->condition('ADID', $row->ADID, '=')
 	        ->execute();
 	    }
-	    $this->adresse = $row->ADID;//Adress-ID merken
+	    $this->adresse = $row->ADID;
 	  }
 	}
-
-	//Zeitformatierung
-	if (strlen($this->ende) == 0) {
-      $this->ende = $this->start . ' ' . $this->zeit_bis;
-	} else {
-	  $this->ende = $this->ende . ' ' . $this->zeit_bis;
-	}
-	$this->start = $this->start . ' ' . $this->zeit_von;
 
 	$this->event_id = db_insert($this->tbl_event)
    	->fields(array(
@@ -552,7 +543,9 @@ Class eventformular extends aae_data_helper {
 		'ende' => $this->ende,
 		'bild' => $this->bild,
 		'kurzbeschreibung' => $this->kurzbeschreibung,
-		'ersteller' => $this->user_id
+		'ersteller' => $this->user_id,
+    'zeit_von' => $this->zeit_von,
+    'zeit_bis' => $this->zeit_bis
 	  ))
 	  ->execute();
 
@@ -561,8 +554,8 @@ Class eventformular extends aae_data_helper {
 
 	    $akteurevents = db_insert($this->tbl_akteur_events)
    	   ->fields(array(
-		  'AID' => $this->veranstalter,
-		  'EID' => $this->event_id,
+		   'AID' => $this->veranstalter,
+	     'EID' => $this->event_id,
 	    ))
 	    ->execute();
   	}
@@ -650,10 +643,7 @@ Class eventformular extends aae_data_helper {
      ->fields('b', array( 'BID', 'bezirksname' ))
      ->execute();
 
-    $all_sparten = db_select($this->tbl_sparte, 's')
-      ->fields('s')
-      ->execute()
-      ->fetchAll();
+    $all_sparten = $this->getAllTags();
 
     foreach ($all_sparten as $id => $sparte) {
      $this->all_sparten[$id] = $sparte;

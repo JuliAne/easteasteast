@@ -6,7 +6,8 @@ Drupal System
 
 ### Requirements
 
-Drupal version 7 (https://www.drupal.org/start.)
+Drupal version 7.x (https://www.drupal.org/start.)
+Imagick
 
 ### aae_theme
 
@@ -25,27 +26,26 @@ Drupal version 7 (https://www.drupal.org/start.)
 
   - Titel 1: < none >
   - Description: Short-Info-Leiste
-  - Text (beliebig anpassbar - bitte in HTML schreiben und Links manuell eintragen)     
+  - Text (beliebig anpassbar - bitte in HTML schreiben und Links manuell eintragen)
   - Region: AAE Theme > Footer
-  
+
 - in the backend system select "Structure > Blocks"
 - select "Main menu"
 - confirm following settings:
 
   - Titel: < none >
   - Region: AAE Theme > Navigation
- 
+
 - add (sub)sites to the menu (see Abschlussdokumente/handbuch.pdf)
 
-#### Slider 
+#### Slider
 
 - see Abschlussdokumente/handbuch.pdf
-  
+
 ### aae data
 
-- copy "aae_data" to "/drupal/sites/all/modules"
-- edit "db config.php" in directory "aae_data/database"
+- copy "aae_data" to "/drupal/sites/all/modules/"
+- edit "aae_data_helper.php"
 - login to Drupal admin account
 - select group "Custom Modules" and enable "AAE Data"
-- call URLs .../?q=akteure or .../?q=events (not working? then reinstall module and try again)
-
+- call URLs .../akteure or .../events (not working? then reinstall module and try again)

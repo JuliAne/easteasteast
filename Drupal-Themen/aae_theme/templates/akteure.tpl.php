@@ -43,18 +43,18 @@
  <div class="large-2 columns">
   <label for="display_number">Anzahl:</label>
   <select name="display_number" id="displayNumber">
-   <option value="10">10</option>
-   <option value="15" selected="selected">15</option>
-   <option value="20">20</option>
-   <option value="alle">Alle</option>
+   <option value="10" <?= ($this->maxAkteure == '10' ? 'selected="selected"' : ''); ?>>10</option>
+   <option value="15" <?= ($this->maxAkteure == '15' ? 'selected="selected"' : ''); ?>>15</option>
+   <option value="20" <?= ($this->maxAkteure == '20' ? 'selected="selected"' : ''); ?>>20</option>
+   <option value="all" <?= ($this->maxAkteure == 'all' ? 'selected="selected"' : ''); ?>>Alle</option>
   </select>
  </div>
 
 
  <div id="change-style" class="button-bar large-4 columns">
   <ul id="presentationFilter" class="button-group round">
-    <li><a href="#" name="boxen" class="small button <?php echo ($presentationMode !== 'map' ? 'active' : 'secondary'); ?>" title="Darstellung als Boxen"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
-    <li><a href="#" name="map" class="small button <?php echo ($presentationMode == 'map' ? 'active' : 'secondary'); ?>" title="Darstellung auf Karte"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
+    <li><a href="#" name="boxen" class="small button <?php echo ($this->presentationMode !== 'map' ? 'active' : 'secondary'); ?>" title="Darstellung als Boxen"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
+    <li><a href="#" name="map" class="small button <?php echo ($this->presentationMode == 'map' ? 'active' : 'secondary'); ?>" title="Darstellung auf Karte"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
   </ul>
   <input type="submit" class="small button right" id="sendFilters" name="submit" value="Filter anwenden">
  </div>
@@ -66,7 +66,7 @@
 
 <div id="akteure" class="row" style="padding: 15px 0;">
 
-<?php if ($presentationMode == 'map') : ?>
+<?php if ($this->presentationMode == 'map') : ?>
   <div id="map" style="width: 100%; height: 400px;"></div>
 <?php else : ?>
 
@@ -91,7 +91,7 @@
 
 <div class="divider"></div>
 
-<?php if ($presentationMode !== 'map') : ?>
+<?php if ($this->presentationMode !== 'map') : ?>
 <div class="row">
   <ul class="pagination large-4 columns large-offset-5" style="padding-top:15px;">
     <li class="arrow"><a href="<?= base_path(); ?>Akteure/1">&laquo;</a></li>

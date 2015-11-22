@@ -67,6 +67,17 @@ $image->writeImage($this->bildpfad.$bild['name']);
 
   }
 
+  protected function getAllTags() {
+
+    return db_select($this->tbl_sparte, 't')
+     ->fields('t', array(
+     'KID',
+     'kategorie',
+     ))
+    ->execute();
+    
+  }
+
  }
 
 ?>

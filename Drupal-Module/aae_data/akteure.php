@@ -11,8 +11,8 @@ Class akteure extends aae_data_helper {
 
  public function run(){
 
+ // Verfügbare actions: "boxen"[default] & "map"
  $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) ? $this->clearContent($_GET['presentation']) : 'boxen');
- // available actions: "boxen" & "map"
 
  // Zeige wie viele Akteure pro Seite?
  $this->maxAkteure = (isset($_GET['display_number']) && !empty($_GET['display_number']) ? $this->clearContent($_GET['display_number']) : '15' );
@@ -44,25 +44,26 @@ Class akteure extends aae_data_helper {
 if (isset($_GET['tags']) && !empty($_GET['tags'])){
 
   $filterSparten = db_select($this->tbl_hat_sparte, 'hs')
-   ->fields('hs');
+   ->fields('hs', array('hat_AID'));
 
-   $db_or = db_or();
+   $or = db_or();
 
-foreach($_GET['tags'] as $tag) {
+ foreach($_GET['tags'] as $tag) {
 
   $tag = $this->clearContent($tag);
-  $db_or->condition('hat_KID', $tag, '=');
+  $or->condition('hat_KID', $tag);
 
  }
 
- $filterSparten->condition($db_or)
+ $filterSparten->condition($or)
   ->execute()
-  ->fetchAssoc();
+  ->fetchAll();
 
   //print_r($filterSparten);
 
- foreach($filterSparten as $sparte) {
-
+ foreach(array_unique($filterSparten) as $sparte) {
+  print_r($sparte);
+  echo 'D';
  }
 
 }
@@ -81,12 +82,7 @@ $resultAkteure = db_select($this->tbl_akteur, 'a')
   ->range($start, $ende)
   ->execute();
 
-  $resulttags = db_select($this->tbl_sparte, 't')
-   ->fields('t', array(
-   'KID',
-   'kategorie',
-   ))
-  ->execute();
+  $resulttags = $this->getAllTags();
 
   ob_start(); // Aktiviert "Render"-modus
   include_once path_to_theme().'/templates/akteure.tpl.php';

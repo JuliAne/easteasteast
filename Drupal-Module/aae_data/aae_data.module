@@ -250,10 +250,8 @@ function events_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/events.php';
 
-  $path = current_path();
-  $path_alias = drupal_lookup_path('alias', $path);
-
-  return $profileHTML;
+  $event = new events();
+  return $event->run();
 }
 
 /**
