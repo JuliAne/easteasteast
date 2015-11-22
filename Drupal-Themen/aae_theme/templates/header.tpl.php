@@ -19,7 +19,7 @@
      <?php print drupal_render(drupal_get_form('search_block_form', TRUE)); ?>
     </div>
 
-   <a href="#login-popup" class="popup-link" title="Einloggen"><img src="<?= base_path().path_to_theme(); ?>/img/user.svg" /></a>
+   <a id="login-button" href="#login-popup" class="popup-link" title="Einloggen"><img src="<?= base_path().path_to_theme(); ?>/img/user.svg" /></a>
     <div id="login-popup" class="popup large-3 columns">
 
      <?php if(!user_is_logged_in()) print render($page['user_region']);

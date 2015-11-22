@@ -132,6 +132,11 @@ input[type=submit].isSubmitButton{
 
 #mainnav.scrolled {
  height: 50px;
+ opacity: 0.8;
+}
+
+#mainnav.scrolled:hover {
+ opacity:1;
 }
 
 #mainnav.scrolled li {
@@ -154,6 +159,7 @@ input[type=submit].isSubmitButton{
 
 #mainnav ul {
  list-style: none !important; /* Overwrites Drupal-CSS */
+ margin-left: 100px;
 }
 
 #mainnav #logo {
@@ -161,12 +167,12 @@ input[type=submit].isSubmitButton{
  margin-top: -10px;
  transition: all 0.25s;
  padding-right: 15px;
- position: relative;
+ position: absolute;
  z-index: 999;
 }
 
 #mainnav #logo:hover {
- width: 108px;
+ width: 107px;
  margin-top: 0;
  padding-right: 0;
  -moz-transform: rotate(-10deg);
@@ -186,6 +192,7 @@ transform: rotate(-10deg);
  padding: 0;
  padding-right: 15px;
  padding-top: 23px;
+ transition: 0.3s all;
 }
 
 #mainnav ul .expanded:before {
@@ -316,19 +323,18 @@ transform: rotate(-10deg);
 }
 
 .pcard:hover, .event:hover {
- box-shadow: 0 0 5px #353535;
+ box-shadow: 0 0 4px #5e5e5e;
 }
 
 .pcard:hover header {
- background-size: 105%;
+ background-size: 110%;
 }
 
 .pcard header {
  height: 150px;
- background: url(../img/project_bg.png);
- background-size: 100%;
- border: 1px solid #fff;
- transition: 0.5s background-size;
+ background-image: url(../img/project_bg.png);
+ background-size: 105%;
+ transition: 0.4s background-size;
 }
 
 .pcard header a {
@@ -348,15 +354,28 @@ transform: rotate(-10deg);
 .pcard header h3 {
  margin: 0;
  padding: 5px;
- padding-top: 35px;
- text-shadow: 0 2px 2px #353535;
- text-transform: uppercase;
- font-size: 1.5em;
+ padding-top: 45px;
+ text-shadow: 0 1px 2px #353535;
+ font-size: 1.4em;
  text-align: center;
 }
 
+.pcard section .plocation {
+ text-align: center;
+}
+
+.pcard section .plocation img {
+  width: 18px;
+  margin-right: 6px;
+}
+
+.pcard section .divider {
+  margin-top: 8px;
+  margin-bottom: 5px;
+}
+
 .pcard section {
- padding: 15px 4px;
+ padding: 11px 9px;
 }
 
 .pcard section p strong {
@@ -574,4 +593,81 @@ transform: rotate(-10deg);
 }
 
 #change-style li {}
-#change-style li img {width:20px;}
+#change-style li img {width:23px;}
+
+.pace {
+  -webkit-pointer-events: none;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.pace-inactive {
+  display: none;
+}
+
+.pace .pace-progress {
+  background: #29d;
+  position: fixed;
+  z-index: 48;
+  top: 60px;
+  right: 100%;
+  width: 100%;
+  height: 2px;
+}
+
+.pace .pace-progress-inner {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  box-shadow: 0 0 10px #29d, 0 0 5px #29d;
+  opacity: 1.0;
+  -webkit-transform: rotate(3deg) translate(0px, -4px);
+  -moz-transform: rotate(3deg) translate(0px, -4px);
+  -ms-transform: rotate(3deg) translate(0px, -4px);
+  -o-transform: rotate(3deg) translate(0px, -4px);
+  transform: rotate(3deg) translate(0px, -4px);
+}
+
+.pace .pace-activity {
+  display: block;
+  position: fixed;
+  z-index: 49;
+  top: 70px;
+  right: 15px;
+  width: 14px;
+  height: 14px;
+  border: solid 2px transparent;
+  border-top-color: #29d;
+  border-left-color: #29d;
+  border-radius: 10px;
+  -webkit-animation: pace-spinner 400ms linear infinite;
+  -moz-animation: pace-spinner 400ms linear infinite;
+  -ms-animation: pace-spinner 400ms linear infinite;
+  -o-animation: pace-spinner 400ms linear infinite;
+  animation: pace-spinner 400ms linear infinite;
+}
+
+@-webkit-keyframes pace-spinner {
+  0% { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-moz-keyframes pace-spinner {
+  0% { -moz-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -moz-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-o-keyframes pace-spinner {
+  0% { -o-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -o-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-ms-keyframes pace-spinner {
+  0% { -ms-transform: rotate(0deg); transform: rotate(0deg); }
+  100% { -ms-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@keyframes pace-spinner {
+  0% { transform: rotate(0deg); transform: rotate(0deg); }
+  100% { transform: rotate(360deg); transform: rotate(360deg); }
+}

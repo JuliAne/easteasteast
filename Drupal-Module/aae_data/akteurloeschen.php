@@ -3,7 +3,8 @@
  * akteurloeschen.php löscht einen Akteur aus der DB
  * (nach vorheriger Abfrage).
  *
- * Ruth, 2015-07-20
+ * TODO: Umstellen auf Klassenmodell
+ * TODO: lösche profilbild
  */
 
 //Eingeloggter User
@@ -19,6 +20,7 @@ $akteur_id = $explodedpath[1];
 $tbl_hat_user = "aae_data_akteur_hat_user";
 $tbl_akteur_events = "aae_data_akteur_hat_event";
 $tbl_akteur = "aae_data_akteur";
+$tbl_hat_sparte = "aae_data_akteur_hat_sparte";
 
 //Sicherheitsschutz
 if(!user_is_logged_in()){
@@ -74,11 +76,15 @@ if (isset($_POST['submit'])) {
     ->condition('AID', $akteur_id, '=')
     ->execute();
 
+  $tagsloeschen = db_delete($tbl_hat_sparte)
+   ->condition('hat_AID', $akteur_id, '=')
+   ->execute();
+
   // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
   if (session_status() == PHP_SESSION_NONE) session_start();
   $_SESSION['sysmsg'][] = 'Der Akteur wurde gelöscht.';
   header("Location: ".base_path()."Akteure");
-  
+
 } else {
 
 }
@@ -88,7 +94,7 @@ $pathThisFile = $_SERVER['REQUEST_URI'];
 //Darstellung
 $profileHTML = <<<EOF
 <div class="alert-box" data-alert>
-  <p>Möchten Sie den Akteur <strong>$akteur</strong> wirklich löschen?</p><br />
+  <h3>Möchten Sie den Akteur <strong>$akteur</strong> wirklich löschen?</h3><br />
   <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
     <input name="akteur_id" type="hidden" id="eventEIDInput" value="$akteur_id" />
     <a class="secondary button" href="javascript:history.go(-1)">Abbrechen</a>

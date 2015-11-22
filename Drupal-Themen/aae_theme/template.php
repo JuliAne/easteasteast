@@ -15,11 +15,13 @@ function aae_preprocess_html(&$variables) {
 
   /* Checke Seitentyp, hänge entsprechendes CSS/JS an den Header: */
 
-  $path = explode("/", current_path()); // Welcome URL-Injection :D TODO: Call ClearContent()
+  $path = explode("/", current_path()); // TODO: Call ClearContent()
 
   switch(strtolower(trim($path[0]))) {
 
   case ('node') :
+
+     $node = node_load(arg(1));
 
     if (drupal_is_front_page()) {
 
@@ -33,10 +35,12 @@ function aae_preprocess_html(&$variables) {
      drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js');*/
      drupal_add_js(path_to_theme().'/js/home.js');
 
-   } else {
+   } else if ($node->type == 'article') {
     // Node--article.tpl.php
     drupal_add_css(path_to_theme(). '/css/subpage.css');
     drupal_add_css(path_to_theme(). '/css/article.css');
+   } else {
+    drupal_add_css(path_to_theme(). '/css/subpage.css');
    }
 
   break;
@@ -87,8 +91,8 @@ function aae_preprocess_html(&$variables) {
    drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
    drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');
    drupal_add_js($js, 'inline');
-   // drupal_add_js(path_to_theme().'/js/stalactite.min.js');
-   //drupal_add_js('$("#block-system-main #akteure").stalactite();', array('type' => 'inline', 'scope' => 'footer'));
+   //drupal_add_js(path_to_theme().'/js/wookmark.min.js');
+   //drupal_add_js('$("#akteure").wookmark({offset:10});', array('type' => 'inline', 'scope' => 'footer'));
 
    if (isset($_GET['submit']) && $_GET['presentation'] == 'map') {
     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
@@ -129,7 +133,7 @@ function aae_preprocess_html(&$variables) {
   global $user;
 
   if (array_intersect(array('redakteur','administrator'), $user->roles)) {
-   echo '<!-- IF IS_ADMIN --><style type="text/css">#mainnav { top: 65px !important; }</style><!-- /IF -->';
+   echo '<!-- IF IS_ADMIN --><style type="text/css">#mainnav { top: 65px !important; }#content { margin-top: 30px; }</style><!-- /IF -->';
   }
 } // END function aae_preprocess_html
 

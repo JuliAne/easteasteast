@@ -133,7 +133,7 @@
 
     <input type="file" id="eventBildInput" name="bild" />
 
-    <?php if (isset($this->bild)) : ?>
+    <?php if (!empty($this->bild)) : ?>
       <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
       <img src="<?= $this->bild; ?>" title="Bisheriges Eventbild" width=250 style="float:right;margin:8px;" />
     <?php endif; ?>

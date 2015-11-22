@@ -92,7 +92,7 @@ Class akteurformular extends aae_data_helper {
    *  Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
    *  @returns $profileHTML;
    */
-   
+
   public function run() {
 
     $path = current_path();
@@ -282,8 +282,9 @@ Class akteurformular extends aae_data_helper {
 	 ->execute();
 
    //Wenn Bilddatei ausgewählt wurde...
-   if ($_FILES) {
-    $this->bild = $this->upload_image($_FILES['bild']['name'], $this->clearContent($_POST['oldPic']));
+
+   if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
+    $this->bild = $this->upload_image($_FILES['bild']);
    }
 
 	 $this->akteur_id = db_insert($this->tbl_akteur)
@@ -302,14 +303,14 @@ Class akteurformular extends aae_data_helper {
 	  ))
 	  ->execute();
 
-	db_insert($this->tbl_hat_user)
-	  ->fields(array(
+    db_insert($this->tbl_hat_user)
+	   ->fields(array(
 	    'hat_UID' => $this->user_id,
 	    'hat_AID' => $this->akteur_id,
-	  ))
+     ))
 	  ->execute();
 
-	 if (is_array($this->sparten) && $this->sparten != "") {
+	 if (is_array($this->sparten) && !empty($this->sparten)) {
 
     foreach ($this->sparten as $id => $sparte) {
 		// Tag bereits in DB?
@@ -319,8 +320,8 @@ Class akteurformular extends aae_data_helper {
     $sparte_id = '';
 
 		$resultsparte = db_select($this->tbl_sparte, 's')
-		  ->fields('s', array( 'KID' ))
-		  ->condition('kategorie', $sparte, '=')
+		  ->fields('s')
+		  ->condition('KID', $sparte, '=')
 		  ->execute();
 
 		if ($resultsparte->rowCount() == 0) {
@@ -364,15 +365,10 @@ Class akteurformular extends aae_data_helper {
   private function akteurUpdaten() {
 
     //Wenn Bilddatei ausgewählt wurde...
-    if ($_FILES) {
-      $bildname = $_FILES['bild']['name'];
-      if ($bildname != "") {
-        if (!move_uploaded_file($_FILES['bild']['tmp_name'], $this->bildpfad.$bildname)) {
-          echo 'Error: Konnte Bild nicht hochladen. Bitte informieren Sie den Administrator. Bildname: <br />' . $bildname;
-          exit();
-        }
-        $this->bild = base_path() . $this->short_bildpfad . $bildname;
-      }
+    if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
+     $this->bild = $this->upload_image($_FILES['bild']);
+    } else if (isset($_POST['oldPic'])) {
+     $this->bild = $this->clearContent($_POST['oldPic']);
     }
 
     $akteurAdresse = db_select($this->tbl_akteur, 'a')
