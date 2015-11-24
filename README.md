@@ -7,6 +7,7 @@ Drupal System
 ### Requirements
 
 Drupal version 7.x (https://www.drupal.org/start.)
+
 Imagick
 
 ### aae_theme
