@@ -73,32 +73,24 @@ foreach ($resultAkteurId as $row) {
    if (session_status() == PHP_SESSION_NONE) session_start();
    $_SESSION['sysmsg'][] = 'Dieses Event konnte nicht gefunden werden...';
    header("Location: ".$base_path."/Event");
+
   }
 
   foreach ($resultEvent as $event) {
    $resultEvent = $event; // Kleiner Fix, um EIN Objekt zu generieren
   }
 
-  /*$resultVeranstalter = db_select($this->tbl_akteur_events, 'e');
-  $resultVeranstalter->join($this->tbl_akteur, 'a')
-   ->fields('a')
-   ->condition('e.EID', $eventId, '=')
-   ->condition('a.AID', $akteurId, '=')
+  $akteurId = db_select($this->tbl_akteur_events, 'ae')
+   ->fields('ae', array('AID'))
+   ->condition('EID', $eventId, '=')
    ->execute()
-   ->fetchAll();
+   ->fetchAssoc();
 
-/* VOR DEM JOIN SAH DAS GANZE SO AUS:
-
-  $resultAkteur = db_select($tbl_akteur, 'b')
-  ->fields('b', array(
-    'name',
-  ))
-  ->condition('AID', $row1->AID, '=')
- */
-
-  foreach ($resultVeranstalter as $veranstalter) {
-   $resultVeranstalter = $veranstalter; // Kleiner Fix, um EIN Objekt zu generieren
-  }
+  $resultAkteur = db_select($this->tbl_akteur, 'a')
+   ->fields('a',array('AID','name'))
+   ->condition('AID', $akteurId['AID'], '=')
+   ->execute()
+   ->fetchAssoc();
 
   //Selektion der Tags
   $resultSparten = db_select($this->tbl_event_sparte, 's')

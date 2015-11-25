@@ -30,7 +30,7 @@
 
 <div class="divider" style="padding: 20px 0;"></div>
 
-<?php if($resultEvent->kurzbeschreibung != "") : ?>
+<?php if(!empty($resultEvent->kurzbeschreibung)) : ?>
   <h4 style="padding: 10px 0;">Beschreibung</h4>
   <p><?= $resultEvent->kurzbeschreibung; ?></p>
 <?php endif;
@@ -47,7 +47,7 @@ if(count($sparten) != 0) { ?>
 } ?>
 
 <?php if($resultEvent->bild != "") : ?>
-  <img style="padding: 10px 0;" src="<?= $resultEvent->bild; ?>">
+  <img style="padding: 10px 0;" src="<?= $resultEvent->bild; ?>" title="<?= $resultEvent->name; ?>">
 <?php endif; ?>
 
  <h4 style="padding: 10px 0;">Veranstalter</h4>
@@ -56,32 +56,35 @@ if(count($sparten) != 0) { ?>
    <p><strong>Erstellt von:</strong> <?= $row2->name; ?></p>
  <?php endforeach; ?>
 
-   <p>Akteur: <a href="<?= base_path(); ?>Akteurprofil/<?= $resultVeranstalter->AID; ?>"><?= $resultVeranstalter->name; ?></a></p>
+   <p><strong>Akteur:</strong> <a href="<?= base_path(); ?>Akteurprofil/<?= $resultAkteur['AID']; ?>" title="Profil von <?= $resultAkteur['name']; ?> besuchen"><?= $resultAkteur['name']; ?></a></p>
 
    <?php if(!empty($resultAdresse)) : ?>
-   <p><strong>Ort:</strong>
+    <p><strong>Ort:</strong>
 
-   <?php if($resultAdresse->strasse != "" && $resultAdresse->nr != "") : ?>
+    <?php if($resultAdresse->strasse != "" && $resultAdresse->nr != "") : ?>
        <?= $resultAdresse->strasse.' '.$resultAdresse->nr; ?>
+    <?php endif; ?>
+
+   <?php if($resultAdresse->plz != "") : ?>
+      - <?= $resultAdresse->plz; ?> Leipzig 
    <?php endif; ?>
 
-  <?php if($resultAdresse->plz != "") : ?>
-      <?= $resultAdresse->plz; ?>
-  <?php endif; ?>
+   <?php  if($resultBezirk->bezirksname != "") : ?>
+      (<?= $resultBezirk->bezirksname; ?>)
+   <?php endif; ?>
 
-  <?php  if($resultBezirk->bezirksname != "") : ?>
-      <?= $resultBezirk->bezirksname; ?>
-  <?php endif; ?>
-
-  <?php if($resultAdresse->gps != "") : ?>
-       GPS: <?= $resultAdresse->gps; ?>
-  <?php endif; ?>
+   <?php //if($resultAdresse->gps != "") : ?>
 
   </p><?php endif; ?>
 
   <?php if($resultEvent->url != "") : ?>
     <br /><p><strong>Weitere Informationen: </strong><a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
   <?php endif; ?>
+
+  <form action="/Tag/<?= $resultEvent->start; ?>" method="POST">
+    <input name="eventid" value="16" type="hidden">
+    <input class="right small secondary button" id="icalSubmit" name="submit" value="Als .ical exportieren" type="submit">
+  </form>
 
 <?php if($okay == 1) : ?>
   <a class="right small secondary button" href="<?= base_path(); ?>Eventloeschen/<?= $eventId; ?>" >Event Löschen</a>
