@@ -1,51 +1,51 @@
 # easteasteast
 
-Drupal System
-
 ## Installation
 
 ### Requirements
 
-Drupal version 7.x (https://www.drupal.org/start.)
-Imagick
+*Drupal version 7.x (https://www.drupal.org/start.)*
+*Imagick*
+*MySQL/MariaDB*
+
+### Installation via git:
+
+Within your local drupal-copy, clone this repo to '/sites/all/'. The module & theme will now be managable in the backend.
 
 ### aae_theme
 
-#### Installation
+#### Installation via (S)FTP
 
-- copy "aaa_theme" to "/drupal/sites/all/themes"
-- go to Drupal site
-- login to your admin account
-- go to "Appearence", select "AAE" and click "Enable and set default“ to activate theme
+- Copy "themes/aaa_theme" to "/drupal/sites/all/themes"
+- Login to your Drupal-backend
+- Navigate to "Appearence", select "AAE Theme" and click "Enable and set default“ to activate the theme.
 
-#### Settings
+#### Settings (untested)
 
-- in the backend system select "Structure > Blocks"
-- add new block
-- confirm following settings:
+- Add a new block @ "Structure > Blocks"
+- Confirm the following settings:
 
-  - Titel 1: < none >
+  - Title: <none>
   - Description: Short-Info-Leiste
   - Text (beliebig anpassbar - bitte in HTML schreiben und Links manuell eintragen)
   - Region: AAE Theme > Footer
 
-- in the backend system select "Structure > Blocks"
-- select "Main menu"
-- confirm following settings:
+- Set the new menu @ "Structure > Blocks > Main Menu"
+- Confirm the following settings:
 
-  - Titel: < none >
+  - Title: <none>
   - Region: AAE Theme > Navigation
 
-- add (sub)sites to the menu (see Abschlussdokumente/handbuch.pdf)
+- Add (sub)sites to the menu (see Abschlussdokumente/handbuch.pdf)
 
-#### Slider
+#### Slider-Settings (front-page)
 
-- see Abschlussdokumente/handbuch.pdf
+- See Abschlussdokumente/handbuch.pdf
 
 ### aae data
 
-- copy "aae_data" to "/drupal/sites/all/modules/"
-- edit "aae_data_helper.php"
-- login to Drupal admin account
-- select group "Custom Modules" and enable "AAE Data"
+- Copy "aae_data" to "/drupal/sites/all/modules/"
+- Edit "aae_data_helper.php" and set the internal server-path's
+- Login to Drupal admin account
+- Select group "Custom Modules" and enable "AAE Data"
 - call URLs .../akteure or .../events (not working? then reinstall module and try again)
