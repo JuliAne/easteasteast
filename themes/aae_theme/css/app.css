@@ -362,6 +362,7 @@ transform: rotate(-10deg);
 
 .pcard section .plocation {
  text-align: center;
+ opacity: 0.7;
 }
 
 .pcard section .plocation img {

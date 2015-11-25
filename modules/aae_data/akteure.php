@@ -77,12 +77,37 @@ $resultAkteure = db_select($this->tbl_akteur, 'a')
   'name',
   'beschreibung',
   'bild',
+  'adresse'
   ))
-  ->orderBy('name', 'ASC')
+  ->orderBy('name', 'ASC') // TODO: Nach neuesten filtern
   ->range($start, $ende)
-  ->execute();
+  ->execute()
+  ->fetchAll();
+
+  // Get Bezirk
+  foreach ($resultAkteure as $counter => $akteur) {
+
+   $adresse = db_select($this->tbl_adresse, 'ad')
+    ->fields('ad', array('bezirk'))
+    ->condition('ADID', $akteur->adresse, '=')
+    ->execute()
+    ->fetchAssoc();
+
+   $bezirk = db_select($this->tbl_bezirke, 'b')
+    ->fields('b')
+    ->condition('BID', $adresse['bezirk'], '=')
+    ->execute()
+    ->fetchAssoc();
+
+   $resultAkteure[$counter] = (array)$resultAkteure[$counter];
+   $resultAkteure[$counter]['bezirk'] = $bezirk['bezirksname'];
+   $resultAkteure[$counter] = (object)$resultAkteure[$counter];
+
+  }
 
   $resulttags = $this->getAllTags();
+
+  // TODO return $this->render();
 
   ob_start(); // Aktiviert "Render"-modus
   include_once path_to_theme().'/templates/akteure.tpl.php';

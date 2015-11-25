@@ -45,23 +45,26 @@ if (empty($resultakteur)) {
 
   if (session_status() == PHP_SESSION_NONE) session_start();
 
-  $_SESSION['sysmsg'][] = 'Akteurprofil konnte nicht gefunden werden...';
+  $_SESSION['sysmsg'][] = 'Dieses Akteurprofil konnte nicht gefunden werden...';
 
   header("Location: ".$base_path."/Akteure");
 }
 
 //-----------------------------------
 
-foreach ($resultakteur as $rId => $row) {
+foreach ($resultakteur as $row) {
+
   $aResult['row1'] = $row;
   $resultAdresse = db_select($tbl_adresse, 'b')
-    ->fields('b')
-	->condition('ADID', $row->adresse, '=')
-	->execute()
-    ->fetchAll();
+   ->fields('b')
+	 ->condition('ADID', $row->adresse, '=')
+	 ->execute()
+   ->fetchAll();
+
   foreach ($resultAdresse as $row2) {
     $aResult['row2'] = $row2; // Kleiner Fix, damit $row2 als Objekt abrufbar
   }
+
 }
 
 // Ziehe Informationen über Events vom Akteur

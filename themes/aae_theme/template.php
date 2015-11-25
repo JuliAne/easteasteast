@@ -2,6 +2,15 @@
 
 function aae_preprocess_html(&$variables) {
 
+  $viewport = array(
+   '#tag' => 'meta',
+   '#attributes' => array(
+     'name' => 'viewport',
+     'content' => 'width=device-width, initial-scale=1, maximum-scale=1',
+   ),
+  );
+  drupal_add_html_head($viewport, 'viewport');
+
   drupal_add_js(path_to_theme().'/js/jquery-1.11.3.min.js'); // Wenn Du das siehst, check mal, ob's ne neue Version gibt
 
   drupal_add_js(path_to_theme().'/js/pace.min.js');

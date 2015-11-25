@@ -76,7 +76,7 @@
      <h3><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>"><?= $akteur->name; ?></a></h3>
     </header>
     <section>
-      <p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" />Leipzig, Reudnitz</strong></p>
+      <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?>
       <?php if (!empty($akteur->beschreibung)): ?>
       <div class="divider"></div>
       <p><?= substr($akteur->beschreibung, 0, 145)."..."; ?></p>

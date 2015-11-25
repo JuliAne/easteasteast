@@ -15,6 +15,7 @@ $(document).ready(function(){
          navigation: true,
 	 navigationPosition: 'right',
 	 navigationTooltips: ['Start', 'Projekte & Veranstaltungen', 'Journal', 'Footer'],
+   fixedElements: '#mainnav',
 
    afterLoad: function(anchor, index){
       if (index == 1) {

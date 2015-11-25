@@ -175,10 +175,8 @@ function kalender_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/kalender.php';
 
-  $path = current_path();
-  $path_alias = drupal_lookup_path('alias', $path);
-
-  return $profileHTML;
+  $aae_kalender = new kalender();
+  return $aae_kalender->run();
 
 }
 
