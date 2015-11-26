@@ -206,11 +206,13 @@ function akteurformular_page() {
 /**
  * Baut die Seite fuer das Akteurprofil
  */
-function akteurprofil_page($aid = 0) {
+function akteurprofil_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurprofil.php';
 
-  return $profileHTML;
+  $akteurprofil = new aae_akteurprofil();
+
+  return $akteurprofil->run();
 }
 
 /**
@@ -255,14 +257,13 @@ function events_page() {
 /**
  * Baut die Seite fuer das Eventprofil
  */
-function eventprofil_page($eid = 0) {
+function eventprofil_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventprofil.php';
 
-  $path = current_path();
-  $path_alias = drupal_lookup_path('alias', $path);
+  $eventprofil = new aae_eventprofil();
 
-  return $profileHTML;
+  return $eventprofil->run();
 }
 
 /**
