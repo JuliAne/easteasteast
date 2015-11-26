@@ -535,18 +535,35 @@ transform: rotate(-10deg);
  padding-bottom: 13px;
 }
 
-
-#footer #mini-calendar .date-heading a {
- float: right;
- font-size: 0.9em;
- margin-top: -42px;
+#footer #calendar .header {
+  margin-bottom: 6px;
 }
 
-#footer #mini-calendar .mini-day-on a {
- background-color: #008CBA;
- color: #fff;
- border-radius: 12px;
- padding: 0 6px;
+#footer #calendar .header a {
+ margin: 8px;
+ font-size: 0.7em;
+}
+
+#footer #calendar ul.label {
+  width: 100%;
+}
+
+#footer #calendar ul.label li {
+  float: left;
+  width: 14%;
+  padding: 6px;
+}
+
+#footer #calendar .dates {
+  width: 100%;
+}
+
+#footer #calendar .dates li {
+  float: left;
+  width: 14%;
+  padding: 5px;
+  font-size: 0.75em;
+  margin: 5px 0;
 }
 
 @media only screen and ( max-width: 40em ) /* 640 */

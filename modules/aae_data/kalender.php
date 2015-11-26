@@ -5,7 +5,7 @@
 
 class kalender extends aae_data_helper {
 
- private $dayLabels = array("Mon","Die","Mit","Don","Fre","Sam","Son");
+ private $dayLabels = array("Mo","Di","Mi","Do","Fr","Sa","So");
  private $currentYear=0;
  private $currentMonth=0;
  private $currentDay=0;
@@ -49,7 +49,7 @@ class kalender extends aae_data_helper {
        $this->_createNavi().
      '</div>'.
      '<div class="box-content">' .
-       '<ul class="label">' . $this->_createLabels() . '</ul>';
+       '<ul class="secondary label">' . $this->_createLabels() . '</ul>';
        $content .= '<div class="clear"></div>';
        $content .= '<ul class="dates">';
 
@@ -122,9 +122,9 @@ class kalender extends aae_data_helper {
 
    return
      '<div class="header">'.
-       '<a class="prev" href="Kalender/?month=' . sprintf('%02d',$preMonth) . '&year=' . $preYear . '">Prev</a>'.
+       '<a class="prev" href="Kalender/?month=' . sprintf('%02d',$preMonth) . '&year=' . $preYear . '"><<</a>'.
          '<span class="title">' . date('Y M',strtotime($this->currentYear . '-' . $this->currentMonth . '-1')) . '</span>'.
-       '<a class="next" href="Kalender/?month=' . sprintf("%02d", $nextMonth) . '&year=' . $nextYear . '">Next</a>'.
+       '<a class="next" href="Kalender/?month=' . sprintf("%02d", $nextMonth) . '&year=' . $nextYear . '">>></a>'.
      '</div>';
  }
 
@@ -134,7 +134,7 @@ class kalender extends aae_data_helper {
  private function _createLabels() {
    $content = '';
    foreach ($this->dayLabels as $index=>$label) {
-     $content .= '<li class="' . ($label==6?'end title':'start title') . ' title">' . $label . '</li>';
+     $content .= '<li class="start title '.$label.'">' . $label . '</li>';
    }
    return $content;
  }
