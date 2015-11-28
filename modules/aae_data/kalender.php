@@ -107,7 +107,11 @@ class kalender extends aae_data_helper {
    if ($countrows == 0) {
      return '<li id="li-' . $this->currentDate . '" class="' . ($cellNumber%7==1?' start ':($cellNumber%7==0?' end ':' ')) . ($cellContent==null?'mask':'') . '">' . $cellContent . '</li>';
    } else {
+<<<<<<< HEAD
      return '<li id="event" class="' . ($cellNumber%7==1?' start ':($cellNumber%7==0?' end ':' ')) . ($cellContent==null?'mask':'') . '"><a href="tag/' . $this->currentDate . '">' . $cellContent . ' (' . $countrows . ')</a></li>';
+=======
+     return '<li id="event" class="' . ($cellNumber%7==1?' start ':($cellNumber%7==0?' end ':' ')) . ($cellContent==null?'mask':'') . '"><a href="Tag/' . $this->currentDate . '">' . $cellContent . ' (' . $countrows . ')</a></li>';
+>>>>>>> c7bbb3722603d63fc6010c7bb63d4d511910169c
    }
  }
 
