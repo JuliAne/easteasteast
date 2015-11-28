@@ -11,7 +11,7 @@ function aae_preprocess_html(&$variables) {
   );
   drupal_add_html_head($viewport, 'viewport');
 
-  drupal_add_js(path_to_theme().'/js/jquery-1.11.3.min.js'); // Wenn Du das siehst, check mal, ob's ne neue Version gibt
+  drupal_add_js(path_to_theme().'/js/jquery-1.11.3.min.js');
 
   drupal_add_js(path_to_theme().'/js/pace.min.js');
   drupal_add_js(path_to_theme().'/js/doubletaptogo.min.js'); // Mobile-Menü, bisher ungenutzt
@@ -57,9 +57,9 @@ function aae_preprocess_html(&$variables) {
   case ('akteurprofil') :
 
     drupal_add_css(path_to_theme().'/css/project.css');
-    drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
+    /*drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
     drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js');
-    drupal_add_js('L.mapbox.accessToken = "pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg";', 'inline');
+    drupal_add_js('L.mapbox.accessToken = "pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg";', 'inline');*/
 
   break;
 

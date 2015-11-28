@@ -19,9 +19,9 @@
   <div class="month-view">
    <div class="date-nav-wrapper clear-block">
     <div class="date-nav">
-     <div class="date-heading">
+     <!--<div class="date-heading">
      <a href="<?= base_path(); ?>Kalender" title="">Großer Kalender</a>
-     </div>
+   </div>-->
     </div>
    </div>
 

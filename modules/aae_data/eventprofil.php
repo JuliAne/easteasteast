@@ -8,17 +8,6 @@ class aae_eventprofil extends aae_data_helper {
 
  public function run(){
 
-
-/*if (empty($resultakteur)) { <-- Einbauen um leere Eventsseiten zu vermeiden!
-  // Akteur nicht vorhanden, beame ihn zur Akteure-Seite
-
-  if (session_status() == PHP_SESSION_NONE) session_start();
-
-  $_SESSION['sysmsg'][] = 'Akteurprofil konnte nicht gefunden werden...';
-
-  header("Location: ".$base_path."/Akteure");
-} */
-
   global $user;
 
   $explodedpath = explode("/", current_path());
@@ -141,6 +130,10 @@ foreach ($resultAkteurId as $row) {
 
   foreach ($resultBezirk as $bezirk) {
    $resultBezirk = $bezirk; // Kleiner Fix, um EIN Objekt zu generieren
+  }
+
+  if (!empty($resultAdresse->gps)) {
+    $this->addMapContent($resultAdresse->gps, array('gps' => $resultAdresse->gps, 'name' => $resultEvent->name, 'strasse' => $resultAdresse->strasse, 'nr' => $resultAdresse->nr));
   }
 
   ob_start(); // Aktiviert "Render"-modus
