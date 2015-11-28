@@ -1,0 +1,187 @@
+<?php
+
+/**
+ * @file
+ * Installiert alles, was unser AAE Data Modul benötigt.
+ */
+
+/**
+ * Implements hook_schema().
+ * Legt bei Installation DB-Tabellen an,
+ * welche automatisch bei Deinstallation wieder entfernt werden.
+ */
+function aae_data_schema() {
+  $schema = array();
+  $schema ['aae_data_bezirke'] = array(
+  'description' => 'Tabelle fuer Leipziger Bezirke',
+	'fields' => array(
+	  'BID' => array('description' => 'ID für Bezirke', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'bezirksname' => array('description' => 'Bezirksname', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
+	),
+	'primary key' => array('BID'),
+  );
+  $schema ['aae_data_akteur'] = array(
+  'description' => 'Tabelle für Akteure',
+	'fields' => array(
+    'AID' => array('description' => 'ID für Akteur', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'name' => array('description' => 'Name des Akteurs/der Organisation', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
+	  'email' => array('description' => 'Email Adresse zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE, 'default' => ''),
+	  'telefon' => array('description' => 'Telefonnummer zur Kontaktaufnahme', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'ansprechpartner' => array('description' => 'Öffentlicher Ansprechpartner', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'funktion' => array('description' => 'Funktion des Ansprechpartners', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'bild' => array('description' => 'Pfad zum hinterlegten Bild', 'type' => 'varchar', 'length' => 400, 'not null' => FALSE, 'default' => ''),
+	  'beschreibung' => array('description' => 'Kurzbeschreibung für Übersicht', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
+	  'oeffnungszeiten' => array('description' => 'Wann der Akteur erreichbar ist', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
+	  'adresse' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+	  'ersteller' => array('description' => 'ID von User, der Akteur angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+	),
+	'primary key' => array('AID'),
+	'foreign keys' => array(
+	  'Akteursadresse' => array('table' => 'aae_data_adresse', 'columns' => array('adresse' => 'ADID')),
+	  'User' => array('table' => 'user', 'columns' => array('ersteller' => 'uid'))
+	)
+  );
+  $schema ['aae_data_adresse'] = array(
+  'description' => 'Tabelle für Adressen',
+	'fields' => array(
+	  'ADID' => array('description' => 'ID für Adressen', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'strasse' => array('description' => 'Straßenname', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'adresszusatz' => array('description' => 'Adresszusatz wie Hinterhof oder a', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'bezirk' => array('description' => 'Bezirk', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+	  'nr' => array('description' => 'Hausnummer', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'plz' => array('description' => 'Postleitzahl', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'gps' => array('description' => 'GPS-Koordinaten für Karte', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	),
+	'primary key' => array('ADID'),
+	'foreign keys' => array(
+	  'Bezirk' => array('table' => 'aae_data_bezirk', 'columns' => array('bezirk' => 'BID'))
+	),
+  );
+  $schema ['aae_data_event'] = array(
+  'description' => 'Tabelle für Events',
+	'fields' => array(
+	  'EID' => array('description' => 'ID für Events', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'name' => array('description' => 'Eventname', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
+	  'start' => array('description' => 'Startzeitpunkt', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
+	  'ende' => array('description' => 'Endzeitpunkt', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+	  'kurzbeschreibung' => array('description' => 'Kurze inhaltliche Erläuterung', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => 0),
+	  'bild' => array('description' => 'Pfad zum Foto', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
+	  'ort' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
+	  'ersteller' => array('description' => 'ID von User, der Event angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+    'zeit_von' => array('TIME', 'not null' => TRUE),
+    'zeit_bis' => array('TIME', 'not null' => FALSE)
+	),
+	'primary key' => array('EID'),
+	'foreign keys' => array(
+	  'Eventadresse' => array('table' => 'aae_data_adresse', 'columns' => array('ort' => 'ADID')),
+	  'User' => array('table' => 'user', 'columns' => array('ersteller' => 'uid'))
+	),
+  );
+  $schema ['aae_data_akteur_hat_sparte'] = array(
+  'description' => 'Hilfstabelle für Sparten/Zielgruppen',
+	'fields' => array(
+	  'hat_AID' => array('description' => 'ID für Akteur', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'hat_KID' => array('description' => 'ID für Kategorien', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	),
+	'primary key' => array('hat_AID', 'hat_KID'),
+	'foreign keys' => array(
+	  'Kategorie' => array('table' => 'aae_data_kategorie', 'columns' => array('hat_KID' => 'KID')),
+	  'Akteur' => array('table' => 'aae_data_akteur', 'columns' => array('hat_AID' => 'AID'))
+	),
+  );
+  $schema ['aae_data_event_hat_sparte'] = array(
+    'description' => 'Hilfstabelle für Sparten/Zielgruppen',
+	'fields' => array(
+	  'hat_EID' => array('description' => 'ID für Event', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'hat_KID' => array('description' => 'ID für Kategorien', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	),
+	'primary key' => array('hat_EID', 'hat_KID'),
+	'foreign keys' => array(
+	  'Kategorie' => array('table' => 'aae_data_kategorie', 'columns' => array('hat_KID' => 'KID')),
+	  'Event' => array('table' => 'aae_data_event', 'columns' => array('hat_EID' => 'EID'))
+	),
+  );
+  $schema ['aae_data_sparte'] = array(
+  'description' => 'Tabelle für Sparten/Zielgruppen',
+	'fields' => array(
+	  'KID' => array('description' => 'ID für Kategorien', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'kategorie' => array('description' => 'Kategorie für Sparte oder Zielgruppe', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
+	),
+	'primary key' => array('KID'),
+  );
+  $schema ['aae_data_akteur_hat_user'] = array(
+  'description' => 'Hilfstabelle für Schreibrechte auf Akteursseiten',
+	'fields' => array(
+	  'hat_UID' => array('description' => 'ID für User', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'hat_AID' => array('description' => 'ID für Akteure', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	),
+	'primary key' => array('hat_AID', 'hat_UID'),
+	'foreign keys' => array(
+	  'User' => array('table' => 'user', 'columns' => array('hat_UID' => 'UID')),
+	  'Akteur' => array('table' => 'aae_data_akteur', 'columns' => array('hat_AID' => 'AID'))
+	),
+  );
+  $schema ['aae_data_akteur_hat_event'] = array(
+    'description' => 'Tabelle fuer Zuordnung aller Akteure zu einem Event',
+	'fields' => array(
+	  'EID' => array('description' => 'ID für Event', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'AID' => array('description' => 'ID für Akteur', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	),
+	'primary key' => array('EID', 'AID'),
+	'foreign keys' => array(
+	  'Event' => array('table' => 'aae_data_event', 'columns' => array('EID' => 'EID')),
+	  'Akteur' => array('table' => 'aae_data_akteur', 'columns' => array('AID' => 'AID'))
+	),
+  );
+
+  return $schema;
+}
+
+/**
+ * Implements hook_update_N().
+ * Create a new database table aae_data_event_hat_sparte.
+ */
+function aae_data_update_7103() {
+  $schema ['aae_data_event_hat_sparte'] = array(
+  'description' => 'Hilfstabelle für Sparten/Zielgruppen',
+	'fields' => array(
+    'hat_EID' => array('description' => 'ID für Event', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'hat_KID' => array('description' => 'ID für Kategorien', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	),
+	'primary key' => array('hat_EID', 'hat_KID'),
+	'foreign keys' => array(
+      'Kategorie' => array('table' => 'aae_data_kategorie', 'columns' => array('hat_KID' => 'KID')),
+      'Event' => array('table' => 'aae_data_event', 'columns' => array('hat_EID' => 'EID'))
+	),
+  );
+
+  db_create_table('aae_data_event_hat_sparte', $schema['aae_data_event_hat_sparte']);
+}
+
+/**
+ * Implements hook_install().
+ * Wird bei Installation des Moduls ausgeführt, NACH hook_schema()
+ */
+function aae_data_install() {
+  //Funktion, die alle Bezirke einfügt
+  insert_bezirke();
+}
+
+/**
+ * Implements hook_uninstall().
+ * Wird bei Deinstallation des Moduls ausgeführt,
+ * löscht alle Tabellen, die das Modul angelegt hat.
+ */
+function aae_data_uninstall() {
+  drupal_uninstall_schema('aae_data');
+}
+
+/**
+ * Implements hook_disable().
+ * Wird bei Deaktivierung des Moduls ausgeführt.
+ */
+function aae_data_disable() {
+  //drupal_uninstall_schema('aae_data');
+}
