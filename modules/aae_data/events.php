@@ -14,6 +14,9 @@ Class events extends aae_data_helper {
 
  public function run(){
 
+  $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) ? $this->clearContent($_GET['presentation']) : 'timeline');
+  // Available: "timeline"[default] & "kalender"
+
   $this->maxEvents = '15';
 
   // Paginator: Auf welcher Seite befinden wir uns?
@@ -45,13 +48,12 @@ Class events extends aae_data_helper {
   $counttags = $resulttags->rowCount();
 
 
-  if (isset($_POST['submit'])) {
+  if (isset($_GET['tags']) && !empty($_GET['tags']) && $this->presentationMode == 'timeline'){
 
    // FUNKTIONIERT DIES?
 
-   $tag = $this->clearContent($_POST['tags']);
+   $tag = $this->clearContent($_GET['tags']);
 
-   if ($tag != 0) {
 
     //Auswahl der Events mit entsprechendem Tag in alphabetischer Reihenfolge
     $result = db_select($this->tbl_event_sparte, 't');
@@ -59,15 +61,15 @@ Class events extends aae_data_helper {
     $result->fields('e', array('name', 'EID', 'kurzbeschreibung', 'start'))->orderBy('name', 'ASC');
     $resultevents = $result->execute();
 
-   } else {
+  } else if ($this->presentationMode == 'kalender') {
 
-    //Auswahl aller Events in alphabetischer Reihenfolge
-    $resultevents = db_select($this->tbl_event, 'a')
-    ->fields('a')
-    ->orderBy('name', 'ASC')
-    ->execute();
-  }
-} else {
+    $modulePath = drupal_get_path('module', 'aae_data');
+    include_once $modulePath . '/kalender.php';
+
+    $kal = new kalender();
+    $resultKalender = $kal->show();
+
+  } else {
 
    // Auswahl aller Events in alphabetischer Reihenfolge
    $resultevents = db_select($this->tbl_event, 'a')

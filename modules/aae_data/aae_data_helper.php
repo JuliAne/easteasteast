@@ -61,7 +61,9 @@
 
   }
 
-  protected function addMapContent($geoCord, $pointData = '', $markerData = '') {
+  protected function addMapContent($geoCord = '', $pointData = '', $markerData = '') {
+
+    if (empty($geoCord)) $geoCord = $this->mapboxDefaultView;
 
     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
     drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js');
@@ -98,27 +100,13 @@
 
     if (is_array($pointData) && !empty($pointData)) {
 
-  /*   $js .= 'L.mapbox.featureLayer({
-      type: "Feature",
-      geometry: {
-        type: "Point",
-        coordinates: [' . str_replace(' ',',',$pointData['gps']) . ']
-      },
-      properties: {
-        title: "' . $pointData['name'] . '",
-        description: "' . $pointData['strasse'] . ' ' . $pointData['nr'] . '",
-        "marker-size": "large",
-        "marker-color": "#1087bf"
-      }
-    }).addTo(map);'; */
-
     $kHelper = explode(',', $pointData['gps'], 2);
     $koordinaten = $kHelper[1] . ',' . $kHelper[0];
 
-$js.='var myLayer = L.mapbox.featureLayer().addTo(map);
+    $js.='var myLayer = L.mapbox.featureLayer().addTo(map);
 
-var geojson = [
-  {
+    var geojson = [
+    {
     "type": "Feature",
     "geometry": {
       "type": "Point",
@@ -130,10 +118,10 @@ var geojson = [
       "marker-color": "#1087bf",
       "marker-size": "large",
       "marker-symbol": "star"
+     }
     }
-  }
-];
-myLayer.setGeoJSON(geojson);';
+   ];
+   myLayer.setGeoJSON(geojson);';
 
     }
 

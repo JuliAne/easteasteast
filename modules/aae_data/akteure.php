@@ -46,24 +46,23 @@ if (isset($_GET['tags']) && !empty($_GET['tags'])){
   $filterSparten = db_select($this->tbl_hat_sparte, 'hs')
    ->fields('hs', array('hat_AID'));
 
-   $or = db_or();
+   $ore = db_or();
 
  foreach($_GET['tags'] as $tag) {
 
   $tag = $this->clearContent($tag);
-  $or->condition('hat_KID', $tag);
+  $ore->condition('hat_KID', $tag);
 
  }
 
- $filterSparten->condition($or)
+ $filterSparten->condition($ore)
   ->execute()
-  ->fetchAll();
+  ->fetchAssoc();
 
-  //print_r($filterSparten);
+ //print_r($filterSparten);
 
  foreach(array_unique($filterSparten) as $sparte) {
   print_r($sparte);
-  echo 'D';
  }
 
 }
@@ -99,10 +98,15 @@ $resultAkteure = db_select($this->tbl_akteur, 'a')
     ->execute()
     ->fetchAssoc();
 
+   // Add variable to $resultAkteure
    $resultAkteure[$counter] = (array)$resultAkteure[$counter];
    $resultAkteure[$counter]['bezirk'] = $bezirk['bezirksname'];
    $resultAkteure[$counter] = (object)$resultAkteure[$counter];
 
+  }
+
+  if ($this->presentationMode == 'map') {
+   $this->addMapContent('', '', array('file' => base_path().drupal_get_path('module', 'aae_data').'/LOdata.js'));
   }
 
   $resulttags = $this->getAllTags();
