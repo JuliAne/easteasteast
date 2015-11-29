@@ -33,8 +33,7 @@ $sliders = array(
  $slider1 = array(
    'image' => 'slider_bg.jpg',
    'headline' => 'Den Leipziger Osten neu entdecken',
-   'description' => 'Die Plattform für den ganzen Stadtteil: Lerne Akteure aus Deiner Umgebung kennen & erfahre, wann und wo sich etwas in Deinem Bezirk bewegt.<br />
-<br /><strong>Kostenlos. Offen. Lokal.</strong>',
+   'description' => 'Die Plattform für den ganzen Stadtteil: Lerne Akteure aus Deiner Umgebung kennen & erfahre, wann und wo sich etwas in Deinem Bezirk bewegt.<br /><strong>Kostenlos. Offen. Lokal.</strong>',
    'whiteText' => true,
    'blueButton' => array(
      'text' => 'Mehr erfahren...',
