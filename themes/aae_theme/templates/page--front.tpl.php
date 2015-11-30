@@ -27,7 +27,7 @@
 
   <div class="slide <?= ($content['whiteText'] == true ? 'whiteText' : ''); ?>" id="slide<?= $id; ?>" style="background-image:url(<?= base_path().path_to_theme().'/img/'.$content['image']; ?>)";>
     <h1><?= $content['headline']; ?></h1>
-    <p><?= $content['description']; ?></p>
+    <?= $content['description']; ?>
 
     <?= $blueButton; ?>
   </div>

@@ -33,8 +33,9 @@ $sliders = array(
  $slider1 = array(
    'image' => 'slider_bg.jpg',
    'headline' => 'Den Leipziger Osten neu entdecken',
-   'description' => 'Die Plattform für den ganzen Stadtteil: Lerne Akteure aus Deiner Umgebung kennen & erfahre, wann und wo sich etwas in Deinem Bezirk bewegt.<br />
-<br /><strong>Kostenlos. Offen. Lokal.</strong>',
+   'description' => '<p>Die Plattform für den ganzen Stadtteil: Lerne Akteure aus Deiner Umgebung kennen & erfahre,</p>
+    <p>wann und wo sich etwas in Deinem Bezirk bewegt.</p>
+<p class="slogan"><strong>Kostenlos. Offen. Lokal.</strong></p>',
    'whiteText' => true,
    'blueButton' => array(
      'text' => 'Mehr erfahren...',
@@ -44,8 +45,8 @@ $sliders = array(
 
  $slider2 = array(
    'image' => 'slider_2_min.jpg',
-   'headline' => '<strong>'.$counts['akteure'].'</strong> Akteure. <strong>'.$counts['events'].'</strong> Events:<br /> Eine Plattform.',
-   'description' => 'Jetzt anmelden, Projekt einstellen oder einfach nur mitmischen.',
+   'headline' => '<strong>'.$counts['akteure'].'</strong> Akteure. <strong>'.$counts['events'].'</strong> Events.<br /> Eine Plattform.',
+   'description' => '<p>Jetzt anmelden, Projekt einstellen oder einfach nur mitmischen.</p>',
    'whiteText' => true,
    'blueButton' => array(
      'text' => '<span style="color:white;">Jetzt registrieren!</span>',

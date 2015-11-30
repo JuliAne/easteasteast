@@ -76,12 +76,12 @@ html.fp-enabled,
     left: 15px;
     width: 0;
     border-width: 38.5px 34px 38.5px 0;
-    border-color: transparent #fff transparent transparent;
+    border-color: transparent rgba(255,255,255,0.9) transparent;
 }
 .fp-controlArrow.fp-next {
     right: 15px;
     border-width: 38.5px 0 38.5px 34px;
-    border-color: transparent transparent transparent #fff;
+    border-color: transparent transparent transparent rgba(255,255,255,0.9);
 }
 .fp-scrollable {
     overflow: scroll;
@@ -214,12 +214,13 @@ html.fp-enabled,
 }
 
 #slideSection h1 {
-  font-weight: 400;
+  font-weight: 500;
   font-size: 3.5em;
+  margin-bottom: 8px;
 }
 
 #slideSection .slide h1, #slideSection .slide p {
-  text-shadow: 0 0 4px rgb(46, 46, 46);
+  /*text-shadow: 0 0 4px rgb(46, 46, 46);*/
 }
 
 #slideSection .slide p {
@@ -242,5 +243,31 @@ html.fp-enabled,
 }
 #slideSection button.transparent:hover {
  background: rgba(255, 255, 255, 0.7);
+ color: #000;
+}
+
+/*settings for slide0*/
+
+#slide0.slide.whiteText p {
+    background-color: rgba(255,255,255,0.8);
+    padding: 5px 10px;
+    margin: 0 auto;
+    margin-bottom: 3px;
+    display: table;
+    color: #2F2F2F !important;
+}
+
+#slideSection #slide0.slide.whiteText h1 {
+  text-shadow: 2px 2px 15px rgb(25,82,95);
+}
+
+#slideSection #slide0 button.transparent {
+ background: rgba(255, 255, 255, 0.8);
+ font-weight: 700;
+ margin-top:30px;
+}
+
+#slideSection #slide0 button.transparent:hover {
+ background: rgba(255, 255, 255, 0.8);
  color: #000;
 }
