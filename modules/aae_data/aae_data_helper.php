@@ -27,7 +27,7 @@
    var $mapboxAccessToken = "pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg";
    var $mapboxMap = "matzelot.ke3420oc";
    var $mapboxDefaultView = "51.336, 12.433";
-   var $mapboxDefaultZoom = "13";
+   var $mapboxDefaultZoom = "12";
 
    /**
     *  Einfache Funktion zum Filtern von POST- und GET-Daten. Gerne erweiterbar.
@@ -89,7 +89,6 @@
 
      map.addLayer(markers);';
 
-     //drupal_add_js(base_path().drupal_get_path('module', 'aae_data').'/LOdata.js');
      if (!empty($markerData['file'])) drupal_add_js($markerData['file']);
 
      drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css', array('type' => 'external'));
