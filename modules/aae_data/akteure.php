@@ -109,7 +109,7 @@ $rAkteure = db_select($this->tbl_akteur, 'a')
   foreach ($resultAkteure as $counter => $akteur) {
 
    $adresse = db_select($this->tbl_adresse, 'ad')
-    ->fields('ad', array('bezirk'))
+    ->fields('ad', array('bezirk','gps'))
     ->condition('ADID', $akteur->adresse, '=')
     ->execute()
     ->fetchAssoc();
@@ -120,15 +120,31 @@ $rAkteure = db_select($this->tbl_akteur, 'a')
     ->execute()
     ->fetchAssoc();
 
-   // Add variable to $resultAkteure
+   // Hack: add variable to $resultAkteure-object
    $resultAkteure[$counter] = (array)$resultAkteure[$counter];
    $resultAkteure[$counter]['bezirk'] = $bezirk['bezirksname'];
+   $resultAkteure[$counter]['gps'] = $adresse['gps'];
    $resultAkteure[$counter] = (object)$resultAkteure[$counter];
 
   }
 
   if ($this->presentationMode == 'map') {
-   $this->addMapContent('', '', array('file' => base_path().drupal_get_path('module', 'aae_data').'/LOdata.js'));
+   // Generiere Map-Content...
+   //$this->addMapContent('', '', array('file' => base_path().drupal_get_path('module', 'aae_data').'/LOdata.js'));
+   $js = 'var addressPoints = [';
+
+   foreach ($resultAkteure as $akteur) {
+
+    if (!empty($akteur->gps)) {
+     $js .= '['.$akteur->gps.',"'.$akteur->name.' - '.$akteur->beschreibung.'"],';
+     //[51.35066457624785, 12.4639892578125, "Beschreibung..."],
+    }
+
+   }
+
+   $js .= '];';
+   drupal_add_js($js, 'inline');
+   $this->addMapContent('','',array('something' => 'bla'));
   }
 
   $resulttags = $this->getAllTags();
