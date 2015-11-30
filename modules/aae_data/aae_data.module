@@ -117,28 +117,10 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
-  //Menuitem "Kalender/%"
-  $items['Kalender/%'] = array(
-    'title' => 'Kalender',
-    'page callback' => 'kalender_page',
-    'access arguments' => array('access content'),
-    'type' => MENU_NORMAL_ITEM,
-    'access callback' => TRUE,
-  );
-
   //Menuitem "Tag"
   $items['Tag/%'] = array(
     'title' => '',
     'page callback' => 'tag_page',
-    'access arguments' => array('access content'),
-    'type' => MENU_NORMAL_ITEM,
-    'access callback' => TRUE,
-  );
-
-  //Menuitem "Kalender"
-  $items['Kalender'] = array(
-    'title' => 'Kalender',
-    'page callback' => 'kalender_page',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
@@ -169,22 +151,6 @@ function tag_page() {
   $path_alias = drupal_lookup_path('alias', $path);
 
   return $profileHTML;
-
-}
-
-
-/**
- * Baut die Seite fuer den Kalender
- */
-
-function kalender_page() {
-
-  drupal_add_css("sites/all/modules/aae_data/calendar.css");
-  $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/kalender.php';
-
-  $aae_kalender = new kalender();
-  return $aae_kalender->run();
 
 }
 
@@ -320,7 +286,7 @@ function eventformular_page() {
 }
 
 /**
- * Gibt ajax-request's an entsprechende Klasse/Funktino weiter
+ * Gibt ajax-request's an entsprechende Klasse/Funktion weiter
  */
 
 function ajax_requests($id) {
@@ -342,6 +308,10 @@ function ajax_requests($id) {
 
    case ('getAkteurAdresse') :
     $request->getAkteurAdresse($id);
+   break;
+
+   case ('getKalender') :
+    $request->getKalender();
    break;
 
    default :

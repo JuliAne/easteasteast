@@ -17,20 +17,20 @@
  <div id="mini-calendar" class="large-4 columns">
   <h4>Events.</h4>
   <div class="month-view">
-   <div class="date-nav-wrapper clear-block">
-    <div class="date-nav">
-     <!--<div class="date-heading">
+    <!--<div class="date-nav">
+     <div class="date-heading">
      <a href="<?= base_path(); ?>Kalender" title="">Großer Kalender</a>
-   </div>-->
-    </div>
+   </div>
+ </div>-->
    </div>
 
+   <div id="aae_calendar" style="margin-top:-15px;">
    <?php $modulePath = drupal_get_path('module', 'aae_data');
          include_once $modulePath . '/kalender.php';
 
          $kal = new kalender();
          echo $kal->show(); ?>
-</div>
+   </div>
  </div>
 
  </div>

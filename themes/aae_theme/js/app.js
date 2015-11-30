@@ -90,4 +90,34 @@ $(document).ready(function() {
   });
  });
 
+ setHandlers();
+
 });
+
+setHandlers = function(){
+
+$('#calendar .next').click(function(){
+
+ $('#calendar').fadeOut('slow');
+
+ $.get($(this).attr('href'), function(data){
+   $('#aae_calendar').html(data);
+   setHandlers();
+ })
+
+ return false;
+});
+
+$('#calendar .prev').click(function(){
+
+ $('#calendar').fadeOut('slow');
+
+ $.get($(this).attr('href'), function(data){
+   $('#aae_calendar').html(data);
+   setHandlers();
+ })
+
+ return false;
+});
+
+}
