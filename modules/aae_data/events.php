@@ -14,6 +14,11 @@ Class events extends aae_data_helper {
 
  public function run(){
 
+  $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) ? $this->clearContent($_GET['presentation']) : 'timeline');
+  // Available: "timeline"[default] & "kalender"
+
+  // TODO: limit
+
   $this->maxEvents = '15';
 
   // Paginator: Auf welcher Seite befinden wir uns?
@@ -40,41 +45,73 @@ Class events extends aae_data_helper {
 
   $pathThisFile = $_SERVER['REQUEST_URI'];
 
-  $resulttags = $this->getAllTags();
+  $resultTags = $this->getAllTags();
 
-  $counttags = $resulttags->rowCount();
+  // Filter nach Tags, falls gesetzt
 
+  $filterTags = array();
 
-  if (isset($_POST['submit'])) {
+  if (isset($_GET['tags']) && !empty($_GET['tags'])){
 
-   // FUNKTIONIERT DIES?
+     $fSparten = db_select($this->tbl_event_sparte, 'hs')
+     ->fields('hs', array('hat_EID'));
 
-   $tag = $this->clearContent($_POST['tags']);
+     $and = db_and();
 
-   if ($tag != 0) {
+     foreach($_GET['tags'] as $tag) {
 
-    //Auswahl der Events mit entsprechendem Tag in alphabetischer Reihenfolge
-    $result = db_select($this->tbl_event_sparte, 't');
-    $result->join($tbl_event, 'e', 't.hat_EID = e.EID AND t.hat_KID = :kid', array(':kid' => $tag));
-    $result->fields('e', array('name', 'EID', 'kurzbeschreibung', 'start'))->orderBy('name', 'ASC');
-    $resultevents = $result->execute();
+      $tag = $this->clearContent($tag);
+      $filterTags[$tag] = $tag;
+      $and->condition('hat_KID', $tag, '=');
 
-   } else {
+     }
 
-    //Auswahl aller Events in alphabetischer Reihenfolge
-    $resultevents = db_select($this->tbl_event, 'a')
-    ->fields('a')
-    ->orderBy('name', 'ASC')
-    ->execute();
+     $filterSparten = $fSparten->condition($and)
+      ->execute()
+      ->fetchAssoc();
+
+     array_unique($filterSparten); // Lösche doppelte Einträge
+
   }
-} else {
+
+  if ($this->presentationMode == 'kalender') {
+
+    $modulePath = drupal_get_path('module', 'aae_data');
+    include_once $modulePath . '/kalender.php';
+
+    $kal = new kalender();
+    $resultKalender = $kal->show();
+
+  } else {
 
    // Auswahl aller Events in alphabetischer Reihenfolge
-   $resultevents = db_select($this->tbl_event, 'a')
-    ->fields('a')
-    ->orderBy('start', 'ASC')
-    ->execute();
- }
+   $rEvents = db_select($this->tbl_event, 'a')
+    ->fields('a');
+
+   if (isset($filterSparten) && !empty($filterSparten)) {
+
+     $or = db_or();
+
+     foreach ($filterSparten as $id => $sparte) {
+       $or->condition('EID', $sparte, '=');
+     }
+
+     $rEvents->condition($or);
+
+  } else if (isset($filterSparten) && empty($filterSparten)) {
+
+      // Keine Akteure mit entsprechendem Tag gefunden, daher negatives resultEvents
+
+      $rEvents->condition('name', 'xlyjdflafdSDas', '=');
+
+  }
+
+  $resultEvents = $rEvents->orderBy('start', 'ASC')
+   #->range()
+   ->execute()
+   ->fetchAll();
+
+  }
 
   // Ausgabe der Events
   ob_start(); // Aktiviert "Render"-modus

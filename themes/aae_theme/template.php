@@ -11,10 +11,9 @@ function aae_preprocess_html(&$variables) {
   );
   drupal_add_html_head($viewport, 'viewport');
 
-  drupal_add_js(path_to_theme().'/js/jquery-1.11.3.min.js'); // Wenn Du das siehst, check mal, ob's ne neue Version gibt
+  drupal_add_js(path_to_theme().'/js/jquery-1.11.3.min.js');
 
   drupal_add_js(path_to_theme().'/js/pace.min.js');
-  drupal_add_js(path_to_theme().'/js/doubletaptogo.min.js'); // Mobile-Menü, bisher ungenutzt
   drupal_add_js(path_to_theme().'/js/app.js');
 
   drupal_add_css(path_to_theme().'/css/foundation.min.css');
@@ -34,14 +33,9 @@ function aae_preprocess_html(&$variables) {
 
     if (drupal_is_front_page()) {
 
-     /*drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
-     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css', array('type' => 'external'));
-     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css', array('type' => 'external'));*/
      drupal_add_css(path_to_theme().'/css/jquery.fullPage.css');
      drupal_add_js(path_to_theme().'/js/jquery.fullPage.min.js');
 
-     /*drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js');
-     drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js');*/
      drupal_add_js(path_to_theme().'/js/home.js');
 
    } else if ($node->type == 'article') {
@@ -57,9 +51,6 @@ function aae_preprocess_html(&$variables) {
   case ('akteurprofil') :
 
     drupal_add_css(path_to_theme().'/css/project.css');
-    drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
-    drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js');
-    drupal_add_js('L.mapbox.accessToken = "pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg";', 'inline');
 
   break;
 
@@ -74,7 +65,6 @@ function aae_preprocess_html(&$variables) {
    drupal_add_css(path_to_theme().'/css/default.css');
    drupal_add_js(path_to_theme().'/js/zebra_datepicker.js');
    drupal_add_js('https://cdn.ckeditor.com/4.4.3/basic/ckeditor.js');
-   // sites/all/modules/ckeditor/ckeditor.js
    drupal_add_css(base_path().'sites/all/modules/ckeditor/css/ckeditor.css');
    drupal_add_css(base_path().'sites/all/modules/ckeditor/css/ckeditor.editor.css');
    drupal_add_js(path_to_theme().'/js/editform.js');
@@ -102,32 +92,6 @@ function aae_preprocess_html(&$variables) {
    drupal_add_js($js, 'inline');
    //drupal_add_js(path_to_theme().'/js/wookmark.min.js');
    //drupal_add_js('$("#akteure").wookmark({offset:10});', array('type' => 'inline', 'scope' => 'footer'));
-
-   if (isset($_GET['submit']) && $_GET['presentation'] == 'map') {
-    drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
-    drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css', array('type' => 'external'));
-    drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css', array('type' => 'external'));
-
-    drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js');
-    drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js');
-    drupal_add_js('L.mapbox.accessToken = "pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg";', 'inline');
-    drupal_add_js(base_path().drupal_get_path('module', 'aae_data').'/LOdata.js');
-    drupal_add_js('$(window).ready(function(){var map = L.mapbox.map("map", "matzelot.ke3420oc").setView([51.336, 12.433], 12);var markers = new L.MarkerClusterGroup({ showCoverageOnHover : false });
-
-     for (var i = 0; i < addressPoints.length; i++) {
-      var a = addressPoints[i];
-      var title = a[2];
-      var marker = L.marker(new L.LatLng(a[0], a[1]), {
-          icon: L.mapbox.marker.icon({"marker-symbol": "pitch", "marker-color": "0044FF"}),
-          title: title
-      });
-
-      marker.bindPopup(title);
-      markers.addLayer(marker);
-     }
-
-     map.addLayer(markers);});', 'inline');
- }
 
   break;
 

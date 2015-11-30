@@ -71,26 +71,12 @@ class aae_akteurprofil extends aae_data_helper {
   }
 
   // Generiere Mapbox-taugliche Koordinaten, übergebe diese ans Frontend
-  if ($aResult['row2']->gps != '') {
-   $kHelper = explode(' ', $aResult['row2']->gps, 2);
-   $koordinaten = $kHelper[1] . ',' . $kHelper[0];
 
-   drupal_add_js('var map = L.mapbox.map("map", "matzelot.mn92ib5i").setView([' . $koordinaten . '], 16);', array('type' => 'inline', 'scope' => 'footer'));
+  if (!empty($aResult['row2']->gps)) {
 
-   // Marker
-  drupal_add_js('L.mapbox.featureLayer({
-    type: "Feature",
-    geometry: {
-      type: "Point",
-      coordinates: [' . str_replace(' ',',',$aResult['row2']->gps) . ']
-    },
-    properties: {
-      title: "' . $aResult['row1']->name . '",
-      description: "' . $aResult['row2']->strasse . ' ' . $aResult['row2']->nr . '",
-      "marker-size": "large",
-      "marker-color": "#1087bf"
-    }
-   }).addTo(map);', array('type' => 'inline', 'scope' => 'footer'));
+    $koordinaten = $aResult['row2']->gps;
+
+    $this->addMapContent($koordinaten, array('gps' => $koordinaten, 'name' => $aResult['row1']->name, 'strasse' => $aResult['row2']->strasse, 'nr' => $aResult['row2']->nr));
   }
 
   $kategorien = db_select($this->tbl_hat_sparte, 'a')

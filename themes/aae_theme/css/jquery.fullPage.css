@@ -216,6 +216,7 @@ html.fp-enabled,
 #slideSection h1 {
   font-weight: 500;
   font-size: 3.5em;
+  margin-bottom: 8px;
 }
 
 #slideSection .slide h1, #slideSection .slide p {
@@ -248,10 +249,12 @@ html.fp-enabled,
 /*settings for slide0*/
 
 #slide0.slide.whiteText p {
-    background-color: rgba(57,114,127,0.9);
-    border: solid 2px rgb(80,137,150);
+    background-color: rgba(255,255,255,0.8);
     padding: 5px 10px;
-    border-radius: 3px;
+    margin: 0 auto;
+    margin-bottom: 3px;
+    display: table;
+    color: #2F2F2F !important;
 }
 
 #slideSection #slide0.slide.whiteText h1 {
@@ -261,6 +264,7 @@ html.fp-enabled,
 #slideSection #slide0 button.transparent {
  background: rgba(255, 255, 255, 0.8);
  font-weight: 700;
+ margin-top:30px;
 }
 
 #slideSection #slide0 button.transparent:hover {

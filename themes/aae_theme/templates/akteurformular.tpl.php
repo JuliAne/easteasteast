@@ -81,6 +81,7 @@
   <label>Geodaten (Karte): <?= $this->fehler['gps']; ?>
    <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= $this->ph_gps; ?>">
   </label>
+  <p id="show_coordinates" style="display:none;"><a href="#" target="_blank">Zeige Koordinaten auf Karte</a></p>
 </div>
 
 </fieldset>

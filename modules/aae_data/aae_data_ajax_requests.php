@@ -57,5 +57,22 @@ Class aae_data_ajax_requests extends aae_data_helper {
     echo json_encode($resultAdresse[0]);
 
  }
+
+ /**
+  * @function getKalender()
+  *
+  * Dient dem Einblenden eines neuen Kalender-Monat's im Footer
+  */
+
+  function getKalender(){
+
+    $modulePath = drupal_get_path('module', 'aae_data');
+    include_once $modulePath . '/kalender.php';
+
+    $kal = new kalender();
+    echo $kal->run();
+
+
+  }
 }
 ?>

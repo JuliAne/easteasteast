@@ -22,25 +22,24 @@
 
 <div id="filter" class="row">
 
- <form id="filterForm" method="get" action="<?= base_path(); ?>Akteure/<?= $currentPageNr; ?>">
+ <form id="filterForm" method="get" action="<?= base_path(); ?>akteure/<?= $currentPageNr; ?>">
 
  <div class="large-1 columns" id="removeFilter">
-  <a class="small secondary button round right" style="padding:4px 10px;" href="/Akteure" title="Alle Filter entfernen">x</a>
+  <a class="small secondary button round right" style="padding:4px 10px;" href="<?= base_path(); ?>akteure" title="Alle Filter entfernen">x</a>
  </div>
 
- <div class="large-4 large-offset-1 columns">
+ <div class="large-4 large-offset-1 small-6 columns">
 
    <label for="tag">Nach Tags filtern:</label>
    <select name="tags[]" id="eventSpartenInput" multiple="multiple" class="tokenize">
-   <?php // show $this->sparten ?>
    <?php foreach ($resulttags as $row) : ?>
-     <option value="<?= $row->KID; ?>"><?= $row->kategorie; ?></option>
+     <option value="<?= $row->KID; ?>"<?php echo ($filterTags[$row->KID] == $row->KID ? ' selected="selected"' : ''); ?>><?= $row->kategorie; ?></option>
    <?php endforeach; ?>
    </select>
 
  </div>
 
- <div class="large-2 columns">
+ <div class="large-2 small-6 columns">
   <label for="display_number">Anzahl:</label>
   <select name="display_number" id="displayNumber">
    <option value="10" <?= ($this->maxAkteure == '10' ? 'selected="selected"' : ''); ?>>10</option>
@@ -70,8 +69,10 @@
   <div id="map" style="width: 100%; height: 400px;"></div>
 <?php else : ?>
 
+<?php if (is_array($resultAkteure) && !empty($resultAkteure)) : ?>
+
 <?php foreach($resultAkteure as $akteur): ?>
-  <div class="large-3 large-offset-1 columns pcard" style="margin-top:10px;">
+  <div class="large-3 large-offset-1 small-5 small-offset-1 columns pcard" style="margin-top:10px;">
    <header <?php if($akteur->bild != '') echo 'style="background-image:url('.$akteur->bild.');"'; ?>>
      <h3><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>"><?= $akteur->name; ?></a></h3>
     </header>
@@ -84,6 +85,11 @@
     </section>
    </div>
  <?php endforeach; ?>
+
+ <?php else : ?>
+  <p style="text-align:center;">Es wurden leider keine Akteure mit diesen Angaben gefunden.</p>
+  <p style="text-align:center;"><a href="<?= base_path(); ?>akteure">Filter löschen.</a></p>
+ <?php endif; ?>
 
 <?php endif; ?>
 
