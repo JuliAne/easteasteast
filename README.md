@@ -4,9 +4,9 @@
 
 ### Requirements
 
-*Drupal version 7.x (https://www.drupal.org/start.)*
-*Imagick*
-*MySQL/MariaDB*
+- Drupal version 7.x (https://www.drupal.org/start.)
+- Imagick
+- MySQL/MariaDB
 
 ### Installation via git:
 
@@ -45,7 +45,13 @@ Within your local drupal-copy, clone this repo to '/sites/all/'. The module & th
 ### aae data
 
 - Copy "aae_data" to "/drupal/sites/all/modules/"
-- Edit "aae_data_helper.php" and set the internal server-path's
-- Login to Drupal admin account
+- Edit "aae_data_helper.php" and set the internal server-path's & other variables
+- Login to your Drupal-backend
 - Select group "Custom Modules" and enable "AAE Data"
 - call URLs .../akteure or .../events (not working? then reinstall module and try again)
+
+#### Issues
+
+The performance of Drupal can vary immensively depending on your webhost. Take a look @ https://drupal.stackoverflow.com
+to receive further information on how to solve this issue. Pro-tips: Change the DB-Host in settings.php
+from "localhost" to "127.0.0.1" and activate Drupal's internal cache or use memcache.

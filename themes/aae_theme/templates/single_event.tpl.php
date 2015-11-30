@@ -47,7 +47,11 @@ if(count($sparten) != 0) { ?>
    <p><strong>Erstellt von:</strong> <?= $row2->name; ?></p>
  <?php endforeach; ?>
 
+   <?php if(empty($resultAkteur)) : ?>
+   <p><strong>Privater Veranstaltater</strong></p>
+   <?php else : ?>
    <p><strong>Akteur:</strong> <a href="<?= base_path(); ?>Akteurprofil/<?= $resultAkteur['AID']; ?>" title="Profil von <?= $resultAkteur['name']; ?> besuchen"><?= $resultAkteur['name']; ?></a></p>
+   <?php endif; ?>
 
    <?php if(!empty($resultAdresse)) : ?>
     <p><strong>Ort:</strong>

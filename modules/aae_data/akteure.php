@@ -39,49 +39,71 @@ Class akteure extends aae_data_helper {
   $ende = $this->maxAkteure;
  }
 
-//-----------------------------------
+// Filter nach Tags, falls gesetzt
+
+$filterTags = array();
 
 if (isset($_GET['tags']) && !empty($_GET['tags'])){
 
-  $filterSparten = db_select($this->tbl_hat_sparte, 'hs')
-   ->fields('hs', array('hat_AID'));
+ $fSparten = db_select($this->tbl_hat_sparte, 'hs')
+ ->fields('hs', array('hat_AID'));
 
-   $ore = db_or();
+ $and = db_and();
 
  foreach($_GET['tags'] as $tag) {
 
   $tag = $this->clearContent($tag);
-  $ore->condition('hat_KID', $tag);
+  $filterTags[$tag] = $tag;
+  $and->condition('hat_KID', $tag, '=');
 
  }
 
- $filterSparten->condition($ore)
+ $filterSparten = $fSparten->condition($and)
   ->execute()
   ->fetchAssoc();
 
- //print_r($filterSparten);
-
- foreach(array_unique($filterSparten) as $sparte) {
-  print_r($sparte);
- }
+ array_unique($filterSparten); // Lösche doppelte Einträge
 
 }
 
 //-----------------------------------
 
 // Auswahl aller Akteure in alphabetischer Reihenfolge
-$resultAkteure = db_select($this->tbl_akteur, 'a')
+$rAkteure = db_select($this->tbl_akteur, 'a')
   ->fields('a', array(
 	'AID',
   'name',
   'beschreibung',
   'bild',
   'adresse'
-  ))
-  ->orderBy('name', 'ASC') // TODO: Nach neuesten filtern
+  ));
+
+ if (isset($filterSparten) && !empty($filterSparten)) {
+
+  $or = db_or();
+
+  foreach ($filterSparten as $id => $sparte) {
+    $or->condition('AID', $sparte, '=');
+  }
+
+  $rAkteure->condition($or);
+
+ } else if (isset($filterSparten) && empty($filterSparten)) {
+
+   // Keine Akteure mit entsprechendem Tag gefunden, daher negatives resultAkteure
+
+   $rAkteure->condition('name', 'LASDFJKASDFSKFDLJ', '=');
+
+ }
+
+ $resultAkteure = $rAkteure->orderBy('name', 'ASC') // *
   ->range($start, $ende)
   ->execute()
   ->fetchAll();
+
+  // *TODO: Nach neuesten Akteuren filtern. Benötigt "created"-Eintrag in DB,
+  // welcher allerdings (da Drupal's DB-Schema kein 'timestamp' supported)
+  // manuell eingetragen werden muss :(
 
   // Get Bezirk
   foreach ($resultAkteure as $counter => $akteur) {

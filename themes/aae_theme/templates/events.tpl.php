@@ -21,22 +21,21 @@
 <div class="divider"></div>
 
 <div id="filter" class="row">
-<form method="get" action="<?= base_path(); ?>/Events">
 
  <div class="large-1 columns" id="removeFilter">
-  <a class="small secondary button round right" style="padding:4px 10px;" href="<?= base_path(); ?>Events/" title="Alle Filter entfernen">x</a>
+  <a class="small secondary button round right" style="padding:4px 10px;" href="<?= base_path(); ?>events/" title="Alle Filter entfernen">x</a>
  </div>
 
  <div class="large-6 large-offset-1 columns">
 
-   <form id="filterForm" method="GET" action="<?= base_path(); ?>Events/<?= $currentPageNr; ?>">
+   <form id="filterForm" method="GET" action="<?= base_path(); ?>events/<?= $currentPageNr; ?>">
 
    <label for="tag">Nach Tags filtern:</label>
    <select name="tags[]" id="eventSpartenInput" multiple="multiple" class="tokenize">
-   <?php foreach ($resulttags as $row) : ?>
-     <option value="<?= $row->KID; ?>"><?= $row->kategorie; ?></option>
+   <?php foreach ($resultTags as $row) : ?>
+     <option value="<?= $row->KID; ?>"<?php echo ($filterTags[$row->KID] == $row->KID ? ' selected="selected"' : ''); ?>><?= $row->kategorie; ?></option>
    <?php endforeach; ?>
-   </select>
+ </select>
 
  </div>
 
@@ -47,9 +46,8 @@
     <!--<li><a href="#" class="small button secondary" title="Darstellung auf Karte"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>-->
   </ul>
   <input type="submit" class="small button right" id="eventSubmit" name="submit" value="Filter anwenden">
+  </form>
 </div>
-
-</form>
 
 </div>
 
@@ -60,12 +58,17 @@
 
    echo $resultKalender;
 
- } else {
+ } else if (is_array($resultEvents) && !empty($resultEvents)) {
 
- foreach($resultevents as $event): ?>
+ foreach($resultEvents as $event): ?>
   <p><?= $event->start; ?><a style="line-height:1.6em;" href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>"> <strong><?= $event->name; ?></strong></a>
   <?php if ($event->kurzbeschreibung!=''): ?>: <?= $event->kurzbeschreibung; ?><?php endif; ?></p><br />
- <?php endforeach; } ?>
+ <?php endforeach; }  else { ?>
+
+   <p style="text-align:center;">Es wurden leider keine Events mit diesen Angaben gefunden...</p>
+   <p style="text-align:center;"><a href="<?= base_path(); ?>events">Filter löschen.</a></p>
+
+  <?php } ?>
 
 </div>
 

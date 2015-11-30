@@ -41,7 +41,7 @@
    protected function upload_image($bild) {
 
     $image = new Imagick($bild['tmp_name']);
-    $image->thumbnailImage(700, 400);
+    //$image->thumbnailImage(700, 400);
     $image->scaleImage(700, 300, true);
     $image->writeImage($this->bildpfad.$bild['name']);
 
