@@ -53,6 +53,9 @@ $(document).ready(function(){
 
       $('#GPSInput').val(data.features[0].center[1] + ',' + data.features[0].center[0]);
 
+      $('#show_coordinates a').attr('href', 'http://www.openstreetmap.org/#map=13/'+data.features[0].center[1]+'/'+data.features[0].center[0]);
+      $('#show_coordinates').fadeIn('fast');
+
       });
     }
   });
