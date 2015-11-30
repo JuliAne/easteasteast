@@ -3,8 +3,7 @@
  </div>
 </aside>
 
-<header id="header"
-<?php if ($aResult['row1']->bild != '') : ?> style="background:url(<?= $row->bild; ?>);" <?php endif; ?>></header>
+<header id="header" <?php if ($aResult['row1']->bild != '') : ?> style="background:url(<?= $row->bild; ?>);"<?php endif; ?>></header>
 
 <div id="akteurActions">
  <div class="row">

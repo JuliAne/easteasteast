@@ -28,7 +28,7 @@ $resultEvents = db_select($tbl_event, 'e')
   ->orderBy('name', 'ASC')
   ->execute();
 foreach ($resultEvents as $row) {
-  $events .= $row->start . ' - ' . $row->ende . ' ' . '<a href="?q=Eventprofil/' . $row->EID . '">' . $row->name . '</a><form action=' . $pathThisFile . ' method="POST" enctype="multipart/form-data"><input type="hidden" name="eventid" value="' . $row->EID . '"><input type="submit" class="event" id="icalSubmit" name="submit" value="Download"></form><br>';
+  $events .= $row->start . ' - ' . $row->ende . ' ' . '<a href="Eventprofil/' . $row->EID . '">' . $row->name . '</a><form action=' . $pathThisFile . ' method="POST"><input type="hidden" name="eventid" value="' . $row->EID . '"><input type="submit" class="event" id="icalSubmit" name="submit" value="Download"></form><br>';
 }
 
 //Wenn auf Download geklickt wird:
@@ -40,20 +40,13 @@ if (isset($_POST['submit'])) {
   $var .= "PRODID;X-RICAL-TZSOURCE=TZINFO:-//com.denhaven2/NONSGML ri_cal gem//EN\r\n";
   $var .= "CALSCALE:GREGORIAN\n";
   $var .= "VERSION:2.0\n";
-
   $var .= "BEGIN:VEVENT\n";
 
   $eventID = $_POST['eventid'];
   $resultEvent = db_select($tbl_event, 'e')
-    ->fields('e', array(
-	  'start',
-	  'ende',
-	  'name',
-	  'EID',
-	  'ort',
-	))
-	->condition('EID', $eventID, '=')
-	->execute();
+   ->fields('e')
+	 ->condition('EID', $eventID, '=')
+	 ->execute();
 
   foreach ($resultEvent as $row) {
     $start = $row->start;
@@ -61,6 +54,7 @@ if (isset($_POST['submit'])) {
 	$event = $row->name;
 	$ort = $row->ort;
 	$eid = $row->EID;
+  $beschreibung = $row->kurzbeschreibung;
   }
 
   $resultAdresse = db_select($tbl_adresse, 'a')
@@ -77,6 +71,7 @@ if (isset($_POST['submit'])) {
   $var .= "DTSTART:" . makeiCalFormat($start) . "\n";
   $var .= "DTEND:" . makeiCalFormat($ende) . "\n";
   $var .= "SUMMARY:" . $event . "\n";
+  $var .= "DESCRIPTION:" . $beschreibung . "\n";
 
   foreach ($resultAdresse as $row) {
     $ad = $row->strasse . ' ' . $row->nr . '\; ' . $row->plz . ' Leipzig';

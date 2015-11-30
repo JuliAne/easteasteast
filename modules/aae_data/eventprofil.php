@@ -8,17 +8,6 @@ class aae_eventprofil extends aae_data_helper {
 
  public function run(){
 
-
-/*if (empty($resultakteur)) { <-- Einbauen um leere Eventsseiten zu vermeiden!
-  // Akteur nicht vorhanden, beame ihn zur Akteure-Seite
-
-  if (session_status() == PHP_SESSION_NONE) session_start();
-
-  $_SESSION['sysmsg'][] = 'Akteurprofil konnte nicht gefunden werden...';
-
-  header("Location: ".$base_path."/Akteure");
-} */
-
   global $user;
 
   $explodedpath = explode("/", current_path());
@@ -35,11 +24,11 @@ class aae_eventprofil extends aae_data_helper {
   $akteurId = "";
   $okay = ""; // Gibt an, ob Zugang erlaubt wird oder nicht
 
-foreach ($resultAkteurId as $row) {
-  $akteurId = $row->AID; //Akteur speichern
+  foreach ($resultAkteurId as $row) {
+   $akteurId = $row->AID; //Akteur speichern
 
-  //Prüfen ob Schreibrecht vorliegt: ob User zu dem Akteur gehört
-  $resultUser = db_select($this->tbl_hat_user, 'u')
+   //Prüfen ob Schreibrecht vorliegt: ob User zu dem Akteur gehört
+   $resultUser = db_select($this->tbl_hat_user, 'u')
     ->fields('u', array(
       'hat_UID',
       'hat_AID',
@@ -48,10 +37,10 @@ foreach ($resultAkteurId as $row) {
     ->condition('hat_UID', $user->uid, '=')
     ->execute();
 
-  if ($resultUser->rowCount() == 1) {
+   if ($resultUser->rowCount() == 1) {
     $okay = 1; //Zugang erlaubt
+   }
   }
-}
 
  //Abfrage, ob User Ersteller des Events ist:
  $ersteller = db_select($this->tbl_event, 'e')
@@ -141,6 +130,10 @@ foreach ($resultAkteurId as $row) {
 
   foreach ($resultBezirk as $bezirk) {
    $resultBezirk = $bezirk; // Kleiner Fix, um EIN Objekt zu generieren
+  }
+
+  if (!empty($resultAdresse->gps)) {
+    $this->addMapContent($resultAdresse->gps, array('gps' => $resultAdresse->gps, 'name' => $resultEvent->name, 'strasse' => $resultAdresse->strasse, 'nr' => $resultAdresse->nr));
   }
 
   ob_start(); // Aktiviert "Render"-modus

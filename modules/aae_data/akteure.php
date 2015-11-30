@@ -39,50 +39,71 @@ Class akteure extends aae_data_helper {
   $ende = $this->maxAkteure;
  }
 
-//-----------------------------------
+// Filter nach Tags, falls gesetzt
+
+$filterTags = array();
 
 if (isset($_GET['tags']) && !empty($_GET['tags'])){
 
-  $filterSparten = db_select($this->tbl_hat_sparte, 'hs')
-   ->fields('hs', array('hat_AID'));
+ $fSparten = db_select($this->tbl_hat_sparte, 'hs')
+ ->fields('hs', array('hat_AID'));
 
-   $or = db_or();
+ $and = db_and();
 
  foreach($_GET['tags'] as $tag) {
 
   $tag = $this->clearContent($tag);
-  $or->condition('hat_KID', $tag);
+  $filterTags[$tag] = $tag;
+  $and->condition('hat_KID', $tag, '=');
 
  }
 
- $filterSparten->condition($or)
+ $filterSparten = $fSparten->condition($and)
   ->execute()
-  ->fetchAll();
+  ->fetchAssoc();
 
-  //print_r($filterSparten);
-
- foreach(array_unique($filterSparten) as $sparte) {
-  print_r($sparte);
-  echo 'D';
- }
+ array_unique($filterSparten); // Lösche doppelte Einträge
 
 }
 
 //-----------------------------------
 
 // Auswahl aller Akteure in alphabetischer Reihenfolge
-$resultAkteure = db_select($this->tbl_akteur, 'a')
+$rAkteure = db_select($this->tbl_akteur, 'a')
   ->fields('a', array(
 	'AID',
   'name',
   'beschreibung',
   'bild',
   'adresse'
-  ))
-  ->orderBy('name', 'ASC') // TODO: Nach neuesten filtern
+  ));
+
+ if (isset($filterSparten) && !empty($filterSparten)) {
+
+  $or = db_or();
+
+  foreach ($filterSparten as $id => $sparte) {
+    $or->condition('AID', $sparte, '=');
+  }
+
+  $rAkteure->condition($or);
+
+ } else if (isset($filterSparten) && empty($filterSparten)) {
+
+   // Keine Akteure mit entsprechendem Tag gefunden, daher negatives resultAkteure
+
+   $rAkteure->condition('name', 'LASDFJKASDFSKFDLJ', '=');
+
+ }
+
+ $resultAkteure = $rAkteure->orderBy('name', 'ASC') // *
   ->range($start, $ende)
   ->execute()
   ->fetchAll();
+
+  // *TODO: Nach neuesten Akteuren filtern. Benötigt "created"-Eintrag in DB,
+  // welcher allerdings (da Drupal's DB-Schema kein 'timestamp' supported)
+  // manuell eingetragen werden muss :(
 
   // Get Bezirk
   foreach ($resultAkteure as $counter => $akteur) {
@@ -99,10 +120,15 @@ $resultAkteure = db_select($this->tbl_akteur, 'a')
     ->execute()
     ->fetchAssoc();
 
+   // Add variable to $resultAkteure
    $resultAkteure[$counter] = (array)$resultAkteure[$counter];
    $resultAkteure[$counter]['bezirk'] = $bezirk['bezirksname'];
    $resultAkteure[$counter] = (object)$resultAkteure[$counter];
 
+  }
+
+  if ($this->presentationMode == 'map') {
+   $this->addMapContent('', '', array('file' => base_path().drupal_get_path('module', 'aae_data').'/LOdata.js'));
   }
 
   $resulttags = $this->getAllTags();

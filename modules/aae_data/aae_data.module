@@ -6,10 +6,18 @@
 /** @function hook_cron()
 *
 * Cronjob, der von Drupal automatisch aufgerufen wird.
-* TODO: Update der LOData.js Maps-Koordinaten-Datei???
 */
 function aae_data_cron() {
   //....
+}
+
+function aae_data_user_logout($account) {
+
+  // Funktioniert nicht, weil Drupal Sessions löscht :(
+
+  if (session_status() == PHP_SESSION_NONE) session_start();
+
+  $_SESSION['sysmsg'][] = 'Ausgeloggt. Komm` bald wieder!';
 }
 
 /**
