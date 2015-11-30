@@ -309,6 +309,8 @@ Class eventformular extends aae_data_helper {
 		'ende' => $this->ende,
 		'bild' => $this->bild,
 		'kurzbeschreibung' => $this->kurzbeschreibung,
+    'zeit_von' => $this->zeit_von,
+    'zeit_bis' => $this->zeit_bis
 	  ))
 	  ->condition('EID', $this->event_id, '=')
 	  ->execute();
@@ -372,7 +374,7 @@ Class eventformular extends aae_data_helper {
       }
 
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
-    session_start();
+    if (session_status() == PHP_SESSION_NONE) session_start();
 
     $_SESSION['sysmsg'][] = 'Das Event wurde erfolgreich bearbeitet!';
 
@@ -600,7 +602,7 @@ Class eventformular extends aae_data_helper {
  	 }
 
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
-    session_start();
+     if (session_status() == PHP_SESSION_NONE) session_start();
     $_SESSION['sysmsg'][] = 'Das Event wurde erfolgreich erstellt!';
 	  header("Location: Eventprofil/" . $this->event_id);
 

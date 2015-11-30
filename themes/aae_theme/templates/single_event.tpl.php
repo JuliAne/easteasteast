@@ -7,25 +7,16 @@
 </div>
 <?php unset($_SESSION['sysmsg']); endif; ?>
 
+<?php if (!empty($resultAdresse->gps)) : ?>
+<div id="map" style="height:280px;width:100%;margin-bottom:20px;"></div>
+<?php endif; ?>
+
 <h3 class="left"><?= $resultEvent->name; ?></h3>
 
 <p class="right">
-<strong>Zeit:</strong>
-
-<?php if($resultEvent->start != "") {
-  $explodedstart = explode(' ', $resultEvent->start);
-  $explodedende = explode(' ', $resultEvent->ende);
-
-  echo $explodedstart[0];
-
-  if($resultEvent->ende != $explodedstart[0]){
-   echo '- '.$explodedende[0];
-  }
-
-  if($explodedstart[1] != "" && $explodedende[1] != ""){
-   echo '<br>'.$explodedstart[1].'-'.$explodedende[1].'<br>';
-  }
-} ?>
+<strong>Start: </strong><?= $resultEvent->start; ?> (<?= $resultEvent->zeit_von; ?>)
+<?php if (!empty($resultEvent->ende)) echo ' - <strong>Ende:</strong> '.$resultEvent->ende;
+      if (!empty($resultEvent->zeit_bis)) echo ' ('.$resultEvent->zeit_bis.')'; ?>
 </p>
 
 <div class="divider" style="padding: 20px 0;"></div>
@@ -36,8 +27,8 @@
 <?php endif;
 
 if(count($sparten) != 0) { ?>
-  <br /><p><strong>Tags:</strong>
-<?php  $laenge = count($sparten);
+  <br /><p><strong>Tags: </strong>
+<?php $laenge = count($sparten);
   $j = 0;
   while($j < $laenge){
     echo $sparten[$j].' ';
@@ -56,7 +47,11 @@ if(count($sparten) != 0) { ?>
    <p><strong>Erstellt von:</strong> <?= $row2->name; ?></p>
  <?php endforeach; ?>
 
+   <?php if(empty($resultAkteur)) : ?>
+   <p><strong>Privater Veranstaltater</strong></p>
+   <?php else : ?>
    <p><strong>Akteur:</strong> <a href="<?= base_path(); ?>Akteurprofil/<?= $resultAkteur['AID']; ?>" title="Profil von <?= $resultAkteur['name']; ?> besuchen"><?= $resultAkteur['name']; ?></a></p>
+   <?php endif; ?>
 
    <?php if(!empty($resultAdresse)) : ?>
     <p><strong>Ort:</strong>
@@ -66,7 +61,7 @@ if(count($sparten) != 0) { ?>
     <?php endif; ?>
 
    <?php if($resultAdresse->plz != "") : ?>
-      - <?= $resultAdresse->plz; ?> Leipzig 
+      - <?= $resultAdresse->plz; ?> Leipzig
    <?php endif; ?>
 
    <?php  if($resultBezirk->bezirksname != "") : ?>
