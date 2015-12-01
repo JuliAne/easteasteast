@@ -1,6 +1,5 @@
 <?php
 /**
- * Ansicht der einzelnen Kalendertage.
  * Moeglichkeit die einzelnen Events als .ics-Datei (iCal-Format)
  * herunterzuladen.
  */
@@ -27,12 +26,9 @@ $resultEvents = db_select($tbl_event, 'e')
   ->condition('start', $tag.'%', 'LIKE')
   ->orderBy('name', 'ASC')
   ->execute();
-foreach ($resultEvents as $row) {
-  $events .= $row->start . ' - ' . $row->ende . ' ' . '<a href="Eventprofil/' . $row->EID . '">' . $row->name . '</a><form action=' . $pathThisFile . ' method="POST"><input type="hidden" name="eventid" value="' . $row->EID . '"><input type="submit" class="event" id="icalSubmit" name="submit" value="Download"></form><br>';
-}
 
-//Wenn auf Download geklickt wird:
 if (isset($_POST['submit'])) {
+
   $var = null;
   $event=null;
   //Generierung der .ics-Datei
@@ -97,7 +93,3 @@ function makeiCalFormat($datum) {
   $datum .= "00";
   return $datum;
 }
-
-$profileHTML = <<<EOF
-<p>$events</p>
-EOF;

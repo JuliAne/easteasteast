@@ -76,8 +76,8 @@ if(count($sparten) != 0) { ?>
     <br /><p><strong>Weitere Informationen: </strong><a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
   <?php endif; ?>
 
-  <form action="/Tag/<?= $resultEvent->start; ?>" method="POST">
-    <input name="eventid" value="16" type="hidden">
+  <form action="<?= base_path(); ?>ics_download/<?= $resultEvent->start; ?>" method="POST">
+    <input name="eventid" value="<?= $resultEvent->EID; ?>" type="hidden">
     <input class="right small secondary button" id="icalSubmit" name="submit" value="Als .ical exportieren" type="submit">
   </form>
 

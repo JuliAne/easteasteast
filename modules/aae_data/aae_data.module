@@ -118,7 +118,7 @@ function aae_data_menu() {
   );
 
   //Menuitem "Tag"
-  $items['Tag/%'] = array(
+  $items['ics_download/%'] = array(
     'title' => '',
     'page callback' => 'tag_page',
     'access arguments' => array('access content'),
