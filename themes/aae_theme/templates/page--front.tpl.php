@@ -43,6 +43,31 @@
     <?php print render($page['blog']); ?>
   </section>
 
+  <section class="section" id="projects-events">
+
+    <h1>N&auml;chste <strong>Veranstaltungen</strong></h1>
+
+    <div class="row">
+
+    <?php
+    // Lade "letzte Events"-Block
+    foreach ($blocks->print_letzte_events() as $event) : ?>
+
+     <div class="large-3 large-offset-1 columns event">
+      <a href="#"><button class="button blue date">08<br />Sept</button></a>
+      <a href="#"><h4><?= $event->name; ?></h4></a>
+      <aside><a href="<?= base_path(); ?>?q=Eventprofil/<?= $event->EID; ?>">
+       <img src="<?= base_path().path_to_theme(); ?>/img/location.svg" /><?= $event->veranstalter; ?> <br/>
+       <img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><strong>BEGINN</strong> - <strong>ENDE</strong></p>
+      </a></aside>
+     </div>
+
+    <?php endforeach; ?>
+
+    </div>
+
+  </section>
+
   <section class="section" id="projects-akteure">
 
     <h1>Neueste <strong>Akteure</strong></h1>
