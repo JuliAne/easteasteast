@@ -39,68 +39,46 @@
 
   </div>
 
- <section class="section" id="projects">
+  <section class="section" id="journal">
+    <?php print render($page['blog']); ?>
+  </section>
 
-  <h1>Neueste <strong>Akteure</strong></h1>
+  <section class="section" id="projects-akteure">
 
-  <div class="row">
+    <h1>Neueste <strong>Akteure</strong></h1>
 
-  <?php
-  // Lade "Meine Akteure"-Block
+    <div class="row">
 
-  include_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
+      <?php
+      // Lade "Meine Akteure"-Block
 
-  $blocks = new aae_blocks();
+      include_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
 
-  foreach ($blocks->print_letzte_akteure() as $akteur) : ?>
+      $blocks = new aae_blocks();
 
-   <div class="large-3 large-offset-1 columns pcard">
-    <header<?php if($akteur->bild != '') echo ' style="background:url('.$akteur->bild.');"'; ?>>
-      <h3><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>"><?= $akteur->name; ?></a></h3>
-      <!--<img title="Barrierefrei" class="barrierefrei" src="img/wheelchair.svg" />-->
-     </header>
-     <section>
-      <p><!--<strong>Reudnitz</strong>--><?= substr($akteur->beschreibung, 0, 120); ?>...</p>
-     </section>
-     <footer>
-      <a href="#" title="Hier erscheint bei Klick eine Minimap inkl. Strassenangabe"><img src="<?= base_path().path_to_theme(); ?>/img/location.svg" /></a>
-      <a href="#" title="Weiterleitung zu Terminen dieses Projektes"><img class="gimmeborder" src="<?= base_path().path_to_theme(); ?>/img/calendar.svg" /></a>
-      <a href="<?= base_path(); ?>Akteurprofil/<?= $akteur->AID; ?>" title="Profil besuchen"><button class="button blue">&gt;</button></a>
-     </footer>
-    </div>
+      foreach ($blocks->print_letzte_akteure() as $akteur) : ?>
 
-  <?php endforeach; ?>
+       <div class="large-3 large-offset-1 columns pcard">
+        <header<?php if($akteur->bild != '') echo ' style="background:url('.$akteur->bild.');"'; ?>>
+          <h3><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>"><?= $akteur->name; ?></a></h3>
+          <!--<img title="Barrierefrei" class="barrierefrei" src="img/wheelchair.svg" />-->
+         </header>
+         <section>
+          <p><!--<strong>Reudnitz</strong>--><?= substr($akteur->beschreibung, 0, 120); ?>...</p>
+         </section>
+         <footer>
+          <a href="#" title="Hier erscheint bei Klick eine Minimap inkl. Strassenangabe"><img src="<?= base_path().path_to_theme(); ?>/img/location.svg" /></a>
+          <a href="#" title="Weiterleitung zu Terminen dieses Projektes"><img class="gimmeborder" src="<?= base_path().path_to_theme(); ?>/img/calendar.svg" /></a>
+          <a href="<?= base_path(); ?>Akteurprofil/<?= $akteur->AID; ?>" title="Profil besuchen"><button class="button blue">&gt;</button></a>
+         </footer>
+        </div>
 
-  </div>
+      <?php endforeach; ?>
 
-  <h1>N&auml;chste <strong>Veranstaltungen</strong></h1>
+    </div> <!--#row-->
 
-  <div class="row">
+  </section> <!--#akteure-->
 
-  <?php
-  // Lade "letzte Events"-Block
-
-  foreach ($blocks->print_letzte_events() as $event) : ?>
-
-   <div class="large-3 large-offset-1 columns event">
-    <a href="#"><button class="button blue date">08<br />Sept</button></a>
-    <a href="#"><h4><?= $event->name; ?></h4></a>
-    <aside><a href="<?= base_path(); ?>?q=Eventprofil/<?= $event->EID; ?>">
-     <img src="<?= base_path().path_to_theme(); ?>/img/location.svg" /><?= $event->veranstalter; ?> <br/>
-     <img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><strong>BEGINN</strong> - <strong>ENDE</strong></p>
-    </a></aside>
-   </div>
-
- <?php endforeach; ?>
-
-  </div>
-
- </section>
-
- <section class="section" id="journal">
-   <?php print render($page['blog']); ?>
- </section>
-
-<?php include_once('footer.tpl.php'); ?>
+  <?php include_once('footer.tpl.php'); ?>
 
 </div><!--/#fullpage -->

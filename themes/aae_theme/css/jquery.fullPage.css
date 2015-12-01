@@ -55,6 +55,11 @@ html.fp-enabled,
     width: 100%;
     height: 100%;
 }
+
+.fp-tableCell h1 {
+    
+}
+
 .fp-slidesContainer {
     float: left;
     position: relative;

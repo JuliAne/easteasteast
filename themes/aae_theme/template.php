@@ -18,7 +18,7 @@ function aae_preprocess_html(&$variables) {
 
   drupal_add_css(path_to_theme().'/css/foundation.min.css');
   drupal_add_css('https://fonts.googleapis.com/css?family=Open+Sans:400,300', array('type' => 'external')); // TODO: Auslagern in local-repo
-  drupal_add_css(path_to_theme().'/css/pace.css');
+  /*drupal_add_css(path_to_theme().'/css/pace.css');*/
   drupal_add_css(path_to_theme().'/css/app.css');
 
   /* Checke Seitentyp, hänge entsprechendes CSS/JS an den Header: */

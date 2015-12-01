@@ -314,6 +314,16 @@ transform: rotate(-10deg);
  background-size: 100%;
 }
 
+#projects-akteure {
+ background: url(../img/homepage_akteure_bg.jpg);
+ background-size: 100%;
+}
+
+#projects-events {
+ background: url(../img/homepage_akteure_bg.jpg);
+ background-size: 100%;
+}
+
 .pcard, .event {
  background-color: #fff;
  margin: 0;
