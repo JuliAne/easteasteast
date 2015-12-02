@@ -24,7 +24,7 @@ Class aae_blocks extends aae_data_helper {
  * Wird in templates/page--front.tpl.php aufgerufen.
  */
 
-public function print_letzte_events($limit = 3) {
+public function print_letzte_events($limit = 6) {
 
   $letzteEvents = db_select($this->tbl_event, 'a')
     ->fields('a')

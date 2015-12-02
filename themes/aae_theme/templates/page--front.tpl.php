@@ -45,8 +45,8 @@
 
   <section class="section" id="projects-events">
 
-    <h1>N&auml;chste <strong>Veranstaltungen</strong></h1>
-
+    <h1><span>&nbsp;<strong>N&auml;chste Veranstaltungen</strong>&nbsp;</span></h1>
+    <br/>
     <div class="row">
 
     <?php
@@ -65,7 +65,7 @@
     <?php endforeach; ?>
 
     </div>
-
+    
   </section>
 
   <section class="section" id="projects-akteure">

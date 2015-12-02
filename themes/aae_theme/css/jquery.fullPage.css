@@ -56,8 +56,8 @@ html.fp-enabled,
     height: 100%;
 }
 
-.fp-tableCell h1 {
-    
+#projects-events .fp-tableCell h1 span{
+    background-color: rgba(255,255,255,0.6); 
 }
 
 .fp-slidesContainer {
@@ -275,4 +275,9 @@ html.fp-enabled,
 #slideSection #slide0 button.transparent:hover {
  background: rgba(255, 255, 255, 0.8);
  color: #000;
+}
+
+/*setting veranstaltungen*/
+.large-3 {
+    margin-bottom:40px;
 }
