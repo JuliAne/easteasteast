@@ -9,12 +9,12 @@ $(document).ready(function(){
   $('#menu li:has(ul)' ).doubleTapToGo();
  } else {
   $('#fullpage').fullpage({
-	 anchors: ['home', 'blog', 'projects-events', 'projects-akteure', 'ueberuns'],
+	 anchors: ['home', 'blog', 'events', 'akteure', 'ueberuns'],
 	 sectionsColor: ['#FFF', '#F7F7F7', '#F7F7F7', '#F7F7F7', '#FFF'],
 	 scrollBar: true,
    navigation: true,
 	 navigationPosition: 'right',
-	 navigationTooltips: ['Start', 'Journal', 'Veranstaltungen', 'Projekte', 'Footer'],
+	 navigationTooltips: ['Start', 'Journal', 'Veranstaltungen', 'Akteure', 'Footer'],
    fixedElements: '#mainnav',
 
    afterLoad: function(anchor, index){
