@@ -286,8 +286,8 @@ transform: rotate(-10deg);
  margin-left: 37px;
 }
 
-#mainnav #actions #login-popup h4 {
- padding-top: 10px;
+#mainnav #actions #login-popup h2 {
+ padding-top: 8px;
 }
 
 #mainnav #actions #login-popup .divider {
@@ -545,35 +545,52 @@ transform: rotate(-10deg);
  padding-bottom: 13px;
 }
 
-#footer #calendar .header {
+#calendar .header {
   margin-bottom: 6px;
 }
 
-#footer #calendar .header a {
+#calendar .header a {
  margin: 8px;
  font-size: 0.7em;
 }
 
-#footer #calendar ul.label {
+#calendar ul.label {
   width: 100%;
 }
 
-#footer #calendar ul.label li {
+#calendar ul.label li {
   float: left;
   width: 14%;
   padding: 6px;
 }
 
-#footer #calendar .dates {
+#calendar .dates {
   width: 100%;
 }
 
-#footer #calendar .dates li {
+#calendar .dates li {
   float: left;
   width: 14%;
   padding: 5px;
   font-size: 0.75em;
   margin: 5px 0;
+}
+
+#calendar #event:after {
+  content:attr(data-nr);
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 10px;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: #fff !important;
+  margin-top: -5px;
+  background: #008CBA;
+}
+
+#presentationFilter ul li .active {
+ background-color: #fff !important;
 }
 
 #nav [type=checkbox] {
