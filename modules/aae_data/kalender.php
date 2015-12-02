@@ -77,7 +77,7 @@ class kalender extends aae_data_helper {
      }
    }
    if (($this->currentDay != 0) && ($this->currentDay <= $this->daysInMonth)) {
-     $this->currentDate = date('d-m-Y', strtotime($this->currentDay . '-' . $this->currentMonth . '-' . ($this->currentYear)));
+     $this->currentDate = date('d-m-Y', strtotime($this->currentDay . '-' . $this->currentMonth . '-' . $this->currentYear));
      $cellContent = $this->currentDay;
 
      //$events = null;
