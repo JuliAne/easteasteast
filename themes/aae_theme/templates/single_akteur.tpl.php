@@ -81,7 +81,7 @@
           <?php if (!empty($resulttags)) : ?>
             <!--<h4>Tags:</h4>-->
             <?php foreach ($resulttags as $row) : ?>
-              <a style="font-size:0.4em;" href="#" title="TODO: Weiterleitung auf /akteure/?$tags=row->KID">#<?= strtolower($row[0]->kategorie); ?></a>
+              <a style="font-size:0.4em;" href="<?= base_path(); ?>akteure/?tags[]=<?= $row[0]->KID; ?>" title="Zeige alle mit <?= $row[0]->kategorie; ?> getaggten Akteure">#<?= strtolower($row[0]->kategorie); ?></a>
             <?php endforeach; ?>
           <?php endif; ?></h1>
 

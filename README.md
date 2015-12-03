@@ -4,7 +4,8 @@
 
 ### Requirements
 
-- Drupal version 7.x (https://www.drupal.org/start.)
+- PHP 5.4 or better
+- Drupal version 7.x (https://www.drupal.org/download) with "CKeditor"-module being installed
 - Imagick
 - MySQL/MariaDB
 
@@ -38,10 +39,6 @@ Within your local drupal-copy, clone this repo to '/sites/all/'. The module & th
 
 - Add (sub)sites to the menu (see Abschlussdokumente/handbuch.pdf)
 
-#### Slider-Settings (front-page)
-
-- See Abschlussdokumente/handbuch.pdf
-
 ### aae data
 
 - Copy "aae_data" to "/drupal/sites/all/modules/"
@@ -52,6 +49,6 @@ Within your local drupal-copy, clone this repo to '/sites/all/'. The module & th
 
 #### Issues
 
-The performance of Drupal can vary immensively depending on your webhost. Take a look @ https://drupal.stackoverflow.com
-to receive further information on how to solve this issue. Pro-tips: Change the DB-Host in settings.php
-from "localhost" to "127.0.0.1" and activate Drupal's internal cache or use memcache.
+The performance of Drupal can vary immensively depending on your webhost. Take a look @ http://drupal.stackexchange.com/
+to receive further support. Pro-tips: Change the DB-Host in settings.php
+from "localhost" to "127.0.0.1" and activate Drupal's internal cache or use memcache to gain a better performance.

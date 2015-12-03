@@ -24,8 +24,8 @@ class kalender extends aae_data_helper {
  }
 
  public function show() {
- $year  == null;
-   $month == null;
+  $year  == null;
+  $month == null;
 
    if (null == $year && isset($_GET['year'])) {
      $year = $_GET['year'];
@@ -77,11 +77,11 @@ class kalender extends aae_data_helper {
      }
    }
    if (($this->currentDay != 0) && ($this->currentDay <= $this->daysInMonth)) {
-     $this->currentDate = date('Y-m-d', strtotime($this->currentYear . '-' . $this->currentMonth . '-' . ($this->currentDay)));
+     $this->currentDate = date('d-m-Y', strtotime($this->currentDay . '-' . $this->currentMonth . '-' . $this->currentYear));
      $cellContent = $this->currentDay;
 
-     $events = null;
-     //DB-Abfrage des Tages
+     //$events = null;
+
      //DB-Abfrage aller Events, die an diesem Tag stattfinden
      $resultEvents = db_select($this->tbl_event, 'e')
        ->fields('e', array(
@@ -92,19 +92,24 @@ class kalender extends aae_data_helper {
        ->condition('start', $this->currentDate . '%', 'LIKE')
        ->orderBy('name', 'ASC')
        ->execute();
-     foreach ($resultEvents as $row) {
-     $events .= '<a href="Eventprofil/' . $row->EID . '">' . $row->name . '</a>';
-     }
+
+     /*foreach ($resultEvents as $row) {
+      $events .= '<a href="Eventprofil/' . $row->EID . '">' . $row->name . '</a>';
+    } */
+
      $countrows = $resultEvents->rowCount();
      $this->currentDay++;
+
    } else {
+
      $this->currentDate = null;
      $cellContent = null;
+
    }
    if ($countrows == 0) {
      return '<li id="li-' . $this->currentDate . '" class="' . ($cellNumber%7==1?' start ':($cellNumber%7==0?' end ':' ')) . ($cellContent==null?'mask':'') . '">' . $cellContent . '</li>';
    } else {
-     return '<li id="event" class="' . ($cellNumber%7==1?' start ':($cellNumber%7==0?' end ':' ')) . ($cellContent==null?'mask':'') . '"><a href="tag/' . $this->currentDate . '">' . $cellContent . ' (' . $countrows . ')</a></li>';
+     return '<li id="event" data-nr="'.$countrows.'" title="'.$countrows.' Event(s) an diesem Tag" class="' . ($cellNumber%7==1?' start ':($cellNumber%7==0?' end ':' ')) . ($cellContent==null?'mask':'') . '"><a href="'.base_path().'events/?day=' . $this->currentDate . '">' . $cellContent . '</a></li>';
    }
  }
 

@@ -27,15 +27,14 @@
 <?php endif;
 
 if(count($sparten) != 0) { ?>
+
   <br /><p><strong>Tags: </strong>
-<?php $laenge = count($sparten);
-  $j = 0;
-  while($j < $laenge){
-    echo $sparten[$j].' ';
-    $j++;
-  }
-  echo '</p>';
-} ?>
+  <?php foreach($sparten as $sparte) : ?>
+    <a href="<?= base_path(); ?>events/?tags[]=<?= $sparte->KID; ?>">#<?= $sparte->kategorie; ?></a>
+  <?php endforeach; ?>
+  </p>
+
+<?php } ?>
 
 <?php if($resultEvent->bild != "") : ?>
   <img style="padding: 10px 0;" src="<?= $resultEvent->bild; ?>" title="<?= $resultEvent->name; ?>">
@@ -76,8 +75,8 @@ if(count($sparten) != 0) { ?>
     <br /><p><strong>Weitere Informationen: </strong><a href="<?= $resultEvent->url; ?>"><?= $resultEvent->url; ?></a></p>
   <?php endif; ?>
 
-  <form action="/Tag/<?= $resultEvent->start; ?>" method="POST">
-    <input name="eventid" value="16" type="hidden">
+  <form action="<?= base_path(); ?>ics_download/<?= $resultEvent->start; ?>" method="POST">
+    <input name="eventid" value="<?= $resultEvent->EID; ?>" type="hidden">
     <input class="right small secondary button" id="icalSubmit" name="submit" value="Als .ical exportieren" type="submit">
   </form>
 

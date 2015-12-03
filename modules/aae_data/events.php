@@ -11,11 +11,14 @@ Class events extends aae_data_helper {
  var $presentationMode;
  var $maxEvents;
  var $sparten;
+ var $tag;
 
  public function run(){
 
   $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) ? $this->clearContent($_GET['presentation']) : 'timeline');
   // Available: "timeline"[default] & "kalender"
+  $this->tag = (isset($_GET['day']) && !empty($_GET['day']) ? $this->clearContent($_GET['day']) : '');
+
 
   // TODO: limit
 
@@ -81,6 +84,19 @@ Class events extends aae_data_helper {
 
     $kal = new kalender();
     $resultKalender = $kal->show();
+
+  }
+
+  if (!empty($this->tag)) {
+
+    // DB-Abfrage aller Events, die an diesem Tag stattfinden
+
+    $resultEvents = db_select($this->tbl_event, 'e')
+     ->fields('e')
+     ->condition('start', $this->tag.'%', 'LIKE')
+     ->orderBy('name', 'ASC')
+     ->execute()
+     ->fetchAll();
 
   } else {
 

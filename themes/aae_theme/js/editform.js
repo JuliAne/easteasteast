@@ -1,9 +1,18 @@
 $(document).ready(function(){
 
-  $('#eventSpartenInput').tokenize({displayDropdownOnFocus:true});
+  $('#eventSpartenInput').tokenize({
+    displayDropdownOnFocus : true,
+    onRemoveToken : function(value, e){
 
-  $("#eventStartdatumInput").Zebra_DatePicker({'readonly_element' : false});
-  $("#eventEnddatumInput").Zebra_DatePicker({'readonly_element' : false});
+      if((parseFloat(value) == parseInt(value)) && !isNaN(value)) {
+       $('form').append('<input type="hidden" name="removedTags[]" value="'+value+'" />');
+      }
+
+    }
+  });
+
+  $("#eventStartdatumInput").Zebra_DatePicker({'readonly_element' : false, format : 'd-m-Y'});
+  $("#eventEnddatumInput").Zebra_DatePicker({'readonly_element' : false, format : 'd-m-Y'});
 
   $('form').submit(function(){
     $('#beschreibung').html(CKEDITOR.instances.beschreibung.getData());

@@ -70,8 +70,8 @@ function aae_data_schema() {
 	  'ort' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
 	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
 	  'ersteller' => array('description' => 'ID von User, der Event angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
-    'zeit_von' => array('TIME', 'not null' => TRUE),
-    'zeit_bis' => array('TIME', 'not null' => FALSE)
+    'zeit_von' => array('type' => 'varchar', length => 5, 'not null' => FALSE),
+    'zeit_bis' => array('type' => 'varchar', length => 5, 'not null' => FALSE)
 	),
 	'primary key' => array('EID'),
 	'foreign keys' => array(
