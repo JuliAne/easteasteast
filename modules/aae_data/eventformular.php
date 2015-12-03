@@ -175,7 +175,7 @@ Class eventformular extends aae_data_helper {
      $this->freigabe = false;
     }
 
-    if (!empty($this->url) && preg_match('/\A(http:\/\/|https:\/\/)\w+(.|\/)+\w+\.[a-z]{2,3}\z/',$this->url)==0) {
+    if (!empty($this->url) && preg_match('/\A(http:\/\/|https:\/\/)(\w+\.\w+)*\w+\.[a-z]{2,3}(\/.*)*\z/',$this->url)==0) {
      $this->fehler['url'] = "Bitte eine gültige URL zur Eventwebseite eingeben! (z.B. http://dasistmeinevent.de)";
      $this->freigabe = false;
     }
