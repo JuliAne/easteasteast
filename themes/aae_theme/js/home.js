@@ -36,9 +36,10 @@ $(document).ready(function(){
 //  drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js');
 //  drupal_add_css('https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css');
 // --> evtl. global im Header laden?
-// Zudem ist Variable addressPoints hier nicht verfügbar, müste als globale Variable angelegt werden, wenn hier Nutzung erfolgen soll
+//
+// Zudem ist Variable addressPoints hier nicht verfügbar, müsste als globale Variable angelegt werden, wenn hier Nutzung erfolgen soll
 
-//********************MAPBOX CODE*****************************************************
+//********************MAPBOX CODE**************************************************
  // L.mapbox.accessToken = 'pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg';
  // // Bug: Map changes view to the left when being used in a slider :(
  // var map = L.mapbox.map('map', 'matzelot.ke3420oc').setView([51.34, 12.735], 13);
