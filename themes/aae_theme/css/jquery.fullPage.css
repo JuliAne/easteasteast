@@ -60,6 +60,10 @@ html.fp-enabled,
     background-color: rgba(255,255,255,0.6); 
 }
 
+#projects-akteure .fp-tableCell h1 span{
+    background-color: rgba(255,255,255,0.6); 
+}
+
 .fp-slidesContainer {
     float: left;
     position: relative;
