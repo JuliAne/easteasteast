@@ -63,6 +63,7 @@ Class eventformular extends aae_data_helper {
   var $resultakteure;
   var $resultbezirke;
   var $target = '';
+  var $removedTags;
 
   function __construct($action = false) {
 
@@ -133,6 +134,7 @@ Class eventformular extends aae_data_helper {
     $this->ort = $this->clearContent($_POST['ort']);
     $this->gps = $this->clearContent($_POST['gps']);
     $this->sparten = $_POST['sparten'];
+    $this->removedTags = $_POST['removedTags'];
 
     //-------------------------------------
 
@@ -142,9 +144,14 @@ Class eventformular extends aae_data_helper {
 	   $this->freigabe = false;
     }
 
-    //Ckeck, ob Datum angegeben wurde
-    if (strlen($this->start) == 0 || DateTime::createFromFormat('Y-m-d', $this->start) == false) {
+    //Ckeck, ob korrektes Datum angegeben wurde
+    if (strlen($this->start) != 0 && DateTime::createFromFormat('d-m-Y', $this->start) == false) {
       $this->fehler['start'] = "Bitte ein (gültiges) Startdatum angeben!";
+      $this->freigabe = false;
+    }
+
+    if (strlen($this->ende) != 0 && DateTime::createFromFormat('d-m-Y', $this->start) == false) {
+      $this->fehler['ende'] = "Bitte ein (gültiges) Enddatum angeben!";
       $this->freigabe = false;
     }
 
@@ -158,7 +165,7 @@ Class eventformular extends aae_data_helper {
      $this->freigabe = false;
     }
 
-    if (empty($this->zeit_von) || DateTime::createFromFormat('H:i', $this->zeit_von) == false) {
+    if (!empty($this->zeit_von) && DateTime::createFromFormat('H:i', $this->zeit_von) == false) {
      $this->fehler['zeit_von'] = "Bitte eine (gültige) Start-Uhrzeit angeben!";
      $this->freigabe = false;
     }
@@ -315,12 +322,26 @@ Class eventformular extends aae_data_helper {
 	  ->condition('EID', $this->event_id, '=')
 	  ->execute();
 
-	$akteureventupdate = db_update($this->tbl_akteur_events)
+	 $akteureventupdate = db_update($this->tbl_akteur_events)
    	->fields(array(
 		'AID' => $this->veranstalter
 	  ))
 	  ->condition('EID', $this->event_id, '=')
 	  ->execute();
+
+    if (!empty($this->removedTags) && is_array($this->removedTags)) {
+
+     foreach($this->removedTags as $tag) {
+
+      $tag = $this->clearContent($tag);
+
+      db_delete($this->tbl_event_sparte)
+       ->condition('hat_KID', $tag, '=')
+       ->condition('hat_EID', $this->event_id, '=')
+       ->execute();
+
+     }
+    }
 
     // Update Tags
 
