@@ -42,7 +42,7 @@
 
     $image = new Imagick($bild['tmp_name']);
     //$image->thumbnailImage(700, 400);
-    $image->scaleImage(700, 300, true);
+    $image->scaleImage(800, 400, true);
     $image->writeImage($this->bildpfad.$bild['name']);
 
     return base_path() . $this->short_bildpfad . $bild['name'];

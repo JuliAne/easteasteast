@@ -68,6 +68,7 @@ Class akteurformular extends aae_data_helper {
   var $resultbezirke = "";
   var $target = "";
   var $modulePath;
+  var $removedTags;
 
   //-----------------------------------
 
@@ -147,6 +148,7 @@ Class akteurformular extends aae_data_helper {
     $this->ort = $this->clearContent($_POST['ort']);
     $this->gps = $this->clearContent($_POST['gps']);
     $this->sparten = $_POST['sparten'];
+    $this->removedTags = $_POST['removedTags'];
 
     //-------------------------------------
 
@@ -371,6 +373,20 @@ Class akteurformular extends aae_data_helper {
      $this->bild = $this->clearContent($_POST['oldPic']);
     }
 
+    if (!empty($this->removedTags) && is_array($this->removedTags)) {
+
+     foreach($this->removedTags as $tag) {
+
+      $tag = $this->clearContent($tag);
+
+      db_delete($this->tbl_hat_sparte)
+       ->condition('hat_KID', $tag, '=')
+       ->condition('hat_AID', $this->akteur_id, '=')
+       ->execute();
+
+     }
+    }
+
     $akteurAdresse = db_select($this->tbl_akteur, 'a')
      ->fields('a', array('adresse'))
      ->condition('AID', $this->akteur_id, '=')
@@ -408,7 +424,7 @@ Class akteurformular extends aae_data_helper {
 
      if (is_array($this->sparten) && $this->sparten != "") {
 
-      foreach ($this->sparten as $id => $sparte) {
+      foreach ($this->sparten as $sparte) {
     	// Tag bereits in DB?
 
       $sparte_id = '';
@@ -438,6 +454,7 @@ Class akteurformular extends aae_data_helper {
     		$hatAkteurSparte = db_select($this->tbl_hat_sparte, 'hs')
     		 ->fields('hs')
          ->condition('hat_KID', $sparte_id, '=')
+         ->condition('hat_AID', $this->akteur_id, '=')
     		 ->execute();
 
          if ($hatAkteurSparte->rowCount() == 0) {
@@ -450,10 +467,9 @@ Class akteurformular extends aae_data_helper {
            ))
            ->execute();
 
-         }
-
-    	  }
+        }
     	 }
+     }
 
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();

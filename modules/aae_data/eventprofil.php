@@ -90,19 +90,18 @@ class aae_eventprofil extends aae_data_helper {
   $countSparten = $resultSparten->rowCount();
   $sparten = array();
 
-  $i = 0;
 
   if ($countSparten != 0) {
+
    foreach ($resultSparten as $row) {
-    $resultSpartenName = db_select($this->tbl_sparte, 'p')
-	  ->fields('p', array('kategorie'))
+    $resultSpartenName = db_select($this->tbl_sparte, 'sp')
+	  ->fields('sp')
 	  ->condition('KID', $row->hat_KID, '=')
 	  ->execute();
 
 	  foreach ($resultSpartenName as $row1) {
-	   $sparten[$i] = $row1->kategorie;
+	   $sparten[] = $row1;
 	  }
-	$i++;
   }
  }
 
