@@ -70,8 +70,8 @@
 
   <section class="section" id="projects-akteure">
 
-    <h1>Neueste <strong>Akteure</strong></h1>
-
+    <h1><span>&nbsp;<strong>Neueste Akteure</strong>&nbsp;</span></h1>
+    <br/>
     <div class="row">
 
       <?php
