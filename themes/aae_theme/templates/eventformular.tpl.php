@@ -23,7 +23,7 @@
   </div>
 
   <div class="large-4 columns">
-   <label>Eventwebsite: <?= $this->fehler['url']; ?>
+   <label>Eventwebsite: <!-- <?= $this->fehler['url']; ?> -->
     <input type="text" id="eventURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= $this->ph_url; ?>">
    </label>
   </div>
