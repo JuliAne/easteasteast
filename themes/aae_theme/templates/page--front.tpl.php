@@ -45,7 +45,7 @@
 
   <section class="section" id="projects-events">
 
-    <h1><span>&nbsp;<strong>N&auml;chste Veranstaltungen</strong>&nbsp;</span></h1>
+    <h1><span>&nbsp;<strong>N&auml;chste Veranstaltungen</strong></span></h1>
     <br/>
     <div class="row">
 
@@ -53,24 +53,27 @@
     // Lade "letzte Events"-Block
     foreach ($blocks->print_letzte_events() as $event) : ?>
 
+    <?php $exploded = explode("-", $event->start); ?>
+
      <div class="large-3 large-offset-1 columns event">
-      <a href="#"><button class="button blue date">08<br />Sept</button></a>
+      <a href="#"><button class="date"><?= $exploded[0]; ?>.<br /><?= $exploded[1]; ?>.</button></a>
       <a href="#"><h4><?= $event->name; ?></h4></a>
-      <aside><a href="<?= base_path(); ?>?q=Eventprofil/<?= $event->EID; ?>">
-       <img src="<?= base_path().path_to_theme(); ?>/img/location.svg" /><?= $event->veranstalter; ?> <br/>
-       <img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><strong>BEGINN</strong> - <strong>ENDE</strong></p>
+      <aside><a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>">
+       <img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><strong><?= $event->zeit_von; ?></strong><?php if (!empty($event->zeit_bis)) :?> - <strong><?= $event->zeit_bis; ?></strong><?php endif; ?></p>
       </a></aside>
      </div>
 
     <?php endforeach; ?>
 
+    <a href="<?= base_path(); ?>events" class="button secondary round">Alle Events</a>
+
     </div>
-    
+
   </section>
 
   <section class="section" id="projects-akteure">
 
-    <h1><span>&nbsp;<strong>Neueste Akteure</strong>&nbsp;</span></h1>
+    <h1><span>&nbsp;<strong>Neueste Akteure</strong></span></h1>
     <br/>
     <div class="row">
 
@@ -84,21 +87,19 @@
       foreach ($blocks->print_letzte_akteure() as $akteur) : ?>
 
        <div class="large-3 large-offset-1 columns pcard">
-        <header<?php if($akteur->bild != '') echo ' style="background:url('.$akteur->bild.');"'; ?>>
+        <header<?php if($akteur->bild != '') echo ' style="background-image:url('.$akteur->bild.');"'; ?>>
           <h3><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>"><?= $akteur->name; ?></a></h3>
-          <!--<img title="Barrierefrei" class="barrierefrei" src="img/wheelchair.svg" />-->
          </header>
          <section>
-          <p><!--<strong>Reudnitz</strong>--><?= substr($akteur->beschreibung, 0, 120); ?>...</p>
+          <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?>
+          <div class="divider"></div>
+          <p><?= substr($akteur->beschreibung, 0, 120); ?>...</p>
          </section>
-         <footer>
-          <a href="#" title="Hier erscheint bei Klick eine Minimap inkl. Strassenangabe"><img src="<?= base_path().path_to_theme(); ?>/img/location.svg" /></a>
-          <a href="#" title="Weiterleitung zu Terminen dieses Projektes"><img class="gimmeborder" src="<?= base_path().path_to_theme(); ?>/img/calendar.svg" /></a>
-          <a href="<?= base_path(); ?>Akteurprofil/<?= $akteur->AID; ?>" title="Profil besuchen"><button class="button blue">&gt;</button></a>
-         </footer>
         </div>
 
       <?php endforeach; ?>
+
+      <a href="<?= base_path(); ?>akteure" class="button secondary round">Alle Akteure</a>
 
     </div> <!--#row-->
 

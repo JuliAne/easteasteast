@@ -1,13 +1,14 @@
 <?php $theme_path =  drupal_get_path('theme', $GLOBALS['theme']);
-      global $base_url; ?>
+      global $base_url;
+      global $user; ?>
 
 <header id="article-image" style="background-image:url(<?php print render (file_create_url($node->field_image['und'][0]['uri'])); ?>);">
 
  <div class="aaeActionBar">
   <div class="row">
-   <?php //if ($hat_recht): ?>
+   <?php if (array_intersect(array('redakteur','administrator'), $user->roles)) : ?>
     <div class="large-3 large-offset-1 columns"><a href="<?= $node_url; ?>/edit" title="Artikel bearbeiten"><img src="<?= base_path().$theme_path; ?>/img/manage.svg" />Bearbeiten</a></div>
-    <?php // endif; ?>
+    <?php endif; ?>
 
    <div class="large-4 columns right" style="text-align: right;">
     <a href="#comments" title="<?= $comment_count; ?> Kommentar(e)"><img src="<?= base_path().$theme_path; ?>/img/comments.svg" /><?= $comment_count; ?> Kommentar(e)</a>

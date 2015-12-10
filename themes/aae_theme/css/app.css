@@ -352,7 +352,11 @@ transform: rotate(-10deg);
  padding: 24px 0;
 }
 
-.section h1 strong {
+.section h1 span {
+ padding: 3px;
+}
+
+.section h1 span strong {
  font-weight: 400;
 }
 
@@ -367,7 +371,7 @@ transform: rotate(-10deg);
 }
 
 #projects-events {
- background: url(../img/homepage_akteure_bg.jpg);
+ background: url(../img/ostspiele_fussball_ida.jpg);
  background-size: 100%;
 }
 

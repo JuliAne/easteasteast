@@ -5,7 +5,6 @@
 *
 * Ein paar Hilfsfunktion für das Theme...
 * @use require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
-*      aae_blocks::FUNKTION
 *
 * @function print_letzte_events
 * @function print_letzte_akteure
@@ -32,8 +31,6 @@ public function print_letzte_events($limit = 6) {
     ->execute()
     ->fetchAll();
 
-  // TODO Fields * durch Werte ersetzen
-
   $resultEvents = array();
 
   foreach($letzteEvents as $row){
@@ -51,21 +48,38 @@ public function print_letzte_events($limit = 6) {
 
 public function print_letzte_akteure($limit = 3) {
 
-  $letzteakteure = db_select($this->tbl_akteur, 'a')
+  $resultAkteure = db_select($this->tbl_akteur, 'a')
     ->fields('a')
     ->range(0, $limit)
     ->execute()
     ->fetchAll();
 
-  $resultakteure = array();
-
-  // TODO Fields * durch Werte ersetzen
-
-  foreach($letzteakteure as $row){
+  /*foreach($letzteAkteure as $row){
     $resultakteure[] = $row; //array('AID' => $row->AID, 'name' => $row->name);
-  }
+  } */
 
-  return $resultakteure;
+  // Get Bezirk
+  foreach ($resultAkteure as $counter => $akteur) {
+
+   $adresse = db_select($this->tbl_adresse, 'ad')
+    ->fields('ad', array('bezirk','gps'))
+    ->condition('ADID', $akteur->adresse, '=')
+    ->execute()
+    ->fetchAssoc();
+
+   $bezirk = db_select($this->tbl_bezirke, 'b')
+    ->fields('b')
+    ->condition('BID', $adresse['bezirk'], '=')
+    ->execute()
+    ->fetchAssoc();
+
+   // Hack: add variable to $resultAkteure-object
+   $resultAkteure[$counter] = (array)$resultAkteure[$counter];
+   $resultAkteure[$counter]['bezirk'] = $bezirk['bezirksname'];
+   $resultAkteure[$counter] = (object)$resultAkteure[$counter];
+
+ }
+ return $resultAkteure;
 }
 
 /**
