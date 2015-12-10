@@ -5,7 +5,7 @@
 
 <header id="header" <?php if ($aResult['row1']->bild != '') : ?> style="background:url(<?= $row->bild; ?>);"<?php endif; ?>></header>
 
-<div id="akteurActions">
+<div class="aaeActionBar">
  <div class="row">
  <?php if ($hat_recht): ?>
   <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>akteuredit/<?= $akteur_id; ?>" title="Akteur bearbeiten"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" />Bearbeiten</a></div>

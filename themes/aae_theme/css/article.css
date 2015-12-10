@@ -8,6 +8,11 @@
   padding-top: 65px !important;
 }
 
+.aaeActionBar {
+  margin-top: -96px;
+  margin-bottom: 70px;
+}
+
 
 #article-image {
  width: 100%;
@@ -17,162 +22,93 @@
 }
 
 #headline {
- background: #008CBA;
- padding: 10px;
- text-transform: uppercase;
- display: table;
+
 }
 
-#headline a {
- color: #fff;
+#headline h2, #headline h3 {
+ /*background: #008CBA;*/
+ text-transform: uppercase;
+ display: table;
+ background-color: rgba(255,255,255,0.8);
+ padding: 5px 10px;
+ margin: 0 auto;
+ margin-bottom: 3px;
+ display: table;
+ float:left;
+}
+
+#headline h2 a {
+ color: #2F2F2F;
+}
+
+#headline h3 {
+ font-size: 1em;
+}
+
+#headline h3 strong {
+  color: #008CBA;
 }
 
 #content {
- background: rgba(255, 255, 255, 0.5);
- padding: 15px;
+ background: rgba(255, 255, 255, 1);
+ padding: 15px 25px;
  position: relative;
- margin-top: -50px;
+ margin-top: -29px;
 }
-
 #content p {
  font-size: 0.9em;
- line-height: 1.8em;
+ line-height: 1.7em;
+ padding-bottom: 25px;
 }
-
-
-
-/*
-#header {
- height: 260px;
- padding-top: 60px;
- background-color: #008cba;
- background-size: 130%;
- margin: 0 -10px;
- filter: blur(8px);
- -webkit-filter: blur(8px);
- -moz-filter: blur(8px);
- -o-filter: blur(8px);
- -ms-filter: blur(8px);
+#content p::first-letter {
+ font-size: 200%;
+ color: #008CBA;
 }
-
-#akteurActions {
- height: 50px;
- border-bottom: 1px solid #fff;
- margin-top: -200px;
- position: relative;
- z-index: 50;
- margin-bottom: 190px;
- padding-top: 16px;
- background: rgba(27, 27, 27, 0.61);
+#meta_info {
+ opacity: 0.8;
+ padding-bottom: 15px;
 }
-
-#akteurActions img {
- width: 19px;
- padding-right: 6px;
+#comments {
+  background: #F7F7F7;
 }
-
-#akteurActions a {
- border-right: 1px solid #fff;
- padding: 13px 18px;
- color: #fff;
+#comments h2 {
+ font-size: 1.5em;
+ padding: 12px 0;
 }
-
-#akteurActions a:hover {
- text-decoration: underline;
+#comments .comment {
+  padding: 12px;
+  border: 1px solid #F1EFEF;
+  background: #fff;
+  border-radius: 3px;
+  margin: 10px 0;
 }
-
-#akteurActions #share {
- padding-top: 10px;
- margin-top: 17px;
+#comments .comment .new {
+  display: none;
 }
-
-#akteurActions #share:before {
- margin-top: -22px;
- margin-left: 120px;
+#comments .comment .submitted {
+  float: right;
+  opacity: 0.8;
+  font-size: 0.8em;
+  margin-top: -16px;
 }
-
-#akteurActions #share a {
- padding: 16px 32px;
- float: left;
- height: 44px;
+#comments .comment .submitted .permalink {
+  display: none;
 }
-
-#akteurActions #share a img {
- width: 19px;
- padding: 0;
+#comments .comment p {
+  margin-top: 15px;
 }
-
-#project {
- position: relative;
- margin-top: -70px;
+#comments .comment h3 {
+  font-size: 1.5em;
 }
-
-#project .pcard header {
- height: auto;
-}
-
-#project aside div {
- margin-bottom: 7px;
-}
-
-#project #project-info {
- padding-top: 3px;
-}
-
-#project #project-info p {
- padding: 5px 0 6px 60px;
- margin: 8px 0;
-}
-
-#project .divider {
- padding-top: 8px;
- margin-bottom: 0;
-}
-
-#project #project-info span {
- background-color: #ce7e12;
- border-radius: 20px;
- padding: 7px 7px;
- margin-right: 10px;
- float: left;
-}
-
-#project #project-info span img {
- width: 20px;
-}
-
-#project #project-contact .button {
- width: 100%;
- text-transform: uppercase;
- margin: 0;
-}
-
-#project #project-content h1 {
- font-size: 2.5em;
- color: #fff;
- text-shadow: 0px 2px 2px #353535;
- padding-bottom: 40px;
-}
-
-#project #project-content h3 {
- padding-top: 10px;
- padding-bottom: 22px;
-}
-
-#project #project-content p {
- padding-bottom: 0.7em;
-}
-
-#project #project-content #next-events li {
-  padding-bottom: 0.7em;
+#comments .links {
+  padding-top: 10px;
+  float: left;
   font-size: 0.8em;
 }
-
-#footer {
- margin-top: 60px;
+.fieldset-wrapper .tips {
+  float: right;
+  margin-top: -65px;
 }
-
-#footer .divider {
- display: block;
- margin-bottom: 50px;
-} */
+.title.comment-form {
+  margin-top: 30px;
+}

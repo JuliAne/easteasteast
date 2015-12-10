@@ -299,6 +299,53 @@ transform: rotate(-10deg);
  padding-bottom: 1px;
 }
 
+.aaeActionBar {
+ height: 50px;
+ border-bottom: 1px solid #fff;
+ margin-top: -216px;
+ position: relative;
+ z-index: 50;
+ margin-bottom: 190px;
+ padding-top: 16px;
+ background: rgba(27, 27, 27, 0.61);
+}
+
+.aaeActionBar img {
+ width: 19px;
+ padding-right: 6px;
+}
+
+.aaeActionBar a {
+ border-right: 1px solid #fff;
+ padding: 13px 18px;
+ color: #fff;
+}
+
+.aaeActionBar a:hover {
+ text-decoration: underline;
+}
+
+.aaeActionBar #share {
+ padding-top: 10px;
+ margin-top: 17px;
+}
+
+.aaeActionBar #share:before {
+ margin-top: -22px;
+ margin-left: 120px;
+}
+
+.aaeActionBar #share a {
+ padding: 16px 32px;
+ float: left;
+ height: 44px;
+}
+
+.aaeActionBar #share a img {
+ width: 19px;
+ padding: 0;
+}
+
 .section h1 {
  font-size: 1.9em;
  font-weight: 100;
