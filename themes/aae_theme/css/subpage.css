@@ -16,8 +16,8 @@
 fieldset p {
   font-size: 0.7em;
   line-height: 1.7em;
-  opacity: 0.75;
-  transition: opacity 0.2s;
+  opacity: 0.85;
+  transition: opacity 0.1s;
 }
 
 fieldset p:hover {
@@ -25,12 +25,12 @@ fieldset p:hover {
 }
 
 #filter {
-  padding-top: 15px;
+  padding: 2px;
   background: #F1EFEF;
 }
 
 #filter div.columns {
-  opacity: 0.7;
+  opacity: 0.85;
   transition: opacity 0.2s;
 }
 
@@ -38,12 +38,21 @@ fieldset p:hover {
   opacity: 1;
 }
 
+#filter label { padding-bottom:4px;}
+#filter .divider { border-bottom: 1px solid #D8D7D7;margin-top:35px; }
+#change-style li a {border:1px solid #fff;background:#fff;padding:9px 35px;}
+#change-style li a.active {background:#2199E8;border-right:none;}
+#change-style li img {width:21px;}
+
+#filter #eventSubmit {float:none!important;}
+
 #removeFilter {
-  padding-top: 19px;
+  padding-top: 15px;
 }
 
 #removeFilter .button {
   padding: 4px 10px;
+  border:1px solid #fff;
 }
 
 #change-style {
@@ -52,4 +61,102 @@ fieldset p:hover {
 
 .button-group a.button {
   padding: 0.6rem 1.2rem
+}
+
+#events_content h4 {
+ color: grey;
+}
+
+.aaeEvent {
+  margin-top: 10px;
+  padding-left: 0;
+  animation-name: event;
+  animation-duration: 0.5s;
+}
+
+@keyframes event {
+    from {opacity:0;margin-top:-10px;}
+    to {opacity:1;margin-top:10;}
+}
+
+.aaeEvent:hover .date {
+  border: 3px solid #2199E8;
+  background: #F1EFEF;
+  color: grey;
+}
+
+.aaeEvent:hover .content {
+  border-color: #2199E8;
+}
+
+.aaeEvent:hover .content:before {
+  border-color: transparent #2199E8 transparent transparent;
+}
+
+.aaeEvent .date {
+  background: #fff;
+  border: 3px solid #F1EFEF;
+  color: #777;
+  border-radius:35px;
+  text-transform: uppercase;
+  padding: 9px 8px;
+}
+
+.aaeEvent header {
+  padding-bottom: 6px;
+}
+
+.aaeEvent header strong {
+  font-size: 1.2em;
+  padding: 3px 0;
+}
+
+.aaeEvent .divider {
+  margin-bottom: 10px;
+}
+
+.aaeEvent header span {
+  color: grey;
+  padding-left: 5px;
+}
+
+.aaeEvent .content {
+  border: 1px solid #F1EFEF;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.aaeEvent .tag {
+  opacity: 0.8;
+}
+
+.aaeEvent .tag:hover {
+  opacity: 1;
+}
+
+.aaeEvent .akteurData {
+  margin-top: 5px;
+  margin-bottom: 12px;
+  text-align: right;
+  padding-right: 16px;
+}
+
+.aaeEvent .akteurData img {
+  width: 30px;
+  height: 30px;
+  border-radius: 18px;
+  margin-right: 8px;
+}
+
+.aaeEvent .content:before {
+  width: 0px;
+  height: 0px;
+  content: '';
+  position: absolute;
+  display: block;
+  border-width: 6px;
+  border-style: solid;
+  border-color:transparent #F1EFEF transparent transparent;
+  margin-top: 7px;
+  margin-left: -22px;
 }

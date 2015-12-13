@@ -122,10 +122,58 @@ Class events extends aae_data_helper {
 
   }
 
-  $resultEvents = $rEvents->orderBy('start', 'ASC')
-   #->range()
+  $resultEvents = $rEvents->orderBy('a.start')
    ->execute()
    ->fetchAll();
+
+   $counter = 0;
+
+   foreach ($resultEvents as $event) {
+
+     //Selektion der Tags
+     $resultSparten = db_select($this->tbl_event_sparte, 's')
+      ->fields('s', array( 'hat_KID' ))
+      ->condition('hat_EID', $event->EID, '=')
+      ->execute();
+
+     $countSparten = $resultSparten->rowCount();
+     $sparten = array();
+
+     if ($countSparten != 0) {
+
+      foreach ($resultSparten as $row) {
+       $resultSpartenName = db_select($this->tbl_sparte, 'sp')
+       ->fields('sp')
+       ->condition('KID', $row->hat_KID, '=')
+       ->execute();
+
+       foreach ($resultSpartenName as $row1) {
+        $sparten[] = $row1;
+       }
+      }
+     }
+
+     $akteurId = db_select($this->tbl_akteur_events, 'ae')
+      ->fields('ae', array('AID'))
+      ->condition('EID', $event->EID, '=')
+      ->execute()
+      ->fetchAssoc();
+
+     $resultAkteur = db_select($this->tbl_akteur, 'a')
+      ->fields('a',array('AID','name','bild'))
+      ->condition('AID', $akteurId['AID'], '=')
+      ->execute()
+      ->fetchAll();
+
+    // Hack: add variable to $resultEvents-object
+    $resultEvents[$counter] = (array)$resultEvents[$counter];
+    $resultEvents[$counter]['tags'] = $sparten;
+    $resultEvents[$counter]['akteur'] = $resultAkteur;
+    $resultEvents[$counter] = (object)$resultEvents[$counter];
+
+    $counter++;
+
+    }
 
   }
 

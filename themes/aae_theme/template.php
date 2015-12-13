@@ -29,7 +29,7 @@ function aae_preprocess_html(&$variables) {
 
   case ('node') :
 
-     $node = node_load(arg(1));
+    $node = node_load(arg(1));
 
     if (drupal_is_front_page()) {
 
@@ -73,12 +73,15 @@ function aae_preprocess_html(&$variables) {
 
   case ('events') :
 
-   $js = '$(window).ready(function(){$(".tokenize").tokenize({displayDropdownOnFocus:true,newElements:false});});';
+   $js = '$(window).ready(function(){$("#eventSpartenInput").tokenize({displayDropdownOnFocus:true,newElements:false,placeholder:"z.B. Jazz, Kultur,..."});});';
+   $js .= '$(window).ready(function(){$("#eventBezirkInput").tokenize({displayDropdownOnFocus:true,newElements:false,placeholder:"z.B. Reudnitz..."});});';
 
    drupal_add_css(path_to_theme(). '/css/subpage.css');
    drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
    drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');
    drupal_add_js($js, 'inline');
+   drupal_add_js(path_to_theme().'/js/foundation.min.js');
+   drupal_add_js('$(document).foundation();', array('type'=>'inline','scope'=>'footer'));
 
   break;
 

@@ -47,6 +47,7 @@
 
     <h1><span>&nbsp;<strong>N&auml;chste Veranstaltungen</strong></span></h1>
     <br/>
+
     <div class="row">
 
     <?php
@@ -65,7 +66,8 @@
 
     <?php endforeach; ?>
 
-    <a href="<?= base_path(); ?>events" class="button secondary round">Alle Events</a>
+    <a href="<?= base_path(); ?>events" class="large button hollow">Alle Events</a>
+
 
     </div>
 
@@ -99,7 +101,7 @@
 
       <?php endforeach; ?>
 
-      <a href="<?= base_path(); ?>akteure" class="button secondary round">Alle Akteure</a>
+      <a href="<?= base_path(); ?>akteure" class="large button hollow">Alle Akteure</a>
 
     </div> <!--#row-->
 
