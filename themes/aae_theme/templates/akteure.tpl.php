@@ -12,23 +12,23 @@
 <h3 class="large-4 columns"><strong><?= $itemsCount; ?></strong> Akteure</h3>
 
 <?php if(user_is_logged_in()) : ?>
-  <a class="small button round right" href="<?= base_path(); ?>Akteurformular">+ Akteur hinzufügen</a><br />
+  <a class="medium button hollow right" href="<?= base_path(); ?>Akteurformular">+ Akteur hinzufügen</a><br />
 <?php else : ?>
-  <a class="login_first small secondary button round right" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Akteur hinzufügen (Login)</a><br />
+  <a class="login_first medium button hollow right" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Akteur hinzufügen (Login)</a><br />
 <?php endif; ?>
 
 </div>
 <div class="divider"></div>
 
-<div id="filter" class="row">
+<div id="filter" style="padding-top:15px;" class="row">
 
  <form id="filterForm" method="get" action="<?= base_path(); ?>akteure/<?= $currentPageNr; ?>">
 
  <div class="large-1 columns" id="removeFilter">
-  <a class="small secondary button round right" style="padding:4px 10px;" href="<?= base_path(); ?>akteure" title="Alle Filter entfernen">x</a>
+  <a class="small secondary button right" style="padding:4px 10px;" href="<?= base_path(); ?>akteure" title="Alle Filter entfernen">x</a>
  </div>
 
- <div class="large-4 large-offset-1 small-6 columns">
+ <div class="large-3 small-6 columns">
 
    <label for="tag">Nach Tags filtern:</label>
    <select name="tags[]" id="eventSpartenInput" multiple="multiple" class="tokenize">
@@ -50,13 +50,14 @@
  </div>
 
 
- <div id="change-style" class="button-bar large-4 columns">
+ <div id="change-style" class="button-bar large-3 columns" style="margin-top:20px;">
   <ul id="presentationFilter" class="button-group round">
     <li><a href="#" name="boxen" class="small button <?php echo ($this->presentationMode !== 'map' ? 'active' : 'secondary'); ?>" title="Darstellung als Boxen"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
     <li><a href="#" name="map" class="small button <?php echo ($this->presentationMode == 'map' ? 'active' : 'secondary'); ?>" title="Darstellung auf Karte"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
   </ul>
-  <input type="submit" class="small button right" id="sendFilters" name="submit" value="Filter anwenden">
  </div>
+
+ <input type="submit" class="large-2 columns medium button" style="margin-top: 15px;" id="sendFilters" name="submit" value="Filter anwenden">
 
 </form>
 
