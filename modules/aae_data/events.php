@@ -22,7 +22,7 @@ Class events extends aae_data_helper {
 
   // TODO: limit
 
-  $this->maxEvents = '15';
+  $this->maxEvents = '16';
 
   // Paginator: Auf welcher Seite befinden wir uns?
   $explodedPath = explode("/", $this->clearContent(current_path()));
@@ -122,7 +122,7 @@ Class events extends aae_data_helper {
 
   }
 
-  $resultEvents = $rEvents->orderBy('a.start')
+  $resultEvents = $rEvents
    ->execute()
    ->fetchAll();
 
@@ -176,6 +176,17 @@ Class events extends aae_data_helper {
     }
 
   }
+
+
+    function sortEvents($a,$b){
+     $a = intval(strrev(str_replace("-","",$a->start)));
+     $b = intval(strrev(str_replace("-","",$b->start)));
+     if ($a == $b) return 0;
+     else if ($a < $b) return -1;
+     else return 1;
+    }
+
+    usort($resultEvents, 'sortEvents');
 
   // Ausgabe der Events
   ob_start(); // Aktiviert "Render"-modus

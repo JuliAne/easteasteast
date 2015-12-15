@@ -22,6 +22,20 @@
   '11' => 'Nov',
   '12' => 'Dez',
  );
+ $monat_lang = array(
+  '01' => 'Januar',
+  '02' => 'Februar',
+  '03' => 'März',
+  '04' => 'April',
+  '05' => 'Mai',
+  '06' => 'Juni',
+  '07' => 'Juli',
+  '08' => 'September',
+  '09' => 'August',
+  '10' => 'Oktober',
+  '11' => 'November',
+  '12' => 'Dezember',
+ );
 ?>
 
 <div class="row">
@@ -104,11 +118,22 @@
 
  } else if (is_array($resultEvents) && !empty($resultEvents)) {
 
-   //echo '<h4>Januar</h4><br />';
+ $cur_month = '';
+ $cur_year = date('Y');
 
- foreach($resultEvents as $event): ?>
+ foreach($resultEvents as $key => $event): ?>
   <?php $eStart = explode('-', $event->start); ?>
   <div class="large-6 columns small-6 columns aaeEvent">
+  <?php if ($eStart[1] != $cur_month) {
+     if ($eStart[2] != $cur_year) {
+      $cur_year = $eStart[2];
+      $year = '<strong>'.$cur_year.'</strong>';
+     }
+     $cur_month = $eStart[1];
+     echo '<h4>'.$monat_lang[$eStart[1]].' '.$year.'</h4>';
+     $year = '';
+   } ?>
+
   <div class="date large-2 columns button secondary round"><?= $eStart[0]; ?><br /><?= $monat[$eStart[1]]; ?></div>
   <div class="content large-9 columns">
    <header>
