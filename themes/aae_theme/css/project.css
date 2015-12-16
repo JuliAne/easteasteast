@@ -57,6 +57,11 @@
 
 #project .pcard header {
  height: auto;
+ background-size: 100%;
+}
+
+#project .pcard header img {
+  width:100%; 
 }
 
 #project aside div {

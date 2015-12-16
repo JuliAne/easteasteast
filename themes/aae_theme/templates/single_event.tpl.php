@@ -8,14 +8,14 @@
 <?php unset($_SESSION['sysmsg']); endif; ?>
 
 <?php if (!empty($resultAdresse->gps)) : ?>
-<div id="map" style="height:280px;width:100%;margin-bottom:20px;"></div>
+<div id="map" style="height:250px;width:100%;margin-bottom:20px;"></div>
 <?php endif; ?>
 
 <h3 class="left"><?= $resultEvent->name; ?></h3>
 
 <p class="right">
-<strong>Start: </strong><?= $resultEvent->start; ?> (<?= $resultEvent->zeit_von; ?>)
-<?php if (!empty($resultEvent->ende)) echo ' - <strong>Ende:</strong> '.$resultEvent->ende;
+<strong>Start: </strong><a href="<?= base_path(); ?>events/?day=<?= $resultEvent->start; ?>"><?= $resultEvent->start; ?></a> (<?= $resultEvent->zeit_von; ?>)
+<?php if (!empty($resultEvent->ende)) echo ' - <strong>Ende: </strong><a href="'.base_path().'events/?day='.$resultEvent->ende.'">'.$resultEvent->ende.'</a>';
       if (!empty($resultEvent->zeit_bis)) echo ' ('.$resultEvent->zeit_bis.')'; ?>
 </p>
 

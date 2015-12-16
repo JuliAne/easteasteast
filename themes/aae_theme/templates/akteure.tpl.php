@@ -75,14 +75,17 @@
 <?php foreach($resultAkteure as $akteur): ?>
   <div class="large-3 large-offset-1 small-5 small-offset-1 columns pcard" style="margin-top:10px;">
    <header <?php if($akteur->bild != '') echo 'style="background-image:url('.$akteur->bild.');"'; ?>>
-     <h3><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>"><?= $akteur->name; ?></a></h3>
+     <h3><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>" title="Akteurprofil besuchen"><?= $akteur->name; ?></a></h3>
     </header>
     <section>
       <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?>
       <?php if (!empty($akteur->beschreibung)): ?>
       <div class="divider"></div>
-      <p><?= substr($akteur->beschreibung, 0, 145)."..."; ?></p>
-     <?php endif; ?>
+        <div class="divider"></div>
+        <?php $numwords = 30;
+              preg_match("/(\S+\s*){0,$numwords}/", $akteur->beschreibung, $regs); ?>
+        <p><?= trim($regs[0]); ?><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>" title="Akteurprofil besuchen">...</a></p>
+      <?php endif; ?></p>
     </section>
    </div>
  <?php endforeach; ?>
