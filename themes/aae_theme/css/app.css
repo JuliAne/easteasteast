@@ -496,6 +496,11 @@ transform: rotate(-10deg);
  float: right;
 }
 
+.pcard, .event {
+ margin-left: 4.151515% !important;
+ margin-right: 4.151515% !important;
+}
+
 .event {
  height: 50px;
  overflow: hidden;

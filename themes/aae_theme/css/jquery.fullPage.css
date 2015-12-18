@@ -56,6 +56,10 @@ html.fp-enabled,
     height: 100%;
 }
 
+.row {
+    max-width: 62.5rem!important;
+}
+
 #projects-events .fp-tableCell h1 span{
     background-color: rgba(255,255,255,0.6); 
 }
