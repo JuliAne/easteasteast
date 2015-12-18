@@ -66,7 +66,7 @@
 
     <?php endforeach; ?>
 
-    <a href="<?= base_path(); ?>events" class="large button hollow">Alle Events</a>
+    <a href="<?= base_path(); ?>events" class="large button hollow frontpage">Alle Events</a>
 
 
     </div>
@@ -101,7 +101,7 @@
 
       <?php endforeach; ?>
 
-      <a href="<?= base_path(); ?>akteure" class="large button hollow">Alle Akteure</a>
+      <a href="<?= base_path(); ?>akteure" class="large button hollow frontpage">Alle Akteure</a>
 
     </div> <!--#row-->
 
