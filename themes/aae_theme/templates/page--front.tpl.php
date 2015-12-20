@@ -57,16 +57,18 @@
       <?php $exploded = explode("-", $event->start); ?>
 
       <div>
-       <div class="large-3 columns large3-events"> 
-       <button class="date"><?= $event->monat; ?>.<br/><?= $exploded[1]; ?>.</button>
-        <div class="events-align event">
-        <a href="#"><h4><?= $event->name; ?></h4></a>
-        <div class="divider"></div>
-        <aside><a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>">
-         <img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><strong><?= $event->zeit_von; ?></strong><?php if (!empty($event->zeit_bis)) :?> - <strong><?= $event->zeit_bis; ?></strong><?php endif; ?></p>
-        </a></aside>
+        <div class="large-3 columns large3-events"> 
+        <a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>">
+          <button class="date"><?= $exploded[0]; ?>.<br/><?= $exploded[1]; ?>.</button>
+        </a>
+        <a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>">
+          <div class="events-align event">
+            <h4><?= $event->name; ?></h4>
+            <div class="divider"></div>
+            <aside><img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><strong><?= $event->zeit_von; ?></strong><?php if (!empty($event->zeit_bis)) :?> - <strong><?= $event->zeit_bis; ?></strong><?php endif; ?></aside>
+          </div>
+        </a>
         </div>
-       </div>
       </div> 
       <?php endforeach; ?>
     </div>

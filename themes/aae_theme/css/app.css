@@ -360,6 +360,7 @@ transform: rotate(-10deg);
  font-weight: 100;
  padding: 24px 0;
  color: #2f2f2f;
+ margin-bottom: 15px;
 }
 
 .section h1 span {
@@ -518,7 +519,17 @@ transform: rotate(-10deg);
 }
 
 .large-3.columns.large3-events {
-  width: 33%;
+  width: 330px;
+}
+
+.large-3.columns.large3-events:hover .date {
+  border: 3px solid #2199E8;
+  background: #F1EFEF;
+  color: grey;
+}
+
+.large-3.columns.large3-events:hover .event:before {
+  border-color: transparent #2199E8 transparent transparent;
 }
 
 .events-align {
@@ -533,7 +544,7 @@ transform: rotate(-10deg);
  /*margin-top: 8px;*/
 }
 
-.event:hover {
+.large-3.columns.large3-events:hover .event {
   border-color: #2199E8;
 }
 
@@ -548,10 +559,6 @@ transform: rotate(-10deg);
   border-color:transparent #F1EFEF transparent transparent;
   margin-top: 7px;
   margin-left: -22px;
-}
-
-.event:hover:before {
-  border-color: transparent #2199E8 transparent transparent;
 }
 
 .date {
