@@ -55,9 +55,11 @@
       foreach ($blocks->print_letzte_events() as $event) : ?>
 
       <?php $exploded = explode("-", $event->start); ?>
+
       <div>
-       <div class="large-3 large-offset-1 columns event"> 
-        <div class="events-align">
+       <div class="large-3 columns large3-events"> 
+       <button class="date"><?= $event->monat; ?>.<br/><?= $exploded[1]; ?>.</button>
+        <div class="events-align event">
         <a href="#"><h4><?= $event->name; ?></h4></a>
         <div class="divider"></div>
         <aside><a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>">

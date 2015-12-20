@@ -514,7 +514,11 @@ transform: rotate(-10deg);
  background-color: rgba(255,255,255,0.6);
  display: table-cell;
  vertical-align: middle;
- width: 24%!important;
+ width: 74%!important;
+}
+
+.large-3.columns.large3-events {
+  width: 33%;
 }
 
 .events-align {
@@ -560,6 +564,8 @@ transform: rotate(-10deg);
  text-transform: uppercase;
  padding: 9px 8px;
  float:left;
+ width:52px;
+ height:52px;
 }
 
 .event h4 {
