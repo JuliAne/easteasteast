@@ -1,3 +1,20 @@
+<?php
+ $monat = array(
+  '01' => 'Jan',
+  '02' => 'Feb',
+  '03' => 'Mär',
+  '04' => 'Apr',
+  '05' => 'Mai',
+  '06' => 'Jun',
+  '07' => 'Jul',
+  '08' => 'Sep',
+  '09' => 'Aug',
+  '10' => 'Okt',
+  '11' => 'Nov',
+  '12' => 'Dez',
+ );
+ ?>
+
 <?php if (!empty($page['sidebar_first'])): ?>
 
   <aside class="col-sm-3" role="complementary">
@@ -59,7 +76,7 @@
       <div>
         <div class="large-3 columns large3-events"> 
         <a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>">
-          <button class="date"><?= $exploded[0]; ?>.<br/><?= $exploded[1]; ?>.</button>
+          <button class="date"><?= $exploded[0]; ?><br/><?= $monat[$exploded[1]]; ?></button>
         </a>
         <a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>">
           <div class="events-align event">
