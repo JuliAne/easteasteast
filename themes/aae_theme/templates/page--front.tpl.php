@@ -49,25 +49,28 @@
     <br/>
 
     <div class="row">
+    <div>
+      <?php
+      // Lade "letzte Events"-Block
+      foreach ($blocks->print_letzte_events() as $event) : ?>
 
-    <?php
-    // Lade "letzte Events"-Block
-    foreach ($blocks->print_letzte_events() as $event) : ?>
-
-    <?php $exploded = explode("-", $event->start); ?>
-
-     <div class="large-3 large-offset-1 columns event">
-      <a href="#"><button class="date"><?= $exploded[0]; ?>.<br /><?= $exploded[1]; ?>.</button></a>
-      <a href="#"><h4><?= $event->name; ?></h4></a>
-      <aside><a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>">
-       <img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><strong><?= $event->zeit_von; ?></strong><?php if (!empty($event->zeit_bis)) :?> - <strong><?= $event->zeit_bis; ?></strong><?php endif; ?></p>
-      </a></aside>
-     </div>
-
-    <?php endforeach; ?>
-
+      <?php $exploded = explode("-", $event->start); ?>
+      <div>
+       <div class="large-3 large-offset-1 columns event"> 
+        <div class="events-align">
+        <a href="#"><h4><?= $event->name; ?></h4></a>
+        <div class="divider"></div>
+        <aside><a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>">
+         <img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><strong><?= $event->zeit_von; ?></strong><?php if (!empty($event->zeit_bis)) :?> - <strong><?= $event->zeit_bis; ?></strong><?php endif; ?></p>
+        </a></aside>
+        </div>
+       </div>
+      </div> 
+      <?php endforeach; ?>
+    </div>
+    <div style="clear:both">
     <a href="<?= base_path(); ?>events" class="large button hollow frontpage">Alle Events</a>
-
+    </div>
 
     </div>
 

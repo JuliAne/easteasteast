@@ -62,10 +62,12 @@ html.fp-enabled,
 
 #projects-events .fp-tableCell h1 span{
     background-color: rgba(255,255,255,0.6); 
+    border-radius: 3px;
 }
 
 #projects-akteure .fp-tableCell h1 span{
     background-color: rgba(255,255,255,0.6); 
+    border-radius: 3px;
 }
 
 .fp-slidesContainer {
@@ -278,10 +280,11 @@ html.fp-enabled,
  background: rgba(255, 255, 255, 0.8);
  font-weight: 700;
  margin-top:30px;
+ color: #2f2f2f;
 }
 
 #slideSection #slide0 button.transparent:hover {
- background: rgba(255, 255, 255, 0.8);
+ background: rgba(255, 255, 255, 0.9);
  color: #000;
 }
 
@@ -293,7 +296,14 @@ html.fp-enabled,
     background-color: rgba(255,255,255,0.8);
     color: #2f2f2f;
     font-weight: 700;
-    border:2px solid #fff;
+    border:1px solid #fff;
     text-transform: uppercase;
     font-size: 1em;
+    border-radius: 3px;
+    
  } 
+
+ .button.hollow.frontpage:hover {
+    background-color: rgba(255,255,255,0.9);
+    color: #000;
+}
