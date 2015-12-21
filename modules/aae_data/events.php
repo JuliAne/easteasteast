@@ -178,20 +178,36 @@ Class events extends aae_data_helper {
   }
 
 
-    function sortEvents($a,$b){
-     $a = intval(strrev(str_replace("-","",$a->start)));
-     $b = intval(strrev(str_replace("-","",$b->start)));
-     if ($a == $b) return 0;
-     else if ($a < $b) return -1;
-     else return 1;
-    }
+  function sortEvents($a,$b){
+   $a = intval(strrev(str_replace("-","",$a->start)));
+   $b = intval(strrev(str_replace("-","",$b->start)));
+   if ($a == $b) return 0;
+   else if ($a < $b) return -1;
+   else return 1;
+  }
 
-    usort($resultEvents, 'sortEvents');
+  usort($resultEvents, 'sortEvents');
 
   // Ausgabe der Events
   ob_start(); // Aktiviert "Render"-modus
   include_once path_to_theme() . '/templates/events.tpl.php';
   return ob_get_clean(); // Übergabe des gerenderten "events.tpl"
+
+ } // end function run()
+
+ public function rss(){
+
+   header("Content-type: text/xml");
+   echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
+
+   $resultEvents = db_select($this->tbl_event, 'e')
+    ->fields('e')
+    ->execute()
+    ->fetchAll();
+
+   ob_start(); // Aktiviert "Render"-modus
+   include_once path_to_theme() . '/templates/events.rss.tpl.php';
+   exit();
 
  }
 } // end class events

@@ -81,6 +81,15 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
+  //Menuitem "Events"
+  $items['Events/rss'] = array(
+    'title' => 'Events',
+    'page callback' => 'events_rss',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
+
   //Menuitem "Eventprofil"
   $items['Eventprofil/%'] = array(
     'title' => '',
@@ -226,6 +235,17 @@ function events_page() {
 
   $event = new events();
   return $event->run();
+}
+
+/**
+ * Baut die Seite fuer die Events
+ */
+function events_rss() {
+  $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/events.php';
+
+  $event = new events();
+  return $event->rss();
 }
 
 /**
