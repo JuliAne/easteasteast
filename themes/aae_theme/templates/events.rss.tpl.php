@@ -1,4 +1,4 @@
-
+<?php //const string RFC822 = "D, d M y H:i:s O"; ?>
 <rss version="2.0">
 <channel>
     <title>Leipziger Ecken</title>

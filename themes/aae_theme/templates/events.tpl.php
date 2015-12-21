@@ -40,7 +40,7 @@
 
 <div class="row">
 
-<h3 class="large-4 columns"><strong><?= $itemsCount; ?></strong> Events</h3>
+<h3 class="large-4 columns"><strong><?= $itemsCount; ?></strong> Events<a href="<?= base_path(); ?>events/rss" title="Alle Events als RSS-Feed"><img id="svg_logo" src="<?= base_path().path_to_theme(); ?>/img/rss.svg" /></a></h3>
 
 <?php if(user_is_logged_in()) : ?>
   <a class="medium button hollow round right" href="<?= base_path(); ?>Eventformular">+ Event hinzufügen</a><br />

@@ -129,7 +129,7 @@ function aae_data_menu() {
   //Menuitem "Tag"
   $items['ics_download/%'] = array(
     'title' => '',
-    'page callback' => 'tag_page',
+    'page callback' => 'ics_download',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
@@ -148,13 +148,13 @@ function aae_data_menu() {
 }
 
 /**
- * Baut die Seite fuer die Tagansicht des Kalenders
+ * Gibt Event im .ical-Format aus
  */
 
-function tag_page() {
+function ics_download() {
 
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/tag.php';
+  include $modulePath . '/ics_download.php';
 
   $path = current_path();
   $path_alias = drupal_lookup_path('alias', $path);
