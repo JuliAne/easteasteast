@@ -39,7 +39,7 @@ $sliders = array(
    'whiteText' => true,
    'blueButton' => array(
      'text' => 'Mehr erfahren...',
-     'link' => base_path().'leipziger-osten'
+     'link' => base_path().'faq'
     )
  ),
 

@@ -35,19 +35,20 @@
 .region-content {
  width: 100% !important;
  max-width: 100% !important;
+ margin: 0;
 }
 
 #header {
- height: 260px;
+ height: 270px;
  padding-top: 60px;
- background-color: #008cba;
- background-size: 130%;
+ background-color: #2199E8;
+ background-size: 105%;
  margin: 0 -10px;
- filter: blur(8px);
- -webkit-filter: blur(8px);
- -moz-filter: blur(8px);
- -o-filter: blur(8px);
- -ms-filter: blur(8px);
+ filter: blur(7px);
+ -webkit-filter: blur(7px);
+ -moz-filter: blur(7px);
+ -o-filter: blur(7px);
+ -ms-filter: blur(7px);
 }
 
 #project {
@@ -58,10 +59,11 @@
 #project .pcard header {
  height: auto;
  background-size: 100%;
+ background-color: none !important;
 }
 
 #project .pcard header img {
-  width:100%; 
+  width:100%;
 }
 
 #project aside div {
@@ -117,11 +119,6 @@
  padding-bottom: 0.7em;
 }
 
-#project #project-content #next-events li {
-  padding-bottom: 0.7em;
-  font-size: 0.8em;
-}
-
 #footer {
  margin-top: 60px;
 }
@@ -129,4 +126,12 @@
 #footer .divider {
  display: block;
  margin-bottom: 50px;
+}
+
+#eventprofil #header {
+  background-color: #FF5217;
+}
+
+#eventprofil #event-data {
+  margin-top: -60px;
 }

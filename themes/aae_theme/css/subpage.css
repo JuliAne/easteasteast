@@ -65,15 +65,16 @@ fieldset p:hover {
 
 #events_content h4 {
  color: grey;
- width: 100;
+ width: 100%;
+ text-align: right;
  float: right;
  padding-bottom: 12px;
  padding-right: 13px;
 }
-
+/*
 #events_content h4 ~ .date {
   margin-top: 32px;
-}
+}*/
 
 .aaeEvent {
   margin-top: 10px;

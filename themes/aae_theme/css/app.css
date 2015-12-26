@@ -310,7 +310,7 @@ transform: rotate(-10deg);
 .aaeActionBar {
  height: 50px;
  border-bottom: 1px solid #fff;
- margin-top: -216px;
+ margin-top: -226px;
  position: relative;
  z-index: 50;
  margin-bottom: 190px;
@@ -500,7 +500,7 @@ transform: rotate(-10deg);
  float: right;
 }
 
-.pcard, .event {
+#fullpage .pcard, #fullpage .event {
  margin-left: 4.151515% !important;
  margin-right: 4.151515% !important;
 }
@@ -611,7 +611,7 @@ transform: rotate(-10deg);
  text-align: left;
  border-bottom: 1px solid #F1EFEF;
  margin: 0 !important;
- padding: 8px 0;
+ padding: 5px 0;
  list-style: none !important;
 }
 
@@ -641,7 +641,11 @@ transform: rotate(-10deg);
 }
 
 #calendar .header {
-  margin-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+#calendar .header .title {
+  color: #333;
 }
 
 #calendar .header a {
@@ -682,6 +686,14 @@ transform: rotate(-10deg);
   color: #fff !important;
   margin-top: -5px;
   background: #008CBA;
+}
+
+#calendar .box-content li:last-child {
+  border-right: none;
+}
+
+#calendar .prev, #calendar .next {
+  letter-spacing: -2px;
 }
 
 #presentationFilter ul li .active {

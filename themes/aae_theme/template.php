@@ -49,7 +49,8 @@ function aae_preprocess_html(&$variables) {
   break;
 
   case ('akteurprofil') :
-
+  case ('eventprofil') :
+    drupal_add_css(path_to_theme(). '/css/subpage.css');
     drupal_add_css(path_to_theme().'/css/project.css');
 
   break;
@@ -89,7 +90,7 @@ function aae_preprocess_html(&$variables) {
 
    $js = '$(window).ready(function(){$(".tokenize").tokenize({displayDropdownOnFocus:true,newElements:false});});';
 
-   drupal_add_css(path_to_theme(). '/css/subpage.css');
+     drupal_add_css(path_to_theme(). '/css/subpage.css');
    drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
    drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');
    drupal_add_js($js, 'inline');
@@ -138,10 +139,10 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
 
     $form['links']['#markup'] = '';
 
-    $form['actions']['submit']['#attributes']['class'][] = 'small button';
+    $form['actions']['submit']['#attributes']['class'][] = 'medium button';
     $form['actions']['submit']['#value'] = 'Einloggen';
-    $form['name']['#description'] = t('');
-    $form['pass']['#description'] = t('');
+    $form['name']['#description'] = '';
+    $form['pass']['#description'] = '';
 
   } else  { // @TODO ELSEIF SEARCH-FORM
 

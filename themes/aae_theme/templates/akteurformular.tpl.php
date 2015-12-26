@@ -33,7 +33,7 @@
 
  </div><!-- /.row -->
 
-  <fieldset class="Adresse row">
+  <fieldset class="Adresse fieldset row">
    <legend>Adresse</legend>
 
    <div class="large-4 columns">
@@ -86,7 +86,7 @@
 
 </fieldset>
 
-<fieldset class="row">
+<fieldset class="row fieldset">
 
  <legend>Sonstiges</legend>
 
@@ -137,7 +137,7 @@
 
  </div>
 
-  <fieldset class="row">
+  <fieldset class="row fieldset">
    <legend>Akteurbild</legend>
 
     <input type="file" id="akteurBildInput" name="bild" />

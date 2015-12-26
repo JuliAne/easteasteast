@@ -205,6 +205,8 @@ Class events extends aae_data_helper {
     ->execute()
     ->fetchAll();
 
+  // sortieren
+
    ob_start(); // Aktiviert "Render"-modus
    include_once path_to_theme() . '/templates/events.rss.tpl.php';
    exit();

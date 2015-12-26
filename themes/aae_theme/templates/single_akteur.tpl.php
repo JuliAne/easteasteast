@@ -3,7 +3,7 @@
  </div>
 </aside>
 
-<header id="header" <?php if ($aResult['row1']->bild != '') : ?> style="background:url(<?= $row->bild; ?>);"<?php endif; ?>></header>
+<header id="header" <?php if ($aResult['row1']->bild != '') : ?> style="background-image:url('<?= $row->bild; ?>');"<?php endif; ?>></header>
 
 <div class="aaeActionBar">
  <div class="row">
@@ -27,7 +27,7 @@
    </div>
   </div>
  </div>
-</div>
+</div><!-- /.aaeActionBar -->
 
 <?php if (!empty($_SESSION['sysmsg'])) : ?>
 <div id="alert">
@@ -43,8 +43,8 @@
 			 <aside class="left large-4 columns">
 
 			  <div class="pcard">
-			   <header <?php if ($aResult['row1']->bild != '') echo 'style="background-image:url('.$row->bild.');"'; ?>>
-					<?php if ($aResult['row1']->bild != '') echo '<img src="'.$row->bild.'" style="visbility:hidden;" />';
+			   <header <?php if ($aResult['row1']->bild != '') echo 'style="background-image:url('.$aResult['row1']->bild.');"'; ?>>
+					<?php if ($aResult['row1']->bild != '') echo '<img src="'.$aResult['row1']->bild.'" style="visbility:hidden;" />';
 					      else echo '<img src="'.base_path().path_to_theme().'/img/project_bg.png" style="visibility:hidden;"/>';	?>
 				 </header>
 			  </div>
@@ -93,16 +93,41 @@
 				<p><i>Hier wurde leider noch keine Beschreibung angelegt :(</i></p>
 			  <?php endif; ?>
 
-        <?php if ($aResult['events'] != '') : ?>
+        <?php if (!empty($aResult['events'])) : ?>
+        <div id="next-events">
 			  <h3>N&auml;chste Veranstaltungen</h3>
+         <?php  $monat = array(
+           '01' => 'Jan',
+           '02' => 'Feb',
+           '03' => 'Mär',
+           '04' => 'Apr',
+           '05' => 'Mai',
+           '06' => 'Jun',
+           '07' => 'Jul',
+           '08' => 'Sep',
+           '09' => 'Aug',
+           '10' => 'Okt',
+           '11' => 'Nov',
+           '12' => 'Dez',
+         ); ?>
 
-			  <ul id="next-events">
 				 <?php foreach($aResult['events'] as $event) : ?>
-			   <li><span><a href="<?= base_path(); ?>Eventprofil/<?= $event[0]->EID; ?>"><?= $event[0]->name; ?></a></span><br />
-         <p><?= $event[0]->kurzbeschreibung; ?></p>
-         <?= $event[0]->start; ?> - <?= $event[0]->ende; ?></li>
+         <?php $eStart = explode('-', $event[0]->start); ?>
+         <div class="aaeEvent row">
+			   <div class="date large-2 columns button secondary"><?= $eStart[0]; ?><br /><?= $monat[$eStart[1]]; ?></div>
+          <div class="content large-10 columns">
+           <p><a style="line-height:1.6em;" href="<?= base_path(); ?>Eventprofil/<?= $event[0]->EID; ?>"> <strong><?= $event[0]->name; ?></strong></a>
+           <span class="right"><?= $event[0]->zeit_von; ?> - <?= $event[0]->zeit_bis; ?></span></p>
+           <?php if (!empty($event[0]->kurzbeschreibung)): ?>
+             <div class="divider"></div>
+             <?php $numwords = 30;
+                   preg_match("/(\S+\s*){0,$numwords}/", $event[0]->kurzbeschreibung, $regs); ?>
+             <p><?= trim($regs[0]); ?>...</p>
+           <?php endif; ?>
+           </div>
+          </div>
 		     <?php endforeach; ?>
-		  	</ul>
+       </div>
 			  <?php endif; ?>
 			 </section>
 

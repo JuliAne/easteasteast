@@ -46,8 +46,14 @@ div.Tokenize.Disabled ul.TokensContainer input {
 div.Tokenize ul.TokensContainer li.Token {
     border: 1px solid #ccd5e3;
     background-color: #eff2f7;
-    padding: 0 5px;
+    padding: 3px 7px;
     line-height: 18px;
+    transition: background 0.2s;
+}
+
+#eventSpartenInput li.Token:hover {
+ background-color: orange;
+ cursor: pointer;
 }
 
 div.Tokenize ul.TokensContainer.ui-sortable:not(.ui-sortable-disabled) li.Token {
@@ -69,7 +75,7 @@ div.Tokenize ul.TokensContainer li.Token.PendingDelete {
 div.Tokenize ul.TokensContainer li.Token,
 div.Tokenize ul.TokensContainer li.TokenSearch {
     margin: 5px 0 0 5px;
-    height: 18px;
+    height: 28px;
     float: left;
 }
 

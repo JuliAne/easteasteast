@@ -117,9 +117,9 @@ class aae_eventprofil extends aae_data_helper {
   ->condition('ADID', $resultEvent->ort, '=')
   ->execute();
 
- foreach ($resultAdresse as $adresse) {
-  $resultAdresse = $adresse; // Kleiner Fix, um EIN Objekt zu generieren
- }
+  foreach ($resultAdresse as $adresse) {
+   $resultAdresse = $adresse; // Kleiner Fix, um EIN Objekt zu generieren
+  }
 
   //Bezirksnamen
   $resultBezirk = db_select($this->tbl_bezirke, 'z')
@@ -131,8 +131,11 @@ class aae_eventprofil extends aae_data_helper {
    $resultBezirk = $bezirk; // Kleiner Fix, um EIN Objekt zu generieren
   }
 
+  $map = false;
+
   if (!empty($resultAdresse->gps)) {
     $this->addMapContent($resultAdresse->gps, array('gps' => $resultAdresse->gps, 'name' => $resultEvent->name, 'strasse' => $resultAdresse->strasse, 'nr' => $resultAdresse->nr));
+    $map = true;
   }
 
   ob_start(); // Aktiviert "Render"-modus

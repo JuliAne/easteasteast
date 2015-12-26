@@ -106,9 +106,21 @@
 
     <input type="submit" class="medium button large-12 columns" id="eventSubmit" name="submit" value="Filter anwenden">
     </form>
-  </div>
+   </div>
 
   </div>
+
+  <div class="large-3 columns" style="position:absolute;margin-top:500px;">
+   <h4>Tag's</h4>
+   <a href="#">Jazz</a>
+   <a href="#">Bla</a>
+   <a href="#">TolleDinge</a>
+   <a href="#">Jazz</a>
+   <a href="#">Huhu</a>
+   <a href="#">Jazz</a>
+  <div class="divider"></div>
+  </div>
+
 
   <div id="events_content" class="large-offset-1 large-8 columns">
 

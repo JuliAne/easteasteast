@@ -8,29 +8,26 @@ global $user;
 
 $pathThisFile = $_SERVER['REQUEST_URI'];
 
-//EID holen:
+// EID holen
 $path = current_path();
 $explodedpath = explode("/", $path);
-$tag = $explodedpath[1];
+$eventID = $explodedpath[1]; // $this->clearContent!!!!
 $tbl_event = "aae_data_event";
 $tbl_adresse = "aae_data_adresse";
 
-//DB-Abfrage aller Events, die an diesem Tag stattfinden
-$resultEvents = db_select($tbl_event, 'e')
-  ->fields('e', array(
-    'start',
+$resultEvent = db_select($tbl_event, 'e')
+ ->fields('e', array(
+  'start',
 	'ende',
-	'name',
-	'EID',
+	'name'
   ))
-  ->condition('start', $tag.'%', 'LIKE')
+  ->condition('EID', $eventID.'%', 'LIKE')
   ->orderBy('name', 'ASC')
   ->execute();
 
-if (isset($_POST['submit'])) {
-
   $var = null;
-  $event=null;
+  $event = null;
+
   //Generierung der .ics-Datei
   $var .= "BEGIN:VCALENDAR\r\n";
   $var .= "PRODID;X-RICAL-TZSOURCE=TZINFO:-//com.denhaven2/NONSGML ri_cal gem//EN\r\n";
@@ -38,30 +35,24 @@ if (isset($_POST['submit'])) {
   $var .= "VERSION:2.0\n";
   $var .= "BEGIN:VEVENT\n";
 
-  $eventID = $_POST['eventid'];
-  $resultEvent = db_select($tbl_event, 'e')
-   ->fields('e')
-	 ->condition('EID', $eventID, '=')
-	 ->execute();
-
   foreach ($resultEvent as $row) {
-    $start = $row->start;
-	$ende = $row->ende;
-	$event = $row->name;
-	$ort = $row->ort;
-	$eid = $row->EID;
-  $beschreibung = $row->kurzbeschreibung;
+   $start = $row->start;
+	 $ende = $row->ende;
+	 $event = $row->name;
+	 $ort = $row->ort;
+	 $eid = $row->EID;
+   $beschreibung = $row->kurzbeschreibung;
   }
 
   $resultAdresse = db_select($tbl_adresse, 'a')
-    ->fields('a', array(
-      'strasse',
+   ->fields('a', array(
+    'strasse',
 	  'nr',
 	  'adresszusatz',
 	  'plz',
 	))
-    ->condition('ADID', $ort, "=")
-    ->execute();
+  ->condition('ADID', $ort, "=")
+  ->execute();
 
   $var .= "UID:" . makeiCalFormat($start) . makeiCalFormat($ende) . $eid . "@leipziger-ecken.de\n";
   $var .= "DTSTART:" . makeiCalFormat($start) . "\n";
@@ -79,7 +70,6 @@ if (isset($_POST['submit'])) {
   header('Content-Length: ' . strlen($var));
   header('Content-Disposition: attachment; filename="' . $event . '.ics"');
   print $var;
-}
 
 /**
  * Datumsformatierung fuer iCal
