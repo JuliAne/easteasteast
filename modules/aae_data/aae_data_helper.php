@@ -22,6 +22,7 @@
    // Speicherort fuer Bilder
    var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/pictures/aae/";
    var $localbildpfad = "/opt/lampp/htdocs/drupal/sites/default/files/pictures/aae/";
+   var $testbildpfad = "/var/www/virtual/grinch/test.leipziger-ecken.de/sites/default/files/pictures/aae/";
    var $short_bildpfad = "sites/default/files/pictures/aae/";
 
    // Mapbox-Data
@@ -48,10 +49,14 @@
     //$image->thumbnailImage(700, 400);
     $image->scaleImage(800, 400, true);
 
-    $whitelist = array( '127.0.0.1', '::1' );
-    if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
+    $servername_local = "localhost";
+    $servername_test = "test.leipziger-ecken.de";
+
+    if($_SERVER['SERVER_NAME'] == $servername_local ){
       $image->writeImage($this->localbildpfad.$bild['name']);
-    } else {
+    } elseif ($_SERVER['SERVER_NAME'] == $servername_test) {
+      $image->writeImage($this->testbildpfad.$bild['name']);
+    }else{
       $image->writeImage($this->bildpfad.$bild['name']);
     }
     return base_path() . $this->short_bildpfad . $bild['name'];

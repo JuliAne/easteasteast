@@ -521,7 +521,8 @@ transform: rotate(-10deg);
 }
 
 #projects-akteure .large-3.large-offset-1.columns.pcard:hover {
-  border-color: #2199E8;
+   border: 1px solid #2199E8;
+   border-radius: 3px;
 }
 
 #projects-akteure .large-3.large-offset-1.columns.pcard:hover  h3 {
@@ -529,11 +530,11 @@ transform: rotate(-10deg);
 }
 
 #projects-akteure .large-3.large-offset-1.columns.pcard h3 {
-  padding-top: 5px;
   color:#2199e8;
   font-size: 0.9em;
-  min-height: 40px;
+  height: 45px;
   font-weight: bold;
+  line-height: 1.5em;
 }
 
 #projects-akteure .large-3.large-offset-1.columns.pcard p {
