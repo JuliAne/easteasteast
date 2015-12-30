@@ -82,7 +82,7 @@
           <div class="events-align event">
             <h4><?= $event->name; ?></h4>
             <div class="divider"></div>
-            <aside><img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><strong><?= $event->zeit_von; ?></strong><?php if (!empty($event->zeit_bis)) :?> - <strong><?= $event->zeit_bis; ?></strong><?php endif; ?></aside>
+            <aside><img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><?= $event->zeit_von; ?><?php if (!empty($event->zeit_bis)) :?> - <?= $event->zeit_bis; ?><?php endif; ?></aside>
           </div>
         </a>
         </div>

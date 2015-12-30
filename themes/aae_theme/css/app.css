@@ -526,11 +526,11 @@ transform: rotate(-10deg);
 }
 
 #projects-akteure .large-3.large-offset-1.columns.pcard:hover  h3 {
-  color: #228cd1!important;
+  color: #2199E8!important;
 }
 
 #projects-akteure .large-3.large-offset-1.columns.pcard h3 {
-  color:#2199e8;
+  color:#228cd1;
   font-size: 0.9em;
   height: 45px;
   font-weight: bold;
@@ -568,7 +568,7 @@ transform: rotate(-10deg);
  border: 1px solid #F1EFEF;
  border-radius: 3px;
  padding: 10px;
- background-color: rgba(255,255,255,0.6);
+ background-color: rgba(255,255,255,0.7);
  display: table-cell;
  vertical-align: middle;
  width: 74%!important;
@@ -581,7 +581,7 @@ transform: rotate(-10deg);
 .large-3.columns.large3-events:hover .date {
   border: 3px solid #2199E8;
   background: #F1EFEF;
-  color: grey;
+  color: #111;
 }
 
 .large-3.columns.large3-events:hover .event:before {
@@ -592,16 +592,32 @@ transform: rotate(-10deg);
   display: inline-block;
 }
 
-.event:hover h4 {
+.event h4 {
+  color: #228cd1;
  /*display: none;*/
 }
 
+.event:hover h4 {
+  color: #2199E8;
+ /*display: none;*/
+}
+
+.event aside {
+  color: #111;
+}
+
 .event:hover aside {
- /*margin-top: 8px;*/
+ color: #111;
+ /* margin-top: 8px;*/
 }
 
 .large-3.columns.large3-events:hover .event {
   border-color: #2199E8;
+  background-color: rgba(255,255,255,0.9);
+}
+
+.large-3.columns.large3-events:hover .event .divider {
+  border-bottom: 1px solid lightgrey;
 }
 
 .event:before {
@@ -621,8 +637,8 @@ transform: rotate(-10deg);
  text-transform: uppercase;
  font-size: 0.75em;
  background: #fff;
- border: 3px solid #F1EFEF;
- color: #777;
+ border: 3px solid #ddd;
+ color: #111;
  border-radius:35px;
  text-transform: uppercase;
  padding: 9px 8px;
