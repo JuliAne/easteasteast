@@ -502,27 +502,38 @@ transform: rotate(-10deg);
  margin-left: 10px;
 } */
 
-.large-3.large-offset-1.columns.pcard {
+#projects-akteure .large-3.large-offset-1.columns.pcard {
  border: 1px solid #F1EFEF;
  border-radius: 3px;
+ background-color: transparent!important;
 }
 
-.large-3.large-offset-1.columns.pcard:hover {
+#projects-akteure .large-3.large-offset-1.columns.pcard section {
+  background: rgba(255,255,255,0.8);
+}
+
+#projects-akteure .large-3.large-offset-1.columns.pcard:hover section {
+  background: rgba(255,255,255,0.9);
+}
+
+#projects-akteure .large-3.large-offset-1.columns.pcard:hover .divider {
+  border-bottom: 1px solid lightgrey;
+}
+
+#projects-akteure .large-3.large-offset-1.columns.pcard:hover {
   border-color: #2199E8;
 }
 
-.large-3.large-offset-1.columns.pcard:hover header h3 {
+#projects-akteure .large-3.large-offset-1.columns.pcard:hover  h3 {
   color: #228cd1!important;
 }
 
-#projects-akteure .large-3.large-offset-1.columns.pcard header h3 {
-  background: rgba(255,255,255,0.8);
-  /*background: -webkit-linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.6), rgba(255,255,255,0));*/ /* For Safari 5.1 to 6.0 */
-  /*background: -o-linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.6), rgba(255,255,255,0));*/  /*For Opera 11.1 to 12.0 */
-  /*background: -moz-linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.6), rgba(255,255,255,0));*/ /* For Firefox 3.6 to 15 */
-  /*background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.6), rgba(255,255,255,0));*/ /* Standard syntax */
+#projects-akteure .large-3.large-offset-1.columns.pcard h3 {
   padding-top: 5px;
   color:#2199e8;
+  font-size: 0.9em;
+  min-height: 40px;
+  font-weight: bold;
 }
 
 #projects-akteure .large-3.large-offset-1.columns.pcard p {
@@ -531,10 +542,16 @@ transform: rotate(-10deg);
 
 #projects-akteure .large-3.large-offset-1.columns.pcard header {
   padding-top: 45px;
+  border-bottom: 1px solid lightgrey;
 }
 
+#projects-akteure .large-3.large-offset-1.columns.pcard:hover header {
+  border-bottom: 1px solid lightgrey;
+}
+
+
 #projects-akteure .large-3.large-offset-1.columns.pcard .pdescription {
-  min-height:90px;
+  min-height:30px;
 }
 
 /*EVENT section settings*/
