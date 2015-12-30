@@ -428,7 +428,7 @@ transform: rotate(-10deg);
  margin: 0;
  padding: 5px;
  padding-top: 45px;
- text-shadow: 0 1px 2px #353535;
+ /*text-shadow: 0 1px 2px #353535;*/
  font-size: 1.4em;
  text-align: center;
 }
@@ -483,6 +483,15 @@ transform: rotate(-10deg);
  opacity: 1;
 }
 
+.pcard footer button {
+ margin: 0;
+ padding: 11px 20px;
+ font-weight: bold;
+ float: right;
+}
+
+/*AKTEURE section settings*/
+
 #akteure .pcard {
   width: 22%;
   margin-left: 2.333%
@@ -493,12 +502,42 @@ transform: rotate(-10deg);
  margin-left: 10px;
 } */
 
-.pcard footer button {
- margin: 0;
- padding: 11px 20px;
- font-weight: bold;
- float: right;
+.large-3.large-offset-1.columns.pcard {
+ border: 1px solid #F1EFEF;
+ border-radius: 3px;
 }
+
+.large-3.large-offset-1.columns.pcard:hover {
+  border-color: #2199E8;
+}
+
+.large-3.large-offset-1.columns.pcard:hover header h3 {
+  color: #228cd1!important;
+}
+
+#projects-akteure .large-3.large-offset-1.columns.pcard header h3 {
+  background: rgba(255,255,255,0.8);
+  /*background: -webkit-linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.6), rgba(255,255,255,0));*/ /* For Safari 5.1 to 6.0 */
+  /*background: -o-linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.6), rgba(255,255,255,0));*/  /*For Opera 11.1 to 12.0 */
+  /*background: -moz-linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.6), rgba(255,255,255,0));*/ /* For Firefox 3.6 to 15 */
+  /*background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0.6), rgba(255,255,255,0));*/ /* Standard syntax */
+  padding-top: 5px;
+  color:#2199e8;
+}
+
+#projects-akteure .large-3.large-offset-1.columns.pcard p {
+  color:#111111;
+}
+
+#projects-akteure .large-3.large-offset-1.columns.pcard header {
+  padding-top: 45px;
+}
+
+#projects-akteure .large-3.large-offset-1.columns.pcard .pdescription {
+  min-height:90px;
+}
+
+/*EVENT section settings*/
 
 #fullpage .pcard, #fullpage .event {
  margin-left: 4.151515% !important;

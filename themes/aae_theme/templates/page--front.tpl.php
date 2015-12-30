@@ -111,18 +111,18 @@
       $blocks = new aae_blocks();
 
       foreach ($blocks->print_letzte_akteure() as $akteur) : ?>
-
+      <a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>">
        <div class="large-3 large-offset-1 columns pcard">
         <header<?php if($akteur->bild != '') echo ' style="background-image:url('.$akteur->bild.');"'; ?>>
-          <h3><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>"><?= $akteur->name; ?></a></h3>
+          <h3><?= $akteur->name; ?></h3>
          </header>
          <section>
           <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?>
           <div class="divider"></div>
-          <p><?= substr($akteur->beschreibung, 0, 120); ?>...</p>
+          <p class="pdescription"><?= substr($akteur->beschreibung, 0, 120); ?>...</p>
          </section>
         </div>
-
+      </a>
       <?php endforeach; ?>
 
       <a href="<?= base_path(); ?>akteure" class="large button hollow frontpage">Alle Akteure</a>

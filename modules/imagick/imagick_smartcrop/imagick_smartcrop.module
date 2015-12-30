@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Imagick toolkit for image manipulation that rewrites Imagecache Actions functionalities
+ */
+
+/**
+ * @ingroup image
+ * @{
+ */
+
+/**
+ * Implements hook_init().
+ */
+function imagick_smartcrop_init() {
+  if (module_exists('smartcrop')) {
+    require_once 'imagick_smartcrop.inc';
+  }
+}
+
+/**
+ * @} End of "ingroup image".
+ */

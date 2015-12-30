@@ -1,0 +1,623 @@
+<?php
+
+/**
+ * @file
+ * Imagick toolkit for image manipulation within Drupal.
+ */
+
+/**
+ * @ingroup image
+ * @{
+ */
+
+/**
+ * Implements hook_init().
+ */
+function imagick_init() {
+  if (module_exists('smartcrop')) {
+    require_once drupal_get_path('module', 'imagick_smartcrop') . '/imagick_smartcrop.inc';
+  }
+
+  require_once 'effects/imagick.annotate.inc';
+  require_once 'effects/imagick.autorotate.inc';
+  require_once 'effects/imagick.blur.inc';
+  require_once 'effects/imagick.charcoal.inc';
+  require_once 'effects/imagick.coloroverlay.inc';
+  require_once 'effects/imagick.colorshift.inc';
+  require_once 'effects/imagick.convert.inc';
+  require_once 'effects/imagick.crop.inc';
+  require_once 'effects/imagick.definecanvas.inc';
+  require_once 'effects/imagick.desaturate.inc';
+  require_once 'effects/imagick.decipher.inc';
+  require_once 'effects/imagick.edge.inc';
+  require_once 'effects/imagick.emboss.inc';
+  require_once 'effects/imagick.encipher.inc';
+  require_once 'effects/imagick.frame.inc';
+  require_once 'effects/imagick.inverse.inc';
+  require_once 'effects/imagick.mirror.inc';
+  require_once 'effects/imagick.modulate.inc';
+  require_once 'effects/imagick.noise.inc';
+  require_once 'effects/imagick.oilpaint.inc';
+  require_once 'effects/imagick.polaroid.inc';
+  require_once 'effects/imagick.posterize.inc';
+  require_once 'effects/imagick.resize.inc';
+  require_once 'effects/imagick.rotate.inc';
+  require_once 'effects/imagick.roundedcorners.inc';
+  require_once 'effects/imagick.scale.inc';
+  require_once 'effects/imagick.shadow.inc';
+  require_once 'effects/imagick.sketch.inc';
+  require_once 'effects/imagick.solarize.inc';
+  require_once 'effects/imagick.spread.inc';
+  require_once 'effects/imagick.swirl.inc';
+  require_once 'effects/imagick.vignette.inc';
+  require_once 'effects/imagick.wave.inc';
+}
+
+/**
+ * Implements hook_theme().
+ */
+function imagick_theme() {
+  return array(
+    'imagick_style_preview' => array(
+      'variables' => array(
+        'style' => NULL,
+        'combined' => NULL,
+      ),
+      'file' => 'includes/imagick.theme.inc',
+    ),
+  );
+}
+
+/**
+ * Implements hook_image_toolkits().
+ */
+function imagick_image_toolkits() {
+  return array(
+    'imagick' => array(
+      'title' => t('Imagick toolkit'),
+      'available' => TRUE,
+    ),
+  );
+}
+
+/**
+ * Retrieve settings for the Imagick toolkit.
+ */
+function image_imagick_settings() {
+  if (image_imagick_check_settings()) {
+    $form['status'] = array(
+      '#markup' => t('The Imagick toolkit is installed and working properly.')
+    );
+
+    $form['image_jpeg_quality'] = array(
+      '#type' => 'textfield',
+      '#title' => t('JPEG quality'),
+      '#description' => t('Define the image quality for JPEG manipulations. Ranges from 0 to 100. Higher values mean better image quality but bigger files.'),
+      '#size' => 10,
+      '#maxlength' => 3,
+      '#default_value' => variable_get('image_jpeg_quality', 75),
+      '#field_suffix' => t('%'),
+    );
+
+    $form['#element_validate'] = array('image_imagick_settings_validate');
+
+    return $form;
+  }
+  else {
+    drupal_set_message(t('The Imagick image toolkit requires that the Imagick extension for PHP be installed and configured properly. For more information see <a href="@url">PHP\'s ImageMagick documentation</a>.', array('@url' => 'http://php.net/manual/book.imagick.php')), 'error');
+    return FALSE;
+  }
+}
+
+/**
+ * Validate the submitted Imagick settings.
+ */
+function image_imagick_settings_validate($form, &$form_state) {
+  // Validate image quality range.
+  $value = $form_state['values']['image_jpeg_quality'];
+  if (!is_numeric($value) || $value < 0 || $value > 100) {
+    form_set_error('image_jpeg_quality', t('JPEG quality must be a number between 0 and 100.'));
+  }
+}
+
+/**
+ * Verify Imagick settings (that the right version is actually installed).
+ *
+ * @return
+ *   A boolean indicating if the Imagick toolkit is available on this machine.
+ */
+function image_imagick_check_settings() {
+  if (extension_loaded('imagick')) {
+    // Imagick support is available.
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+}
+
+/**
+ * Imagick helper function to create an image resource from a file.
+ *
+ * @param $image
+ *   An image object. The $image->resource value will populated by this call.
+ * @return
+ *   TRUE or FALSE, based on success.
+ *
+ * @see image_load()
+ */
+function image_imagick_load(stdClass $image) {
+  try {
+    $source = drupal_realpath($image->source);
+    $res = new Imagick($source);
+    $image->resource = $res;
+    return TRUE;
+  }
+  catch (ImagickExeception $e) {
+    return FALSE;
+  }
+}
+
+/**
+ * Imagick helper to write an image resource to a destination file.
+ *
+ * @param $image
+ *   An image object.
+ * @param $destination
+ *   A string file URI or path where the image should be saved.
+ * @return
+ *   TRUE or FALSE, based on success.
+ *
+ * @see image_save()
+ */
+function image_imagick_save(stdClass $image, $destination) {
+  $res = $image->resource;
+
+  $scheme = file_uri_scheme($destination);
+  // Work around lack of stream wrapper support in imagejpeg() and imagepng().
+  if ($scheme && file_stream_wrapper_valid_scheme($scheme)) {
+    // If destination is not local, save image to temporary local file.
+    $local_wrappers = file_get_stream_wrappers(STREAM_WRAPPERS_LOCAL);
+    if (!isset($local_wrappers[$scheme])) {
+      $permanent_destination = $destination;
+      $destination = drupal_tempnam('temporary://', 'imagick_');
+    }
+    // Convert stream wrapper URI to normal path.
+    $destination = drupal_realpath($destination);
+  }
+
+  // If preferred format is set, use it as prefix for writeImage
+  // If not this will throw a ImagickException exception
+  try {
+    $image_format = $res->getImageFormat();
+    $destination = implode(':', array($image_format, $destination));
+  }
+  catch (ImagickException $e) {}
+
+  // If compression quality is not set, use the default
+  $quality = $res->getImageCompressionQuality();
+  if ($quality == 0) {
+    $quality = variable_get('image_jpeg_quality', 75);
+    $res->setImageCompressionQuality($quality);
+  }
+
+  // Remove compression quality from not JPEG files because they will increase in filesize
+  if (isset($image_format) && $image_format !== 'jpg') {
+    $res->setImageCompressionQuality(100);
+  }
+
+  // Write image to destination
+  if (!$res->writeImage($destination)) {
+    return FALSE;
+  }
+
+  // Move temporary local file to remote destination.
+  if (isset($permanent_destination)) {
+    return (bool) file_unmanaged_move($destination, $permanent_destination, FILE_EXISTS_REPLACE);
+  }
+  return TRUE;
+}
+
+/**
+ * Get details about an image.
+ *
+ * @param $image
+ *   An image object.
+ * @return
+ *   FALSE, if the file could not be found or is not an image. Otherwise, a
+ *   keyed array containing information about the image:
+ *   - "width": Width, in pixels.
+ *   - "height": Height, in pixels.
+ *   - "extension": Commonly used file extension for the image.
+ *   - "mime_type": MIME type ('image/jpeg', 'image/gif', 'image/png').
+ *
+ * @see image_get_info()
+ */
+function image_imagick_get_info(stdClass $image) {
+  $details = FALSE;
+  $data = getimagesize($image->source);
+
+  if (isset($data) && is_array($data)) {
+    $extensions = array('1' => 'gif', '2' => 'jpg', '3' => 'png');
+    $extension = isset($extensions[$data[2]]) ?  $extensions[$data[2]] : '';
+    $details = array(
+      'width'     => $data[0],
+      'height'    => $data[1],
+      'extension' => $extension,
+      'mime_type' => $data['mime'],
+    );
+  }
+
+  return $details;
+}
+
+/**
+ * Implements hook_help().
+ */
+function imagick_help($path, $arg) {
+  switch ($path) {
+    case 'admin/config/media/image-styles/edit/%/effects/%':
+      $effect = image_effect_load($arg[7], $arg[5]);
+      return isset($effect['help']) ? ('<p>' . $effect['help'] . '</p>') : NULL;
+  }
+}
+
+/**
+ * Implements hook_image_effect_info()
+ */
+function imagick_image_effect_info() {
+  $effects = array();
+
+  $effects['imagick_annotate'] = array(
+    'label' => t('Annotate'),
+    'help' => t('Annotates an image with text.'),
+    'effect callback' => 'imagick_annotate',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_annotate_form',
+    'default settings' => 'imagick_annotate_defaults',
+  );
+  $effects['imagick_autorotate'] = array(
+    'label' => t('Autorotate'),
+    'effect callback' => 'imagick_autorotate',
+    'dimensions passthrough' => TRUE,
+  );
+  $effects['imagick_blur'] = array(
+    'label' => t('Blur'),
+    'help' => t('The intensity of the blur effect. For reasonable results, the radius should be larger than sigma.'),
+    'effect callback' => 'imagick_blur',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_blur_form',
+    'default settings' => 'imagick_blur_defaults',
+  );
+  $effects['imagick_charcoal'] = array(
+    'label' => t('Charcoal'),
+    'help' => t('Simulates a charcoal drawing.'),
+    'effect callback' => 'imagick_charcoal',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_charcoal_form',
+    'default settings' => 'imagick_charcoal_defaults',
+  );
+  $effects['imagick_coloroverlay_alpha'] = array(
+    'label' => t('Color Overlay with Alpha'),
+    'help' => t('Adds an colored overlay to an image'),
+    'effect callback' => 'imagick_coloroverlay_alpha',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_coloroverlay_alpha_form',
+    'default settings' => 'imagick_coloroverlay_defaults',
+  );
+  $effects['imagick_colorshift'] = array(
+    'label' => t('Color Shift'),
+    'help' => t('Note that colorshift is a mathematical filter that doesn\'t always have the expected result. To shift an image precisely TO a target color, desaturate (greyscale) it before colorizing. The hue (color wheel) is the <em>direction</em> the existing colors are shifted. The tone (inner box) is the amount. Keep the tone half-way up the left site of the color box for best results.'),
+    'effect callback' => 'imagick_colorshift',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_colorshift_form',
+    'default settings' => 'imagick_colorshift_defaults',
+  );
+  $effects['imagick_convert'] = array(
+    'label' => t('Convert File Format'),
+    'help' => t('If you\'ve been using transparencies in the process, the result may get saved as a PNG (as the image was treated as a one in in-between processes). If this is not desired (file sizes may get too big) you should use this process to force a flatten action before saving. For technical reasons, changing the file format does <em>not</em> change the filename suffix. A png may be saved as a *.jpg or vice versa. This may confuse some browsers and image software, but most of them have no trouble.'),
+    'effect callback' => 'imagick_convert',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_convert_form',
+    'default settings' => 'imagick_convert_defaults',
+  );
+  $effects['imagick_crop'] = array(
+    'label' => t('Crop'),
+    'effect callback' => 'imagick_crop',
+    'dimensions callback' => 'image_resize_dimensions',
+    'form callback' => 'imagick_crop_form',
+    'default settings' => 'imagick_crop_defaults',
+    'summary theme' => 'image_crop_summary',
+  );
+  $effects['imagick_decipher'] = array(
+    'label' => t('Decipher'),
+    'help' => t('Deciphers image that has been enciphered before.'),
+    'effect callback' => 'imagick_decipher',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_decipher_form',
+    'default settings' => 'imagick_decipher_defaults',
+  );
+  $effects['imagick_definecanvas'] = array(
+    'label' => t('Define Canvas'),
+    'help' => t('Enter no color value for transparent. This will have the effect of adding clear margins around the image.'),
+    'effect callback' => 'imagick_definecanvas',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_definecanvas_form',
+    'default settings' => 'imagick_definecanvas_defaults',
+  );
+  $effects['imagick_edge'] = array(
+    'label' => t('Edge'),
+    'help' => t('Enhance edges within the image with a convolution filter of the given radius. Use radius 0 and it will be auto-selected.'),
+    'effect callback' => 'imagick_edge',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_edge_form',
+    'default settings' => 'imagick_edge_defaults',
+  );
+  $effects['imagick_emboss'] = array(
+    'label' => t('Emboss'),
+    'help' => t('Returns a grayscale image with a three-dimensional effect. We convolve the image with a Gaussian operator of the given radius and standard deviation (sigma). For reasonable results, radius should be larger than sigma. Use a radius of 0 and it will choose a suitable radius for you.'),
+    'effect callback' => 'imagick_emboss',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_emboss_form',
+    'default settings' => 'imagick_emboss_defaults',
+  );
+  $effects['imagick_encipher'] = array(
+    'label' => t('Encipher'),
+    'help' => t('Converts plain pixels to enciphered pixels.'),
+    'effect callback' => 'imagick_encipher',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_encipher_form',
+    'default settings' => 'imagick_encipher_defaults',
+  );
+  $effects['imagick_frame'] = array(
+    'label' => t('Frame'),
+    'help' => t('Adds a simulated three-dimensional border around the image. The width and height specify the border width of the vertical and horizontal sides of the frame. The inner and outer bevels indicate the width of the inner and outer shadows of the frame.'),
+    'effect callback' => 'imagick_frame',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_frame_form',
+    'default settings' => 'imagick_frame_defaults',
+  );
+  $effects['imagick_inverse'] = array(
+    'label' => t('Inverse'),
+    'effect callback' => 'imagick_inverse',
+    'dimensions passthrough' => TRUE,
+  );
+  $effects['imagick_mirror'] = array(
+    'label' => t('Mirror'),
+    'help' => t('Creates a vertical or horizontal mirror image by reflecting the pixels around an axis.'),
+    'effect callback' => 'imagick_mirror',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_mirror_form',
+    'default settings' => 'imagick_mirror_defaults',
+  );
+  $effects['imagick_modulate'] = array(
+    'label' => t('Modulate'),
+    'help' => t('Lets you control the brightness, saturation, and hue of an image. Hue is the percentage of absolute rotation from the current position. For example 50 results in a counter-clockwise rotation of 90 degrees, 150 results in a clockwise rotation of 90 degrees, with 0 and 200 both resulting in a rotation of 180 degrees.'),
+    'effect callback' => 'imagick_modulate',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_modulate_form',
+    'default settings' => 'imagick_modulate_defaults',
+  );
+  $effects['imagick_noise'] = array(
+    'label' => t('Noise'),
+    'help' => t('Adds random noise to the image.'),
+    'effect callback' => 'imagick_noise',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_noise_form',
+    'default settings' => 'imagick_noise_defaults',
+  );
+  $effects['imagick_oilpaint'] = array(
+    'label' => t('Oil paint'),
+    'help' => t('Applies a special effect filter that simulates an oil painting. Each pixel is replaced by the most frequent color occurring in a circular region defined by radius.'),
+    'effect callback' => 'imagick_oilpaint',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_oilpaint_form',
+    'default settings' => 'imagick_oilpaint_defaults',
+  );
+  $effects['imagick_polaroid'] = array(
+    'label' => t('Polaroid'),
+    'help' => t('Simulates a Polaroid picture.'),
+    'effect callback' => 'imagick_polaroid',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_polaroid_form',
+    'default settings' => 'imagick_polaroid_defaults',
+  );
+  $effects['imagick_posterize'] = array(
+    'label' => t('Posterize'),
+    'help' => t('Reduces the image to a limited number of color level.'),
+    'effect callback' => 'imagick_posterize',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_posterize_form',
+    'default settings' => 'imagick_posterize_defaults',
+  );
+  $effects['imagick_resize'] = array(
+    'label' => t('Resize'),
+    'effect callback' => 'imagick_resize',
+    'dimensions callback' => 'image_resize_dimensions',
+    'form callback' => 'imagick_resize_form',
+    'default settings' => 'imagick_resize_defaults',
+    'summary theme' => 'image_resize_summary',
+  );
+  $effects['imagick_rotate'] = array(
+    'label' => t('Rotate'),
+    'effect callback' => 'imagick_rotate',
+    'dimensions callback' => 'image_rotate_dimensions',
+    'form callback' => 'imagick_rotate_form',
+    'default settings' => 'imagick_rotate_defaults',
+    'summary theme' => 'image_rotate_summary',
+  );
+  $effects['imagick_roundedcorners'] = array(
+    'label' => t('Rounded corners'),
+    'help' => t('Rounds image corners. The first two parameters control the amount of rounding and the three last parameters can be used to fine-tune the rounding process.'),
+    'effect callback' => 'imagick_roundedcorners',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_roundedcorners_form',
+    'default settings' => 'imagick_roundedcorners_defaults',
+  );
+  $effects['image_scale'] = array(
+    'label' => t('Scale'),
+    'help' => t('Scaling will maintain the aspect-ratio of the original image. If only a single dimension is specified, the other dimension will be calculated.
+'),
+    'effect callback' => 'image_scale_effect',
+    'dimensions callback' => 'image_scale_dimensions',
+    'form callback' => 'imagick_scale_form',
+    'default settings' => 'imagick_scale_defaults',
+    'summary theme' => 'image_scale_summary',
+  );
+  $effects['image_scale_and_crop'] = array(
+    'label' => t('Scale and crop'),
+    'help' => t('Scale and crop will maintain the aspect-ratio of the original image, then crop the larger dimension. This is most useful for creating perfectly square thumbnails without stretching the image.
+'),
+    'effect callback' => 'image_scale_and_crop_effect',
+    'dimensions callback' => 'image_resize_dimensions',
+    'form callback' => 'imagick_resize_form',
+    'default settings' => 'imagick_resize_defaults',
+    'summary theme' => 'image_resize_summary',
+  );
+  $effects['imagick_shadow'] = array(
+    'label' => t('Shadow'),
+    'help' => t('Simulates an image shadow.'),
+    'effect callback' => 'imagick_shadow',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_shadow_form',
+    'default settings' => 'imagick_shadow_defaults',
+  );
+  $effects['imagick_sketch'] = array(
+    'label' => t('Sketch'),
+    'help' => t('Simulates a pencil sketch. We convolve the image with a Gaussian operator of the given radius and standard deviation (sigma). For reasonable results, radius should be larger than sigma. Use a radius of 0 and sketchImage selects a suitable radius for you. Angle gives the angle of the blurring motion.'),
+    'effect callback' => 'imagick_sketch',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_sketch_form',
+    'default settings' => 'imagick_sketch_defaults',
+  );
+  $effects['imagick_solarize'] = array(
+    'label' => t('Solarize'),
+    'help' => t('Applies a special effect to the image, similar to the effect achieved in a photo darkroom by selectively exposing areas of photo sensitive paper to light. Threshold ranges from 0 to QuantumRange and is a measure of the extent of the solarization.'),
+    'effect callback' => 'imagick_solarize',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_solarize_form',
+    'default settings' => 'imagick_solarize_defaults',
+  );
+  $effects['imagick_spread'] = array(
+    'label' => t('Spread'),
+    'help' => t('Special effects method that randomly displaces each pixel in a block defined by the radius parameter.'),
+    'effect callback' => 'imagick_spread',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_spread_form',
+    'default settings' => 'imagick_spread_defaults',
+  );
+  $effects['imagick_swirl'] = array(
+    'label' => t('Swirl'),
+    'help' => t('Swirls the pixels about the center of the image, where degrees indicates the sweep of the arc through which each pixel is moved. You get a more dramatic effect as the degrees move from 1 to 360.'),
+    'effect callback' => 'imagick_swirl',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_swirl_form',
+    'default settings' => 'imagick_swirl_defaults',
+  );
+  $effects['imagick_vignette'] = array(
+    'label' => t('Vignette'),
+    'help' => t('Softens the edges of the image in vignette style.'),
+    'effect callback' => 'imagick_vignette',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_vignette_form',
+    'default settings' => 'imagick_vignette_defaults',
+  );
+  $effects['imagick_wave'] = array(
+    'label' => t('Wave'),
+    'help' => t('Applies a wave filter to the image.'),
+    'effect callback' => 'imagick_wave',
+    'dimensions passthrough' => TRUE,
+    'form callback' => 'imagick_wave_form',
+    'default settings' => 'imagick_wave_defaults',
+  );
+
+  // Backward compatibility for imagecache actions
+  if (module_exists('imagecache_autorotate')) {
+    $effects['imagecache_autorotate'] = array_remove($effects, 'imagick_autorotate');
+  }
+  if (module_exists('imagecache_canvasactions')) {
+    $effects['canvasactions_definecanvas'] = array_remove($effects, 'imagick_definecanvas');
+    $effects['canvasactions_roundedcorners'] = array_remove($effects, 'imagick_roundedcorners');
+  }
+  if (module_exists('imagecache_coloractions')) {
+    $effects['coloractions_inverse'] = array_remove($effects, 'imagick_inverse');
+    $effects['coloractions_colorshift'] = array_remove($effects, 'imagick_colorshift');
+    $effects['imagecache_coloroverlay'] = array_remove($effects, 'imagick_coloroverlay_alpha');
+    $effects['coloractions_convert'] = array_remove($effects, 'imagick_convert');
+    $effects['coloractions_posterize'] = array_remove($effects, 'imagick_posterize');
+  }
+
+  return $effects;
+}
+
+/**
+ * Implements hook_image_effect_info_alter()
+ */
+function imagick_image_effect_info_alter(&$effects) {
+  // Delete effects we override to prevent duplicates
+  unset(
+    $effects['image_crop'],
+    $effects['image_rotate'],
+    $effects['image_resize']
+  );
+
+  // Sort effects
+  ksort($effects);
+}
+
+function array_remove(array &$arr, $key) {
+  if (array_key_exists($key, $arr)) {
+    $val = $arr[$key];
+    unset($arr[$key]);
+    return $val;
+  }
+  return null;
+}
+
+function imagick_file_formats() {
+  // @TODO use imagick::queryFormats() to generate full format list
+  return array('image/jpeg' => 'jpg', 'image/gif' => 'gif', 'image/png' => 'png');
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter()
+ */
+function imagick_form_image_effect_form_alter(&$form, $form_state) {
+  foreach ($form['data'] as $key => &$element) {
+    _imagick_add_element_colorpicker_widget($element);
+  }
+}
+
+/**
+ * Helper function to add a colorpicker widget to an element
+ */
+function _imagick_add_element_colorpicker_widget(&$element) {
+  $children = element_children($element);
+
+  // If element has children, loop over them first
+  if (count($children) > 0) {
+    foreach ($children as $key) {
+      _imagick_add_element_colorpicker_widget($element[$key]);
+    }
+  }
+  else {
+    if (isset($element['#colorpicker'])) {
+      $element['#attributes'] = array('class' => array('colorentry'));
+
+      // Add Farbtastic color picker.
+      $element['#attached'] = array(
+        'library' => array(
+          array('system', 'farbtastic'),
+        ),
+        'js' => array(
+          drupal_get_path('module', 'imagick') . '/js/colorPicker.js',
+        ),
+      );
+    }
+  }
+}
+
+/**
+ * @} End of "ingroup image".
+ */
+

@@ -21,6 +21,7 @@
 
    // Speicherort fuer Bilder
    var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/pictures/aae/";
+   var $localbildpfad = "/opt/lampp/htdocs/drupal/sites/default/files/pictures/aae/";
    var $short_bildpfad = "sites/default/files/pictures/aae/";
 
    // Mapbox-Data
@@ -28,6 +29,8 @@
    var $mapboxMap = "matzelot.ke3420oc";
    var $mapboxDefaultView = "51.336, 12.433";
    var $mapboxDefaultZoom = "12";
+
+   var $servercheck;
 
    /**
     *  Einfache Funktion zum Filtern von POST- und GET-Daten. Gerne erweiterbar.
@@ -38,13 +41,19 @@
      //return mysql_real_escape_string($clear);
    }
 
-   protected function upload_image($bild) {
+
+   protected function upload_image($bild,$servercheck) {
 
     $image = new Imagick($bild['tmp_name']);
     //$image->thumbnailImage(700, 400);
     $image->scaleImage(800, 400, true);
-    $image->writeImage($this->bildpfad.$bild['name']);
 
+    $whitelist = array( '127.0.0.1', '::1' );
+    if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
+      $image->writeImage($this->localbildpfad.$bild['name']);
+    } else {
+      $image->writeImage($this->bildpfad.$bild['name']);
+    }
     return base_path() . $this->short_bildpfad . $bild['name'];
 
    }

@@ -1,0 +1,13 @@
+name = Imagick Smartcrop
+description = Implementation of Smartcrop functionalities
+core = 7.x
+package = Imagick
+
+dependencies[] = imagick
+
+; Information added by Drupal.org packaging script on 2015-04-08
+version = "7.x-1.2"
+core = "7.x"
+project = "imagick"
+datestamp = "1428501183"
+

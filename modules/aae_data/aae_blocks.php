@@ -25,9 +25,15 @@ Class aae_blocks extends aae_data_helper {
 
 public function print_letzte_events($limit = 6) {
 
+//Show nearest of latest 6 events first
+// $sql = '(SELECT * FROM "aae_data_event" ORDER BY "EID" DESC LIMIT 6) ORDER BY "start" ASC';
+// $letzteEvents = db_query($sql)->fetchAll();
+
+//Show furthest of latest 6 events first
   $letzteEvents = db_select($this->tbl_event, 'a')
     ->fields('a')
-    ->range(0, $limit)
+    ->orderBy('EID','DESC')
+    ->range(0,$limit)
     ->execute()
     ->fetchAll();
 
@@ -50,6 +56,7 @@ public function print_letzte_akteure($limit = 3) {
 
   $resultAkteure = db_select($this->tbl_akteur, 'a')
     ->fields('a')
+    ->orderBy('AID', 'DESC')
     ->range(0, $limit)
     ->execute()
     ->fetchAll();

@@ -1,0 +1,110 @@
+<?php
+
+/**
+ * Implements hook_form_FORM_ID_alter()
+ */
+function imagick_preview_form_image_effect_form_alter(&$form, $form_state) {
+  $style = image_style_load(arg(5));
+
+  if (is_numeric(arg(7))) {
+    $effect = $style['effects'][arg(7)];
+    $data = $effect['data'];
+  }
+  else {
+    $effect = image_effect_definition_load(arg(7));
+
+    if (!empty($effect) && isset($effect['default settings'])) {
+      $function = $effect['default settings'];
+      $data = $function();
+    }
+  }
+
+  _imagick_preview_form($data, $form['data'], $style, $effect);
+}
+
+/**
+ * Helper function to update the preview image
+ */
+function _imagick_preview_update_preview($form, $form_state) {
+  $style = $form_state['image_style'];
+  $effect = $form_state['image_effect'];
+  $data = $form_state['values']['data'];
+
+  $form = _imagick_preview_form($data, $form, $style, $effect);
+
+  return $form['preview']['images'];
+}
+
+/**
+ * Helper function to show a preview image on the effect edit form
+ */
+function _imagick_preview_form($data, &$setting_form, $style, $effect) {
+  $effect['data'] = $data;
+
+  $combined = $style;
+  if (isset($effect['ieid'])) {
+    $combined['effects'][$effect['ieid']] = $effect;
+  }
+  else {
+    $combined['effects'][] = $effect;
+  }
+  $style['effects'] = array($effect);
+
+  // If preview setting has been enabled
+  $form['preview']['title'] = array(
+    '#theme' => 'html_tag',
+    '#tag' => 'h4',
+    '#value' => t('Preview'),
+  );
+  $form['preview']['images'] = array(
+    '#type' => 'item',
+    '#markup' => theme('imagick_style_preview',
+      array(
+        'style' => $style,
+        'combined' => $combined,
+      )
+    ),
+    '#prefix' => '<div id="image-style-preview">',
+    '#suffix' => '</div>',
+  );
+
+  $form['settings']['title'] = array(
+    '#theme' => 'html_tag',
+    '#tag' => 'h4',
+    '#value' => t('Effect settings'),
+  );
+
+  foreach ($setting_form as $key => &$element) {
+    _imagick_preview_add_element_ajax($element);
+  }
+
+  $setting_form = array_merge($form, $setting_form);
+
+  return $form;
+}
+
+/**
+ * Helper function to show a preview image on the effect edit form
+ */
+function _imagick_preview_add_element_ajax(&$element) {
+  if (is_array($element) && isset($element['#type'])) {
+
+    if ($element['#type'] == 'fieldset') {
+      $children = element_children($element);
+
+      foreach ($element as $key => &$child) {
+        if (in_array($key, $children)) {
+          _imagick_preview_add_element_ajax($child);
+        }
+      }
+    }
+    else {
+      $element['#ajax'] = array(
+        'callback' => '_imagick_preview_update_preview',
+        'wrapper' => 'image-style-preview',
+        'method' => 'replace',
+      );
+    }
+
+  }
+}

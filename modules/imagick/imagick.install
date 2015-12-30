@@ -1,0 +1,89 @@
+<?php
+
+/**
+ * Implements hook_requirements().
+ */
+function imagick_requirements($phase) {
+  $t = get_t();
+  $requirements = array();
+
+  if (!extension_loaded('imagick')) {
+    switch ($phase) {
+      case 'install':
+        return array(
+          'imagick_imagick' => array(
+            'title' => 'ImageMagick PHP extension',
+            'value' => $t('Not installed'),
+            'severity' => REQUIREMENT_ERROR,
+            'description' => $t('The Imagick image toolkit requires that the Imagick extension for PHP be installed and configured properly. For more information see <a href="@url">PHP\'s ImageMagick documentation</a>.', array('@url' => 'http://php.net/manual/book.imagick.php')),
+          ),
+        );
+        break;
+      case 'runtime':
+        return array(
+          'imagick_imagick' => array(
+            'title' => 'ImageMagick PHP extension',
+            'value' => $t('Not installed'),
+            'severity' => REQUIREMENT_ERROR,
+            'description' => $t('The Imagick image toolkit requires that the Imagick extension for PHP be installed and configured properly. For more information see <a href="@url">PHP\'s ImageMagick documentation</a>.', array('@url' => 'http://php.net/manual/book.imagick.php')),
+          ),
+        );
+        break;
+    }
+  }
+}
+
+/**
+ * Helper function to alter existing effect names
+ */
+function _imagick_alter_existing_effect_names($enable = TRUE) {
+  $effects = array(
+    'image_crop' => 'imagick_crop',
+    'image_resize' => 'imagick_resize',
+    'image_rotate' => 'imagick_rotate',
+  );
+  if (!$enable) {
+    $effects = array_flip($effects);
+  }
+
+  // Load all broken effects
+  $result = db_select('image_effects', NULL, array('fetch' => PDO::FETCH_ASSOC))
+    ->fields('image_effects')
+    ->condition('name', array_keys($effects), 'IN')
+    ->execute()
+    ->fetchAll();
+
+  // Update effect name
+  foreach ($result as $effect) {
+    db_update('image_effects')
+      ->fields(array(
+        'name' => $effects[$effect['name']],
+      ))
+      ->condition('ieid', $effect['ieid'])
+      ->condition('isid', $effect['isid'])
+      ->execute();
+  }
+}
+
+/**
+ * Implements hook_enable()
+ */
+function imagick_enable() {
+  _imagick_alter_existing_effect_names(TRUE);
+}
+
+/**
+ * Implements hook_disable()
+ */
+function imagick_disable() {
+  _imagick_alter_existing_effect_names(FALSE);
+}
+
+/**
+ * Updates image effects to work with 7.x-1.1 version
+ */
+function imagick_update_7100(&$sandbox) {
+  _imagick_alter_existing_effect_names(TRUE);
+
+  return 'Updated Imagick image effects';
+}
