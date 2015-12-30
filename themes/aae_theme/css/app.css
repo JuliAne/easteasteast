@@ -435,7 +435,7 @@ transform: rotate(-10deg);
 
 .pcard section .plocation {
  text-align: center;
- opacity: 0.7;
+ opacity: 0.8;
 }
 
 .pcard section .plocation img {
@@ -548,6 +548,10 @@ transform: rotate(-10deg);
 
 #projects-akteure .large-3.large-offset-1.columns.pcard:hover header {
   border-bottom: 1px solid lightgrey;
+}
+
+#projects-akteure .large-3.large-offset-1.columns.pcard:hover .plocation {
+  opacity: 1;
 }
 
 
