@@ -1,5 +1,7 @@
 # easteasteast
 
+*Deine soziale Stadtteilplattform powered by Drupal.* Alpha, alpha everywhere. If you'd like to join us take a look @ https://leipziger-ecken.de/faq
+
 ## Installation
 
 ### Requirements
