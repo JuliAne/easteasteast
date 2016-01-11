@@ -87,7 +87,7 @@
 
 			  <h3>Beschreibung</h3>
 
-				<?php if ($aResult['row1']->beschreibung !== ''): ?>
+				<?php if (!empty($aResult['row1']->beschreibung)): ?>
 				<p><?= $aResult['row1']->beschreibung; ?></p>
 			  <?php else : ?>
 				<p><i>Hier wurde leider noch keine Beschreibung angelegt :(</i></p>
@@ -95,7 +95,7 @@
 
         <?php if (!empty($aResult['events'])) : ?>
         <div id="next-events">
-			  <h3>N&auml;chste Veranstaltungen</h3>
+			  <h3>Veranstaltungen</h3>
          <?php  $monat = array(
            '01' => 'Jan',
            '02' => 'Feb',

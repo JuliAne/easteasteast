@@ -1,26 +1,19 @@
 <?php
 /**
  * akteurloeschen.php löscht einen Akteur aus der DB
- * (nach vorheriger Abfrage).
- *
- * TODO: Umstellen auf Klassenmodell
- * TODO: lösche profilbild
  */
+
+Class akteurloeschen extends aae_data_helper {
+
+ public function run(){
 
 //Eingeloggter User
 global $user;
 $user_id = $user->uid;
 
 //EID holen:
-$path = current_path();
-$explodedpath = explode("/", $path);
-$akteur_id = $explodedpath[1];
-
-//DB-Tabellen
-$tbl_hat_user = "aae_data_akteur_hat_user";
-$tbl_akteur_events = "aae_data_akteur_hat_event";
-$tbl_akteur = "aae_data_akteur";
-$tbl_hat_sparte = "aae_data_akteur_hat_sparte";
+$explodedpath = explode("/", current_path());
+$akteur_id = $this->clearContent($explodedpath[1]);
 
 //Sicherheitsschutz
 if(!user_is_logged_in()){
@@ -28,77 +21,85 @@ if(!user_is_logged_in()){
 }
 
 //Prüfen ob Schreibrecht vorliegt
-$resultUser = db_select($tbl_hat_user, 'u')
-  ->fields('u', array(
-    'hat_UID',
-    'hat_AID',
-  ))
-  ->condition('hat_AID', $akteur_id, '=')
-  ->condition('hat_UID', $user_id, '=')
-  ->execute();
+$resultUser = db_select($this->tbl_hat_user, 'u')
+ ->fields('u', array('hat_UID', 'hat_AID'))
+ ->condition('hat_AID', $akteur_id, '=')
+ ->condition('hat_UID', $user_id, '=')
+ ->execute();
+
 $hat_recht = $resultUser->rowCount();
 
 if (!array_intersect(array('redakteur','administrator'), $user->roles)) {
-  if ($hat_recht != 1) {
+ if ($hat_recht != 1) {
     drupal_access_denied();
-  }
+ }
 }
-//AKteurnamen ermitteln
-$akteur = "";
-$resultakteur = db_select($tbl_akteur, 'a')
-  ->fields('a', array(
-    'name',
-  ))
+
+ $resultAkteur = db_select($this->tbl_akteur, 'a')
+  ->fields('a', array('name','bild'))
   ->condition('AID', $akteur_id, '=')
-  ->execute();
-foreach ($resultakteur as $row) {
-  $akteur = $row->name;
-}
+  ->execute()
+  ->fetchAssoc();
 
 //-----------------------------------
 
-//das wird ausgeführt, wenn auf "Löschen" gedrückt wird
 if (isset($_POST['submit'])) {
 
-  $akteur_id = $_POST['akteur_id'];
+  $resultEvents = db_select($this->tbl_akteur_events, 'ae')
+   ->fields('ae')
+   ->condition('AID', $akteur_id, '=')
+   ->execute()
+   ->fetchAll();
 
-  //Akteur aus $tbl_akteur_events loeschen
-  $akteureventloeschen = db_delete($tbl_akteur_events)
+  foreach($resultEvents as $event){
+   db_delete($this->tbl_event)
+    ->condition('EID', $event->EID, '=')
+    ->execute();
+  }
+
+  db_delete($this->tbl_akteur_events)
     ->condition('AID', $akteur_id, '=')
     ->execute();
-  //Akteur aus $tbl_hat_user loeschen
-  $akteuruserloeschen = db_delete($tbl_hat_user)
+
+  db_delete($this->tbl_hat_user)
     ->condition('hat_AID', $akteur_id, '=')
     ->execute();
 
-  //Akteur aus DB loeschen
-  $akteurloeschen = db_delete($tbl_akteur)
+  db_delete($this->tbl_akteur)
     ->condition('AID', $akteur_id, '=')
     ->execute();
 
-  $tagsloeschen = db_delete($tbl_hat_sparte)
+  db_delete($this->tbl_hat_sparte)
    ->condition('hat_AID', $akteur_id, '=')
    ->execute();
 
-  // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
+  // remove profile-image (if possible)
+  $bild = end(explode('/', $resultAkteur['bild']));
+
+  if (file_exists($this->short_bildpfad.$bild)) {
+   unlink($this->short_bildpfad.$bild);
+  }
+
   if (session_status() == PHP_SESSION_NONE) session_start();
   $_SESSION['sysmsg'][] = 'Der Akteur wurde gelöscht.';
   header("Location: ".base_path()."Akteure");
 
 } else {
 
-}
-
 $pathThisFile = $_SERVER['REQUEST_URI'];
 
-//Darstellung
-$profileHTML = <<<EOF
-<div class="alert-box" data-alert>
-  <h3>Möchten Sie den Akteur <strong>$akteur</strong> wirklich löschen?</h3><br />
-  <form action='$pathThisFile' method='POST' enctype='multipart/form-data'>
-    <input name="akteur_id" type="hidden" id="eventEIDInput" value="$akteur_id" />
+// Render
+
+return '<div class="callout">
+  <h3>Möchten Sie den Akteur <strong>'.$resultAkteur['name'].'</strong> wirklich löschen?</h3><br />
+  <form action="'.$pathThisFile.'" method="POST" enctype="multipart/form-data">
+    <input name="akteur_id" type="hidden" id="eventEIDInput" value="'.$akteur_id.'" />
     <a class="secondary button" href="javascript:history.go(-1)">Abbrechen</a>
     <input type="submit" class="button" id="akteurSubmit" name="submit" value="Löschen">
   </form>
-</div>
-EOF;
+</div>';
+
+ }
+
+ } // end function run()
+} // end class akteurloeschen

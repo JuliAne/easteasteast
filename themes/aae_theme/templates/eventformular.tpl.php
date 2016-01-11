@@ -1,4 +1,7 @@
 <h3>Event <?php echo ($this->target == 'update' ? 'bearbeiten' : 'anlegen'); ?></h3>
+<?php if ($this->target == 'update') : ?>
+<a href="<?= base_path(); ?>eventloeschen/<?= $this->event_id; ?>" class="small secondary button round right" style="margin-top:-37px;">Löschen</a>
+<?php endif; ?>
 <div class="divider" style="margin-bottom: 25px;"></div>
 
 <?php if (!$this->freigabe) : ?>

@@ -214,16 +214,15 @@ function akteuredit_page($aid = 0) {
 }
 
 /**
- * Baut die Seite fuer das Eventloeschen
+ * Baut die Seite fuer das Akteurloeschen
  */
 function akteurloeschen_page($eid=0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurloeschen.php';
 
-  $path = current_path();
-  $path_alias = drupal_lookup_path('alias', $path);
+  $aae_akteurloeschen = new akteurloeschen();
 
-  return $profileHTML;
+  return $aae_akteurloeschen->run();
 }
 
 /**
@@ -267,10 +266,8 @@ function eventloeschen_page($eid = 0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventloeschen.php';
 
-  $path = current_path();
-  $path_alias = drupal_lookup_path('alias', $path);
-
-  return $profileHTML;
+  $aae_eventloeschen = new eventloeschen();
+  return $aae_eventloeschen->run();
 }
 
 /**

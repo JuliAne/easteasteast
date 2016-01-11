@@ -47,11 +47,18 @@ $(document).ready(function(){
 
     if ($('#NrInput').val() != '' && $('#PLZInput').val() != '' && $('#StrasseInput').val() != '') {
 
+    var strasse = $('#StrasseInput').val();
+
+    if (strasse.slice(-1) == '.') {
+      // Replace "xystr." with "xystrasse"
+      strasse = strasse.replace('.', 'asse');
+    }
+
     $('#GPSInput').val('Ermittle Geo-Koordinaten...');
 
     $.ajax({
       //url: "https://api.mapbox.com/v4/geocode/mapbox.places/"+ $('#PLZInput').val() +"Leipzig+" + $('#StrasseInput').val() + "+"+ $('#NrInput').val() +".json?access_token=pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg",
-      url: "https://api.mapbox.com/geocoding/v5/mapbox.places/"+ $('#PLZInput').val() +"+Leipzig+" + $('#StrasseInput').val() + "+"+ $('#NrInput').val() +".json?access_token=pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg",
+      url: "https://api.mapbox.com/geocoding/v5/mapbox.places/"+ $('#PLZInput').val() +"+Leipzig+" + strasse + "+"+ $('#NrInput').val() +".json?access_token=pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg",
     })
     .done(function( data ) {
 
