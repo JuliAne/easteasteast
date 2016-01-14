@@ -104,7 +104,7 @@ $('#calendar .next').click(function(){
    $('#aae_calendar').html(data);
    setHandlers();
  })
-
+ 
  return false;
 });
 
@@ -116,6 +116,7 @@ $('#calendar .prev').click(function(){
    $('#aae_calendar').html(data);
    setHandlers();
  })
+
 
  return false;
 });

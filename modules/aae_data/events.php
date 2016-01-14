@@ -82,7 +82,7 @@ Class events extends aae_data_helper {
     $modulePath = drupal_get_path('module', 'aae_data');
     include_once $modulePath . '/kalender.php';
 
-    $kal = new kalender();
+    $kal = new kalender(true);
     $resultKalender = $kal->show();
 
   }

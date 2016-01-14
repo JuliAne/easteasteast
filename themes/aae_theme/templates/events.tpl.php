@@ -126,7 +126,9 @@
 
  <?php if(isset($resultKalender) && !empty($resultKalender)){
 
+   echo '<div id="aae_calendar">';
    echo $resultKalender;
+   echo '</div>';
 
  } else if (is_array($resultEvents) && !empty($resultEvents)) {
 

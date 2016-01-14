@@ -494,13 +494,11 @@ transform: rotate(-10deg);
 
 #akteure .pcard {
   width: 22%;
-  margin-left: 2.333%
+  margin-left: 2.333%;
+  float: none;
+  display: inline-block;
+  vertical-align: top;
 }
-
-/*.pcard footer .gimmeborder {
- border-left: 1px solid #8C8C8C;
- margin-left: 10px;
-} */
 
 #projects-akteure .large-3.large-offset-1.columns.pcard {
  border: 1px solid #F1EFEF;
