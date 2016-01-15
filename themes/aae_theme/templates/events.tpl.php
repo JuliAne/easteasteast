@@ -132,6 +132,12 @@
 
  } else if (is_array($resultEvents) && !empty($resultEvents)) {
 
+  //print_r($resultEvents);
+  //print_r('Hello World');
+  //print_r($datesort);
+  //print_r('Hello World');
+  //print_r($resultEventsBool);
+
  $cur_month = '';
  $cur_year = date('Y');
 

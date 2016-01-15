@@ -194,10 +194,10 @@ Class events extends aae_data_helper {
     $resultEvents[$counter] = (array)$resultEvents[$counter];
     $resultEvents[$counter]['tags'] = $sparten;
     $resultEvents[$counter]['akteur'] = $resultAkteur;
-    //$resultEvents[$counter]['datestringstart'] = $datestringten;
-    //$resultEvents[$counter]['dateyear'] = $datestringyear;
-    //$resultEvents[$counter]['datemonth'] = $datestringmonth;
-    //$resultEvents[$counter]['dateday'] = $datestringday;
+    $resultEvents[$counter]['datestringstart'] = $datestringten;
+    $resultEvents[$counter]['dateyear'] = $datestringyear;
+    $resultEvents[$counter]['datemonth'] = $datestringmonth;
+    $resultEvents[$counter]['dateday'] = $datestringday;
     //$resultEvents[$counter]['dateinthalf'] = $datestringyearhalf;
     $resultEvents[$counter]['datesum'] = (int) $datesum;
     $resultEvents[$counter] = (object)$resultEvents[$counter];
@@ -218,18 +218,21 @@ Class events extends aae_data_helper {
   // }
   // usort($resultEvents, 'sortEvents');
 
+
   // NEW SORTING FUNCTION (Juliane, 15.01.2016)
   // sort array $resultEvents by datesum
   foreach ($resultEvents as $event) {
-    $datesort[$event->datesum] = $event->datesum;
+    $datesort[] = $event->datesum;
   }
   array_multisort($datesort, SORT_DESC, $resultEvents);
+  $resultEventsBool = array_multisort($datesort, SORT_DESC, $resultEvents);
   // END SORTING FUNCTION
 
   // Ausgabe der Events
   ob_start(); // Aktiviert "Render"-modus
   include_once path_to_theme() . '/templates/events.tpl.php';
   return ob_get_clean(); // Übergabe des gerenderten "events.tpl"
+
 
  } // end function run()
 
