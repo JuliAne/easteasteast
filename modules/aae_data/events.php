@@ -199,7 +199,7 @@ Class events extends aae_data_helper {
     //$resultEvents[$counter]['datemonth'] = $datestringmonth;
     //$resultEvents[$counter]['dateday'] = $datestringday;
     //$resultEvents[$counter]['dateinthalf'] = $datestringyearhalf;
-    $resultEvents[$counter]['datesum'] = $datesum;
+    $resultEvents[$counter]['datesum'] = (int) $datesum;
     $resultEvents[$counter] = (object)$resultEvents[$counter];
 
     $counter++;
