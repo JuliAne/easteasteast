@@ -12,6 +12,7 @@ Class events extends aae_data_helper {
  var $maxEvents;
  var $sparten;
  var $tag;
+ var $dateint;
 
  public function run(){
 
@@ -165,10 +166,40 @@ Class events extends aae_data_helper {
       ->execute()
       ->fetchAll();
 
+
+    //Workaround to sort events by date:
+    // 1 Split strings by year, month, date
+    // 2 Merge single strings for year, month, date together ($datesum)
+    // 3 sort array reultsEvents by $datesum
+    $datestringstart = preg_replace("/[^0-9]/", "", $event->start);
+    $datestring = preg_replace("/[^0-9]/", "", $event->start);
+    $datestringyear = substr($datestringstart, 0, 4); 
+    $datestringten = substr($datestring, 0, 8); 
+
+    $datestringyearhalf = (int) substr($datestringyear, 2, 4); 
+
+    if($datestringyearhalf < 13) {
+      $datestringyear = substr($datestringten, 4, 4);
+      $datestringmonth = substr($datestringten, 2,2);
+      $datestringday = substr($datestringten, 0,2);
+    } else {
+      $datestringyear = $datestringyear;
+      $datestringmonth = substr($datestringten, 4,2);
+      $datestringday = substr($datestringten, 6,2);
+    }
+
+    $datesum = "{$datestringyear}{$datestringmonth}{$datestringday}";
+
     // Hack: add variable to $resultEvents-object
     $resultEvents[$counter] = (array)$resultEvents[$counter];
     $resultEvents[$counter]['tags'] = $sparten;
     $resultEvents[$counter]['akteur'] = $resultAkteur;
+    //$resultEvents[$counter]['datestringstart'] = $datestringten;
+    //$resultEvents[$counter]['dateyear'] = $datestringyear;
+    //$resultEvents[$counter]['datemonth'] = $datestringmonth;
+    //$resultEvents[$counter]['dateday'] = $datestringday;
+    //$resultEvents[$counter]['dateinthalf'] = $datestringyearhalf;
+    $resultEvents[$counter]['datesum'] = $datesum;
     $resultEvents[$counter] = (object)$resultEvents[$counter];
 
     $counter++;
@@ -177,16 +208,23 @@ Class events extends aae_data_helper {
 
   }
 
+  // OLD SORTING FUNCTION
+  // function sortEvents($a,$b){
+  //  $a = intval(strrev(str_replace("-","",$a->start)));
+  //  $b = intval(strrev(str_replace("-","",$b->start)));
+  //  if ($a == $b) return 0;
+  //  else if ($a < $b) return -1;
+  //  else return 1;
+  // }
+  // usort($resultEvents, 'sortEvents');
 
-  function sortEvents($a,$b){
-   $a = intval(strrev(str_replace("-","",$a->start)));
-   $b = intval(strrev(str_replace("-","",$b->start)));
-   if ($a == $b) return 0;
-   else if ($a < $b) return -1;
-   else return 1;
+  // NEW SORTING FUNCTION (Juliane, 15.01.2016)
+  // sort array $resultEvents by datesum
+  foreach ($resultEvents as $event) {
+    $datesort[$event->datesum] = $event->datesum;
   }
-
-  usort($resultEvents, 'sortEvents');
+  array_multisort($datesort, SORT_DESC, $resultEvents);
+  // END SORTING FUNCTION
 
   // Ausgabe der Events
   ob_start(); // Aktiviert "Render"-modus

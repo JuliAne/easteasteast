@@ -154,6 +154,7 @@
     <p><a style="line-height:1.6em;" href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>"> <strong><?= $event->name; ?></strong></a>
     <span class=""><?= $event->zeit_von; ?> - <?= $event->zeit_bis; ?></span></p>
     <p>
+   <?php //print_r($event); ?>
      <?php foreach($event->tags as $tag) : ?>
      <a class="tag" href="<?= base_path(); ?>events/?tags[]=<?= $tag->KID; ?>">#<?= $tag->kategorie; ?></a>
    <?php endforeach; ?>
