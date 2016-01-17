@@ -16,8 +16,8 @@
   '05' => 'Mai',
   '06' => 'Jun',
   '07' => 'Jul',
-  '08' => 'Sep',
-  '09' => 'Aug',
+  '08' => 'Aug',
+  '09' => 'Sep',
   '10' => 'Okt',
   '11' => 'Nov',
   '12' => 'Dez',
@@ -30,8 +30,8 @@
   '05' => 'Mai',
   '06' => 'Juni',
   '07' => 'Juli',
-  '08' => 'September',
-  '09' => 'August',
+  '08' => 'August',
+  '09' => 'September',
   '10' => 'Oktober',
   '11' => 'November',
   '12' => 'Dezember',
@@ -139,22 +139,41 @@
   //print_r($resultEventsBool);
 
  $cur_month = '';
- $cur_year = date('Y');
+ //$cur_year = date('Y');
+ $cur_date = (int) date('Ymd');
+ $heading_future = 0;
+ $heading_present = 0;
+ $heading_past = 0;
 
  foreach($resultEvents as $key => $event): ?>
-  <?php $eStart = explode('-', $event->start); ?>
-  <div class="large-6 columns small-6 columns aaeEvent">
-  <?php if ($eStart[1] != $cur_month) {
-     if ($eStart[2] != $cur_year) {
-      $cur_year = $eStart[2];
-      $year = '<strong>'.$cur_year.'</strong>';
-     }
-     $cur_month = $eStart[1];
-     echo '<h4>'.$monat_lang[$eStart[1]].' '.$year.'</h4>';
-     $year = '';
-   } ?>
 
-  <div class="date large-2 columns button secondary round"><?= $eStart[0]; ?><br /><?= $monat[$eStart[1]]; ?></div>
+  <?php 
+
+  if ($heading_future == 0 && $event->datesum > $cur_date) {
+    echo '<h4 class="heading-event">DEMNÄCHST</h4>';
+    echo '<div class="large-6 columns small-6 columns aaeEvent future-first">';
+    $heading_future = 1;
+  } elseif ($heading_present == 0 && $event->datesum == $cur_date) {
+    echo '<h4 class="heading-event">HEUTE</h4>';
+    echo '<div class="large-6 columns small-6 columns aaeEvent present-first">';
+    $heading_present = 1;
+  } elseif ($heading_past == 0 && $event->datesum < $cur_date) {
+    echo '<h4 class="heading-event">VERGANGEN</h4>';
+    echo '<div class="large-6 columns small-6 columns aaeEvent past-first">';
+    $heading_past = 1;
+  } else {
+    echo '<div class="large-6 columns small-6 columns aaeEvent">';
+  }
+
+  if ($event->datemonth != $cur_month) {
+    echo '<h4>'.$monat_lang[$event->datemonth].' '.$event->dateyear.'</h4>';
+  } 
+
+  $cur_month = $event->datemonth;
+
+  ?>
+
+  <div class="date large-2 columns button secondary round"><?= $event->dateday; ?><br /><?= $monat[$event->datemonth]; ?></div>
   <div class="content large-9 columns">
    <header>
     <p><a style="line-height:1.6em;" href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>"> <strong><?= $event->name; ?></strong></a>

@@ -76,11 +76,26 @@ fieldset p:hover {
   margin-top: 32px;
 }*/
 
+#events_content h4.heading-event {
+  width:100%;
+  text-align: center;
+  color:grey;
+  background-color: #F1EFEF;
+  padding: 5px 0px 5px 0px;
+  border-radius: 0px;
+  font-size: 14px;
+}
+
+.aaeEvent:nth-of-type(odd){
+    clear:both;
+}
+
 .aaeEvent {
   margin-top: 10px;
   padding-left: 0;
   animation-name: event;
   animation-duration: 0.5s;
+  float: left;
 }
 
 @keyframes event {
