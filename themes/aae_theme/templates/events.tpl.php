@@ -146,7 +146,7 @@
  $heading_past = 0;
 
  foreach($resultEvents as $key => $event): ?>
-
+ 
   <?php 
 
   if ($heading_future == 0 && $event->datesum > $cur_date) {

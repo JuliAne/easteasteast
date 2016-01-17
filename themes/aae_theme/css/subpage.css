@@ -95,7 +95,7 @@ fieldset p:hover {
   padding-left: 0;
   animation-name: event;
   animation-duration: 0.5s;
-  float: left;
+  float: left!important;
 }
 
 @keyframes event {

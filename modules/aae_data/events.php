@@ -99,6 +99,38 @@ Class events extends aae_data_helper {
      ->execute()
      ->fetchAll();
 
+    //Temporary Workaround to sort events by date:
+    foreach ($resultEvents as $event) {
+    // 1 Split strings by year, month, date
+    // 2 Merge single strings for year, month, date together ($datesum)
+    // 3 sort array reultsEvents by $datesum
+    $datestringstart = preg_replace("/[^0-9]/", "", $event->start);
+    $datestring = preg_replace("/[^0-9]/", "", $event->start);
+    $datestringyear = substr($datestringstart, 0, 4); 
+    $datestringten = substr($datestring, 0, 8); 
+
+    $datestringyearhalf = (int) substr($datestringyear, 2, 4); 
+
+    if($datestringyearhalf < 13) {
+      $datestringyear = substr($datestringten, 4, 4);
+      $datestringmonth = substr($datestringten, 2,2);
+      $datestringday = substr($datestringten, 0,2);
+    } else {
+      $datestringyear = $datestringyear;
+      $datestringmonth = substr($datestringten, 4,2);
+      $datestringday = substr($datestringten, 6,2);
+    }
+
+    $datesum = "{$datestringyear}{$datestringmonth}{$datestringday}";
+
+    // Hack: add variable to $resultEvents-object
+    $event->datestringstart = $datestringten;
+    $event->dateyear = $datestringyear;
+    $event->datemonth = $datestringmonth;
+    $event->dateday = $datestringday;
+    $event->datesum = (int) $datesum;
+    }
+
   } else {
 
    // Auswahl aller Events in alphabetischer Reihenfolge
