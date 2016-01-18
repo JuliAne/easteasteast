@@ -370,13 +370,18 @@ transform: rotate(-10deg);
  font-weight: 400;
 }
 
+#journal {
+ background: url(../img/rabet_abends_ida_bg.jpg);
+ background-size: 100%;
+}
+
 #projects {
  background: url(../img/homepage_akteure_bg.jpg);
  background-size: 100%;
 }
 
 #projects-akteure {
- background: url(../img/homepage_akteure_bg.jpg);
+ background: url(../img/rabet_seil_kids_ida_bg.jpg);
  background-size: 100%;
 }
 
