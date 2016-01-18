@@ -278,11 +278,15 @@ html.fp-enabled,
 }
 
 #slideSection #slide0.slide.whiteText h1{
-  text-shadow: 2px 2px 15px rgb(25,82,95);
+  text-shadow: 2px 2px 10px rgba(25,82,95,1);
 }
 
-#slideSection #slide2.slide.whiteText h1, #slideSection #slide3.slide.whiteText h1 {
-  text-shadow: 2px 2px 15px rgba(25,82,95,1);
+#slideSection #slide2.slide.whiteText h1{
+  text-shadow: 2px 2px 10px rgba(25,82,95,0.6);
+}
+
+#slideSection #slide3.slide.whiteText h1 {
+  text-shadow: 2px 2px 15px rgba(100,100,100,1);
 }
 
 #slideSection #slide0 button.transparent, #slideSection #slide2 button.transparent, #slideSection #slide3 button.transparent {
