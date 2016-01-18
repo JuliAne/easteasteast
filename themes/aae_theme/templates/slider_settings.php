@@ -52,6 +52,30 @@ $sliders = array(
      'text' => '<span style="color:white;">Jetzt registrieren!</span>',
      'link' => base_path().'user/register'
    )
+ ),
+
+ $slider3 = array(
+   'image' => 'rabet_abends_ida.jpg',
+   'headline' => 'Den Leipziger Osten neu entdecken',
+   'description' => '<p>Die Plattform für den ganzen Stadtteil: lerne Akteure aus Deiner Umgebung kennen & erfahre,</p>
+    <p>wann und wo sich etwas in Deinem Bezirk bewegt.</p>
+    <p class="slogan"><strong>Kostenlos. Offen. Lokal.</strong></p>',
+   'whiteText' => true,
+   'blueButton' => array(
+     'text' => 'Mehr erfahren...',
+     'link' => base_path().'faq'
+    )
+ ),
+
+  $slider4 = array(
+   'image' => 'rabet_seil_kids_ida.jpg',
+   'headline' => '<strong>'.$counts['akteure'].'</strong> Akteure. <strong>'.$counts['events'].'</strong> Events.<br /> Eine Plattform.',
+   'description' => '<p>Jetzt anmelden, Projekt einstellen oder einfach nur mitmischen.</p>',
+   'whiteText' => true,
+   'blueButton' => array(
+     'text' => '<span style="color:white;">Jetzt registrieren!</span>',
+     'link' => base_path().'user/register'
+   )
  )
 
 );
