@@ -262,9 +262,9 @@ html.fp-enabled,
  color: #000;
 }
 
-/*settings for slide0 and slide2*/
+/*settings for slide0, slide2, slide3*/
 
-#slide0.slide.whiteText p, #slide2.slide.whiteText p {
+#slide0.slide.whiteText p, #slide2.slide.whiteText p, #slide3.slide.whiteText p {
     background-color: rgba(255,255,255,0.8);
     padding: 5px 10px;
     margin: 0 auto;
@@ -281,18 +281,18 @@ html.fp-enabled,
   text-shadow: 2px 2px 15px rgb(25,82,95);
 }
 
-#slideSection #slide2.slide.whiteText h1 {
-  text-shadow: 1px 1px 15px rgba(25,82,95,0.6);
+#slideSection #slide2.slide.whiteText h1, #slideSection #slide3.slide.whiteText h1 {
+  text-shadow: 2px 2px 15px rgba(25,82,95,1);
 }
 
-#slideSection #slide0 button.transparent, #slideSection #slide2 button.transparent {
+#slideSection #slide0 button.transparent, #slideSection #slide2 button.transparent, #slideSection #slide3 button.transparent {
  background: rgba(255, 255, 255, 0.8);
  font-weight: 700;
  margin-top:30px;
- color: #2f2f2f;
+ color: #2f2f2f!important;
 }
 
-#slideSection #slide0 button.transparent:hover, #slideSection #slide2 button.transparent:hover {
+#slideSection #slide0 button.transparent:hover, #slideSection #slide2 button.transparent:hover, #slideSection #slide3 button.transparent:hover {
  background: rgba(255, 255, 255, 0.9);
  color: #000;
 }

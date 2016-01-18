@@ -73,7 +73,7 @@ $sliders = array(
    'description' => '<p>Jetzt anmelden, Projekt einstellen oder einfach nur mitmischen.</p>',
    'whiteText' => true,
    'blueButton' => array(
-     'text' => '<span style="color:white;">Jetzt registrieren!</span>',
+     'text' => '<span>Jetzt registrieren!</span>',
      'link' => base_path().'user/register'
    )
  )
