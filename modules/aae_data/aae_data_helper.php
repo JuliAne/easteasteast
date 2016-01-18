@@ -34,32 +34,39 @@
    var $servercheck;
 
    /**
-    *  Einfache Funktion zum Filtern von POST- und GET-Daten. Gerne erweiterbar.
+    *  Einfache Funktion zum Filtern von POST- und GET-Daten ("escape-function")
+    *  Da Drupal automatisch PDO verwendet, brauchen wir hier nicht allzu viel.
     */
    public function clearContent($trimTag) {
      $clear = trim($trimTag);
      return strip_tags($clear);
-     //return mysql_real_escape_string($clear);
+     /*$var=stripslashes($var);
+       $var=htmlentities($var);
+       $var=mysql_real_escape_string($var);*/
    }
 
 
-   protected function upload_image($bild,$servercheck) {
+   protected function upload_image($bild,$servercheck = null) {
 
     $image = new Imagick($bild['tmp_name']);
-    //$image->thumbnailImage(700, 400);
+    $image->setImageBackgroundColor('white'); // Entfernt Transparenz bein png's
     $image->scaleImage(800, 400, true);
+    $image = $image->flattenImages();
+    $image->setImageCompressionQuality(90); // = Idealer Wert???
+    $image->setImageFormat('jpg'); // see also: $image->getImageFormat();
 
     $servername_local = "localhost";
     $servername_test = "test.leipziger-ecken.de";
 
     if($_SERVER['SERVER_NAME'] == $servername_local ){
-      $image->writeImage($this->localbildpfad.$bild['name']);
+      $image->writeImage($this->localbildpfad.substr(md5($bild['name']),0,18).'.jpg');
     } elseif ($_SERVER['SERVER_NAME'] == $servername_test) {
-      $image->writeImage($this->testbildpfad.$bild['name']);
+      $image->writeImage($this->testbildpfad.substr(md5($bild['name']),0,18).'.jpg');
     }else{
-      $image->writeImage($this->bildpfad.$bild['name']);
+      $image->writeImage($this->bildpfad.substr(md5($bild['name']),0,18).'.jpg');
     }
-    return base_path() . $this->short_bildpfad . $bild['name'];
+
+    return base_path() . $this->short_bildpfad.substr(md5($bild['name']),0,18) . '.jpg';
 
    }
 

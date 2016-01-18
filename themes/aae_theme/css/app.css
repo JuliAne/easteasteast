@@ -787,8 +787,7 @@ transform: rotate(-10deg);
 	user-select: none;
 }
 
-@media only screen and ( max-width: 43em ) /* 640 */
-{
+@media only screen and (max-width: 40em){
 
   #fullpage { margin-top: 40px; }
   .popup { position: fixed;margin-top:28px !important;width:100%;left:0; }
