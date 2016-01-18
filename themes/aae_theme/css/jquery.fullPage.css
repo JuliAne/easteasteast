@@ -226,7 +226,7 @@ html.fp-enabled,
 
 #slideSection .slide {
   background-size: 100%;
-  padding: 0 5%;
+  padding: 0 0 0 0;
 }
 
 #slideSection h1 {
@@ -273,8 +273,16 @@ html.fp-enabled,
     color: #2F2F2F !important;
 }
 
-#slideSection #slide0.slide.whiteText h1, #slideSection #slide2.slide.whiteText h1 {
+#slide2.slide.whiteText p {
+    background-color: rgba(255,255,255,0.7)!important;
+}
+
+#slideSection #slide0.slide.whiteText h1{
   text-shadow: 2px 2px 15px rgb(25,82,95);
+}
+
+#slideSection #slide2.slide.whiteText h1 {
+  text-shadow: 1px 1px 15px rgba(25,82,95,0.6);
 }
 
 #slideSection #slide0 button.transparent, #slideSection #slide2 button.transparent {
