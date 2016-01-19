@@ -680,12 +680,37 @@ transform: rotate(-10deg);
  margin-right: 5px;
 }
 
+/*FOOTER section settings*/
+
 #footer {
  padding-top: 50px;
  min-height: 400px;
 }
 
-#footer .divider {
+body.not-front {
+  height: 100%;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.singlesite {
+  display: table;
+  height: 100%;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.not-front #footer {
+  display: table-row;
+  height: 1px;
+}
+
+.not-front #footer .row {
+  margin-top: 10px; 
+  margin-bottom:10px;
+}
+
+#footer .divider, .not-front #footer .divider {
   display: none;
 }
 
@@ -725,6 +750,8 @@ transform: rotate(-10deg);
 #footer .row {
   background-color: rgba(255,255,255,0.8);
   padding: 15px 20px 25px 20px; 
+  width: 75%;
+  min-width: 350px;
 }
 
 #footer #about, #footer h4 {
@@ -738,6 +765,8 @@ transform: rotate(-10deg);
 #footer #about p {
  padding-bottom: 13px;
 }
+
+/*CALENDAR section settings*/
 
 #calendar .header {
   margin-bottom: 10px;
