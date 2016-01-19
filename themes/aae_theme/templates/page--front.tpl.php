@@ -128,9 +128,9 @@
       </a>
       <?php endforeach; ?>
 
-      <a href="<?= base_path(); ?>akteure" class="large button hollow frontpage">Alle Akteure</a>
-
     </div> <!--#row-->
+
+    <a href="<?= base_path(); ?>akteure" class="large button hollow frontpage">Alle Akteure</a>
 
   </section> <!--#akteure-->
 

@@ -381,12 +381,17 @@ transform: rotate(-10deg);
 }
 
 #projects-akteure {
- background: url(../img/rabet_seil_kids_ida_bg.jpg);
+ background: url(../img/homepage_akteure_bg.jpg);
  background-size: 100%;
 }
 
 #projects-events {
  background: url(../img/ostspiele_fussball_ida.jpg);
+ background-size: 100%;
+}
+
+#footer {
+ background: url(../img/rabet_seil_kids_ida_bg.jpg);
  background-size: 100%;
 }
 
@@ -509,6 +514,7 @@ transform: rotate(-10deg);
  border: 1px solid #F1EFEF;
  border-radius: 3px;
  background-color: transparent!important;
+ max-width: 250px;
 }
 
 #projects-akteure .large-3.large-offset-1.columns.pcard section {
@@ -683,6 +689,11 @@ transform: rotate(-10deg);
   display: none;
 }
 
+#footer .fp-tableCell {
+  vertical-align: top;
+  padding-top: 10%;
+}
+
 #footer p, #bottom #footer a {
  color: #777777;
 }
@@ -711,9 +722,17 @@ transform: rotate(-10deg);
   display: block !important;
 }
 
+#footer .row {
+  background-color: rgba(255,255,255,0.8);
+  padding: 15px 20px 25px 20px; 
+}
+
 #footer #about, #footer h4 {
  text-align: left;
- padding-bottom: 25px;
+}
+
+#footer h4 {
+ padding: 10px 0 25px 0;
 }
 
 #footer #about p {
