@@ -687,12 +687,6 @@ transform: rotate(-10deg);
  min-height: 400px;
 }
 
-body.not-front {
-  height: 100%;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-
 .singlesite {
   display: table;
   height: 100%;
@@ -700,17 +694,17 @@ body.not-front {
   width: 100%;
 }
 
-.not-front #footer {
+.singlesite #footer {
   display: table-row;
   height: 1px;
 }
 
-.not-front #footer .row {
+.singlesite #footer .row {
   margin-top: 10px; 
   margin-bottom:10px;
 }
 
-#footer .divider, .not-front #footer .divider {
+#footer .divider, .singlesite #footer .divider {
   display: none;
 }
 
