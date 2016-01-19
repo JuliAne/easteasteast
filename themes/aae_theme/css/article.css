@@ -60,7 +60,7 @@
  line-height: 1.7em;
  padding-bottom: 25px;
 }
-#content p::first-letter {
+#content p:first-child::first-letter {
  font-size: 200%;
  color: #008CBA;
 }

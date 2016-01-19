@@ -48,11 +48,11 @@ public function print_letzte_events($limit = 6) {
 
 
 /**
- * Kleiner, interner(!) Block zum Anzeigen der letzten drei (=$limit) eingetragenen Projekte.
+ * Kleiner, interner(!) Block zum Anzeigen der letzten vier (=$limit) eingetragenen Projekte.
  * Wird in theme/page--front.tpl.php aufgerufen
  */
 
-public function print_letzte_akteure($limit = 3) {
+public function print_letzte_akteure($limit = 4) {
 
   $resultAkteure = db_select($this->tbl_akteur, 'a')
     ->fields('a')
