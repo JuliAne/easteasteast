@@ -500,6 +500,40 @@ transform: rotate(-10deg);
  float: right;
 }
 
+/*Journal section settings*/
+
+section#journal .row.article {
+margin-bottom: 15px;
+}
+
+section#journal .row.article:nth-child(even) .large-2.columns, section#journal .row.article:nth-of-type(even) .large-8.large-offset-2.columns {
+  float:right!important;
+  text-align: left!important;
+}
+
+section#journal .row.article:nth-child(odd) .large-2.columns, section#journal .row.article:nth-of-type(odd) .large-8.large-offset-2.columns{
+  float:left!important;
+  text-align: left!important;
+}
+
+section#journal .large-2.columns {
+  border-radius: 0px!important;
+  border: 2px solid #fff;
+  width: 200px!important;
+  height: 200px!important;
+  background-size: 300px!important;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+section#journal .large-8.large-offset-2.columns {
+  margin: 0px 15px 0px 15px!important;
+  padding: 10px 20px 10px 20px;
+  min-height: 200px;
+  background-color: rgba(255,255,255,0.8);
+  max-width: 667px!important;
+}
+
 /*AKTEURE section settings*/
 
 #akteure .pcard {
