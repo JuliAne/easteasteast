@@ -144,10 +144,14 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
     $form['name']['#description'] = '';
     $form['pass']['#description'] = '';
 
+    $form['warning']['#description'] = 'd';
+
   } else  { // @TODO ELSEIF SEARCH-FORM
 
     $form['actions']['submit']['#attributes']['class'][] = 'small button';
     $form['actions']['submit']['#value'] = 'Absenden';
+    $form['actions']['preview']['#attributes']['class'][] = 'small button secondary';
+
 
   }
  }

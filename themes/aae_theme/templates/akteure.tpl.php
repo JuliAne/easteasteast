@@ -81,7 +81,6 @@
       <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?>
       <?php if (!empty($akteur->beschreibung)): ?>
       <div class="divider"></div>
-        <div class="divider"></div>
         <?php $numwords = 30;
               preg_match("/(\S+\s*){0,$numwords}/", $akteur->beschreibung, $regs); ?>
         <p><?= trim($regs[0]); ?><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>" title="Akteurprofil besuchen">...</a></p>

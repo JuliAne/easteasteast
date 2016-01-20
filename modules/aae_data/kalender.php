@@ -93,9 +93,9 @@ class kalender extends aae_data_helper {
        ->orderBy('name', 'ASC')
        ->execute();
 
-     /*foreach ($resultEvents as $row) {
-      $events .= '<a href="Eventprofil/' . $row->EID . '">' . $row->name . '</a>';
-    } */
+     foreach ($resultEvents as $row) {
+      $events .= $row->name.' ';
+     }
 
      $countrows = $resultEvents->rowCount();
      $this->currentDay++;
@@ -109,7 +109,7 @@ class kalender extends aae_data_helper {
    if ($countrows == 0) {
      return '<li id="li-' . $this->currentDate . '" class="' . ($cellNumber%7==1?' start ':($cellNumber%7==0?' end ':' ')) . ($cellContent==null?'mask':'') . '">' . $cellContent . '</li>';
    } else {
-     return '<li id="event" data-nr="'.$countrows.'" title="'.$countrows.' Event(s) an diesem Tag" class="' . ($cellNumber%7==1?' start ':($cellNumber%7==0?' end ':' ')) . ($cellContent==null?'mask':'') . '"><a href="'.base_path().'events/?day=' . $this->currentDate . '">' . $cellContent . '</a></li>';
+     return '<li id="event" data-nr="'.$countrows.'" title="'.$events.'" class="' . ($cellNumber%7==1?' start ':($cellNumber%7==0?' end ':' ')) . ($cellContent==null?'mask':'') . '"><a href="'.base_path().'events/?day=' . $this->currentDate . '">' . $cellContent . '</a></li>';
    }
  }
 

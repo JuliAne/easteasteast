@@ -57,7 +57,7 @@
 
    <div class="large-12 columns" id="removeFilter">
     <h4 class="left">Filter</h4>
-    <a class="small secondary button right hollow hide-for-medium" style="padding:4px 10px;" href="<?= base_path(); ?>events/" title="Alle Filter entfernen">&#x25BE;</a>
+    <a class="small secondary button right hollow hide-for-medium" style="padding:4px 10px;" href="#" title="Zeige Filter" onclick="javascript:$('#filter .large-12').slideDown(400);">&#x25BE;</a>
     <a class="small secondary button right" style="padding:4px 10px;" href="<?= base_path(); ?>events/" title="Alle Filter entfernen">x</a>
     <div class="divider"></div>
    </div>
@@ -79,8 +79,8 @@
 
      <label for="tag">Bezirke:</label>
      <select name="bezirk[]" id="eventBezirkInput" multiple="multiple" class="tokenize">
-     <?php foreach ($resultTags as $row) : ?>
-       <option value="<?= $row->KID; ?>"<?php echo ($filterTags[$row->KID] == $row->KID ? ' selected="selected"' : ''); ?>><?= $row->kategorie; ?></option>
+     <?php foreach ($resultBezirke as $row) : ?>
+       <option value="<?= $row->BID; ?>"<?php echo ($filterTags[$row->BID] == $row->BID ? ' selected="selected"' : ''); ?>><?= $row->bezirksname; ?></option>
      <?php endforeach; ?>
    </select>
 
@@ -146,8 +146,8 @@
  $heading_past = 0;
 
  foreach($resultEvents as $key => $event): ?>
- 
-  <?php 
+
+  <?php
 
   if ($heading_future == 0 && $event->datesum > $cur_date) {
     echo '<h4 class="heading-event">DEMNÄCHST</h4>';
@@ -167,7 +167,7 @@
 
   if ($event->datemonth != $cur_month) {
     echo '<h4>'.$monat_lang[$event->datemonth].' '.$event->dateyear.'</h4>';
-  } 
+  }
 
   $cur_month = $event->datemonth;
 
