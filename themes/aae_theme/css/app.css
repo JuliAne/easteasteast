@@ -768,6 +768,15 @@ section#journal .large-8.large-offset-2.columns {
   width: 100%;
 }
 
+.singlesite .content .node-page .content h1{
+  margin-bottom: 20px;
+  font-size: 46px!important;
+}
+
+.singlesite .content .node-page .content h1 span{
+  font-size: 46px!important;
+}
+
 .singlesite #footer {
   display: table-row;
   height: 1px;
