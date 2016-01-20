@@ -40,10 +40,10 @@
 
 #header {
  height: 270px;
+ width: 100%;
  padding-top: 60px;
  background-color: #2199E8;
  background-size: 105%;
- margin: 0 -10px;
  filter: blur(7px);
  -webkit-filter: blur(7px);
  -moz-filter: blur(7px);
@@ -108,6 +108,7 @@
  color: #fff;
  text-shadow: 0px 2px 2px #353535;
  padding-bottom: 40px;
+ line-height: 46px;
 }
 
 #project #project-content h3 {

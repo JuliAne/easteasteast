@@ -148,6 +148,8 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
 
     $form['actions']['submit']['#attributes']['class'][] = 'small button';
     $form['actions']['submit']['#value'] = 'Absenden';
+    $form['actions']['preview']['#attributes']['class'][] = 'small button secondary';
+
 
   }
  }

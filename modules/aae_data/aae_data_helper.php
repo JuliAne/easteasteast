@@ -162,6 +162,12 @@
 
   }
 
- }
+  protected function getAllBezirke() {
 
+    return db_select($this->tbl_bezirke, 'b')
+     ->fields('b')
+     ->execute();
+
+  }
+ }
 ?>

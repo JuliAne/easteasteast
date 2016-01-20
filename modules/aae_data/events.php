@@ -50,6 +50,7 @@ Class events extends aae_data_helper {
   $pathThisFile = $_SERVER['REQUEST_URI'];
 
   $resultTags = $this->getAllTags();
+  $resultBezirke = $this->getAllBezirke();
 
   // Filter nach Tags, falls gesetzt
 
@@ -106,10 +107,10 @@ Class events extends aae_data_helper {
     // 3 sort array reultsEvents by $datesum
     $datestringstart = preg_replace("/[^0-9]/", "", $event->start);
     $datestring = preg_replace("/[^0-9]/", "", $event->start);
-    $datestringyear = substr($datestringstart, 0, 4); 
-    $datestringten = substr($datestring, 0, 8); 
+    $datestringyear = substr($datestringstart, 0, 4);
+    $datestringten = substr($datestring, 0, 8);
 
-    $datestringyearhalf = (int) substr($datestringyear, 2, 4); 
+    $datestringyearhalf = (int) substr($datestringyear, 2, 4);
 
     if($datestringyearhalf < 13) {
       $datestringyear = substr($datestringten, 4, 4);
@@ -205,10 +206,10 @@ Class events extends aae_data_helper {
     // 3 sort array reultsEvents by $datesum
     $datestringstart = preg_replace("/[^0-9]/", "", $event->start);
     $datestring = preg_replace("/[^0-9]/", "", $event->start);
-    $datestringyear = substr($datestringstart, 0, 4); 
-    $datestringten = substr($datestring, 0, 8); 
+    $datestringyear = substr($datestringstart, 0, 4);
+    $datestringten = substr($datestring, 0, 8);
 
-    $datestringyearhalf = (int) substr($datestringyear, 2, 4); 
+    $datestringyearhalf = (int) substr($datestringyear, 2, 4);
 
     if($datestringyearhalf < 13) {
       $datestringyear = substr($datestringten, 4, 4);

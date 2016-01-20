@@ -336,6 +336,12 @@ transform: rotate(-10deg);
 .aaeActionBar #share {
  padding-top: 10px;
  margin-top: 17px;
+ border-radius: 0;
+ margin-left: 70px;
+}
+
+#eventprofil .aaeActionBar #share {
+  margin-left: 271px;
 }
 
 .aaeActionBar #share:before {
@@ -344,7 +350,7 @@ transform: rotate(-10deg);
 }
 
 .aaeActionBar #share a {
- padding: 16px 32px;
+ padding: 16px 24px;
  float: left;
  height: 44px;
 }
@@ -799,6 +805,7 @@ section#journal .large-8.large-offset-2.columns {
   margin-bottom:15px;
   position: relative;
   background: none;
+  width: 100%;
 }
 
 #footer .divider, .singlesite #footer .divider {
@@ -940,6 +947,10 @@ section#journal .large-8.large-offset-2.columns {
   .popup { position: fixed;margin-top:28px !important;width:100%;left:0; }
   #project #project-content h1 { position: absolute;top:-100px; }
   .aaeEvent .content:before {opacity:0!important;}
+
+  #events #filter {margin-bottom:20px;}
+  #events #filter .large-12 { display:none; }
+  #events #filter #removeFilter {display:block;}
 
   #nav .region-mainnav { display: none; }
   #nav label { display:block;margin-left:105px; }

@@ -70,6 +70,8 @@
 }
 #comments {
   background: #F7F7F7;
+  margin-bottom: -45px;
+  padding-bottom: 30px;
 }
 #comments h2 {
  font-size: 1.5em;
@@ -107,7 +109,8 @@
 }
 .fieldset-wrapper .tips {
   float: right;
-  margin-top: -65px;
+  font-size:0.85em;
+  opacity:0.7;
 }
 .title.comment-form {
   margin-top: 30px;
