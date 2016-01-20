@@ -28,6 +28,9 @@ html.fp-enabled,
     -webkit-box-sizing: border-box; /* Safari<=5 Android<=3 */
     -moz-box-sizing: border-box; /* <=28 */
     box-sizing: border-box;
+    margin-top: -15px;
+    position: relative;
+    padding-bottom: 30px;
 }
 .fp-slide {
     float: left;
@@ -61,12 +64,12 @@ html.fp-enabled,
 }
 
 #projects-events .fp-tableCell h1 span, #projects-akteure .fp-tableCell h1 span{
-    background-color: rgba(255,255,255,0.6);
-    border-radius: 3px;
+/*    background-color: rgba(255,255,255,0.6);
+    border-radius: 3px; */
 }
 
 #journal .fp-tableCell h1 span{
-    background-color: rgba(255,255,255,0.6);
+ /*   background-color: rgba(255,255,255,0.6); */
 }
 
 .fp-slidesContainer {
@@ -223,6 +226,11 @@ html.fp-enabled,
 #fullpage {
 }
 
+#slideSection {
+  margin-top: 0;
+  padding-bottom: 15px;
+}
+
 #slideSection .slide {
   background-size: 100%;
   padding: 0 0 0 0;
@@ -264,7 +272,7 @@ html.fp-enabled,
 /*settings for slide0, slide2, slide3*/
 
 #slide0.slide.whiteText p, #slide2.slide.whiteText p, #slide3.slide.whiteText p {
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255,255,255,0.75);
     padding: 5px 10px;
     margin: 0 auto;
     margin-bottom: 3px;

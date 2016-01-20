@@ -357,9 +357,41 @@ transform: rotate(-10deg);
 .section h1 {
  font-size: 1.9em;
  font-weight: 100;
- padding: 24px 0;
  color: #2f2f2f;
- margin-bottom: 15px;
+ padding-bottom: 20px;
+}
+
+.section .aaeHeadline {
+  margin-bottom: 45px;
+  margin-top: 30px;
+  padding-bottom: 54px;
+  border-bottom: 1px solid #fff;
+}
+
+.section .aaeHeadline h1 {
+  float: left;
+  color: #ebe9e9;
+}
+
+#projects-events h1 {
+  color: #1c1c1c;
+}
+
+.section #allevents, .section #allakteure, .section #rss {
+ float: right;
+}
+
+.section #rss {
+ background: #fff;
+}
+
+.section #rss #svg_logo {
+ margin: -2px;
+}
+
+.section .event {
+  height: auto;
+  min-height: 90px;
 }
 
 .section#journal .content h1 {
@@ -504,6 +536,10 @@ transform: rotate(-10deg);
  float: right;
 }
 
+#block-system-main .content {
+  margin-bottom: 45px;
+}
+
 /*Journal section settings*/
 
 section#journal .row.article {
@@ -549,35 +585,34 @@ section#journal .large-8.large-offset-2.columns {
   vertical-align: top;
 }
 
-#projects-akteure .large-3.large-offset-1.columns.pcard {
+#projects-akteure ..pcard {
  border: 1px solid #F1EFEF;
  border-radius: 3px;
  background-color: transparent!important;
- max-width: 250px;
 }
 
-#projects-akteure .large-3.large-offset-1.columns.pcard section {
+#projects-akteure .pcard section {
   background: rgba(255,255,255,0.8);
 }
 
-#projects-akteure .large-3.large-offset-1.columns.pcard:hover section {
+#projects-akteure .pcard:hover section {
   background: rgba(255,255,255,0.9);
 }
 
-#projects-akteure .large-3.large-offset-1.columns.pcard:hover .divider {
+#projects-akteure .pcard:hover .divider {
   border-bottom: 1px solid lightgrey;
 }
 
-#projects-akteure .large-3.large-offset-1.columns.pcard:hover {
+#projects-akteure .pcard:hover {
    border: 1px solid #2199E8;
    border-radius: 3px;
 }
 
-#projects-akteure .large-3.large-offset-1.columns.pcard:hover  h3 {
+#projects-akteure .pcard:hover  h3 {
   color: #2199E8!important;
 }
 
-#projects-akteure .large-3.large-offset-1.columns.pcard h3 {
+#projects-akteure .pcard h3 {
   color:#228cd1;
   font-size: 0.9em;
   height: 45px;
@@ -585,33 +620,33 @@ section#journal .large-8.large-offset-2.columns {
   line-height: 1.5em;
 }
 
-#projects-akteure .large-3.large-offset-1.columns.pcard p {
+#projects-akteure .pcard p {
   color:#111111;
 }
 
-#projects-akteure .large-3.large-offset-1.columns.pcard header {
+#projects-akteure .pcard header {
   padding-top: 45px;
   border-bottom: 1px solid lightgrey;
 }
 
-#projects-akteure .large-3.large-offset-1.columns.pcard:hover header {
+#projects-akteure .pcard:hover header {
   border-bottom: 1px solid lightgrey;
 }
 
-#projects-akteure .large-3.large-offset-1.columns.pcard:hover .plocation {
+#projects-akteure .pcard:hover .plocation {
   opacity: 1;
 }
 
 
-#projects-akteure .large-3.large-offset-1.columns.pcard .pdescription {
+#projects-akteure .pcard .pdescription {
   min-height:30px;
 }
 
 /*EVENT section settings*/
 
 #fullpage .pcard, #fullpage .event {
- margin-left: 4.151515% !important;
- margin-right: 4.151515% !important;
+ margin-right: 2%;
+ width: 23%;
 }
 
 .event {
@@ -620,7 +655,7 @@ section#journal .large-8.large-offset-2.columns {
  border: 1px solid #F1EFEF;
  border-radius: 3px;
  padding: 10px;
- background-color: rgba(255,255,255,0.7);
+ background-color: rgba(255,255,255,0.55);
  display: table-cell;
  vertical-align: middle;
  width: 74%!important;
@@ -722,7 +757,7 @@ section#journal .large-8.large-offset-2.columns {
 /*FOOTER section settings*/
 
 #footer {
- padding-top: 50px;
+ padding-top: 55px;
  min-height: 400px;
 }
 
@@ -736,11 +771,25 @@ section#journal .large-8.large-offset-2.columns {
 .singlesite #footer {
   display: table-row;
   height: 1px;
+  position: relative;
+}
+
+.singlesite #footer:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  opacity: 0.8;
+  left: 0;
+  /*box-shadow: inset 0 2px 2px #3b3a3a;*/
 }
 
 .singlesite #footer .row {
-  margin-top: 10px; 
-  margin-bottom:10px;
+  margin-top: 15px;
+  margin-bottom:15px;
+  position: relative;
+  background: none;
 }
 
 #footer .divider, .singlesite #footer .divider {
@@ -782,7 +831,7 @@ section#journal .large-8.large-offset-2.columns {
 
 #footer .row {
   background-color: rgba(255,255,255,0.8);
-  padding: 15px 20px 25px 20px; 
+  padding: 15px 20px 25px 20px;
   width: 75%;
   min-width: 350px;
 }
@@ -875,7 +924,10 @@ section#journal .large-8.large-offset-2.columns {
 
 @media only screen and (max-width: 40em){
 
-  #fullpage { margin-top: 40px; }
+  #fullpage { margin-top: 40px;}
+  #fullpage #slideSection h1 { padding-top:30px;padding-bottom:30px; }
+  #fullpage .section {background-size:300% !important;font-size:0.85em;}
+  #fullpage .pcard {width:48%;}
   .popup { position: fixed;margin-top:28px !important;width:100%;left:0; }
   #project #project-content h1 { position: absolute;top:-100px; }
   .aaeEvent .content:before {opacity:0!important;}

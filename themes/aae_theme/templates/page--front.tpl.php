@@ -62,11 +62,13 @@
 
   <section class="section" id="projects-events">
 
-    <h1><span>&nbsp;<strong>N&auml;chste Veranstaltungen</strong>&nbsp;</span></h1>
-    <br/>
-
     <div class="row">
-    <div>
+     <div class="aaeHeadline">
+      <h1><span>&nbsp;<strong>N&auml;chste Veranstaltungen</strong>&nbsp;</span></h1>
+      <a href="<?= base_path(); ?>events/rss" id="rss" class="small button" title="Alle Events als RSS-Feed abonnieren"><img id="svg_logo" src="/sites/all/themes/aae_theme/img/rss.svg"></a>
+      <a href="<?= base_path(); ?>events" id="allevents" class="small button frontpage">Alle Events</a>
+     </div>
+     <div>
       <?php
       // Lade "letzte Events"-Block
       foreach ($blocks->print_letzte_events() as $event) : ?>
@@ -74,7 +76,7 @@
       <?php $exploded = explode("-", $event->start); ?>
 
       <div>
-        <div class="large-3 columns large3-events"> 
+        <div class="large-3 columns large3-events">
         <a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>">
           <button class="date"><?= $exploded[0]; ?><br/><?= $monat[$exploded[1]]; ?></button>
         </a>
@@ -85,23 +87,20 @@
             <aside><img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><?= $event->zeit_von; ?><?php if (!empty($event->zeit_bis)) :?> - <?= $event->zeit_bis; ?><?php endif; ?></aside>
           </div>
         </a>
-        </div>
-      </div> 
+       </div>
+      </div>
       <?php endforeach; ?>
     </div>
-    <div style="clear:both">
-    <a href="<?= base_path(); ?>events" class="large button hollow frontpage">Alle Events</a>
-    </div>
-
     </div>
 
   </section>
 
   <section class="section" id="projects-akteure">
-
-    <h1><span>&nbsp;<strong>Neueste Akteure</strong>&nbsp;</span></h1>
-    <br/>
     <div class="row">
+     <div class="aaeHeadline">
+      <h1><span>&nbsp;<strong>Neueste Akteure</strong>&nbsp;</span></h1>
+      <a href="<?= base_path(); ?>akteure" id="allakteure" class="small button frontpage">Alle Akteure</a>
+     </div>
 
       <?php
       // Lade "Meine Akteure"-Block
@@ -112,7 +111,7 @@
 
       foreach ($blocks->print_letzte_akteure() as $akteur) : ?>
       <a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>">
-       <div class="large-3 large-offset-1 columns pcard">
+       <div class="large-3 small-5 columns pcard">
         <header<?php if($akteur->bild != '') echo ' style="background-image:url('.$akteur->bild.');"'; ?>>
          </header>
          <section>
@@ -129,8 +128,6 @@
       <?php endforeach; ?>
 
     </div> <!--#row-->
-
-    <a href="<?= base_path(); ?>akteure" class="large button hollow frontpage">Alle Akteure</a>
 
   </section> <!--#akteure-->
 
