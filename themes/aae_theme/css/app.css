@@ -575,6 +575,14 @@ section#journal .large-8.large-offset-2.columns {
   white-space: normal;
 }
 
+section#journal .large-8.large-offset-2.columns br {
+  content: ' ';
+}
+
+section#journal .large-8.large-offset-2.columns br:after {
+  content: ' ';
+}
+
 /*AKTEURE section settings*/
 
 #akteure .pcard {
