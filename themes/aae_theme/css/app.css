@@ -797,7 +797,9 @@ section#journal .large-8.large-offset-2.columns {
 .singlesite #footer {
   display: table-row;
   height: 1px;
-  position: relative;
+  position: absolute;
+  padding-top: 0;
+  width: 100%;
 }
 
 .singlesite #footer:before {
