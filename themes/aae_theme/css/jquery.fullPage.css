@@ -60,14 +60,13 @@ html.fp-enabled,
     max-width: 62.5rem!important;
 }
 
-#projects-events .fp-tableCell h1 span{
+#projects-events .fp-tableCell h1 span, #projects-akteure .fp-tableCell h1 span{
     background-color: rgba(255,255,255,0.6);
     border-radius: 3px;
 }
 
-#projects-akteure .fp-tableCell h1 span{
+#journal .fp-tableCell h1 span{
     background-color: rgba(255,255,255,0.6);
-    border-radius: 3px;
 }
 
 .fp-slidesContainer {

@@ -362,6 +362,10 @@ transform: rotate(-10deg);
  margin-bottom: 15px;
 }
 
+.section#journal .content h1 {
+  margin-bottom: 5px;
+}
+
 .section h1 span {
  padding: 3px;
 }
@@ -503,15 +507,15 @@ transform: rotate(-10deg);
 /*Journal section settings*/
 
 section#journal .row.article {
-margin-bottom: 15px;
+margin-bottom: 5px;
 }
 
-section#journal .row.article:nth-child(even) .large-2.columns, section#journal .row.article:nth-of-type(even) .large-8.large-offset-2.columns {
+section#journal .row.article:nth-of-type(even) .large-2.columns, section#journal .row.article:nth-of-type(even) .large-8.large-offset-2.columns {
   float:right!important;
   text-align: left!important;
 }
 
-section#journal .row.article:nth-child(odd) .large-2.columns, section#journal .row.article:nth-of-type(odd) .large-8.large-offset-2.columns{
+section#journal .row.article:nth-of-type(odd) .large-2.columns, section#journal .row.article:nth-of-type(odd) .large-8.large-offset-2.columns{
   float:left!important;
   text-align: left!important;
 }
