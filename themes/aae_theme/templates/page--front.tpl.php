@@ -15,7 +15,7 @@
  );
  ?>
 
- <?php if(!empty($messages)) : ?>
+ <?php if(!empty($messages) && !strpos($messages, 'warning') && !strpos($messages, 'session')) : ?>
  <div id="alert" class="drupal-error">
    <?php print $messages; ?>
    <a href="#" class="close" title="Schliessen">x</a>
