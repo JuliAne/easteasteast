@@ -61,6 +61,17 @@ button.button, #actions {
   border-radius: 0 0 4px 4px;
 }
 
+#alert.drupal-error {
+  height: auto;
+}
+
+#alert.drupal-error h2 {
+  font-size: 1em;
+  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 8px;
+}
+
 #alert .close {
   float: right;
   color: #fff;

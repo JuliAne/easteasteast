@@ -15,6 +15,13 @@
  );
  ?>
 
+ <?php if(!empty($messages)) : ?>
+ <div id="alert" class="drupal-error">
+   <?php print $messages; ?>
+   <a href="#" class="close" title="Schliessen">x</a>
+ </div>
+ <?php endif; ?>
+
 <?php if (!empty($page['sidebar_first'])): ?>
 
   <aside class="col-sm-3" role="complementary">
