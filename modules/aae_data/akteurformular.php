@@ -152,24 +152,23 @@ Class akteurformular extends aae_data_helper {
 
     //-------------------------------------
 
-    //Check, ob ein Name eingegeben wurde:
-    if (strlen($this->name) == 0) {
+    if (empty($this->name)) {
      $this->fehler['name'] = "Bitte einen Organisationsnamen eingeben!";
      $this->freigabe = false;
     }
-    //Check, ob Email angegeben wurde
-    if (strlen($this->email) == 0) {
+
+    if (empty($this->email)) {
      $this->fehler['email'] = "Bitte eine Emailadresse eingeben!";
 	   $this->freigabe = false;
     }
-    //Check, ob Bezirk angegeben wurde
-    if (strlen($this->ort) == 0) {
+
+    if (empty($this->ort)) {
      $this->fehler['ort'] = "Bitte einen Bezirk auswählen!";
      $this->freigabe = false;
     }
 
     //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
-    if (strlen($this->name) > 100) {
+    if (strlen($this->name) > 64) {
 	   $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
 	   $this->freigabe = false;
     }
@@ -199,7 +198,7 @@ Class akteurformular extends aae_data_helper {
      $this->freigabe = false;
     }
 
-    if (strlen($this->beschreibung) > 500) {
+    if (strlen($this->beschreibung) > 700) {
 	   $this->fehler['beschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
 	   $this->freigabe = false;
     }

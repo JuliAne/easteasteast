@@ -11,6 +11,10 @@ function aae_data_cron() {
   //....
 }
 
+function aae_data_user_login(&$edit, $account){
+  drupal_set_message('Willkommen, <strong>'.$account->name.'</strong>!');
+}
+
 function aae_data_user_logout($account) {
 
   // Funktioniert nicht, weil Drupal Sessions löscht :(

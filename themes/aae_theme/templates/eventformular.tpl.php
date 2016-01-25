@@ -5,14 +5,13 @@
 <div class="divider" style="margin-bottom: 25px;"></div>
 
 <?php if (!$this->freigabe) : ?>
-<div class="alert-box" data-alert>
+<div class="callout alert">
  <p>Ihr Event konnte nicht gespeichert werden, da folgende Fehler vorliegen:</p><br />
  <ul>
   <?php foreach($this->fehler as $f) : ?>
-    <li><?= $f; ?></li>
+    <p><strong><?= $f; ?></strong></p>
   <?php endforeach; ?>
- </ul>
-<a href="#" class="close">&times;</a></div>
+ </ul></div>
 <?php endif; ?>
 
 <form action='<?= $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
@@ -26,7 +25,7 @@
   </div>
 
   <div class="large-4 columns">
-   <label>Eventwebsite: <!-- <?= $this->fehler['url']; ?> -->
+   <label>Eventwebsite: <!--<?= $this->fehler['url']; ?>-->
     <input type="text" id="eventURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= $this->ph_url; ?>">
    </label>
   </div>
@@ -156,7 +155,6 @@
 
     <select id="eventSpartenInput" multiple="multiple" class="tokenize" name="sparten[]">
     <?php foreach ($this->sparten as $sparte) : ?>
-      <?php print_r($sparte); ?>
      <?php if (is_array($sparte)) : ?>
       <option selected value="<?= $sparte[0]->KID; ?>"><?php echo $sparte[0]->kategorie; ?></option>
      <?php else : ?>

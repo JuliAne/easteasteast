@@ -43,10 +43,10 @@ Class eventformular extends aae_data_helper {
   //Variablen, welche Texte in den Formularfeldern beschreiben ("placeholder"):
   var $ph_name = "Veranstaltungsname";
   var $ph_veranstalter = "Veranstalter";
-  var $ph_start = "Starttag (yyyy-mm-dd)";
+  var $ph_start = "Starttag (dd-mm-yyyy)";
   var $ph_zeit_von = "von (Uhrzeit: hh:mm)";
   var $ph_zeit_bis = "bis (Uhrzeit: hh:mm)";
-  var $ph_ende = "Endtag (yyyy-mm-dd)";
+  var $ph_ende = "Endtag (dd-mm-yyyy)";
   var $ph_bild = "Bild";
   var $ph_kurzbeschreibung = "Beschreibung";
   var $ph_url = "URL";
@@ -117,7 +117,7 @@ Class eventformular extends aae_data_helper {
    * @returns $this->freigabe [bool]
    */
   private function eventCheckPost() {
-    //Wertezuweisung
+
     $this->name = $this->clearContent($_POST['name']);
     $this->veranstalter = $this->clearContent($_POST['veranstalter']);
     $this->start = $this->clearContent($_POST['start']);
@@ -138,13 +138,11 @@ Class eventformular extends aae_data_helper {
 
     //-------------------------------------
 
-    //Check, ob ein Name eingegeben wurde:
-    if (strlen($this->name) == 0) {
+    if (empty($this->name)) {
      $this->fehler['name'] = "Bitte einen Veranstaltungsnamen eingeben!";
 	   $this->freigabe = false;
     }
 
-    //Ckeck, ob korrektes Datum angegeben wurde
     if (strlen($this->start) != 0 && DateTime::createFromFormat('d-m-Y', $this->start) == false) {
       $this->fehler['start'] = "Bitte ein (gültiges) Startdatum angeben!";
       $this->freigabe = false;
@@ -155,12 +153,12 @@ Class eventformular extends aae_data_helper {
       $this->freigabe = false;
     }
 
-    if (strlen($this->ort) == 0) {
+    if (empty($this->ort)) {
   	  $this->fehler['ort'] = "Bitte einen Bezirk auswählen!";
   	  $this->freigabe = false;
     }
 
-    if (strlen($this->kurzbeschreibung) == 0) {
+    if (empty($this->kurzbeschreibung)) {
      $this->fehler['kurzbeschreibung'] = "Ein paar Beschreibungs-Zeilen werden Dir wohl einfallen...";
      $this->freigabe = false;
     }
@@ -176,13 +174,18 @@ Class eventformular extends aae_data_helper {
     }
 
     if (!empty($this->url) && preg_match('/\A(http:\/\/|https:\/\/)(\w*[.|-]\w*)*\w+\.[a-z]{2,3}(\/.*)*\z/',$this->url)==0) {
-     $this->fehler['url'] = "Bitte eine gültige URL zur Eventwebseite eingeben! (z.B. http://dasistmeinevent.de)";
+     $this->fehler['url'] = "Bitte eine gültige URL zur Eventwebseite eingeben! (z.B. <i>http://dasistmeinevent.de</i>)";
+     $this->freigabe = false;
+    }
+
+    if (count($this->sparten) > 11) {
+     $this->fehler['sparten'] = "Bitte max. 10 Tags angeben.";
      $this->freigabe = false;
     }
 
     //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
 
-    if (strlen($this->name) > 100) {
+    if (strlen($this->name) > 64) {
 	  $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
       $this->freigabe = false;
     }
@@ -192,27 +195,27 @@ Class eventformular extends aae_data_helper {
 	  $this->freigabe = false;
     }
 
-    if (strlen($this->kurzbeschreibung) > 500) {
+    if (strlen($this->kurzbeschreibung) > 1000) {
      $this->fehler['kurzbeschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
 	   $this->freigabe = false;
     }
 
-    if (strlen($this->strasse) > 100) {
+    if (strlen($this->strasse) > 64) {
 	  $this->fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
 	  $this->freigabe = false;
     }
 
-    if (strlen($this->nr) > 100) {
+    if (strlen($this->nr) > 8) {
 	  $this->fehler['nr'] = "Bitte geben Sie eine kürzere Nummer an.";
 	  $this->freigabe = false;
     }
 
     if (strlen($this->adresszusatz) > 100) {
-	  $this->fehler['adresszusatz'] = "Bitte geben Sie einen kürzeren Adresszusatz an.";
-      $this->freigabe = false;
+	   $this->fehler['adresszusatz'] = "Bitte geben Sie einen kürzeren Adresszusatz an.";
+     $this->freigabe = false;
     }
 
-    if (strlen($this->plz) > 100) {
+    if (strlen($this->plz) > 8) {
 	  $this->fehler['plz'] = "Bitte geben Sie eine kürzere PLZ an.";
       $this->freigabe = false;
     }
@@ -226,6 +229,11 @@ Class eventformular extends aae_data_helper {
      $this->fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
 	   $this->freigabe = false;
     }
+
+    /*if (!empty($this->gps) && preg_match('\s.\s,\s.\s',$this->gps)==0) {
+      echo ':/';
+      exit(); } */
+
 
     // Um die bereits gewählten Tag's anzuzeigen benötigen wir deren Namen...
     if ($this->freigabe == false) {

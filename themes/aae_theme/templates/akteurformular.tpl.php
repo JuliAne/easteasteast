@@ -5,14 +5,12 @@
 <div class="divider" style="margin-bottom: 25px;"></div>
 
 <?php if (!$this->freigabe) : ?>
-<div class="alert-box" data-alert>
- <p><strong>Akteur konnte nicht gespeichert werden, da folgende Fehler vorliegen:</strong></p><br />
- <ul>
+<div class="callout alert">
+ <p>Akteur konnte nicht gespeichert werden, da folgende Fehler vorliegen:/p><br />
   <?php foreach($this->fehler as $f) : ?>
-    <li><?= $f; ?></li>
+    <p><strong><?= $f; ?></strong></p>
   <?php endforeach; ?>
- </ul>
-<a href="#" class="close">&times;</a></div>
+</div>
 <?php endif; ?>
 
 <form action='<?= $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>

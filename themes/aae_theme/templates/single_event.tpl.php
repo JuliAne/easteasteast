@@ -69,7 +69,7 @@
 </div>
 
 <div id="project-content" class="large-7 large-offset-1 columns">
- <h1><?= $resultEvent->name; ?>
+ <h1><?= $resultEvent->name; ?><br />
  <?php if (!empty($sparten)) : ?>
    <?php foreach ($sparten as $row) : ?>
      <a style="font-size:0.4em;" href="<?= base_path(); ?>events/?tags[]=<?= $row->KID; ?>" title="Zeige alle mit <?= $row->kategorie; ?> getaggten Events">#<?= strtolower($row->kategorie); ?></a>
