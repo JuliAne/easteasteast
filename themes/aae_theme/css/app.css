@@ -1084,3 +1084,19 @@ section#journal .large-8.large-offset-2.columns br:after {
   width: 14px;
   margin-left: 20px;
 }
+
+#edit-account .description {
+  font-size: 0.8em;
+  opacity: 0.6;
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+
+.comment-wrapper .form-type-select {
+  width: 18%;
+  float: left;
+}
+
+.g-recaptcha {
+  margin-bottom: 20px;
+}
