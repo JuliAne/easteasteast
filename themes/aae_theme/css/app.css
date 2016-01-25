@@ -1085,7 +1085,7 @@ section#journal .large-8.large-offset-2.columns br:after {
   margin-left: 20px;
 }
 
-#edit-account .description {
+#edit-account .description, #user-profile-form .description {
   font-size: 0.8em;
   opacity: 0.6;
   padding: 10px 0;

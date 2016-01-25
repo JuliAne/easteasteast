@@ -47,7 +47,7 @@
      <p>Neu hier? <a href="<?= base_path(); ?>user/register">Registrieren</a></p>
      <p><a href="<?= base_path(); ?>user/password">Passwort vergessen?</a></p>
      <?php else : ?>
-     <p><a href="<?= base_path(); ?>user">Profil</a></p>
+     <p><a href="<?= base_path(); ?>user/<?= $user->uid; ?>/edit">Profil</a></p>
      <p><a href="<?= base_path(); ?>user/logout">Logout</a></p>
      <?php endif; ?>
 
