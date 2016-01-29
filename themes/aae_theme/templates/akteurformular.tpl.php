@@ -6,7 +6,7 @@
 
 <?php if (!$this->freigabe) : ?>
 <div class="callout alert">
- <p>Akteur konnte nicht gespeichert werden, da folgende Fehler vorliegen:/p><br />
+ <p>Akteur konnte nicht gespeichert werden, da folgende Fehler vorliegen:</p><br />
   <?php foreach($this->fehler as $f) : ?>
     <p><strong><?= $f; ?></strong></p>
   <?php endforeach; ?>
