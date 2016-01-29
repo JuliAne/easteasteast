@@ -17,7 +17,6 @@ function aae_preprocess_html(&$variables) {
   drupal_add_js(path_to_theme().'/js/app.js');
 
   drupal_add_css(path_to_theme().'/css/foundation.min.css');
-  //drupal_add_css('https://fonts.googleapis.com/css?family=Open+Sans:400,300', array('type' => 'external')); // TODO: Auslagern in local-repo
   drupal_add_css(path_to_theme().'/css/pace.css');
   drupal_add_css(path_to_theme().'/css/app.css');
 
@@ -94,8 +93,6 @@ function aae_preprocess_html(&$variables) {
    drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
    drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');
    drupal_add_js($js, 'inline');
-   //drupal_add_js(path_to_theme().'/js/wookmark.min.js');
-   //drupal_add_js('$("#akteure").wookmark({offset:10});', array('type' => 'inline', 'scope' => 'footer'));
 
   break;
 
@@ -199,6 +196,7 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
  // Remove contrib module CSS
  drupal_get_path('module', 'views') . '/css/views.css' => FALSE, );
  $css = array_diff_key($css, $exclude);
+
  }
 }
 ?>
