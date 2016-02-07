@@ -1,22 +1,21 @@
-<h3>Event <?php echo ($this->target == 'update' ? 'bearbeiten' : 'anlegen'); ?></h3>
-<?php if ($this->target == 'update') : ?>
-<a href="<?= base_path(); ?>eventloeschen/<?= $this->event_id; ?>" class="small secondary button round right" style="margin-top:-37px;">Löschen</a>
-<?php endif; ?>
-<div class="divider" style="margin-bottom: 25px;"></div>
+<div class="row columns">
+ <h3>Event <?php echo ($this->target == 'update' ? 'bearbeiten' : 'anlegen'); ?></h3>
+ <?php if ($this->target == 'update') : ?>
+ <a href="<?= base_path(); ?>eventloeschen/<?= $this->event_id; ?>" class="small secondary button round right" style="margin-top:-37px;" title="Event löschen?">Löschen</a>
+ <?php endif; ?>
+ <div class="divider" style="margin-bottom: 25px;"></div>
 
-<?php if (!$this->freigabe) : ?>
-<div class="callout alert">
- <p>Ihr Event konnte nicht gespeichert werden, da folgende Fehler vorliegen:</p><br />
- <ul>
+ <?php if (!$this->freigabe) : ?>
+ <div class="callout alert">
+  <p>Ihr Event konnte nicht gespeichert werden, da folgende Fehler vorliegen:</p><br />
   <?php foreach($this->fehler as $f) : ?>
-    <p><strong><?= $f; ?></strong></p>
+   <p><strong><?= $f; ?></strong></p>
   <?php endforeach; ?>
- </ul></div>
-<?php endif; ?>
+  </div>
+ <?php endif; ?>
+</div>
 
-<form action='<?= $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
-
- <div class="row">
+<form action="#" method="POST" enctype="multipart/form-data" class="row">
 
   <div class="large-4 columns">
    <label>Name <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['name']; ?>
@@ -37,14 +36,10 @@
   <?php if (is_array($this->resultakteure) && !empty($this->resultakteure)) :
     foreach ($this->resultakteure as $akteur) : ?>
     <option value="<?= $akteur[0]->AID; ?>" <?php echo ($akteur[0]->AID == $this->veranstalter ? 'selected="selected"' : '') ?>><?= $akteur[0]->name; ?></option>
-  <?php endforeach; ?>
-<?php endif; ?>
- </select>
- </div>
-
- </div><!-- /.row -->
-
-  <div class="row">
+   <?php endforeach; ?>
+  <?php endif; ?>
+  </select>
+  </div>
 
    <div class="large-3 columns">
     <label>Start (Datum, <span class="pflichtfeld">Pflichtfeld</span>): <?= $this->fehler['start']; ?>
@@ -54,25 +49,26 @@
 
    <div class="large-3 columns">
     <label>Ende (Datum): <?= $this->fehler['ende']; ?>
-     <input type="text" id="eventEnddatumInput" name="ende" value="<?= $this->ende; ?>" placeholder="<?= $this->ph_ende; ?>">
+     <input type="text" id="eventEnddatumInput" name="ende" value="<?= ($this->ende != '1000-01-01' ? $this->ende : ''); ?>" placeholder="<?= $this->ph_ende; ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
     <label>Von... (Uhrzeit): <?= $this->fehler['zeit_von']; ?>
-     <input type="text" id="eventZeitvonInput" name="zeit_von" value="<?= $this->zeit_von; ?>" placeholder="<?= $this->ph_zeit_von; ?>">
+     <input type="text" id="eventZeitvonInput" name="zeit_von" value="<?= ($this->hat_zeit_von ? $this->zeit_von : ''); ?>" placeholder="<?= $this->ph_zeit_von; ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
     <label>...Bis (Uhrzeit): <?= $this->fehler['zeit_bis']; ?>
-     <input type="text" id="eventZeitbisInput" name="zeit_bis" value="<?= $this->zeit_bis; ?>" placeholder="<?= $this->ph_zeit_bis; ?>">
+     <input type="text" id="eventZeitbisInput" name="zeit_bis" value="<?= ($this->hat_zeit_bis ? $this->zeit_bis : ''); ?>" placeholder="<?= $this->ph_zeit_bis; ?>">
     </label>
    </div>
 
   </div><!-- /.row -->
 
-  <fieldset class="Adresse row fieldset">
+  <div class="row">
+  <fieldset class="Adresse fieldset">
    <legend>Adresse</legend>
 
    <div class="large-4 columns">
@@ -118,7 +114,7 @@
   <p id="show_coordinates" style="display:none;"><a href="#" target="_blank">Zeige Koordinaten auf Karte</a></p>
 </div>
 
-</fieldset>
+</fieldset></div>
 
  <div class="row">
 
@@ -131,25 +127,28 @@
 
  </div>
 
-  <fieldset class="row fieldset">
+ <div class="row">
+  <fieldset class="fieldset">
    <legend>Eventbild</legend>
 
     <input type="file" id="eventBildInput" name="bild" />
 
     <?php if (!empty($this->bild)) : ?>
-      <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
-      <img src="<?= $this->bild; ?>" title="Bisheriges Eventbild" width=250 style="float:right;margin:8px;" />
+     <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
+     <div id="currentPic">
+       <img src="<?= $this->bild; ?>" title="Aktuelles Eventbild" />
+       <a href="#">Eventbild löschen.</a></div>
     <?php endif; ?>
 
-   <p><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf leipzigerecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
- <p>Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefeldern zu beschreiben.</p><br />
- <p>Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte.</p>
- <p>Bildmaterial sollte abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
-  </fieldset>
+    <p><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf Leipziger-Ecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
+    <p>Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefelder zu beschreiben.</p><br />
+    <p>Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte.</p>
+    <p>Bildmaterial sollte abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
+   </fieldset>
+  </div>
 
   <div class="row">
-
-  <div class="large-12 columns">
+   <div class="large-12 columns">
 
     <label>Kategorien: <?= $this->fehler['sparten']; ?></label>
 
@@ -169,12 +168,18 @@
 
   </div>
 
- </div>
-
  <div class="row">
+ <?php if ($this->target == 'update' && !empty($resultEvent->created)) : ?>
+  <?php if ($this->created->format('d.m.Y') != '01.01.1000') : ?>
+  <p style="color:grey;">Event eingetragen am <?= $this->created->format('d.m.Y, H:i'); ?> Uhr.
+  <?php if ($this->modified->format('d.m.Y') != '01.01.1000') : ?> Zuletzt aktualisiert am <?= $this->modified->format('d.m.Y, H:i'); ?> Uhr.<?php endif; ?>
+  </p><div class="divider" style="margin:17px 0;"></div>
+  <?php endif; ?>
+ <?php endif; ?>
 
   <input type="submit" class="left button" id="eventSubmit" name="submit" value="Speichern">
-  <a class="secondary right button" href="<?= base_path(); ?>Events">Abbrechen</a>
+  <a class="secondary right button" href="<?= base_path(); ?>events">Abbrechen</a>
 
- </div>
+</div>
+
 </form>

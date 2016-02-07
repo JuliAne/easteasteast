@@ -1,5 +1,21 @@
+ <?php if(!empty($messages) && !strpos($messages, 'Warning') && !strpos($messages, 'session')) : ?>
+ <div id="alert" class="drupal-error">
+   <?php print $messages; ?>
+   <a href="#" class="close" title="Schliessen">x</a>
+ </div>
+ <?php endif; ?>
+
+<?php if (!empty($page['sidebar_first'])): ?>
+
+  <aside class="col-sm-3" role="complementary">
+    <?php print render($page['sidebar_first']); ?>
+  </aside>
+
+<?php endif; ?>
+
 <?php
- $monat = array(
+
+ $monat_short = array(
   '01' => 'Jan',
   '02' => 'Feb',
   '03' => 'Mär',
@@ -12,25 +28,14 @@
   '10' => 'Okt',
   '11' => 'Nov',
   '12' => 'Dez',
- );
- ?>
+);
 
- <?php if(!empty($messages) && !strpos($messages, 'warning') && !strpos($messages, 'session')) : ?>
- <div id="alert" class="drupal-error">
-   <?php print $messages; ?>
-   <a href="#" class="close" title="Schliessen">x</a>
- </div>
- <?php endif; ?>
+ include_once('header.tpl.php');
+ $path = drupal_get_path('module', 'aae_data');
+ include_once $path . '/aae_blocks.php';
+ $blocks = new aae_blocks();
 
-<?php if (!empty($page['sidebar_first'])): ?>
-
-  <aside class="col-sm-3" role="complementary">
-    <?php print render($page['sidebar_first']); ?>
-  </aside>  <!-- /#sidebar-first -->
-
-<?php endif; ?>
-
-<?php include_once('header.tpl.php'); ?>
+?>
 
 <div id="fullpage">
 
@@ -52,26 +57,21 @@
   <div class="slide <?= ($content['whiteText'] == true ? 'whiteText' : ''); ?>" id="slide<?= $id; ?>" style="background-image:url(<?= base_path().path_to_theme().'/img/'.$content['image']; ?>)";>
     <h1><?= $content['headline']; ?></h1>
     <?= $content['description']; ?>
-
     <?= $blueButton; ?>
   </div>
   <?php endforeach; ?>
 
-  <!--<div class="slide">
-    <div id="map"></div>
-  </div>-->
-
   </div>
 
   <section class="section" id="journal">
-    <?php print render($page['blog']); ?>
+   <?php print render($page['blog']); ?>
   </section>
 
   <section class="section" id="projects-events">
 
     <div class="row">
      <div class="aaeHeadline">
-      <h1><span>&nbsp;<strong>N&auml;chste Veranstaltungen</strong>&nbsp;</span></h1>
+      <h1><span>&nbsp;<strong>Neueste Veranstaltungen</strong></span></h1>
       <a href="<?= base_path(); ?>events/rss" id="rss" class="small button" title="Alle Events als RSS-Feed abonnieren"><img id="svg_logo" src="/sites/all/themes/aae_theme/img/rss.svg"></a>
       <a href="<?= base_path(); ?>events" id="allevents" class="small button frontpage">Alle Events</a>
      </div>
@@ -79,19 +79,16 @@
       <?php
       // Lade "letzte Events"-Block
       foreach ($blocks->print_letzte_events() as $event) : ?>
-
-      <?php $exploded = explode("-", $event->start); ?>
-
       <div>
-        <div class="large-3 columns large3-events">
+        <div class="large-4 columns large3-events">
         <a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>">
-          <button class="date"><?= $exploded[0]; ?><br/><?= $monat[$exploded[1]]; ?></button>
+          <button class="date"><?= $event->start->format('d'); ?><br/><?= $monat_short[$event->start->format('m')]; ?></button>
         </a>
         <a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>">
           <div class="events-align event">
             <h4><?= $event->name; ?></h4>
             <div class="divider"></div>
-            <aside><img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" /><?= $event->zeit_von; ?><?php if (!empty($event->zeit_bis)) :?> - <?= $event->zeit_bis; ?><?php endif; ?></aside>
+            <aside><!--<img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" />--><?= $event->start->format('H:i'); ?><?php if ($event->ende->format('H:i') != '00:00') :?> - <?= $event->ende->format('H:i'); ?><?php endif; ?></aside>
           </div>
         </a>
        </div>
@@ -111,10 +108,6 @@
 
       <?php
       // Lade "Meine Akteure"-Block
-
-      include_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
-
-      $blocks = new aae_blocks();
 
       foreach ($blocks->print_letzte_akteure() as $akteur) : ?>
       <a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>">

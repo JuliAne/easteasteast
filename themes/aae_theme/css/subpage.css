@@ -1,6 +1,6 @@
 .region-content {
  margin: 0 auto;
- max-width: 62.5rem;
+ /*max-width: 62.5rem;*/
  margin-top: 85px;
 }
 
@@ -34,42 +34,36 @@ fieldset p:hover {
   transition: opacity 0.2s;
 }
 
-#filter div.columns:hover{
+#filter div.columns:hover {
   opacity: 1;
 }
 
 #filter label { padding-bottom:4px;}
 #filter .divider { border-bottom: 1px solid #D8D7D7;margin-top:35px; }
-#change-style li a {border:1px solid #fff;background:#fff;padding:9px 35px;}
-#change-style li a.active {background:#2199E8;border-right:none;}
-#change-style li img {width:21px;}
+#presentationFilter { margin-bottom: 0; margin-top:6px;}
+#presentationFilter li a {border:1px solid #fff;background-color:#F1EFEF;padding:9px 18px;transition:background 0.2s;}
+#presentationFilter li img {width:21px;}
+#presentationFilter li a.active, #presentationFilter li:hover a { background-color: #dfdfdf !important;}
 
 #filter #eventSubmit {float:none!important;}
 
 #removeFilter {
   padding-top: 15px;
+  margin-bottom: 8px;
 }
 
 #removeFilter .button {
-  padding: 4px 10px;
-  border:1px solid #fff;
-}
-
-#change-style {
-  margin-top: 12px;
-}
-
-.button-group a.button {
-  padding: 0.6rem 1.2rem
+  padding: 4px 8px;
+  background: #fff;
+  color: #777;
+  margin-right: 0;
 }
 
 #events_content h4 {
  color: grey;
  width: 100%;
- text-align: right;
- float: right;
+ text-align: center;
  padding-bottom: 12px;
- padding-right: 13px;
 }
 /*
 #events_content h4 ~ .date {
@@ -86,10 +80,6 @@ fieldset p:hover {
   font-size: 14px;
 }
 
-.aaeEvent:nth-of-type(odd){
-    clear:both;
-}
-
 .aaeEvent {
   margin-top: 10px;
   padding-left: 0;
@@ -98,9 +88,18 @@ fieldset p:hover {
   float: left!important;
 }
 
+.aaeEvent.outdated {
+  opacity: 0.6;
+  transition: opacity 0.25s;
+}
+
+.aaeEvent.outdated:hover {
+  opacity: 1;
+}
+
 @keyframes event {
-    from {opacity:0;margin-top:-10px;}
-    to {opacity:1;margin-top:10;}
+ from {opacity:0;margin-top:-10px;}
+ to {opacity:1;margin-top:10;}
 }
 
 .aaeEvent:hover .date {
@@ -141,13 +140,14 @@ fieldset p:hover {
 
 .aaeEvent header span {
   color: grey;
-  padding-left: 5px;
+  line-height: 22px;
 }
 
 .aaeEvent .content {
   border: 1px solid #F1EFEF;
   border-radius: 3px;
   padding: 10px;
+  margin-bottom: 0 !important;
 }
 
 .aaeEvent .tag {
@@ -163,6 +163,10 @@ fieldset p:hover {
   margin-bottom: 12px;
   text-align: right;
   padding-right: 16px;
+}
+
+.aaeEvent .akteurData:hover a {
+  text-decoration: underline;
 }
 
 .aaeEvent .akteurData img {
@@ -184,3 +188,61 @@ fieldset p:hover {
   margin-top: 7px;
   margin-left: -22px;
 }
+
+.aaeEvent.today .content {
+  border-color: #FF5217;
+}
+
+.aaeEvent.today .content:before {
+  border-color:transparent #FF5217 transparent transparent;
+}
+
+ .aaeEvent.today a {
+   color: #FF5217;
+ }
+
+ .aaeEvent.today .date {
+   border-color: #FF5217;
+ }
+ .aaeEvent.today:hover .date {
+   border-color: #FF5217;
+ }
+
+ #filter #timespace ul {
+  padding-top: 15px;
+  margin-bottom: 10px;
+ }
+
+ #filter #timespace ul li {
+  float: left;
+  font-size: 0.75em;
+  padding: 0 14px 0 0;
+ }
+
+ #filter #timespace ul li.selected {
+   font-weight: bold;
+ }
+
+ #currentPic img, #currentPic {
+   float:right;
+   margin:8px;
+   max-width: 250px;
+   overflow: hidden;
+ }
+/*
+ #currentPic:after {
+   content: 'x';
+   color: #fff;
+   background:rgba(40,40,40,0.5);
+   position: absolute;
+   height: 300px;
+   width: 300px;
+ }
+
+ #currentPic:hover:after {
+
+ } */
+
+ .page-eventprofil #contentRow {
+  max-width: 100%;
+ }

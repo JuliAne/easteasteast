@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file
+ * @file aae_data.install
  * Installiert alles, was unser AAE Data Modul benötigt.
  */
 
@@ -34,7 +34,9 @@ function aae_data_schema() {
 	  'beschreibung' => array('description' => 'Kurzbeschreibung für Übersicht', 'type' => 'text', 'length' => 'small', 'not null' => FALSE, 'default' => ''),
 	  'oeffnungszeiten' => array('description' => 'Wann der Akteur erreichbar ist', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
 	  'adresse' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
-	  'ersteller' => array('description' => 'ID von User, der Akteur angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0)
+	  'ersteller' => array('description' => 'ID von User, der Akteur angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+    'created' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Created als Timestamp'),
+    'modified' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Modified als Timestamp')
 	),
 	'primary key' => array('AID'),
 	'foreign keys' => array(
@@ -63,15 +65,15 @@ function aae_data_schema() {
 	'fields' => array(
 	  'EID' => array('description' => 'ID für Events', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'name' => array('description' => 'Eventname', 'type' => 'varchar', 'length' => 64, 'not null' => TRUE),
-	  'start' => array('description' => 'Startzeitpunkt', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
-	  'ende' => array('description' => 'Endzeitpunkt', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	  'kurzbeschreibung' => array('description' => 'Kurze inhaltliche Erläuterung', 'type' => 'text', 'length' => 'small', 'not null' => FALSE, 'default' => 0),
 	  'bild' => array('description' => 'Pfad zum Foto', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
 	  'ort' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
 	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
 	  'ersteller' => array('description' => 'ID von User, der Event angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
-    'zeit_von' => array('type' => 'varchar', 'length' => 5, 'not null' => FALSE),
-    'zeit_bis' => array('type' => 'varchar', 'length' => 5, 'not null' => FALSE)
+    'start_ts' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Startzeit des Events als Timestamp'),
+    'ende_ts' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Endzeit des Events als Timestamp'),
+    'created' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Created als Timestamp'),
+    'modified' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Modified als Timestamp')
 	),
 	'primary key' => array('EID'),
 	'foreign keys' => array(
@@ -143,7 +145,7 @@ function aae_data_schema() {
  * Implements hook_update_N().
  * Create a new database table aae_data_event_hat_sparte.
  */
-function aae_data_update_7103() {
+function aae_data_update_7104() {
   $schema ['aae_data_event_hat_sparte'] = array(
   'description' => 'Hilfstabelle für Sparten/Zielgruppen',
 	'fields' => array(
@@ -161,12 +163,95 @@ function aae_data_update_7103() {
 }
 
 /**
+ * Implements hook_update_N().
+ * Create fields for timestamp-data in tables aae_events & aae_akteure
+ * Transfer start-& end-data as Timestamp into the new fields
+ * Remove fields 'start', 'ende', 'zeit_von' & 'zeit_bis' in aae_events
+ */
+
+function aae_data_update_7105() {
+
+  /*if ($key == 'modified') {
+   db_query('
+    ALTER TABLE aae_data_event
+    MODIFY modified DATETIME
+    ON UPDATE CURRENT_TIMESTAMP');
+   }
+
+   if ($key == 'created') {
+    db_query('
+     ALTER TABLE aae_data_event
+     MODIFY created DATETIME
+     DEFAULT CURRENT_TIMESTAMP');
+   } */
+
+ $newSchemaEvents = array(
+  'start_ts' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Startzeit des Events als Timestamp'),
+  'ende_ts' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Endzeit des Events als Timestamp'),
+  'created' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Created als Timestamp'),
+  'modified' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Modified als Timestamp')
+ );
+
+ $newSchemaAkteure = array(
+  'created' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Created als Timestamp'),
+  'modified' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Modified als Timestamp')
+ );
+
+ foreach ($newSchemaEvents as $key => $field)  {
+    if (!db_field_exists('aae_data_event', $key)) {
+      db_add_field('aae_data_event', $key, $field);
+    }
+  }
+
+  foreach ($newSchemaAkteure as $key => $field)  {
+     if (!db_field_exists('aae_data_akteur', $key)) {
+       db_add_field('aae_data_akteur', $key, $field);
+     }
+   }
+
+
+  $resultEvents = db_select('aae_data_event', 'e')
+   ->fields('e')
+   ->execute();
+
+  foreach ($resultEvents as $event){
+    $eStart = explode('-', trim($event->start));
+    $eEnde  = explode('-', trim($event->ende));
+
+    $eZeitVon = (empty(trim($event->zeit_von))) ? '00:00' : trim($event->zeit_von);
+    $eZeitBis = (empty(trim($event->zeit_bis))) ? '00:00' : trim($event->zeit_bis);
+
+    $eStart = $eStart[2].'-'.$eStart[1].'-'.$eStart[0].' '.$eZeitVon.':01';
+    $eEnde = $eEnde[2].'-'.$eEnde[1].'-'.$eEnde[0].' '.$eZeitBis.':01';
+
+    $eStart = (strlen($event->start) > 10 || empty(trim($event->start))) ? '1000-01-01 00:00:00' : $eStart;
+    $eEnde = (strlen($event->ende) > 10 || empty(trim($event->ende))) ? '1000-01-01 00:00:00' : $eEnde;
+
+    // Transfer strings into DB. Created becomes now().
+
+    db_update('aae_data_event')
+     ->fields(array(
+      'start_ts' => $eStart,
+      'ende_ts' => $eEnde,
+      'created' => date('Y-m-d H:i:s', time())
+     ))
+     ->condition('EID', $event->EID)
+     ->execute();
+  }
+
+  db_drop_field('aae_data_event', 'start');
+  db_drop_field('aae_data_event', 'ende');
+  db_drop_field('aae_data_event', 'zeit_von');
+  db_drop_field('aae_data_event', 'zeit_bis');
+
+}
+
+/**
  * Implements hook_install().
  * Wird bei Installation des Moduls ausgeführt, NACH hook_schema()
  */
 function aae_data_install() {
-  //Funktion, die alle Bezirke einfügt
-  insert_bezirke();
+  aae_install_insert_bezirke();
 }
 
 /**

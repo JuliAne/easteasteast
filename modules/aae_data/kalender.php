@@ -77,19 +77,19 @@ class kalender extends aae_data_helper {
      }
    }
    if (($this->currentDay != 0) && ($this->currentDay <= $this->daysInMonth)) {
-     $this->currentDate = date('d-m-Y', strtotime($this->currentDay . '-' . $this->currentMonth . '-' . $this->currentYear));
+     $this->currentDate = date('Y-m-d', strtotime($this->currentYear . '-' . $this->currentMonth . '-' . $this->currentDay));
      $cellContent = $this->currentDay;
 
      //$events = null;
 
-     //DB-Abfrage aller Events, die an diesem Tag stattfinden
+     // DB-Abfrage aller Events, die an diesem Tag stattfinden
      $resultEvents = db_select($this->tbl_event, 'e')
        ->fields('e', array(
-       'start',
+       'start_ts',
        'name',
        'EID',
        ))
-       ->condition('start', $this->currentDate . '%', 'LIKE')
+       ->condition('start_ts', $this->currentDate . '%', 'LIKE')
        ->orderBy('name', 'ASC')
        ->execute();
 

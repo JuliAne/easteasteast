@@ -32,18 +32,24 @@
   float: right;
 }
 
-.region-content {
+.region-content, #contentRow {
  width: 100% !important;
  max-width: 100% !important;
  margin: 0;
+ overflow: hidden;
+}
+
+.region-content .row {
+  margin: 0 auto;
 }
 
 #header {
  height: 270px;
- width: 100%;
+ width: 103%;
  padding-top: 60px;
  background-color: #2199E8;
  background-size: 105%;
+ margin-left: -18px;
  filter: blur(7px);
  -webkit-filter: blur(7px);
  -moz-filter: blur(7px);
@@ -53,6 +59,7 @@
 
 #project {
  position: relative;
+ margin: 0 auto;
  margin-top: -70px;
 }
 

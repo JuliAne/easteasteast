@@ -10,11 +10,12 @@
 * @function print_letzte_akteure
 * @function count_projects_events
 * @function print_my_akteure
-* @function tagcloud
 */
+
 
 $modulePath = drupal_get_path('module', 'aae_data');
 include_once $modulePath . '/aae_data_helper.php';
+
 
 Class aae_blocks extends aae_data_helper {
 
@@ -25,22 +26,22 @@ Class aae_blocks extends aae_data_helper {
 
 public function print_letzte_events($limit = 6) {
 
-//Show nearest of latest 6 events first
-// $sql = '(SELECT * FROM "aae_data_event" ORDER BY "EID" DESC LIMIT 6) ORDER BY "start" ASC';
-// $letzteEvents = db_query($sql)->fetchAll();
+ //Show furthest of latest 6 events first
+ $events = db_select($this->tbl_event, 'a')
+  ->fields('a')
+  ->orderBy('created', 'DESC')
+  ->range(0, $limit);
 
-//Show furthest of latest 6 events first
-  $letzteEvents = db_select($this->tbl_event, 'a')
-    ->fields('a')
-    ->orderBy('EID','DESC')
-    ->range(0,$limit)
-    ->execute()
-    ->fetchAll();
+  $resultEvents = $events->execute()->fetchAll();
 
-  $resultEvents = array();
+  foreach ($resultEvents as $counter => $event){
 
-  foreach($letzteEvents as $row){
-    $resultEvents[] = $row;
+   // Hack: add variable to $resultEvents-object
+   $resultEvents[$counter] = (array)$resultEvents[$counter];
+   $resultEvents[$counter]['start'] = new DateTime($event->start_ts);
+   $resultEvents[$counter]['ende'] = new DateTime($event->ende_ts);
+   $resultEvents[$counter] = (object)$resultEvents[$counter];
+
   }
 
   return $resultEvents;
@@ -56,14 +57,10 @@ public function print_letzte_akteure($limit = 4) {
 
   $resultAkteure = db_select($this->tbl_akteur, 'a')
     ->fields('a')
-    ->orderBy('AID', 'DESC')
+    ->orderBy('created', 'DESC')
     ->range(0, $limit)
     ->execute()
     ->fetchAll();
-
-  /*foreach($letzteAkteure as $row){
-    $resultakteure[] = $row; //array('AID' => $row->AID, 'name' => $row->name);
-  } */
 
   // Get Bezirk
   foreach ($resultAkteure as $counter => $akteur) {
@@ -142,18 +139,6 @@ public function count_projects_events() {
   }
 
   return $results;
-
- }
-
- /**
- * @function tagcloud()
- *
- * ...
- */
-
- public function tagcloud() {
-
-
 
  }
 } // end class aae_block

@@ -1,41 +1,39 @@
 <?php
 /**
- * akteurloeschen.php löscht einen Akteur aus der DB
+ * @file akteurloeschen.php
+ * Löscht einen Akteur aus der DB
  */
 
 Class akteurloeschen extends aae_data_helper {
 
  public function run(){
 
-//Eingeloggter User
-global $user;
-$user_id = $user->uid;
+  global $user;
+  $user_id = $user->uid;
 
-//EID holen:
-$explodedpath = explode("/", current_path());
-$akteur_id = $this->clearContent($explodedpath[1]);
+  $explodedpath = explode("/", current_path());
+  $akteur_id = $this->clearContent($explodedpath[1]);
 
-//Sicherheitsschutz
-if(!user_is_logged_in()){
-  drupal_access_denied();
-}
+  if(!user_is_logged_in()){
+   drupal_access_denied();
+  }
 
-//Prüfen ob Schreibrecht vorliegt
-$resultUser = db_select($this->tbl_hat_user, 'u')
- ->fields('u', array('hat_UID', 'hat_AID'))
- ->condition('hat_AID', $akteur_id, '=')
- ->condition('hat_UID', $user_id, '=')
- ->execute();
+  //Prüfen ob Schreibrecht vorliegt
+  $resultUser = db_select($this->tbl_hat_user, 'u')
+   ->fields('u', array('hat_UID', 'hat_AID'))
+   ->condition('hat_AID', $akteur_id, '=')
+   ->condition('hat_UID', $user_id, '=')
+   ->execute();
 
-$hat_recht = $resultUser->rowCount();
+  $hat_recht = $resultUser->rowCount();
 
-if (!array_intersect(array('redakteur','administrator'), $user->roles)) {
- if ($hat_recht != 1) {
+  if (!array_intersect(array('redakteur','administrator'), $user->roles)) {
+   if ($hat_recht != 1) {
     drupal_access_denied();
- }
-}
+   }
+  }
 
- $resultAkteur = db_select($this->tbl_akteur, 'a')
+  $resultAkteur = db_select($this->tbl_akteur, 'a')
   ->fields('a', array('name','bild'))
   ->condition('AID', $akteur_id, '=')
   ->execute()
@@ -43,7 +41,7 @@ if (!array_intersect(array('redakteur','administrator'), $user->roles)) {
 
 //-----------------------------------
 
-if (isset($_POST['submit'])) {
+ if (isset($_POST['submit'])) {
 
   $resultEvents = db_select($this->tbl_akteur_events, 'ae')
    ->fields('ae')
@@ -86,20 +84,17 @@ if (isset($_POST['submit'])) {
 
 } else {
 
-$pathThisFile = $_SERVER['REQUEST_URI'];
+ $pathThisFile = $_SERVER['REQUEST_URI'];
 
-// Render
-
-return '<div class="callout">
+ return '<div class="callout">
   <h3>Möchten Sie den Akteur <strong>'.$resultAkteur['name'].'</strong> wirklich löschen?</h3><br />
   <form action="'.$pathThisFile.'" method="POST" enctype="multipart/form-data">
     <input name="akteur_id" type="hidden" id="eventEIDInput" value="'.$akteur_id.'" />
     <a class="secondary button" href="javascript:history.go(-1)">Abbrechen</a>
     <input type="submit" class="button" id="akteurSubmit" name="submit" value="Löschen">
   </form>
-</div>';
+  </div>';
 
- }
-
+  }
  } // end function run()
 } // end class akteurloeschen

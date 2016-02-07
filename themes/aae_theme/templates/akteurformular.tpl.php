@@ -13,7 +13,7 @@
 </div>
 <?php endif; ?>
 
-<form action='<?= $pathThisFile; ?>' method='POST' enctype='multipart/form-data'>
+<form action="#" method="POST" enctype="multipart/form-data">
 
  <div class="row">
     <div class="large-6 columns">
@@ -64,7 +64,7 @@
 
   <select name="ort">
    <option value="" selected="selected">Bezirk auswählen</option>
-   <?php foreach ($this->resultbezirke as $bezirk) : ?>
+   <?php foreach ($this->resultBezirke as $bezirk) : ?>
     <?php if ($bezirk->BID == $this->ort) : ?>
     <option value="<?= $bezirk->BID; ?>" selected="selected"><?= $bezirk->bezirksname; ?></option>
     <?php else : ?>
@@ -140,13 +140,16 @@
 
     <input type="file" id="akteurBildInput" name="bild" />
 
-    <?php if ($this->bild != '') : ?>
+    <?php if (!empty($this->bild)) : ?>
       <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
-      <img src="<?= $this->bild; ?>" title="Bisheriges Profilbild" width=200 style="float:right; margin: 6px;">
+      <div id="currentPic">
+       <img src="<?= $this->bild; ?>" title="Aktuelles Akteurbild" />
+       <a href="#">Akteurbild löschen.</a><
+      </div>
     <?php endif; ?>
 
-   <p><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf leipzigerecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
- <p>Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefeldern zu beschreiben.</p><br />
+   <p><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf Leipziger-ecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
+ <p>Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten, wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefeldern zu beschreiben.</p><br />
  <p>Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte. Bildmaterial sollte abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
   </fieldset>
 
@@ -174,11 +177,16 @@
   </div>
 
  </div>
-
  <div class="row">
+ <?php if ($this->target == 'update' && !empty($this->created)) : ?>
+  <?php if ($this->created->format('d.m.Y') != '01.01.1000') : ?>
+   <p style="color:grey;">Akteur eingetragen am <?= $this->created->format('d.m.Y, H:i'); ?> Uhr.
+   <?php if ($this->modified->format('d.m.Y') != '01.01.1000') : ?> Zuletzt aktualisiert am <?= $this->modified->format('d.m.Y, H:i'); ?> Uhr.<?php endif; ?>
+   </p><div class="divider" style="margin:17px 0;"></div>
+  <?php endif; ?>
+ <?php endif; ?>
 
   <input type="submit" class="left button" id="akteurSubmit" name="submit" value="Speichern">
-  <a class="secondary right button" href="<?= base_path(); ?>Akteure">Abbrechen</a>
-
+  <a class="secondary right button" href="<?= base_path(); ?>akteure">Abbrechen</a>
  </div>
 </form>

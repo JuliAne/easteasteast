@@ -11,6 +11,8 @@ function aae_preprocess_html(&$variables) {
   );
   drupal_add_html_head($viewport, 'viewport');
 
+  drupal_add_feed(base_path().'events/rss');
+
   drupal_add_js(path_to_theme().'/js/jquery-1.11.3.min.js');
 
   drupal_add_js(path_to_theme().'/js/pace.min.js');
@@ -64,7 +66,7 @@ function aae_preprocess_html(&$variables) {
    drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');
    drupal_add_css(path_to_theme().'/css/default.css');
    drupal_add_js(path_to_theme().'/js/zebra_datepicker.js');
-   drupal_add_js('https://cdn.ckeditor.com/4.4.3/basic/ckeditor.js');
+   drupal_add_js('https://cdn.ckeditor.com/4.5.7/basic/ckeditor.js');
    drupal_add_css(base_path().'sites/all/modules/ckeditor/css/ckeditor.css');
    drupal_add_css(base_path().'sites/all/modules/ckeditor/css/ckeditor.editor.css');
    drupal_add_js(path_to_theme().'/js/editform.js');
@@ -89,7 +91,7 @@ function aae_preprocess_html(&$variables) {
 
    $js = '$(window).ready(function(){$(".tokenize").tokenize({displayDropdownOnFocus:true,newElements:false});});';
 
-     drupal_add_css(path_to_theme(). '/css/subpage.css');
+   drupal_add_css(path_to_theme(). '/css/subpage.css');
    drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
    drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');
    drupal_add_js($js, 'inline');
@@ -141,7 +143,12 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
     $form['name']['#description'] = '';
     $form['pass']['#description'] = '';
 
-  } else  { // @TODO ELSEIF SEARCH-FORM
+  } else if ( TRUE === in_array( $form_id, array('search_block', 'user_block_form')) )  {
+
+    $form['actions']['submit']['#attributes']['class'][] = 'small button';
+    $form['actions']['submit']['#value'] = 'Suchen';
+
+  } else {
 
     $form['actions']['submit']['#attributes']['class'][] = 'small button';
     $form['actions']['submit']['#value'] = 'Absenden';

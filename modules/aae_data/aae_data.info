@@ -2,11 +2,8 @@ name = AAE Data
 description = Modul zur Darstellung und Speicherung von Akteuren und Events.
 package = "Custom Modules"
 core = 7.x
-
-;configure = admin/config/development/aae_data
-
-version = "7.x-1.4"
-core = "7.x"
-project = "aae_data"
+version = "7.x-1.5"
+dependencies[] = ckeditor
+dependencies[] = html5_tools
+configure = admin/config/content/aae_data
 datestamp = "2015-08-31"
-

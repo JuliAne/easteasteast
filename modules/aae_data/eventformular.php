@@ -1,7 +1,7 @@
 <?php
 /**
- * eventformular.php stellt ein Formular dar,
- * in welches alle Informationen über eine Veranstaltung
+ * @file eventformular.php
+ * Stellt ein Formular dar, in welches alle Informationen über eine Veranstaltung
  * eingetragen werden können.
  * Pflichtfelder sind (bisher): Name, Veranstalter, Datum (Anfang) & Beschreibung
  * Anschließend werden die Daten gefiltert in die DB-Tabellen eingetragen
@@ -10,8 +10,6 @@
 
 Class eventformular extends aae_data_helper {
 
-  //Variablen zum Speichern von Werten, welche in die DB-Tabellen eingefügt werden sollen
-
   //$tbl_event
   var $name = "";
   var $veranstalter = "";
@@ -19,9 +17,13 @@ Class eventformular extends aae_data_helper {
   var $ende = "";
   var $zeit_von = "";
   var $zeit_bis = "";
+  var $hat_zeit_von = true;
+  var $hat_zeit_bis = true;
   var $bild = "";
   var $kurzbeschreibung = "";
   var $url = "";
+  var $created = "";
+  var $modified = "";
 
   //$tbl_adresse
   var $strasse = "";
@@ -32,21 +34,20 @@ Class eventformular extends aae_data_helper {
   var $gps = "";
   var $adresse = "";
 
-  //Tags:
+  //$tbl_sparte
   var $sparten= "";
   var $all_sparten = ''; // Zur Darstellung des tokenizer (#akteurSpartenInput)
 
-  //Variable zur Freigabe: muss true sein
-  var $freigabe = true;
+  var $freigabe = true;   //Variable zur Freigabe: muss true sein
   var $fehler = array(); // In diesem Array werden alle Fehler gespeichert
 
   //Variablen, welche Texte in den Formularfeldern beschreiben ("placeholder"):
   var $ph_name = "Veranstaltungsname";
   var $ph_veranstalter = "Veranstalter";
-  var $ph_start = "Starttag (dd-mm-yyyy)";
+  var $ph_start = "Starttag (yyyy-mm-dd)";
+  var $ph_ende = "Endtag (yyyy-mm-dd)";
   var $ph_zeit_von = "von (Uhrzeit: hh:mm)";
   var $ph_zeit_bis = "bis (Uhrzeit: hh:mm)";
-  var $ph_ende = "Endtag (dd-mm-yyyy)";
   var $ph_bild = "Bild";
   var $ph_kurzbeschreibung = "Beschreibung";
   var $ph_url = "URL";
@@ -56,7 +57,7 @@ Class eventformular extends aae_data_helper {
   var $ph_plz = "PLZ";
   var $ph_ort = "Bezirk";
   var $ph_gps = "GPS Koordinaten";
-  var $ph_sparten = "Tags kommasepariert eingeben!";
+  var $ph_sparten = "Tags";
 
   var $user_id;
   var $event_id;
@@ -64,6 +65,7 @@ Class eventformular extends aae_data_helper {
   var $resultbezirke;
   var $target = '';
   var $removedTags;
+  var $removedPic;
 
   function __construct($action = false) {
 
@@ -76,8 +78,9 @@ Class eventformular extends aae_data_helper {
     }
 
     if (!user_is_logged_in()) {
-	  drupal_access_denied();
+	   drupal_access_denied();
     }
+
   } // END Constructor
 
   /**
@@ -94,13 +97,13 @@ Class eventformular extends aae_data_helper {
     if (isset($_POST['submit'])) {
       if ($this->eventCheckPost()) {
         if ($this->target == 'update') {
-	      $this->eventUpdaten();
+	       $this->eventUpdaten();
         } else {
-	      $this->eventSpeichern();
+	       $this->eventSpeichern();
         }
-        $output = $this->eventDisplay();
+         $output = $this->eventDisplay();
       } else {
-        $output = $this->eventDisplay();
+         $output = $this->eventDisplay();
       }
     } else {
       // Was passiert, wenn Seite zum ersten mal gezeigt wird?
@@ -114,7 +117,7 @@ Class eventformular extends aae_data_helper {
 
   /**
    * Wird ausgeführt, wenn auf "Speichern" gedrückt wird
-   * @returns $this->freigabe [bool]
+   * @returns $this->freigabe
    */
   private function eventCheckPost() {
 
@@ -134,7 +137,8 @@ Class eventformular extends aae_data_helper {
     $this->ort = $this->clearContent($_POST['ort']);
     $this->gps = $this->clearContent($_POST['gps']);
     $this->sparten = $_POST['sparten'];
-    $this->removedTags = $_POST['removedTags'];
+    $this->removedTags = $this->clearContent($_POST['removedTags']);
+    $this->removedPic = $this->clearContent($_POST['removeCurrentPic']);
 
     //-------------------------------------
 
@@ -143,12 +147,12 @@ Class eventformular extends aae_data_helper {
 	   $this->freigabe = false;
     }
 
-    if (strlen($this->start) != 0 && DateTime::createFromFormat('d-m-Y', $this->start) == false) {
+    if (strlen($this->start) != 0 && DateTime::createFromFormat('Y-m-d', $this->start) == false) {
       $this->fehler['start'] = "Bitte ein (gültiges) Startdatum angeben!";
       $this->freigabe = false;
     }
 
-    if (strlen($this->ende) != 0 && DateTime::createFromFormat('d-m-Y', $this->start) == false) {
+    if (strlen($this->ende) != 0 && DateTime::createFromFormat('Y-m-d', $this->ende) == false) {
       $this->fehler['ende'] = "Bitte ein (gültiges) Enddatum angeben!";
       $this->freigabe = false;
     }
@@ -159,40 +163,38 @@ Class eventformular extends aae_data_helper {
     }
 
     if (empty($this->kurzbeschreibung)) {
-     $this->fehler['kurzbeschreibung'] = "Ein paar Beschreibungs-Zeilen werden Dir wohl einfallen...";
+     $this->fehler['kurzbeschreibung'] = "Ein paar Beschreibungs-Zeilen werden Dir wohl einfallen!";
      $this->freigabe = false;
     }
 
-    if (!empty($this->zeit_von) && DateTime::createFromFormat('H:i', $this->zeit_von) == false) {
+    if (!empty($this->zeit_von) && DateTime::createFromFormat('h:i', $this->zeit_von) == false) {
      $this->fehler['zeit_von'] = "Bitte eine (gültige) Start-Uhrzeit angeben!";
      $this->freigabe = false;
     }
 
-    if (!empty($this->zeit_bis) && DateTime::createFromFormat('H:i', $this->zeit_bis) == false) {
+    if (!empty($this->zeit_bis) && DateTime::createFromFormat('h:i', $this->zeit_bis) == false) {
      $this->fehler['zeit_bis'] = "Bitte eine (gültige) End-Uhrzeit angeben!";
      $this->freigabe = false;
     }
 
     if (!empty($this->url) && preg_match('/\A(http:\/\/|https:\/\/)(\w*[.|-]\w*)*\w+\.[a-z]{2,3}(\/.*)*\z/',$this->url)==0) {
-     $this->fehler['url'] = "Bitte eine gültige URL zur Eventwebseite eingeben! (z.B. <i>http://dasistmeinevent.de</i>)";
+     $this->fehler['url'] = "Bitte eine gültige URL zur Eventwebseite eingeben! (z.B. <i>http://meinevent.de</i>)";
      $this->freigabe = false;
     }
 
-    if (count($this->sparten) > 11) {
+    /*if ((count($this->sparten)/2) > 11) {
      $this->fehler['sparten'] = "Bitte max. 10 Tags angeben.";
      $this->freigabe = false;
-    }
-
-    //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
+   } */
 
     if (strlen($this->name) > 64) {
-	  $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
-      $this->freigabe = false;
+	   $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
+     $this->freigabe = false;
     }
 
     if (strlen($this->url) > 200) {
-	  $this->fehler['url'] = "Bitte geben Sie eine kürzere URL an.";
-	  $this->freigabe = false;
+	   $this->fehler['url'] = "Bitte geben Sie eine kürzere URL an.";
+	   $this->freigabe = false;
     }
 
     if (strlen($this->kurzbeschreibung) > 1000) {
@@ -201,13 +203,13 @@ Class eventformular extends aae_data_helper {
     }
 
     if (strlen($this->strasse) > 64) {
-	  $this->fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
-	  $this->freigabe = false;
+	   $this->fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
+	   $this->freigabe = false;
     }
 
     if (strlen($this->nr) > 8) {
-	  $this->fehler['nr'] = "Bitte geben Sie eine kürzere Nummer an.";
-	  $this->freigabe = false;
+	   $this->fehler['nr'] = "Bitte geben Sie eine kürzere Nummer an.";
+	   $this->freigabe = false;
     }
 
     if (strlen($this->adresszusatz) > 100) {
@@ -216,13 +218,13 @@ Class eventformular extends aae_data_helper {
     }
 
     if (strlen($this->plz) > 8) {
-	  $this->fehler['plz'] = "Bitte geben Sie eine kürzere PLZ an.";
-      $this->freigabe = false;
+	   $this->fehler['plz'] = "Bitte geben Sie eine kürzere PLZ an.";
+     $this->freigabe = false;
     }
 
     if (strlen($this->ort) > 100) {
-      $this->fehler['ort'] = "Bitte geben Sie einen kürzeren Ortsnamen an.";
-	  $this->freigabe = false;
+     $this->fehler['ort'] = "Bitte geben Sie einen kürzeren Ortsnamen an.";
+	   $this->freigabe = false;
     }
 
     if (strlen($this->gps) > 100) {
@@ -264,6 +266,7 @@ Class eventformular extends aae_data_helper {
    }
 
     return $this->freigabe;
+
   } // END function eventCheckPost()
 
   /**
@@ -271,9 +274,9 @@ Class eventformular extends aae_data_helper {
    */
   private function eventUpdaten() {
 
-	//Abfrage, ob Adresse bereits in Adresstabelle
+	// Abfrage, ob Adresse bereits in Adresstabelle
 
-	$this->resultadresse = db_select($this->tbl_adresse, 'a')
+	$this->resultAdresse = db_select($this->tbl_adresse, 'a')
 	  ->fields('a', array( 'ADID', 'gps' ))
 	  ->condition('strasse', $this->strasse, '=')
 	  ->condition('nr', $this->nr, '=')
@@ -282,35 +285,33 @@ Class eventformular extends aae_data_helper {
 	  ->condition('bezirk', $this->ort, '=')
 	  ->execute();
 
-    $i = $this->resultadresse->rowCount();
+    $i = $this->resultAdresse->rowCount();
 
     if ($i == 0) {
-      //Adresse nicht vorhanden
-	  $this->adresse = db_insert($this->tbl_adresse)
+     // Adresse nicht vorhanden
+	   $this->adresse = db_insert($this->tbl_adresse)
 	    ->fields(array(
-		  'strasse' => $this->strasse,
-		  'nr' => $this->nr,
-		  'adresszusatz' => $this->adresszusatz,
-		  'plz' => $this->plz,
-		  'bezirk' => $this->ort,
-		  'gps' => $this->gps,
-		))
-		->execute();
+		   'strasse' => $this->strasse,
+		   'nr' => $this->nr,
+		   'adresszusatz' => $this->adresszusatz,
+		   'plz' => $this->plz,
+		   'bezirk' => $this->ort,
+		   'gps' => $this->gps,
+		  ))
+		  ->execute();
+
     } else {
-      //Adresse bereits vorhanden
-      foreach ($this->resultadresse as $row) {
-	    //Abfrage, ob GPS-Angaben gemacht wurden
+      // Adresse bereits vorhanden
+      foreach ($this->resultAdresse as $row) {
+	    // Abfrage, ob GPS-Angaben gemacht wurden
         if (strlen($this->gps) != 0 && strlen($row->gps) == 0 ) {
-          //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
-	      //Update der Adresse
+        //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
 	      $adresse_updated = db_update($this->tbl_adresse)
-	 	    ->fields(array(
-			  'gps' => $this->gps,
-	        ))
-	        ->condition('ADID', $row->ADID, '=')
-	        ->execute();
+	 	     ->fields(array( 'gps' => $this->gps ))
+	       ->condition('ADID', $row->ADID, '=')
+	       ->execute();
 	    }
-	    $this->adresse = $row->ADID; //Adress-ID merken
+	    $this->adresse = $row->ADID;
 	  }
 	}
 
@@ -320,38 +321,54 @@ Class eventformular extends aae_data_helper {
    $this->bild = $this->clearContent($_POST['oldPic']);
   }
 
-	$eventupdate = db_update($this->tbl_event)
-   	->fields(array(
+  // remove current picture manually
+
+  if (!empty($this->removedPic)) {
+
+   $b = end(explode('/', $this->removedPic));
+
+   if (file_exists($this->short_bildpfad.$b)) {
+    unlink($this->short_bildpfad.$b);
+   }
+
+   if ($_POST['oldPic'] == $this->removedPic) $this->bild = '';
+
+  }
+
+  $startQuery = $this->start.' '.(!empty($this->zeit_von) ? $this->zeit_von.':01' : '00:00:00');
+  $endeQuery  = (!empty($this->ende) ? $this->ende : '1000-01-01').' '.(!empty($this->zeit_bis) ? $this->zeit_bis.':01' : '00:00:00');
+
+	$eventUpdate = db_update($this->tbl_event)
+   ->fields(array(
 		'name' => $this->name,
 		'ort' => $this->adresse,
-		'start' => $this->start,
+		'start_ts' => $startQuery,
 		'url' => $this->url,
-		'ende' => $this->ende,
+		'ende_ts' => $endeQuery,
 		'bild' => $this->bild,
 		'kurzbeschreibung' => $this->kurzbeschreibung,
-    'zeit_von' => $this->zeit_von,
-    'zeit_bis' => $this->zeit_bis
-	  ))
+    'modified' => date('Y-m-d H:i:s', time())
+	 ))
+	 ->condition('EID', $this->event_id, '=')
+	 ->execute();
+
+	 $akteurEventUpdate = db_update($this->tbl_akteur_events)
+   	->fields(array(	'AID' => $this->veranstalter ))
 	  ->condition('EID', $this->event_id, '=')
 	  ->execute();
 
-	 $akteureventupdate = db_update($this->tbl_akteur_events)
-   	->fields(array(
-		'AID' => $this->veranstalter
-	  ))
-	  ->condition('EID', $this->event_id, '=')
-	  ->execute();
+   // remove tags manually
 
-    if (!empty($this->removedTags) && is_array($this->removedTags)) {
+   if (!empty($this->removedTags) && is_array($this->removedTags)) {
 
-     foreach($this->removedTags as $tag) {
+    foreach($this->removedTags as $tag) {
 
-      $tag = $this->clearContent($tag);
+     $tag = $this->clearContent($tag);
 
-      db_delete($this->tbl_event_sparte)
-       ->condition('hat_KID', $tag, '=')
-       ->condition('hat_EID', $this->event_id, '=')
-       ->execute();
+     db_delete($this->tbl_event_sparte)
+      ->condition('hat_KID', $tag, '=')
+      ->condition('hat_EID', $this->event_id, '=')
+      ->execute();
 
      }
     }
@@ -400,7 +417,7 @@ Class eventformular extends aae_data_helper {
           ->fields(array(
            'hat_EID' => $this->event_id,
            'hat_KID' => $sparte_id
-          ))
+           ))
           ->execute();
 
         }
@@ -409,11 +426,8 @@ Class eventformular extends aae_data_helper {
 
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
-
-    $_SESSION['sysmsg'][] = 'Das Event wurde erfolgreich bearbeitet!';
-
+    drupal_set_message('Das Event wurde erfolgreich bearbeitet!');
   	header("Location: ".base_path()."Eventprofil/" . $this->event_id);
-    // Event erstellt uuuund.... tschüss ;)
 
   } // END function eventUpdaten()
 
@@ -424,47 +438,44 @@ Class eventformular extends aae_data_helper {
   private function eventGetFields() {
 
     //Auswahl der Daten des ausgewählten Events
-    $resultevent = db_select($this->tbl_event, 'e')
-      ->fields('e', array(
-	    'name',
-	    'start',
-	    'ende',
-	    'url',
-	    'bild',
-	    'kurzbeschreibung',
-	    'ort',
-      'zeit_von',
-      'zeit_bis'
-	  ))
-	  ->condition('EID', $this->event_id, '=')
-    ->execute();
+    $resultEvent = db_select($this->tbl_event, 'e')
+     ->fields('e')
+	   ->condition('EID', $this->event_id)
+     ->execute();
 
-    foreach ($resultevent as $row) {
+    foreach ($resultEvent as $row) {
+     $startTime = new DateTime($row->start_ts);
+     $endeTime  = new DateTime($row->ende_ts);
+     $this->hat_zeit_von = ($startTime->format('s') == '01') ? true : false;
+     $this->hat_zeit_bis = ($endeTime->format('s') == '01') ? true : false;
+
      $this->name = $row->name;
      $this->ort = $row->ort;
-     $this->start = $row->start;
-     $this->ende = $row->ende;
+     $this->start = $startTime->format('Y-m-d');
+     $this->ende = $endeTime->format('Y-m-d');
+     $this->zeit_von = $startTime->format('H:i');
+     $this->zeit_bis = $endeTime->format('H:i');
      $this->url = $row->url;
      $this->bild = $row->bild;
      $this->kurzbeschreibung = $row->kurzbeschreibung;
-     $this->zeit_von = $row->zeit_von;
-     $this->zeit_bis = $row->zeit_bis;
+     $this->created = new DateTime($row->created);
+     $this->modified = new DateTime($row->modified);
     }
 
-    $resultveranstalter = db_select($this->tbl_akteur_events, 'a')
+    $resultVeranstalter = db_select($this->tbl_akteur_events, 'a')
      ->fields('a', array( 'AID' ))
 	   ->condition('EID', $this->event_id, '=')
      ->execute();
 
-     foreach ($resultveranstalter as $row) {
+     foreach ($resultVeranstalter as $row) {
       $this->veranstalter = $row->AID;
      }
 
     $akteur_id = $this->veranstalter;
 
     //Adressdaten aus DB holen:
-    $this->resultadresse = db_select($this->tbl_adresse, 'd')
-      ->fields('d', array(
+    $this->resultAdresse = db_select($this->tbl_adresse, 'd')
+     ->fields('d', array(
 	    'strasse',
 	    'nr',
 	    'adresszusatz',
@@ -476,7 +487,7 @@ Class eventformular extends aae_data_helper {
      ->execute();
 
     //Speichern der Adressdaten in den Arbeitsvariablen
-    foreach ($this->resultadresse as $row) {
+    foreach ($this->resultAdresse as $row) {
 	   $this->strasse = $row->strasse;
 	   $this->nr = $row->nr;
 	   $this->adresszusatz = $row->adresszusatz;
@@ -485,7 +496,7 @@ Class eventformular extends aae_data_helper {
 	   $this->gps = $row->gps;
     }
 
-    $resultsparten = db_select($this->tbl_event_sparte, 'es')
+    $resultSparten = db_select($this->tbl_event_sparte, 'es')
      ->fields('es')
      ->condition('hat_EID', $this->event_id, '=')
      ->execute()
@@ -493,7 +504,7 @@ Class eventformular extends aae_data_helper {
 
     $sparten = array();
 
-    foreach($resultsparten as $sparte) {
+    foreach($resultSparten as $sparte) {
 
      $sparten[] = db_select($this->tbl_sparte, 's')
      ->fields('s')
@@ -504,20 +515,6 @@ Class eventformular extends aae_data_helper {
     }
 
     $this->sparten = $sparten;
-
-    //Zeit auflösen
-    /* I have no idea what this does...
-    $explodedstart = explode(' ', $this->start);
-    $explodedende = explode(' ', $this->ende);
-    $this->ende = $explodedende[0];
-    $this->start = $explodedstart[0];
-
-    if (count($explodedstart) == 2) {
-	   $this->zeit_von = $explodedstart[1];
-    }
-    if (count($explodedende) == 2) {
-	   $this->zeit_bis = $explodedende[1];
-   } */
 
   } // END function eventUpdaten()
 
@@ -532,7 +529,7 @@ Class eventformular extends aae_data_helper {
     }
 
 	//Abfrage, ob Adresse bereits in Adresstabelle
-	 $this->resultadresse = db_select($this->tbl_adresse, 'a')
+	 $this->resultAdresse = db_select($this->tbl_adresse, 'a')
 	  ->fields('a', array( 'ADID', 'gps' ))
 	  ->condition('strasse', $this->strasse, '=')
 	  ->condition('nr', $this->nr, '=')
@@ -541,52 +538,58 @@ Class eventformular extends aae_data_helper {
 	  ->condition('bezirk', $this->ort, '=')
 	  ->execute();
 
-    //wenn ja: Holen der ID der Adresse, wenn nein: Einfuegen
-    if ($this->resultadresse->rowCount() == 0) {
-      //Adresse nicht vorhanden
-	  $this->adresse = db_insert($this->tbl_adresse)
+    // Wenn ja: Holen der ID der Adresse, wenn nein: einfuegen
+    if ($this->resultAdresse->rowCount() == 0) {
+
+	   $this->adresse = db_insert($this->tbl_adresse)
 	    ->fields(array(
-		  'strasse' => $this->strasse,
-		  'nr' => $this->nr,
-		  'adresszusatz' => $this->adresszusatz,
-		  'plz' => $this->plz,
-		  'bezirk' => $this->ort,
-		  'gps' => $this->gps,
-		))
-		->execute();
-	} else {
-      //Adresse bereits vorhanden
-	  foreach ($this->resultadresse as $row) {
-	    //Abfrage, ob GPS-Angaben gemacht wurden
+		   'strasse' => $this->strasse,
+		   'nr' => $this->nr,
+		   'adresszusatz' => $this->adresszusatz,
+		   'plz' => $this->plz,
+		   'bezirk' => $this->ort,
+		   'gps' => $this->gps,
+		 ))
+		 ->execute();
+
+	 } else {
+
+	  foreach ($this->resultAdresse as $row) {
+	    // Abfrage, ob GPS-Angaben gemacht wurden
+
 	    if (strlen($this->gps) != 0 && strlen($row->gps) == 0 ) {
-          //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
-	      //Update der Adresse
+        // Ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
+	      // Update der Adresse
 	      $adresse_updated = db_update($this->tbl_adresse)
 	 	     ->fields(array( 'gps' => $this->gps ))
-	        ->condition('ADID', $row->ADID, '=')
-	        ->execute();
+	       ->condition('ADID', $row->ADID, '=')
+	       ->execute();
 	    }
+
 	    $this->adresse = $row->ADID;
 	  }
 	}
 
+
+  $startQuery = $this->start.' '.(!empty($this->zeit_von) ? $this->zeit_von.':01' : '00:00:00');
+  $endeQuery  = (!empty($this->ende) ? $this->ende : '1000-01-01').' '.(!empty($this->zeit_bis) ? $this->zeit_bis.':01' : '00:00:00');
+
 	$this->event_id = db_insert($this->tbl_event)
-   	->fields(array(
+   ->fields(array(
 		'name' => $this->name,
 		'ort' => $this->adresse,
-		'start' => $this->start,
+		'start_ts' => $startQuery,
 		'url' => $this->url,
-		'ende' => $this->ende,
+		'ende_ts' => $endeQuery,
 		'bild' => $this->bild,
 		'kurzbeschreibung' => $this->kurzbeschreibung,
 		'ersteller' => $this->user_id,
-    'zeit_von' => $this->zeit_von,
-    'zeit_bis' => $this->zeit_bis
-	  ))
-	  ->execute();
+    'created' => date('Y-m-d H:i:s', time())
+	 ))
+	 ->execute();
 
 	 // Falls Akteur angegeben wurde:
-    if (isset($this->veranstalter)) {
+    if (!empty($this->veranstalter)) {
 
 	    $akteurevents = db_insert($this->tbl_akteur_events)
    	   ->fields(array(
@@ -594,6 +597,7 @@ Class eventformular extends aae_data_helper {
 	     'EID' => $this->event_id,
 	    ))
 	    ->execute();
+
   	}
 
     if (is_array($this->sparten) && $this->sparten != "") {
@@ -605,12 +609,12 @@ Class eventformular extends aae_data_helper {
 
      $sparte_id = '';
 
- 		 $resultsparte = db_select($this->tbl_sparte, 's')
+ 		 $resultSparte = db_select($this->tbl_sparte, 's')
  		  ->fields('s')
  		  ->condition('KID', $sparte, '=')
  		  ->execute();
 
-  		if ($resultsparte->rowCount() == 0) {
+  		if ($resultSparte->rowCount() == 0) {
       // Tag in DB einfügen
  	  	 $sparte_id = db_insert($this->tbl_sparte)
  		   ->fields(array('kategorie' => $sparte))
@@ -618,7 +622,7 @@ Class eventformular extends aae_data_helper {
 
  		} else {
 
- 		  foreach ($resultsparte as $row) {
+ 		  foreach ($resultSparte as $row) {
  		    $sparte_id = $row->KID;
  		  }
 
@@ -636,8 +640,8 @@ Class eventformular extends aae_data_helper {
  	 }
 
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
-     if (session_status() == PHP_SESSION_NONE) session_start();
-    $_SESSION['sysmsg'][] = 'Das Event wurde erfolgreich erstellt!';
+    if (session_status() == PHP_SESSION_NONE) session_start();
+    drupal_set_message('Das Event wurde erfolgreich erstellt!');
 	  header("Location: Eventprofil/" . $this->event_id);
 
   } // END function event_speichern()
@@ -648,16 +652,17 @@ Class eventformular extends aae_data_helper {
    */
 
   private function eventDisplay() {
-    // Ausgabe des Eventformulars
 
     if (array_intersect(array('administrator'), $user->roles)) {
-      //alle Akteure abfragen, die in DB: nur Admin
+
+      // Zeige Admin alle Akteure
       $this->resultakteure = db_select($this->tbl_akteur, 'a')
         ->fields('a', array( 'AID', 'name' ))
         ->execute();
+
     } else {
 
-      //Akteure abfragen, die in DB und für welche User Schreibrechte hat
+      // Akteure abfragen, die in DB und für welche User Schreibrechte hat
       $user_hat_akteure = db_select($this->tbl_hat_user, 'hu')
        ->fields('hu')
        ->condition('hat_UID', $this->user_id, '=')
@@ -671,7 +676,6 @@ Class eventformular extends aae_data_helper {
        ->condition('AID', $akteur->hat_AID, '=')
        ->execute()
        ->fetchAll();
-
      }
     }
 
@@ -685,13 +689,7 @@ Class eventformular extends aae_data_helper {
      $this->all_sparten[$id] = $sparte;
     }
 
-    $pathThisFile = $_SERVER['REQUEST_URI'];
-
     return $this->render('/templates/eventformular.tpl.php');
-
-   //  ob_start(); // Aktiviert "Render"-modus
-  //  include_once path_to_theme() . '/templates/eventformular.tpl.php';
- //    return ob_get_clean(); // Übergabe des gerenderten "eventformular.tpl.php"
 
   } // END function eventDisplay()
 } // END class eventformular()

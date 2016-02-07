@@ -1,6 +1,7 @@
 # easteasteast
 
-*Deine soziale Stadtteilplattform powered by Drupal.* Alpha, alpha everywhere. If you'd like to join us take a look @ https://leipziger-ecken.de/faq
+*Deine soziale Stadtteilplattform powered by Drupal.*
+Alpha, alpha everywhere. If you'd like to join us take a look @ https://leipziger-ecken.de/faq
 
 ## Installation
 
@@ -9,17 +10,17 @@
 - PHP 5.4 or better
 - Drupal version 7.x (https://www.drupal.org/download) with "CKeditor"-module being installed
 - Imagick
-- MySQL/MariaDB
+- MySQL/MariaDB supporting datetime-fields and -actions (e.g. NOW())
 
 ### Installation via git:
 
-Within your local drupal-copy, clone this repo to '/sites/all/'. The module & theme will now be managable in the backend.
+Within your local Drupal-copy, clone this repo to 'sites/all/'. The module & theme will now be manageable from within Drupal's backend.
 
 ### aae_theme
 
 #### Installation via (S)FTP
 
-- Copy "themes/aaa_theme" to "/drupal/sites/all/themes"
+- Copy "themes/aaa_theme" to "drupal/sites/all/themes"
 - Login to your Drupal-backend
 - Navigate to "Appearence", select "AAE Theme" and click "Enable and set default“ to activate the theme.
 
@@ -39,7 +40,7 @@ Within your local drupal-copy, clone this repo to '/sites/all/'. The module & th
   - Title: <none>
   - Region: AAE Theme > Navigation
 
-- Add (sub)sites to the menu (see Abschlussdokumente/handbuch.pdf)
+- Add (sub)sites and paths (e.g. /events, /akteure) to the menu.
 
 ### aae data
 

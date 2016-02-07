@@ -1,81 +1,80 @@
 <?php
 /**
- * eventloeschen.php löscht ein Event aus der DB
+ * @file eventloeschen.php
+ * Löscht ein Event aus der DB
  */
 
 Class eventloeschen extends aae_data_helper {
 
  public function run(){
 
-//Eingeloggter User
-global $user;
-$user_id = $user->uid;
+  global $user;
+  $user_id = $user->uid;
 
-$okay = 0;
+  $okay = 0;
 
-//EID holen:
-$explodedpath = explode("/", current_path());
-$event_id = $this->clearContent($explodedpath[1]);
+  $explodedpath = explode("/", current_path());
+  $event_id = $this->clearContent($explodedpath[1]);
 
-if (!user_is_logged_in()) {
-  drupal_access_denied();
-}
+  if (!user_is_logged_in()) {
+   drupal_access_denied();
+  }
 
-//Sicherheitsschutz, ob User entsprechende Rechte hat
-$resultAkteurEvent = db_select($this->tbl_akteur_events, 'e')
-  ->fields('e')
-  ->condition('EID', $event_id, '=')
-  ->execute();
-
-foreach ($resultAkteurEvent as $row) {
-
-  $akteur_id = $row->AID;
-
-  //Prüfen ob Schreibrecht vorliegt: ob User zu dem Akteur gehört
-  $resultUser = db_select($this->tbl_hat_user, 'u')
-   ->fields('u')
-   ->condition('hat_AID', $akteur_id, '=')
-   ->condition('hat_UID', $user_id, '=')
+  //Sicherheitsschutz, ob User entsprechende Rechte hat
+  $resultAkteurEvent = db_select($this->tbl_akteur_events, 'e')
+   ->fields('e')
+   ->condition('EID', $event_id, '=')
    ->execute();
 
-  if ($resultUser->rowCount()) {
-	 $okay = 1;
+  foreach ($resultAkteurEvent as $row) {
+
+   $akteur_id = $row->AID;
+
+   //Prüfen ob Schreibrecht vorliegt: ob User zu dem Akteur gehört
+   $resultUser = db_select($this->tbl_hat_user, 'u')
+    ->fields('u')
+    ->condition('hat_AID', $akteur_id, '=')
+    ->condition('hat_UID', $user_id, '=')
+    ->execute();
+
+   if ($resultUser->rowCount()) {
+	  $okay = 1;
+   }
   }
- }
 
- //Abfrage, ob User Ersteller des Events ist:
- $ersteller = db_select($this->tbl_event, 'e')
-  ->fields('e', array('ersteller'))
-  ->condition('ersteller', $user->uid, '=')
-  ->execute();
+  // Abfrage, ob User Ersteller des Events ist:
+  $ersteller = db_select($this->tbl_event, 'e')
+   ->fields('e', array('ersteller'))
+   ->condition('ersteller', $user->uid, '=')
+   ->execute();
 
- if ($ersteller->rowCount()) {
-  $okay = 1;
- }
+  if ($ersteller->rowCount()) {
+   $okay = 1;
+  }
 
-if (!array_intersect(array('administrator'), $user->roles) || !$okay) {
-  drupal_access_denied();
-}
+  if (!array_intersect(array('administrator'), $user->roles) || !$okay) {
+   drupal_access_denied();
+  }
 
 //-----------------------------------
 
-if (isset($_POST['submit'])) {
+  if (isset($_POST['submit'])) {
 
-  $resultEvent = db_select($this->tbl_event, 'e')
-   ->fields('e', array('bild'))
-   ->condition('EID', $event_id, '=')
-   ->execute()
-   ->fetchAssoc();
+   $resultEvent = db_select($this->tbl_event, 'e')
+    ->fields('e', array('bild'))
+    ->condition('EID', $event_id, '=')
+    ->execute()
+    ->fetchAssoc();
 
-  db_delete($this->tbl_akteur_events)
+   db_delete($this->tbl_akteur_events)
     ->condition('EID', $event_id, '=')
     ->execute();
 
-  db_delete($this->tbl_event)
+   db_delete($this->tbl_event)
     ->condition('EID', $event_id, '=')
     ->execute();
 
-  db_delete($this->tbl_event_sparte)
+   db_delete($this->tbl_event_sparte)
    ->condition('hat_EID', $event_id, '=')
    ->execute();
 
@@ -87,11 +86,11 @@ if (isset($_POST['submit'])) {
    }
 
    if (session_status() == PHP_SESSION_NONE) session_start();
-   $_SESSION['sysmsg'][] = 'Das Event wurde gelöscht.';
+   drupal_set_message('Das Event wurde gelöscht.');
    header("Location: ".base_path()."Events");
    // Und "Tschö mit ö..."!
 
-} else {
+ } else {
 
  $pathThisFile = $_SERVER['REQUEST_URI'];
 

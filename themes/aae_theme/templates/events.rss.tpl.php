@@ -1,27 +1,31 @@
-<?php //const string RFC822 = "D, d M y H:i:s O"; ?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-    <title>Leipziger Ecken</title>
+    <title>Leipziger Ecken RSS Feed</title>
     <link>https://www.leipziger-ecken.de</link>
-    <description>(D)eine Stadtteilplattform für den Leipziger Osten</description>
+    <atom:link href="https://www.leipziger-ecken.de/events/rss" rel="self" type="application/rss+xml" />
+    <description>Alle kommenden Events im Leipziger Osten, powered by Leipziger Ecken.</description>
     <language>de-de</language>
-    <pubDate>01.01.2016</pubDate>
-    <lastBuildDate><?= date(DATE_ATOM, mktime(0, 0, 0, 7, 1, 2000)); ?></lastBuildDate>
+    <pubDate><?php $rNow = new DateTime('01.01.2016'); echo $rNow->format(DateTime::RFC822); ?></pubDate>
+    <lastBuildDate><?php $rNow = new DateTime('NOW'); echo $rNow->format(DateTime::RFC822); ?></lastBuildDate>
     <docs>https://www.leipziger-ecken.de/events/rss</docs>
     <generator>AAE Data</generator>
-    <managingEditor>info@leipziger-ecken.de</managingEditor>
-    <webMaster>info@leipziger-ecken.de.de</webMaster>
+    <managingEditor>info@leipziger-ecken.de (Matthias Petzold)</managingEditor>
+    <webMaster>info@leipziger-ecken.de.de (Matthias Petzold)</webMaster>
+    <image>
+     <url>https://leipziger-ecken.de<?= base_path().path_to_theme(); ?>/logo.png</url>
+     <title>Leipziger Ecken RSS Feed</title>
+     <link>https://leipziger-ecken.de/events/rss</link>
+    </image>
 
 <?php foreach ($resultEvents as $event) : ?>
-<?php $explodeDate = explode("-",$event->start); ?>
+<?php $start = new DateTime($event->start_ts);
+      $created = new DateTime($event->created); ?>
     <item>
-    <title><?= htmlspecialchars($event->name); ?> am <?= $explodeDate[0].'.'.$explodeDate[1].'.'.$explodeDate[2]; ?></title>
-    <link>https://leipziger-ecken.de<?= base_path(); ?>eventprofil/<?= $event->EID; ?></link>
-    <description>
-    <?= htmlspecialchars($this->kurzbeschreibung); ?>
-    </description>
-    <category>Event</category>
-    <image><?= $event->bild; ?></image>
+     <title><?= htmlspecialchars($event->name); ?> am <?= $start->format('d.m.Y'); ?></title>
+     <link>https://leipziger-ecken.de<?= base_path(); ?>eventprofil/<?= $event->EID; ?></link>
+     <description><?= htmlspecialchars($event->kurzbeschreibung); ?></description>
+     <category>Event</category>
+     <pubDate><?= $created->format(DateTime::RFC822); ?></pubDate>
     </item>
 <?php endforeach; ?>
 

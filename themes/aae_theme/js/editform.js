@@ -11,8 +11,20 @@ $(document).ready(function(){
     }
   });
 
-  $("#eventStartdatumInput").Zebra_DatePicker({'readonly_element' : false, format : 'd-m-Y'});
-  $("#eventEnddatumInput").Zebra_DatePicker({'readonly_element' : false, format : 'd-m-Y'});
+  $("#eventStartdatumInput").Zebra_DatePicker({'readonly_element' : false, format : 'Y-m-d'});
+  $("#eventEnddatumInput").Zebra_DatePicker({'readonly_element' : false, format : 'Y-m-d'});
+
+  if ($('#currentPic').length){
+   $('#currentPic a').click(function(){
+     var r = confirm("Bild wirklich löschen?");
+     if (r == true) {
+      $('#currentPic img').fadeOut('slow');
+      $('#currentPic a').fadeOut('slow');
+      $('form').append('<input type="hidden" name="removeCurrentPic" value="'+$('input[name="oldPic"]').attr('value')+'" />');
+     }
+     return false;
+   });
+  }
 
   $('form').submit(function(){
     $('#beschreibung').html(CKEDITOR.instances.beschreibung.getData());
@@ -28,7 +40,7 @@ $(document).ready(function(){
     $.get("../ajax/getAkteurAdresse/" + actionUrl, function(data) {
 
      if (data.substring(2) !== '') {
-      var obj = jQuery.parseJSON(data.substring(2));
+      var obj = jQuery.parseJSON(data);
       $('#StrasseInput').attr('value',obj.strasse);
       $('#NrInput').attr('value',obj.nr);
       $('#AdresszusatzInput').attr('value',obj.adresszusatz);
@@ -50,8 +62,9 @@ $(document).ready(function(){
     var strasse = $('#StrasseInput').val();
 
     if (strasse.slice(-1) == '.') {
-      // Replace "xystr." with "xystrasse"
+      // Replace characters to optimize query-results
       strasse = strasse.replace('.', 'asse');
+      strasse = strasse.replace('ß', 'ss');
     }
 
     $('#GPSInput').val('Ermittle Geo-Koordinaten...');

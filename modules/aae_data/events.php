@@ -1,271 +1,256 @@
 <?php
 /**
- * events.php listet alle Events auf.
- *
- * TODO: Vereinheitlichung des Filter abrufens bzw. Anpassung des
- * Paginator's an (bedingt durch Filter) veränderte Eventanzahlen
+ * @file events.php
+ * Listet alle Events auf.
+ * Filterbar nach Datum, Tags, keywords, Bezirken und Zeitraum
  */
 
 Class events extends aae_data_helper {
 
  var $presentationMode;
- var $maxEvents;
- var $sparten;
- var $tag;
- var $dateint;
+ var $getOldEvents;
+ var $hasFilters = false;
+ var $filter = array();
+ var $filteredEventIds = array();
+ var $filteredTags = array();
+ var $filteredBezirke = array();
+ var $numFilters = 0;
 
  public function run(){
 
-  $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) ? $this->clearContent($_GET['presentation']) : 'timeline');
-  // Available: "timeline"[default] & "kalender"
-  $this->tag = (isset($_GET['day']) && !empty($_GET['day']) ? $this->clearContent($_GET['day']) : '');
+  $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation'])) ? $this->clearContent($_GET['presentation']) : 'timeline';
+
+  if (isset($_GET['day']) && !empty($_GET['day'])) {
+   $this->filter['day'] = $this->clearContent($_GET['day']);
+  }
+
+  if (isset($_GET['filterTags']) && !empty($_GET['filterTags'])) {
+   $this->filter['tags'] = $_GET['filterTags'];
+  }
+
+  if (isset($_GET['filterKeyword']) && !empty($_GET['filterKeyword'])) {
+   $this->filter['keyword'] = $this->clearContent($_GET['filterKeyword']);
+  }
+
+  if (isset($_GET['filterBezirke']) && !empty($_GET['filterBezirke'])) {
+   $this->filter['bezirke'] = $_GET['filterBezirke'];
+  }
 
 
   // TODO: limit
 
   $this->maxEvents = '16';
 
+
   // Paginator: Auf welcher Seite befinden wir uns?
   $explodedPath = explode("/", $this->clearContent(current_path()));
-  $currentPageNr = ($explodedPath[1] == '' ? '1' : $explodedPath[1]);
+  $currentPageNr = ($explodedPath[1] == '') ? '1' : $explodedPath[1];
 
-  $itemsCount = db_query("SELECT COUNT(EID) AS count FROM " . $this->tbl_event)->fetchField();
-
-  // Paginator: Wie viele Seiten gibt es?
-  $maxPages = ceil($itemsCount / $this->maxEvents);
-
-  if ($currentPageNr > $maxPages) {
-   // Diese URL gibt es nicht, daher zurück...
-   header("Location: Events/" . $maxPages);
-  } else if ($currentPageNr > 1) {
-   $start = $this->maxEvents * ($currentPageNr - 1);
-   $ende = $this->maxEvents * $currentPageNr;
-  } else {
-   $start = 0;
-   $ende = $this->maxEvents;
-  }
+  $this->getOldEvents = ($explodedPath[1] == 'old') ? true : false;
 
   //-----------------------------------
-
-  $pathThisFile = $_SERVER['REQUEST_URI'];
 
   $resultTags = $this->getAllTags();
   $resultBezirke = $this->getAllBezirke();
 
   // Filter nach Tags, falls gesetzt
 
-  $filterTags = array();
+  if (isset($this->filter['tags'])){
 
-  if (isset($_GET['tags']) && !empty($_GET['tags'])){
+   $sparten = db_select($this->tbl_event_sparte, 'hs')
+    ->fields('hs', array('hat_EID'));
 
-     $fSparten = db_select($this->tbl_event_sparte, 'hs')
-     ->fields('hs', array('hat_EID'));
+   $and = db_and();
 
-     $and = db_and();
+   foreach ($this->filter['tags'] as $tag) {
 
-     foreach($_GET['tags'] as $tag) {
+    $this->numFilters++;
+    $tag = $this->clearContent($tag);
+    $this->filteredTags[$tag] = $tag;
+    $and->condition('hat_KID', $tag, '=');
 
-      $tag = $this->clearContent($tag);
-      $filterTags[$tag] = $tag;
-      $and->condition('hat_KID', $tag, '=');
+   }
 
-     }
+   $filterSparten = $sparten->condition($and)
+    ->execute()
+    ->fetchAll();
 
-     $filterSparten = $fSparten->condition($and)
-      ->execute()
-      ->fetchAssoc();
+   foreach ($filterSparten as $sparte){
+    $this->filteredEventIds[] = $sparte->hat_EID;
+   }
 
-     array_unique($filterSparten); // Lösche doppelte Einträge
+  } // end Tag-Filter
 
-  }
+  if (isset($this->filter['bezirke'])){
 
-  if ($this->presentationMode == 'kalender') {
+   foreach ($this->filter['bezirke'] as $bezirk) {
 
-    $modulePath = drupal_get_path('module', 'aae_data');
-    include_once $modulePath . '/kalender.php';
+    $this->numFilters++;
+    $bezirkId = $this->clearContent($bezirk);
+    $this->filteredBezirke[$bezirkId] = $bezirkId;
 
-    $kal = new kalender(true);
-    $resultKalender = $kal->show();
-
-  }
-
-  if (!empty($this->tag)) {
-
-    // DB-Abfrage aller Events, die an diesem Tag stattfinden
-
-    $resultEvents = db_select($this->tbl_event, 'e')
-     ->fields('e')
-     ->condition('start', $this->tag.'%', 'LIKE')
-     ->orderBy('name', 'ASC')
+    $adressen = db_select($this->tbl_adresse, 'a')
+     ->fields('a', array('ADID'))
+     ->condition('bezirk', $bezirkId, '=')
      ->execute()
      ->fetchAll();
 
-    //Temporary Workaround to sort events by date:
-    foreach ($resultEvents as $event) {
-    // 1 Split strings by year, month, date
-    // 2 Merge single strings for year, month, date together ($datesum)
-    // 3 sort array reultsEvents by $datesum
-    $datestringstart = preg_replace("/[^0-9]/", "", $event->start);
-    $datestring = preg_replace("/[^0-9]/", "", $event->start);
-    $datestringyear = substr($datestringstart, 0, 4);
-    $datestringten = substr($datestring, 0, 8);
-
-    $datestringyearhalf = (int) substr($datestringyear, 2, 4);
-
-    if($datestringyearhalf < 13) {
-      $datestringyear = substr($datestringten, 4, 4);
-      $datestringmonth = substr($datestringten, 2,2);
-      $datestringday = substr($datestringten, 0,2);
-    } else {
-      $datestringyear = $datestringyear;
-      $datestringmonth = substr($datestringten, 4,2);
-      $datestringday = substr($datestringten, 6,2);
-    }
-
-    $datesum = "{$datestringyear}{$datestringmonth}{$datestringday}";
-
-    // Hack: add variable to $resultEvents-object
-    $event->datestringstart = $datestringten;
-    $event->dateyear = $datestringyear;
-    $event->datemonth = $datestringmonth;
-    $event->dateday = $datestringday;
-    $event->datesum = (int) $datesum;
-    }
-
-  } else {
-
-   // Auswahl aller Events in alphabetischer Reihenfolge
-   $rEvents = db_select($this->tbl_event, 'a')
-    ->fields('a');
-
-   if (isset($filterSparten) && !empty($filterSparten)) {
-
-     $or = db_or();
-
-     foreach ($filterSparten as $id => $sparte) {
-       $or->condition('EID', $sparte, '=');
-     }
-
-     $rEvents->condition($or);
-
-  } else if (isset($filterSparten) && empty($filterSparten)) {
-
-      // Keine Akteure mit entsprechendem Tag gefunden, daher negatives resultEvents
-
-      $rEvents->condition('name', 'xlyjdflafdSDas', '=');
-
-  }
-
-  $resultEvents = $rEvents
-   ->execute()
-   ->fetchAll();
-
-   $counter = 0;
-
-   foreach ($resultEvents as $event) {
-
-     //Selektion der Tags
-     $resultSparten = db_select($this->tbl_event_sparte, 's')
-      ->fields('s', array( 'hat_KID' ))
-      ->condition('hat_EID', $event->EID, '=')
-      ->execute();
-
-     $countSparten = $resultSparten->rowCount();
-     $sparten = array();
-
-     if ($countSparten != 0) {
-
-      foreach ($resultSparten as $row) {
-       $resultSpartenName = db_select($this->tbl_sparte, 'sp')
-       ->fields('sp')
-       ->condition('KID', $row->hat_KID, '=')
-       ->execute();
-
-       foreach ($resultSpartenName as $row1) {
-        $sparten[] = $row1;
-       }
-      }
-     }
-
-     $akteurId = db_select($this->tbl_akteur_events, 'ae')
-      ->fields('ae', array('AID'))
-      ->condition('EID', $event->EID, '=')
-      ->execute()
-      ->fetchAssoc();
-
-     $resultAkteur = db_select($this->tbl_akteur, 'a')
-      ->fields('a',array('AID','name','bild'))
-      ->condition('AID', $akteurId['AID'], '=')
+    foreach ($adressen as $adresse) {
+     $filterBezirke = db_select($this->tbl_event, 'e')
+      ->fields('e', array('EID'))
+      ->condition('ort', $adresse->ADID)
       ->execute()
       ->fetchAll();
 
-
-    //Workaround to sort events by date:
-    // 1 Split strings by year, month, date
-    // 2 Merge single strings for year, month, date together ($datesum)
-    // 3 sort array reultsEvents by $datesum
-    $datestringstart = preg_replace("/[^0-9]/", "", $event->start);
-    $datestring = preg_replace("/[^0-9]/", "", $event->start);
-    $datestringyear = substr($datestringstart, 0, 4);
-    $datestringten = substr($datestring, 0, 8);
-
-    $datestringyearhalf = (int) substr($datestringyear, 2, 4);
-
-    if($datestringyearhalf < 13) {
-      $datestringyear = substr($datestringten, 4, 4);
-      $datestringmonth = substr($datestringten, 2,2);
-      $datestringday = substr($datestringten, 0,2);
-    } else {
-      $datestringyear = $datestringyear;
-      $datestringmonth = substr($datestringten, 4,2);
-      $datestringday = substr($datestringten, 6,2);
+     foreach ($filterBezirke as $bezirk) {
+      $this->filteredEventIds[] = $bezirk->EID;
+     }
     }
+   }
+  } // end Bezirke-Filter
 
-    $datesum = "{$datestringyear}{$datestringmonth}{$datestringday}";
+  if (isset($this->filter['keyword'])) {
 
-    // Hack: add variable to $resultEvents-object
-    $resultEvents[$counter] = (array)$resultEvents[$counter];
-    $resultEvents[$counter]['tags'] = $sparten;
-    $resultEvents[$counter]['akteur'] = $resultAkteur;
-    $resultEvents[$counter]['datestringstart'] = $datestringten;
-    $resultEvents[$counter]['dateyear'] = $datestringyear;
-    $resultEvents[$counter]['datemonth'] = $datestringmonth;
-    $resultEvents[$counter]['dateday'] = $datestringday;
-    //$resultEvents[$counter]['dateinthalf'] = $datestringyearhalf;
-    $resultEvents[$counter]['datesum'] = (int) $datesum;
-    $resultEvents[$counter] = (object)$resultEvents[$counter];
+   $this->numFilters++;
 
-    $counter++;
+   $filterKeyword = db_select($this->tbl_event, 'e')
+    ->fields('e', array('EID'))
+    ->condition('kurzbeschreibung', '%'.$this->filter['keyword'].'%', 'LIKE') // ONLY BY BESCHREIBUNGSTEXT :(
+    ->execute()
+    ->fetchAll();
 
-    }
+   foreach ($filterKeyword as $keyword){
+    $this->filteredEventIds[] = $keyword->EID;
+   }
 
+  } // end Keyword-Filter
+
+  if (isset($this->filter['day'])) {
+
+   $this->numFilters++;
+
+   $resultDays = db_select($this->tbl_event, 'e')
+    ->fields('e', array('EID'))
+    ->condition('start_ts', $this->filter['day'].'%', 'LIKE')
+    ->execute()
+    ->fetchAll();
+
+   foreach ($resultDays as $day){
+    $this->filteredEventIds[] = $day->EID;
+   }
+  } // end Day-Filter
+
+  // Get the actual results
+  $this->filteredEventIds = $this->getDuplicates($this->filteredEventIds, $this->numFilters);
+
+  $this->hasFilters = ($this->numFilters >= 1) ? true : false;
+
+  // Auswahl aller Events in Reihenfolge ihres Starts
+  $rEvents = db_select($this->tbl_event, 'a')
+   ->fields('a')
+   ->orderBy('start_ts', 'ASC');
+
+  if ($this->getOldEvents) {
+
+   $rEvents->where('DATE(start_ts) < CURDATE()');
+   $rEvents->orderBy('start_ts', 'DESC');
+
+  } else if (!$this->getOldEvents && !$this->hasFilters) {
+   $rEvents->where('DATE(start_ts) >= CURDATE()');
   }
 
-  // OLD SORTING FUNCTION
-  // function sortEvents($a,$b){
-  //  $a = intval(strrev(str_replace("-","",$a->start)));
-  //  $b = intval(strrev(str_replace("-","",$b->start)));
-  //  if ($a == $b) return 0;
-  //  else if ($a < $b) return -1;
-  //  else return 1;
-  // }
-  // usort($resultEvents, 'sortEvents');
+  if ($this->hasFilters && !empty($this->filteredEventIds)){
 
+   $or = db_or();
 
-  // NEW SORTING FUNCTION (Juliane, 15.01.2016)
-  // sort array $resultEvents by datesum
+   foreach ($this->filteredEventIds as $event){
+    $or->condition('EID', $event);
+   }
+
+   $rEvents->condition($or);
+
+ } else if ($this->hasFilters && empty($this->filteredEventIds)) {
+
+   // No results :/
+   $rEvents->condition('name', 'assdf55asdf216we');
+
+ }
+
+  $resultEvents = $rEvents->execute()->fetchAll();
+
+  $counter = 0;
+
+  if ($this->presentationMode == 'calendar') {
+
+   $modulePath = drupal_get_path('module', 'aae_data');
+   include_once $modulePath . '/kalender.php';
+
+   $kal = new kalender();
+   $resultKalender = $kal->show();
+
+  } else {
+
+  // Add specific data from other tables... we don't need no joins, yah'
+
   foreach ($resultEvents as $event) {
-    $datesort[] = $event->datesum;
+
+    //Selektion der Tags
+    $resultSparten = db_select($this->tbl_event_sparte, 's')
+     ->fields('s', array( 'hat_KID' ))
+     ->condition('hat_EID', $event->EID, '=')
+     ->execute();
+
+    $countSparten = $resultSparten->rowCount();
+    $sparten = array();
+
+    if ($countSparten != 0) {
+
+     foreach ($resultSparten as $row) {
+      $resultSpartenName = db_select($this->tbl_sparte, 'sp')
+      ->fields('sp')
+      ->condition('KID', $row->hat_KID, '=')
+      ->execute();
+
+      foreach ($resultSpartenName as $row1) {
+       $sparten[] = $row1;
+      }
+     }
+    }
+
+    $akteurId = db_select($this->tbl_akteur_events, 'ae')
+     ->fields('ae', array('AID'))
+     ->condition('EID', $event->EID, '=')
+     ->execute()
+     ->fetchObject();
+
+    $resultAkteur = db_select($this->tbl_akteur, 'a')
+     ->fields('a',array('AID','name','bild'))
+     ->condition('AID', $akteurId->AID)
+     ->execute()
+     ->fetchAll();
+
+   // Hack: add variable to $resultEvents-object
+   $resultEvents[$counter] = (array)$resultEvents[$counter];
+   $resultEvents[$counter]['tags'] = $sparten;
+   $resultEvents[$counter]['akteur'] = $resultAkteur;
+   $resultEvents[$counter]['start'] = new DateTime($event->start_ts);
+   $resultEvents[$counter]['ende'] = new DateTime($event->ende_ts);
+   $resultEvents[$counter] = (object)$resultEvents[$counter];
+
+   $counter++;
+
+   }
   }
-  array_multisort($datesort, SORT_DESC, $resultEvents);
-  $resultEventsBool = array_multisort($datesort, SORT_DESC, $resultEvents);
-  // END SORTING FUNCTION
+
+  $resultTagCloud = db_query_range('SELECT COUNT(*) AS count, s.KID, s.kategorie FROM {aae_data_sparte} s INNER JOIN {aae_data_event_hat_sparte} hs ON s.KID = hs.hat_KID GROUP BY hs.hat_KID HAVING COUNT(*) > 0 ORDER BY count DESC', 0, 8);
+
+  $itemsCount = db_query("SELECT COUNT(EID) AS count FROM " . $this->tbl_event)->fetchField();
+
 
   // Ausgabe der Events
   ob_start(); // Aktiviert "Render"-modus
   include_once path_to_theme() . '/templates/events.tpl.php';
   return ob_get_clean(); // Übergabe des gerenderten "events.tpl"
-
 
  } // end function run()
 
@@ -276,14 +261,28 @@ Class events extends aae_data_helper {
 
    $resultEvents = db_select($this->tbl_event, 'e')
     ->fields('e')
+    ->orderBy('start_ts', 'ASC')
+    ->where('DATE(start_ts) >= CURDATE()')
     ->execute()
     ->fetchAll();
 
-  // sortieren
-
-   ob_start(); // Aktiviert "Render"-modus
+   ob_start();
    include_once path_to_theme() . '/templates/events.rss.tpl.php';
    exit();
 
- }
+ } // end function rss()
+
+ private function getDuplicates($ids, $num) {
+
+  $result = array();
+  $counts =  array_count_values($ids);
+
+  foreach ($counts as $id => $count){
+    if ($count >= $num) $result[$id] = $id;
+  }
+
+  return (empty($result)) ? NULL : $result;
+
+ } // end private function getDuplicates
+
 } // end class events

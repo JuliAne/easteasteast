@@ -1,15 +1,6 @@
-<?php if (!empty($_SESSION['sysmsg'])) : ?>
-<div id="alert">
-  <?php foreach ($_SESSION['sysmsg'] as $msg): ?>
-    <?= $msg; ?>
-  <?php endforeach; ?>
-  <a href="#" class="close">x</a>
-</div>
-<?php unset($_SESSION['sysmsg']); endif; ?>
-
 <div class="row">
 
-<h3 class="large-4 columns"><strong><?= $itemsCount; ?></strong> Akteure</h3>
+ <h3 class="large-4 columns"><strong><?= $itemsCount; ?></strong> Akteure</h3>
 
 <?php if(user_is_logged_in()) : ?>
   <a class="medium button hollow right" href="<?= base_path(); ?>Akteurformular">+ Akteur hinzufügen</a><br />
@@ -17,18 +8,18 @@
   <a class="login_first medium button hollow right" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Akteur hinzufügen (Login)</a><br />
 <?php endif; ?>
 
-</div>
+ </div>
 <div class="divider"></div>
 
 <div id="filter" style="padding-top:15px;" class="row">
 
  <form id="filterForm" method="get" action="<?= base_path(); ?>akteure/<?= $currentPageNr; ?>">
 
- <div class="large-1 columns" id="removeFilter">
+ <div class="large-1 columns" id="removeFilter" style="margin-top:14px;">
   <a class="small secondary button right" style="padding:4px 10px;" href="<?= base_path(); ?>akteure" title="Alle Filter entfernen">x</a>
  </div>
 
- <div class="large-3 small-6 columns">
+ <div class="large-4 small-6 columns">
 
    <label for="tag">Nach Tags filtern:</label>
    <select name="tags[]" id="eventSpartenInput" multiple="multiple" class="tokenize">
@@ -39,7 +30,7 @@
 
  </div>
 
- <div class="large-2 small-6 columns">
+ <div class="large-1 small-6 columns">
   <label for="display_number">Anzahl:</label>
   <select name="display_number" id="displayNumber">
    <option value="10" <?= ($this->maxAkteure == '10' ? 'selected="selected"' : ''); ?>>10</option>
@@ -57,7 +48,7 @@
   </ul>
  </div>
 
- <input type="submit" class="large-2 columns medium button" style="margin-top: 15px;" id="sendFilters" name="submit" value="Filter anwenden">
+ <input type="submit" class="large-2 large-offset-2 columns medium button" style="margin-top: 25px;" id="sendFilters" name="submit" value="Filter anwenden">
 
 </form>
 

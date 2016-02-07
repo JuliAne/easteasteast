@@ -16,13 +16,13 @@
 
     <div id="share" class="popup large-3 columns">
 
-      <a target="_blank" href="https://twitter.com/intent/tweet?text=<?= $base_url.'/'.current_path(); ?>" title="Auf Twitter teilen" class="twitter button"><img alt="icons/twitter.png" src="http://fadeco.info/system/cms/themes/defaults/img/icons/twitter.png"><span></span></a>
+      <a target="_blank" href="https://twitter.com/intent/tweet?text=<?= $base_url.'/'.current_path(); ?>" title="Auf Twitter teilen" class="twitter button"><img alt="Twitter" src="<?= base_path().$theme_path; ?>/img/social-twitter.svg"><span></span></a>
 
-      <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= $base_url.'/'.current_path(); ?>" title="Auf Facebook teilen" class="fb button"><img alt="icons/fb.png" src="http://fadeco.info/system/cms/themes/defaults/img/icons/fb.png"><span></span></a>
+      <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= $base_url.'/'.current_path(); ?>" title="Auf Facebook teilen" class="fb button"><img alt="Facebook" src="<?= base_path().$theme_path; ?>/img/social-facebook.svg"><span></span></a>
 
-      <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="Auf Google+ teilen" class="g_plus button"><img alt="icons/g_plus.png" src="http://fadeco.info/system/cms/themes/defaults/img/icons/g_plus.png"><span></span></a>
+      <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="Auf Google+ teilen" class="g_plus button"><img alt="Google+" src="<?= base_path().$theme_path; ?>/img/social-googleplus-outline.svg"><span></span></a>
 
-      <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $title; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="Teile auf Diaspora / Friendica"><img alt="" src="https://sharetodiaspora.github.io/favicon.png"></a>
+      <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $title; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="Teile auf Diaspora / Friendica"><img alt="Federated networks" src="<?= base_path().$theme_path; ?>/img/social-diaspora.png"></a>
 
     </div>
    </div>
@@ -33,8 +33,23 @@
  <div id="headline" class="row">
 
   <div class="large-8 columns">
+    <a href="<?= $node_url; ?>" title="<?= $title; ?>">
+    <?php
 
-   <h2><a href="<?= $node_url; ?>" title="<?= $title; ?>"><?= $title; ?></a></h2>
+      // Formatiere die Headline auf ein humanes Niveau
+      $exploded = explode(" ", $title);
+      $counter = 0;
+      $res = array();
+      foreach ($exploded as $n => $headline) {
+       if (!empty($res) && strlen($res[$counter].$headline) < 25) {
+        $res[$counter] .= ' '.$headline;
+       } else {
+        $counter++;
+        $res[$counter] = $headline;
+       }
+      }
+
+    foreach ($res as $r) { echo '<h2>'.$r.'</h2>';  } ?></a>
    <h3>Von <strong><?= $name; ?></strong></h3>
 
   </div>

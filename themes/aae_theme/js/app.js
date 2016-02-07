@@ -6,8 +6,10 @@ $(document).ready(function() {
  $(document).scroll(function(){
   if($(window).scrollTop()>0){
    $('#mainnav').addClass('scrolled');
+   $('.pace-progress').addClass('pace-scrolled');
   } else {
    $('#mainnav').removeClass('scrolled');
+   $('.pace-progress').removeClass('pace-scrolled');
   }
  });
 
@@ -59,20 +61,20 @@ $(document).ready(function() {
  });
 
  $('#alert-box .close').click(function(){
-  $('#alert-box').fadeOut('fast');
+  $('#alert-box').fadeOut('slow');
  });
 
  $('#presentationFilter li a').click(function(){
   var that = $(this);
   $('#presentationFilter').find('.active').removeClass('active').addClass('secondary');
   that.removeClass('secondary').addClass('active');
-  return false;
+  //return false;
  });
 
  $('#filterForm').submit(function(){
-  var presentationValue = $('#presentationFilter').find('.active').attr('name');
+  //var presentationValue = $('#presentationFilter').find('.active').attr('name');
   //var displayNumber
-   $('<input />').attr('type', 'hidden').attr('name', 'presentation').attr('value', presentationValue).appendTo('#filterForm');
+  // $('<input />').attr('type', 'hidden').attr('name', 'presentation').attr('value', presentationValue).appendTo('#filterForm');
  });
 
  $('#project-contact a').click(function(){
@@ -104,7 +106,7 @@ $('#calendar .next').click(function(){
    $('#aae_calendar').html(data);
    setHandlers();
  })
- 
+
  return false;
 });
 

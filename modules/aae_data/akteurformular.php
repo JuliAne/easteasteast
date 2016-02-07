@@ -12,7 +12,7 @@
 
 Class akteurformular extends aae_data_helper {
 
-  //$tbl_akteur
+  // $tbl_akteur
   var $name = "";
   var $adresse = "";
   var $email = "";
@@ -23,8 +23,10 @@ Class akteurformular extends aae_data_helper {
   var $bild = "";
   var $beschreibung = "";
   var $oeffnungszeiten = "";
+  var $created = "";
+  var $modified = "";
 
-  //$tbl_adresse
+  // $tbl_adresse
   var $strasse = "";
   var $nr = "";
   var $adresszusatz = "";
@@ -32,7 +34,7 @@ Class akteurformular extends aae_data_helper {
   var $ort = "";
   var $gps = "";
 
-  //Tags:
+  // $tbl_tag
   var $sparten = "";
   var $all_sparten = ''; // Ermöglicht Tokenizer-plugin im Frontend
 
@@ -41,8 +43,7 @@ Class akteurformular extends aae_data_helper {
   var $fehler = array();
   var $freigabe = true; // Variable zur Freigabe: muss true sein
 
-  //Variablen, welche Texte in den Formularfeldern halten ("Placeholder")
-  //$tbl_akteur
+  // $tbl_akteur
   var $ph_name = "Name des Vereins/ der Organisation";
   var $ph_email = "E-mail Addresse";
   var $ph_telefon = "Telefonnummer";
@@ -53,7 +54,7 @@ Class akteurformular extends aae_data_helper {
   var $ph_beschreibung = "Beschreibung";
   var $ph_oeffnungszeiten = "Öffnungszeiten";
 
-  //$tbl_adresse
+  // $tbl_adresse
   var $ph_strasse = "Strasse";
   var $ph_nr = "Hausnummer";
   var $ph_adresszusatz = "Adresszusatz";
@@ -61,7 +62,7 @@ Class akteurformular extends aae_data_helper {
   var $ph_ort = "Bezirk";
   var $ph_gps = "GPS-Addresskoordinaten";
 
-  //$tbl_akteur_hat_Sparte
+  // $tbl_akteur_hat_Sparte
   var $countsparten = "";
   var $sparte_id = "";
 
@@ -69,24 +70,24 @@ Class akteurformular extends aae_data_helper {
   var $target = "";
   var $modulePath;
   var $removedTags;
+  var $removedPic;
 
   //-----------------------------------
 
   function __construct($action) {
 
-    //Sicherheitsschutz
-    if (!user_is_logged_in()) {
-      drupal_access_denied();
-    }
+   if (!user_is_logged_in()) {
+    drupal_access_denied();
+   }
 
-    $this->modulePath = drupal_get_path('module', 'aae_data');
-    global $user;
-    $this->user_id = $user->uid;
+   $this->modulePath = drupal_get_path('module', 'aae_data');
+   global $user;
+   $this->user_id = $user->uid;
 
-    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
-    if ($action == 'update') {
-      $this->target = 'update';
-    }
+   // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
+   if ($action == 'update') {
+    $this->target = 'update';
+   }
   } // END Constructor
 
   /**
@@ -104,12 +105,12 @@ Class akteurformular extends aae_data_helper {
 
     if (isset($_POST['submit'])) {
       if ($this->akteurCheckPost()) {
-	    if ($this->target == 'update') {
+	     if ($this->target == 'update') {
 	      $this->akteurUpdaten();
-	    } else {
-		  $this->akteurSpeichern();
-	    }
-        $output = $this->akteurDisplay();
+	     } else {
+		    $this->akteurSpeichern();
+	     }
+       $output = $this->akteurDisplay();
       } else {
 	    $output = $this->akteurDisplay();
       }
@@ -138,7 +139,7 @@ Class akteurformular extends aae_data_helper {
     $this->url = $this->clearContent($_POST['url']);
     $this->ansprechpartner = $this->clearContent($_POST['ansprechpartner']);
     $this->funktion = $this->clearContent($_POST['funktion']);
-    if (isset($_POST['bild'])) $this->bild = $_POST['bild']; // EXTEND!
+    if (isset($_POST['bild'])) $this->bild = $_POST['bild'];
     $this->beschreibung = $this->clearContent($_POST['beschreibung']);
     $this->oeffnungszeiten = $this->clearContent($_POST['oeffnungszeiten']);
     $this->strasse = $this->clearContent($_POST['strasse']);
@@ -149,6 +150,7 @@ Class akteurformular extends aae_data_helper {
     $this->gps = $this->clearContent($_POST['gps']);
     $this->sparten = $_POST['sparten'];
     $this->removedTags = $_POST['removedTags'];
+    $this->removedPic = $_POST['removeCurrentPic'];
 
     //-------------------------------------
 
@@ -198,7 +200,7 @@ Class akteurformular extends aae_data_helper {
      $this->freigabe = false;
     }
 
-    if (strlen($this->beschreibung) > 700) {
+    if (strlen($this->beschreibung) > 1200) {
 	   $this->fehler['beschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
 	   $this->freigabe = false;
     }
@@ -290,17 +292,18 @@ Class akteurformular extends aae_data_helper {
 
 	 $this->akteur_id = db_insert($this->tbl_akteur)
    	->fields(array(
-	  'name' => $this->name,
-		'adresse' => $this->adresse,
-		'email' => $this->email,
-		'telefon' => $this->telefon,
-		'url' => $this->url,
-		'ansprechpartner' => $this->ansprechpartner,
-		'funktion' => $this->funktion,
-		'bild' => $this->bild,
-		'beschreibung' => $this->beschreibung,
-		'oeffnungszeiten' => $this->oeffnungszeiten,
-		'ersteller' => $this->user_id,
+	   'name' => $this->name,
+		 'adresse' => $this->adresse,
+		 'email' => $this->email,
+		 'telefon' => $this->telefon,
+		 'url' => $this->url,
+		 'ansprechpartner' => $this->ansprechpartner,
+		 'funktion' => $this->funktion,
+		 'bild' => $this->bild,
+		 'beschreibung' => $this->beschreibung,
+		 'oeffnungszeiten' => $this->oeffnungszeiten,
+		 'ersteller' => $this->user_id,
+     'created' => date('Y-m-d H:i:s', time())
 	  ))
 	  ->execute();
 
@@ -350,12 +353,10 @@ Class akteurformular extends aae_data_helper {
 	  }
 	 }
 
-  // Gebe auf der nächsten Seite eine Erfolgsmeldung aus...
+   // Gebe auf der nächsten Seite eine Erfolgsmeldung aus...
 
-  if (session_status() == PHP_SESSION_NONE) session_start();
-
-  $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich erstellt!';
-
+   if (session_status() == PHP_SESSION_NONE) session_start();
+   drupal_set_message('Ihr Akteurprofil wurde erfolgreich erstellt!');
    header("Location: Akteurprofil/" . $this->akteur_id);
 
   } // END function akteurSpeichern()
@@ -390,7 +391,7 @@ Class akteurformular extends aae_data_helper {
      ->fields('a', array('adresse'))
      ->condition('AID', $this->akteur_id, '=')
      ->execute()
-     ->fetchAll();
+     ->fetchObject();
 
 	  $updateAdresse = db_update($this->tbl_adresse)
 	  	->fields(array(
@@ -401,27 +402,42 @@ Class akteurformular extends aae_data_helper {
 		  'bezirk' => $this->ort,
 		  'gps' => $this->gps,
 		))
-    ->condition('ADID', $akteurAdresse[0]->adresse, '=')
+    ->condition('ADID', $akteurAdresse->adresse, '=')
 		->execute();
+
+    // remove current picture manually
+
+    if (!empty($this->removedPic)) {
+
+     $b = end(explode('/', $this->removedPic));
+
+     if (file_exists($this->short_bildpfad.$b)) {
+      unlink($this->short_bildpfad.$b);
+     }
+
+     if ($_POST['oldPic'] == $this->removedPic) $this->bild = '';
+
+    }
 
 	  $updateAkteur = db_update($this->tbl_akteur)
      ->fields(array(
-	   'name' => $this->name,
-		 'email' => $this->email,
-		 'telefon' => $this->telefon,
-		 'url' => $this->url,
-		 'ansprechpartner' => $this->ansprechpartner,
-		 'funktion' => $this->funktion,
-		 'bild' => $this->bild,
-		 'beschreibung' => $this->beschreibung,
-		 'oeffnungszeiten' => $this->oeffnungszeiten,
+	    'name' => $this->name,
+		  'email' => $this->email,
+		  'telefon' => $this->telefon,
+		  'url' => $this->url,
+		  'ansprechpartner' => $this->ansprechpartner,
+		  'funktion' => $this->funktion,
+		  'bild' => $this->bild,
+		  'beschreibung' => $this->beschreibung,
+		  'oeffnungszeiten' => $this->oeffnungszeiten,
+      'modified' => date('Y-m-d H:i:s', time())
 	   ))
-	  ->condition('AID', $this->akteur_id, '=')
-	  ->execute();
+	   ->condition('AID', $this->akteur_id, '=')
+	   ->execute();
 
      // Update Tags
 
-     if (is_array($this->sparten) && $this->sparten != "") {
+     if (is_array($this->sparten) && !empty($this->sparten)) {
 
       foreach ($this->sparten as $sparte) {
     	// Tag bereits in DB?
@@ -472,7 +488,7 @@ Class akteurformular extends aae_data_helper {
 
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
-    $_SESSION['sysmsg'][] = 'Ihr Akteurprofil wurde erfolgreich bearbeitet!';
+    drupal_set_message('Ihr Akteurprofil wurde erfolgreich bearbeitet!');
    	header("Location: ".base_path()."Akteurprofil/" . $this->akteur_id);
 
   } // END function akteurUpdaten()
@@ -482,24 +498,13 @@ Class akteurformular extends aae_data_helper {
    */
   private function akteurGetFields() {
 
-    //Auswahl der Daten des ausgewählten Akteurs:
+    // Auswahl der Daten des ausgewählten Akteurs:
     $resultakteur = db_select($this->tbl_akteur, 'c')
-      ->fields('c', array(
-	    'name',
-	    'adresse',
-	    'email',
-	    'telefon',
-	    'url',
-	    'ansprechpartner',
-	    'funktion',
-	    'bild',
-	    'beschreibung',
-	    'oeffnungszeiten',
-	  ))
-	  ->condition('AID', $this->akteur_id, '=')
-    ->execute();
+     ->fields('c')
+	   ->condition('AID', $this->akteur_id, '=')
+     ->execute();
 
-    //Speichern der Daten in den Arbeitsvariablen
+    // Speichern der Daten in den Arbeitsvariablen
     foreach ($resultakteur as $row) {
 	   $this->name = $row->name;
      $this->adresse = $row->adresse;
@@ -511,23 +516,25 @@ Class akteurformular extends aae_data_helper {
 	   $this->bild = $row->bild;
 	   $this->beschreibung = $row->beschreibung;
 	   $this->oeffnungszeiten = $row->oeffnungszeiten;
+     $this->created = new DateTime($row->created);
+     $this->modified = new DateTime($row->modified);
     }
 
     //Adressdaten aus DB holen:
-    $resultadresse = db_select($this->tbl_adresse, 'd')
-      ->fields('d', array(
+    $resultAdresse = db_select($this->tbl_adresse, 'd')
+     ->fields('d', array(
 	    'strasse',
 	    'nr',
 	    'adresszusatz',
 	    'plz',
 	    'bezirk',
 	    'gps'
-	  ))
-	  ->condition('ADID', $this->adresse, '=')
-    ->execute();
+	   ))
+	   ->condition('ADID', $this->adresse, '=')
+     ->execute();
 
-    //Speichern der Adressdaten in den Arbeitsvariablen
-    foreach ($resultadresse as $row) {
+    // Speichern der Adressdaten in den Arbeitsvariablen
+    foreach ($resultAdresse as $row) {
 	   $this->strasse = $row->strasse;
 	   $this->nr = $row->nr;
 	   $this->adresszusatz = $row->adresszusatz;
@@ -536,7 +543,7 @@ Class akteurformular extends aae_data_helper {
 	   $this->gps = $row->gps;
     }
 
-    $resultsparten = db_select($this->tbl_hat_sparte, 'hs')
+    $resultSparten = db_select($this->tbl_hat_sparte, 'hs')
      ->fields('hs')
      ->condition('hat_AID', $this->akteur_id, '=')
      ->execute()
@@ -544,7 +551,7 @@ Class akteurformular extends aae_data_helper {
 
     $sparten = array();
 
-    foreach($resultsparten as $sparte) {
+    foreach($resultSparten as $sparte) {
 
      $sparten[] = db_select($this->tbl_sparte, 's')
      ->fields('s')
@@ -564,7 +571,7 @@ Class akteurformular extends aae_data_helper {
    */
   private function akteurDisplay() {
 
-    $this->resultbezirke = db_select($this->tbl_bezirke, 'b')
+    $this->resultBezirke = db_select($this->tbl_bezirke, 'b')
      ->fields('b', array( 'BID', 'bezirksname' ))
      ->execute();
 
@@ -572,8 +579,6 @@ Class akteurformular extends aae_data_helper {
      ->fields('s')
      ->execute()
      ->fetchAll();
-
-    $pathThisFile = $_SERVER['REQUEST_URI'];
 
     ob_start(); // Aktiviert "Render"-modus
     include_once path_to_theme() . '/templates/akteurformular.tpl.php';

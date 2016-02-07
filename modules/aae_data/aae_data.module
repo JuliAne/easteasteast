@@ -3,13 +3,13 @@
  $modulePath = drupal_get_path('module', 'aae_data');
  include_once $modulePath . '/aae_data_helper.php';
 
-/** @function hook_cron()
-*
+/*
+* Implements hook_data_cron()
 * Cronjob, der von Drupal automatisch aufgerufen wird.
-*/
+
 function aae_data_cron() {
   //....
-}
+} */
 
 function aae_data_user_login(&$edit, $account){
   drupal_set_message('Willkommen, <strong>'.$account->name.'</strong>!');
@@ -17,11 +17,45 @@ function aae_data_user_login(&$edit, $account){
 
 function aae_data_user_logout($account) {
 
-  // Funktioniert nicht, weil Drupal Sessions löscht :(
+  // Funktioniert nicht, weil Drupal Sessions löscht...workaround?!
 
   if (session_status() == PHP_SESSION_NONE) session_start();
+  drupal_set_message('Ausgeloggt. Komm` bald wieder!');
+}
 
-  $_SESSION['sysmsg'][] = 'Ausgeloggt. Komm` bald wieder!';
+/**
+ * Implements hook_block_info().
+ */
+
+function aae_data_block_info() {
+
+  $blocks['aae_footer_desc'] = array(
+    'info' => 'Kurzer Intro-/Beschreibungstext für den Footer',
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => TRUE,
+    'region' => 'footer'
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function aae_data_block_view($delta = '') {
+
+  $block = array();
+
+  switch ($delta) {
+
+    case 'aae_footer_desc':
+
+     $block['content'] = '';
+     break;
+  }
+
+  return $block;
+
 }
 
 /**
@@ -31,6 +65,7 @@ function aae_data_user_logout($account) {
  */
 function aae_data_menu() {
   $items = array();
+
   //Menuitem "Akteure"
   $items['Akteure'] = array(
     'title' => 'Akteure',
@@ -85,7 +120,10 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
-  //Menuitem "Events"
+  //Menuitem  "Events/old"
+  //...$items['Events/old']
+
+  //Menuitem "Events/RSS"
   $items['Events/rss'] = array(
     'title' => 'Events',
     'page callback' => 'events_rss',
@@ -156,15 +194,11 @@ function aae_data_menu() {
  */
 
 function ics_download() {
-
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/ics_download.php';
 
-  $path = current_path();
-  $path_alias = drupal_lookup_path('alias', $path);
-
-  return $profileHTML;
-
+  $ics = new ics_download();
+  return $ics->run();
 }
 
 /**
@@ -347,7 +381,7 @@ function ajax_requests($id) {
  * Funktion zum Einlesen aller Stadtteile
  * Wird einmalig aufgerufen in aae_data_install.php
  */
-function insert_bezirke() {
+function aae_install_insert_bezirke() {
   $bezirke = array(
     'Zentrum (Mitte)',
     'Zentrum-Ost (Mitte)',
@@ -424,12 +458,10 @@ function insert_bezirke() {
 
   $i = 0;
   while ($i < count($bezirke)) {
-	$insert_bezirke = db_insert("aae_data_bezirke")
-      ->fields(array(
-        'bezirksname' => $bezirke[$i],
-	  ))
+	 $insert_bezirke = db_insert('aae_data_bezirke')
+    ->fields(array('bezirksname' => $bezirke[$i]))
 	  ->execute();
-	$i++;
+	 $i++;
   }
   return $insert_bezirke;
 }

@@ -96,14 +96,10 @@ $rAkteure = db_select($this->tbl_akteur, 'a')
 
  }
 
- $resultAkteure = $rAkteure->orderBy('name', 'ASC') // *
-  ->range($start, $ende)
+ $resultAkteure = $rAkteure->range($start, $ende)
+  ->orderBy('created', 'DESC')
   ->execute()
   ->fetchAll();
-
-  // *TODO: Nach neuesten Akteuren filtern. Benötigt "created"-Eintrag in DB,
-  // welcher allerdings (da Drupal's DB-Schema kein 'timestamp' supported)
-  // manuell eingetragen werden muss :(
 
   // Get Bezirk
   foreach ($resultAkteure as $counter => $akteur) {
@@ -112,18 +108,18 @@ $rAkteure = db_select($this->tbl_akteur, 'a')
     ->fields('ad', array('bezirk','gps'))
     ->condition('ADID', $akteur->adresse, '=')
     ->execute()
-    ->fetchAssoc();
+    ->fetchObject();
 
    $bezirk = db_select($this->tbl_bezirke, 'b')
     ->fields('b')
-    ->condition('BID', $adresse['bezirk'], '=')
+    ->condition('BID', $adresse->bezirk, '=')
     ->execute()
-    ->fetchAssoc();
+    ->fetchObject();
 
    // Hack: add variable to $resultAkteure-object
    $resultAkteure[$counter] = (array)$resultAkteure[$counter];
-   $resultAkteure[$counter]['bezirk'] = $bezirk['bezirksname'];
-   $resultAkteure[$counter]['gps'] = $adresse['gps'];
+   $resultAkteure[$counter]['bezirk'] = $bezirk->bezirksname;
+   $resultAkteure[$counter]['gps'] = $adresse->gps;
    $resultAkteure[$counter] = (object)$resultAkteure[$counter];
 
   }
@@ -148,8 +144,6 @@ $rAkteure = db_select($this->tbl_akteur, 'a')
   }
 
   $resulttags = $this->getAllTags();
-
-  // TODO return $this->render();
 
   ob_start(); // Aktiviert "Render"-modus
   include_once path_to_theme().'/templates/akteure.tpl.php';

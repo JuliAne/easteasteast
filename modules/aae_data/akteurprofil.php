@@ -21,62 +21,58 @@ class aae_akteurprofil extends aae_data_helper {
   ->execute();
 
   // Anzeige Edit-Button?
-  $hat_recht = $resultUser->rowCount();
+  if ($resultUser->rowCount() == 1 || array_intersect(array('administrator'), $user->roles)) $hat_recht = 1;
+
 
   //Auswahl der Daten des Akteurs
-  $resultakteur = db_select($this->tbl_akteur, 'a')
+  $resultAkteur = db_select($this->tbl_akteur, 'a')
    ->fields('a')
    ->condition('AID', $akteur_id, '=')
    ->execute()
    ->fetchAll();
 
-  if (empty($resultakteur)) {
+  if (empty($resultAkteur)) {
   // Akteur nicht vorhanden, beame ihn zur Akteure-Seite
 
    if (session_status() == PHP_SESSION_NONE) session_start();
-   $_SESSION['sysmsg'][] = 'Dieses Akteurprofil konnte nicht gefunden werden...';
-   header("Location: ".$base_path."/Akteure");
+   drupal_set_message('Dieses Akteurprofil konnte nicht gefunden werden...');
+   header("Location: ".$base_path."akteure");
+
+ } else {
+
+  foreach ($resultAkteur as $row) {
+
+   $aResult['row1'] = $row;
+   $resultAdresse = db_select($this->tbl_adresse, 'b')
+    ->fields('b')
+    ->condition('ADID', $row->adresse, '=');
+
+   $aResult['adresse'] = $resultAdresse->execute()->fetchObject();
+
   }
-
- foreach ($resultakteur as $row) {
-
-  $aResult['row1'] = $row;
-  $resultAdresse = db_select($this->tbl_adresse, 'b')
-   ->fields('b')
-	 ->condition('ADID', $row->adresse, '=')
-	 ->execute()
-   ->fetchAll();
-
-  foreach ($resultAdresse as $row2) {
-    $aResult['row2'] = $row2; // Kleiner Fix, damit $row2 als Objekt abrufbar
-  }
-
-}
 
   // Ziehe Informationen über Events vom Akteur
-  $events = db_select($this->tbl_akteur_events, 'ae')
-  ->fields('ae')
-  ->condition('AID', $akteur_id, '=')
-  ->execute()
-  ->fetchAll();
 
-  foreach ($events as $event) {
+  $events = db_query('
+   SELECT * FROM {aae_data_event} AS e JOIN {aae_data_akteur_hat_event} AS he
+   WHERE he.EID = e.EID AND he.AID = :aid
+   ORDER BY start_ts DESC',
+   array(':aid' => $akteur_id));
 
-   $aResult['events'][] = db_select($this->tbl_event, 'e')
-   ->fields('e')
-   ->condition('EID', $event->EID, '=')
-   ->execute()
-   ->fetchAll();
-
-  }
+  $resultEvents = $events->fetchAll();
 
   // Generiere Mapbox-taugliche Koordinaten, übergebe diese ans Frontend
 
-  if (!empty($aResult['row2']->gps)) {
+  if (!empty($aResult['adresse']->gps)) {
 
-    $koordinaten = $aResult['row2']->gps;
+    $koordinaten = $aResult['adresse']->gps;
+    $this->addMapContent($koordinaten, array(
+     'gps' => $koordinaten,
+     'name' => $aResult['adresse']->name,
+     'strasse' => $aResult['adresse']->strasse,
+     'nr' => $aResult['adresse']->nr
+    ));
 
-    $this->addMapContent($koordinaten, array('gps' => $koordinaten, 'name' => $aResult['row1']->name, 'strasse' => $aResult['row2']->strasse, 'nr' => $aResult['row2']->nr));
   }
 
   $kategorien = db_select($this->tbl_hat_sparte, 'a')
@@ -102,6 +98,7 @@ class aae_akteurprofil extends aae_data_helper {
  include_once path_to_theme() . '/templates/single_akteur.tpl.php';
  return ob_get_clean(); // Übergabe des gerenderten "single_akteur.tpl"
 
+ }
  }
 } // end class aae_akteurprofil
 

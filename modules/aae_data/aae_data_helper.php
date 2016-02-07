@@ -33,6 +33,36 @@
 
    var $servercheck;
 
+   var $monat_short = array(
+     '01' => 'Jan',
+     '02' => 'Feb',
+     '03' => 'Mär',
+     '04' => 'Apr',
+     '05' => 'Mai',
+     '06' => 'Jun',
+     '07' => 'Jul',
+     '08' => 'Sep',
+     '09' => 'Aug',
+     '10' => 'Okt',
+     '11' => 'Nov',
+     '12' => 'Dez',
+   );
+
+   var $monat_lang = array(
+    '01' => 'Januar',
+    '02' => 'Februar',
+    '03' => 'März',
+    '04' => 'April',
+    '05' => 'Mai',
+    '06' => 'Juni',
+    '07' => 'Juli',
+    '08' => 'August',
+    '09' => 'September',
+    '10' => 'Oktober',
+    '11' => 'November',
+    '12' => 'Dezember',
+   );
+
    /**
     *  Einfache Funktion zum Filtern von POST- und GET-Daten ("escape-function")
     *  Da Drupal automatisch PDO verwendet, brauchen wir hier nicht allzu viel.
@@ -74,7 +104,7 @@
     * Dickes fettes TODO... (bisher ungenutzte Funktion)
     */
 
-   protected function render($tpl) {
+  protected function render($tpl) {
 
     ob_start(); // Aktiviert "Render"-modus
     include_once path_to_theme().$tpl;

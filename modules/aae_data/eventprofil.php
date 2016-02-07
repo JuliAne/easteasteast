@@ -25,6 +25,7 @@ class aae_eventprofil extends aae_data_helper {
   $okay = ""; // Gibt an, ob Zugang erlaubt wird oder nicht
 
   foreach ($resultAkteurId as $row) {
+
    $akteurId = $row->AID; //Akteur speichern
 
    //Prüfen ob Schreibrecht vorliegt: ob User zu dem Akteur gehört
@@ -50,24 +51,27 @@ class aae_eventprofil extends aae_data_helper {
 
  if ($ersteller->rowCount() == 1 || array_intersect(array('administrator'), $user->roles)) $okay = 1;
 
- $resultEvent = db_select($this->tbl_event, 'a')
-  ->fields('a')
-  ->condition('EID', $eventId, '=')
-  ->execute()
-  ->fetchAll();
+  $event = db_select($this->tbl_event, 'a')
+   ->fields('a')
+   ->condition('EID', $eventId, '=');
+
+  $resultEvent = $event->execute()->fetchAssoc();
 
   if (empty($resultEvent)) {
   // Event nicht vorhanden
 
    if (session_status() == PHP_SESSION_NONE) session_start();
-   $_SESSION['sysmsg'][] = 'Dieses Event konnte nicht gefunden werden...';
-   header("Location: ".$base_path."/Event");
+   drupal_set_message('Dieses Event konnte nicht gefunden werden...');
+   header("Location: ".$base_path."/events");
 
   }
 
-  foreach ($resultEvent as $event) {
-   $resultEvent = $event; // Kleiner Fix, um EIN Objekt zu generieren
-  }
+  // Hack: add times to $resultEvent-object
+  $resultEvent = (object)$resultEvent;
+  $resultEvent->start = new DateTime($resultEvent->start_ts);
+  $resultEvent->ende = new DateTime($resultEvent->ende_ts);
+  $resultEvent->created = new DateTime($resultEvent->created);
+  $resultEvent = (object)$resultEvent;
 
   $akteurId = db_select($this->tbl_akteur_events, 'ae')
    ->fields('ae', array('AID'))

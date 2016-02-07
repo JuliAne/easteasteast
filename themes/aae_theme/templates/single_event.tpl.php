@@ -1,12 +1,3 @@
-<?php if (!empty($_SESSION['sysmsg'])) : ?>
-<div id="alert">
-  <?php foreach ($_SESSION['sysmsg'] as $msg): ?>
-    <?= $msg; ?>
-  <?php endforeach; ?>
-  <a href="#" class="close">x</a>
-</div>
-<?php unset($_SESSION['sysmsg']); endif; ?>
-
 <div id="eventprofil">
 
 <?php
@@ -20,7 +11,7 @@
 </header>
 
 <div class="aaeActionBar">
- <div class="row">
+ <div class="row" style="margin: 0 auto;">
  <?php if ($okay) : ?>
   <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>eventedit/<?= $resultEvent->EID; ?>" title="Event bearbeiten"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" />Bearbeiten</a></div>
  <?php endif; ?>
@@ -38,15 +29,13 @@
 
        <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="Auf Google+ teilen" class="g_plus button"><img alt="Google+" src="<?= base_path().path_to_theme(); ?>/img/social-googleplus-outline.svg"><span></span></a>
 
-       <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $resultEvent->name; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="Teile auf Diaspora / Friendica"><img alt="" src="https://sharetodiaspora.github.io/favicon.png"></a>
+       <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $resultEvent->name; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="Teile auf Diaspora / Friendica"><img alt="Federated networks" src="<?= base_path().path_to_theme(); ?>/img/social-diaspora.png"></a>
     </div>
    </div>
   </div>
  </div><!-- /.aaeActionBar -->
 
  <div id="project" class="row">
-
- <?php $start = explode("-", $resultEvent->start); ?>
 
   <div id="event-data" class="large-4 columns">
     <div class="pcard">
@@ -58,13 +47,15 @@
 
    <div id="project-info" class="pcard" style="margin-top:5px;">
      <p><span><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" /></span>
-     <a href="<?= base_path(); ?>events/?day=<?= $resultEvent->start; ?>"><?= $start[0].'.'.$start[1].'.'.$start[2]; ?></a>
-     <?php if (!empty($resultEvent->ende)) echo ' - <a href="'.base_path().'events/?day='.$resultEvent->ende.'">'.$resultEvent->ende.'</a>'; ?>
-     <br /><?= $resultEvent->zeit_von; ?><?php  if (!empty($resultEvent->zeit_bis)) echo ' - '.$resultEvent->zeit_bis.' Uhr'; ?>
+     <strong style="color:grey;">Start: </strong><a href="<?= base_path(); ?>events/?day=<?= $resultEvent->start->format('Y-m-d'); ?>"><?= $resultEvent->start->format('d.m.Y'); ?></a>
+     <?= ($resultEvent->start->format('s') == '01' ? $resultEvent->start->format('H:i').' Uhr' : ''); ?>
+     <?php if ($resultEvent->ende->format('Ymd') !== '10000101' || $resultEvent->ende->format('s') == '01') : ?>
+       <br /><strong style="color:grey">Bis: </strong>
+       <?= ($resultEvent->ende->format('Ymd') !== '10000101' ? '<a href="'.base_path().'events/?day='.$resultEvent->ende->format('Y-m-d').'">'.$resultEvent->ende->format('d.m.Y').'</a>' : ''); ?>
+       <?= ($resultEvent->ende->format('s') == '01' ? ' '.$resultEvent->ende->format('H:i').' Uhr' : ''); ?>
+    <?php endif; ?>
     </p>
    </div>
-
-<div class="divider" style="padding: 20px 0;"></div>
 
 </div>
 
@@ -72,7 +63,7 @@
  <h1><?= $resultEvent->name; ?><br />
  <?php if (!empty($sparten)) : ?>
    <?php foreach ($sparten as $row) : ?>
-     <a style="font-size:0.4em;" href="<?= base_path(); ?>events/?tags[]=<?= $row->KID; ?>" title="Zeige alle mit <?= $row->kategorie; ?> getaggten Events">#<?= strtolower($row->kategorie); ?></a>
+     <a style="font-size:0.4em;" href="<?= base_path(); ?>events/?filterTags[]=<?= $row->KID; ?>" title="Zeige alle mit '<?= $row->kategorie; ?>' getaggten Events">#<?= strtolower($row->kategorie); ?></a>
    <?php endforeach; ?>
  <?php endif; ?></h1>
 
@@ -83,32 +74,30 @@
 
  <h4 style="padding: 10px 0;">Veranstalter</h4>
 
- <?php foreach ($ersteller as $row2) : ?>
-   <p><strong>Erstellt von:</strong> <?= $row2->name; ?></p>
- <?php endforeach; ?>
+  <?php foreach ($ersteller as $row2) : ?>
+   <p><strong>Erstellt von:</strong> <?= $row2->name; ?> am <?= $resultEvent->created->format('d.m.Y'); ?></p>
+  <?php endforeach; ?>
 
-   <?php if(empty($resultAkteur)) : ?>
-   <p><strong>Privater Veranstaltater</strong></p>
+   <?php if (empty($resultAkteur)) : ?>
+   <p><strong>Privater Veranstalter</strong></p>
    <?php else : ?>
    <p><strong>Akteur:</strong> <a href="<?= base_path(); ?>Akteurprofil/<?= $resultAkteur['AID']; ?>" title="Profil von <?= $resultAkteur['name']; ?> besuchen"><?= $resultAkteur['name']; ?></a></p>
    <?php endif; ?>
 
-   <?php if(!empty($resultAdresse)) : ?>
+   <?php if (!empty($resultAdresse)) : ?>
     <p><strong>Ort:</strong>
 
-    <?php if($resultAdresse->strasse != "" && $resultAdresse->nr != "") : ?>
+    <?php if (!empty($resultAdresse->strasse) && !empty($resultAdresse->nr)) : ?>
        <?= $resultAdresse->strasse.' '.$resultAdresse->nr; ?>
     <?php endif; ?>
 
-   <?php if($resultAdresse->plz != "") : ?>
+   <?php if (!empty($resultAdresse->plz)) : ?>
       - <?= $resultAdresse->plz; ?> Leipzig
    <?php endif; ?>
 
-   <?php  if($resultBezirk->bezirksname != "") : ?>
-      <?= $resultBezirk->bezirksname; ?>
+   <?php if (!empty($resultBezirk->bezirksname)) : ?>
+    <?= $resultBezirk->bezirksname; ?>
    <?php endif; ?>
-
-   <?php //if($resultAdresse->gps != "") : ?>
 
   </p><?php endif; ?>
 

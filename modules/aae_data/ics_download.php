@@ -1,29 +1,25 @@
 <?php
 /**
- * Moeglichkeit die einzelnen Events als .ics-Datei (iCal-Format)
+ * Moeglichkeit, die einzelnen Events als .ics-Datei (iCal-Format)
  * herunterzuladen.
+ * TODO: Missing Paramter "Categories"???
  */
 
-global $user;
+Class ics_download extends aae_data_helper {
 
-$pathThisFile = $_SERVER['REQUEST_URI'];
+ public function run(){
 
-// EID holen
-$path = current_path();
-$explodedpath = explode("/", $path);
-$eventID = $explodedpath[1]; // $this->clearContent!!!!
-$tbl_event = "aae_data_event";
-$tbl_adresse = "aae_data_adresse";
+  global $user;
 
-$resultEvent = db_select($tbl_event, 'e')
- ->fields('e', array(
-  'start',
-	'ende',
-	'name'
-  ))
-  ->condition('EID', $eventID.'%', 'LIKE')
-  ->orderBy('name', 'ASC')
-  ->execute();
+  $pathThisFile = $_SERVER['REQUEST_URI'];
+
+  $explodedpath = explode("/", current_path());
+  $eventID = $this->clearContent($explodedpath[1]);
+
+  $resultEvent = db_select($this->tbl_event, 'e')
+   ->fields('e')
+   ->condition('EID', $eventID)
+   ->execute();
 
   $var = null;
   $event = null;
@@ -36,50 +32,42 @@ $resultEvent = db_select($tbl_event, 'e')
   $var .= "BEGIN:VEVENT\n";
 
   foreach ($resultEvent as $row) {
-   $start = $row->start;
-	 $ende = $row->ende;
-	 $event = $row->name;
+   $start = new DateTime($row->start_ts);
+	 $ende  = new DateTime($row->ende_ts);
+	 $name = $row->name;
 	 $ort = $row->ort;
 	 $eid = $row->EID;
    $beschreibung = $row->kurzbeschreibung;
   }
 
-  $resultAdresse = db_select($tbl_adresse, 'a')
+  $resultAdresse = db_select($this->tbl_adresse, 'a')
    ->fields('a', array(
     'strasse',
 	  'nr',
 	  'adresszusatz',
 	  'plz',
-	))
-  ->condition('ADID', $ort, "=")
-  ->execute();
+	 ))
+   ->condition('ADID', $ort)
+   ->execute();
 
-  $var .= "UID:" . makeiCalFormat($start) . makeiCalFormat($ende) . $eid . "@leipziger-ecken.de\n";
-  $var .= "DTSTART:" . makeiCalFormat($start) . "\n";
-  $var .= "DTEND:" . makeiCalFormat($ende) . "\n";
-  $var .= "SUMMARY:" . $event . "\n";
+  $var .= "UID:". $eid . "@leipziger-ecken.de\n";
+  $var .= "DTSTART:" . $start->format('Ymd\THis') . "\n";
+  $var .= "DTEND:" . $ende->format('Ymd\THis') . "\n";
+  $var .= "SUMMARY:" . $name . " am ". $start->format('d.m.Y') ."\n";
   $var .= "DESCRIPTION:" . $beschreibung . "\n";
-
   foreach ($resultAdresse as $row) {
     $ad = $row->strasse . ' ' . $row->nr . '\; ' . $row->plz . ' Leipzig';
   }
   $var .= "LOCATION:" . $ad . "\n";
   $var .= "END:VEVENT\n";
+  $var .= "END:VCALENDAR\n";
 
   header('Content-Type: text/plain');
   header('Content-Length: ' . strlen($var));
-  header('Content-Disposition: attachment; filename="' . $event . '.ics"');
-  print $var;
+  header('Content-Disposition: attachment; filename="' . $name . '.ics"');
 
-/**
- * Datumsformatierung fuer iCal
- */
-function makeiCalFormat($datum) {
-  //yyyy-mm-dd hh:mm DB (ist)
-  //yyyymmddThhmmss iCal (soll)
-  $datum = str_replace(" ", "T", $datum);
-  $datum = str_replace("-", "", $datum);
-  $datum = str_replace(":", "", $datum);
-  $datum .= "00";
-  return $datum;
+  echo $var;
+  exit();
+
+ }
 }
