@@ -10,7 +10,8 @@
   <?php if ($hat_recht): ?>
   <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>akteuredit/<?= $akteur_id; ?>" title="Akteur bearbeiten"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" />Bearbeiten</a></div>
   <?php endif; ?>
-  <div class="large-3 columns right" style="text-align: right;">
+  <div class="large-4 columns right" style="text-align: right;">
+   <a href="<?= base_path(); ?>vcard_download/<?= $aResult['row1']->AID; ?>" title="Akteur als .vcard exportieren">Export (VCard)</a>
    <a href="https://leipziger-ecken.de/contact" title="Das Profil wurde unbefugt erstellt? Melden Sie sich hier."><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" />Melden</a>
    <a href="#share" class="popup-link" title="Akteursseite in den sozialen Netzwerken posten"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" />Teilen</a>
    <div id="share" class="popup large-3 columns">
@@ -29,25 +30,16 @@
  </div>
 </div><!-- /.aaeActionBar -->
 
-<?php if (!empty($_SESSION['sysmsg'])) : ?>
-<div id="alert">
-  <?php foreach ($_SESSION['sysmsg'] as $msg): ?>
-    <?= $msg; ?>
-  <?php endforeach; ?>
-  <a href="#" class="close">x</a>
-</div>
-<?php unset($_SESSION['sysmsg']); endif; ?>
+<div id="project" class="row">
 
-			<div id="project" class="row">
+ <aside class="left large-4 columns">
 
-			 <aside class="left large-4 columns">
-
-			  <div class="pcard">
-			   <header <?php if ($aResult['row1']->bild != '') echo 'style="background-image:url('.$aResult['row1']->bild.');"'; ?>>
-					<?php if ($aResult['row1']->bild != '') echo '<img src="'.$aResult['row1']->bild.'" style="visbility:hidden;" />';
-					      else echo '<img src="'.base_path().path_to_theme().'/img/project_bg.png" style="visibility:hidden;"/>';	?>
-				 </header>
-			  </div>
+  <div class="pcard">
+   <header <?php if ($aResult['row1']->bild != '') echo 'style="background-image:url('.$aResult['row1']->bild.');"'; ?>>
+  	<?php if ($aResult['row1']->bild != '') echo '<img src="'.$aResult['row1']->bild.'" style="visbility:hidden;" />';
+	        else echo '<img src="'.base_path().path_to_theme().'/img/project_bg.png" style="visibility:hidden;"/>';	?>
+	 </header>
+	</div>
 
 			  <div id="project-info" class="pcard">
 				 <?php if (!empty($aResult['row1']->oeffnungszeiten)) : ?>

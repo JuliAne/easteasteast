@@ -469,7 +469,7 @@ transform: rotate(-10deg);
 
 .pcard {
   background-color: #fff;
-  box-shadow: 0 0 2px #909090;
+  box-shadow: 0 1px 1px #9f9c9c;
   transition: 0.3s box-shadow;
 }
 
@@ -483,11 +483,11 @@ transform: rotate(-10deg);
 }
 
 .pcard:hover {
- box-shadow: 0 0 2px #989797;
+ box-shadow: 0 1px 2px #989797;
 }
 
 .pcard:hover header {
- background-size: 110%;
+ background-size: 115%;
 }
 
 .pcard header {
@@ -499,6 +499,8 @@ transform: rotate(-10deg);
 
 .pcard header a {
  color: #fff;
+ text-transform: uppercase;
+ text-shadow: 0 0 3px rgba(0,0,0,0.6);
 }
 
 .pcard header img.barrierefrei {
@@ -628,7 +630,7 @@ section#journal .large-8.large-offset-2.columns br:after {
 /*AKTEURE section settings*/
 
 #akteure .pcard {
-  width: 22%;
+  width: 30%;
   margin-left: 2.333%;
   float: none;
   display: inline-block;
@@ -835,6 +837,7 @@ section#journal .large-8.large-offset-2.columns br:after {
   position: absolute;
   padding-top: 0;
   width: 100%;
+  left: 0;
 }
 
 .singlesite #footer:before {
@@ -849,11 +852,12 @@ section#journal .large-8.large-offset-2.columns br:after {
 }
 
 .singlesite #footer .row {
+  margin:0 auto;
   margin-top: 15px;
   margin-bottom:15px;
   position: relative;
   background: none;
-  width: 100%;
+  width:auto;
 }
 
 #footer .divider, .singlesite #footer .divider {

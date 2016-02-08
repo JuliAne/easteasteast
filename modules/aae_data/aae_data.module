@@ -168,10 +168,19 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
-  //Menuitem "Tag"
+  //Menuitem "ICS-Download"
   $items['ics_download/%'] = array(
     'title' => '',
     'page callback' => 'ics_download',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
+
+  //Menuitem "ICS-Download"
+  $items['vcard_download/%'] = array(
+    'title' => '',
+    'page callback' => 'vcard_download',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
@@ -199,6 +208,18 @@ function ics_download() {
 
   $ics = new ics_download();
   return $ics->run();
+}
+
+/**
+ * Gibt Akteursdaten im .vcf-Format aus ("VCard")
+ */
+
+function vcard_download() {
+  $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/vcard_download.php';
+
+  $vcard = new vcard_download();
+  return $vcard->run();
 }
 
 /**

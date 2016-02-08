@@ -8,63 +8,86 @@
   <a class="login_first medium button hollow right" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Akteur hinzufügen (Login)</a><br />
 <?php endif; ?>
 
- </div>
+</div>
 <div class="divider"></div>
 
-<div id="filter" style="padding-top:15px;" class="row">
+<div id="akteure" class="row" style="padding-top:15px;">
 
- <form id="filterForm" method="get" action="<?= base_path(); ?>akteure/<?= $currentPageNr; ?>">
+ <div id="filter" class="large-3 offset-large-1 columns right">
 
- <div class="large-1 columns" id="removeFilter" style="margin-top:14px;">
-  <a class="small secondary button right" style="padding:4px 10px;" href="<?= base_path(); ?>akteure" title="Alle Filter entfernen">x</a>
+ <div class="large-12 columns" id="removeFilter">
+  <h4 class="left">Filter</h4>
+  <a class="small button right hide-for-medium" style="padding:4px 10px;margin-left:5px;" href="#" title="Zeige Filter" onclick="javascript:$('#filter .large-12').slideDown(400);">&#x25BE;</a>
+  <a class="small secondary button right" style="padding:4px 10px;" href="<?= base_path(); ?>akteure" title="Alle Filter entfernen">X</a>
+  <div class="divider"></div>
  </div>
 
- <div class="large-4 small-6 columns">
+ <form id="filterForm" method="get" action="<?= base_path(); ?>akteure">
+  <div class="large-12 columns">
+   <label for="filterKeyword">Schlagwort:</label>
+   <input name="filterKeyword" id="filterKeywordInput" type="text" <?= (isset($this->filter['keyword']) ? 'value="'.$this->filter['keyword'].'"' : ''); ?>/>
+  </div>
 
-   <label for="tag">Nach Tags filtern:</label>
-   <select name="tags[]" id="eventSpartenInput" multiple="multiple" class="tokenize">
-   <?php foreach ($resulttags as $row) : ?>
-     <option value="<?= $row->KID; ?>"<?php echo ($filterTags[$row->KID] == $row->KID ? ' selected="selected"' : ''); ?>><?= $row->kategorie; ?></option>
+  <div class="large-12 columns">
+   <label for="filterTags">Tags:</label>
+   <select name="filterTags[]" id="eventSpartenInput" multiple="multiple" class="tokenize">
+   <?php foreach ($resultTags as $tag) : ?>
+    <option value="<?= $tag->KID; ?>"<?php echo ($filteredTags[$tag->KID] == $tag->KID ? ' selected="selected"' : ''); ?>><?= $tag->kategorie; ?></option>
    <?php endforeach; ?>
    </select>
+  </div>
 
- </div>
+  <div class="large-12 columns">
+   <label for="filterBezirke">Bezirke:</label>
+   <select name="filterBezirke[]" id="eventBezirkInput" multiple="multiple" class="tokenize">
+   <?php foreach ($resultBezirke as $bezirk) : ?>
+    <option value="<?= $bezirk->BID; ?>"<?php echo ($this->filteredBezirke[$bezirk->BID] == $bezirk->BID ? ' selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
+   <?php endforeach; ?>
+   </select>
+  </div>
 
- <div class="large-1 small-6 columns">
+
+ <div class="large-5 small-6 columns">
   <label for="display_number">Anzahl:</label>
   <select name="display_number" id="displayNumber">
-   <option value="10" <?= ($this->maxAkteure == '10' ? 'selected="selected"' : ''); ?>>10</option>
    <option value="15" <?= ($this->maxAkteure == '15' ? 'selected="selected"' : ''); ?>>15</option>
    <option value="20" <?= ($this->maxAkteure == '20' ? 'selected="selected"' : ''); ?>>20</option>
+   <option value="30" <?= ($this->maxAkteure == '30' ? 'selected="selected"' : ''); ?>>30</option>
    <option value="all" <?= ($this->maxAkteure == 'all' ? 'selected="selected"' : ''); ?>>Alle</option>
   </select>
  </div>
 
 
- <div id="change-style" class="button-bar large-3 columns" style="margin-top:20px;">
-  <ul id="presentationFilter" class="button-group round">
-    <li><a href="#" name="boxen" class="small button <?php echo ($this->presentationMode !== 'map' ? 'active' : 'secondary'); ?>" title="Darstellung als Boxen"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
-    <li><a href="#" name="map" class="small button <?php echo ($this->presentationMode == 'map' ? 'active' : 'secondary'); ?>" title="Darstellung auf Karte"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
+ <div id="change-style" class="large-6 large-offset-1 columns">
+  <ul id="presentationFilter" class="button-group round" style="margin-top:25px;">
+   <li><a href="#" name="boxen" class="small button <?php echo ($this->presentationMode !== 'map' ? 'active' : 'secondary'); ?>" title="Darstellung als Boxen"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
+   <li><a href="#" name="map" class="small button <?php echo ($this->presentationMode == 'map' ? 'active' : 'secondary'); ?>" title="Darstellung auf Karte"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
   </ul>
  </div>
 
- <input type="submit" class="large-2 large-offset-2 columns medium button" style="margin-top: 25px;" id="sendFilters" name="submit" value="Filter anwenden">
+ <div class="large-12 columns">
+  <input type="submit" class="large-12 columns medium button" id="sendFilters" name="submit" value="Filter anwenden">
+ </div>
 
 </form>
-
 </div>
-<div class="divider"></div>
 
-<div id="akteure" class="row" style="padding: 15px 0;">
+<div id="akteure-content" class="large-8 columns">
+
+ <!--<?php if ($this->hasFilter) : ?>
+ <div class="divider large-12 columns">
+   Filterergebnisse (<?= count($resultAkteure); ?>)
+ </div>
+ <?php endif; ?>-->
 
 <?php if ($this->presentationMode == 'map') : ?>
-  <div id="map" style="width: 100%; height: 400px;"></div>
+ <div id="map" style="width: 100%; height: 400px;"></div>
 <?php else : ?>
 
 <?php if (is_array($resultAkteure) && !empty($resultAkteure)) : ?>
 
 <?php foreach($resultAkteure as $akteur): ?>
-  <div class="large-3 large-offset-1 small-5 small-offset-1 columns pcard" style="margin-top:10px;">
+  <div class="large-4 large-offset-1 small-5 small-offset-1 columns pcard" style="margin-top:10px;">
    <header <?php if($akteur->bild != '') echo 'style="background-image:url('.$akteur->bild.');"'; ?>>
      <h3><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>" title="Akteurprofil besuchen"><?= $akteur->name; ?></a></h3>
     </header>
@@ -87,12 +110,15 @@
 
 <?php endif; ?>
 
+ </div>
 </div>
 
-<div class="divider"></div>
+<div class="divider" style="margin-top:25px;"></div>
 
 <?php if ($this->presentationMode !== 'map') : ?>
 <div class="row">
+
+
   <ul class="pagination large-4 columns large-offset-5" style="padding-top:15px;">
     <li class="arrow"><a href="<?= base_path(); ?>Akteure/1">&laquo;</a></li>
 

@@ -24,7 +24,7 @@
 
    <div class="large-12 columns">
 
-     <form id="filterForm" method="GET" action="<?= base_path(); ?>events">
+    <form id="filterForm" method="GET" action="<?= base_path(); ?>events">
 
      <label for="filterKeyword">Schlagwort:</label>
      <input name="filterKeyword" id="filterKeywordInput" type="text" <?= (isset($this->filter['keyword']) ? 'value="'.$this->filter['keyword'].'"' : ''); ?>/>
@@ -34,7 +34,7 @@
      <?php foreach ($resultTags as $tag) : ?>
        <option value="<?= $tag->KID; ?>"<?php echo ($this->filteredTags[$tag->KID] == $tag->KID ? ' selected="selected"' : ''); ?>><?= $tag->kategorie; ?></option>
      <?php endforeach; ?>
-   </select>
+     </select>
 
    </div>
    <div class="large-12 columns">
