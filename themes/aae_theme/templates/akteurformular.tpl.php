@@ -72,8 +72,17 @@
     <?php endif; ?>
    <?php endforeach; ?>
   </select>
- </label>
+  </label>
  </div>
+<!--
+<div class="switch">
+        <input class="switch-input" id="exampleSwitch" type="checkbox" name="exampleSwitch">
+        <label class="switch-paddle" for="exampleSwitch">
+          <span class="show-for-sr">barrierefrei?</span>
+        </label>
+      </div> -->
+
+
 
   <div class="large-4 columns">
   <label>Geodaten (Karte): <?= $this->fehler['gps']; ?>

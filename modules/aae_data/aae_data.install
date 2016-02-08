@@ -33,8 +33,9 @@ function aae_data_schema() {
 	  'bild' => array('description' => 'Pfad zum hinterlegten Bild', 'type' => 'varchar', 'length' => 400, 'not null' => FALSE, 'default' => ''),
 	  'beschreibung' => array('description' => 'Kurzbeschreibung für Übersicht', 'type' => 'text', 'length' => 'small', 'not null' => FALSE, 'default' => ''),
 	  'oeffnungszeiten' => array('description' => 'Wann der Akteur erreichbar ist', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
-	  'adresse' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
-	  'ersteller' => array('description' => 'ID von User, der Akteur angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+	  'adresse' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => ''),
+	  'barrierefrei' => array('description' => 'Barrierefreier Zugang?', 'type' => 'int', 'size' => 'tiny', 'not null' => FALSE, 'default' => ''),
+    'ersteller' => array('description' => 'ID von User, der Akteur angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
     'created' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Created als Timestamp'),
     'modified' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Modified als Timestamp')
 	),
@@ -171,20 +172,6 @@ function aae_data_update_7104() {
 
 function aae_data_update_7105() {
 
-  /*if ($key == 'modified') {
-   db_query('
-    ALTER TABLE aae_data_event
-    MODIFY modified DATETIME
-    ON UPDATE CURRENT_TIMESTAMP');
-   }
-
-   if ($key == 'created') {
-    db_query('
-     ALTER TABLE aae_data_event
-     MODIFY created DATETIME
-     DEFAULT CURRENT_TIMESTAMP');
-   } */
-
  $newSchemaEvents = array(
   'start_ts' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Startzeit des Events als Timestamp'),
   'ende_ts' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Endzeit des Events als Timestamp'),
@@ -193,6 +180,7 @@ function aae_data_update_7105() {
  );
 
  $newSchemaAkteure = array(
+  'barrierefrei' => array('description' => 'Barrierefreier Zugang?', 'type' => 'int', 'size' => 'tiny', 'not null' => FALSE),
   'created' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Created als Timestamp'),
   'modified' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Modified als Timestamp')
  );

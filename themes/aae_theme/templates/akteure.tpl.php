@@ -13,7 +13,7 @@
 
 <div id="akteure" class="row" style="padding-top:15px;">
 
- <div id="filter" class="large-3 offset-large-1 columns right">
+ <div id="filter" class="large-3 large-offset-1 columns right">
 
  <div class="large-12 columns" id="removeFilter">
   <h4 class="left">Filter</h4>
@@ -79,6 +79,11 @@
    Filterergebnisse (<?= count($resultAkteure); ?>)
  </div>
  <?php endif; ?>-->
+
+ <ul class="tabs" data-tabs id="events-tabs" style="margin-bottom:22px;">
+  <?php if (true) : ?><li class="tabs-title is-active"><a href="#" aria-selected="true">Filterergebnisse (<?= count($resultEvents); ?>)</a></li><?php endif; ?>
+
+ </ul>
 
 <?php if ($this->presentationMode == 'map') : ?>
  <div id="map" style="width: 100%; height: 400px;"></div>

@@ -51,12 +51,13 @@
 
     <label>Zeitraum:</label>
 
-    <div class="large-12 columns slider" data-slider data-initial-start="1" data-initial-end="100" data-end="100">
+    <div class="slider" data-slider data-initial-start="25" data-initial-end="75" data-end="100">
      <span class="slider-handle" data-slider-handle role="slider" tabindex="1"></span>
      <span class="slider-fill" data-slider-fill></span>
      <span class="slider-handle" data-slider-handle role="slider" tabindex="1"></span>
      <input type="hidden">
      <input type="hidden">
+    </div>
 
      <ul>
       <?php
@@ -67,13 +68,13 @@
         echo '<li>'.$this->monat_short[($month < 10 ? '0' : '').$month].'</li>';
        } ?>
      </ul>
-
     </div>
 
-    <input type="submit" class="medium button large-12 columns" id="eventSubmit" name="submit" value="Filter anwenden">
-    </form>
-   </div>
+    <div class="large-12 columns">
+     <input type="submit" class="medium button large-12 columns" id="eventSubmit" name="submit" value="Filter anwenden">
+    </div>
 
+   </form>
   </div>
 
   <div id="events_content" class="large-offset-1 large-8 columns">
@@ -138,9 +139,6 @@
  <?php endif; ?>
 
 </div>
-</div>
-
-<div class="divider"></div>
 
 <div class="row">
 <!--  <ul class="pagination large-4 columns large-offset-5" style="padding-top:15px;">
@@ -157,6 +155,8 @@
 
 
   <div class="large-12 columns">
+
+    <div class="divider"></div>
 
    <aside class="tagcloud">
     <h4><img class="cloudimg" src="<?= base_path().path_to_theme(); ?>/img/cloud.svg" />Tagcloud</h4>
