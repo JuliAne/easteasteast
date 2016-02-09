@@ -469,7 +469,7 @@ transform: rotate(-10deg);
 
 .pcard {
   background-color: #fff;
-  box-shadow: 0 1px 1px #9f9c9c;
+  box-shadow: 0 1px 1px #b8b8b8;
   transition: 0.3s box-shadow;
 }
 
@@ -518,18 +518,12 @@ transform: rotate(-10deg);
  padding: 5px;
  padding-top: 45px;
  /*text-shadow: 0 1px 2px #353535;*/
- font-size: 1.4em;
+ font-size: 1.6em;
  text-align: center;
 }
 
-.pcard section .plocation {
- text-align: center;
- opacity: 0.8;
-}
-
-.pcard section .plocation img {
-  width: 18px;
-  margin-right: 6px;
+.pcard header.renderSmallName h3 {
+  font-size: 1.25em;
 }
 
 .pcard section .divider {
@@ -541,8 +535,30 @@ transform: rotate(-10deg);
  padding: 11px 9px;
 }
 
+.pcard section p {
+ padding-top: 6px;
+ opacity: 0.8;
+ transition: opacity 0.25s;
+}
+
+.pcard:hover section p {
+ opacity: 1;
+}
+
 .pcard section p strong {
  color: #007095;
+}
+
+.pcard section .plocation {
+ text-align: center;
+ opacity: 0.8;
+ padding-top: 0;
+ line-height: 25px;
+}
+
+.pcard section .plocation img {
+  width: 18px;
+  margin-right: 6px;
 }
 
 .pcard footer {
@@ -1141,6 +1157,22 @@ section#journal .large-8.large-offset-2.columns br:after {
 .tagcloud {
   text-align:center;
   padding-top:28px;
+}
+
+.tagcloud.akteure-tc {
+  margin-top: 20px;
+  opacity: 0.75;
+  transition: opacity 0.25s;
+}
+
+.tagcloud.akteure-tc:hover {
+  opacity: 1;
+}
+
+.tagcloud.akteure-tc li a {
+  line-height: 22px;
+  border-bottom: 1px dotted #F1EFEF;
+  font-size: 0.8em;
 }
 
 .tagcloud h4 {

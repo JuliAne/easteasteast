@@ -197,7 +197,7 @@ Class eventformular extends aae_data_helper {
 	   $this->freigabe = false;
     }
 
-    if (strlen($this->kurzbeschreibung) > 1000) {
+    if (strlen($this->kurzbeschreibung) > 1200) {
      $this->fehler['kurzbeschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
 	   $this->freigabe = false;
     }
@@ -232,10 +232,11 @@ Class eventformular extends aae_data_helper {
 	   $this->freigabe = false;
     }
 
+    if ($this->gps == 'Ermittle Geo-Koordinaten...') $this->gps = '';
+
     /*if (!empty($this->gps) && preg_match('\s.\s,\s.\s',$this->gps)==0) {
       echo ':/';
       exit(); } */
-
 
     // Um die bereits gewählten Tag's anzuzeigen benötigen wir deren Namen...
     if ($this->freigabe == false) {
@@ -252,9 +253,9 @@ Class eventformular extends aae_data_helper {
        ->fields('s', array('kategorie'))
        ->condition('KID', $sparte, '=')
        ->execute()
-       ->fetchAll();
+       ->fetchObject();
 
-       $neueSparten[$sparte] = $spartenName[0]->kategorie;
+       $neueSparten[$sparte] = $spartenName->kategorie;
 
      } else {
 

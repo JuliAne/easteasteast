@@ -32,7 +32,7 @@
      <label for="filterTags">Tags:</label>
      <select name="filterTags[]" id="eventSpartenInput" multiple="multiple" class="tokenize">
      <?php foreach ($resultTags as $tag) : ?>
-       <option value="<?= $tag->KID; ?>"<?php echo ($this->filteredTags[$tag->KID] == $tag->KID ? ' selected="selected"' : ''); ?>><?= $tag->kategorie; ?></option>
+       <option value="<?= $tag->KID; ?>"<?= ($this->filteredTags[$tag->KID] == $tag->KID ? ' selected="selected"' : ''); ?>><?= $tag->kategorie; ?></option>
      <?php endforeach; ?>
      </select>
 
@@ -51,10 +51,10 @@
 
     <label>Zeitraum:</label>
 
-    <div class="slider" data-slider data-initial-start="25" data-initial-end="75" data-end="100">
-     <span class="slider-handle" data-slider-handle role="slider" tabindex="1"></span>
+    <div class="slider" data-slider>
+     <span class="slider-handle sh-1" data-slider-handle role="slider" tabindex="1"></span>
      <span class="slider-fill" data-slider-fill></span>
-     <span class="slider-handle" data-slider-handle role="slider" tabindex="1"></span>
+     <span class="slider-handle sh-2" data-slider-handle role="slider" tabindex="1"></span>
      <input type="hidden">
      <input type="hidden">
     </div>
@@ -65,7 +65,7 @@
 
        for ($i=0; $i<= 6; $i++) {
         $month = ($curMonth + $i > 12) ? ($curMonth-12) + $i : $curMonth + $i;
-        echo '<li>'.$this->monat_short[($month < 10 ? '0' : '').$month].'</li>';
+        echo '<li class="'.$this->monat_short[($month < 10 ? '0' : '').$month].'">'.$this->monat_short[($month < 10 ? '0' : '').$month].'</li>';
        } ?>
      </ul>
     </div>

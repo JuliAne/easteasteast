@@ -45,7 +45,7 @@ fieldset p:hover {
 #presentationFilter li img {width:21px;}
 #presentationFilter li a.active, #presentationFilter li:hover a { background-color: #dfdfdf !important;}
 
-#filter #eventSubmit {float:none!important;}
+#filter #eventSubmit {float:none!important;margin-top:15px;}
 
 #removeFilter {
   padding-top: 15px;
@@ -208,15 +208,18 @@ fieldset p:hover {
    border-color: #FF5217;
  }
 
+ #filter #timespace .slider {
+   margin-bottom: 0;
+ }
+
  #filter #timespace ul {
-  padding-top: 15px;
-  margin-bottom: 10px;
+  padding-top: 12px;
  }
 
  #filter #timespace ul li {
   float: left;
   font-size: 0.75em;
-  padding: 0 14px 0 0;
+  padding: 0 9px;
  }
 
  #filter #timespace ul li.selected {

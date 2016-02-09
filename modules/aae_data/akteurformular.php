@@ -169,7 +169,7 @@ Class akteurformular extends aae_data_helper {
      $this->freigabe = false;
     }
 
-    //Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
+    // Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
     if (strlen($this->name) > 64) {
 	   $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
 	   $this->freigabe = false;
@@ -188,6 +188,11 @@ Class akteurformular extends aae_data_helper {
     if (strlen($this->url) > 100) {
 	   $this->fehler['url'] = "Bitte geben Sie eine kürzere URL an.";
 	   $this->freigabe = false;
+    }
+
+    if (!empty($this->url) && preg_match('/\A(http:\/\/|https:\/\/)(\w*[.|-]\w*)*\w+\.[a-z]{2,3}(\/.*)*\z/',$this->url)==0) {
+     $this->fehler['url'] = "Bitte eine gültige URL zur Akteurswebseite eingeben! (z.B. <i>http://meinakteur.de</i>)";
+     $this->freigabe = false;
     }
 
     if (strlen($this->ansprechpartner) > 100){
@@ -234,6 +239,8 @@ Class akteurformular extends aae_data_helper {
 	   $this->fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
 	   $this->freigabe = false;
     }
+
+    if ($this->gps == 'Ermittle Geo-Koordinaten...') $this->gps = '';
 
     // Um die bereits gewählten Tag's anzuzeigen benötigen wir deren Namen...
     if ($this->freigabe == false) {

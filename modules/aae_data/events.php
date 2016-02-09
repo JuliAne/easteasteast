@@ -112,10 +112,13 @@ Class events extends aae_data_helper {
   if (isset($this->filter['keyword'])) {
 
    $this->numFilters++;
+   $or = db_or()
+   ->condition('name', '%'.$this->filter['keyword'].'%', 'LIKE')
+   ->condition('kurzbeschreibung', '%'.$this->filter['keyword'].'%', 'LIKE');
 
    $filterKeyword = db_select($this->tbl_event, 'e')
     ->fields('e', array('EID'))
-    ->condition('kurzbeschreibung', '%'.$this->filter['keyword'].'%', 'LIKE') // ONLY BY BESCHREIBUNGSTEXT :(
+    ->condition($or)
     ->execute()
     ->fetchAll();
 
@@ -271,18 +274,5 @@ Class events extends aae_data_helper {
    exit();
 
  } // end function rss()
-
- private function getDuplicates($ids, $num) {
-
-  $result = array();
-  $counts =  array_count_values($ids);
-
-  foreach ($counts as $id => $count){
-    if ($count >= $num) $result[$id] = $id;
-  }
-
-  return (empty($result)) ? NULL : $result;
-
- } // end private function getDuplicates
 
 } // end class events

@@ -130,10 +130,9 @@
       var a = addressPoints[i];
       var title = a[2];
       var marker = L.marker(new L.LatLng(a[0], a[1]), {
-          icon: L.mapbox.marker.icon({"marker-symbol": "pitch", "marker-color": "0044FF"}),
+          icon: L.mapbox.marker.icon({"marker-symbol": "star", "marker-color": "#2199E8"}),
           title: title
       });
-
       marker.bindPopup(title);
       markers.addLayer(marker);
      }
@@ -165,7 +164,7 @@
     "properties": {
       "title": "'. $pointData['name'] .'",
       "description": "'.$pointData['strasse'].' '. $pointData['nr'] .'",
-      "marker-color": "#1087bf",
+      "marker-color": "#2199E8",
       "marker-size": "large",
       "marker-symbol": "star"
      }
@@ -199,5 +198,18 @@
      ->execute();
 
   }
+
+  protected function getDuplicates($ids, $num) {
+
+   $result = array();
+   $counts =  array_count_values($ids);
+
+   foreach ($counts as $id => $count){
+     if ($count >= $num) $result[$id] = $id;
+   }
+
+   return (empty($result)) ? NULL : $result;
+
+  } // end protected function getDuplicates
  }
 ?>

@@ -13,6 +13,15 @@ $(document).ready(function() {
   }
  });
 
+ $('#timespace .slider').on('moved.zf.slider', function() {
+  var leftS = $('#timespace .sh-1').css('left');
+  var rightS = $('#timespace .sh-2').css('left');
+
+  //$('#timespace ul')
+
+  //14.25
+ });
+
  $('.login_first').click(function(){
   $('#login-button').trigger('click');
   return false;
