@@ -73,10 +73,10 @@
 
 			 <section id="project-content" class="large-7 large-offset-1 columns">
 			  <h1><?= $aResult['row1']->name; ?><br />
-         <?php if (!empty($resulttags)) : ?>
+         <?php if (!empty($resultTags)) : ?>
           <!--<h4>Tags:</h4>-->
-          <?php foreach ($resulttags as $row) : ?>
-           <a style="font-size:0.4em;" href="<?= base_path(); ?>akteure/?tags[]=<?= $row[0]->KID; ?>" title="Zeige alle mit <?= $row[0]->kategorie; ?> getaggten Akteure">#<?= strtolower($row[0]->kategorie); ?></a>
+          <?php foreach ($resultTags as $tag) : ?>
+           <a style="font-size:0.4em;" href="<?= base_path(); ?>akteure/?tags[]=<?= $tag->KID; ?>" rel="nofollow" title="Zeige alle mit <?= $tag->kategorie; ?> getaggten Akteure">#<?= strtolower($tag->kategorie); ?></a>
           <?php endforeach; ?>
         <?php endif; ?></h1>
 

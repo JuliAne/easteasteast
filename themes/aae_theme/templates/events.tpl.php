@@ -114,7 +114,7 @@
     <span><?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? '<a href="#">Heute,</a> ' : ''; ?><?php if($event->start->format('H:i') !== '00:00') echo $event->start->format('H:i'); ?><?php if($event->ende->format('H:i') !== '00:00') echo ' - '. $event->ende->format('H:i'); ?></span></p>
     <p>
      <?php foreach($event->tags as $tag) : ?>
-     <a class="tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>">#<?= $tag->kategorie; ?></a>
+     <a class="tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow">#<?= $tag->kategorie; ?></a>
      <?php endforeach; ?>
     </p>
    </header>

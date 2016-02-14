@@ -167,12 +167,12 @@ Class eventformular extends aae_data_helper {
      $this->freigabe = false;
     }
 
-    if (!empty($this->zeit_von) && DateTime::createFromFormat('h:i', $this->zeit_von) == false) {
+    if (!empty($this->zeit_von) && DateTime::createFromFormat('H:i', $this->zeit_von) == false) {
      $this->fehler['zeit_von'] = "Bitte eine (gültige) Start-Uhrzeit angeben!";
      $this->freigabe = false;
     }
 
-    if (!empty($this->zeit_bis) && DateTime::createFromFormat('h:i', $this->zeit_bis) == false) {
+    if (!empty($this->zeit_bis) && DateTime::createFromFormat('H:i', $this->zeit_bis) == false) {
      $this->fehler['zeit_bis'] = "Bitte eine (gültige) End-Uhrzeit angeben!";
      $this->freigabe = false;
     }

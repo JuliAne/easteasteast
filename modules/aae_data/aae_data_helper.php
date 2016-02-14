@@ -180,7 +180,13 @@
 
   }
 
-  protected function getAllTags() {
+  protected function getAllTags($type = events) {
+
+    if ($type == 'events'){
+    $res = db_query('SELECT * FROM {aae_data_event_hat_sparte} ehs JOIN {aae_data_sparte} s WHERE s.KID = ehs.hat_KID ORDER BY s.kategorie DESC');
+print_r($res);
+
+    }
 
     return db_select($this->tbl_sparte, 't')
      ->fields('t', array(

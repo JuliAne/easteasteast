@@ -85,11 +85,11 @@ class aae_akteurprofil extends aae_data_helper {
 
   foreach($kategorien as $kategorie) {
 
-   $resulttags[] = db_select($this->tbl_sparte, 't')
+   $resultTags[] = db_select($this->tbl_sparte, 't')
    ->fields('t')
    ->condition('KID', $kategorie->hat_KID, '=')
    ->execute()
-   ->fetchAll();
+   ->fetchObject();
 
   }
  }

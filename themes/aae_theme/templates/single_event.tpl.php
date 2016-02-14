@@ -47,11 +47,11 @@
 
    <div id="project-info" class="pcard" style="margin-top:5px;">
      <p><span><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" /></span>
-     <strong style="color:grey;">Start: </strong><a href="<?= base_path(); ?>events/?day=<?= $resultEvent->start->format('Y-m-d'); ?>"><?= $resultEvent->start->format('d.m.Y'); ?></a>
+     <strong style="color:grey;">Start: </strong><a href="<?= base_path(); ?>events/?day=<?= $resultEvent->start->format('Y-m-d'); ?>" rel="nofollow"><?= $resultEvent->start->format('d.m.Y'); ?></a>
      <?= ($resultEvent->start->format('s') == '01' ? $resultEvent->start->format('H:i').' Uhr' : ''); ?>
      <?php if ($resultEvent->ende->format('Ymd') !== '10000101' || $resultEvent->ende->format('s') == '01') : ?>
        <br /><strong style="color:grey">Bis: </strong>
-       <?= ($resultEvent->ende->format('Ymd') !== '10000101' ? '<a href="'.base_path().'events/?day='.$resultEvent->ende->format('Y-m-d').'">'.$resultEvent->ende->format('d.m.Y').'</a>' : ''); ?>
+       <?= ($resultEvent->ende->format('Ymd') !== '10000101' ? '<a href="'.base_path().'events/?day='.$resultEvent->ende->format('Y-m-d').'" rel="nofollow">'.$resultEvent->ende->format('d.m.Y').'</a>' : ''); ?>
        <?= ($resultEvent->ende->format('s') == '01' ? ' '.$resultEvent->ende->format('H:i').' Uhr' : ''); ?>
     <?php endif; ?>
     </p>
@@ -63,7 +63,7 @@
  <h1><?= $resultEvent->name; ?><br />
  <?php if (!empty($sparten)) : ?>
    <?php foreach ($sparten as $row) : ?>
-     <a style="font-size:0.4em;" href="<?= base_path(); ?>events/?filterTags[]=<?= $row->KID; ?>" title="Zeige alle mit '<?= $row->kategorie; ?>' getaggten Events">#<?= strtolower($row->kategorie); ?></a>
+     <a style="font-size:0.4em;" href="<?= base_path(); ?>events/?filterTags[]=<?= $row->KID; ?>" rel="nofollow" title="Zeige alle mit '<?= $row->kategorie; ?>' getaggten Events">#<?= strtolower($row->kategorie); ?></a>
    <?php endforeach; ?>
  <?php endif; ?></h1>
 

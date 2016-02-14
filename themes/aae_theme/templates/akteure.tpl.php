@@ -76,7 +76,7 @@
   <h4>Bezirke nach Häufigkeit</h4>
   <ul>
    <?php foreach ($resultBezirkeRelevance as $bez) : ?>
-    <li><a href="<?= base_path(); ?>akteure/?filterBezirke[]=<?= $bez->BID; ?>"><?= $bez->bezirksname; ?> - <?= $bez->count; ?></a></li>
+    <li><a href="<?= base_path(); ?>akteure/?filterBezirke[]=<?= $bez->BID; ?>" rel="nofollow"><?= $bez->bezirksname; ?> - <?= $bez->count; ?></a></li>
    <?php endforeach; ?>
  </ul>
 </div>
