@@ -651,6 +651,14 @@ section#journal .large-8.large-offset-2.columns br:after {
   float: none;
   display: inline-block;
   vertical-align: top;
+  margin-top:15px;
+  animation-name: akteure;
+  animation-duration: 0.5s;
+}
+
+@keyframes akteure {
+ from {opacity:0;margin-top:-10px;}
+ to {opacity:1;margin-top:15px;}
 }
 
 #projects-akteure .pcard {

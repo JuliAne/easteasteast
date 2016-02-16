@@ -99,7 +99,7 @@
 <?php if (is_array($resultAkteure) && !empty($resultAkteure)) : ?>
 
 <?php foreach($resultAkteure as $akteur): ?>
-  <div class="large-4 large-offset-1 small-5 small-offset-1 columns pcard" style="margin-top:15px;">
+  <div class="large-4 large-offset-1 small-5 small-offset-1 columns pcard">
    <header <?= (!empty($akteur->bild) ? 'style="background-image:url('.$akteur->bild.');"' : ''); ?><?= ($akteur->renderSmallName ? ' class="renderSmallName"' : ''); ?>>
      <h3><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>" title="Akteurprofil besuchen"><?= $akteur->name; ?></a></h3>
     </header>

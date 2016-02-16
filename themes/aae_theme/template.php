@@ -109,7 +109,7 @@ function aae_preprocess_html(&$variables) {
   global $user;
 
   if (array_intersect(array('redakteur','administrator'), $user->roles)) {
-   echo '<!-- IF IS_ADMIN --><style type="text/css">#mainnav { top: 65px !important; }#content { margin-top: 30px; }</style><!-- /IF -->';
+   echo '<!-- IF IS_ADMIN --><style type="text/css">#mainnav{top: 65px !important;}#singlesite{margin-top:130px;}.aaeActionBar{margin-top:-161px !important;margin-bottom:160px !important;}</style><!-- /IF -->';
   }
 } // END function aae_preprocess_html
 
