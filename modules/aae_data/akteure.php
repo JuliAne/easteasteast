@@ -230,8 +230,9 @@ $akteure = db_select($this->tbl_akteur, 'a')
                                             INNER JOIN {aae_data_adresse} ad ON b.BID = ad.bezirk
                                             INNER JOIN {aae_data_akteur} a ON a.adresse = ad.ADID
                                             GROUP BY b.BID HAVING COUNT(*) > 0 ORDER BY count DESC', 0, 5);
-  $resultTags = $this->getAllTags();
-  $resultBezirke = $this->getAllBezirke();
+
+  $resultTags = $this->getAllTags('akteure');
+  $resultBezirke = $this->getAllBezirke('akteure');
 
   ob_start(); // Aktiviert "Render"-modus
   include_once path_to_theme().'/templates/akteure.tpl.php';

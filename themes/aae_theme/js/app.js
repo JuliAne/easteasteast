@@ -81,9 +81,11 @@ $(document).ready(function() {
  });
 
  $('#filterForm').submit(function(){
-  //var presentationValue = $('#presentationFilter').find('.active').attr('name');
-  //var displayNumber
-  // $('<input />').attr('type', 'hidden').attr('name', 'presentation').attr('value', presentationValue).appendTo('#filterForm');
+  if ($('#akteure #filter').length){
+   // Add selected presentation mode to URL
+   var presentationValue = $('#presentationFilter').find('.active').attr('name');
+   $('<input />').attr('type', 'hidden').attr('name', 'presentation').attr('value', presentationValue).appendTo('#filterForm');
+  }
  });
 
  $('#project-contact a').click(function(){

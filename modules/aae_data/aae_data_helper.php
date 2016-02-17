@@ -4,6 +4,8 @@
   * Kleine Helferklasse (!=model) für wiederkehrende Funktionen, Variablen
   *  & Pfade. Gerne erweiterbar :)
   *
+  * TODO: Konfigurationsdaten via Backend verwaltbar machen
+  *
   */
 
  Class aae_data_helper {
@@ -81,7 +83,7 @@
     $image = new Imagick($bild['tmp_name']);
     $image->setImageBackgroundColor('white'); // Entfernt Transparenz bein png's
     $image->scaleImage(800, 400, true);
-    $image = $image->flattenImages();
+    $image = $image->flattenImages(); // Deprecated!
     $image->setImageCompressionQuality(90); // = Idealer Wert???
     $image->setImageFormat('jpg'); // see also: $image->getImageFormat();
 
@@ -180,21 +182,24 @@
 
   }
 
+  /*
+   * function getAllTags($type)
+   * returns all given tags - sortable for only events / akteure
+   */
+
   protected function getAllTags($type = events) {
 
-  /* if ($type == 'events'){
-    $res = db_query('SELECT * FROM {aae_data_event_hat_sparte} ehs JOIN {aae_data_sparte} s WHERE s.KID = ehs.hat_KID ORDER BY s.kategorie DESC');
-print_r($res);
+   if ($type == 'events'){
+     $tags = db_query('SELECT s.KID, s.kategorie FROM {aae_data_sparte} s JOIN {aae_data_event_hat_sparte} ehs WHERE s.KID = ehs.hat_KID ORDER BY s.kategorie DESC');
+   } else if ($type == 'akteure') {
+     $tags = db_query('SELECT s.KID, s.kategorie FROM {aae_data_sparte} s JOIN {aae_data_akteur_hat_sparte} ahs WHERE s.KID = ahs.hat_KID ORDER BY s.kategorie DESC');
+   } else {
+     $tags = db_select($this->tbl_sparte, 't')
+      ->fields('t', array('KID', 'kategorie', ))
+      ->execute();
+   }
 
-    } */
-
-    return db_select($this->tbl_sparte, 't')
-     ->fields('t', array(
-     'KID',
-     'kategorie',
-     ))
-    ->execute();
-
+    return $tags->fetchAll();
   }
 
   protected function getAllBezirke() {

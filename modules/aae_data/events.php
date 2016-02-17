@@ -18,7 +18,7 @@ Class events extends aae_data_helper {
 
  public function run(){
 
-  $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation'])) ? $this->clearContent($_GET['presentation']) : 'timeline';
+  $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) && $_GET['presentation'] == 'calendar') ? 'calendar' : 'timeline';
 
   if (isset($_GET['day']) && !empty($_GET['day'])) {
    $this->filter['day'] = $this->clearContent($_GET['day']);
@@ -36,12 +36,6 @@ Class events extends aae_data_helper {
    $this->filter['bezirke'] = $_GET['filterBezirke'];
   }
 
-
-  // TODO: limit
-
-  $this->maxEvents = '16';
-
-
   // Paginator: Auf welcher Seite befinden wir uns?
   $explodedPath = explode("/", $this->clearContent(current_path()));
   $currentPageNr = ($explodedPath[1] == '') ? '1' : $explodedPath[1];
@@ -50,8 +44,8 @@ Class events extends aae_data_helper {
 
   //-----------------------------------
 
-  $resultTags = $this->getAllTags();
-  $resultBezirke = $this->getAllBezirke();
+  $resultTags = $this->getAllTags('events');
+  $resultBezirke = $this->getAllBezirke('events');
 
   // Filter nach Tags, falls gesetzt
 
