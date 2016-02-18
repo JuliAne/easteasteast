@@ -23,6 +23,7 @@ Class akteurformular extends aae_data_helper {
   var $bild = "";
   var $beschreibung = "";
   var $oeffnungszeiten = "";
+  var $barrierefrei = "";
   var $created = "";
   var $modified = "";
 
@@ -282,12 +283,12 @@ Class akteurformular extends aae_data_helper {
 
 	$this->adresse = db_insert($this->tbl_adresse)
 	 ->fields(array(
-	 'strasse' => $this->strasse,
-	 'nr' => $this->nr,
-	 'adresszusatz' => $this->adresszusatz,
-	 'plz' => $this->plz,
-	 'bezirk' => $this->ort,
-	 'gps' => $this->gps
+	  'strasse' => $this->strasse,
+	  'nr' => $this->nr,
+	  'adresszusatz' => $this->adresszusatz,
+	  'plz' => $this->plz,
+	  'bezirk' => $this->ort,
+	  'gps' => $this->gps
    ))
 	 ->execute();
 
@@ -309,6 +310,7 @@ Class akteurformular extends aae_data_helper {
 		 'bild' => $this->bild,
 		 'beschreibung' => $this->beschreibung,
 		 'oeffnungszeiten' => $this->oeffnungszeiten,
+     'barrierefrei' => (isset($_POST['barrierefrei']) && !empty($_POST['barrierefrei']) ? '1' : '0'),
 		 'ersteller' => $this->user_id,
      'created' => date('Y-m-d H:i:s', time())
 	  ))
@@ -436,6 +438,7 @@ Class akteurformular extends aae_data_helper {
 		  'funktion' => $this->funktion,
 		  'bild' => $this->bild,
 		  'beschreibung' => $this->beschreibung,
+      'barrierefrei' => (isset($_POST['barrierefrei']) && !empty($_POST['barrierefrei']) ? '1' : '0'),
 		  'oeffnungszeiten' => $this->oeffnungszeiten,
       'modified' => date('Y-m-d H:i:s', time())
 	   ))
@@ -523,6 +526,7 @@ Class akteurformular extends aae_data_helper {
 	   $this->bild = $row->bild;
 	   $this->beschreibung = $row->beschreibung;
 	   $this->oeffnungszeiten = $row->oeffnungszeiten;
+     $this->barrierefrei = $row->barrierefrei;
      $this->created = new DateTime($row->created);
      $this->modified = new DateTime($row->modified);
     }

@@ -52,10 +52,17 @@
     </label>
    </div>
 
-   <div class="large-4 columns">
+   <div class="large-3 columns">
     <label>PLZ: <?= $this->fehler['plz']; ?>
       <input type="text" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= $this->ph_plz; ?>">
     </label>
+   </div>
+
+   <div id="akteur_access" class="switch large-1 columns">
+    <input class="switch-input" id="barrierefrei" type="checkbox" name="barrierefrei"<?= ($this->barrierefrei ? 'checked="checked"' : ''); ?>>
+    <label class="switch-paddle" for="barrierefrei" title="Barrierefreier Zugang?">
+     <span class="show-for-sr">Barrierefreier Zugang?</span>
+   </label>
    </div>
 
    <div class="large-4 columns">
@@ -74,15 +81,6 @@
   </select>
   </label>
  </div>
-<!--
-<div class="switch">
-        <input class="switch-input" id="exampleSwitch" type="checkbox" name="exampleSwitch">
-        <label class="switch-paddle" for="exampleSwitch">
-          <span class="show-for-sr">barrierefrei?</span>
-        </label>
-      </div> -->
-
-
 
   <div class="large-4 columns">
   <label>Geodaten (Karte): <?= $this->fehler['gps']; ?>
@@ -153,7 +151,7 @@
       <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
       <div id="currentPic">
        <img src="<?= $this->bild; ?>" title="Aktuelles Akteurbild" />
-       <a href="#">Akteurbild löschen.</a><
+       <a href="#">Akteurbild löschen.</a>
       </div>
     <?php endif; ?>
 

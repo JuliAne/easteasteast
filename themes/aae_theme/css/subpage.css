@@ -232,20 +232,18 @@ fieldset p:hover {
    max-width: 250px;
    overflow: hidden;
  }
-/*
- #currentPic:after {
-   content: 'x';
-   color: #fff;
-   background:rgba(40,40,40,0.5);
-   position: absolute;
-   height: 300px;
-   width: 300px;
- }
 
- #currentPic:hover:after {
-
- } */
-
- .page-eventprofil #contentRow {
+.page-eventprofil #contentRow {
   max-width: 100%;
  }
+
+#akteur_access {
+  margin-top: 28px;
+}
+
+#akteur_access .switch-paddle:after {
+  background-image: url(../img/accessibility_icon.svg);
+  background-size: 29px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}

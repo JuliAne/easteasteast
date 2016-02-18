@@ -15,16 +15,11 @@
    <a href="https://leipziger-ecken.de/contact" title="Das Profil wurde unbefugt erstellt? Melden Sie sich hier."><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" />Melden</a>
    <a href="#share" class="popup-link" title="Akteursseite in den sozialen Netzwerken posten"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" />Teilen</a>
    <div id="share" class="popup large-3 columns">
-
      <a target="_blank" href="https://twitter.com/intent/tweet?text=<?php global $base_url;
  echo $base_url.'/'.current_path(); ?>" title="Auf Twitter teilen" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/social-twitter.svg"><span></span></a>
-
      <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= $base_url.'/'.current_path(); ?>" title="Auf Facebook teilen" class="fb button"><img alt="Facebook" src="<?= base_path().path_to_theme(); ?>/img/social-facebook.svg"><span></span></a>
-
      <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="Auf Google+ teilen" class="g_plus button"><img alt="Google+" src="<?= base_path().path_to_theme(); ?>/img/social-googleplus-outline.svg"><span></span></a>
-
      <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $aResult['row1']->name; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="Teile auf Diaspora / Friendica"><img alt="Federated networks" src="<?= base_path().path_to_theme(); ?>/img/social-diaspora.png"></a>
-
    </div>
   </div>
  </div>
@@ -58,6 +53,11 @@
 				 <p><span><img src="<?= base_path().path_to_theme(); ?>/img/cloud_white.svg" /></span><a href="<?= $aResult['row1']->url; ?>"><?= str_replace('http://', '', $aResult['row1']->url);?></a></p>
 				 <div class="divider"></div>
 				<?php endif; ?>
+
+        <?php if ($aResult['row1']->barrierefrei == '1') : ?>
+        <p><span style="padding:7px 2px;"><img style="width:32px;" src="<?= base_path().path_to_theme(); ?>/img/accessibility_icon_white.svg" /></span>Barrierefreier Zugang</p>
+        <div class="divider"></div>
+       <?php endif; ?>
 
 				 <?php if (!empty($aResult['adresse']->gps)) : ?>
 				 <div id="map" style="width: 100%; height: 180px;"></div>

@@ -9,8 +9,9 @@ Alpha, alpha everywhere. If you'd like to join us take a look @ https://leipzige
 
 - PHP 5.4 or better
 - Drupal version 7.x (https://www.drupal.org/download) with "CKeditor"-module being installed
+- Recommended modules for an advanced UX: "HTML5 Tools", "Simple FB Connect" (supported), "Views" & "Metatags"
 - Imagick
-- MySQL/MariaDB supporting datetime-fields and -actions (e.g. NOW())
+- MySQL/MariaDB with support for datetime-fields and -actions (e.g. CURDATE())
 
 ### Installation via git:
 

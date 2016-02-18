@@ -23,7 +23,6 @@ class aae_akteurprofil extends aae_data_helper {
   // Anzeige Edit-Button?
   if ($resultUser->rowCount() == 1 || array_intersect(array('administrator'), $user->roles)) $hat_recht = 1;
 
-
   //Auswahl der Daten des Akteurs
   $resultAkteur = db_select($this->tbl_akteur, 'a')
    ->fields('a')
@@ -36,7 +35,7 @@ class aae_akteurprofil extends aae_data_helper {
 
    if (session_status() == PHP_SESSION_NONE) session_start();
    drupal_set_message('Dieses Akteurprofil konnte nicht gefunden werden...');
-   header("Location: ".$base_path."akteure");
+   header("Location: ".base_path()."akteure");
 
  } else {
 

@@ -42,7 +42,7 @@
 
         <?php endforeach; ?>
 
-        <a href="<?= base_path(); ?>akteurformular" class="medium button">+ Akteur erstellen</a>
+        <a href="<?= base_path(); ?>akteurformular" class="large-12 columns small button">+ Akteur erstellen</a>
      <?php endif; ?>
 
      <div class="divider"></div>
@@ -59,13 +59,12 @@
        <p><strong>Neu hier?</strong> Registriere Dich kostenfrei, um die Leipziger Ecken voll nutzen zu können und zu einem schöneren Platz für uns alle zu machen. <a href="<?= base_path(); ?>faq" title="FAQ öffnen">Wieso & warum?</a></p><br />
        <a href="<?= base_path(); ?>user/register" class="large-12 columns small button" title="Jetzt registrieren">Registrieren</a>
        <?php if (module_exists('simple_fb_connect')) : ?>
-       <a href="<?= base_path(); ?>user/simple-fb-connect" class="large-12 columns small hollow button" title="Mit Facebook registreiren"><img src="<?= path_to_theme(); ?>/img/social-facebook-blue.svg" />Mit Facebook registrieren</a><p>
+       <a href="<?= base_path(); ?>user/simple-fb-connect" class="large-12 columns small hollow button" title="Mit Facebook registrieren"><img src="<?= path_to_theme(); ?>/img/social-facebook-blue.svg" />Mit Facebook registrieren</a><p>
        <?php endif; ?>
       </div>
      </div>
      <?php else : ?>
-     <p><a href="<?= base_path(); ?>user/<?= $user->uid; ?>/edit">Profil</a></p>
-     <p><a href="<?= base_path(); ?>user/logout">Logout</a></p>
+     <p><a href="<?= base_path(); ?>user/<?= $user->uid; ?>/edit">Einstellungen</a> | <a href="<?= base_path(); ?>user/logout">Logout</a></p>
      <?php endif; ?>
 
 
