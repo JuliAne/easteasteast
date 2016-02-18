@@ -173,16 +173,16 @@ input[type=submit].isSubmitButton{
  opacity:1;
 }
 
-#mainnav.scrolled li {
+#mainnav.scrolled ul.menu li {
  height: 50px; /* WTF */
  padding-top: 8px;
 }
 
-#mainnav.scrolled ul li ul {
+#mainnav.scrolled ul.menu li ul {
  margin-top: 6px;
 }
 
-#mainnav.scrolled ul li ul li {
+#mainnav.scrolled ul.menu li ul li {
  height: 35px;
  padding-top: 8px;
 }
@@ -191,7 +191,7 @@ input[type=submit].isSubmitButton{
  margin-top: 4px;
 }
 
-#mainnav ul {
+#mainnav ul.menu {
  list-style: none !important; /* Overwrites Drupal-CSS */
  margin-left: 100px;
 }
@@ -216,7 +216,7 @@ input[type=submit].isSubmitButton{
 transform: rotate(-10deg);
 }
 
-#mainnav ul li {
+#mainnav ul.menu li {
  float: left;
  height: 60px;
  list-style: none !important;
@@ -229,7 +229,7 @@ transform: rotate(-10deg);
  transition: 0.3s all;
 }
 
-#mainnav ul .expanded:before {
+#mainnav ul.menu .expanded:before {
  content: "▾";
  position: relative;
  float: right;
@@ -238,21 +238,21 @@ transform: rotate(-10deg);
  margin-left: 9px;
 }
 
-#mainnav ul li a {
+#mainnav ul.menu li a {
  color: #7b7b7b;
  font-size: 0.9em;
  transition: 0.3s color;
 }
 
-#mainnav ul li:hover a, nav ul li.active-trail a {
+#mainnav ul.menu li:hover a, nav ul li.active-trail a {
  color: #000;
 }
 
-#mainnav ul li:hover ul {
+#mainnav ul.menu li:hover ul {
  display: block;
 }
 
-#mainnav ul li ul { /* SUB-MENU */
+#mainnav ul.menu li ul { /* SUB-MENU */
  display: none;
  position: absolute;
  background-color: #fff;
@@ -264,7 +264,7 @@ transform: rotate(-10deg);
  text-align: center;
 }
 
-#mainnav ul li ul li {
+#mainnav ul.menu li ul li {
  width: 100%;
  border-right: none;
  height: 35px;
@@ -273,7 +273,7 @@ transform: rotate(-10deg);
  margin-left: 0;
 }
 
-#mainnav ul li ul li a {
+#mainnav ul.menu li ul li a {
  font-size: 0.75em;
 }
 
@@ -317,15 +317,48 @@ transform: rotate(-10deg);
 }
 
 #mainnav #actions #login-popup {
- margin-left: -100px;
+ margin-left: -164px;
+ width: 250px;
+}
+
+#mainnav #actions #login-popup .tabs-content {
+  border: none !important;
+}
+
+#mainnav #actions #login-popup #mainnav-tabs {
+  padding: 0;
+  background: #fff;
+  border: none !important;
+  margin-bottom: 10px;
+}
+
+#mainnav #actions #login-popup #mainnav-tabs li a {
+  padding: 16px 13px !important;
+  font-size: 15px !important;
+  text-transform: uppercase;
+}
+
+#mainnav #actions #login-popup #mainnav-tabs .tabs-title > a[aria-selected="true"] {
+  font-weight: bold;
+  background:none;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+#mainnav #actions #login-popup .tabs-panel {
+  padding: 0 0 6px 0 !important;
+}
+
+.tabs-title > a:focus, .tabs-title > a[aria-selected="true"] {
+  background: #fff;
 }
 
 #mainnav #actions #login-popup:before {
- margin-left: 146px;
+ margin-left: 202px;
 }
 
-#mainnav #actions #login-popup h2 {
+#mainnav #actions #login-popup h2, #mainnav #actions #login-popup label {
  padding-top: 8px;
+ display: none;
 }
 
 #mainnav #actions #login-popup .divider {

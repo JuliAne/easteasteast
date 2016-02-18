@@ -43,6 +43,9 @@ function aae_preprocess_html(&$variables) {
   drupal_add_css(path_to_theme().'/css/pace.css');
   drupal_add_css(path_to_theme().'/css/app.css');
 
+  drupal_add_js(path_to_theme().'/js/foundation.min.js');
+  drupal_add_js('$(document).foundation();', array('type'=>'inline','scope'=>'footer'));
+
   /* Checke Seitentyp, hänge entsprechendes CSS/JS an den Header: */
 
   $path = explode("/", current_path()); // TODO: Call ClearContent()
@@ -57,7 +60,6 @@ function aae_preprocess_html(&$variables) {
 
      drupal_add_css(path_to_theme().'/css/jquery.fullPage.css');
      drupal_add_js(path_to_theme().'/js/jquery.fullPage.min.js');
-
      drupal_add_js(path_to_theme().'/js/home.js');
 
    } else if ($node->type == 'article') {
@@ -103,8 +105,6 @@ function aae_preprocess_html(&$variables) {
    drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
    drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');
    drupal_add_js($js, 'inline');
-   drupal_add_js(path_to_theme().'/js/foundation.min.js');
-   drupal_add_js('$(document).foundation();', array('type'=>'inline','scope'=>'footer'));
 
   break;
 
@@ -159,8 +159,8 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
 
     $form['links']['#markup'] = '';
 
-    $form['actions']['submit']['#attributes']['class'][] = 'medium button';
-    $form['actions']['submit']['#value'] = 'Einloggen';
+    $form['actions']['submit']['#attributes']['class'][] = 'large-12 columns medium button';
+    $form['actions']['submit']['#value'] = 'Anmelden';
     $form['name']['#description'] = '';
     $form['pass']['#description'] = '';
 
