@@ -59,7 +59,7 @@
    </div>
 
    <div id="akteur_access" class="switch large-1 columns">
-    <input class="switch-input" id="barrierefrei" type="checkbox" name="barrierefrei"<?= ($this->barrierefrei ? 'checked="checked"' : ''); ?>>
+    <input class="switch-input" id="barrierefrei" type="checkbox" name="barrierefrei"<?= ($this->barrierefrei || isset($_POST['barrierefrei']) ? 'checked="checked"' : ''); ?>>
     <label class="switch-paddle" for="barrierefrei" title="Barrierefreier Zugang?">
      <span class="show-for-sr">Barrierefreier Zugang?</span>
    </label>

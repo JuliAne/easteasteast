@@ -22,7 +22,7 @@ function aae_preprocess_html(&$variables) {
    'msapplication-navbutton-color' => array(
    '#tag' => 'meta',
    '#attributes' => array(
-     'name' => 'viewport',
+     'name' => 'msapplication-navbutton-color',
      'content' => '#2199E8',
     )
    ),
