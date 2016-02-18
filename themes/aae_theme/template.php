@@ -2,14 +2,35 @@
 
 function aae_preprocess_html(&$variables) {
 
-  $viewport = array(
+  // Add theme-specific meta-tags
+
+  $html_heads = array(
+   'viewport' => array(
+    '#tag' => 'meta',
+    '#attributes' => array(
+     'name' => 'viewport',
+     'content' => 'width=device-width, initial-scale=1, maximum-scale=1',
+    )
+   ),
+   'theme-color' => array(
+   '#tag' => 'meta',
+   '#attributes' => array(
+     'name' => 'theme-color',
+     'content' => '#2199E8',
+    )
+   ),
+   'msapplication-navbutton-color' => array(
    '#tag' => 'meta',
    '#attributes' => array(
      'name' => 'viewport',
-     'content' => 'width=device-width, initial-scale=1, maximum-scale=1',
+     'content' => '#2199E8',
+    )
    ),
   );
-  drupal_add_html_head($viewport, 'viewport');
+
+  foreach ($html_heads as $key => $data) {
+    drupal_add_html_head($data, $key);
+  }
 
   drupal_add_feed(base_path().'events/rss');
 
@@ -153,7 +174,6 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['submit']['#attributes']['class'][] = 'small button';
     $form['actions']['submit']['#value'] = 'Absenden';
     $form['actions']['preview']['#attributes']['class'][] = 'small button secondary';
-
 
   }
  }

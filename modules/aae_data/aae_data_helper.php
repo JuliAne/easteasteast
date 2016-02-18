@@ -187,7 +187,7 @@
    * returns all given tags - sortable for only events / akteure
    */
 
-  protected function getAllTags($type = events) {
+  protected function getAllTags($type) {
 
    if ($type == 'events'){
      $tags = db_query('SELECT s.KID, s.kategorie FROM {aae_data_sparte} s JOIN {aae_data_event_hat_sparte} ehs WHERE s.KID = ehs.hat_KID ORDER BY s.kategorie DESC');
@@ -195,7 +195,7 @@
      $tags = db_query('SELECT s.KID, s.kategorie FROM {aae_data_sparte} s JOIN {aae_data_akteur_hat_sparte} ahs WHERE s.KID = ahs.hat_KID ORDER BY s.kategorie DESC');
    } else {
      $tags = db_select($this->tbl_sparte, 't')
-      ->fields('t', array('KID', 'kategorie', ))
+      ->fields('t', array('KID', 'kategorie' ))
       ->execute();
    }
 
