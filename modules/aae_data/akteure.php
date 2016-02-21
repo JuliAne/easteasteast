@@ -19,6 +19,14 @@ Class akteure extends aae_data_helper {
 
  public function run(){
 
+  module_invoke_all('hook_akteur_created');
+
+ global $user;
+
+    $message = message_create('firstmessage', array(), $user);
+    $wrapper = entity_metadata_wrapper('message', $message);
+    $wrapper->save();
+
   $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) ? $this->clearContent($_GET['presentation']) : 'boxen');
 
   $this->maxAkteure = (isset($_GET['display_number']) && !empty($_GET['display_number']) ? $this->clearContent($_GET['display_number']) : '15' );

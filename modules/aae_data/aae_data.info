@@ -6,3 +6,5 @@ version = "7.x-1.5"
 dependencies[] = ckeditor
 configure = admin/config/content/aae_data
 datestamp = "2015-08-31"
+
+files [] = aae_data.api.php

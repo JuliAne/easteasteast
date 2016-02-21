@@ -15,6 +15,10 @@ function aae_data_user_login(&$edit, $account){
   drupal_set_message('Willkommen, <strong>'.$account->name.'</strong>!');
 }
 
+function aae_data_simple_fb_connect_login($account){
+  drupal_set_message('Willkommen, <strong>'.$account->name.'</strong>!');
+}
+
 function aae_data_user_logout($account) {
 
   // Funktioniert nicht, weil Drupal Sessions löscht...workaround?!
@@ -37,6 +41,17 @@ function aae_data_block_info() {
   );
 
   return $blocks;
+}
+
+function aae_data_akteur_created(){
+
+  echo 'd'; exit();
+
+  $message = message_create('firstmessage', array(), 'bla');
+  $wrapper = entity_metadata_wrapper('message', $message);
+  $wrapper->field_published->set($account->status);
+  $wrapper->save();
+
 }
 
 /**

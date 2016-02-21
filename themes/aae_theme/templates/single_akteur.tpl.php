@@ -1,6 +1,5 @@
 <aside class="aaeModal">
- <div class="content">
- </div>
+ <div class="content"></div>
 </aside>
 
 <header id="header" <?php if ($aResult['row1']->bild != '') : ?> style="background-image:url('<?= $row->bild; ?>');"<?php endif; ?>></header>
@@ -25,78 +24,100 @@
  </div>
 </div><!-- /.aaeActionBar -->
 
-<div id="project" class="row">
+<div id="project" class="row" itemscope itemtype="http://schema.org/Organization">
+ <?php global $base_root; ?>
+ <meta itemprop="name" content="<?= $aResult['row1']->name; ?>" />
+ <meta itemprop="url" content="<?= $base_root.'/akteurprofil/'.$aResult['row1']->AID; ?>" />
 
  <aside class="left large-4 columns">
 
   <div class="pcard">
    <header <?php if ($aResult['row1']->bild != '') echo 'style="background-image:url('.$aResult['row1']->bild.');"'; ?>>
-  	<?php if ($aResult['row1']->bild != '') echo '<img src="'.$aResult['row1']->bild.'" style="visbility:hidden;" />';
-	        else echo '<img src="'.base_path().path_to_theme().'/img/project_bg.png" style="visibility:hidden;"/>';	?>
+  	<?php if ($aResult['row1']->bild != '') echo '<img src="'.$aResult['row1']->bild.'" style="visbility:hidden;" itemprop="logo" />';
+	        else echo '<img src="'.base_path().path_to_theme().'/img/project_bg.png" style="visibility:hidden;" />';	?>
 	 </header>
 	</div>
 
-			  <div id="project-info" class="pcard">
-				 <?php if (!empty($aResult['row1']->oeffnungszeiten)) : ?>
-			   <p><span><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" title="Öffnunszeiten" /></span><?= $aResult['row1']->oeffnungszeiten; ?></p>
-				 <div class="divider"></div>
-			   <?php endif; ?>
+	<div id="project-info" class="pcard">
+	<?php if (!empty($aResult['row1']->oeffnungszeiten)) : ?>
+	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" title="Öffnunszeiten" /></span><?= $aResult['row1']->oeffnungszeiten; ?></p>
+	 <div class="divider"></div>
+	 <?php endif; ?>
 
-	       <!-- TODO: Zu ergänzen mit "Bezirk" in strong-case's -->
-         <?php if (!empty($aResult['adresse']->strasse) || !empty($aResult['adresse']->plz)) : ?>
-			   <p><span><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" title="Adresse" /></span><?= $aResult['adresse']->strasse; ?> <?= $aResult['adresse']->nr; ?><br />
-         <?php if (!empty($aResult['adresse']->plz)) : ?><?= $aResult['adresse']->plz; ?> Leipzig</p><?php endif; ?>
-				 <div class="divider"></div>
-         <?php endif; ?>
+	 <!-- TODO: Zu ergänzen mit "Bezirk" in strong-case's -->
+   <?php if (!empty($aResult['adresse']->strasse) || !empty($aResult['adresse']->plz)) : ?>
+   <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" title="Adresse" /></span>
+   <span itemprop="streetAddress"><?= $aResult['adresse']->strasse; ?> <?= $aResult['adresse']->nr; ?></span><br />
+   <?php if (!empty($aResult['adresse']->plz)) : ?><span itemprop="postalCode"><?= $aResult['adresse']->plz; ?></span> <span itemprop="addressLocality">Leipzig</span></p><?php endif; ?>
+   </div><div class="divider"></div>
+   <?php endif; ?>
 
-         <?php if (!empty($aResult['row1']->url)) : ?>
-				 <p><span><img src="<?= base_path().path_to_theme(); ?>/img/cloud_white.svg" /></span><a href="<?= $aResult['row1']->url; ?>"><?= str_replace('http://', '', $aResult['row1']->url);?></a></p>
-				 <div class="divider"></div>
-				<?php endif; ?>
+   <?php if (!empty($aResult['row1']->url)) : ?>
+	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/cloud_white.svg" /></span><a href="<?= $aResult['row1']->url; ?>" itemprop="sameAs"><?= str_replace('http://', '', $aResult['row1']->url);?></a></p>
+	 <div class="divider"></div>
+	<?php endif; ?>
 
-        <?php if ($aResult['row1']->barrierefrei == '1') : ?>
-        <p><span style="padding:7px 2px;"><img style="width:32px;" src="<?= base_path().path_to_theme(); ?>/img/accessibility_icon_white.svg" /></span>Barrierefreier Zugang</p>
-        <div class="divider"></div>
-       <?php endif; ?>
+  <?php if ($aResult['row1']->barrierefrei == '1') : ?>
+  <p><span style="padding:7px 2px;"><img style="width:32px;" src="<?= base_path().path_to_theme(); ?>/img/accessibility_icon_white.svg" /></span>Barrierefreier Zugang</p>
+  <div class="divider"></div>
+  <?php endif; ?>
 
-				 <?php if (!empty($aResult['adresse']->gps)) : ?>
-				 <div id="map" style="width: 100%; height: 180px;"></div>
-		     <?php endif; ?>
+	<?php if (!empty($aResult['adresse']->gps)) : ?>
+	<div id="map" style="width: 100%; height: 180px;"></div>
+	<?php endif; ?>
 
-				</div>
+	</div>
 
-			  <div id="project-contact" class="pcard">
-			   <a href="#"><button class="button">Kontaktieren</button></a>
-			  </div>
+  <div id="project-contact" class="pcard">
+   <a href="#"><button class="button">Kontaktieren</button></a>
+  </div>
 
-			 </aside>
+ </aside>
+ <section id="project-content" class="large-7 large-offset-1 columns">
 
-			 <section id="project-content" class="large-7 large-offset-1 columns">
-			  <h1><?= $aResult['row1']->name; ?><br />
-         <?php if (!empty($resultTags)) : ?>
-          <!--<h4>Tags:</h4>-->
-          <?php foreach ($resultTags as $tag) : ?>
-           <a style="font-size:0.4em;" href="<?= base_path(); ?>akteure/?tags[]=<?= $tag->KID; ?>" rel="nofollow" title="Zeige alle mit <?= $tag->kategorie; ?> getaggten Akteure">#<?= strtolower($tag->kategorie); ?></a>
-          <?php endforeach; ?>
-        <?php endif; ?></h1>
+  <ol id="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+   <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+    <a itemprop="item" href="https://leipziger-ecken.de">
+    <span itemprop="name">Startseite</span></a>
+    <meta itemprop="position" content="0" />
+   </li>
+   <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+    <a itemprop="item" href="https://leipziger-ecken.de/akteure">
+    <span itemprop="name">Akteure</span></a>
+    <meta itemprop="position" content="1" />
+   </li>
+   <li id="activeEvent" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+    <a itemprop="item" href="https://leipziger-ecken.de/akteurprofil/<?= $aResult['row1']->AID; ?>">
+    <span itemprop="name"><?= $aResult['row1']->name; ?></span></a>
+    <meta itemprop="position" content="2" />
+   </li>
+  </ol>
 
-			  <h3>Beschreibung</h3>
+  <?php if (!empty($resultTags)) : ?>
+  <aside id="akteurSparten">
+  <?php foreach ($resultTags as $tag) : ?>
+   <a href="<?= base_path(); ?>akteure/?tags[]=<?= $tag->KID; ?>" rel="nofollow" title="Zeige alle mit '<?= $tag->kategorie; ?>' getaggten Akteure">#<?= strtolower($tag->kategorie); ?></a>
+  <?php endforeach; ?>
+  </aside>
+  <?php endif; ?>
 
-				<?php if (!empty($aResult['row1']->beschreibung)): ?>
-				<p><?= $aResult['row1']->beschreibung; ?></p>
-			  <?php else : ?>
-				<p><i>Hier wurde leider noch keine Beschreibung angelegt :(</i></p>
-			  <?php endif; ?>
+  <h3>Beschreibung</h3>
 
-        <?php if (!empty($resultEvents)) : ?>
-        <div id="next-events">
-			   <h3>Veranstaltungen</h3>
+	<?php if (!empty($aResult['row1']->beschreibung)): ?>
+	<p itemprop="description"><?= $aResult['row1']->beschreibung; ?></p>
+	<?php else : ?>
+	<p><i>Hier wurde leider noch keine Beschreibung angelegt :(</i></p>
+	<?php endif; ?>
 
-				 <?php foreach($resultEvents as $event) : ?>
-         <?php $start = new DateTime($event->start_ts);
-               $ende =  new DateTime($event->ende_ts);
-               $istAbgelaufen = ($start->format('Ymd') < date('Ymd')) ? true : false;
-         ?>
+  <?php if (!empty($resultEvents)) : ?>
+  <div id="next-events">
+	<h3>Veranstaltungen</h3>
+
+	<?php foreach($resultEvents as $event) : ?>
+  <?php $start = new DateTime($event->start_ts);
+        $ende =  new DateTime($event->ende_ts);
+        $istAbgelaufen = ($start->format('Ymd') < date('Ymd')) ? true : false;  ?>
          <div class="aaeEvent row<?= ($istAbgelaufen ? ' outdated' : ''); ?>">
 			   <div class="date large-2 columns button secondary"><?= $start->format('d'); ?><br /><?= $this->monat_short[$start->format('m')]; ?></div>
           <div class="content large-10 columns">
@@ -110,9 +131,9 @@
             <?php endif; ?>
            </div>
           </div>
-		     <?php endforeach; ?>
-       </div>
-			  <?php endif; ?>
-			 </section>
+     <?php endforeach; ?>
+    </div>
+	 <?php endif; ?>
+	 </section>
 
-			</div>
+	</div>
