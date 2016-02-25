@@ -64,7 +64,7 @@
       </div>
      </div>
      <?php else : ?>
-     <p><a href="<?= base_path(); ?>user/<?= $user->uid; ?>/edit">Einstellungen</a> | <a href="<?= base_path(); ?>user/logout">Logout</a></p>
+     <p><a href="<?= base_path(); ?>user/<?= $user->uid; ?>/edit">Einstellungen</a> | <a href="<?= base_path(); ?>user/logout">Logout</a><br /></p>
      <?php endif; ?>
 
 

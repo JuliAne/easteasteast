@@ -43,6 +43,60 @@ function aae_data_block_info() {
   return $blocks;
 }
 
+/*
+ * Implements hook_default_message_type().
+ */
+function aae_data_default_message_type() {
+
+  $defaults = array();
+
+  $defaults['aae_message'] = entity_create('message_type', array(
+   'description' => 'Activity messages from AAE-module',
+   'argument_keys' => array(
+     '!name',
+     /*'!body',
+     '@string',*/
+    ),
+    'message_text_format' => 'filtered_html',
+    'message_text' => array(
+      LANGUAGE_NONE => array(
+        array('value' => '!name Example text.'),
+      ),
+    ),
+    'language' => 'de',
+    ));
+/*
+  $items['aaee_akteur_message'] = entity_create('message_type', '{
+  "name" : "aaee_akteur_message",
+  "description" : "bla",
+  "module" : "aaejunge",
+  "argument_keys" : [],
+  "argument" : [],
+  "category" : "message_type",
+  "data" : {
+    "token options" : { "clear" : 0 },
+    "purge" : { "override" : 0, "enabled" : 0, "quota" : "", "days" : "" }
+  },
+  "language" : "de",
+  "arguments" : null,
+  "message_text" : { "de" : [
+      {
+        "value" : "\u003Cp\u003ETach, [current-user:uid]\u003C\/p\u003E\r\n",
+        "format" : "filtered_html",
+        "safe_value" : "\u003Cp\u003ETach, [current-user:uid]\u003C\/p\u003E\n"
+      }
+    ]
+  }
+}'); */
+
+  return $defaults;
+
+}
+
+/**
+ * Implements hook_akteur_created().
+ */
+
 function aae_data_akteur_created(){
 
   echo 'd'; exit();

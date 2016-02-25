@@ -110,11 +110,12 @@ function aae_preprocess_html(&$variables) {
 
   case ('akteure') :
 
-   $js = '$(window).ready(function(){$(".tokenize").tokenize({displayDropdownOnFocus:true,newElements:false});});';
+   $js = '$(window).ready(function(){$(".tokenize").tokenize({displayDropdownOnFocus:true,newElements:false});$("#akteure-content").stalactite({cssPrep:false,loader:"",duration:100});});';
 
    drupal_add_css(path_to_theme(). '/css/subpage.css');
    drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
    drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');
+   drupal_add_js(path_to_theme().'/js/stalactite.min.js');
    drupal_add_js($js, 'inline');
 
   break;
@@ -130,7 +131,7 @@ function aae_preprocess_html(&$variables) {
   global $user;
 
   if (array_intersect(array('redakteur','administrator'), $user->roles)) {
-   echo '<!-- IF IS_ADMIN --><style type="text/css">#mainnav{top: 65px !important;}#singlesite{margin-top:130px;}.aaeActionBar{margin-top:-231px !important;margin-bottom:160px !important;}</style><!-- /IF -->';
+   echo '<!-- IF IS_ADMIN --><style type="text/css">#mainnav{top: 65px !important;}#singlesite{margin-top:130px;}.aaeActionBar{margin-top:-161px !important;margin-bottom:160px !important;}</style><!-- /IF -->';
   }
 } // END function aae_preprocess_html
 

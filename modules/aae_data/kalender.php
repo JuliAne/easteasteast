@@ -90,6 +90,7 @@ class kalender extends aae_data_helper {
        'EID',
        ))
        ->condition('start_ts', $this->currentDate . '%', 'LIKE')
+       // WHERE -> FILTERS!
        ->orderBy('name', 'ASC')
        ->execute();
 

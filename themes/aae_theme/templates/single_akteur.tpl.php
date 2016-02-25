@@ -59,7 +59,7 @@
 	<?php endif; ?>
 
   <?php if ($aResult['row1']->barrierefrei == '1') : ?>
-  <p><span style="padding:7px 2px;"><img style="width:32px;" src="<?= base_path().path_to_theme(); ?>/img/accessibility_icon_white.svg" /></span>Barrierefreier Zugang</p>
+  <p><span class="icon" style="padding:7px 2px;"><img style="width:32px;" src="<?= base_path().path_to_theme(); ?>/img/accessibility_icon_white.svg" /></span>Barrierefreier Zugang</p>
   <div class="divider"></div>
   <?php endif; ?>
 

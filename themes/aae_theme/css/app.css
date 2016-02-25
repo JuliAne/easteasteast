@@ -373,7 +373,7 @@ transform: rotate(-10deg);
 .aaeActionBar {
  height: 50px;
  border-bottom: 1px solid #fff;
- margin-top: -242px;
+ margin-top: -226px;
  position: relative;
  z-index: 50;
  margin-bottom: 190px;
@@ -684,9 +684,8 @@ section#journal .large-8.large-offset-2.columns br:after {
   float: none;
   display: inline-block;
   vertical-align: top;
-  margin-top:15px;
-  animation-name: akteure;
-  animation-duration: 0.5s;
+  /*animation-name: akteure;
+  animation-duration: 0.5s;*/
 }
 
 @keyframes akteure {
@@ -1256,4 +1255,8 @@ section#journal .large-8.large-offset-2.columns br:after {
 
 .tagcloud .tag.tagc-5 {
   font-size: 1.35em;
+}
+
+#akteure-content {
+ width: 75% !important;
 }

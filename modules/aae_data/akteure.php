@@ -19,17 +19,23 @@ Class akteure extends aae_data_helper {
 
  public function run(){
 
-  module_invoke_all('hook_akteur_created');
+  /*module_invoke_all('hook_akteur_created');
 
- global $user;
+  global $user;
 
-    $message = message_create('firstmessage', array(), $user);
-    $wrapper = entity_metadata_wrapper('message', $message);
-    $wrapper->save();
+  $values = array(
+  'arguments' => array(
+    '@name' => '<a href="'.base_path().'eventprofil/'.$akteurResult->AID.'">'.$akteurResult->name.'</a>',
+    '@message' => 'hat den Akteur xy hinzugefügt'
+  ));
+
+  $message = message_create('aae_message', $values);
+  $wrapper = entity_metadata_wrapper('message', $message);
+  $wrapper->save(); */
 
   $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) ? $this->clearContent($_GET['presentation']) : 'boxen');
 
-  $this->maxAkteure = (isset($_GET['display_number']) && !empty($_GET['display_number']) ? $this->clearContent($_GET['display_number']) : '15' );
+  $this->maxAkteure = (isset($_GET['display_number']) && !empty($_GET['display_number']) ? $this->clearContent($_GET['display_number']) : '25' );
 
   if (isset($_GET['filterTags']) && !empty($_GET['filterTags'])) {
    $this->filter['tags'] = $_GET['filterTags'];

@@ -31,7 +31,7 @@
    var $mapboxAccessToken = "pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg";
    var $mapboxMap = "matzelot.ke3420oc";
    var $mapboxDefaultView = "51.336, 12.433";
-   var $mapboxDefaultZoom = "12";
+   var $mapboxDefaultZoom = "11";
 
    var $servercheck;
 

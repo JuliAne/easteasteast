@@ -44,7 +44,7 @@
     </div>
 
    <div id="project-info" class="pcard" style="margin-top:5px;">
-     <p><span><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" /></span>
+     <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" /></span>
      <strong style="color:grey;">Start: </strong><a href="<?= base_path(); ?>events/?day=<?= $resultEvent->start->format('Y-m-d'); ?>" rel="nofollow" itemprop="startDate" content="<?= $resultEvent->start->format('Y-m-d'); ?>"><?= $resultEvent->start->format('d.m.Y'); ?></a>
      <?= ($resultEvent->start->format('s') == '01' ? ', '.$resultEvent->start->format('H:i').' Uhr' : ''); ?>
      <?php if ($resultEvent->ende->format('Ymd') !== '10000101' || $resultEvent->ende->format('s') == '01') : ?>
