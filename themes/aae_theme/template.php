@@ -35,6 +35,7 @@ function aae_preprocess_html(&$variables) {
   drupal_add_feed(base_path().'events/rss');
 
   drupal_add_js(path_to_theme().'/js/jquery-1.11.3.min.js');
+  drupal_add_css('https://fonts.googleapis.com/css?family=Merriweather:100,400,500');
 
   drupal_add_js(path_to_theme().'/js/pace.min.js');
   drupal_add_js(path_to_theme().'/js/app.js');

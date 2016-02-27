@@ -134,7 +134,7 @@
 <div class="row">
 
   <div class="large-12 columns">
-  <label>Beschreibung: <?= $this->fehler['beschreibung']; ?>
+  <label>Beschreibung. In der Vorschau erscheinen die ersten 30 Wörter. <?= $this->fehler['beschreibung']; ?>
    <textarea name="beschreibung" id="beschreibung" cols="45" rows="3" placeholder="<?= $this->ph_beschreibung; ?>"><?= $this->beschreibung; ?></textarea>
   </label>
   <script>CKEDITOR.replace('beschreibung');</script>

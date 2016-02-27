@@ -128,7 +128,7 @@
   </p><?php endif; ?>
 
   <?php if (!empty($resultEvent->url)) : ?>
-    <br /><p><strong>Weitere Informationen: </strong><a href="<?= $resultEvent->url; ?>" itemprop="sameAs"><?= $resultEvent->url; ?></a></p>
+    <br /><p><strong>Weitere Informationen: </strong><a href="<?= $resultEvent->url; ?>" itemprop="sameAs" target="_blank"><?= $resultEvent->url; ?></a></p>
   <?php endif; ?>
 
    </div></section>

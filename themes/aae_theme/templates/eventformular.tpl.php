@@ -119,7 +119,7 @@
  <div class="row">
 
   <div class="large-12 columns">
-  <label>Beschreibung <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['kurzbeschreibung']; ?>
+  <label>Beschreibung. In der Vorschau erscheinen die ersten 30 Wörter <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['kurzbeschreibung']; ?>
    <textarea name="kurzbeschreibung" id="kurzbeschreibung" cols="45" rows="3" placeholder="<?= $this->ph_kurzbeschreibung; ?>"><?= $this->kurzbeschreibung; ?></textarea>
   </label>
   <script>CKEDITOR.replace('kurzbeschreibung', { toolbar : 'Basic' });</script>

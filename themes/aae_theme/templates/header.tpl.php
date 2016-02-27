@@ -1,8 +1,14 @@
+<?php if(!empty($messages) && !strpos($messages, 'Warning') && !strpos($messages, 'session')) : ?>
+<div id="alert" class="drupal-error">
+ <?php print $messages; ?>
+ <a href="#" class="close" title="Schliessen">x</a>
+</div>
+<?php endif; ?>
+
 <div id="mainnav">
  <div class="row">
 
  <nav id="nav" role="navigation">
-
   <!-- for responsive menu (CSS only) -->
   <input type="checkbox" id="responsive-menu" name="responsive-menu" class="show-for-small-only" title="Zeige/Verstecke Menü">
   <label for="responsive-menu" onclick></label>
@@ -10,7 +16,6 @@
   <a href="<?= base_path(); ?>"><img id="logo" class="left" src="<?= base_path().path_to_theme(); ?>/logo.png" /></a>
 
   <?php print render($page['mainnav']); ?>
-
  </nav>
 
   <aside id="actions" class="large-1 small-2 columns panel radius right">
@@ -64,7 +69,7 @@
       </div>
      </div>
      <?php else : ?>
-     <p><a href="<?= base_path(); ?>user/<?= $user->uid; ?>/edit">Einstellungen</a> | <a href="<?= base_path(); ?>user/logout">Logout</a><br /></p>
+     <p><a href="<?= base_path(); ?>user/<?= $user->uid; ?>/edit">Einstellungen</a> | <a href="<?= base_path(); ?>user/logout">Logout</a></p><br />
      <?php endif; ?>
 
 

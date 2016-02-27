@@ -49,7 +49,7 @@ Class eventformular extends aae_data_helper {
   var $ph_zeit_von = "von (Uhrzeit: hh:mm)";
   var $ph_zeit_bis = "bis (Uhrzeit: hh:mm)";
   var $ph_bild = "Bild";
-  var $ph_kurzbeschreibung = "Beschreibung";
+  var $ph_kurzbeschreibung = "Beschreibungstext";
   var $ph_url = "URL";
   var $ph_strasse = "Strasse";
   var $ph_nr = "Hausnummer";

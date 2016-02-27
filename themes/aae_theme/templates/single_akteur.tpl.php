@@ -54,7 +54,7 @@
    <?php endif; ?>
 
    <?php if (!empty($aResult['row1']->url)) : ?>
-	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/cloud_white.svg" /></span><a href="<?= $aResult['row1']->url; ?>" itemprop="sameAs"><?= str_replace('http://', '', $aResult['row1']->url);?></a></p>
+	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/cloud_white.svg" /></span><a href="<?= $aResult['row1']->url; ?>" itemprop="sameAs" target="_blank"><?= str_replace('http://', '', $aResult['row1']->url);?></a></p>
 	 <div class="divider"></div>
 	<?php endif; ?>
 

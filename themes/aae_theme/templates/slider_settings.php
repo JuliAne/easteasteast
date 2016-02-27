@@ -32,10 +32,10 @@ $sliders = array(
 
  $slider1 = array(
    'image' => 'slider_bg.jpg',
-   'headline' => 'Den Leipziger Osten neu entdecken',
-   'description' => '<p>Die Plattform für den ganzen Stadtteil: Lerne Akteure aus Deiner Umgebung kennen & erfahre,</p>
-    <p>wann und wo sich etwas in Deinem Bezirk bewegt.</p>
-    <p class="slogan"><strong>Kostenlos. Offen. Lokal.</strong></p>',
+   'headline' => 'Den Leipziger Osten entdecken',
+   'description' => '<p>Deine Stadtteilplattform: Erfahre mehr über Vereine, Initiativen und Akteure in deiner Umgebung, </p>
+    <p>werde Teil der Community und registriere dich.</p>
+    <p class="slogan"><strong>Offen. Lokal. Vernetzt.</strong></p>',
    'whiteText' => true,
    'blueButton' => array(
      'text' => 'Mehr erfahren...',
@@ -46,7 +46,7 @@ $sliders = array(
  $slider2 = array(
    'image' => 'slider_2_min.jpg',
    'headline' => '<strong>'.$counts['akteure'].'</strong> Akteure. <strong>'.$counts['events'].'</strong> Events.<br /> Eine Plattform.',
-   'description' => '<p>Jetzt anmelden, Projekt einstellen oder einfach nur mitmischen.</p>',
+   'description' => '<p>Jetzt anmelden, Akteur werden, Veranstaltungen einstellen und einfach mitmischen.</p>',
    'whiteText' => true,
    'blueButton' => array(
      'text' => '<span style="color:white;">Jetzt registrieren!</span>',
@@ -56,10 +56,9 @@ $sliders = array(
 
  $slider3 = array(
    'image' => 'rabet_abends_ida.jpg',
-   'headline' => 'Den Leipziger Osten neu entdecken',
-   'description' => '<p>Die Plattform für den ganzen Stadtteil: lerne Akteure aus Deiner Umgebung kennen & erfahre,</p>
-    <p>wann und wo sich etwas in Deinem Bezirk bewegt.</p>
-    <p class="slogan"><strong>Kostenlos. Offen. Lokal.</strong></p>',
+   'headline' => 'Der Leipziger Osten',
+   'description' => '<p>vom „Grafischen Viertel” über Neustadt-Neuschönefeld, Volkmarsdorf, Schönefeld bis Sellerhausen-Stünz</p>
+    <p class="slogan"><strong>vernetzt und kooperativ für ein buntes Leipzig</strong></p>',
    'whiteText' => true,
    'blueButton' => array(
      'text' => 'Mehr erfahren...',

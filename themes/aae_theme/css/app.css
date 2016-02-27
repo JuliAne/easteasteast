@@ -352,6 +352,10 @@ transform: rotate(-10deg);
   background: #fff;
 }
 
+.tabs-title.is-active {
+  border-bottom: 1px solid #2199e8;
+}
+
 #mainnav #actions #login-popup:before {
  margin-left: 202px;
 }
@@ -373,7 +377,7 @@ transform: rotate(-10deg);
 .aaeActionBar {
  height: 50px;
  border-bottom: 1px solid #fff;
- margin-top: -226px;
+ margin-top: -242px;
  position: relative;
  z-index: 50;
  margin-bottom: 190px;
@@ -1175,7 +1179,7 @@ section#journal .large-8.large-offset-2.columns br:after {
 
 #svg_logo {
   width: 19px;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 
 #edit-account .description, #user-profile-form .description {

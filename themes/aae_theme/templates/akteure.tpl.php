@@ -1,19 +1,18 @@
-<div class="row">
+<header id="akteurePageHeader" class="pageHeader">
+  <h2><?= $itemsCount; ?> Akteure</h2>
+  <p>Lerne Vereine, Initiativen und Akteure aus dem Leipziger Osten kennen.</p>
+</header>
 
- <h3 class="large-4 columns"><strong><?= $itemsCount; ?></strong> Akteure</h3>
-
-<?php if(user_is_logged_in()) : ?>
-  <a class="medium button hollow right" href="<?= base_path(); ?>Akteurformular">+ Akteur hinzufügen</a><br />
-<?php else : ?>
-  <a class="login_first medium button hollow right" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Akteur hinzufügen (Login)</a><br />
-<?php endif; ?>
-
-</div>
-<div class="divider"></div>
-
-<div id="akteure" class="row" style="padding-top:15px;">
+<div id="akteure" class="row" style="padding-top:280px;">
 
  <aside class="aae-sidebar large-3 columns right">
+
+   <?php if(user_is_logged_in()) : ?>
+     <a class="medium button hollow large-12 columns" href="<?= base_path(); ?>Akteurformular">+ Akteur hinzufügen</a><br />
+   <?php else : ?>
+     <a class="login_first medium button hollow large-12 columns" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Akteur hinzufügen (Login)</a><br />
+   <?php endif; ?>
+
   <div id="filter" class="large-12 columns">
 
   <div class="large-12 columns" id="removeFilter">

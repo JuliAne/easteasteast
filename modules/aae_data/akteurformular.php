@@ -52,7 +52,7 @@ Class akteurformular extends aae_data_helper {
   var $ph_ansprechpartner = "Kontaktperson";
   var $ph_funktion = "Funktion der Kontaktperson";
   var $ph_bild = "Dateiname mit Endung";
-  var $ph_beschreibung = "Beschreibung";
+  var $ph_beschreibung = "Beschreibungstext. In der Vorschau werden die ersten 30 Wörter angezeigt.";
   var $ph_oeffnungszeiten = "Öffnungszeiten";
 
   // $tbl_adresse

@@ -1,19 +1,19 @@
-<div class="row">
+<header id="eventsPageHeader" class="pageHeader">
+  <h2><?= $itemsCount; ?> Events <a href="<?= base_path(); ?>events/rss" title="Alle Events als RSS-Feed"><img id="svg_logo" src="<?= base_path().path_to_theme(); ?>/img/rss.svg" /></a></h2>
+  <p>Finde Workshops, Kreativwerkstätten, Märkte, Versammlungen und mehr.</p>
+</header>
 
-<h3 class="large-4 columns"><strong><?= $itemsCount; ?></strong> Events<a href="<?= base_path(); ?>events/rss" title="Alle Events als RSS-Feed"><img id="svg_logo" src="<?= base_path().path_to_theme(); ?>/img/rss.svg" /></a></h3>
+<div id="events" class="row" style="padding-top:280px;">
 
-<?php if(user_is_logged_in()) : ?>
-  <a class="medium button hollow round right" href="<?= base_path(); ?>Eventformular">+ Event hinzufügen</a><br />
-<?php else : ?>
-  <a class="login_first medium button hollow round right" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Event hinzufügen (Login)</a><br />
-<?php endif; ?>
+  <aside class="aae-sidebar large-3 columns right">
 
-</div>
-<div class="divider"></div>
+  <?php if(user_is_logged_in()) : ?>
+   <a class="medium button hollow round larg-12 columns" href="<?= base_path(); ?>Eventformular">+ Event hinzufügen</a><br />
+  <?php else : ?>
+   <a class="login_first medium button hollow round large-12 columns" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Event hinzufügen (Login)</a><br />
+   <?php endif; ?>
 
-<div id="events" class="row" style="padding: 15px 0;">
-
-  <div id="filter" class="large-3 columns">
+  <div id="filter" class="large-12 columns">
 
    <div class="large-12 columns" id="removeFilter">
     <h4 class="left">Filter</h4>
@@ -76,8 +76,9 @@
 
    </form>
   </div>
+  </aside>
 
-  <div id="events_content" class="large-offset-1 large-8 columns">
+  <div id="events_content" class="large-9 columns">
 
    <ul class="tabs" data-tabs id="events-tabs" style="margin-bottom:22px;">
     <li class="tabs-title<?= ($this->getOldEvents || $this->hasFilters ? '' : ' is-active'); ?>"><a href="<?= base_path(); ?>events"<?= ($this->getOldEvents ? '' : ' aria-selected="true"'); ?>>Demnächst</a></li>

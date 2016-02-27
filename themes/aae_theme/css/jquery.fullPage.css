@@ -249,6 +249,13 @@ html.fp-enabled,
 #slideSection .slide p {
   margin-bottom: 45px;
   font-size: 1.2em;
+  font-family: 'Merriweather', 'Open Sans', serif !important;
+  font-weight: 100;
+  padding: 2px 10px;
+  margin: 0 auto;
+  display: table;
+  color: #FFF;
+  text-shadow: 0 0 5px #000, 0 0 5px #000, 0 0 5px #000;
 }
 
 #slideSection .slide.whiteText h1, #slideSection .slide.whiteText p {
@@ -271,19 +278,6 @@ html.fp-enabled,
 
 /*settings for slide0, slide2, slide3*/
 
-#slide0.slide.whiteText p, #slide2.slide.whiteText p, #slide3.slide.whiteText p {
-    background-color: rgba(255,255,255,0.75);
-    padding: 5px 10px;
-    margin: 0 auto;
-    margin-bottom: 3px;
-    display: table;
-    color: #2F2F2F !important;
-}
-
-#slide2.slide.whiteText p {
-    background-color: rgba(255,255,255,0.7)!important;
-}
-
 #slideSection #slide0.slide.whiteText h1{
   text-shadow: 2px 2px 10px rgba(25,82,95,1);
 }
@@ -296,16 +290,19 @@ html.fp-enabled,
   text-shadow: 2px 2px 15px rgba(100,100,100,1);
 }
 
-#slideSection #slide0 button.transparent, #slideSection #slide2 button.transparent, #slideSection #slide3 button.transparent {
- background: rgba(255, 255, 255, 0.8);
+#slideSection button.transparent {
+ /*background: rgba(255, 255, 255, 0.8);*/
+ background: #2199E8;
+ border: none;
+ border-bottom: 3px solid #007095;
  font-weight: 700;
  margin-top:30px;
- color: #2f2f2f!important;
+ color: #fff;
 }
 
-#slideSection #slide0 button.transparent:hover, #slideSection #slide2 button.transparent:hover, #slideSection #slide3 button.transparent:hover {
- background: rgba(255, 255, 255, 0.9);
- color: #000;
+#slideSection button.transparent:hover {
+ background: #007095;
+ color: #fff !important;
 }
 
 /*setting veranstaltungen*/
