@@ -377,7 +377,7 @@ transform: rotate(-10deg);
 .aaeActionBar {
  height: 50px;
  border-bottom: 1px solid #fff;
- margin-top: -242px;
+ margin-top: -226px;
  position: relative;
  z-index: 50;
  margin-bottom: 190px;
@@ -532,12 +532,12 @@ transform: rotate(-10deg);
  background-image: url(../img/project_bg.png);
  background-size: 112%;
  transition: 0.4s background-size;
+ padding-top: 45px;
 }
 
 .pcard header a {
  color: #fff;
  text-transform: uppercase;
- text-shadow: 0 0 3px rgba(0,0,0,0.6);
 }
 
 .pcard header img.barrierefrei {
@@ -550,17 +550,26 @@ transform: rotate(-10deg);
  box-shadow: 0 1px 2px #353535;
 }
 
-.pcard header h3 {
+/*.pcard header h3 {
  margin: 0;
  padding: 5px;
  padding-top: 45px;
- /*text-shadow: 0 1px 2px #353535;*/
+ /*text-shadow: 0 1px 2px #353535;
  font-size: 1.6em;
+ text-align: center;
+} */
+
+.pcard header h3 {
+ margin: 0;
+ padding: 13px;
+ background: rgba(0,0,0,0.3);
+ padding: 13px;
+ font-size: 1.3em;
  text-align: center;
 }
 
 .pcard header.renderSmallName h3 {
-  font-size: 1.25em;
+  font-size: 1.15em;
 }
 
 .pcard section .divider {

@@ -3,6 +3,8 @@ $(document).ready(function() {
  activePopupId = false;
  activePopupCaller = false;
 
+ setInterval(function(){$('#alert').slideUp('slow')}, 10000);
+
  $(document).scroll(function(){
   if($(window).scrollTop()>0){
    $('#mainnav').addClass('scrolled');

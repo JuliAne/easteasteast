@@ -136,7 +136,7 @@ function aae_data_menu() {
   $items = array();
 
   //Menuitem "Akteure"
-  $items['Akteure'] = array(
+  $items['akteure'] = array(
     'title' => 'Akteure',
     'page callback' => 'akteure_page',
     'access arguments' => array('access content'),
@@ -145,7 +145,7 @@ function aae_data_menu() {
   );
 
   //Menuitem "Akteurformular"
-  $items['Akteurformular'] = array(
+  $items['akteurformular'] = array(
     'title' => 'Akteurformular',
     'page callback' => 'akteurformular_page',
     'access arguments' => array('access content'),
@@ -154,8 +154,8 @@ function aae_data_menu() {
   );
 
   //Menuitem "Akteurprofil"
-  $items['Akteurprofil/%'] = array(
-    'title' => '',
+  $items['akteurprofil/%'] = array(
+    'title' => 'Akteurprofil',
     'page callback' => 'akteurprofil_page',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
@@ -163,7 +163,7 @@ function aae_data_menu() {
   );
 
   //Menuitem "Akteuredit"
-  $items['Akteuredit/%'] = array(
+  $items['akteuredit/%'] = array(
     'title' => '',
     'page callback' => 'akteuredit_page',
     'access arguments' => array('access content'),
@@ -172,7 +172,7 @@ function aae_data_menu() {
   );
 
   //Menuitem "Akteurloeschen"
-  $items['Akteurloeschen/%'] = array(
+  $items['akteurloeschen/%'] = array(
     'title' => '',
     'page callback' => 'akteurloeschen_page',
     'access arguments' => array('access content'),
@@ -181,7 +181,7 @@ function aae_data_menu() {
   );
 
   //Menuitem "Events"
-  $items['Events'] = array(
+  $items['events'] = array(
     'title' => 'Events',
     'page callback' => 'events_page',
     'access arguments' => array('access content'),
@@ -189,11 +189,8 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
-  //Menuitem  "Events/old"
-  //...$items['Events/old']
-
   //Menuitem "Events/RSS"
-  $items['Events/rss'] = array(
+  $items['events/rss'] = array(
     'title' => 'Events',
     'page callback' => 'events_rss',
     'access arguments' => array('access content'),
@@ -202,7 +199,7 @@ function aae_data_menu() {
   );
 
   //Menuitem "Eventprofil"
-  $items['Eventprofil/%'] = array(
+  $items['eventprofil/%'] = array(
     'title' => '',
     'page callback' => 'eventprofil_page',
     'access arguments' => array('access content'),
@@ -210,8 +207,17 @@ function aae_data_menu() {
     'access callback' => TRUE,
   );
 
+  //Menuitem "Eventprofil"
+  $items['eventprofil/%/ics_download'] = array(
+    'title' => '',
+    'page callback' => 'ics_download',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
+
   //Menuitem "Eventloeschen"
-  $items['Eventloeschen/%'] = array(
+  $items['eventloeschen/%'] = array(
     'title' => '',
     'page callback' => 'eventloeschen_page',
     'access arguments' => array('access content'),
@@ -220,7 +226,7 @@ function aae_data_menu() {
   );
 
   //Menuitem "Eventedit"
-  $items['Eventedit/%'] = array(
+  $items['eventedit/%'] = array(
     'title' => '',
     'page callback' => 'eventedit_page',
     'access arguments' => array('access content'),
@@ -229,18 +235,9 @@ function aae_data_menu() {
   );
 
   //Menuitem "Eventformular"
-  $items['Eventformular'] = array(
+  $items['eventformular'] = array(
     'title' => 'Eventformular',
     'page callback' => 'eventformular_page',
-    'access arguments' => array('access content'),
-    'type' => MENU_NORMAL_ITEM,
-    'access callback' => TRUE,
-  );
-
-  //Menuitem "ICS-Download"
-  $items['ics_download/%'] = array(
-    'title' => '',
-    'page callback' => 'ics_download',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
@@ -271,12 +268,12 @@ function aae_data_menu() {
  * Gibt Event im .ical-Format aus
  */
 
-function ics_download() {
+function event_ics_download() {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/ics_download.php';
+  include $modulePath . '/eventprofil.php';
 
-  $ics = new ics_download();
-  return $ics->run();
+  $ics = new aae_eventprofil();
+  return $ics->ics_download();
 }
 
 /**

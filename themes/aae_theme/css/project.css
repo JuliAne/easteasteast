@@ -67,6 +67,7 @@
  height: auto;
  background-size: 100%;
  background-color: none !important;
+ padding-top: 0;
 }
 
 #project .pcard header img {

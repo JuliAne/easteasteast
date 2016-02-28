@@ -13,7 +13,7 @@
   <input type="checkbox" id="responsive-menu" name="responsive-menu" class="show-for-small-only" title="Zeige/Verstecke Menü">
   <label for="responsive-menu" onclick></label>
 
-  <a href="<?= base_path(); ?>"><img id="logo" class="left" src="<?= base_path().path_to_theme(); ?>/logo.png" /></a>
+  <a href="<?= base_path(); ?>"><img id="logo" class="left" src="<?= base_path().path_to_theme(); ?>/logo_blue.png" /></a>
 
   <?php print render($page['mainnav']); ?>
  </nav>

@@ -191,7 +191,7 @@ $akteure = db_select($this->tbl_akteur, 'a')
    $akName = explode(" ", $akteur->name);
 
    foreach ($akName as $name) {
-    if (strlen($name) >= 17) $renderSmallName = true;
+    if (strlen($name) >= 17 || strlen($akteur->name) >= 30) $renderSmallName = true;
    }
 
    // Get short-text

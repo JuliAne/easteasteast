@@ -23,8 +23,12 @@ $(document).ready(function(){
       } else {
        $('#fp-nav').fadeIn('slow');
       }
+    },
+    afterRender: function () {
+      setInterval(function () {
+       $.fn.fullpage.moveSlideRight();
+      }, 5500);
     }
-
   });
  }
 

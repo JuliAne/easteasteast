@@ -59,7 +59,7 @@ function aae_preprocess_html(&$variables) {
 
     if (drupal_is_front_page()) {
 
-     drupal_add_css(path_to_theme().'/css/jquery.fullPage.css');
+     drupal_add_css(path_to_theme().'/css/page_front.css');
      drupal_add_js(path_to_theme().'/js/jquery.fullPage.min.js');
      drupal_add_js(path_to_theme().'/js/home.js');
 
@@ -111,7 +111,7 @@ function aae_preprocess_html(&$variables) {
 
   case ('akteure') :
 
-   $js = '$(window).ready(function(){$(".tokenize").tokenize({displayDropdownOnFocus:true,newElements:false});$("#akteure-content").stalactite({cssPrep:false,loader:"",duration:100});});';
+   $js = '$(window).ready(function(){$(".tokenize").tokenize({displayDropdownOnFocus:true,newElements:false});$("#akteure-content").stalactite({cssPrep:false,loader:"",duration:50});});';
 
    drupal_add_css(path_to_theme(). '/css/subpage.css');
    drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
@@ -132,7 +132,7 @@ function aae_preprocess_html(&$variables) {
   global $user;
 
   if (array_intersect(array('redakteur','administrator'), $user->roles)) {
-   echo '<!-- IF IS_ADMIN --><style type="text/css">#mainnav{top: 65px !important;}#singlesite{margin-top:130px;}.aaeActionBar{margin-top:-161px !important;margin-bottom:160px !important;}</style><!-- /IF -->';
+   echo '<!-- IF IS_ADMIN --><style type="text/css">#mainnav{top: 65px !important;}#singlesite{margin-top:130px;}.aaeActionBar{margin-top:-230px !important;margin-bottom:160px !important;}</style><!-- /IF -->';
   }
 } // END function aae_preprocess_html
 
