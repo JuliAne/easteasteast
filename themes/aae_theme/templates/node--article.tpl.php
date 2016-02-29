@@ -32,7 +32,7 @@
 
  <div id="headline" class="row">
 
-  <div class="large-8 columns">
+  <div class="large-7 columns">
     <a href="<?= $node_url; ?>" title="<?= $title; ?>">
     <?php
 

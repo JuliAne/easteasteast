@@ -46,7 +46,7 @@ class kalender extends aae_data_helper {
        $this->_createNavi().
      '</div>'.
      '<div class="box-content">' .
-       '<ul class="secondary label">' . $this->_createLabels() . '</ul>';
+       '<ul class="label">' . $this->_createLabels() . '</ul>';
        $content .= '<div class="clear"></div>';
        $content .= '<ul class="dates">';
 

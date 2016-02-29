@@ -464,7 +464,7 @@ transform: rotate(-10deg);
 
 .section .event {
   height: auto;
-  min-height: 90px;
+  min-height: 74px;
 }
 
 .section#journal .content h1 {
@@ -529,10 +529,12 @@ transform: rotate(-10deg);
 
 .pcard header {
  height: 150px;
+ min-width: 261px;
  background-image: url(../img/project_bg.png);
  background-size: 112%;
  transition: 0.4s background-size;
- padding-top: 45px;
+ display: table-cell;
+ vertical-align: middle;
 }
 
 .pcard header a {
@@ -560,7 +562,6 @@ transform: rotate(-10deg);
 } */
 
 .pcard header h3 {
- margin: 0;
  padding: 13px;
  background: rgba(0,0,0,0.3);
  padding: 13px;
@@ -710,6 +711,7 @@ section#journal .large-8.large-offset-2.columns br:after {
  border: 1px solid #F1EFEF;
  border-radius: 1px;
  transition: border 0.25s;
+ overflow: hidden;
 }
 
 #projects-akteure .pcard section {
@@ -732,20 +734,7 @@ section#journal .large-8.large-offset-2.columns br:after {
   color: #2199E8!important;
 }
 
-#projects-akteure .pcard h3 {
-  color:#228cd1;
-  font-size: 0.9em;
-  height: 45px;
-  font-weight: bold;
-  line-height: 1.5em;
-}
-
-#projects-akteure .pcard p {
-  color:#111111;
-}
-
 #projects-akteure .pcard header {
-  padding-top: 45px;
   border-bottom: 1px solid lightgrey;
 }
 
@@ -1008,6 +997,12 @@ section#journal .large-8.large-offset-2.columns br:after {
   float: left;
   width: 14%;
   padding: 6px;
+  text-align: center;
+  border-right: 1px solid #fff;
+}
+
+#calendar ul.label li:last-child {
+  border-right: none;
 }
 
 #calendar .dates {
@@ -1020,6 +1015,7 @@ section#journal .large-8.large-offset-2.columns br:after {
   padding: 5px;
   font-size: 0.75em;
   margin: 5px 0;
+  text-align: center;
 }
 
 #calendar #event:after {

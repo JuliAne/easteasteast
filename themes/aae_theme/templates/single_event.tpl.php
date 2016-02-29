@@ -17,7 +17,7 @@
  <?php endif; ?>
   <div class="large-5 columns right" style="text-align: right;">
 
-   <a href="<?= base_path(); ?>ics_download/<?= $resultEvent->EID; ?>" title="Event Als .ical exportieren">Export (iCal)</a>
+   <a href="<?= base_path(); ?>eventprofil/<?= $resultEvent->EID; ?>/ics_download/" title="Event Als .ical exportieren">Export (iCal)</a>
    <a href="https://leipziger-ecken.de/contact" title="Dieses Event wurde unbefugt erstellt? Melden Sie sich hier."><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" />Melden</a>
    <a href="#share" class="popup-link" title="Event in den sozialen Netzwerken teilen"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" />Teilen</a>
    <div id="share" class="popup large-3 columns">

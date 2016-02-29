@@ -77,9 +77,17 @@ public function print_letzte_akteure($limit = 4) {
     ->execute()
     ->fetchAssoc();
 
+  $renderSmallName = false;
+  $akName = explode(" ", $akteur->name);
+
+  foreach ($akName as $name) {
+   if (strlen($name) >= 17 || strlen($akteur->name) >= 30) $renderSmallName = true;
+  }
+
    // Hack: add variable to $resultAkteure-object
    $resultAkteure[$counter] = (array)$resultAkteure[$counter];
    $resultAkteure[$counter]['bezirk'] = $bezirk['bezirksname'];
+   $resultAkteure[$counter]['renderSmallName'] = $renderSmallName;
    $resultAkteure[$counter] = (object)$resultAkteure[$counter];
 
  }

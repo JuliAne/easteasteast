@@ -80,7 +80,7 @@
 
   <div id="events_content" class="large-9 columns">
 
-   <ul class="tabs" data-tabs id="events-tabs" style="margin-bottom:22px;">
+   <ul class="tabs" id="events-tabs" style="margin-bottom:22px;">
     <li class="tabs-title<?= ($this->getOldEvents || $this->hasFilters ? '' : ' is-active'); ?>"><a href="<?= base_path(); ?>events"<?= ($this->getOldEvents ? '' : ' aria-selected="true"'); ?>>Demnächst</a></li>
     <li class="tabs-title<?= ($this->getOldEvents && !$this->hasFilters ? ' is-active' : ''); ?>"><a href="<?= base_path(); ?>events/old"<?= ($this->getOldEvents ? ' aria-selected="true"' : ''); ?>>Vergangene Events</a></li>
     <?php if ($this->hasFilters) : ?><li class="tabs-title is-active"><a href="#" aria-selected="true">Filterergebnisse (<?= count($resultEvents); ?>)</a></li><?php endif; ?>
