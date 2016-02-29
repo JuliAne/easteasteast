@@ -1,5 +1,5 @@
 <header id="eventsPageHeader" class="pageHeader">
-  <h2><?= $itemsCount; ?> Events <a href="<?= base_path(); ?>events/rss" title="Alle Events als RSS-Feed"><img id="svg_logo" src="<?= base_path().path_to_theme(); ?>/img/rss.svg" /></a></h2>
+  <h2><?= $itemsCount; ?> Veranstaltungen/Events <a href="<?= base_path(); ?>events/rss" title="Alle Events als RSS-Feed"><img id="svg_logo" src="<?= base_path().path_to_theme(); ?>/img/rss.svg" /></a></h2>
   <p>Finde Workshops, Kreativwerkstätten, Märkte, Versammlungen und mehr.</p>
 </header>
 
