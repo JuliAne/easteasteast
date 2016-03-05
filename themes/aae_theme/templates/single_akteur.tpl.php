@@ -146,13 +146,15 @@
              <?php endforeach; ?>
         </div>
       </div>
-    <?php endif; ?>      
+    <?php endif; ?>
 
     <?php if (!empty($aResult['rssFeed'])) : ?>
     <div class="tabs-panel" id="prss">
      <?php foreach ($aResult['rssFeed'] as $feed) : ?>
-        <h5><a href="<?= $feed->url; ?>"><?= $feed->title; ?></a></h5>
-        <p><?= $feed->description; ?></p>
+     <div class="rssitem">
+      <h5><a href="<?= $feed->url; ?>"><?= $feed->title; ?></a></h5>
+      <p><?= $feed->description; ?></p>
+     </div>
      <?php endforeach; ?>
 
      <a href="<?= $aResult['rssFeedUrl']; ?>" class="secondary hollow button">Gesamten Feed öffnen</a>

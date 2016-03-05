@@ -196,3 +196,7 @@
 #akteurProfilTabs #prss img {
   display: none;
 }
+
+#akteurProfilTabs .rssitem {
+  margin-top: 6px;
+}

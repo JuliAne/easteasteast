@@ -322,14 +322,14 @@ Class akteurformular extends aae_data_helper {
 	  ))
 	  ->execute();
 
-    db_insert($this->tbl_hat_user)
-	   ->fields(array(
+   db_insert($this->tbl_hat_user)
+	  ->fields(array(
 	    'hat_UID' => $this->user_id,
 	    'hat_AID' => $this->akteur_id,
-     ))
-	  ->execute();
+    ))
+	 ->execute();
 
-    if (module_exists('aggregator') && !empty($this->rssFeed)) {
+   if (module_exists('aggregator') && !empty($this->rssFeed)) {
 
     aggregator_save_feed(array(
      'category' => 'aae-feeds',
@@ -342,6 +342,32 @@ Class akteurformular extends aae_data_helper {
     ));
 
    }
+
+  // Tell Drupal about new akteurprofil/ID-item
+  /*  xmlsitemap_link_save(array(
+      'access' => 1,
+      'status' => 1,
+      'status_override' => 0,
+      'loc' => 'akteurprofil/'.$this->akteur_id,
+      'lastmod' => date('Y-m-d'),
+      'priority' => '0.5',
+      'priority_override' => 0,
+      'changefreq' => 'weekly'
+    ));*/
+
+    $item = array(
+    'menu_name' => 'navigation',
+    'weight' => 1,
+    'link_title' => t('Akteurprofil von !username', array('!username' => $this->name)),
+    'hidden' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'module' => 'aae_data',
+    'link_path' => 'akteurprofil/'.$this->akteur_id,
+    );
+
+    menu_link_save($item);
+
 
    if (is_array($this->sparten) && !empty($this->sparten)) {
 
