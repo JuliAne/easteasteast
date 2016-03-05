@@ -33,6 +33,7 @@ Class akteure extends aae_data_helper {
   $wrapper = entity_metadata_wrapper('message', $message);
   $wrapper->save(); */
 
+
   $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) ? $this->clearContent($_GET['presentation']) : 'boxen');
 
   $this->maxAkteure = (isset($_GET['display_number']) && !empty($_GET['display_number']) ? $this->clearContent($_GET['display_number']) : '25' );

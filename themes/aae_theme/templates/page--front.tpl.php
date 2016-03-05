@@ -66,10 +66,10 @@
       foreach ($blocks->print_letzte_events() as $event) : ?>
       <div>
         <div class="large-4 columns large3-events">
-        <a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>">
+        <a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>">
           <button class="date"><?= $event->start->format('d'); ?><br/><?= $monat_short[$event->start->format('m')]; ?></button>
         </a>
-        <a href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>">
+        <a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>">
           <div class="events-align event">
             <h4><?= $event->name; ?></h4>
             <div class="divider"></div>
@@ -96,10 +96,10 @@
 
       foreach ($blocks->print_letzte_akteure() as $akteur) : ?>
 
-      <a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>">
+      <a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>">
       <div class="large-3 small-5 columns pcard">
        <header <?= (!empty($akteur->bild) ? 'style="background-image:url('.$akteur->bild.');"' : ''); ?><?= ($akteur->renderSmallName ? ' class="renderSmallName"' : ''); ?>>
-         <h3><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>" title="Akteurprofil besuchen"><?= $akteur->name; ?></a></h3>
+         <h3><a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="Akteurprofil besuchen"><?= $akteur->name; ?></a></h3>
         </header>
         <section>
           <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?>

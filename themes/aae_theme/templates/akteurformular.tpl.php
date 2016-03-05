@@ -91,30 +91,6 @@
 
 </fieldset>
 
-<fieldset class="row fieldset">
-
- <legend>Sonstiges</legend>
-
- <div class="large-4 columns">
-  <label>Öffnungszeiten: <?= $this->fehler['oeffnungszeiten']; ?>
-   <input type="text" id="akteurOeffnungszeitenInput" name="oeffnungszeiten" value="<?= $this->oeffnungszeiten; ?>" placeholder="<?= $this->ph_oeffnungszeiten; ?>">
-  </label>
- </div>
-
- <div class="large-4 columns">
-  <label>Projektwebsite: <?= $this->fehler['url']; ?>
-   <input type="text" id="akteurURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= $this->ph_url; ?>">
-  </label>
- </div>
-
- <div class="large-4 columns">
-  <label>Telefonnummer: <?= $this->fehler['telefon']; ?>
-   <input type="text" id="akteurTelefonInput" name="telefon" value="<?= $this->telefon; ?>" placeholder="<?= $this->ph_telefon; ?>">
-  </label>
- </div>
-
-</fieldset>
-
 <div class="row">
 
  <div class="large-6 columns">
@@ -142,25 +118,65 @@
 
  </div>
 
-  <fieldset class="row fieldset">
-   <legend>Akteurbild</legend>
+  <div class="row collapse" id="akteurTabs">
+  <div class="medium-3 columns">
+    <ul class="tabs vertical" id="example-vert-tabs" data-tabs>
+      <li class="tabs-title is-active"><a href="#pbild" aria-selected="true">Akteurbild</a></li>
+      <li class="tabs-title"><a href="#prss">RSS-Integration <i>(Beta)</i></a></li>
+      <li class="tabs-title"><a href="#psonstiges">Sonstiges</a></li>
+    </ul>
+    </div>
+    <div class="medium-9 columns">
+    <div class="tabs-content vertical" data-tabs-content="example-vert-tabs">
+      <div class="tabs-panel is-active" id="pbild">
+        <input type="file" id="akteurBildInput" name="bild" />
 
-    <input type="file" id="akteurBildInput" name="bild" />
+        <?php if (!empty($this->bild)) : ?>
+          <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
+          <div id="currentPic">
+           <img src="<?= $this->bild; ?>" title="Aktuelles Akteurbild" />
+           <a href="#">Akteurbild löschen.</a>
+          </div>
+        <?php endif; ?>
 
-    <?php if (!empty($this->bild)) : ?>
-      <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
-      <div id="currentPic">
-       <img src="<?= $this->bild; ?>" title="Aktuelles Akteurbild" />
-       <a href="#">Akteurbild löschen.</a>
+      <p class="licensetext"><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf leipziger-ecken.de stimmen sie auch einer etwaigen Nutzung dieser Daten durch andere zu.</p>
+      <p class="licensetext">Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten, wenn er den Urheber nennt. Wir bitten Sie, ihre Daten nach bestem (Ge-)wissen über die Eingabefeldern zu beschreiben.</p><br />
+      <p class="licensetext">Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte. Bildmaterial sollte vorher abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
+
+       </div>
+      <div class="tabs-panel" id="prss">
+        <p>Hier haben Sie die Möglichkeit, einen bestehenden RSS-Feed (bspw. ihres Blogs) in das Profil einzubinden.</p>
+        <p class="licensetext" style="padding-bottom: 8px;">Hinweis: Nicht mit diesem Profil zusammenhängende Feeds können ggf. entfernt werden. Eine Aktualisierung des Feeds erfolgt im Tagestakt.</p>
+        <input type="text" name="rssFeed" placholder="URL zum RSS-Feed" value="<?= $this->rssFeed->url; ?>" />
       </div>
-    <?php endif; ?>
 
-   <p><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf Leipziger-ecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
- <p>Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten, wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefeldern zu beschreiben.</p><br />
- <p>Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte. Bildmaterial sollte abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
-  </fieldset>
+      <div class="tabs-panel" id="psonstiges">
 
-  <div class="row">
+        <div class="large-4 columns">
+         <label>Öffnungszeiten: <?= $this->fehler['oeffnungszeiten']; ?>
+          <input type="text" id="akteurOeffnungszeitenInput" name="oeffnungszeiten" value="<?= $this->oeffnungszeiten; ?>" placeholder="<?= $this->ph_oeffnungszeiten; ?>">
+         </label>
+        </div>
+
+        <div class="large-4 columns">
+         <label>Projektwebsite: <?= $this->fehler['url']; ?>
+          <input type="text" id="akteurURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= $this->ph_url; ?>">
+         </label>
+        </div>
+
+        <div class="large-4 columns">
+         <label>Telefonnummer: <?= $this->fehler['telefon']; ?>
+          <input type="text" id="akteurTelefonInput" name="telefon" value="<?= $this->telefon; ?>" placeholder="<?= $this->ph_telefon; ?>">
+         </label>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <div class="row" style="margin-top:15px;">
 
   <div class="large-12 columns">
 

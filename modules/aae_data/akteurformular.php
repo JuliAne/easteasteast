@@ -72,6 +72,7 @@ Class akteurformular extends aae_data_helper {
   var $modulePath;
   var $removedTags;
   var $removedPic;
+  var $rssFeed = "";
 
   //-----------------------------------
 
@@ -152,6 +153,7 @@ Class akteurformular extends aae_data_helper {
     $this->sparten = $_POST['sparten'];
     $this->removedTags = $_POST['removedTags'];
     $this->removedPic = $_POST['removeCurrentPic'];
+    $this->rssFeed = $this->clearContent($_POST['rssFeed']);
 
     //-------------------------------------
 
@@ -241,6 +243,10 @@ Class akteurformular extends aae_data_helper {
 	   $this->freigabe = false;
     }
 
+    if (strlen($this->rssFeed) > 400) {
+
+    }
+
     if ($this->gps == 'Ermittle Geo-Koordinaten...') $this->gps = '';
 
     // Um die bereits gewählten Tag's anzuzeigen benötigen wir deren Namen...
@@ -323,7 +329,21 @@ Class akteurformular extends aae_data_helper {
      ))
 	  ->execute();
 
-	 if (is_array($this->sparten) && !empty($this->sparten)) {
+    if (module_exists('aggregator') && !empty($this->rssFeed)) {
+
+    aggregator_save_feed(array(
+     'category' => 'aae-feeds',
+     'title' => 'aae-feed-'.$this->akteur_id,
+     'description' => t('Feed for AAE-User :username', array(':username' => $this->name)),
+     'url' => $this->rssFeed,
+     'refresh' => '86400',
+     'link' => base_path().'akteurprofil/'.$this->akteur_id,
+     'block' => 5
+    ));
+
+   }
+
+   if (is_array($this->sparten) && !empty($this->sparten)) {
 
     foreach ($this->sparten as $id => $sparte) {
 		// Tag bereits in DB?
@@ -366,7 +386,7 @@ Class akteurformular extends aae_data_helper {
 
    if (session_status() == PHP_SESSION_NONE) session_start();
    drupal_set_message('Ihr Akteurprofil wurde erfolgreich erstellt!');
-   header("Location: Akteurprofil/" . $this->akteur_id);
+   header("Location: akteurprofil/" . $this->akteur_id);
 
   } // END function akteurSpeichern()
 
@@ -445,61 +465,108 @@ Class akteurformular extends aae_data_helper {
 	   ->condition('AID', $this->akteur_id, '=')
 	   ->execute();
 
-     // Update Tags
+     if (module_exists('aggregator')) {
 
-     if (is_array($this->sparten) && !empty($this->sparten)) {
+       $akteurFeed = db_select('aggregator_feed', 'af')
+        ->fields('af', array('fid','url'))
+        ->condition('title', 'aae-feed-'.$this->akteur_id)
+        ->execute();
 
-      foreach ($this->sparten as $sparte) {
-    	// Tag bereits in DB?
+       $hasFeed = $akteurFeed->rowCount();
+       $akteurFeed = $akteurFeed->fetchObject();
 
-      $sparte_id = '';
-      $sparte = strtolower($this->clearContent($sparte));
+     if (!empty($this->rssFeed) && $hasFeed){
 
-    	$resultsparte = db_select($this->tbl_sparte, 's')
-    	 ->fields('s')
-    	 ->condition('KID', $sparte, '=')
-    	 ->execute();
+      // rewrite RSS-path of Feed
+      $feedUpdate = db_update('aggregator_feed')
+       ->fields(array('url' => $this->rssFeed))
+       ->condition('title', 'aae-feed-'.$this->akteur_id)
+       ->execute();
 
-    	 if ($resultsparte->rowCount() == 0) {
-         // Tag in DB einfügen
-    	  $sparte_id = db_insert($this->tbl_sparte)
-    	   ->fields(array('kategorie' => $sparte))
-    	 	 ->execute();
+      //remove all current feed items
+      db_delete('aggregator_item')
+       ->condition('fid', $hasFeed);
 
-    		} else {
+     } else if (!empty($this->rssFeed) && !$hasFeed) {
 
-    		  foreach ($resultsparte as $row) {
-    		    $sparte_id = $row->KID;
-    		  }
+     aggregator_save_feed(array(
+      'category' => 'aae-feeds',
+      'title' => 'aae-feed-'.$this->akteur_id,
+      'description' => t('Feed for AAE-User :username', array(':username' => $this->name)),
+      'url' => $this->rssFeed,
+      'refresh' => '86400', // daily
+      'link' => base_path().'akteurprofil/'.$this->akteur_id,
+      'block' => '5'
+    ));
 
-    		}
+   } else if (empty($this->rssFeed) && $hasFeed && $akteurFeed->url != $this->rssFeed) {
 
-    		// Hat der Akteur dieses Tag bereits zugeteilt?
+     // remove akteur-feed and its items
 
-    		$hatAkteurSparte = db_select($this->tbl_hat_sparte, 'hs')
-    		 ->fields('hs')
-         ->condition('hat_KID', $sparte_id, '=')
-         ->condition('hat_AID', $this->akteur_id, '=')
-    		 ->execute();
+     db_delete('aggregator_feed')
+      ->condition('fid', $akteurFeed->fid)
+      ->execute();
+     db_delete('aggregator_item')
+      ->condition('fid', $akteurFeed->fid)
+      ->execute();
 
-         if ($hatAkteurSparte->rowCount() == 0) {
-          // Nein, daher rein damit
+    }
+   }
 
-          db_insert($this->tbl_hat_sparte)
-           ->fields(array(
-            'hat_AID' => $this->akteur_id,
-            'hat_KID' => $sparte_id
-           ))
-           ->execute();
+   // Update Tags
 
-        }
-    	 }
+   if (is_array($this->sparten) && !empty($this->sparten)) {
+
+    foreach ($this->sparten as $sparte) {
+  	// Tag bereits in DB?
+
+    $sparte_id = '';
+    $sparte = strtolower($this->clearContent($sparte));
+
+  	$resultsparte = db_select($this->tbl_sparte, 's')
+  	 ->fields('s')
+  	 ->condition('KID', $sparte, '=')
+  	 ->execute();
+
+    if ($resultsparte->rowCount() == 0) {
+     // Tag in DB einfügen
+     $sparte_id = db_insert($this->tbl_sparte)
+  	   ->fields(array('kategorie' => $sparte))
+  	 	 ->execute();
+
+  	} else {
+
+  	  foreach ($resultsparte as $row) {
+  	    $sparte_id = $row->KID;
+  	  }
+  	}
+
+    // Hat der Akteur dieses Tag bereits zugeteilt?
+
+    $hatAkteurSparte = db_select($this->tbl_hat_sparte, 'hs')
+     ->fields('hs')
+     ->condition('hat_KID', $sparte_id, '=')
+     ->condition('hat_AID', $this->akteur_id, '=')
+     ->execute();
+
+     if ($hatAkteurSparte->rowCount() == 0) {
+      // Nein, daher rein damit
+
+      db_insert($this->tbl_hat_sparte)
+      ->fields(array(
+       'hat_AID' => $this->akteur_id,
+       'hat_KID' => $sparte_id
+       ))
+      ->execute();
+
      }
+    }
+   }
 
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
     drupal_set_message('Ihr Akteurprofil wurde erfolgreich bearbeitet!');
-   	header("Location: ".base_path()."Akteurprofil/" . $this->akteur_id);
+   	header("Location: ".base_path()."akteurprofil/" . $this->akteur_id);
 
   } // END function akteurUpdaten()
 
@@ -513,6 +580,10 @@ Class akteurformular extends aae_data_helper {
      ->fields('c')
 	   ->condition('AID', $this->akteur_id, '=')
      ->execute();
+
+    if (module_exists('aggregator')) {
+     $this->rssFeed = aggregator_feed_load('aae-feed-'.$this->akteur_id);
+    }
 
     // Speichern der Daten in den Arbeitsvariablen
     foreach ($resultakteur as $row) {

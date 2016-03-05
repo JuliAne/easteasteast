@@ -68,6 +68,7 @@
  background-size: 100%;
  background-color: none !important;
  padding-top: 0;
+ min-width: 369px;
 }
 
 #project .pcard header img {
@@ -181,4 +182,17 @@
 
 #projet #eventSparten a, #project #akteurSparten a {
   line-height: 25px;
+  margin-left: 5px;
+}
+
+#akteurProfilTabs {
+  margin-top: 20px;
+}
+
+#akteurProfilTabs .tabs-content {
+  border: none;
+}
+
+#akteurProfilTabs #prss img {
+  display: none;
 }

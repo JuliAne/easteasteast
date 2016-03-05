@@ -128,12 +128,45 @@ function aae_data_block_view($delta = '') {
 }
 
 /**
- * @function hook_menu()
+ * Implements hook_menu().
  *
  * Verlinkt URL-Pfade auf die entsprechende Funktion.
  */
 function aae_data_menu() {
+
   $items = array();
+
+  // The basic AAE-admin-page
+  $items['admin/config/aae_data'] = array(
+    'title' => t('AAE config interface'),
+    'description' => t('Configure AAE module'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('admin_form'),
+    'access arguments' => array('access administration pages'),
+    'weight' => 1
+  );
+
+  // AAE-admin-page "xy" (default)
+  $items['admin/config/aae_data/bla'] = array(
+    'title' => t('AAE config interface bla'),
+    'description' => t('Configure AAE module'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('admin_form'),
+    'access arguments' => array('access administration pages'),
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => 2
+  );
+
+  // AAE-admin-page "xy"
+  $items['admin/config/aae_data/contents'] = array(
+    'title' => t('AAE config interface'),
+    'description' => t('Set and edit AAE-specific content, e.g. SEO-tags'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('admin_form'),
+    'access arguments' => array('access administration pages'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 3
+  );
 
   //Menuitem "Akteure"
   $items['akteure'] = array(
@@ -262,6 +295,23 @@ function aae_data_menu() {
   );
 
   return $items;
+}
+
+
+function admin_form() {
+
+  $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/aae_data.admin.inc';
+
+  $form = build_admin_form();
+  return system_settings_form($form);
+}
+
+/**
+ * Logic behind the form submit.
+ */
+function admin_form_submit($form, $form_state) {
+  // Kept it empty, intentionally.
 }
 
 /**

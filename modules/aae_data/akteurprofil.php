@@ -39,9 +39,23 @@ class aae_akteurprofil extends aae_data_helper {
 
  } else {
 
+   // Watch out for possible RSS-Feeds...
+
+  if (module_exists('aggregator')) {
+
+   $feed = db_query('SELECT fid, title, block, url FROM {aggregator_feed} WHERE title = :title', array(':title' => 'aae-feed-'.$akteur_id))->fetchObject();
+
+   if ($feed) {
+    $result = db_query('SELECT * FROM {aggregator_item} WHERE fid = :fid ORDER BY timestamp DESC, iid DESC LIMIT 5', array(':fid' => $feed->fid));
+    $rssFeed = $result->fetchAll();
+   }
+  }
+
   foreach ($resultAkteur as $row) {
 
    $aResult['row1'] = $row;
+   if (isset($rssFeed)) $aResult['rssFeed'] = $rssFeed;
+   if (isset($rssFeed)) $aResult['rssFeedUrl'] = $feed->url;
    $resultAdresse = db_select($this->tbl_adresse, 'b')
     ->fields('b')
     ->condition('ADID', $row->adresse, '=');
@@ -164,9 +178,9 @@ class aae_akteurprofil extends aae_data_helper {
    header('Content-Length: ' . strlen($var));
    header("Content-type:text/x-vCard; charset=utf-8");
    header("Content-Disposition: attachment; filename=vcard_".$fileName.".vcf");
-   header('Connection', 'close');
+   //header('Connection', 'close');
    echo $var;
-
+   exit();
   }
 
 } // end class aae_akteurprofil
