@@ -120,7 +120,7 @@
 
     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
     drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js');
-    drupal_add_js('L.mapbox.accessToken = "'.$this->mapboxAccessToken.'";', 'inline', array('type' => 'inline', 'scope' => 'footer'));
+    drupal_add_js('L.mapbox.accessToken = "'.$this->mapboxAccessToken.'";', 'inline', array('type' => 'inline', 'scope' => 'footer', 'weight' => -1));
 
     $js = '$(window).ready(function(){var map = L.mapbox.map("map", "'.$this->mapboxMap.'").setView(['.$geoCord.'], '.$this->mapboxDefaultZoom.');';
 
@@ -143,8 +143,8 @@
 
      if (!empty($markerData['file'])) drupal_add_js($markerData['file']);
 
-     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css', array('type' => 'external'));
-     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css', array('type' => 'external'));
+     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.css', array('type' => 'external', 'scope' => 'footer'));
+     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/MarkerCluster.Default.css', array('type' => 'external', 'scope' => 'footer'));
      drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-markercluster/v0.4.0/leaflet.markercluster.js');
 
     }
@@ -178,7 +178,7 @@
 
     $js .=  '});';
 
-    drupal_add_js($js, array( 'type' => 'inline', 'scope' => 'footer'));
+    drupal_add_js($js, array('type' => 'inline', 'weight' => 999));
 
   }
 

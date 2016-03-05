@@ -227,6 +227,7 @@ transform: rotate(-10deg);
  padding-right: 15px;
  padding-top: 12px;
  transition: 0.3s all;
+ display: block;
 }
 
 #mainnav ul.menu .expanded:before {
@@ -907,6 +908,7 @@ section#journal .large-8.large-offset-2.columns br:after {
   padding-top: 0;
   width: 100%;
   left: 0;
+  background-attachment: fixed;
 }
 
 .singlesite #footer:before {
@@ -1027,6 +1029,10 @@ section#journal .large-8.large-offset-2.columns br:after {
   font-size: 0.75em;
   margin: 5px 0;
   text-align: center;
+}
+
+#calendar .dates li a {
+  font-weight: bold;
 }
 
 #calendar #event:after {
@@ -1287,4 +1293,12 @@ section#journal .large-8.large-offset-2.columns br:after {
 
 #breadcrumb li a:hover {
   color: #fff;
+}
+
+.hasMap #breadcrumb li a {
+  color: #2f2e2e;
+}
+
+.hasMap #breadcrumb li a:hover {
+  color: #000;
 }

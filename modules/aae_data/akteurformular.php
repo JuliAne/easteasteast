@@ -99,6 +99,16 @@ Class akteurformular extends aae_data_helper {
 
   public function run() {
 
+    $og_title = array(
+  '#tag' => 'meta',
+  '#attributes' => array(
+    'property' => 'og:title',
+    'content' => 'bla',
+  ),
+);
+
+drupal_add_html_head($og_title, 'og_title');
+
     $path = current_path();
     $explodedpath = explode("/", $path);
     $this->akteur_id = $this->clearContent($explodedpath[1]);
