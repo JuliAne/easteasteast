@@ -421,9 +421,12 @@ Class eventformular extends aae_data_helper {
            ))
           ->execute();
 
-        }
-       }
       }
+     }
+    }
+
+    // Call hooks
+    module_invoke_all('hook_event_modified');
 
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
@@ -653,6 +656,9 @@ Class eventformular extends aae_data_helper {
     );
 
     menu_link_save($item);
+
+    // Call hooks
+    module_invoke_all('hook_event_created');
 
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();

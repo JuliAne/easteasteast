@@ -2,7 +2,6 @@
  description = Theme für die Stadtteilplattform "Leipziger Ecken".
  core = 7.x
 
-
  ;;;;;;;;;;;;;;;;;;;;;
  ;; Regions
  ;;;;;;;;;;;;;;;;;;;;;
@@ -13,3 +12,4 @@
  regions[header]  = 'Header'
  regions[blog]    = 'Journal (Top 3)'
  regions[user_region]  = 'Userregion'
+ regions[user_invite_by_mail] = 'Invite by mail'

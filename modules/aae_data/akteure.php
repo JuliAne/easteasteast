@@ -19,7 +19,7 @@ Class akteure extends aae_data_helper {
 
  public function run(){
 
-  /*module_invoke_all('hook_akteur_created');
+  /*
 
   global $user;
 

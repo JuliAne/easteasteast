@@ -152,7 +152,7 @@
     <div class="tabs-panel" id="prss">
      <?php foreach ($aResult['rssFeed'] as $feed) : ?>
      <div class="rssitem">
-      <h5><a href="<?= $feed->url; ?>"><?= $feed->title; ?></a></h5>
+      <h5><a href="<?= $feed->link; ?>"><?= $feed->title; ?></a></h5>
       <p><?= $feed->description; ?></p>
      </div>
      <?php endforeach; ?>

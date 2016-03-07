@@ -81,7 +81,7 @@ Class akteurloeschen extends aae_data_helper {
   menu_link_delete(NULL, 'akteurprofil/'.$akteur_id);
 
   if (session_status() == PHP_SESSION_NONE) session_start();
-  $_SESSION['sysmsg'][] = 'Der Akteur wurde gelöscht.';
+  drupal_set_message(t('Der Akteur wurde gelöscht.'));
   header("Location: ".base_path()."akteure");
 
 } else {

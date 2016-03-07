@@ -88,7 +88,7 @@ Class eventloeschen extends aae_data_helper {
    menu_link_delete(NULL, 'eventprofil/'.$event_id);
 
    if (session_status() == PHP_SESSION_NONE) session_start();
-   drupal_set_message('Das Event wurde gelöscht.');
+   drupal_set_message(t('Das Event wurde gelöscht.'));
    header("Location: ".base_path()."events");
    // Und "Tschö mit ö..."!
 

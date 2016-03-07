@@ -365,6 +365,7 @@ drupal_add_html_head($og_title, 'og_title');
       'changefreq' => 'weekly'
     ));*/
 
+
     $item = array(
     'menu_name' => 'navigation',
     'weight' => 1,
@@ -417,6 +418,9 @@ drupal_add_html_head($og_title, 'og_title');
 		  ->execute();
 	  }
 	 }
+
+   // Call hooks
+   module_invoke_all('hook_akteur_created');
 
    // Gebe auf der nächsten Seite eine Erfolgsmeldung aus...
 
