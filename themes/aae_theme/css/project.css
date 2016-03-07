@@ -151,11 +151,11 @@
  font-size: 1.6em;
 }
 
-#project #project-content p, #project #project-content li{
+#project #project-content p, #project .event-content li{
  padding-bottom: 0.7em;
 }
 
-#project #project-content ul li {
+#project .event-content ul li {
  list-style-type: disc;
  font-size: 0.8em;
  line-height: 1.65em;

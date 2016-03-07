@@ -57,7 +57,7 @@
 
 </div>
 
-<div id="project-content" class="large-7 large-offset-1 columns">
+<div id="project-content" class="large-7 large-offset-1 columns event-content">
   <ol id="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
      <a itemprop="item" href="https://leipziger-ecken.de">
