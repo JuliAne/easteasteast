@@ -34,17 +34,17 @@ function aae_preprocess_html(&$variables) {
 
   drupal_add_feed(base_path().'events/rss');
 
-  drupal_add_js(path_to_theme().'/js/jquery-1.11.3.min.js');
+  drupal_add_js(path_to_theme().'/js/jquery-1.11.3.min.js', array('scope'=>'header'));
   drupal_add_css('https://fonts.googleapis.com/css?family=Merriweather:100,400,500');
 
   drupal_add_js(path_to_theme().'/js/pace.min.js');
-  drupal_add_js(path_to_theme().'/js/app.js');
+  drupal_add_js(path_to_theme().'/js/app.js', array('scope'=>'footer'));
 
   drupal_add_css(path_to_theme().'/css/foundation.min.css');
   drupal_add_css(path_to_theme().'/css/pace.css');
   drupal_add_css(path_to_theme().'/css/app.css');
 
-  drupal_add_js(path_to_theme().'/js/foundation.min.js');
+  drupal_add_js(path_to_theme().'/js/foundation.min.js', array('scope'=>'footer'));
   drupal_add_js('$(document).foundation();', array('type'=>'inline','scope'=>'footer'));
 
   /* Checke Seitentyp, hänge entsprechendes CSS/JS an den Header: */
@@ -60,8 +60,8 @@ function aae_preprocess_html(&$variables) {
     if (drupal_is_front_page()) {
 
      drupal_add_css(path_to_theme().'/css/page_front.css');
-     drupal_add_js(path_to_theme().'/js/jquery.fullPage.min.js');
-     drupal_add_js(path_to_theme().'/js/home.js');
+     drupal_add_js(path_to_theme().'/js/jquery.fullPage.min.js', array('scope'=>'footer'));
+     drupal_add_js(path_to_theme().'/js/home.js', array('scope' => 'footer'));
 
    } else if ($node->type == 'article') {
     // Node--article.tpl.php
@@ -87,13 +87,13 @@ function aae_preprocess_html(&$variables) {
 
    drupal_add_css(path_to_theme(). '/css/subpage.css');
    drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
-   drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');
+   drupal_add_js(path_to_theme().'/js/jquery.tokenize.js', array('scope'=>'footer'));
    drupal_add_css(path_to_theme().'/css/default.css');
-   drupal_add_js(path_to_theme().'/js/zebra_datepicker.js');
-   drupal_add_js('https://cdn.ckeditor.com/4.5.7/basic/ckeditor.js');
+   drupal_add_js(path_to_theme().'/js/zebra_datepicker.js', array('scope'=>'footer'));
+   drupal_add_js('https://cdn.ckeditor.com/4.5.7/basic/ckeditor.js', array('scope'=>'footer'));
    drupal_add_css(base_path().'sites/all/modules/ckeditor/css/ckeditor.css');
    drupal_add_css(base_path().'sites/all/modules/ckeditor/css/ckeditor.editor.css');
-   drupal_add_js(path_to_theme().'/js/editform.js');
+   drupal_add_js(path_to_theme().'/js/editform.js', array('scope'=>'footer'));
 
   break;
 
@@ -104,8 +104,8 @@ function aae_preprocess_html(&$variables) {
 
    drupal_add_css(path_to_theme(). '/css/subpage.css');
    drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
-   drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');
-   drupal_add_js($js, 'inline');
+   drupal_add_js(path_to_theme().'/js/jquery.tokenize.js', array('scope'=>'footer'));
+   drupal_add_js($js, array('type' => 'inline', 'scope' => 'footer'));
 
   break;
 
@@ -115,8 +115,8 @@ function aae_preprocess_html(&$variables) {
 
    drupal_add_css(path_to_theme(). '/css/subpage.css');
    drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
-   drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');
-   drupal_add_js(path_to_theme().'/js/stalactite.min.js');
+   drupal_add_js(path_to_theme().'/js/jquery.tokenize.js', array('scope'=>'footer'));
+   drupal_add_js(path_to_theme().'/js/stalactite.min.js', array('scope'=>'footer'));
    drupal_add_js($js, 'inline');
 
   break;

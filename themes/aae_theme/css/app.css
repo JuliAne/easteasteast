@@ -227,6 +227,7 @@ transform: rotate(-10deg);
  padding-right: 15px;
  padding-top: 12px;
  transition: 0.3s all;
+ display: block;
 }
 
 #mainnav ul.menu .expanded:before {
@@ -332,6 +333,10 @@ transform: rotate(-10deg);
   margin-bottom: 10px;
 }
 
+#mainnav #actions #login-popup #mainnav-tabs li {
+  background-color: #fff;
+}
+
 #mainnav #actions #login-popup #mainnav-tabs li a {
   padding: 16px 13px !important;
   font-size: 15px !important;
@@ -348,6 +353,9 @@ transform: rotate(-10deg);
   padding: 0 0 6px 0 !important;
 }
 
+.tabs-title {
+  background: #e6e6e6;
+}
 .tabs-title > a:focus, .tabs-title > a[aria-selected="true"] {
   background: #fff;
 }
@@ -535,6 +543,10 @@ transform: rotate(-10deg);
  transition: 0.4s background-size;
  display: table-cell;
  vertical-align: middle;
+}
+
+#projects-akteure .pcard header {
+ min-width: 274px;
 }
 
 .pcard header a {
@@ -896,6 +908,7 @@ section#journal .large-8.large-offset-2.columns br:after {
   padding-top: 0;
   width: 100%;
   left: 0;
+  background-attachment: fixed;
 }
 
 .singlesite #footer:before {
@@ -1016,6 +1029,10 @@ section#journal .large-8.large-offset-2.columns br:after {
   font-size: 0.75em;
   margin: 5px 0;
   text-align: center;
+}
+
+#calendar .dates li a {
+  font-weight: bold;
 }
 
 #calendar #event:after {
@@ -1268,4 +1285,20 @@ section#journal .large-8.large-offset-2.columns br:after {
 
 #akteure-content {
  width: 75% !important;
+}
+
+#breadcrumb li a {
+  color: #fff;
+}
+
+#breadcrumb li a:hover {
+  color: #fff;
+}
+
+.hasMap #breadcrumb li a {
+  color: #2f2e2e;
+}
+
+.hasMap #breadcrumb li a:hover {
+  color: #000;
 }

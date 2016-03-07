@@ -7,10 +7,10 @@ Alpha, alpha everywhere. If you'd like to join us take a look @ https://leipzige
 
 ### Requirements
 
-- PHP 5.4 or better
+- PHP 5.4 or better with the Imagick-extension being installed.
 - Drupal version 7.x (https://www.drupal.org/download) with "CKeditor"-module being installed
-- Recommended modules for an advanced UX: "HTML5 Tools", "Simple FB Connect" (supported), "Views" & "Metatags"
-- Imagick
+- Recommended modules for an advanced UX: "HTML5 Tools", "Views" & "Metatags"
+- Enjoy extra-features with our support for "Simple FB Connect"-, "aggregator"- and "xmlsitemap"-module
 - MySQL/MariaDB with support for datetime-fields and -actions (e.g. CURDATE())
 
 ### Installation via git:

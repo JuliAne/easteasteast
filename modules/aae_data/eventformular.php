@@ -640,10 +640,24 @@ Class eventformular extends aae_data_helper {
  	  }
  	 }
 
+    // Tell Drupal about the new eventprofil/ID-item
+    $item = array(
+     'menu_name' => 'navigation',
+     'weight' => 1,
+     'link_title' => t('Akteurprofil von !username', array('!username' => $this->name)),
+     'hidden' => 0,
+     'has_children' => 0,
+     'expanded' => 0,
+     'module' => 'aae_data',
+     'link_path' => 'eventprofil/'.$this->event_id,
+    );
+
+    menu_link_save($item);
+
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
     drupal_set_message('Das Event wurde erfolgreich erstellt!');
-	  header("Location: Eventprofil/" . $this->event_id);
+	  header("Location: eventprofil/" . $this->event_id);
 
   } // END function event_speichern()
 
@@ -658,8 +672,8 @@ Class eventformular extends aae_data_helper {
 
       // Zeige Admin alle Akteure
       $this->resultakteure = db_select($this->tbl_akteur, 'a')
-        ->fields('a', array( 'AID', 'name' ))
-        ->execute();
+       ->fields('a', array( 'AID', 'name' ))
+       ->execute();
 
     } else {
 

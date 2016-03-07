@@ -25,10 +25,20 @@ $(document).ready(function(){
       }
     },
     afterRender: function () {
-      setInterval(function () {
+
+      timer = setInterval(function () {
        $.fn.fullpage.moveSlideRight();
-      }, 5500);
+      }, 6000);
+
+     $('#fullpage .fp-slides').hover(function(ev){
+      clearInterval(timer);
+     }, function(ev){
+      timer = setInterval(function () {
+       $.fn.fullpage.moveSlideRight();
+      }, 6000);
+     });
     }
+
   });
  }
 

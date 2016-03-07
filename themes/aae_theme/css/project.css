@@ -68,6 +68,7 @@
  background-size: 100%;
  background-color: none !important;
  padding-top: 0;
+ min-width: 369px;
 }
 
 #project .pcard header img {
@@ -181,8 +182,8 @@
 }
 
 #project #eventSparten, #project #akteurSparten {
-  text-shadow: 0px 1px 2px #676767;
-  margin-top: 25px;
+  text-shadow: 0px 2px 2px #8D8D8D;
+  margin-top: 50px;
   margin-bottom: 5px;
   padding-bottom: 15px;
   border-bottom: 1px solid #F1F1F1;
@@ -190,4 +191,21 @@
 
 #projet #eventSparten a, #project #akteurSparten a {
   line-height: 25px;
+  margin-left: 5px;
+}
+
+#akteurProfilTabs {
+  margin-top: 20px;
+}
+
+#akteurProfilTabs .tabs-content {
+  border: none;
+}
+
+#akteurProfilTabs #prss img {
+  display: none;
+}
+
+#akteurProfilTabs .rssitem {
+  margin-top: 6px;
 }

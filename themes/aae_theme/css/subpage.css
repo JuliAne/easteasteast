@@ -13,14 +13,14 @@
  display: block;
 }
 
-fieldset p {
+p.licensetext {
   font-size: 0.7em;
   line-height: 1.7em;
   opacity: 0.85;
   transition: opacity 0.1s;
 }
 
-fieldset p:hover {
+p.licensetext:hover {
    opacity: 1;
 }
 
@@ -229,8 +229,17 @@ fieldset p:hover {
  #currentPic img, #currentPic {
    float:right;
    margin:8px;
+   margin-top: -27px;
    max-width: 250px;
    overflow: hidden;
+ }
+
+ #akteurTabs {
+   margin-top: 20px;
+ }
+
+ #akteurTabs .tabs-content {
+   min-height: 157px;
  }
 
 .page-eventprofil #contentRow {

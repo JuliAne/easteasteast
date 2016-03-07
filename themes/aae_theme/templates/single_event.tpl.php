@@ -1,9 +1,9 @@
-<div id="eventprofil">
+<div id="eventprofil"<?= ($map) ? ' class="hasMap"' : ''; ?>>
 
 <?php
  $style = 'style="';
  if (!empty($resultEvent->bild)) $style .= "background-image:url('".$resultEvent->bild."');";
- if ($map) $style .= "filter:none;padding-top:38px;";
+ if ($map) $style .= "filter:none !important;padding-top:38px;";
  $style .= '"'; ?>
 
 <header id="header" <?= $style; ?>>
@@ -45,10 +45,10 @@
 
    <div id="project-info" class="pcard" style="margin-top:5px;">
      <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" /></span>
-     <strong style="color:grey;">Start: </strong><a href="<?= base_path(); ?>events/?day=<?= $resultEvent->start->format('Y-m-d'); ?>" rel="nofollow" itemprop="startDate" content="<?= $resultEvent->start->format('Y-m-d'); ?>"><?= $resultEvent->start->format('d.m.Y'); ?></a>
+     <strong style="color:rgb(96,94,94);">Start: </strong><a href="<?= base_path(); ?>events/?day=<?= $resultEvent->start->format('Y-m-d'); ?>" rel="nofollow" itemprop="startDate" content="<?= $resultEvent->start->format('Y-m-d'); ?>"><?= $resultEvent->start->format('d.m.Y'); ?></a>
      <?= ($resultEvent->start->format('s') == '01' ? ', '.$resultEvent->start->format('H:i').' Uhr' : ''); ?>
      <?php if ($resultEvent->ende->format('Ymd') !== '10000101' || $resultEvent->ende->format('s') == '01') : ?>
-       <br /><strong style="color:grey">Bis: </strong>
+       <br /><strong style="color:rgb(96,94,94);">Bis: </strong>
        <?= ($resultEvent->ende->format('Ymd') !== '10000101' ? '<a href="'.base_path().'events/?day='.$resultEvent->ende->format('Y-m-d').'" rel="nofollow" itemprop="endDate" content="'.$resultEvent->ende->format('Y-m-d').'">'.$resultEvent->ende->format('d.m.Y').'</a>' : ''); ?>
        <?= ($resultEvent->ende->format('s') == '01' ? ' '.$resultEvent->ende->format('H:i').' Uhr' : ''); ?>
     <?php endif; ?>

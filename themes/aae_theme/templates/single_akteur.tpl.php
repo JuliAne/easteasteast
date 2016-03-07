@@ -102,38 +102,71 @@
   </aside>
   <?php endif; ?>
 
-  <h3>Beschreibung</h3>
 
-	<?php if (!empty($aResult['row1']->beschreibung)): ?>
-	<p itemprop="description"><?= $aResult['row1']->beschreibung; ?></p>
-	<?php else : ?>
-	<p><i>Hier wurde leider noch keine Beschreibung angelegt :(</i></p>
-	<?php endif; ?>
+    <div class="row collapse" id="akteurProfilTabs">
+     <div class="large-12 columns">
+      <ul class="tabs" data-tabs>
+       <li class="tabs-title is-active"><a href="#pdesc" aria-selected="true">Beschreibung</a></li>
+       <?php if (!empty($resultEvents)) : ?><li class="tabs-title"><a href="#pevents">Veranstaltungen</a></li><?php endif; ?>
+       <?php if (!empty($aResult['rssFeed'])) : ?><li class="tabs-title"><a href="#prss">RSS-Feeds</i></a></li><?php endif; ?>
+      </ul>
+     </div>
 
-  <?php if (!empty($resultEvents)) : ?>
-  <div id="next-events">
-	<h3>Veranstaltungen</h3>
+     <div class="large-12 columns tabs-content">
 
-	<?php foreach($resultEvents as $event) : ?>
-  <?php $start = new DateTime($event->start_ts);
-        $ende =  new DateTime($event->ende_ts);
-        $istAbgelaufen = ($start->format('Ymd') < date('Ymd')) ? true : false;  ?>
-         <div class="aaeEvent row<?= ($istAbgelaufen ? ' outdated' : ''); ?>">
-			   <div class="date large-2 columns button secondary"><?= $start->format('d'); ?><br /><?= $this->monat_short[$start->format('m')]; ?></div>
-          <div class="content large-10 columns">
-           <p><a style="line-height:1.6em;" href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>"> <strong><?= $event->name; ?></strong></a>
-           <span class="right"><?php if($ende->format('H:i') !== '00:00') echo $start->format('H:i'); ?><?php if($ende->format('H:i') !== '00:00') echo' - '. $ende->format('H:i'); ?></span></p>
-           <?php if (!empty($event->kurzbeschreibung)): ?>
-             <div class="divider"></div>
-             <?php $numwords = 30;
-                   preg_match("/(\S+\s*){0,$numwords}/", $event->kurzbeschreibung, $regs); ?>
-             <p><?= trim($regs[0]); ?><a href="<?= base_path().'eventprofil/'.$event->EID; ?>">...</a></p>
-            <?php endif; ?>
-           </div>
-          </div>
+      <div class="tabs-panel is-active" id="pdesc">
+       	<?php if (!empty($aResult['row1']->beschreibung)): ?>
+       	<p itemprop="description"><?= $aResult['row1']->beschreibung; ?></p>
+       	<?php else : ?>
+       	<p><i>Hier wurde leider noch keine Beschreibung angelegt :(</i></p>
+       	<?php endif; ?>
+      </div>
+
+      <?php if (!empty($resultEvents)) : ?>
+      <div class="tabs-panel" id="pevents">
+        <div id="next-events">
+
+          <?php foreach($resultEvents as $event) : ?>
+          <?php $start = new DateTime($event->start_ts);
+                $ende =  new DateTime($event->ende_ts);
+                $istAbgelaufen = ($start->format('Ymd') < date('Ymd')) ? true : false;  ?>
+                 <div class="aaeEvent row<?= ($istAbgelaufen ? ' outdated' : ''); ?>">
+                 <div class="date large-2 columns button secondary"><?= $start->format('d'); ?><br /><?= $this->monat_short[$start->format('m')]; ?></div>
+                  <div class="content large-10 columns">
+                   <p><a style="line-height:1.6em;" href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>"> <strong><?= $event->name; ?></strong></a>
+                   <span class="right"><?php if($ende->format('H:i') !== '00:00') echo $start->format('H:i'); ?><?php if($ende->format('H:i') !== '00:00') echo' - '. $ende->format('H:i'); ?></span></p>
+                   <?php if (!empty($event->kurzbeschreibung)): ?>
+                     <div class="divider"></div>
+                     <?php $numwords = 30;
+                           preg_match("/(\S+\s*){0,$numwords}/", $event->kurzbeschreibung, $regs); ?>
+                     <p><?= trim($regs[0]); ?><a href="<?= base_path().'eventprofil/'.$event->EID; ?>">...</a></p>
+                    <?php endif; ?>
+                   </div>
+                  </div>
+             <?php endforeach; ?>
+        </div>
+      </div>
+    <?php endif; ?>
+
+    <?php if (!empty($aResult['rssFeed'])) : ?>
+    <div class="tabs-panel" id="prss">
+     <?php foreach ($aResult['rssFeed'] as $feed) : ?>
+     <div class="rssitem">
+      <h5><a href="<?= $feed->url; ?>"><?= $feed->title; ?></a></h5>
+      <p><?= $feed->description; ?></p>
+     </div>
      <?php endforeach; ?>
-    </div>
-	 <?php endif; ?>
+
+     <a href="<?= $aResult['rssFeedUrl']; ?>" class="secondary hollow button">Gesamten Feed öffnen</a>
+   </div>
+    <?php endif; ?>
+
+</div>
+
+
+
+
+
 	 </section>
 
 	</div>
