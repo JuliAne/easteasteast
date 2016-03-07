@@ -5,3 +5,11 @@
 *.bib
 libraries/
 Abschlussdokumente/
+modules/ckeditor/
+modules/ctools/
+modules/elements/
+modules/entity/
+modules/html5_tools/
+modules/message/
+modules/views/
+

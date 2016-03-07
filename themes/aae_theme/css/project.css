@@ -150,9 +150,18 @@
  font-size: 1.6em;
 }
 
-#project #project-content p {
+#project #project-content p, #project #project-content li{
  padding-bottom: 0.7em;
 }
+
+#project #project-content ul li {
+ list-style-type: disc;
+ font-size: 0.8em;
+ line-height: 1.65em;
+ list-style-position: inside;
+}
+
+
 
 #footer {
  margin-top: 60px;
