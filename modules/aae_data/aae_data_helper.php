@@ -77,6 +77,14 @@
        $var=mysql_real_escape_string($var);*/
    }
 
+  /*Entfernt Whitespaces (oder andere Zeichen) am Anfang und Ende eines Strings und 
+  filtert HTML um XSS Attacken vorzubeugen.*/
+
+   public function clearWhiteSpace($trimTag) {
+     $clear = trim($trimTag);
+     return filter_xss($clear, $allowed_tags = array('a', 'em', 'strong', 'cite', 'blockquote', 'img', 'ul', 'ol', 'li', 'dl', 'dt', 'dd', 'br', 'video', 'p'));
+   }
+
 
    protected function upload_image($bild,$servercheck = null) {
 
