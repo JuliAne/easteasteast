@@ -8,7 +8,7 @@
  <aside class="aae-sidebar large-3 columns right">
 
    <?php if(user_is_logged_in()) : ?>
-     <a class="medium button hollow large-12 columns" href="<?= base_path(); ?>Akteurformular">+ Akteur hinzufügen</a><br />
+     <a class="medium button hollow large-12 columns" href="<?= base_path(); ?>akteure/new">+ Akteur hinzufügen</a><br />
    <?php else : ?>
      <a class="login_first medium button hollow large-12 columns" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Akteur hinzufügen (Login)</a><br />
    <?php endif; ?>
@@ -100,13 +100,13 @@
 <?php foreach($resultAkteure as $akteur): ?>
   <div class="large-4 large-offset-1 small-5 small-offset-1 columns pcard">
    <header <?= (!empty($akteur->bild) ? 'style="background-image:url('.$akteur->bild.');"' : ''); ?><?= ($akteur->renderSmallName ? ' class="renderSmallName"' : ''); ?>>
-     <h3><a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>" title="Akteurprofil besuchen"><?= $akteur->name; ?></a></h3>
+     <h3><a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>"><?= $akteur->name; ?></a></h3>
     </header>
     <section>
       <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?>
       <?php if (!empty($akteur->beschreibung)): ?>
       <div class="divider"></div>
-        <p><?= $akteur->kurzbeschreibung; ?> <a href="<?= base_path().'Akteurprofil/'.$akteur->AID; ?>" title="Akteurprofil besuchen">...</a></p>
+        <p><?= $akteur->kurzbeschreibung; ?> <a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">...</a></p>
       <?php endif; ?>
     </section>
    </div>

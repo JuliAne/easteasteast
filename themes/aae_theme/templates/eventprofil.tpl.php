@@ -13,7 +13,7 @@
 <div class="aaeActionBar">
  <div class="row" style="margin: 0 auto;">
  <?php if ($okay) : ?>
-  <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>eventedit/<?= $resultEvent->EID; ?>" title="Event bearbeiten"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" />Bearbeiten</a></div>
+  <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>eventprofil/<?= $resultEvent->EID; ?>/edit" title="<?= t('Event bearbeiten'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" /><?= t('Bearbeiten'); ?></a></div>
  <?php endif; ?>
   <div class="large-5 columns right" style="text-align: right;">
 

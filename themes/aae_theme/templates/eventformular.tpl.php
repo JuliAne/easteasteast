@@ -1,7 +1,7 @@
 <div class="row columns">
  <h3>Event <?php echo ($this->target == 'update' ? 'bearbeiten' : 'anlegen'); ?></h3>
  <?php if ($this->target == 'update') : ?>
- <a href="<?= base_path(); ?>eventloeschen/<?= $this->event_id; ?>" class="small secondary button round right" style="margin-top:-37px;" title="Event löschen?">Löschen</a>
+ <a href="<?= base_path(); ?>eventprofil/<?= $this->event_id; ?>/remove" class="small secondary button round right" style="margin-top:-37px;" title="Event löschen?">Löschen</a>
  <?php endif; ?>
  <div class="divider" style="margin-bottom: 25px;"></div>
 

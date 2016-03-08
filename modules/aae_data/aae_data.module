@@ -12,23 +12,23 @@ function aae_data_cron() {
 } */
 
 function aae_data_user_login(&$edit, $account){
-  drupal_set_message('Willkommen, <strong>'.$account->name.'</strong>!');
+  drupal_set_message(t('Willkommen, <strong>!name</strong>!', array('!name'=>$account->name)));
 }
 
 function aae_data_simple_fb_connect_login($account){
-  drupal_set_message('Willkommen, <strong>'.$account->name.'</strong>!');
+  drupal_set_message(t('Willkommen, <strong>!name</strong>!', array('!name'=>$account->name)));
 }
 
 function aae_data_user_logout($account) {
 
   // Funktioniert nicht, weil Drupal Sessions löscht...workaround?!
-
   if (session_status() == PHP_SESSION_NONE) session_start();
-  drupal_set_message('Ausgeloggt. Komm` bald wieder!');
+  drupal_set_message(t('Ausgeloggt. Komm` bald wieder!'));
 }
 
 /**
  * Implements hook_block_info().
+ * YET USELESS
  */
 
 function aae_data_block_info() {
@@ -98,7 +98,7 @@ function aae_data_default_message_type() {
  */
 
 function aae_data_akteur_created(){
-
+  // doesn't work...
   echo 'd'; exit();
 
   $message = message_create('firstmessage', array(), 'bla');
@@ -110,6 +110,7 @@ function aae_data_akteur_created(){
 
 /**
  * Implements hook_block_view().
+ * YET UNUSED
  */
 function aae_data_block_view($delta = '') {
 
@@ -147,7 +148,7 @@ function aae_data_menu() {
   );
 
   // AAE-admin-page "xy" (default)
-  $items['admin/config/aae_data/bla'] = array(
+  $items['admin/config/aae_data/settings'] = array(
     'title' => t('AAE config interface bla'),
     'description' => t('Configure AAE module'),
     'page callback' => 'drupal_get_form',
@@ -178,7 +179,7 @@ function aae_data_menu() {
   );
 
   //Menuitem "Akteurformular"
-  $items['akteurformular'] = array(
+  $items['akteure/new'] = array(
     'title' => 'Akteurformular',
     'page callback' => 'akteurformular_page',
     'access arguments' => array('access content'),
@@ -205,7 +206,7 @@ function aae_data_menu() {
   );
 
   //Menuitem "Akteuredit"
-  $items['akteuredit/%'] = array(
+  $items['akteurprofil/%/edit'] = array(
     'title' => '',
     'page callback' => 'akteuredit_page',
     'access arguments' => array('access content'),
@@ -214,7 +215,7 @@ function aae_data_menu() {
   );
 
   //Menuitem "Akteurloeschen"
-  $items['akteurloeschen/%'] = array(
+  $items['akteurprofil/%/remove'] = array(
     'title' => '',
     'page callback' => 'akteurloeschen_page',
     'access arguments' => array('access content'),
@@ -226,6 +227,15 @@ function aae_data_menu() {
   $items['events'] = array(
     'title' => 'Events',
     'page callback' => 'events_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
+
+  //Menuitem "Eventformular"
+  $items['events/new'] = array(
+    'title' => 'Eventformular',
+    'page callback' => 'eventformular_page',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
@@ -259,7 +269,7 @@ function aae_data_menu() {
   );
 
   //Menuitem "Eventloeschen"
-  $items['eventloeschen/%'] = array(
+  $items['eventprofil/%/remove'] = array(
     'title' => '',
     'page callback' => 'eventloeschen_page',
     'access arguments' => array('access content'),
@@ -268,18 +278,9 @@ function aae_data_menu() {
   );
 
   //Menuitem "Eventedit"
-  $items['eventedit/%'] = array(
+  $items['eventprofil/%/edit'] = array(
     'title' => '',
     'page callback' => 'eventedit_page',
-    'access arguments' => array('access content'),
-    'type' => MENU_NORMAL_ITEM,
-    'access callback' => TRUE,
-  );
-
-  //Menuitem "Eventformular"
-  $items['eventformular'] = array(
-    'title' => 'Eventformular',
-    'page callback' => 'eventformular_page',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
@@ -380,12 +381,12 @@ function akteuredit_page($aid = 0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurformular.php';
 
-  $akteur = new akteurformular('update');
+  $aae_akteur = new akteurformular('update');
 
   $path = current_path();
   $path_alias = drupal_lookup_path('alias', $path);
 
-  return $akteur->run();
+  return $aae_akteur->run();
 }
 
 /**
@@ -393,11 +394,11 @@ function akteuredit_page($aid = 0) {
  */
 function akteurloeschen_page($eid=0) {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/akteurloeschen.php';
+  include $modulePath . '/akteurprofil.php';
 
-  $aae_akteurloeschen = new akteurloeschen();
+  $aae_akteur = new aae_akteurprofil();
 
-  return $aae_akteurloeschen->run();
+  return $aae_akteur->removeAkteur();
 }
 
 /**
@@ -429,9 +430,9 @@ function eventprofil_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventprofil.php';
 
-  $eventprofil = new aae_eventprofil();
+  $aae_event = new aae_eventprofil();
 
-  return $eventprofil->run();
+  return $aae_event->run();
 }
 
 /**
@@ -439,10 +440,10 @@ function eventprofil_page() {
  */
 function eventloeschen_page($eid = 0) {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/eventloeschen.php';
+  include $modulePath . '/eventprofil.php';
 
-  $aae_eventloeschen = new eventloeschen();
-  return $aae_eventloeschen->run();
+  $aae_event = new aae_eventprofil();
+  return $aae_event->removeEvent();
 }
 
 /**

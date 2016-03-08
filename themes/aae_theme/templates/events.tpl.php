@@ -8,7 +8,7 @@
   <aside class="aae-sidebar large-3 columns right">
 
   <?php if(user_is_logged_in()) : ?>
-   <a class="medium button hollow round larg-12 columns" href="<?= base_path(); ?>Eventformular">+ Event hinzufügen</a><br />
+   <a class="medium button hollow round larg-12 columns" href="<?= base_path(); ?>events/new">+ Event hinzufügen</a><br />
   <?php else : ?>
    <a class="login_first medium button hollow round large-12 columns" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Event hinzufügen (Login)</a><br />
    <?php endif; ?>
@@ -163,7 +163,7 @@
     <h4><img class="cloudimg" src="<?= base_path().path_to_theme(); ?>/img/cloud.svg" />Tagcloud</h4>
 
     <?php foreach ($resultTagCloud as $tag) : ?>
-      <a class="tagc-<?= ($tag->count >= 5 ? '5' : $tag->count); ?> tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>">#<?= $tag->kategorie; ?></a>
+      <a class="tagc-<?= ($tag->count >= 5 ? '5' : $tag->count); ?> tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow">#<?= $tag->kategorie; ?></a>
     <?php endforeach; ?>
     </aside>
 

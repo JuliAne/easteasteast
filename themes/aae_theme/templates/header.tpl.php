@@ -47,7 +47,7 @@
 
         <?php endforeach; ?>
 
-        <a href="<?= base_path(); ?>akteurformular" class="large-12 columns small button">+ Akteur erstellen</a>
+        <a href="<?= base_path(); ?>akteure/new" class="large-12 columns small button">+ Akteur erstellen</a>
      <?php endif; ?>
 
      <div class="divider"></div>
