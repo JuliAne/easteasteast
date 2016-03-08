@@ -386,7 +386,7 @@ transform: rotate(-10deg);
 .aaeActionBar {
  height: 50px;
  border-bottom: 1px solid #fff;
- margin-top: -226px;
+ margin-top: -242px;
  position: relative;
  z-index: 50;
  margin-bottom: 190px;
@@ -543,7 +543,7 @@ transform: rotate(-10deg);
  background-size: 112%;
  transition: 0.4s background-size;
  display: table-cell;
- vertical-align: middle;
+ vertical-align: bottom;
 }
 
 #projects-akteure .pcard header {
@@ -578,12 +578,12 @@ transform: rotate(-10deg);
  padding: 13px;
  background: rgba(0,0,0,0.3);
  padding: 13px;
- font-size: 1.3em;
+ font-size: 1.2em;
  text-align: center;
 }
 
 .pcard header.renderSmallName h3 {
-  font-size: 1.15em;
+  font-size: 1.05em;
 }
 
 .pcard section .divider {
