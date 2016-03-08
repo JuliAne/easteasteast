@@ -158,6 +158,14 @@ p.licensetext:hover {
   opacity: 1;
 }
 
+.aaeEvent .eventDesc ul li {
+ font-size: 0.8em;
+}
+
+.aaeEvent .eventDesc img {
+  display: none;
+}
+
 .aaeEvent .akteurData {
   margin-top: 5px;
   margin-bottom: 12px;

@@ -1,6 +1,6 @@
 <h3>Akteur <?php echo ($this->target == 'update' ? 'bearbeiten' : 'anlegen'); ?></h3>
 <?php if ($this->target == 'update') : ?>
-<a href="<?= base_path(); ?>akteurloeschen/<?= $this->akteur_id; ?>" class="small secondary button round right" style="margin-top:-37px;">Löschen</a>
+<a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/remove" class="small secondary button round right" style="margin-top:-37px;">Löschen</a>
 <?php endif; ?>
 <div class="divider" style="margin-bottom: 25px;"></div>
 
@@ -118,7 +118,7 @@
 
  </div>
 
-  <div class="row collapse" id="akteurTabs">
+  <div class="row" id="akteurTabs">
   <div class="medium-3 columns">
     <ul class="tabs vertical" id="example-vert-tabs" data-tabs>
       <li class="tabs-title is-active"><a href="#pbild" aria-selected="true">Akteurbild</a></li>

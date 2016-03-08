@@ -51,7 +51,7 @@ function aae_preprocess_html(&$variables) {
 
   $path = explode("/", current_path()); // TODO: Call ClearContent()
 
-  switch(strtolower(trim($path[0]))) {
+  switch (strtolower(trim($path[0]))) {
 
   case ('node') :
 
@@ -83,22 +83,8 @@ function aae_preprocess_html(&$variables) {
     drupal_add_css(path_to_theme(). '/css/subpage.css');
     drupal_add_css(path_to_theme().'/css/project.css');
 
-  break;
-
-  case ('akteurformular'):
-  case ('akteuredit') :
-  case ('eventformular') :
-  case ('eventedit') :
-
-   drupal_add_css(path_to_theme(). '/css/subpage.css');
-   drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
-   drupal_add_js(path_to_theme().'/js/jquery.tokenize.js', array('scope'=>'footer'));
-   drupal_add_css(path_to_theme().'/css/default.css');
-   drupal_add_js(path_to_theme().'/js/zebra_datepicker.js', array('scope'=>'footer'));
-   drupal_add_js('https://cdn.ckeditor.com/4.5.7/basic/ckeditor.js');
-   drupal_add_css(base_path().'sites/all/modules/ckeditor/css/ckeditor.css');
-   drupal_add_css(base_path().'sites/all/modules/ckeditor/css/ckeditor.editor.css');
-   drupal_add_js(path_to_theme().'/js/editform.js', array('scope'=>'footer'));
+    if (trim($path[2]) == 'edit')
+     addAkteurEventsAddEditHead();
 
   break;
 
@@ -112,6 +98,9 @@ function aae_preprocess_html(&$variables) {
    drupal_add_js(path_to_theme().'/js/jquery.tokenize.js', array('scope'=>'footer'));
    drupal_add_js($js, array('type' => 'inline', 'scope' => 'footer'));
 
+   if (trim($path[1]) == 'new')
+    addAkteurEventsAddEditHead();
+
   break;
 
   case ('akteure') :
@@ -123,6 +112,9 @@ function aae_preprocess_html(&$variables) {
    drupal_add_js(path_to_theme().'/js/jquery.tokenize.js', array('scope'=>'footer'));
    drupal_add_js(path_to_theme().'/js/stalactite.min.js', array('scope'=>'footer'));
    drupal_add_js($js, 'inline');
+
+   if (trim($path[1]) == 'new')
+    addAkteurEventsAddEditHead();
 
   break;
 
@@ -140,6 +132,18 @@ function aae_preprocess_html(&$variables) {
    echo '<!-- IF IS_ADMIN --><style type="text/css">#mainnav{top: 65px !important;}#singlesite{margin-top:130px;}.aaeActionBar{margin-top:-230px !important;margin-bottom:160px !important;}</style><!-- /IF -->';
   }
 } // END function aae_preprocess_html
+
+// small function for paths /add and /edit
+function addAkteurEventsAddEditHead(){
+  drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
+  drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');
+  drupal_add_css(path_to_theme().'/css/default.css');
+  drupal_add_js(path_to_theme().'/js/zebra_datepicker.js');
+  drupal_add_js('https://cdn.ckeditor.com/4.5.7/basic/ckeditor.js');
+  drupal_add_css(base_path().'sites/all/modules/ckeditor/css/ckeditor.css');
+  drupal_add_css(base_path().'sites/all/modules/ckeditor/css/ckeditor.editor.css');
+  drupal_add_js(path_to_theme().'/js/editform.js');
+}
 
 
 /**

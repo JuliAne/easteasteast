@@ -8,7 +8,7 @@
   <aside class="aae-sidebar large-3 columns right">
 
   <?php if(user_is_logged_in()) : ?>
-   <a class="medium button hollow round larg-12 columns" href="<?= base_path(); ?>Eventformular">+ Event hinzufügen</a><br />
+   <a class="medium button hollow round larg-12 columns" href="<?= base_path(); ?>events/new">+ Event hinzufügen</a><br />
   <?php else : ?>
    <a class="login_first medium button hollow round large-12 columns" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Event hinzufügen (Login)</a><br />
    <?php endif; ?>
@@ -107,11 +107,10 @@
 
    <div class="large-6 columns small-6 columns aaeEvent<?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? ' today' : ''; ?>">
 
-
    <div class="date large-2 columns button secondary round"><?= $event->start->format('d'); ?><br /><?= $this->monat_short[$event->start->format('m')]; ?></div>
    <div class="content large-9 columns">
    <header>
-    <p><a style="line-height:1.6em;" href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>"><strong><?= $event->name; ?></strong></a><br />
+    <p><a style="line-height:1.6em;" href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>"><strong><?= $event->name; ?></strong></a><br />
     <span><?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? '<a href="#">Heute,</a> ' : ''; ?><?php if($event->start->format('H:i') !== '00:00') echo $event->start->format('H:i'); ?><?php if($event->ende->format('H:i') !== '00:00') echo ' - '. $event->ende->format('H:i'); ?></span></p>
     <p>
      <?php foreach($event->tags as $tag) : ?>
@@ -123,7 +122,7 @@
     <div class="divider"></div>
     <div class="event-content">
       <?php $numwords = 30; preg_match("/(\S+\s*){0,$numwords}/", $event->kurzbeschreibung, $regs); ?>
-      <p><?= trim($regs[0]); ?> <a class="weiterlesen" href="<?= base_path().'eventprofil/'.$event->EID; ?>">...weiterlesen</a></p>
+      <div class="eventDesc"><p><?= trim($regs[0]); ?> <a class="weiterlesen" href="<?= base_path().'eventprofil/'.$event->EID; ?>">...weiterlesen</a></p></div>
     </div>
    <?php endif; ?>
    </div>
@@ -165,7 +164,7 @@
     <h4><img class="cloudimg" src="<?= base_path().path_to_theme(); ?>/img/cloud.svg" />Tagcloud</h4>
 
     <?php foreach ($resultTagCloud as $tag) : ?>
-      <a class="tagc-<?= ($tag->count >= 5 ? '5' : $tag->count); ?> tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>">#<?= $tag->kategorie; ?></a>
+      <a class="tagc-<?= ($tag->count >= 5 ? '5' : $tag->count); ?> tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow">#<?= $tag->kategorie; ?></a>
     <?php endforeach; ?>
     </aside>
 
