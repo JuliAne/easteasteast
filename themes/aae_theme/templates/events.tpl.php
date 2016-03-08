@@ -121,8 +121,10 @@
    </header>
    <?php if (!empty($event->kurzbeschreibung)): ?>
     <div class="divider"></div>
-    <?php $numwords = 30; preg_match("/(\S+\s*){0,$numwords}/", $event->kurzbeschreibung, $regs); ?>
-    <p><?= trim($regs[0]); ?> <a href="<?= base_path().'eventprofil/'.$event->EID; ?>">...</a></p>
+    <div class="event-content">
+      <?php $numwords = 30; preg_match("/(\S+\s*){0,$numwords}/", $event->kurzbeschreibung, $regs); ?>
+      <p><?= trim($regs[0]); ?> <a class="weiterlesen" href="<?= base_path().'eventprofil/'.$event->EID; ?>">...weiterlesen</a></p>
+    </div>
    <?php endif; ?>
    </div>
 

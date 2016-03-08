@@ -152,7 +152,7 @@ drupal_add_html_head($og_title, 'og_title');
     $this->ansprechpartner = $this->clearContent($_POST['ansprechpartner']);
     $this->funktion = $this->clearContent($_POST['funktion']);
     if (isset($_POST['bild'])) $this->bild = $_POST['bild'];
-    $this->beschreibung = $this->clearContent($_POST['beschreibung']);
+    $this->beschreibung = $this->clearWhiteSpace($_POST['beschreibung']);
     $this->oeffnungszeiten = $this->clearContent($_POST['oeffnungszeiten']);
     $this->strasse = $this->clearContent($_POST['strasse']);
     $this->nr = $this->clearContent($_POST['nr']);

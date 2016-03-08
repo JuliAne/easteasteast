@@ -57,7 +57,7 @@
 
 </div>
 
-<div id="project-content" class="large-7 large-offset-1 columns event-content">
+<div id="project-content" class="large-7 large-offset-1 columns">
   <ol id="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
      <a itemprop="item" href="https://leipziger-ecken.de">
@@ -85,8 +85,10 @@
  <?php endif; ?>
 
  <?php if(!empty($resultEvent->kurzbeschreibung)) : ?>
-  <h4 style="padding: 10px 0;">Beschreibung</h4>
-  <p itemprop="description"><?= $resultEvent->kurzbeschreibung; ?></p>
+  <div class="event-content">
+    <h4 style="padding: 10px 0;">Beschreibung</h4>
+    <p itemprop="description"><?= $resultEvent->kurzbeschreibung; ?></p>
+  </div>
  <?php endif; ?>
 
  <h4 style="padding: 10px 0;">Veranstalter</h4>

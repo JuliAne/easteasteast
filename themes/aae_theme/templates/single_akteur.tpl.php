@@ -116,7 +116,9 @@
 
       <div class="tabs-panel is-active" id="pdesc">
        	<?php if (!empty($aResult['row1']->beschreibung)): ?>
-       	<p itemprop="description"><?= $aResult['row1']->beschreibung; ?></p>
+        <div class="akteur-content">
+       	  <p itemprop="description"><?= $aResult['row1']->beschreibung; ?></p>
+        </div>
        	<?php else : ?>
        	<p><i>Hier wurde leider noch keine Beschreibung angelegt :(</i></p>
        	<?php endif; ?>
