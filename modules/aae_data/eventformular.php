@@ -431,8 +431,8 @@ Class eventformular extends aae_data_helper {
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
     drupal_set_message(t('Das Event wurde erfolgreich bearbeitet!'));
-  	//header('Location: '. $base_url .'/eventprofil/' . $this->event_id);
-    header("Location: ". $base_url ."eventprofil/" . $this->event_id);
+  	header('Location: '. $base_url .'/eventprofil/' . $this->event_id);
+    //header("Location: ". $base_url ."eventprofil/" . $this->event_id);
 
   } // END function eventUpdaten()
 

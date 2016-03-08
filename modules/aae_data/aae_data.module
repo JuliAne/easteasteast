@@ -207,7 +207,7 @@ function aae_data_menu() {
 
   //Menuitem "Akteuredit"
   $items['akteurprofil/%/edit'] = array(
-    'title' => '',
+    'title' => t('Akteur bearbeiten'),
     'page callback' => 'akteuredit_page',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
@@ -216,7 +216,7 @@ function aae_data_menu() {
 
   //Menuitem "Akteurloeschen"
   $items['akteurprofil/%/remove'] = array(
-    'title' => '',
+    'title' => t('Akteur löschen'),
     'page callback' => 'akteurloeschen_page',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
@@ -270,7 +270,7 @@ function aae_data_menu() {
 
   //Menuitem "Eventloeschen"
   $items['eventprofil/%/remove'] = array(
-    'title' => '',
+    'title' => t('Event löschen'),
     'page callback' => 'eventloeschen_page',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
@@ -279,7 +279,7 @@ function aae_data_menu() {
 
   //Menuitem "Eventedit"
   $items['eventprofil/%/edit'] = array(
-    'title' => '',
+    'title' => t('Event bearbeiten'),
     'page callback' => 'eventedit_page',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
