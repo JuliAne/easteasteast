@@ -7,7 +7,7 @@
 <div class="aaeActionBar">
  <div class="row">
   <?php if ($hat_recht): ?>
-  <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>akteurprofil/<?= $akteur_id; ?>/edit" title="<?= t('Akteur bearbeiten'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" /><?= t('Bearbeiten'); ?></a></div>
+  <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>akteuredit/<?= $akteur_id; ?>" title="Akteur bearbeiten"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" />Bearbeiten</a></div>
   <?php endif; ?>
   <div class="large-4 columns right" style="text-align: right;">
    <a href="<?= base_path(); ?>akteurprofil/<?= $aResult['row1']->AID; ?>/vcard_download" title="Akteur als .vcard exportieren">Export (VCard)</a>

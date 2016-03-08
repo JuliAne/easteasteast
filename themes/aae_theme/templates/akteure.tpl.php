@@ -106,7 +106,9 @@
       <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?>
       <?php if (!empty($akteur->beschreibung)): ?>
       <div class="divider"></div>
-        <p><?= $akteur->kurzbeschreibung; ?> <a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">...</a></p>
+        <div class="akteur-content">
+          <p><?= $akteur->kurzbeschreibung; ?> <a class="weiterlesen" href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">...weiterlesen</a></p>
+        </div>
       <?php endif; ?>
     </section>
    </div>

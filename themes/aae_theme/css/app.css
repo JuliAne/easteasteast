@@ -1288,6 +1288,22 @@ section#journal .large-8.large-offset-2.columns br:after {
  width: 75% !important;
 }
 
+#akteure-content section .akteur-content p, #akteure-content section .akteur-content li, .content .event-content li, .content .event-content p{
+ padding-bottom: 0.7em;
+ word-wrap: break-word;
+}
+
+#akteure-content section .akteur-content ul li, .content .event-content ul li{
+ list-style-type: disc;
+ font-size: 0.8em;
+ line-height: 1.65em;
+ list-style-position: inside;
+}
+
+#akteure-content section .akteur-content .weiterlesen, .content .event-content .weiterlesen {
+	font-size: 10px;
+}
+
 #breadcrumb li a {
   color: #fff;
 }
