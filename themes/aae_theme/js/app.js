@@ -26,6 +26,7 @@ $(document).ready(function() {
 
  $('.login_first').click(function(){
   $('#login-button').trigger('click');
+  $('#user-login-form').attr('action', $('#user-login-form').attr('action')+'/new');
   return false;
  });
 

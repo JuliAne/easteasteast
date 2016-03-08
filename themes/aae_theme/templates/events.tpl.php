@@ -107,11 +107,10 @@
 
    <div class="large-6 columns small-6 columns aaeEvent<?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? ' today' : ''; ?>">
 
-
    <div class="date large-2 columns button secondary round"><?= $event->start->format('d'); ?><br /><?= $this->monat_short[$event->start->format('m')]; ?></div>
    <div class="content large-9 columns">
    <header>
-    <p><a style="line-height:1.6em;" href="<?= base_path(); ?>Eventprofil/<?= $event->EID; ?>"><strong><?= $event->name; ?></strong></a><br />
+    <p><a style="line-height:1.6em;" href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>"><strong><?= $event->name; ?></strong></a><br />
     <span><?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? '<a href="#">Heute,</a> ' : ''; ?><?php if($event->start->format('H:i') !== '00:00') echo $event->start->format('H:i'); ?><?php if($event->ende->format('H:i') !== '00:00') echo ' - '. $event->ende->format('H:i'); ?></span></p>
     <p>
      <?php foreach($event->tags as $tag) : ?>
@@ -122,7 +121,7 @@
    <?php if (!empty($event->kurzbeschreibung)): ?>
     <div class="divider"></div>
     <?php $numwords = 30; preg_match("/(\S+\s*){0,$numwords}/", $event->kurzbeschreibung, $regs); ?>
-    <p><?= trim($regs[0]); ?> <a href="<?= base_path().'eventprofil/'.$event->EID; ?>">...</a></p>
+    <div class="eventDesc"><p><?= trim($regs[0]); ?> <a href="<?= base_path().'eventprofil/'.$event->EID; ?>">...</a></p></div>
    <?php endif; ?>
    </div>
 

@@ -425,8 +425,8 @@ drupal_add_html_head($og_title, 'og_title');
    // Gebe auf der nächsten Seite eine Erfolgsmeldung aus...
 
    if (session_status() == PHP_SESSION_NONE) session_start();
-   drupal_set_message('Ihr Akteurprofil wurde erfolgreich erstellt!');
-   header("Location: akteurprofil/" . $this->akteur_id);
+   drupal_set_message(t('Ihr Akteurprofil wurde erfolgreich erstellt!'));
+   header("Location: ". $base_url ."akteurprofil/" . $this->akteur_id);
 
   } // END function akteurSpeichern()
 
@@ -605,8 +605,8 @@ drupal_add_html_head($og_title, 'og_title');
 
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
-    drupal_set_message('Ihr Akteurprofil wurde erfolgreich bearbeitet!');
-   	header("Location: ".base_path()."akteurprofil/" . $this->akteur_id);
+    drupal_set_message(t('Ihr Akteurprofil wurde erfolgreich bearbeitet!'));
+   	header("Location: ". $base_url ."akteurprofil/" . $this->akteur_id);
 
   } // END function akteurUpdaten()
 

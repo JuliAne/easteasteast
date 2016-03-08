@@ -430,8 +430,8 @@ Class eventformular extends aae_data_helper {
 
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
-    drupal_set_message('Das Event wurde erfolgreich bearbeitet!');
-  	header("Location: ".base_path()."Eventprofil/" . $this->event_id);
+    drupal_set_message(t('Das Event wurde erfolgreich bearbeitet!'));
+  	header('Location: '. $base_url .'/eventprofil/' . $this->event_id);
 
   } // END function eventUpdaten()
 
@@ -647,7 +647,7 @@ Class eventformular extends aae_data_helper {
     $item = array(
      'menu_name' => 'navigation',
      'weight' => 1,
-     'link_title' => t('Akteurprofil von !username', array('!username' => $this->name)),
+     'link_title' => t('Eventprofil von !username', array('!username' => $this->name)),
      'hidden' => 0,
      'has_children' => 0,
      'expanded' => 0,
@@ -662,8 +662,8 @@ Class eventformular extends aae_data_helper {
 
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
-    drupal_set_message('Das Event wurde erfolgreich erstellt!');
-	  header("Location: eventprofil/" . $this->event_id);
+    drupal_set_message(t('Das Event wurde erfolgreich erstellt!'));
+	  header("Location: ". $base_url ."eventprofil/" . $this->event_id);
 
   } // END function event_speichern()
 

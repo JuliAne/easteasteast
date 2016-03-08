@@ -61,8 +61,8 @@ class aae_eventprofil extends aae_data_helper {
   // Event nicht vorhanden
 
    if (session_status() == PHP_SESSION_NONE) session_start();
-   drupal_set_message('Dieses Event konnte nicht gefunden werden...');
-   header("Location: ".$base_path."/events");
+   drupal_set_message(t('Dieses Event konnte nicht gefunden werden...'));
+   header("Location: ". $base_url ."/events");
 
   }
 
@@ -232,7 +232,7 @@ class aae_eventprofil extends aae_data_helper {
 
    if (session_status() == PHP_SESSION_NONE) session_start();
    drupal_set_message(t('Das Event wurde gelöscht.'));
-   header("Location: ".base_path()."events");
+   header("Location: ". $base_url." events");
    // Und "Tschö mit ö..."!
 
  } else {
