@@ -644,15 +644,21 @@ Class eventformular extends aae_data_helper {
  	 }
 
     // Tell Drupal about the new eventprofil/ID-item
+    $parentItem = db_query(
+     "SELECT menu_links.mlid
+      FROM {menu_links} menu_links
+      WHERE menu_name = :menu_name AND link_path = :link_path",
+      array(":menu_name" => "navigation", ":link_path" => 'events'));
+
+    $plid = $parentItem->fetchObject();
+
     $item = array(
      'menu_name' => 'navigation',
      'weight' => 1,
      'link_title' => t('Eventprofil von !username', array('!username' => $this->name)),
-     'hidden' => 0,
-     'has_children' => 0,
-     'expanded' => 0,
      'module' => 'aae_data',
      'link_path' => 'eventprofil/'.$this->event_id,
+     'plid' => $plid->mlid
     );
 
     menu_link_save($item);
@@ -663,7 +669,7 @@ Class eventformular extends aae_data_helper {
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
     drupal_set_message(t('Das Event wurde erfolgreich erstellt!'));
-	  header("Location: ". $base_url ."eventprofil/" . $this->event_id);
+	  header("Location: ". $base_url ."/eventprofil/" . $this->event_id);
 
   } // END function event_speichern()
 

@@ -35,7 +35,7 @@ class aae_akteurprofil extends aae_data_helper {
 
    if (session_status() == PHP_SESSION_NONE) session_start();
    drupal_set_message(t('Dieses Akteurprofil konnte nicht gefunden werden...'));
-   header("Location: ". $base_url ."akteure");
+   header("Location: ". $base_url ."/akteure");
 
  } else {
 
@@ -194,7 +194,7 @@ if (isset($_POST['submit'])) {
 
  if (session_status() == PHP_SESSION_NONE) session_start();
  drupal_set_message(t('Der Akteur wurde gelöscht.'));
- header("Location: ". $base_url() ."akteure");
+ header("Location: ". $base_url() ."/akteure");
 
 } else {
 

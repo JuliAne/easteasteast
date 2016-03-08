@@ -7,10 +7,10 @@ Alpha, alpha everywhere. If you'd like to join us take a look @ https://leipzige
 
 ### Requirements
 
-- PHP 5.4 or better with the Imagick-extension being installed.
-- Drupal version 7.x (https://www.drupal.org/download) with "CKeditor"-module being installed
-- Recommended modules for an advanced UX: "HTML5 Tools", "Views" & "Metatags"
-- Enjoy extra-features with our support for "Simple FB Connect"-, "aggregator"- and "xmlsitemap"-module
+- PHP 5.4 or better with Imagick-extension being installed.
+- Drupal version 7.x (https://www.drupal.org/download) with "CKeditor", "Views" & "Messages"-module being installed
+- Recommended modules for an advanced UX/SEO: "HTML5 Tools", "Metatags" & "AdvAgg"
+- Enjoy extra-features with our support for "Simple FB Connect"-, "aggregator"- and "xmlsitemap"-module.
 - MySQL/MariaDB with support for datetime-fields and -actions (e.g. CURDATE())
 
 ### Installation via git:
@@ -50,6 +50,11 @@ Within your local Drupal-copy, clone this repo to 'sites/all/'. The module & the
 - Login to your Drupal-backend
 - Select group "Custom Modules" and enable "AAE Data"
 - call URLs .../akteure or .../events (not working? then reinstall module and try again)
+
+
+### Featured modules
+
+*XMLSITEMAP*: AAE Data module creates paths which can easily be used to create a XML sitemap. To do so, download "XML Sitemap"-module and activate it together with "XML Sitemap menu". After configuring, navigate to Drupal > Structure > Menues > "Navigation" > Edit and set "Inclusion" to "Included". On "Link lists"-Tab, deactivate unused or non-pulic paths (e.g. "events/new"). Mind the fact that this module uses  Cronjobs - it can take days to receive an updated sitemap.
 
 #### Issues
 

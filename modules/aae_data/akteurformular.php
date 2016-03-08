@@ -348,37 +348,31 @@ drupal_add_html_head($og_title, 'og_title');
      'url' => $this->rssFeed,
      'refresh' => '86400',
      'link' => base_path().'akteurprofil/'.$this->akteur_id,
-     'block' => 5
+     'block' => 0
     ));
 
    }
 
   // Tell Drupal about new akteurprofil/ID-item
-  /*  xmlsitemap_link_save(array(
-      'access' => 1,
-      'status' => 1,
-      'status_override' => 0,
-      'loc' => 'akteurprofil/'.$this->akteur_id,
-      'lastmod' => date('Y-m-d'),
-      'priority' => '0.5',
-      'priority_override' => 0,
-      'changefreq' => 'weekly'
-    ));*/
 
+  $parentItem = db_query(
+   "SELECT menu_links.mlid
+    FROM {menu_links} menu_links
+    WHERE menu_name = :menu_name AND link_path = :link_path",
+    array(":menu_name" => "navigation", ":link_path" => 'akteure'));
 
-    $item = array(
+   $plid = $parentItem->fetchObject();
+
+   $item = array(
     'menu_name' => 'navigation',
     'weight' => 1,
     'link_title' => t('Akteurprofil von !username', array('!username' => $this->name)),
-    'hidden' => 0,
-    'has_children' => 0,
-    'expanded' => 0,
     'module' => 'aae_data',
     'link_path' => 'akteurprofil/'.$this->akteur_id,
-    );
+    'plid' => $plid->mlid
+   );
 
-    menu_link_save($item);
-
+   menu_link_save($item);
 
    if (is_array($this->sparten) && !empty($this->sparten)) {
 
@@ -426,7 +420,7 @@ drupal_add_html_head($og_title, 'og_title');
 
    if (session_status() == PHP_SESSION_NONE) session_start();
    drupal_set_message(t('Ihr Akteurprofil wurde erfolgreich erstellt!'));
-   header("Location: ". $base_url ."akteurprofil/" . $this->akteur_id);
+   header('Location: '. $base_url . '/akteurprofil/' . $this->akteur_id);
 
   } // END function akteurSpeichern()
 
@@ -606,7 +600,7 @@ drupal_add_html_head($og_title, 'og_title');
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
     drupal_set_message(t('Ihr Akteurprofil wurde erfolgreich bearbeitet!'));
-   	header("Location: ". $base_url ."akteurprofil/" . $this->akteur_id);
+   	header("Location: ". $base_url ."/akteurprofil/" . $this->akteur_id);
 
   } // END function akteurUpdaten()
 

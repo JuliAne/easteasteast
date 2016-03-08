@@ -235,6 +235,91 @@ function aae_data_update_7105() {
 }
 
 /**
+ * Implements hook_update_N().
+ * Create menu-links for all given event- and akteure-profiles
+ */
+
+function aae_data_update_7106() {
+
+ $akteure = db_select('aae_data_akteur', 'a')
+  ->fields('a', array('AID', 'name'))
+  ->execute()
+  ->fetchAll();
+
+ foreach ($akteure as $akteur) {
+
+  $hasMenuItem = db_select('menu_links', 'ml')
+   ->fields('ml')
+   ->condition('menu_name', 'navigation')
+   ->condition('link_path', 'akteurprofil/'.$akteur->AID)
+   ->execute();
+
+  if (!$hasMenuItem->rowCount()) {
+   // Save menu-item "akteurprofil/ID"
+   $parentItem = db_query(
+    "SELECT menu_links.mlid
+     FROM {menu_links} menu_links
+     WHERE menu_name = :menu_name AND link_path = :link_path",
+     array(":menu_name" => "navigation", ":link_path" => 'akteure'));
+
+   $plid = $parentItem->fetchObject();
+
+   $item = array(
+    'menu_name' => 'navigation',
+    'weight' => 1,
+    'link_title' => t('Akteurprofil von !username', array('!username' => $akteur->name)),
+    'module' => 'aae_data',
+    'link_path' => 'akteurprofil/'.$akteur->AID,
+    'plid' => $plid->mlid
+   );
+
+   menu_link_save($item);
+
+  }
+ }
+
+ $events = db_select('aae_data_event', 'e')
+  ->fields('e', array('EID', 'name'))
+  ->execute()
+  ->fetchAll();
+
+  foreach ($events as $event) {
+
+   $hasMenuItem = db_select('menu_links', 'ml')
+    ->fields('ml')
+    ->condition('menu_name', 'navigation')
+    ->condition('link_path', 'eventprofil/'.$event->EID)
+    ->execute();
+
+   if (!$hasMenuItem->rowCount()) {
+    // Save menu-item "eventprofil/ID"
+    $parentItem = db_query(
+     "SELECT menu_links.mlid
+      FROM {menu_links} menu_links
+      WHERE menu_name = :menu_name AND link_path = :link_path",
+      array(":menu_name" => "navigation", ":link_path" => 'events'));
+
+    $plid = $parentItem->fetchObject();
+
+    $item = array(
+     'menu_name' => 'navigation',
+     'weight' => 1,
+     'link_title' => t('Eventprofil von !username', array('!username' => $event->name)),
+     'module' => 'aae_data',
+     'link_path' => 'eventprofil/'.$event->EID,
+     'plid' => $plid->mlid
+    );
+
+    menu_link_save($item);
+
+   }
+  }
+
+  menu_cache_clear_all();
+
+}
+
+/**
  * Implements hook_install().
  * Wird bei Installation des Moduls ausgeführt, NACH hook_schema()
  */
