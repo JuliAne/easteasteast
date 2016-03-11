@@ -99,7 +99,7 @@
 
 <?php foreach($resultAkteure as $akteur): ?>
   <div class="large-4 large-offset-1 small-5 small-offset-1 columns pcard">
-   <header <?= (!empty($akteur->bild) ? 'style="background-image:url('.$akteur->bild.');"' : ''); ?><?= ($akteur->renderSmallName ? ' class="renderSmallName"' : ''); ?>>
+   <header <?= (!empty($akteur->bild) ? 'style="background-image:url('.$akteur->bild.');" ' : ''); ?>class="<?= ($akteur->renderSmallName ? 'renderSmallName ' : ''); ?><?= ($akteur->renderBigImg ? 'renderBigImg' : ''); ?>">
      <h3><a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>"><?= $akteur->name; ?></a></h3>
     </header>
     <section>

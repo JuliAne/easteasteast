@@ -99,7 +99,7 @@ Class akteurformular extends aae_data_helper {
 
   public function run() {
 
-    $og_title = array(
+  /*  $og_title = array(
   '#tag' => 'meta',
   '#attributes' => array(
     'property' => 'og:title',
@@ -107,7 +107,7 @@ Class akteurformular extends aae_data_helper {
   ),
 );
 
-drupal_add_html_head($og_title, 'og_title');
+drupal_add_html_head($og_title, 'og_title'); */
 
     $path = current_path();
     $explodedpath = explode("/", $path);
@@ -152,7 +152,7 @@ drupal_add_html_head($og_title, 'og_title');
     $this->ansprechpartner = $this->clearContent($_POST['ansprechpartner']);
     $this->funktion = $this->clearContent($_POST['funktion']);
     if (isset($_POST['bild'])) $this->bild = $_POST['bild'];
-    $this->beschreibung = $this->clearWhiteSpace($_POST['beschreibung']);
+    $this->beschreibung = $this->clearContent($_POST['beschreibung']);
     $this->oeffnungszeiten = $this->clearContent($_POST['oeffnungszeiten']);
     $this->strasse = $this->clearContent($_POST['strasse']);
     $this->nr = $this->clearContent($_POST['nr']);
@@ -341,7 +341,7 @@ drupal_add_html_head($og_title, 'og_title');
 
    if (module_exists('aggregator') && !empty($this->rssFeed)) {
 
-    aggregator_save_feed(array(
+    $feed = array(
      'category' => 'aae-feeds',
      'title' => 'aae-feed-'.$this->akteur_id,
      'description' => t('Feed for AAE-User :username', array(':username' => $this->name)),
@@ -349,7 +349,10 @@ drupal_add_html_head($og_title, 'og_title');
      'refresh' => '86400',
      'link' => base_path().'akteurprofil/'.$this->akteur_id,
      'block' => 0
-    ));
+    );
+
+    aggregator_save_feed($feed);
+    aggregator_refresh($feed);
 
    }
 
@@ -523,17 +526,19 @@ drupal_add_html_head($og_title, 'og_title');
 
      } else if (!empty($this->rssFeed) && !$hasFeed) {
 
-     aggregator_save_feed(array(
+     $feed = array(
       'category' => 'aae-feeds',
       'title' => 'aae-feed-'.$this->akteur_id,
       'description' => t('Feed for AAE-User :username', array(':username' => $this->name)),
       'url' => $this->rssFeed,
       'refresh' => '86400', // daily
       'link' => base_path().'akteurprofil/'.$this->akteur_id,
-      'block' => '5'
-    ));
+      'block' => 0
+     );
+     aggregator_save_feed($feed);
+     aggregator_refresh($feed);
 
-   } else if (empty($this->rssFeed) && $hasFeed && $akteurFeed->url != $this->rssFeed) {
+    } else if (empty($this->rssFeed) && $hasFeed && $akteurFeed->url != $this->rssFeed) {
 
      // remove akteur-feed and its items
 

@@ -536,6 +536,10 @@ transform: rotate(-10deg);
  background-size: 115%;
 }
 
+.pcard:hover header h3 {
+ opacity: 0.6;
+}
+
 .pcard header {
  height: 150px;
  min-width: 261px;
@@ -546,13 +550,16 @@ transform: rotate(-10deg);
  vertical-align: bottom;
 }
 
+.pcard header.renderBigImg {
+ height: 220px;
+}
+
 #projects-akteure .pcard header {
  min-width: 274px;
 }
 
 .pcard header a {
  color: #fff;
- text-transform: uppercase;
 }
 
 .pcard header img.barrierefrei {
@@ -576,10 +583,11 @@ transform: rotate(-10deg);
 
 .pcard header h3 {
  padding: 13px;
- background: rgba(0,0,0,0.3);
+ background: rgba(0,0,0,0.5);
  padding: 13px;
  font-size: 1.2em;
  text-align: center;
+ transition: 0.25s opacity;
 }
 
 .pcard header.renderSmallName h3 {
@@ -713,6 +721,10 @@ section#journal .large-8.large-offset-2.columns br:after {
   vertical-align: top;
   /*animation-name: akteure;
   animation-duration: 0.5s;*/
+}
+
+#akteure .pcard.userIsAkteur {
+  box-shadow: 0 0 3px rgb(33, 153, 232);
 }
 
 @keyframes akteure {

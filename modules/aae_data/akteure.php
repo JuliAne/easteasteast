@@ -19,9 +19,10 @@ Class akteure extends aae_data_helper {
 
  public function run(){
 
-  /*
 
   global $user;
+
+    /*
 
   $values = array(
   'arguments' => array(
@@ -49,7 +50,6 @@ Class akteure extends aae_data_helper {
   if (isset($_GET['filterBezirke']) && !empty($_GET['filterBezirke'])) {
    $this->filter['bezirke'] = $_GET['filterBezirke'];
   }
-
 
  //-----------------------------------
 
@@ -182,12 +182,22 @@ $akteure = db_select($this->tbl_akteur, 'a')
 
  }
 
- $resultAkteure = $akteure->execute()
-  ->fetchAll();
+ $resultAkteure = $akteure->execute()->fetchAll();
+
+ /*
+ TODO: Check for user_akteure and mark them by CSS-class .userIsAkteur
+
+ if (user_is_logged_in()) {
+ $userHasAkteure = db_select($this->tbl_hat_user, 'hu')
+  ->fields('hu',array('hat_AID'))
+  ->condition('hat_UID', $user->uid)
+  ->execute();
+
+  $userHasAkteure = $userHasAkteure->fetchAll();
+} */
 
   // Get additional data
   foreach ($resultAkteure as $counter => $akteur) {
-
    $renderSmallName = false;
    $akName = explode(" ", $akteur->name);
 
@@ -211,12 +221,21 @@ $akteure = db_select($this->tbl_akteur, 'a')
     ->execute()
     ->fetchObject();
 
+   $renderBigImg = false;
+
+   // Check imagesize-relations, adjust height
+   if (!empty($akteur->bild)){
+    $img = getimagesize($this->bildpfad . $akteur->bild);
+    $renderBigImg = ($img[0] / $img[1] < 1.3) ? 1 : 0;
+   }
+
    // Hack: add variable to $resultAkteure-object
    $resultAkteure[$counter] = (array)$resultAkteure[$counter];
    $resultAkteure[$counter]['bezirk'] = $bezirk->bezirksname;
    $resultAkteure[$counter]['gps'] = ($adresse->gps != 'Ermittle Geo-Koordinaten...' ? $adresse->gps : '');
    $resultAkteure[$counter]['renderSmallName'] = $renderSmallName;
    $resultAkteure[$counter]['kurzbeschreibung'] = trim($regs[0]);
+   $resultAkteure[$counter]['renderBigImg'] = $renderBigImg;
    $resultAkteure[$counter] = (object)$resultAkteure[$counter];
 
   }

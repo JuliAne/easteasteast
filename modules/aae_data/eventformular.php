@@ -129,7 +129,7 @@ Class eventformular extends aae_data_helper {
     $this->zeit_von = $this->clearContent($_POST['zeit_von']);
     $this->zeit_bis = $this->clearContent($_POST['zeit_bis']);
     if (isset($_POST['bild'])) $this->bild = $_POST['bild'];
-    $this->kurzbeschreibung = $this->clearWhiteSpace($_POST['kurzbeschreibung']);
+    $this->kurzbeschreibung = $this->clearContent($_POST['kurzbeschreibung']);
     $this->strasse = $this->clearContent($_POST['strasse']);
     $this->nr = $this->clearContent($_POST['nr']);
     $this->adresszusatz = $this->clearContent($_POST['adresszusatz']);

@@ -68,20 +68,13 @@
    /**
     *  Einfache Funktion zum Filtern von POST- und GET-Daten ("escape-function")
     *  Da Drupal automatisch PDO verwendet, brauchen wir hier nicht allzu viel.
+    *  Entfernt Whitespaces (oder andere Zeichen) am Anfang und Ende eines Strings und
+    *  filtert HTML um XSS Attacken vorzubeugen.
     */
+
    public function clearContent($trimTag) {
      $clear = trim($trimTag);
-     return strip_tags($clear);
-     /*$var=stripslashes($var);
-       $var=htmlentities($var);
-       $var=mysql_real_escape_string($var);*/
-   }
-
-  /*Entfernt Whitespaces (oder andere Zeichen) am Anfang und Ende eines Strings und 
-  filtert HTML um XSS Attacken vorzubeugen.*/
-
-   public function clearWhiteSpace($trimTag) {
-     $clear = trim($trimTag);
+     //return strip_tags($clear);
      return filter_xss($clear, $allowed_tags = array('a', 'em', 'strong', 'cite', 'blockquote', 'img', 'ul', 'ol', 'li', 'dl', 'dt', 'dd', 'br', 'video', 'p'));
    }
 
@@ -111,7 +104,7 @@
    }
 
    /**
-    * Dickes fettes TODO... (bisher ungenutzte Funktion)
+    * Dickes fettes TODO... (bisher quasi ungenutzte Funktion)
     */
 
   protected function render($tpl) {
@@ -230,5 +223,16 @@
    return (empty($result)) ? NULL : $result;
 
   } // end protected function getDuplicates
+
+  protected function in_array_r($needle, $haystack, $strict = true) {
+	    foreach ($haystack as $item) {
+	        if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
+	            return true;
+	        }
+	    }
+	    return false;
+  }
+
+
  }
 ?>

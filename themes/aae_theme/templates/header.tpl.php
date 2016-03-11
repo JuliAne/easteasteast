@@ -1,6 +1,6 @@
 <?php if(!empty($messages) && !strpos($messages, 'Warning') && !strpos($messages, 'session')) : ?>
 <div id="alert" class="drupal-error">
- <?php print $messages; ?>
+ <?php print($messages); ?>
  <a href="#" class="close" title="Schliessen">x</a>
 </div>
 <?php endif; ?>
