@@ -19,36 +19,59 @@
  $path = drupal_get_path('module', 'aae_data');
  include_once $path . '/aae_blocks.php';
  $blocks = new aae_blocks();
+ include_once 'slider_settings.php';
+ $counts = $blocks->count_projects_events();
 
 ?>
+
+<div class="section" id="imgSlideSection">
+
+<?php foreach($sliders as $id => $content ): ?>
+<div class="slide" id="slide<?= $id; ?>" style="background-image:url(<?= base_path().path_to_theme().'/img/'.$content['image']; ?>)";></div>
+<?php endforeach; ?>
+
+</div>
 
 <div id="fullpage">
 
   <div class="section" id="slideSection">
 
-  <?php
-
-  // Let's build a slider :D
-
-  include 'slider_settings.php';
-
-  foreach($sliders as $id => $content ): ?>
-
-  <?php
-  $blueButton = ($content['blueButton']['text'] ? '<a href="'.$content['blueButton']['link'].'"><button class="button radius transparent">'.$content['blueButton']['text'].'</button></a>' : '' );
-  //$whiteButton = ($content['whiteButton']['text'] ? '<a href="'.$content['whiteButton']['link'].'"><button class="button radius secondary">'.$content['whiteButton']['text'].'</button></a>' : '');
-  ?>
-
-  <div class="slide <?= ($content['whiteText'] == true ? 'whiteText' : ''); ?>" id="slide<?= $id; ?>" style="background-image:url(<?= base_path().path_to_theme().'/img/'.$content['image']; ?>)";>
-    <h1><?= $content['headline']; ?></h1>
-    <?= $content['description']; ?>
-    <?= $blueButton; ?>
+  <div class="slide whiteText" id="slide0">
+    <h1>Den Leipziger Osten entdecken.</h1>
+    <p>Deine Stadtteilplattform: Erfahre mehr über Vereine, Initiativen und Akteure in deiner Umgebung, </p>
+    <p>werde Teil der Community und registriere dich.</p>
+    <p class="slogan"><strong>Offen. Lokal. Vernetzt.</strong></p>
+    <a href="<?= base_path(); ?>faq"><button class="button radius transparent">Mehr erfahren...</button></a>
+    <a href="<?= base_path(); ?>user/login"><button id="homeLoginBtn" class="button radius transparent hollow">Einloggen</button></a>
   </div>
-  <?php endforeach; ?>
+
+  <div class="slide whiteText" id="slide1">
+    <h1><strong><?= $counts['akteure']; ?></strong> Akteure. <strong><?= $counts['events']; ?></strong> Events.<br /> Eine Plattform.</h1>
+    <p>Jetzt anmelden, Akteur werden, Veranstaltungen einstellen und mitmischen.</p>
+    <a href="<?= base_path(); ?>user/register"><button class="button radius transparent">Jetzt registrieren.</button></a>
+  </div>
+
+  <div class="slide whiteText" id="slide2">
+    <h1>Der Leipziger Osten</h1>
+    <p>vom „Grafischen Viertel” über Neustadt-Neuschönefeld, Volkmarsdorf, Schönefeld bis Sellerhausen-Stünz</p>
+    <p class="slogan"><strong>vernetzt und kooperativ für ein buntes Leipzig</strong></p>
+    <a href="<?= base_path(); ?>leipziger-osten"><button class="button radius transparent">Über den Osten.</button></a>
+  </div>
 
   </div>
 
   <section class="section" id="journal">
+
+  <!--
+    Sollte unkommentiert werden, sobald die einzelnen Entry-Kästchen weniger Höhe besitzen!
+
+    <div class="row">
+     <div class="aaeHeadline">
+      <h1><span>&nbsp;<strong><?= t('Digitales Stadtteiljournal'); ?></strong>&nbsp;</span></h1>
+      <a href="<?= base_path(); ?>journal" id="allakteure" class="small button frontpage"><?= t('Zum Journal'); ?></a>
+     </div>
+   </div> -->
+
    <?php print render($page['blog']); ?>
   </section>
 
@@ -56,16 +79,15 @@
 
     <div class="row">
      <div class="aaeHeadline">
-      <h1><span>&nbsp;<strong>Neueste Veranstaltungen</strong></span></h1>
-      <a href="<?= base_path(); ?>events/rss" id="rss" class="small button" title="Alle Events als RSS-Feed abonnieren"><img id="svg_logo" src="/sites/all/themes/aae_theme/img/rss.svg"></a>
-      <a href="<?= base_path(); ?>events" id="allevents" class="small button frontpage">Alle Events</a>
+      <h1><span><strong><?= t('Neueste Veranstaltungen'); ?></strong></span></h1>
+      <a href="<?= base_path(); ?>events/rss" id="rss" class="small button" title="<?= t('Alle Events als RSS-Feed abonnieren'); ?>"><img id="svg_logo" src="/sites/all/themes/aae_theme/img/rss.svg"></a>
+      <a href="<?= base_path(); ?>events" id="allevents" class="small button frontpage"><?= t('Alle Events'); ?></a>
      </div>
-     <div>
       <?php
       // Lade "letzte Events"-Block
       foreach ($blocks->print_letzte_events() as $event) : ?>
       <div>
-        <div class="large-4 columns large3-events">
+        <div class="large-4 small-6 columns large3-events">
         <a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>">
           <button class="date"><?= $event->start->format('d'); ?><br/><?= $monat_short[$event->start->format('m')]; ?></button>
         </a>
@@ -76,7 +98,6 @@
             <aside><!--<img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" />--><?= $event->start->format('H:i'); ?><?php if ($event->ende->format('H:i') != '00:00') :?> - <?= $event->ende->format('H:i'); ?><?php endif; ?></aside>
           </div>
         </a>
-       </div>
       </div>
       <?php endforeach; ?>
     </div>
@@ -87,8 +108,8 @@
   <section class="section" id="projects-akteure">
     <div class="row">
      <div class="aaeHeadline">
-      <h1><span>&nbsp;<strong>Neueste Akteure</strong>&nbsp;</span></h1>
-      <a href="<?= base_path(); ?>akteure" id="allakteure" class="small button frontpage">Alle Akteure</a>
+      <h1><span>&nbsp;<strong><?= t('Neueste Akteure'); ?></strong>&nbsp;</span></h1>
+      <a href="<?= base_path(); ?>akteure" id="allakteure" class="small button frontpage"><?= t('Alle Akteure'); ?></a>
      </div>
 
       <?php
@@ -96,7 +117,6 @@
 
       foreach ($blocks->print_letzte_akteure() as $akteur) : ?>
 
-      <a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>">
       <div class="large-3 small-5 columns pcard">
        <header <?= (!empty($akteur->bild) ? 'style="background-image:url('.$akteur->bild.');"' : ''); ?><?= ($akteur->renderSmallName ? ' class="renderSmallName"' : ''); ?>>
          <h3><a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="Akteurprofil besuchen"><?= $akteur->name; ?></a></h3>
@@ -105,7 +125,6 @@
           <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?>
         </section>
        </div>
-     </a>
       <?php endforeach; ?>
 
     </div> <!--#row-->

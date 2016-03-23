@@ -35,7 +35,6 @@ function aae_preprocess_html(&$variables) {
   drupal_add_feed(base_path().'events/rss');
 
   drupal_add_js(path_to_theme().'/js/jquery-1.11.3.min.js', array('scope'=>'header'));
-  drupal_add_css('https://fonts.googleapis.com/css?family=Merriweather:100,400,500');
 
   drupal_add_js(path_to_theme().'/js/pace.min.js');
   drupal_add_js(path_to_theme().'/js/app.js', array('scope'=>'footer'));
@@ -49,7 +48,7 @@ function aae_preprocess_html(&$variables) {
 
   /* Checke Seitentyp, hänge entsprechendes CSS/JS an den Header: */
 
-  $path = explode("/", current_path()); // TODO: Call ClearContent()
+  $path = explode("/", current_path()); // TODO: Call filter_xss()
 
   switch (strtolower(trim($path[0]))) {
 
@@ -77,6 +76,8 @@ function aae_preprocess_html(&$variables) {
 
     drupal_add_css(path_to_theme(). '/css/subpage.css');
     drupal_add_css(path_to_theme().'/css/user.css');
+
+  break;
 
   case ('akteurprofil') :
   case ('eventprofil') :

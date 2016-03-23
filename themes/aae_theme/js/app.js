@@ -6,7 +6,7 @@ $(document).ready(function() {
  setInterval(function(){$('#alert').slideUp('slow')}, 10000);
 
  $(document).scroll(function(){
-  if($(window).scrollTop()>0){
+  if($(window).scrollTop()>1){
    $('#mainnav').addClass('scrolled');
    $('.pace-progress').addClass('pace-scrolled');
   } else {
@@ -27,6 +27,11 @@ $(document).ready(function() {
  $('.login_first').click(function(){
   $('#login-button').trigger('click');
   $('#user-login-form').attr('action', $('#user-login-form').attr('action')+'/new');
+  return false;
+ });
+
+ $('#homeLoginBtn').click(function(){
+  $('#login-button').trigger('click');
   return false;
  });
 
@@ -91,19 +96,32 @@ $(document).ready(function() {
   }
  });
 
+ $('#inviteBtn').click(function(){
+   $('.aaeModal').fadeIn('slow');
+
+   $('.aaeModal .button.closeBtn').click(function(){
+    $('.aaeModal').fadeOut('slow');
+   });
+ })
+
  $('#project-contact a').click(function(){
-  $('.aaeModal .content').html('<p style="padding:15px 0;text-align:center;">Lade Kontaktinformationen...</p>')
+  $('.aaeModal .content').html('<p style="padding:15px 0;text-align:center;">Lade Kontaktinformationen...</p>');
   $('.aaeModal').fadeIn('slow');
 
-  var segments = $(location).attr('href').split('/')
+  var segments = $(location).attr('href').split('/');
   var actionUrl = segments[4];
 
   $.get("../ajax/getAkteurKontakt/" + actionUrl, function(data) {
    $('.aaeModal .content').html(data);
-   $('.aaeModal .button').click(function(){
+   $('.aaeModal .button.closeBtn').click(function(){
     $('.aaeModal').fadeOut('slow');
    });
   });
+ });
+
+ $(document).keyup(function(e) {
+  // Closes lightbox when hitting "escape".
+  if (e.keyCode == 27) $('.aaeModal .button.closeBtn').click();
  });
 
  setHandlers();

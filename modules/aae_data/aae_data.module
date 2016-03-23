@@ -43,6 +43,20 @@ function aae_data_block_info() {
   return $blocks;
 }
 
+/**
+ * Implements hook_block_view_MODULE_DELTA_alter().
+ * Improve the default "Invite"-block
+ */
+
+function aae_data_block_view_invite_invite_add_invite_by_email_alter(&$data, $bla) {
+  //print_r($data['content']);
+//exit();
+
+  //  $data['content']['#entity']['und']['0']['#description'] = 'derda';
+
+  return $data;
+}
+
 /*
  * Implements hook_default_message_type().
  */
@@ -112,7 +126,7 @@ function aae_data_akteur_created(){
  * Implements hook_block_view().
  * YET UNUSED
  */
-function aae_data_block_view($delta = '') {
+function aae_data_block_view($delta = '', $bla) {
 
   $block = array();
 

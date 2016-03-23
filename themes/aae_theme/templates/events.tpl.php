@@ -78,7 +78,7 @@
   </div>
   </aside>
 
-  <div id="events_content" class="large-9 columns">
+  <div id="events_content" class="large-9 small-12 columns">
 
    <ul class="tabs" id="events-tabs" style="margin-bottom:22px;">
     <li class="tabs-title<?= ($this->getOldEvents || $this->hasFilters ? '' : ' is-active'); ?>"><a href="<?= base_path(); ?>events"<?= ($this->getOldEvents ? '' : ' aria-selected="true"'); ?>>Demnächst</a></li>

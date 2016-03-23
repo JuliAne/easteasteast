@@ -28,9 +28,8 @@ html.fp-enabled,
     -webkit-box-sizing: border-box; /* Safari<=5 Android<=3 */
     -moz-box-sizing: border-box; /* <=28 */
     box-sizing: border-box;
-    margin-top: -15px;
     position: relative;
-    padding-bottom: 30px;
+    background-image: none !important;
 }
 .fp-slide {
     float: left;
@@ -116,10 +115,7 @@ html.fp-enabled,
     -webkit-transform: translate3d(0,0,0);
 }
 #fp-nav.right {
-    right: 17px;
-}
-#fp-nav.left {
-    left: 17px;
+    right: 20px;
 }
 .fp-slidesNav{
     position: absolute;
@@ -149,6 +145,9 @@ html.fp-enabled,
 .fp-slidesNav ul li {
     display: inline-block;
 }
+#fp-nav ul li:first-child {
+  display: none;
+}
 #fp-nav ul li a,
 .fp-slidesNav ul li a {
     display: block;
@@ -163,11 +162,11 @@ html.fp-enabled,
 .fp-slidesNav ul li a.active span,
 #fp-nav ul li:hover a.active span,
 .fp-slidesNav ul li:hover a.active span{
-    height: 12px;
-    width: 12px;
+    height: 14px;
+    width: 14px;
     margin: -6px 0 0 -6px;
     border-radius: 100%;
-    border: 1px solid #333;
+    border: 1px solid #fff;
     background: none;
  }
 #fp-nav ul li a span,
@@ -175,10 +174,10 @@ html.fp-enabled,
     border-radius: 50%;
     position: absolute;
     z-index: 1;
-    height: 4px;
-    width: 4px;
+    height: 6px;
+    width: 6px;
     border: 0;
-    background: #333;
+    background: #fff;
     left: 50%;
     top: 50%;
     margin: -2px 0 0 -2px;
@@ -196,10 +195,10 @@ html.fp-enabled,
 #fp-nav ul li .fp-tooltip {
     position: absolute;
     top: -2px;
-    color: #000;
+    color: #fff;
     font-size: 0.9em;
     text-transform: uppercase;
-    text-shadow: 0 0 3px #fff;
+    text-shadow: 0 0 2px #fff;
     white-space: nowrap;
     max-width: 220px;
     overflow: hidden;
@@ -221,19 +220,28 @@ html.fp-enabled,
     left: 20px;
 }
 
+/* Adjustments - keep them where they are! */
+#fullpage { margin-top: 1px; }
+
 /* STYLES FOR AAE */
 
-#fullpage {
-}
-
-#slideSection {
+#imgSlideSection {
   margin-top: 0;
-  padding-bottom: 15px;
+  position: fixed;
+  background-color:#000;
 }
 
-#slideSection .slide {
+.slide {padding-top:20px;}
+
+#imgSlideSection .slide {
   background-size: 100%;
+  background-color: #000;
   padding: 0 0 0 0;
+  transition: 0.3s all;
+}
+
+#imgSlideSection.blurme .slide {
+  opacity: 0.8;
 }
 
 #slideSection h1 {
@@ -248,14 +256,18 @@ html.fp-enabled,
 
 #slideSection .slide p {
   margin-bottom: 45px;
-  font-size: 1.2em;
-  font-family: 'Merriweather', 'Open Sans', serif !important;
+  font-size: 1.25em;
+  font-family: 'Lora', 'Open Sans', serif !important;
   font-weight: 100;
   padding: 2px 10px;
   margin: 0 auto;
   display: table;
   color: #FFF;
-  text-shadow: 0 0 5px #000, 0 0 5px #000, 0 0 5px #000;
+  text-shadow: 0 0 5px #000;
+}
+
+#slideSection .slide p.slogan strong {
+  font-family: 'Lora', 'Open Sans', serif !important;
 }
 
 #slideSection .slide.whiteText h1, #slideSection .slide.whiteText p {
@@ -264,40 +276,41 @@ html.fp-enabled,
 
 #slideSection button.transparent {
  background: rgba(255, 255, 255, 0.4);
- border: 2px solid #fff;
- color: #2f2f2f;
  transition: all 0.25s;
  text-transform: uppercase;
  font-size: 1em;
- font-weight: 700;
-}
-#slideSection button.transparent:hover {
- background: rgba(255, 255, 255, 0.7);
- color: #000;
-}
-
-/*settings for slide0, slide2, slide3*/
-
-#slideSection #slide0.slide.whiteText h1{
-  text-shadow: 2px 2px 10px rgba(25,82,95,1);
-}
-
-#slideSection #slide2.slide.whiteText h1{
-  text-shadow: 2px 2px 10px rgba(25,82,95,0.6);
-}
-
-#slideSection #slide3.slide.whiteText h1 {
-  text-shadow: 2px 2px 15px rgba(100,100,100,1);
-}
-
-#slideSection button.transparent {
- /*background: rgba(255, 255, 255, 0.8);*/
  background: #2199E8;
  border: none;
  border-bottom: 3px solid #007095;
  font-weight: 700;
  margin-top:30px;
  color: #fff;
+}
+
+#slideSection button.transparent:hover {
+ background: rgba(255, 255, 255, 0.7);
+ color: #000;
+}
+
+#slideSection button.transparent.hollow {
+ border: 2px solid #fff;
+ background: none;
+ padding-bottom: 12px;
+}
+
+#slideSection button.transparent.hollow:hover {
+  background: rgba(0,0,0,0.5);
+  color:#fff;
+}
+
+/*settings for slide0, slide2, slide3*/
+
+#slideSection .slide.whiteText h1{
+  text-shadow: 2px 2px 10px rgba(75, 88, 92, 0.6);
+}
+
+#slideSection button.transparent {
+
 }
 
 #slideSection button.transparent:hover {
@@ -323,4 +336,136 @@ html.fp-enabled,
  .button.hollow.frontpage:hover {
     background-color: rgba(255,255,255,0.9);
     color: #000;
+}
+
+
+.section h1 {
+ font-size: 1.9em;
+ font-weight: 100;
+ color: #2f2f2f;
+ padding-bottom: 20px;
+}
+
+.section .aaeHeadline {
+  margin-bottom: 45px;
+  margin-top: 30px;
+  padding-bottom: 54px;
+  border-bottom: 1px solid #fff;
+}
+
+.section .aaeHeadline h1 {
+  float: left;
+  color: #fff;
+}
+
+.section #allevents, .section #allakteure, .section #rss {
+ float: right;
+}
+
+#projects-akteure .pcard {
+ border: 1px solid #F1EFEF;
+ border-radius: 1px;
+ transition: border 0.25s;
+ overflow: hidden;
+}
+
+#projects-akteure .pcard section {
+  background: rgba(255,255,255,0.8);
+}
+
+#projects-akteure .pcard:hover section {
+  background: rgba(255,255,255,0.9);
+}
+
+#projects-akteure .pcard:hover .divider {
+  border-bottom: 1px solid lightgrey;
+}
+
+#projects-akteure .pcard:hover {
+ border: 1px solid #2199E8;
+}
+
+#projects-akteure .pcard:hover h3 {
+  color: #2199E8!important;
+}
+
+#projects-akteure .pcard header {
+  border-bottom: 1px solid lightgrey;
+}
+
+#projects-akteure .pcard:hover header {
+  border-bottom: 1px solid lightgrey;
+}
+
+#projects-akteure .pcard:hover .plocation {
+  opacity: 1;
+}
+
+
+#projects-akteure .pcard .pdescription {
+  min-height:30px;
+}
+
+/*EVENT section settings*/
+
+#fullpage .pcard, #fullpage .event {
+ margin-right: 2%;
+ width: 23%;
+ transition: all 0.25s;
+}
+
+.event {
+ height: 120px;
+ border: 1px solid #F1EFEF;
+ border-radius: 3px;
+ padding: 10px;
+ background-color: rgba(255,255,255,0.8);
+ display: table-cell;
+ vertical-align: middle;
+ width: 74%!important;
+}
+
+.large3-events {
+  transition: all 0.25s;
+  margin-bottom: 15px;
+}
+
+.large3-events .date {
+  opacity: 0.8;
+}
+
+.large3-events:hover .date {
+  border: 3px solid #2199E8;
+  background: #F1EFEF;
+  color: #111;
+  opacity: 1;
+}
+
+.large3-events:hover .event:before {
+  border-color: transparent #2199E8 transparent transparent;
+}
+
+.events-align {
+  display: inline-block;
+}
+
+.event h4 {
+  color: #228cd1;
+}
+
+.event:hover h4 {
+  color: #2199E8;
+}
+
+.event aside, .event:hover aside {
+  color: #111;
+}
+
+.large3-events:hover .event {
+  border-color: #2199E8;
+  background-color: rgba(255,255,255,0.9);
+}
+
+.large3-events:hover .event .divider {
+  border-bottom: 1px solid lightgrey;
 }

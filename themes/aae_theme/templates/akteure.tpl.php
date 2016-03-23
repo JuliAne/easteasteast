@@ -8,23 +8,23 @@
  <aside class="aae-sidebar large-3 columns right">
 
    <?php if(user_is_logged_in()) : ?>
-     <a class="medium button hollow large-12 columns" href="<?= base_path(); ?>akteure/new">+ Akteur hinzufügen</a><br />
+     <a class="medium button hollow large-12 columns" href="<?= base_path(); ?>akteure/new">+ <?= t('Akteur hinzufügen'); ?></a><br />
    <?php else : ?>
-     <a class="login_first medium button hollow large-12 columns" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Akteur hinzufügen (Login)</a><br />
+     <a class="login_first medium button hollow large-12 columns" href="<?= base_path(); ?>user/login" title="<?= t('Bitte zunächst einloggen.'); ?>">+ <?= t('Akteur hinzufügen'); ?> (Login)</a><br />
    <?php endif; ?>
 
   <div id="filter" class="large-12 columns">
 
   <div class="large-12 columns" id="removeFilter">
    <h4 class="left">Filter</h4>
-   <a class="small button right hide-for-medium" style="padding:4px 10px;margin-left:5px;" href="#" title="Zeige Filter" onclick="javascript:$('#filter .large-12').slideDown(400);">&#x25BE;</a>
-   <a class="small secondary button right" style="padding:4px 10px;" href="<?= base_path(); ?>akteure" title="Alle Filter entfernen">X</a>
+   <a class="small button right hide-for-medium" style="padding:4px 10px;margin-left:5px;" href="#" title="<?= t('Zeige Filter'); ?>" onclick="javascript:$('#filterForm').slideDown(400);">&#x25BE;</a>
+   <a class="small secondary button right" style="padding:4px 10px;" href="<?= base_path(); ?>akteure" title="<?= t('Alle Filter entfernen'); ?>">X</a>
    <div class="divider"></div>
   </div>
 
   <form id="filterForm" method="get" action="<?= base_path(); ?>akteure">
    <div class="large-12 columns">
-    <label for="filterKeyword">Schlagwort:</label>
+    <label for="filterKeyword"><?= t('Schlagwort'); ?>:</label>
     <input name="filterKeyword" id="filterKeywordInput" type="text" <?= (isset($this->filter['keyword']) ? 'value="'.$this->filter['keyword'].'"' : ''); ?>/>
    </div>
 
@@ -38,7 +38,7 @@
    </div>
 
    <div class="large-12 columns">
-    <label for="filterBezirke">Bezirke:</label>
+    <label for="filterBezirke"><?= t('Bezirke'); ?>:</label>
     <select name="filterBezirke[]" id="eventBezirkInput" multiple="multiple" class="tokenize">
     <?php foreach ($resultBezirke as $bezirk) : ?>
      <option value="<?= $bezirk->BID; ?>"<?php echo ($this->filteredBezirke[$bezirk->BID] == $bezirk->BID ? ' selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
@@ -47,7 +47,7 @@
    </div>
 
   <div class="large-5 small-6 columns">
-   <label for="display_number">Anzahl:</label>
+   <label for="display_number"><?= t('Anzahl'); ?>:</label>
    <select name="display_number" id="displayNumber">
     <option value="15" <?= ($this->maxAkteure == '15' ? 'selected="selected"' : ''); ?>>15</option>
     <option value="20" <?= ($this->maxAkteure == '20' ? 'selected="selected"' : ''); ?>>20</option>
@@ -59,20 +59,20 @@
 
   <div id="change-style" class="large-7 columns">
    <ul id="presentationFilter" class="button-group round" style="margin-top:27px;">
-    <li><a href="#" name="boxen" class="small button <?php echo ($this->presentationMode !== 'map' ? 'active' : 'secondary'); ?>" title="Darstellung als Boxen"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
-    <li><a href="#" name="map" class="small button <?php echo ($this->presentationMode == 'map' ? 'active' : 'secondary'); ?>" title="Darstellung auf Karte"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
+    <li><a href="#" name="boxen" class="small button <?php echo ($this->presentationMode !== 'map' ? 'active' : 'secondary'); ?>" title="<?= t('Normale Darstellung'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
+    <li><a href="#" name="map" class="small button <?php echo ($this->presentationMode == 'map' ? 'active' : 'secondary'); ?>" title="<?= t('Darstellung auf Karte'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
    </ul>
   </div>
 
   <div class="large-12 columns">
-   <input type="submit" class="large-12 columns medium button" id="sendFilters" name="submit" value="Filter anwenden">
+   <input type="submit" class="large-12 columns medium button" id="sendFilters" name="submit" value="<?= t('Filter anwenden'); ?>">
   </div>
 
  </form>
  </div>
 
  <div class="tagcloud akteure-tc large-12 columns">
-  <h4>Bezirke nach Häufigkeit</h4>
+  <h4><?= t('Bezirke nach Häufigkeit'); ?></h4>
   <ul>
    <?php foreach ($resultBezirkeRelevance as $bez) : ?>
     <li><a href="<?= base_path(); ?>akteure/?filterBezirke[]=<?= $bez->BID; ?>" rel="nofollow"><?= $bez->bezirksname; ?> - <?= $bez->count; ?></a></li>
@@ -82,12 +82,12 @@
 
 </aside>
 
-<div id="akteure-content" class="large-9 columns">
+<div id="akteure-content" class="large-9 small-12 columns">
 
  <?php if ($this->hasFilters) : ?>
- <ul class="tabs" data-tabs id="events-tabs" style="margin-bottom:22px;">
-  <li class="tabs-title is-active"><a href="#" aria-selected="true">Filterergebnisse (<?= count($resultAkteure); ?>)</a></li>
-  <li class="tabs-title"><a href="<?= base_path(); ?>akteure">Alle Akteure</a></li>
+ <ul class="tabs small-12 columns" data-tabs id="events-tabs" style="margin-bottom:22px;">
+  <li class="tabs-title is-active"><a href="#" aria-selected="true"><?= t('Filterergebnisse'); ?> (<?= count($resultAkteure); ?>)</a></li>
+  <li class="tabs-title"><a href="<?= base_path(); ?>akteure"><?= t('Alle Akteure'); ?></a></li>
  </ul>
  <?php endif; ?>
 
@@ -115,8 +115,8 @@
  <?php endforeach; ?>
 
  <?php else : ?>
-  <p style="text-align:center;">Es wurden leider keine Akteure mit diesen Angaben gefunden.</p>
-  <p style="text-align:center;"><a href="<?= base_path(); ?>akteure">Filter löschen.</a></p>
+  <p style="text-align:center;"><?= t('Es wurden leider keine Akteure mit diesen Angaben gefunden.'); ?></p>
+  <p style="text-align:center;"><a href="<?= base_path(); ?>akteure"><?= t('Filter löschen.'); ?></a></p>
  <?php endif; ?>
 
 <?php endif; ?>
@@ -130,15 +130,15 @@
 <div class="row">
 
   <ul class="pagination large-4 columns large-offset-5" style="padding-top:15px;">
-    <li class="arrow"><a href="<?= base_path(); ?>Akteure/1">&laquo;</a></li>
+    <li class="arrow"><a href="<?= base_path(); ?>akteure/1">&laquo;</a></li>
 
     <?php for ($i=1; $i<=$maxPages; $i++) {
      if ($i == $currentPageNr) echo '<li class="current"><a href="#">'.$i.'</a></li>';
-     else echo '<li><a href="'.base_path().'Akteure/'.$i.'">'.$i.'</a></li>';
+     else echo '<li><a href="'.base_path().'akteure/'.$i.'">'.$i.'</a></li>';
      //<!-- <li class="unavailable"><a href="">&hellip;</a></li>-->
      } ?>
 
-    <li class="arrow"><a href="<?= base_path(); ?>Akteure/<?= $maxPages ?>">&raquo;</a></li>
+    <li class="arrow"><a href="<?= base_path(); ?>akteure/<?= $maxPages ?>">&raquo;</a></li>
  </ul>
 </div>
 <?php endif; ?>

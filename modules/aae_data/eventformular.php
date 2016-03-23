@@ -42,21 +42,21 @@ Class eventformular extends aae_data_helper {
   var $fehler = array(); // In diesem Array werden alle Fehler gespeichert
 
   //Variablen, welche Texte in den Formularfeldern beschreiben ("placeholder"):
-  var $ph_name = "Veranstaltungsname";
-  var $ph_veranstalter = "Veranstalter";
-  var $ph_start = "Starttag (yyyy-mm-dd)";
-  var $ph_ende = "Endtag (yyyy-mm-dd)";
-  var $ph_zeit_von = "von (Uhrzeit: hh:mm)";
-  var $ph_zeit_bis = "bis (Uhrzeit: hh:mm)";
-  var $ph_bild = "Bild";
-  var $ph_kurzbeschreibung = "Beschreibungstext";
+  public $ph_name = t('Veranstaltungsname');
+  var $ph_veranstalter = t("Veranstalter");
+  var $ph_start = t("Starttag")."(yyyy-mm-dd)";
+  var $ph_ende = t("Endtag")."(yyyy-mm-dd)";
+  var $ph_zeit_von = t("von (Uhrzeit: hh:mm)");
+  var $ph_zeit_bis = t("bis (Uhrzeit: hh:mm)");
+  var $ph_bild = t("Bild");
+  var $ph_kurzbeschreibung = t("Beschreibungstext");
   var $ph_url = "URL";
-  var $ph_strasse = "Strasse";
-  var $ph_nr = "Hausnummer";
-  var $ph_adresszusatz = "Adresszusatz";
-  var $ph_plz = "PLZ";
-  var $ph_ort = "Bezirk";
-  var $ph_gps = "GPS Koordinaten";
+  var $ph_strasse = t("Strasse");
+  var $ph_nr = t("Hausnummer");
+  var $ph_adresszusatz = t("Adresszusatz");
+  var $ph_plz = t("PLZ");
+  var $ph_ort = t("Bezirk");
+  var $ph_gps = t("GPS Koordinaten");
   var $ph_sparten = "Tags";
 
   var $user_id;
@@ -143,42 +143,42 @@ Class eventformular extends aae_data_helper {
     //-------------------------------------
 
     if (empty($this->name)) {
-     $this->fehler['name'] = "Bitte einen Veranstaltungsnamen eingeben!";
+     $this->fehler['name'] = t("Bitte einen Veranstaltungsnamen eingeben!");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->start) != 0 && DateTime::createFromFormat('Y-m-d', $this->start) == false) {
-      $this->fehler['start'] = "Bitte ein (gültiges) Startdatum angeben!";
+      $this->fehler['start'] = t("Bitte ein (gültiges) Startdatum angeben!");
       $this->freigabe = false;
     }
 
     if (strlen($this->ende) != 0 && DateTime::createFromFormat('Y-m-d', $this->ende) == false) {
-      $this->fehler['ende'] = "Bitte ein (gültiges) Enddatum angeben!";
+      $this->fehler['ende'] = t("Bitte ein (gültiges) Enddatum angeben!");
       $this->freigabe = false;
     }
 
     if (empty($this->ort)) {
-  	  $this->fehler['ort'] = "Bitte einen Bezirk auswählen!";
+  	  $this->fehler['ort'] = t("Bitte einen Bezirk auswählen!");
   	  $this->freigabe = false;
     }
 
     if (empty($this->kurzbeschreibung)) {
-     $this->fehler['kurzbeschreibung'] = "Ein paar Beschreibungs-Zeilen werden Dir wohl einfallen!";
+     $this->fehler['kurzbeschreibung'] = t("Ein paar Beschreibungs-Zeilen werden Dir einfallen...");
      $this->freigabe = false;
     }
 
     if (!empty($this->zeit_von) && DateTime::createFromFormat('H:i', $this->zeit_von) == false) {
-     $this->fehler['zeit_von'] = "Bitte eine (gültige) Start-Uhrzeit angeben!";
+     $this->fehler['zeit_von'] = t("Bitte eine (gültige) Start-Uhrzeit angeben!");
      $this->freigabe = false;
     }
 
     if (!empty($this->zeit_bis) && DateTime::createFromFormat('H:i', $this->zeit_bis) == false) {
-     $this->fehler['zeit_bis'] = "Bitte eine (gültige) End-Uhrzeit angeben!";
+     $this->fehler['zeit_bis'] = t("Bitte eine (gültige) End-Uhrzeit angeben!");
      $this->freigabe = false;
     }
 
     if (!empty($this->url) && preg_match('/\A(http:\/\/|https:\/\/)(\w*[.|-]\w*)*\w+\.[a-z]{2,3}(\/.*)*\z/',$this->url)==0) {
-     $this->fehler['url'] = "Bitte eine gültige URL zur Eventwebseite eingeben! (z.B. <i>http://meinevent.de</i>)";
+     $this->fehler['url'] = t("Bitte eine gültige URL zur Eventwebseite anngeben! (z.B. <i>http://meinevent.de</i>)");
      $this->freigabe = false;
     }
 
@@ -188,51 +188,51 @@ Class eventformular extends aae_data_helper {
    } */
 
     if (strlen($this->name) > 64) {
-	   $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
+	   $this->fehler['name'] = t("Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.");
      $this->freigabe = false;
     }
 
     if (strlen($this->url) > 200) {
-	   $this->fehler['url'] = "Bitte geben Sie eine kürzere URL an.";
+	   $this->fehler['url'] = t("Bitte geben Sie eine kürzere URL an.");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->kurzbeschreibung) > 1200) {
-     $this->fehler['kurzbeschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
+     $this->fehler['kurzbeschreibung'] = t("Bitte geben Sie eine kürzere Beschreibung an.");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->strasse) > 64) {
-	   $this->fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
+	   $this->fehler['strasse'] = t("Bitte geben Sie einen kürzeren Strassennamen an.");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->nr) > 8) {
-	   $this->fehler['nr'] = "Bitte geben Sie eine kürzere Nummer an.";
+	   $this->fehler['nr'] = t("Bitte geben Sie eine kürzere Nummer an.");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->adresszusatz) > 100) {
-	   $this->fehler['adresszusatz'] = "Bitte geben Sie einen kürzeren Adresszusatz an.";
+	   $this->fehler['adresszusatz'] = t("Bitte geben Sie einen kürzeren Adresszusatz an.");
      $this->freigabe = false;
     }
 
     if (strlen($this->plz) > 8) {
-	   $this->fehler['plz'] = "Bitte geben Sie eine kürzere PLZ an.";
+	   $this->fehler['plz'] = t("Bitte geben Sie eine kürzere PLZ an.");
      $this->freigabe = false;
     }
 
     if (strlen($this->ort) > 100) {
-     $this->fehler['ort'] = "Bitte geben Sie einen kürzeren Ortsnamen an.";
+     $this->fehler['ort'] = t("Bitte geben Sie einen kürzeren Ortsnamen an.");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->gps) > 100) {
-     $this->fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
+     $this->fehler['gps'] = t("Bitte geben Sie kürzere GPS-Daten an.");
 	   $this->freigabe = false;
     }
 
-    if ($this->gps == 'Ermittle Geo-Koordinaten...') $this->gps = '';
+    if ($this->gps == t('Ermittle Geo-Koordinaten...')) $this->gps = '';
 
     /*if (!empty($this->gps) && preg_match('\s.\s,\s.\s',$this->gps)==0) {
       echo ':/';
@@ -432,7 +432,6 @@ Class eventformular extends aae_data_helper {
     if (session_status() == PHP_SESSION_NONE) session_start();
     drupal_set_message(t('Das Event wurde erfolgreich bearbeitet!'));
   	header('Location: '. $base_url .'/eventprofil/' . $this->event_id);
-    //header("Location: ". $base_url ."eventprofil/" . $this->event_id);
 
   } // END function eventUpdaten()
 

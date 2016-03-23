@@ -18,13 +18,13 @@
   <div class="large-5 columns right" style="text-align: right;">
 
    <a href="<?= base_path(); ?>eventprofil/<?= $resultEvent->EID; ?>/ics_download/" title="Event Als .ical exportieren">Export (iCal)</a>
-   <a href="https://leipziger-ecken.de/contact" title="Dieses Event wurde unbefugt erstellt? Melden Sie sich hier."><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" />Melden</a>
-   <a href="#share" class="popup-link" title="Event in den sozialen Netzwerken teilen"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" />Teilen</a>
+   <a href="https://leipziger-ecken.de/contact" title="<?= t('Dieses Event wurde unbefugt erstellt? Melden Sie sich hier.'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" /><?= t('Melden'); ?></a>
+   <a href="#share" class="popup-link" title="Event in den sozialen Netzwerken teilen"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" /><?= t('Teilen'); ?></a>
    <div id="share" class="popup large-3 columns">
-    <a target="_blank" href="https://twitter.com/intent/tweet?text=<?php global $base_url; echo $base_url.'/'.current_path(); ?>" title="Auf Twitter teilen" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/social-twitter.svg"><span></span></a>
-    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= $base_url.'/'.current_path(); ?>" title="Auf Facebook teilen" class="fb button"><img alt="Facebook" src="<?= base_path().path_to_theme(); ?>/img/social-facebook.svg"><span></span></a>
-    <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="Auf Google+ teilen" class="g_plus button"><img alt="Google+" src="<?= base_path().path_to_theme(); ?>/img/social-googleplus-outline.svg"><span></span></a>
-    <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $resultEvent->name; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="Teile auf Diaspora / Friendica"><img alt="Federated networks" src="<?= base_path().path_to_theme(); ?>/img/social-diaspora.png"></a>
+    <a target="_blank" href="https://twitter.com/intent/tweet?text=<?php global $base_url; echo $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Twitter')); ?>" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/social-twitter.svg"><span></span></a>
+    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Facebook')); ?>" class="fb button"><img alt="Facebook" src="<?= base_path().path_to_theme(); ?>/img/social-facebook.svg"><span></span></a>
+    <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Google+')); ?>" class="g_plus button"><img alt="Google+" src="<?= base_path().path_to_theme(); ?>/img/social-googleplus-outline.svg"><span></span></a>
+    <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $resultEvent->name; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="<?= t('Auf !network teilen',array('!network'=>'Diaspora/Friendica')); ?>"><img alt="Federated networks" src="<?= base_path().path_to_theme(); ?>/img/social-diaspora.png"></a>
     </div>
    </div>
   </div>
@@ -38,7 +38,7 @@
   <div id="event-data" class="large-4 columns">
     <div class="pcard">
      <header <?php if (!empty($resultEvent->bild)) echo 'style="background-image:url('.$resultEvent->bild.');"'; ?>>
-      <?php if (!empty($resultEvent->bild)) echo '<img src="'.$resultEvent->bild.'" style="visbility:hidden;" itemprop="image" />';
+      <?php if (!empty($resultEvent->bild)) echo '<img src="'.$resultEvent->bild.'" style="visbility:hidden;" itemprop="image" alt="'. t('Logo vom Event').'" />';
             else echo '<img src="'.base_path().path_to_theme().'/img/event_bg.png" style="visibility:hidden;" />';	?>
      </header>
     </div>
@@ -60,18 +60,18 @@
 <div id="project-content" class="large-7 large-offset-1 columns">
   <ol id="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-     <a itemprop="item" href="https://leipziger-ecken.de">
-     <span itemprop="name">Startseite</span></a>
+     <a itemprop="item" href="<?= $base_url; ?>">
+     <span itemprop="name" title="<?= t('Startseite'); ?>"><?= t('Startseite'); ?></span></a>
      <meta itemprop="position" content="0" />
    </li>
    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-     <a itemprop="item" href="https://leipziger-ecken.de/events">
-     <span itemprop="name">Events</span></a>
+     <a itemprop="item" href="<?= $base_url; ?>/events">
+     <span itemprop="name" title="<?= t('Events'); ?>"><?= t('Events'); ?></span></a>
      <meta itemprop="position" content="1" />
    </li>
    <li id="activeEvent" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-     <a itemprop="item" href="https://leipziger-ecken.de/eventprofil/<?= $resultEvent->EID; ?>">
-     <span itemprop="name"><?= $resultEvent->name; ?></span></a>
+     <a itemprop="item" href="<?= $base_url; ?>/eventprofil/<?= $resultEvent->EID; ?>">
+     <span itemprop="name" title="<?= $resultEvent->name; ?>"><?= $resultEvent->name; ?></span></a>
      <meta itemprop="position" content="2" />
    </li>
   </ol>
@@ -79,15 +79,15 @@
  <?php if (!empty($sparten)) : ?>
   <aside id="eventSparten">
   <?php foreach ($sparten as $row) : ?>
-     <a href="<?= base_path(); ?>events/?filterTags[]=<?= $row->KID; ?>" rel="nofollow" title="Zeige alle mit '<?= $row->kategorie; ?>' getaggten Events">#<?= strtolower($row->kategorie); ?></a>
+     <a href="<?= base_path(); ?>events/?filterTags[]=<?= $row->KID; ?>" rel="nofollow" title="<?= t('Zeige alle mit !kategorie getaggten Events',array('!kategorie'=>$row->kategorie)); ?>">#<?= strtolower($row->kategorie); ?></a>
   <?php endforeach; ?>
   </aside>
  <?php endif; ?>
 
  <?php if(!empty($resultEvent->kurzbeschreibung)) : ?>
   <div class="event-content">
-    <h4 style="padding: 10px 0;">Beschreibung</h4>
-    <p itemprop="description"><?= $resultEvent->kurzbeschreibung; ?></p>
+   <h4 style="padding: 10px 0;"><?= t('Beschreibung'); ?></h4>
+   <p itemprop="description"><?= $resultEvent->kurzbeschreibung; ?></p>
   </div>
  <?php endif; ?>
 
@@ -102,18 +102,18 @@
     <?php endif; ?>
 
   <?php foreach ($ersteller as $row2) : ?>
-   <p><strong>Erstellt von:</strong> <?= $row2->name; ?> am <?= $resultEvent->created->format('d.m.Y'); ?></p>
+   <p><strong><?= t('Erstellt von'); ?>:</strong> <?= $row2->name; ?> am <?= $resultEvent->created->format('d.m.Y'); ?></p>
   <?php endforeach; ?>
 
    <?php if (empty($resultAkteur)) : ?>
-   <p><strong>Privater Veranstalter</strong></p>
+   <p><strong><?= t('Privater Veranstalter'); ?></strong></p>
    <?php else : ?>
-   <p><strong>Akteur:</strong> <a href="<?= base_path(); ?>akteurprofil/<?= $resultAkteur['AID']; ?>" title="Profil von <?= $resultAkteur['name']; ?> besuchen" itemprop="name"><?= $resultAkteur['name']; ?></a></p>
+   <p><strong><?= t('Akteur'); ?>:</strong> <a href="<?= base_path(); ?>akteurprofil/<?= $resultAkteur['AID']; ?>" title="<?= t('Profil von !username besuchen',array('!username'=>$resultAkteur['name'])); ?>" itemprop="name"><?= $resultAkteur['name']; ?></a></p>
    <?php endif; ?>
 
    <?php if (!empty($resultAdresse)) : ?>
     <div id="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-    <p><strong>Ort:</strong>
+    <p><strong><?= t('Ort'); ?>:</strong>
 
     <?php if (!empty($resultAdresse->strasse) && !empty($resultAdresse->nr)) : ?>
      <span itemprop="streetAddress"><?= $resultAdresse->strasse.' '.$resultAdresse->nr; ?></span>
@@ -130,7 +130,7 @@
   </p><?php endif; ?>
 
   <?php if (!empty($resultEvent->url)) : ?>
-    <br /><p><strong>Weitere Informationen: </strong><a href="<?= $resultEvent->url; ?>" itemprop="sameAs" target="_blank"><?= $resultEvent->url; ?></a></p>
+   <br /><p><strong><?= t('Weitere Informationen'); ?>: </strong><a href="<?= $resultEvent->url; ?>" itemprop="sameAs" target="_blank"><?= $resultEvent->url; ?></a></p>
   <?php endif; ?>
 
    </div></section>

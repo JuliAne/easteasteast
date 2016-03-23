@@ -1,7 +1,15 @@
 <?php
 
-/**
+/*
  * Builds and returns the form-elements for AAE-Admin-interface
+
+ Tab Einstellungen
+  - Standardbildpfad
+
+ Tab SEO/Content - Beschreibung, description: Standard, Akteure, Events
+
+
+
  */
 
 function build_admin_form(){
