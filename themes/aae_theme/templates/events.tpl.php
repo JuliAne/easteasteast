@@ -122,14 +122,14 @@
     <div class="divider"></div>
     <div class="event-content">
       <?php $numwords = 30; preg_match("/(\S+\s*){0,$numwords}/", $event->kurzbeschreibung, $regs); ?>
-      <div class="eventDesc"><p><?= trim($regs[0]); ?> <a class="weiterlesen" href="<?= base_path().'eventprofil/'.$event->EID; ?>">...weiterlesen</a></p></div>
+      <div class="eventDesc"><p><?= strip_tags(trim($regs[0])); ?> <a class="weiterlesen" href="<?= base_path().'eventprofil/'.$event->EID; ?>">...<?= t('weiterlesen'); ?></a></p></div>
     </div>
    <?php endif; ?>
    </div>
 
    <div class="akteurData large-10 columns">
    <?php foreach ($event->akteur as $akteur) : ?>
-    <p><a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="Profil von <?= $akteur->name; ?>"><img src="<?= $akteur->bild; ?>" /><?= $akteur->name; ?></a></p>
+    <p><a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil von !username', array('!username' => $akteur->name)); ?>"><img src="<?= $akteur->bild; ?>" /><?= $akteur->name; ?></a></p>
    <?php endforeach; ?>
    </div>
   </div>

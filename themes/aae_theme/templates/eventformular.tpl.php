@@ -1,5 +1,5 @@
 <div class="row columns">
- <h3>Event <?php echo ($this->target == 'update' ? 'bearbeiten' : 'anlegen'); ?></h3>
+ <h3>Event <?= ($this->target == 'update' ? t('bearbeiten') : t('anlegen')); ?></h3>
  <?php if ($this->target == 'update') : ?>
  <a href="<?= base_path(); ?>eventprofil/<?= $this->event_id; ?>/remove" class="small secondary button round right" style="margin-top:-37px;" title="Event löschen?">Löschen</a>
  <?php endif; ?>
@@ -7,7 +7,7 @@
 
  <?php if (!$this->freigabe) : ?>
  <div class="callout alert">
-  <p>Ihr Event konnte nicht gespeichert werden, da folgende Fehler vorliegen:</p><br />
+  <p><?= t('Ihr Event konnte nicht gespeichert werden, da folgende Fehler vorliegen:'); ?></p><br />
   <?php foreach($this->fehler as $f) : ?>
    <p><strong><?= $f; ?></strong></p>
   <?php endforeach; ?>
@@ -19,13 +19,13 @@
 
   <div class="large-4 columns">
    <label>Name <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['name']; ?>
-    <input type="text" id="eventNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= $this->ph_name; ?>" required/>
+    <input type="text" id="eventNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= t('Veranstaltungsname'); ?>" required/>
    </label>
   </div>
 
   <div class="large-4 columns">
    <label>Eventwebsite: <!--<?= $this->fehler['url']; ?>-->
-    <input type="text" id="eventURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= $this->ph_url; ?>">
+    <input type="text" id="eventURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= t('URL'); ?>">
    </label>
   </div>
 
@@ -43,25 +43,25 @@
 
    <div class="large-3 columns">
     <label>Start (Datum, <span class="pflichtfeld">Pflichtfeld</span>): <?= $this->fehler['start']; ?>
-     <input type="text" id="eventStartdatumInput" name="start" value="<?= $this->start; ?>" placeholder="<?= $this->ph_start; ?>" required/>
+     <input type="text" id="eventStartdatumInput" name="start" value="<?= $this->start; ?>" placeholder="<?= t("Starttag")." (yyyy-mm-dd)"; ?>" required/>
     </label>
    </div>
 
    <div class="large-3 columns">
     <label>Ende (Datum): <?= $this->fehler['ende']; ?>
-     <input type="text" id="eventEnddatumInput" name="ende" value="<?= ($this->ende != '1000-01-01' ? $this->ende : ''); ?>" placeholder="<?= $this->ph_ende; ?>">
+     <input type="text" id="eventEnddatumInput" name="ende" value="<?= ($this->ende != '1000-01-01' ? $this->ende : ''); ?>" placeholder="<?= t("Endtag")." (yyyy-mm-dd)"; ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
     <label>Von... (Uhrzeit): <?= $this->fehler['zeit_von']; ?>
-     <input type="text" id="eventZeitvonInput" name="zeit_von" value="<?= ($this->hat_zeit_von ? $this->zeit_von : ''); ?>" placeholder="<?= $this->ph_zeit_von; ?>">
+     <input type="text" id="eventZeitvonInput" name="zeit_von" value="<?= ($this->hat_zeit_von ? $this->zeit_von : ''); ?>" placeholder="<?= t("von (Uhrzeit: hh:mm)"); ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
     <label>...Bis (Uhrzeit): <?= $this->fehler['zeit_bis']; ?>
-     <input type="text" id="eventZeitbisInput" name="zeit_bis" value="<?= ($this->hat_zeit_bis ? $this->zeit_bis : ''); ?>" placeholder="<?= $this->ph_zeit_bis; ?>">
+     <input type="text" id="eventZeitbisInput" name="zeit_bis" value="<?= ($this->hat_zeit_bis ? $this->zeit_bis : ''); ?>" placeholder="<?= t("bis (Uhrzeit: hh:mm)"); ?>">
     </label>
    </div>
 
@@ -73,25 +73,25 @@
 
    <div class="large-4 columns">
     <label>Straße: <?= $this->fehler['strasse']; ?>
-     <input type="text" id="StrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= $this->ph_strasse; ?>">
+     <input type="text" id="StrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= t("Strasse"); ?>">
     </label>
    </div>
 
    <div class="large-1 columns">
     <label>Nr.: <?= $this->fehler['nr']; ?>
-     <input type="text" id="NrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= $this->ph_nr; ?>">
+     <input type="text" id="NrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= t("Hausnummer"); ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
     <label>Adresszusatz: <?= $this->fehler['adresszusatz']; ?>
-     <input type="text" id="AdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= $this->ph_adresszusatz; ?>">
+     <input type="text" id="AdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= t("Adresszusatz"); ?>">
     </label>
    </div>
 
    <div class="large-4 columns">
     <label>PLZ: <?= $this->fehler['plz']; ?>
-      <input type="text" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= $this->ph_plz; ?>">
+      <input type="text" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= t("PLZ"); ?>">
     </label>
    </div>
 
@@ -109,9 +109,9 @@
 
   <div class="large-4 columns">
   <label>Geodaten (Karte): <?= $this->fehler['gps']; ?>
-   <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= $this->ph_gps; ?>">
+   <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= t("GPS Koordinaten"); ?>">
   </label>
-  <p id="show_coordinates" style="display:none;"><a href="#" target="_blank">Zeige Koordinaten auf Karte</a></p>
+  <p id="show_coordinates" style="display:none;"><a href="#" target="_blank"><?= t('Zeige Koordinaten auf Karte'); ?></a></p>
 </div>
 
 </fieldset></div>
@@ -120,7 +120,7 @@
 
   <div class="large-12 columns">
   <label>Beschreibung. In der Vorschau erscheinen die ersten 30 Wörter <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['kurzbeschreibung']; ?>
-   <textarea name="kurzbeschreibung" id="kurzbeschreibung" cols="45" rows="3" placeholder="<?= $this->ph_kurzbeschreibung; ?>"><?= $this->kurzbeschreibung; ?></textarea>
+   <textarea name="kurzbeschreibung" id="kurzbeschreibung" cols="45" rows="3" placeholder="<?= t("Beschreibungstext"); ?>"><?= $this->kurzbeschreibung; ?></textarea>
   </label>
   <script>CKEDITOR.replace('kurzbeschreibung', { toolbar : 'Basic' });</script>
  </div>
@@ -131,13 +131,15 @@
   <fieldset class="fieldset">
    <legend>Eventbild</legend>
 
-    <input type="file" id="eventBildInput" name="bild" />
+    <label for="eventBildInput" class="button"><?= t('Bild hochladen'); ?>...</label>
+    <input type="file" id="eventBildInput" name="bild" class="show-for-sr" />
 
     <?php if (!empty($this->bild)) : ?>
-     <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
-     <div id="currentPic">
-       <img src="<?= $this->bild; ?>" title="Aktuelles Eventbild" />
-       <a href="#">Eventbild löschen.</a></div>
+    <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
+    <div id="currentPic">
+     <img src="<?= $this->bild; ?>" title="Aktuelles Eventbild" />
+     <a href="#">Eventbild löschen.</a>
+    </div>
     <?php endif; ?>
 
     <p><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf Leipziger-Ecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
@@ -150,7 +152,7 @@
   <div class="row">
    <div class="large-12 columns">
 
-    <label>Kategorien: <?= $this->fehler['sparten']; ?></label>
+    <label><?= t('Kategorien:'); ?> <?= $this->fehler['sparten']; ?></label>
 
     <select id="eventSpartenInput" multiple="multiple" class="tokenize" name="sparten[]">
     <?php foreach ($this->sparten as $sparte) : ?>
@@ -172,13 +174,13 @@
  <?php if ($this->target == 'update' && !empty($resultEvent->created)) : ?>
   <?php if ($this->created->format('d.m.Y') != '01.01.1000') : ?>
   <p style="color:grey;">Event eingetragen am <?= $this->created->format('d.m.Y, H:i'); ?> Uhr.
-  <?php if ($this->modified->format('d.m.Y') != '01.01.1000') : ?> Zuletzt aktualisiert am <?= $this->modified->format('d.m.Y, H:i'); ?> Uhr.<?php endif; ?>
+  <?php if ($this->modified->format('d.m.Y') != '01.01.1000' && $this->modified->format('H:i') != date('H:i')) : ?> Zuletzt aktualisiert am <?= $this->modified->format('d.m.Y, H:i'); ?> Uhr.<?php endif; ?>
   </p><div class="divider" style="margin:17px 0;"></div>
   <?php endif; ?>
  <?php endif; ?>
 
-  <input type="submit" class="left button" id="eventSubmit" name="submit" value="Speichern">
-  <a class="secondary right button" href="<?= base_path(); ?>events">Abbrechen</a>
+  <input type="submit" class="left button" id="eventSubmit" name="submit" value="<?= t('Speichern'); ?>">
+  <a class="secondary right button" href="<?= base_path(); ?>events" title="<?= t('Zurück zu den Events'); ?>"><?= t('Abbrechen'); ?></a>
 
 </div>
 

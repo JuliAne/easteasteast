@@ -8,7 +8,7 @@
 <div id="mainnav">
  <div class="row">
 
- <nav id="nav" role="navigation">
+ <nav id="nav" role="navigation" class="large-8 small-8 columns">
   <!-- for responsive menu (CSS only) -->
   <input type="checkbox" id="responsive-menu" name="responsive-menu" class="show-for-small-only" title="<?= t('Zeige/Verstecke Menü'); ?>">
   <label for="responsive-menu" onclick="javascript:$('#mainnav').removeClass('scrolled');"></label>
@@ -18,7 +18,7 @@
   <?php print render($page['mainnav']); global $user ?>
  </nav>
 
-  <aside id="actions" class="large-1 small-4 columns panel radius right">
+  <aside id="actions" class="large-1 small-4 medium-2 columns panel radius right">
    <a id="search-button" href="#search-popup" class="popup-link" title="Suchen"><img src="<?= base_path().path_to_theme(); ?>/img/search.svg" /></a>
     <div id="search-popup" class="popup large-3 small-12 columns">
      <!-- <input type="text" placeholder="Suchen..." />
@@ -61,7 +61,7 @@
        <p><a href="<?= base_path(); ?>user/password"><?= t('Passwort vergessen?'); ?></a></p>
       </div>
       <div class="tabs-panel" id="panelRegister">
-       <p><strong>Neu hier?</strong> Registriere Dich kostenfrei, um die Leipziger Ecken voll nutzen zu können und zu einem schöneren Platz für uns alle zu machen. <a href="<?= base_path(); ?>faq" title="FAQ öffnen">Zum "Wieso & warum?""</a></p><br />
+       <p><strong>Neu hier?</strong> Registriere Dich kostenfrei, um die Leipziger Ecken voll nutzen zu können und zu einem schöneren Platz für uns alle zu machen. <a href="<?= base_path(); ?>faq" title="FAQ öffnen">Zum "Wieso & warum?"</a></p><br />
        <a href="<?= base_path(); ?>user/register" class="large-12 columns small button" title="<?= t('Jetzt registrieren'); ?>"><?= t('Registrieren'); ?></a>
        <?php if (module_exists('simple_fb_connect')) : ?>
        <a href="<?= base_path(); ?>user/simple-fb-connect" class="large-12 columns small hollow button" title="<?= t('Mit Facebook registrieren'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/social-facebook-blue.svg" /><?= t('Mit Facebook registrieren'); ?></a><p>
@@ -77,13 +77,16 @@
   </aside>
 
   <?php if (user_is_logged_in() && module_exists('invite')) : ?>
-  <!--<a href="#" id="inviteBtn" class="hollow secondary button right" title="<?= t('Bekannte einladen'); ?>">+ <?= t('Bekannte einladen'); ?></a>
+  <a href="#" id="inviteBtn" class="hollow secondary button right" title="<?= t('Bekannte einladen'); ?>">+ <?= t('Bekannte einladen'); ?></a>
   <aside class="aaeModal">
    <div class="content">
+    <h3>Spread the word.</h3>
+    <p>Die Leipziger Ecken leben vom Engagement und der Vielfältigkeit ihrer Benutzer. Wenn Dir dieser Ort genauso gut gefällt, dann trage hier schnell die Mail-Adressen Deiner Bekannten ein.</p>
+    <p>Einladungen werden einmalig via Mail versendet.</p>
     <?php print render($page['user_invite_by_mail']); ?>
     <a href="#" class="button secondary round closeBtn" title="<?= t('Fenster schliessen'); ?>">x</a>
    </div>
- </aside>-->
+ </aside>
   <?php endif; ?>
 
  </div>

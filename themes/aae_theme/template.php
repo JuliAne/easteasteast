@@ -199,6 +199,7 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
  if (!array_intersect(array('redakteur','administrator'), $user->roles)) {
 
  $exclude = array(
+ 'modules/invite/modules/invite_by_email/css/invite_by_email.css' => FALSE,
  'modules/aggregator/aggregator.css' => FALSE,
  'modules/block/block.css' => FALSE,
  'modules/book/book.css' => FALSE,

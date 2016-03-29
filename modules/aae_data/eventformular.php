@@ -5,7 +5,7 @@
  * eingetragen werden können.
  * Pflichtfelder sind (bisher): Name, Veranstalter, Datum (Anfang) & Beschreibung
  * Anschließend werden die Daten gefiltert in die DB-Tabellen eingetragen
- * oder geupdated
+ * oder geupdatet.
  */
 
 Class eventformular extends aae_data_helper {
@@ -41,24 +41,6 @@ Class eventformular extends aae_data_helper {
   var $freigabe = true;   //Variable zur Freigabe: muss true sein
   var $fehler = array(); // In diesem Array werden alle Fehler gespeichert
 
-  //Variablen, welche Texte in den Formularfeldern beschreiben ("placeholder"):
-  public $ph_name = t('Veranstaltungsname');
-  var $ph_veranstalter = t("Veranstalter");
-  var $ph_start = t("Starttag")."(yyyy-mm-dd)";
-  var $ph_ende = t("Endtag")."(yyyy-mm-dd)";
-  var $ph_zeit_von = t("von (Uhrzeit: hh:mm)");
-  var $ph_zeit_bis = t("bis (Uhrzeit: hh:mm)");
-  var $ph_bild = t("Bild");
-  var $ph_kurzbeschreibung = t("Beschreibungstext");
-  var $ph_url = "URL";
-  var $ph_strasse = t("Strasse");
-  var $ph_nr = t("Hausnummer");
-  var $ph_adresszusatz = t("Adresszusatz");
-  var $ph_plz = t("PLZ");
-  var $ph_ort = t("Bezirk");
-  var $ph_gps = t("GPS Koordinaten");
-  var $ph_sparten = "Tags";
-
   var $user_id;
   var $event_id;
   var $resultakteure;
@@ -69,19 +51,17 @@ Class eventformular extends aae_data_helper {
 
   function __construct($action = false) {
 
-    global $user;
-    $this->user_id = $user->uid;
+   global $user;
+   $this->user_id = $user->uid;
 
-    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
-    if ($action == 'update') {
-	   $this->target = 'update';
-    }
+   // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
+   if ($action == 'update')
+	  $this->target = 'update';
 
-    if (!user_is_logged_in()) {
-	   drupal_access_denied();
-    }
+   if (!user_is_logged_in())
+	  drupal_access_denied();
 
-  } // END Constructor
+  }
 
   /**
    * Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.

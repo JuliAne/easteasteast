@@ -83,11 +83,12 @@
       <a href="<?= base_path(); ?>events/rss" id="rss" class="small button" title="<?= t('Alle Events als RSS-Feed abonnieren'); ?>"><img id="svg_logo" src="/sites/all/themes/aae_theme/img/rss.svg"></a>
       <a href="<?= base_path(); ?>events" id="allevents" class="small button frontpage"><?= t('Alle Events'); ?></a>
      </div>
+    </div>
+    <div class="row">
       <?php
       // Lade "letzte Events"-Block
       foreach ($blocks->print_letzte_events() as $event) : ?>
-      <div>
-        <div class="large-4 small-6 columns large3-events">
+        <div class="large-6 small-6 columns large3-events">
         <a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>">
           <button class="date"><?= $event->start->format('d'); ?><br/><?= $monat_short[$event->start->format('m')]; ?></button>
         </a>
@@ -100,7 +101,6 @@
         </a>
       </div>
       <?php endforeach; ?>
-    </div>
     </div>
 
   </section>
@@ -115,13 +115,14 @@
       <?php
       // Lade "Meine Akteure"-Block
 
-      foreach ($blocks->print_letzte_akteure() as $akteur) : ?>
+      foreach ($blocks->print_letzte_akteure(8) as $count => $akteur) : ?>
 
-      <div class="large-3 small-5 columns pcard">
+      <div class="large-3 small-5 columns pcard<?= ($count >= 4 ? ' show-for-medium':''); ?>">
        <header <?= (!empty($akteur->bild) ? 'style="background-image:url('.$akteur->bild.');"' : ''); ?><?= ($akteur->renderSmallName ? ' class="renderSmallName"' : ''); ?>>
-         <h3><a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="Akteurprofil besuchen"><?= $akteur->name; ?></a></h3>
+         <h3><a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>"><?= $akteur->name; ?></a>
+             <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?></h3>
         </header>
-        <section>
+        <section style="display:none;">
           <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?>
         </section>
        </div>

@@ -128,8 +128,9 @@
     </div>
     <div class="medium-9 columns">
     <div class="tabs-content vertical" data-tabs-content="example-vert-tabs">
-      <div class="tabs-panel is-active" id="pbild">
-        <input type="file" id="akteurBildInput" name="bild" />
+     <div class="tabs-panel is-active" id="pbild">
+      <label for="akteurBildInput" class="button"><?= t('Bild hochladen'); ?>...</label>
+      <input type="file" id="akteurBildInput" name="bild" class="show-for-sr" />
 
         <?php if (!empty($this->bild)) : ?>
           <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
@@ -204,12 +205,12 @@
  <?php if ($this->target == 'update' && !empty($this->created)) : ?>
   <?php if ($this->created->format('d.m.Y') != '01.01.1000') : ?>
    <p style="color:grey;">Akteur eingetragen am <?= $this->created->format('d.m.Y, H:i'); ?> Uhr.
-   <?php if ($this->modified->format('d.m.Y') != '01.01.1000') : ?> Zuletzt aktualisiert am <?= $this->modified->format('d.m.Y, H:i'); ?> Uhr.<?php endif; ?>
+   <?php if ($this->modified->format('d.m.Y') != '01.01.1000' && $this->modified->format('H:i') != date('H:i')) : ?> Zuletzt aktualisiert am <?= $this->modified->format('d.m.Y, H:i'); ?> Uhr.<?php endif; ?>
    </p><div class="divider" style="margin:17px 0;"></div>
   <?php endif; ?>
  <?php endif; ?>
 
-  <input type="submit" class="left button" id="akteurSubmit" name="submit" value="Speichern">
-  <a class="secondary right button" href="<?= base_path(); ?>akteure">Abbrechen</a>
+  <input type="submit" class="left button" id="akteurSubmit" name="submit" value="<?= t('Speichern'); ?>">
+  <a class="secondary right button" href="<?= base_path(); ?>akteure" title="<?= t('Zurück zu den Akteuren'); ?>"><?= t('Abbrechen'); ?></a>
  </div>
 </form>

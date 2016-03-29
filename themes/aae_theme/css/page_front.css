@@ -225,6 +225,19 @@ html.fp-enabled,
 
 /* STYLES FOR AAE */
 
+#mainnav.scrolled {
+ opacity: 1;
+ background: rgba(255,255,255,0.3);
+}
+
+#mainnav.scrolled ul.menu li a {
+ color: #fff;
+}
+
+#mainnav.scrolled ul.menu li ul li a {
+  color: #000;
+}
+
 #imgSlideSection {
   margin-top: 0;
   position: fixed;
@@ -387,6 +400,7 @@ html.fp-enabled,
 
 #projects-akteure .pcard:hover h3 {
   color: #2199E8!important;
+  opacity: 1 !important;
 }
 
 #projects-akteure .pcard header {
@@ -395,6 +409,14 @@ html.fp-enabled,
 
 #projects-akteure .pcard:hover header {
   border-bottom: 1px solid lightgrey;
+}
+
+#projects-akteure .pcard:hover header .plocation {
+  display: block;
+}
+
+#projects-akteure .pcard header .plocation {
+  display: none;
 }
 
 #projects-akteure .pcard:hover .plocation {
@@ -423,15 +445,18 @@ html.fp-enabled,
  display: table-cell;
  vertical-align: middle;
  width: 74%!important;
+ border-bottom: 3px solid #fff;
 }
 
 .large3-events {
   transition: all 0.25s;
   margin-bottom: 15px;
+  overflow: hidden;
 }
 
 .large3-events .date {
-  opacity: 0.8;
+  background: none;
+  color: #fff;
 }
 
 .large3-events:hover .date {
