@@ -34,6 +34,10 @@
   list-style: none;
 }
 
+.row {
+ padding: 0 12px;
+}
+
 ol, ul {
  list-style: none;
  margin: 0;
@@ -308,6 +312,11 @@ transform: rotate(-10deg);
  padding-top: 9px;
 }
 
+.logged-in #mainnav #actions {
+ background-color: #FF5217;
+ border-bottom: 3px solid #AA3912;
+}
+
 #mainnav #actions a img {
  width: 19px;
  color: white;
@@ -319,6 +328,10 @@ transform: rotate(-10deg);
  margin-right: 6px;
  border-right: 1px solid #007095;
  padding-right: 6px;
+}
+
+.logged-in #mainnav #actions #search-button {
+ border-right: 1px solid #AA3912;
 }
 
 #mainnav #actions a img:hover, #mainnav #actions a.active img {
@@ -536,7 +549,7 @@ transform: rotate(-10deg);
 
 .pcard header {
  height: 150px;
- min-width: 261px;
+ min-width: 256px;
  background-image: url(../img/project_bg.png);
  background-size: 112%;
  transition: 0.4s background-size;
@@ -624,7 +637,7 @@ transform: rotate(-10deg);
 }
 
 .pcard header h3 .plocation {
- color: #fff;
+ color: #ececec;
 }
 
 .pcard footer {

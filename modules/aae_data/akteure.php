@@ -22,7 +22,7 @@ Class akteure extends aae_data_helper {
 
   global $user;
 
-    /*
+  /*  ...to be put within function invite->hasAddedAkteur()...
 
   $values = array(
   'arguments' => array(
@@ -223,9 +223,10 @@ $akteure = db_select($this->tbl_akteur, 'a')
 
    $renderBigImg = false;
 
-   // Check imagesize-relations, adjust height
+   // Check image-relations, adjust height via CSS-Class
    if (!empty($akteur->bild)){
-    $img = getimagesize($this->bildpfad . $akteur->bild);
+    $img = str_replace('/'.$this->short_bildpfad, '', $akteur->bild);
+    $img = getimagesize($this->bildpfad . $img);
     $renderBigImg = ($img[0] / $img[1] < 1.3) ? 1 : 0;
    }
 
@@ -256,7 +257,7 @@ $akteure = db_select($this->tbl_akteur, 'a')
 
    $js .= '];';
    drupal_add_js($js, 'inline');
-   $this->addMapContent('','',array('something' => 'bla'));
+   //$this->addMapContent('','',array('something' => 'bla'));
   }
 
 

@@ -8,7 +8,7 @@
 <div id="mainnav">
  <div class="row">
 
- <nav id="nav" role="navigation" class="large-8 small-8 columns">
+ <nav id="nav" role="navigation" class="large-10 small-8 columns">
   <!-- for responsive menu (CSS only) -->
   <input type="checkbox" id="responsive-menu" name="responsive-menu" class="show-for-small-only" title="<?= t('Zeige/Verstecke Menü'); ?>">
   <label for="responsive-menu" onclick="javascript:$('#mainnav').removeClass('scrolled');"></label>
@@ -76,7 +76,7 @@
     </div>
   </aside>
 
-  <?php if (user_is_logged_in() && module_exists('invite')) : ?>
+  <?php if (user_is_logged_in() && module_exists('inviteSSSS')) : ?>
   <a href="#" id="inviteBtn" class="hollow secondary button right" title="<?= t('Bekannte einladen'); ?>">+ <?= t('Bekannte einladen'); ?></a>
   <aside class="aaeModal">
    <div class="content">
