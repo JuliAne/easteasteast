@@ -9,7 +9,7 @@
   <?php if ($hat_recht): ?>
   <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>akteurprofil/<?= $akteur_id; ?>/edit" title="<?= t('Akteur bearbeiten'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" /><?= t('Bearbeiten'); ?></a></div>
   <?php endif; ?>
-  <div class="large-4 columns right" style="text-align: right;">
+  <div class="large-6 columns right" style="text-align: right;">
    <a href="<?= base_path(); ?>akteurprofil/<?= $aResult['row1']->AID; ?>/vcard_download" title="Akteur als .vcard exportieren">Export (VCard)</a>
    <a href="https://leipziger-ecken.de/contact" title="<?= t('Das Profil wurde unbefugt erstellt? Melden Sie sich hier.'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" /><?= t('Melden'); ?></a>
    <a href="#share" class="popup-link" title="Akteursseite in den sozialen Netzwerken posten"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" /><?= t('Teilen'); ?></a>

@@ -37,10 +37,10 @@ function aae_preprocess_html(&$variables) {
   drupal_add_js(path_to_theme().'/js/jquery-1.11.3.min.js', array('scope'=>'header'));
 
   drupal_add_js(path_to_theme().'/js/pace.min.js');
+  /* Would be better if it looked like <script data-pace-options="{'ajax':false}" src=".."></script> */
   drupal_add_js(path_to_theme().'/js/app.js', array('scope'=>'footer'));
 
   drupal_add_css(path_to_theme().'/css/foundation.min.css');
-  drupal_add_css(path_to_theme().'/css/pace.css');
   drupal_add_css(path_to_theme().'/css/app.css');
 
   drupal_add_js(path_to_theme().'/js/foundation.min.js', array('scope'=>'footer'));

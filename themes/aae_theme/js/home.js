@@ -6,23 +6,30 @@ $(document).ready(function(){
 
 
  if($(window).width() < 640) {*/
+
+  $('#hitMeScrollMe').click(function(){
+   $.fn.fullpage.moveSectionDown();
+  });
+
   $('#fullpage').fullpage({
 	 /*anchors: ['images','home', 'blog', 'events', 'akteure', 'ueberuns'],
 	 sectionsColor: ['#FFF', '#F7F7F7', '#F7F7F7', '#F7F7F7', '#FFF'],*/
 	 scrollBar: true,
    navigation: true,
 	 navigationPosition: 'right',
-	 navigationTooltips: ['we','Start', 'Journal', 'Veranstaltungen', 'Akteure', 'Footer'],
+	 navigationTooltips: ['','Start', 'Journal', 'Veranstaltungen', 'Akteure', 'Footer'],
    fixedElements: '#mainnav',
    fitToSection : false,
 
-   afterLoad: function(anchor, index){
-      if (index == 2) {
+   onLeave: function(anchor, index){
+      if (index == 2) { /* = #slider */
        $('#fp-nav').fadeOut('fast');
        $('#imgSlideSection').removeClass('blurme');
+       $('#hitMeScrollMe').fadeIn('slow');
       } else {
        $('#fp-nav').fadeIn('slow');
        $('#imgSlideSection').addClass('blurme');
+       $('#hitMeScrollMe').fadeOut('fast');
       }
     },
 

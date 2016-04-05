@@ -58,7 +58,9 @@
     <a href="<?= base_path(); ?>leipziger-osten"><button class="button radius transparent">Über den Osten.</button></a>
   </div>
 
-  </div>
+  <div id="hitMeScrollMe">></div>
+
+ </div>
 
   <section class="section" id="journal">
 
