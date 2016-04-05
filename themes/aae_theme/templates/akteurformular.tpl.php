@@ -121,9 +121,9 @@
   <div class="row" id="akteurTabs">
   <div class="medium-3 columns">
     <ul class="tabs vertical" id="example-vert-tabs" data-tabs>
-      <li class="tabs-title is-active"><a href="#pbild" aria-selected="true">Akteurbild</a></li>
+      <li class="tabs-title is-active"><a href="#pbild" aria-selected="true"><?= t('Akteurbild'); ?></a></li>
       <li class="tabs-title"><a href="#prss">RSS-Integration <i>(Beta)</i></a></li>
-      <li class="tabs-title"><a href="#psonstiges">Sonstiges</a></li>
+      <li class="tabs-title"><a href="#psonstiges"><?= t('Sonstige Informationen'); ?></a></li>
     </ul>
     </div>
     <div class="medium-9 columns">
@@ -135,8 +135,8 @@
         <?php if (!empty($this->bild)) : ?>
           <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
           <div id="currentPic">
-           <img src="<?= $this->bild; ?>" title="Aktuelles Akteurbild" />
-           <a href="#">Akteurbild löschen.</a>
+           <img src="<?= $this->bild; ?>" title="<?= t('Aktuelles Akteurbild'); ?>" />
+           <a href="#"><?= t('Akteurbild löschen.'); ?></a>
           </div>
         <?php endif; ?>
 
@@ -146,7 +146,8 @@
 
        </div>
       <div class="tabs-panel" id="prss">
-        <p>Hier haben Sie die Möglichkeit, einen bestehenden RSS-Feed (bspw. ihres Blogs) in das Profil einzubinden.</p>
+        <img src="<?= base_path().path_to_theme(); ?>/img/rss.svg" style="width:18px;float:left;margin-right:10px;" />
+        <p>Hier haben Sie die Möglichkeit, einen bestehenden <strong>RSS-Feed</strong> (bspw. ihres Blogs) in das Profil einzubinden.</p>
         <p class="licensetext" style="padding-bottom: 8px;">Hinweis: Nicht mit diesem Profil zusammenhängende Feeds können ggf. entfernt werden. Eine Aktualisierung des Feeds erfolgt im Tagestakt.</p>
         <input type="text" name="rssFeed" placholder="URL zum RSS-Feed" value="<?= $this->rssFeed->url; ?>" />
       </div>
@@ -154,19 +155,19 @@
       <div class="tabs-panel" id="psonstiges">
 
         <div class="large-4 columns">
-         <label>Öffnungszeiten: <?= $this->fehler['oeffnungszeiten']; ?>
+         <label><?= t('Öffnungszeiten'); ?>: <?= $this->fehler['oeffnungszeiten']; ?>
           <input type="text" id="akteurOeffnungszeitenInput" name="oeffnungszeiten" value="<?= $this->oeffnungszeiten; ?>" placeholder="<?= $this->ph_oeffnungszeiten; ?>">
          </label>
         </div>
 
         <div class="large-4 columns">
-         <label>Projektwebsite: <?= $this->fehler['url']; ?>
+         <label><?= t('Projektwebsite'); ?>: <?= $this->fehler['url']; ?>
           <input type="text" id="akteurURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= $this->ph_url; ?>">
          </label>
         </div>
 
         <div class="large-4 columns">
-         <label>Telefonnummer: <?= $this->fehler['telefon']; ?>
+         <label><?= t('Telefonnummer'); ?>: <?= $this->fehler['telefon']; ?>
           <input type="text" id="akteurTelefonInput" name="telefon" value="<?= $this->telefon; ?>" placeholder="<?= $this->ph_telefon; ?>">
          </label>
         </div>

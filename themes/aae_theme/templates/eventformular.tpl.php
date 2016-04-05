@@ -99,7 +99,7 @@
   <label>Bezirk: <?= $this->fehler['ort']; ?>
 
   <select name="ort">
-   <option value="" selected="selected">Bezirk auswählen</option>
+   <option value="" selected="selected"><?= t('Bezirk auswählen'); ?></option>
    <?php foreach ($this->resultbezirke as $bezirk) : ?>
     <option value="<?= $bezirk->BID; ?>" <?php echo ($bezirk->BID == $this->ort ? 'selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
    <?php endforeach; ?>
@@ -137,8 +137,8 @@
     <?php if (!empty($this->bild)) : ?>
     <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
     <div id="currentPic">
-     <img src="<?= $this->bild; ?>" title="Aktuelles Eventbild" />
-     <a href="#">Eventbild löschen.</a>
+     <img src="<?= $this->bild; ?>" title="<?= t('Aktuelles Eventbild'); ?>" />
+     <a href="#"><?= t('Eventbild löschen.'); ?></a>
     </div>
     <?php endif; ?>
 

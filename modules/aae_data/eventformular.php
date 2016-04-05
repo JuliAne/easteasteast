@@ -177,7 +177,7 @@ Class eventformular extends aae_data_helper {
 	   $this->freigabe = false;
     }
 
-    if (strlen($this->kurzbeschreibung) > 1200) {
+    if (strlen($this->kurzbeschreibung) > 65000) {
      $this->fehler['kurzbeschreibung'] = t("Bitte geben Sie eine kürzere Beschreibung an.");
 	   $this->freigabe = false;
     }
@@ -252,6 +252,7 @@ Class eventformular extends aae_data_helper {
 
   /**
    * Wird ausgefuehrt, wenn Update der Daten verlangt ist
+   * TODO Veranstalter wechselbar machen
    */
   private function eventUpdaten() {
 
@@ -507,12 +508,12 @@ Class eventformular extends aae_data_helper {
    */
   private function eventSpeichern() {
 
-    //Wenn Bilddatei ausgewählt wurde...
-    if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
-     $this->bild = $this->upload_image($_FILES['bild']);
-    }
+   //Wenn Bilddatei ausgewählt wurde...
+   if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
+    $this->bild = $this->upload_image($_FILES['bild']);
+   }
 
-	//Abfrage, ob Adresse bereits in Adresstabelle
+	 //Abfrage, ob Adresse bereits in Adresstabelle
 	 $this->resultAdresse = db_select($this->tbl_adresse, 'a')
 	  ->fields('a', array( 'ADID', 'gps' ))
 	  ->condition('strasse', $this->strasse, '=')
@@ -554,7 +555,6 @@ Class eventformular extends aae_data_helper {
 	  }
 	}
 
-
   $startQuery = $this->start.' '.(!empty($this->zeit_von) ? $this->zeit_von.':01' : '00:00:00');
   $endeQuery  = (!empty($this->ende) ? $this->ende : '1000-01-01').' '.(!empty($this->zeit_bis) ? $this->zeit_bis.':01' : '00:00:00');
 
@@ -569,7 +569,7 @@ Class eventformular extends aae_data_helper {
 		'kurzbeschreibung' => $this->kurzbeschreibung,
 		'ersteller' => $this->user_id,
     'created' => date('Y-m-d H:i:s', time())
-	 ))
+	  ))
 	 ->execute();
 
 	 // Falls Akteur angegeben wurde:
@@ -584,7 +584,7 @@ Class eventformular extends aae_data_helper {
 
   	}
 
-    if (is_array($this->sparten) && $this->sparten != "") {
+    if (is_array($this->sparten) && !empty($this->sparten)) {
 
      foreach ($this->sparten as $id => $sparte) {
  		 // Tag bereits in DB?

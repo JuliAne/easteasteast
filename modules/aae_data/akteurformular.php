@@ -218,7 +218,7 @@ drupal_add_html_head($og_title, 'og_title'); */
      $this->freigabe = false;
     }
 
-    if (strlen($this->beschreibung) > 1200) {
+    if (strlen($this->beschreibung) > 65000) {
 	   $this->fehler['beschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
 	   $this->freigabe = false;
     }

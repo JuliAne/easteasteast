@@ -28,13 +28,20 @@ function aae_data_user_logout($account) {
 
 /**
  * Implements hook_block_info().
- * YET USELESS
+ * Make AAE-custom blocks available.
  */
 
 function aae_data_block_info() {
 
+  $blocks['aae_journal'] = array(
+    'info' => 'Latest blog-posts. Called on start- and journal-page (see theme).',
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => TRUE,
+    'region' => 'journal_latest_posts'
+  );
+
   $blocks['aae_footer_desc'] = array(
-    'info' => 'Kurzer Intro-/Beschreibungstext für den Footer',
+    'info' => 'Short intro-/descriptions-text for the footer',
     'cache' => DRUPAL_NO_CACHE,
     'status' => TRUE,
     'region' => 'footer'
@@ -124,9 +131,8 @@ function aae_data_akteur_created(){
 
 /**
  * Implements hook_block_view().
- * YET UNUSED
  */
-function aae_data_block_view($delta = '', $bla) {
+function aae_data_block_view($delta = '') {
 
   $block = array();
 
@@ -134,7 +140,13 @@ function aae_data_block_view($delta = '', $bla) {
 
     case 'aae_footer_desc':
 
-     $block['content'] = '';
+     $block['content'] = ''; // TODO fill with data from AAE-backend
+     break;
+
+    case 'aae_journal':
+
+     $nodes = aae_data_helper::getJournalEntries(3);
+     $block['content'] = aae_data_helper::render('/templates/journal_latest_posts.tpl.php', array('nodes' => $nodes));
      break;
   }
 

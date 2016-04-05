@@ -227,7 +227,7 @@ p.licensetext:hover {
  #filter #timespace ul li {
   float: left;
   font-size: 0.75em;
-  padding: 0 7px;
+  padding: 0 6px;
  }
 
  #filter #timespace ul li.selected {

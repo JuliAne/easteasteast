@@ -3,7 +3,7 @@
 <?php
  $style = 'style="';
  if (!empty($resultEvent->bild)) $style .= "background-image:url('".$resultEvent->bild."');";
- if ($map) $style .= "filter:none !important;padding-top:38px;";
+ if ($map) $style .= "filter:none !important;-webkit-filter:none !important;padding-top:38px;";
  $style .= '"'; ?>
 
 <header id="header" <?= $style; ?>>

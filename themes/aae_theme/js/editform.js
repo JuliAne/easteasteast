@@ -11,8 +11,11 @@ $(document).ready(function(){
     }
   });
 
-  $("#eventStartdatumInput").Zebra_DatePicker({'readonly_element' : false, format : 'Y-m-d'});
-  $("#eventEnddatumInput").Zebra_DatePicker({'readonly_element' : false, format : 'Y-m-d'});
+  $("#eventStartdatumInput,#eventEnddatumInput").Zebra_DatePicker({'readonly_element' : false, format : 'Y-m-d'});
+
+  $(document).on('change', '#eventBildInput,#akteurBildInput', function(){
+   $(this).parent().find('label').html($(this).val());
+  } );
 
   if ($('#currentPic').length){
    $('#currentPic a').click(function(){
@@ -57,7 +60,7 @@ $(document).ready(function(){
 
   $('.Adresse input').focusout(function(){
 
-    if ($('#NrInput').val() != '' && $('#PLZInput').val() != '' && $('#StrasseInput').val() != '') {
+    if ($('#NrInput').val() != '' && $('#PLZInput').val() != '' && $('#StrasseInput').val() != '' && $(this).attr('name') != 'gps') {
 
     var strasse = $('#StrasseInput').val();
 

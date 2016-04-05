@@ -38,7 +38,7 @@
 
   <div class="slide whiteText" id="slide0">
     <h1>Den Leipziger Osten entdecken.</h1>
-    <p>Deine Stadtteilplattform: Erfahre mehr über Vereine, Initiativen und Akteure in deiner Umgebung, </p>
+    <p>Deine Stadtteilplattform: Erfahre mehr über Vereine, Initiativen und Akteure aus Deiner Umgebung,</p>
     <p>werde Teil der Community und registriere dich.</p>
     <p class="slogan"><strong>Offen. Lokal. Vernetzt.</strong></p>
     <a href="<?= base_path(); ?>faq"><button class="button radius transparent">Mehr erfahren...</button></a>
@@ -53,28 +53,26 @@
 
   <div class="slide whiteText" id="slide2">
     <h1>Der Leipziger Osten</h1>
-    <p>vom „Grafischen Viertel” über Neustadt-Neuschönefeld, Volkmarsdorf, Schönefeld bis Sellerhausen-Stünz</p>
+    <p>vom „Grafischen Viertel” über Neustadt-Neuschönefeld, Volkmarsdorf, Schönefeld bis Sellerhausen-Stünz:</p>
     <p class="slogan"><strong>vernetzt und kooperativ für ein buntes Leipzig</strong></p>
     <a href="<?= base_path(); ?>leipziger-osten"><button class="button radius transparent">Über den Osten.</button></a>
   </div>
 
-  <div id="hitMeScrollMe">></div>
+  <div id="hitMeScrollMe" title="<?= t('Weiterspringen'); ?>">></div>
 
  </div>
 
   <section class="section" id="journal">
-
-  <!--
-    Sollte unkommentiert werden, sobald die einzelnen Entry-Kästchen weniger Höhe besitzen!
 
     <div class="row">
      <div class="aaeHeadline">
       <h1><span>&nbsp;<strong><?= t('Digitales Stadtteiljournal'); ?></strong>&nbsp;</span></h1>
       <a href="<?= base_path(); ?>journal" id="allakteure" class="small button frontpage"><?= t('Zum Journal'); ?></a>
      </div>
-   </div> -->
+   </div>
 
-   <?php print render($page['blog']); ?>
+   <?php print render($page['journal_latest_posts']); ?>
+
   </section>
 
   <section class="section" id="projects-events">

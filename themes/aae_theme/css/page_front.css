@@ -301,7 +301,7 @@ html.fp-enabled,
   margin: 0 auto;
   display: table;
   color: #FFF;
-  text-shadow: 0 0 5px #000;
+  text-shadow: 0 0 6px rgba(0, 0, 0, 0.65);
 }
 
 #slideSection .slide p.slogan strong {

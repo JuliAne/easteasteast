@@ -5,6 +5,14 @@
  overflow: hidden;
 }
 
+#contentRow, #contentRow .row {
+ padding: 0 0 !important;
+}
+
+.aaeActionBar {
+ margin-bottom: 170px;
+}
+
 .region-content .row {
   margin: 0 auto;
 }
@@ -128,6 +136,11 @@
  list-style-position: inside;
 }
 
+#project .akteur-content p {
+ font-family: 'Lora','Open Sans',serif;
+ line-height: 1.8em;
+}
+
 #footer {
  margin-top: 60px;
 }
@@ -142,12 +155,12 @@
 }
 
 #eventprofil #event-data {
-  margin-top: -25px;
+  /*margin-top: -25px; */
 }
 
 #project #eventSparten, #project #akteurSparten {
   text-shadow: 0px 2px 2px #8D8D8D;
-  margin-top: 50px;
+  margin-top: 25px;
   margin-bottom: 5px;
   padding-bottom: 15px;
   border-bottom: 1px solid #F1F1F1;

@@ -21,7 +21,7 @@
    var $tbl_akteur_events = "aae_data_akteur_hat_event";
    var $tbl_event_sparte = "aae_data_event_hat_sparte";
 
-   // Speicherort fuer Bilder
+   // Image-path's. TODO Make 'em managable by backend
    var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/pictures/aae/";
    var $localbildpfad = "/opt/lampp/htdocs/drupal/sites/default/files/pictures/aae/";
    var $testbildpfad = "/var/www/virtual/grinch/test.leipziger-ecken.de/sites/default/files/pictures/aae/";
@@ -78,6 +78,26 @@
      return filter_xss($clear, $allowed_tags = array('a', 'em', 'strong', 'cite', 'blockquote', 'img', 'ul', 'ol', 'li', 'dl', 'dt', 'dd', 'br', 'video', 'p'));
    }
 
+   public function getJournalEntries($limit = 5) {
+
+    $query = new EntityFieldQuery();
+    $query->entityCondition('entity_type', 'node')
+     ->entityCondition('bundle', 'article')
+     ->propertyCondition('status', 1)
+     ->propertyOrderBy('created', 'DESC')
+     ->range(0,$limit);
+
+    $result = $query->execute();
+    $nodes = array();
+
+    if (isset($result['node'])) {
+      $nids = array_keys($result['node']);
+      $nodes = node_load_multiple($nids);
+    }
+
+    return $nodes;
+
+   }
 
    protected function upload_image($bild,$servercheck = null) {
 
@@ -105,9 +125,14 @@
 
    /**
     * Dickes fettes TODO... (bisher quasi ungenutzte Funktion)
+    * @param $tpl : Path within current theme
+    * @param $setVars : Array that'll be extracted
+    * @return rendered HTML
     */
 
-  protected function render($tpl) {
+  public function render($tpl, $setVars) {
+
+    extract($setVars);
 
     ob_start(); // Aktiviert "Render"-modus
     include_once path_to_theme().$tpl;

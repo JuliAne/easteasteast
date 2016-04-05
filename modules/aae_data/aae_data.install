@@ -31,7 +31,7 @@ function aae_data_schema() {
 	  'ansprechpartner' => array('description' => 'Öffentlicher Ansprechpartner', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	  'funktion' => array('description' => 'Funktion des Ansprechpartners', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
 	  'bild' => array('description' => 'Pfad zum hinterlegten Bild', 'type' => 'varchar', 'length' => 400, 'not null' => FALSE, 'default' => ''),
-	  'beschreibung' => array('description' => 'Kurzbeschreibung für Übersicht', 'type' => 'text', 'length' => 'small', 'not null' => FALSE, 'default' => ''),
+	  'beschreibung' => array('description' => 'Kurzbeschreibung für Übersicht', 'type' => 'text', 'length' => 'medium', 'not null' => FALSE, 'default' => ''),
 	  'oeffnungszeiten' => array('description' => 'Wann der Akteur erreichbar ist', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
 	  'adresse' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => ''),
 	  'barrierefrei' => array('description' => 'Barrierefreier Zugang?', 'type' => 'int', 'size' => 'tiny', 'not null' => FALSE, 'default' => ''),
@@ -66,7 +66,7 @@ function aae_data_schema() {
 	'fields' => array(
 	  'EID' => array('description' => 'ID für Events', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'name' => array('description' => 'Eventname', 'type' => 'varchar', 'length' => 64, 'not null' => TRUE),
-	  'kurzbeschreibung' => array('description' => 'Kurze inhaltliche Erläuterung', 'type' => 'text', 'length' => 'small', 'not null' => FALSE, 'default' => 0),
+	  'kurzbeschreibung' => array('description' => 'Kurze inhaltliche Erläuterung', 'type' => 'text', 'length' => 'medium', 'not null' => FALSE, 'default' => 0),
 	  'bild' => array('description' => 'Pfad zum Foto', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
 	  'ort' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
 	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
