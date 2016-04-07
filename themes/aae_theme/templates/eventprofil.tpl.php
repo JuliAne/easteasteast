@@ -1,3 +1,11 @@
+<style type="text/css">
+.region-content, #contentRow {
+ width: 100% !important;
+ max-width: 100% !important;
+ margin: 0;
+ overflow: hidden;
+}
+</style>
 <div id="eventprofil"<?= ($map) ? ' class="hasMap"' : ''; ?>>
 
 <?php

@@ -4,6 +4,7 @@
 
 .row {
   margin: 0 auto !important;
+  padding: 0;
 }
 
 .region-content {
@@ -17,7 +18,7 @@
 }
 
 .aaeActionBar {
-  margin-top: -100px !important;
+  margin-top: -80px !important;
   margin-bottom: 70px;
 }
 

@@ -1,4 +1,4 @@
-<div class="row columns">
+<div class="row">
  <h3>Event <?= ($this->target == 'update' ? t('bearbeiten') : t('anlegen')); ?></h3>
  <?php if ($this->target == 'update') : ?>
  <a href="<?= base_path(); ?>eventprofil/<?= $this->event_id; ?>/remove" class="small secondary button round right" style="margin-top:-37px;" title="Event löschen?">Löschen</a>

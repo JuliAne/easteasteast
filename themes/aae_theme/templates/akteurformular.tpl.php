@@ -1,3 +1,4 @@
+<div class="row">
 <h3>Akteur <?php echo ($this->target == 'update' ? 'bearbeiten' : 'anlegen'); ?></h3>
 <?php if ($this->target == 'update') : ?>
 <a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/remove" class="small secondary button round right" style="margin-top:-37px;">Löschen</a>
@@ -12,6 +13,7 @@
   <?php endforeach; ?>
 </div>
 <?php endif; ?>
+</div>
 
 <form action="#" method="POST" enctype="multipart/form-data">
 
@@ -24,7 +26,7 @@
     </div>
 
     <div class="large-6 columns">
-     <label>Emailaddresse <span class="Pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['email']; ?>
+     <label>Email-Adresse <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['email']; ?>
       <input type="email" id="akteurEmailInput" name ="email" value="<?= $this->email; ?>" placeholder="<?= $this->ph_email; ?>" required>
      </label>
     </div>
