@@ -8,7 +8,7 @@
 <div id="mainnav">
  <div class="row">
 
- <nav id="nav" role="navigation" class="large-10 small-8 columns">
+ <nav id="nav" role="navigation" class="large-9 small-8 columns">
   <!-- for responsive menu (CSS only) -->
   <input type="checkbox" id="responsive-menu" name="responsive-menu" class="show-for-small-only" title="<?= t('Zeige/Verstecke Menü'); ?>">
   <label for="responsive-menu" onclick="javascript:$('#mainnav').removeClass('scrolled');"></label>
@@ -76,13 +76,15 @@
     </div>
   </aside>
 
-  <?php if (user_is_logged_in() && module_exists('inviteSSSS')) : ?>
+  <?php if (user_is_logged_in() && module_exists('invite')) : ?>
   <a href="#" id="inviteBtn" class="hollow secondary button right" title="<?= t('Bekannte einladen'); ?>">+ <?= t('Bekannte einladen'); ?></a>
-  <aside class="aaeModal">
+  <aside id="invite-modal" class="aaeModal">
    <div class="content">
     <h3>Spread the word.</h3>
-    <p>Die Leipziger Ecken leben vom Engagement und der Vielfältigkeit ihrer Benutzer. Wenn Dir dieser Ort genauso gut gefällt, dann trage hier schnell die Mail-Adressen Deiner Bekannten ein.</p>
-    <p>Einladungen werden einmalig via Mail versendet.</p>
+    <p>Wie im Kiez, so auch im Web: Die <strong>Leipziger Ecken</strong> leben vom Engagement und der Vielfältigkeit ihrer Benutzer. Wenn Dir dieser Ort gefällt, dann teile ihn auf diesem Wege ganz komfortabel via Mail Deinen Bekannten mit.</p>
+    <br />
+    <p>Einladungen werden einmalig via Mail versendet. <a href="<?= $base_path; ?>user/<?= $user->uid; ?>/invites">Offene Einladungen einsehen.</a></p>
+    <div class="divider"></div>
     <?php print render($page['user_invite_by_mail']); ?>
     <a href="#" class="button secondary round closeBtn" title="<?= t('Fenster schliessen'); ?>">x</a>
    </div>
