@@ -222,6 +222,7 @@ Class eventformular extends aae_data_helper {
     if ($this->freigabe == false) {
 
      $neueSparten = array();
+     $this->sparten = array_unique($this->sparten);
 
      foreach($this->sparten as $sparte) {
 
@@ -356,8 +357,9 @@ Class eventformular extends aae_data_helper {
     }
 
     // Update Tags
+    if (is_array($this->sparten) && !empty($this->sparten)) {
 
-    if (is_array($this->sparten) && $this->sparten != "") {
+     $this->sparten = array_unique($this->sparten);
 
      foreach ($this->sparten as $id => $sparte) {
      // Tag bereits in DB?
@@ -409,7 +411,6 @@ Class eventformular extends aae_data_helper {
     // Call hooks
     module_invoke_all('hook_event_modified');
 
-    // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
     drupal_set_message(t('Das Event wurde erfolgreich bearbeitet!'));
   	header('Location: '. $base_url .'/eventprofil/' . $this->event_id);
@@ -646,7 +647,6 @@ Class eventformular extends aae_data_helper {
     // Call hooks
     module_invoke_all('hook_event_created');
 
-    // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
     drupal_set_message(t('Das Event wurde erfolgreich erstellt!'));
 	  header("Location: ". $base_url ."/eventprofil/" . $this->event_id);

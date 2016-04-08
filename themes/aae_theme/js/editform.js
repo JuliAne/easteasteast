@@ -11,6 +11,11 @@ $(document).ready(function(){
     }
   });
 
+  if ($('#veranstalter').length && $('#veranstalter').find('option:selected').attr('value')=='0'){
+   // manually set veranstalter from "private" to the first Akteur available in list
+   $('#veranstalter option:eq(1)').attr('selected','selected');
+  }
+
   $("#eventStartdatumInput,#eventEnddatumInput").Zebra_DatePicker({'readonly_element' : false, format : 'Y-m-d'});
 
   $(document).on('change', '#eventBildInput,#akteurBildInput', function(){

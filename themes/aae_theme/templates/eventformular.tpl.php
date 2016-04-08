@@ -18,19 +18,19 @@
 <form action="#" method="POST" enctype="multipart/form-data" class="row">
 
   <div class="large-4 columns">
-   <label>Name <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['name']; ?>
+   <label><?= t('Name'); ?> <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>: <?= $this->fehler['name']; ?>
     <input type="text" id="eventNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= t('Veranstaltungsname'); ?>" required/>
    </label>
   </div>
 
   <div class="large-4 columns">
-   <label>Eventwebsite: <!--<?= $this->fehler['url']; ?>-->
+   <label><?= t('Eventwebsite'); ?>: <!--<?= $this->fehler['url']; ?>-->
     <input type="text" id="eventURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= t('URL'); ?>">
    </label>
   </div>
 
   <div class="large-4 columns">
-  <label>Veranstalter:</label>
+  <label><?= t('Veranstalter'); ?>:</label>
   <select name="veranstalter" id="veranstalter">
   <option value="0">Privat</option>
   <?php if (is_array($this->resultakteure) && !empty($this->resultakteure)) :

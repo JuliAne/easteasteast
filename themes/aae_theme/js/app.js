@@ -85,7 +85,7 @@ $(document).ready(function() {
   var that = $(this);
   $('#presentationFilter').find('.active').removeClass('active').addClass('secondary');
   that.removeClass('secondary').addClass('active');
-  //return false;
+  $('#filterForm').submit();
  });
 
  $('#filterForm').submit(function(){

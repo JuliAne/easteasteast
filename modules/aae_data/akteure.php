@@ -257,7 +257,8 @@ $akteure = db_select($this->tbl_akteur, 'a')
 
    $js .= '];';
    drupal_add_js($js, 'inline');
-   //$this->addMapContent('','',array('something' => 'bla'));
+   // Needed to add Map-Files:
+   $this->addMapContent('','',array('something' => 'bla'));
   }
 
 

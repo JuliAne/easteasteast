@@ -379,6 +379,8 @@ drupal_add_html_head($og_title, 'og_title'); */
 
    if (is_array($this->sparten) && !empty($this->sparten)) {
 
+    $this->sparten = array_unique($this->sparten);
+
     foreach ($this->sparten as $id => $sparte) {
 		// Tag bereits in DB?
 
@@ -555,6 +557,8 @@ drupal_add_html_head($og_title, 'og_title'); */
    // Update Tags
 
    if (is_array($this->sparten) && !empty($this->sparten)) {
+
+    $this->sparten = array_unique($this->sparten);
 
     foreach ($this->sparten as $sparte) {
   	// Tag bereits in DB?
