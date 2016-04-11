@@ -421,8 +421,6 @@ drupal_add_html_head($og_title, 'og_title'); */
    // Call hooks
    module_invoke_all('hook_akteur_created');
 
-   // Gebe auf der nächsten Seite eine Erfolgsmeldung aus...
-
    if (session_status() == PHP_SESSION_NONE) session_start();
    drupal_set_message(t('Ihr Akteurprofil wurde erfolgreich erstellt!'));
    header('Location: '. $base_url . '/akteurprofil/' . $this->akteur_id);
@@ -469,9 +467,9 @@ drupal_add_html_head($og_title, 'og_title'); */
 		  'plz' => $this->plz,
 		  'bezirk' => $this->ort,
 		  'gps' => $this->gps,
-		))
-    ->condition('ADID', $akteurAdresse->adresse, '=')
-		->execute();
+		 ))
+     ->condition('ADID', $akteurAdresse->adresse, '=')
+		 ->execute();
 
     // remove current picture manually
 

@@ -472,7 +472,7 @@ transform: rotate(-10deg);
  text-decoration: underline;
 }
 
-.aaeActionBar #share {
+#share {
  padding-top: 10px;
  margin-top: 17px;
  border-radius: 0;
@@ -488,13 +488,13 @@ transform: rotate(-10deg);
  margin-left: 120px;
 }
 
-.aaeActionBar #share a {
+#share a {
  padding: 16px 24px;
  float: left;
  height: 44px;
 }
 
-.aaeActionBar #share a img {
+#share a img {
  width: 19px;
  padding: 0;
 }
@@ -723,7 +723,7 @@ section#journal .row.article:nth-of-type(odd) .large-2.columns, section#journal 
   text-align: left!important;
 }
 
-section#journal .large-2.columns {
+section#journal .row.article .large-2.columns {
   border: 2px solid #fff;
   width: 200px;
   height: 200px;
@@ -734,7 +734,7 @@ section#journal .large-2.columns {
   border-radius: 0 !important;
 }
 
-section#journal .large-8.large-offset-2.columns {
+section#journal .row.article .large-8.large-offset-2.columns {
   margin: 0px 15px 0px 15px!important;
   padding: 10px 20px 10px 20px;
   min-height: 200px;
@@ -743,12 +743,104 @@ section#journal .large-8.large-offset-2.columns {
   white-space: normal;
 }
 
-section#journal .large-8.large-offset-2.columns br {
+section#journal .row.article .large-8.large-offset-2.columns br {
   content: ' ';
 }
 
-section#journal .large-8.large-offset-2.columns br:after {
+section#journal .row.article .large-8.large-offset-2.columns br:after {
   content: ' ';
+}
+
+.jEntry {
+ margin-left: 6% !important;
+}
+
+.jEntry:last-child {
+  margin-right: 6% !important;
+}
+
+.jEntryPrev {
+  padding: 6px;
+  height: 250px;
+  background-color: #fff;
+  margin-bottom: 10px;
+}
+
+.jEntry .jEntryContent {
+  padding-top: 10px;
+}
+
+.jEntry .jEntryContent h3 {
+  text-align: right;
+  font-size: 1.5em;
+  transition: 0.3s opacity;
+}
+
+.jEntry:hover .jEntryContent h3 {
+  height: 0;
+  opacity: 0;
+}
+
+.jEntry .jEntryContent p {
+  line-height: 1.5em;
+  opacity: 0;
+  text-align: right;
+}
+
+.jEntry:hover .jEntryContent p {
+  opacity: 1;
+}
+
+.jEntry .jEntryImg {
+  background-size: 800%;
+  height: 100%;
+  transition: 0.3s width;
+}
+
+.jEntry:hover .jEntryImg {
+ width: 25%;
+}
+
+.jEntry .jFooter .jAside {
+ width: 60%;
+ transition: 0.3s width;
+ float: right;
+ text-align: right;
+ color: #fff;
+ font-size:0.9em;
+}
+
+.jEntry .jFooter .jAside span {
+ padding-top: 10px;
+}
+
+.jEntry .jFooter #share {
+ width: 0;
+ overflow: hidden;
+ transition: 0.3s all;
+ float: left;
+ padding-top: 0;
+ margin: 0;
+ width: 40%;
+ opacity: 0;
+}
+
+.jEntry .jFooter #share a {
+ padding: 6px;
+  border: 1px solid #fff;
+ border-radius: 30px;
+ height: auto;
+ transition: 0.3s all;
+ margin-left: 5px;
+}
+
+
+.jEntry .jFooter #share a:hover {
+ background:rgba(255,255,255,0.3);
+}
+
+.jEntry:hover .jFooter #share {
+ opacity: 1;
 }
 
 /*AKTEURE section settings*/
@@ -877,12 +969,12 @@ section#journal .large-8.large-offset-2.columns br:after {
 }
 
 #footer .fp-tableCell {
-  vertical-align: top;
-  padding-top: 10%;
+ vertical-align: top;
+ padding-top: 10%;
 }
 
 #footer p, #bottom #footer a {
- color: #545454;
+ color: #393939;
 }
 
 #footer #block-system-main-menu ul li {

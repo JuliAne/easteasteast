@@ -257,9 +257,8 @@ Class eventformular extends aae_data_helper {
    */
   private function eventUpdaten() {
 
-	// Abfrage, ob Adresse bereits in Adresstabelle
-
-	$this->resultAdresse = db_select($this->tbl_adresse, 'a')
+	 // Abfrage, ob Adresse bereits in Adresstabelle
+	 $this->resultAdresse = db_select($this->tbl_adresse, 'a')
 	  ->fields('a', array( 'ADID', 'gps' ))
 	  ->condition('strasse', $this->strasse, '=')
 	  ->condition('nr', $this->nr, '=')
@@ -267,6 +266,12 @@ Class eventformular extends aae_data_helper {
 	  ->condition('plz', $this->plz, '=')
 	  ->condition('bezirk', $this->ort, '=')
 	  ->execute();
+
+  /*  TODO Felix: Überarbeite Funktion zum Adresspeichern
+     $resultEvent = db_select($this->tbl_event, 'e')
+     ->fields('ort') = ADID
+     ->condition('EID', $this->event_id)
+     ->execute(); */
 
     $i = $this->resultAdresse->rowCount();
 
