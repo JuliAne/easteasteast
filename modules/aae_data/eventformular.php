@@ -19,6 +19,7 @@ Class eventformular extends aae_data_helper {
   var $zeit_bis = "";
   var $hat_zeit_von = true;
   var $hat_zeit_bis = true;
+  var $eventRecurres;
   var $bild = "";
   var $kurzbeschreibung = "";
   var $url = "";
@@ -35,7 +36,7 @@ Class eventformular extends aae_data_helper {
   var $adresse = "";
 
   //$tbl_sparte
-  var $sparten= "";
+  var $sparten = "";
   var $all_sparten = ''; // Zur Darstellung des tokenizer (#akteurSpartenInput)
 
   var $freigabe = true;   //Variable zur Freigabe: muss true sein
@@ -65,7 +66,7 @@ Class eventformular extends aae_data_helper {
 
   /**
    * Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
-   * @returns $profileHTML;
+   * @return $profileHTML;
    */
   public function run() {
 
@@ -119,6 +120,8 @@ Class eventformular extends aae_data_helper {
     $this->sparten = $_POST['sparten'];
     $this->removedTags = $this->clearContent($_POST['removedTags']);
     $this->removedPic = $this->clearContent($_POST['removeCurrentPic']);
+    $this->eventRecurres = $this->clearContent($_POST['eventRecurres']);
+    $this->eventRecurringType = $this->clearContent($_POST['eventRecurringType']);
 
     //-------------------------------------
 
@@ -236,7 +239,7 @@ Class eventformular extends aae_data_helper {
        ->execute()
        ->fetchObject();
 
-       $neueSparten[$sparte] = $spartenName->kategorie;
+      $neueSparten[$sparte] = $spartenName->kategorie;
 
      } else {
 
@@ -259,7 +262,7 @@ Class eventformular extends aae_data_helper {
 
 	 // Abfrage, ob Adresse bereits in Adresstabelle
 	 $this->resultAdresse = db_select($this->tbl_adresse, 'a')
-	  ->fields('a', array( 'ADID', 'gps' ))
+	  ->fields('a', array('ADID', 'gps_lat', 'gps_long'))
 	  ->condition('strasse', $this->strasse, '=')
 	  ->condition('nr', $this->nr, '=')
 	  ->condition('adresszusatz', $this->adresszusatz, '=')
@@ -277,6 +280,8 @@ Class eventformular extends aae_data_helper {
 
     if ($i == 0) {
      // Adresse nicht vorhanden
+     $gps = explode(',', $this->gps, 2);
+
 	   $this->adresse = db_insert($this->tbl_adresse)
 	    ->fields(array(
 		   'strasse' => $this->strasse,
@@ -284,7 +289,8 @@ Class eventformular extends aae_data_helper {
 		   'adresszusatz' => $this->adresszusatz,
 		   'plz' => $this->plz,
 		   'bezirk' => $this->ort,
-		   'gps' => $this->gps,
+		   'gps_lat' => $gps[0],
+       'gps_long' => $gps[1]
 		  ))
 		  ->execute();
 
@@ -294,8 +300,13 @@ Class eventformular extends aae_data_helper {
 	    // Abfrage, ob GPS-Angaben gemacht wurden
         if (strlen($this->gps) != 0 && strlen($row->gps) == 0 ) {
         //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
+        $gps = explode(',', $this->gps, 2);
+
 	      $adresse_updated = db_update($this->tbl_adresse)
-	 	     ->fields(array( 'gps' => $this->gps ))
+	 	     ->fields(array(
+          'gps_lat' => $gps[0],
+          'gps_long' => $gps[1]
+         ))
 	       ->condition('ADID', $row->ADID, '=')
 	       ->execute();
 	    }
@@ -315,11 +326,11 @@ Class eventformular extends aae_data_helper {
 
    $b = end(explode('/', $this->removedPic));
 
-   if (file_exists($this->short_bildpfad.$b)) {
-    unlink($this->short_bildpfad.$b);
-   }
+   if (file_exists($this->short_bildpfad.$b))
+     unlink($this->short_bildpfad.$b);
 
-   if ($_POST['oldPic'] == $this->removedPic) $this->bild = '';
+   if ($_POST['oldPic'] == $this->removedPic)
+     $this->bild = '';
 
   }
 
@@ -451,6 +462,7 @@ Class eventformular extends aae_data_helper {
      $this->kurzbeschreibung = $row->kurzbeschreibung;
      $this->created = new DateTime($row->created);
      $this->modified = new DateTime($row->modified);
+     $this->recurringEventType = $row->recurring_event_type;
     }
 
     $resultVeranstalter = db_select($this->tbl_akteur_events, 'a')
@@ -466,14 +478,7 @@ Class eventformular extends aae_data_helper {
 
     //Adressdaten aus DB holen:
     $this->resultAdresse = db_select($this->tbl_adresse, 'd')
-     ->fields('d', array(
-	    'strasse',
-	    'nr',
-	    'adresszusatz',
-	    'plz',
-	    'bezirk',
-	    'gps',
-	   ))
+     ->fields('d')
 	   ->condition('ADID', $this->ort, '=')
      ->execute();
 
@@ -484,7 +489,7 @@ Class eventformular extends aae_data_helper {
 	   $this->adresszusatz = $row->adresszusatz;
 	   $this->plz = $row->plz;
 	   $this->ort = $row->bezirk;
-	   $this->gps = $row->gps;
+	   $this->gps = $row->gps_lat.','.$row->gps_long;
     }
 
     $resultSparten = db_select($this->tbl_event_sparte, 'es')
@@ -509,19 +514,17 @@ Class eventformular extends aae_data_helper {
 
   } // END function eventUpdaten()
 
-  /**
-   * Schreibt die Eventdaten in die DB
-   */
+
   private function eventSpeichern() {
 
-   //Wenn Bilddatei ausgewählt wurde...
    if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
+    // TODO $this->check_image_compatibility($_FILES['bild'])
     $this->bild = $this->upload_image($_FILES['bild']);
    }
 
 	 //Abfrage, ob Adresse bereits in Adresstabelle
 	 $this->resultAdresse = db_select($this->tbl_adresse, 'a')
-	  ->fields('a', array( 'ADID', 'gps' ))
+	  ->fields('a', array('ADID', 'gps_lat', 'gps_long'))
 	  ->condition('strasse', $this->strasse, '=')
 	  ->condition('nr', $this->nr, '=')
 	  ->condition('adresszusatz', $this->adresszusatz, '=')
@@ -532,6 +535,8 @@ Class eventformular extends aae_data_helper {
     // Wenn ja: Holen der ID der Adresse, wenn nein: einfuegen
     if ($this->resultAdresse->rowCount() == 0) {
 
+     $gps = explode(',', $this->gps, 2);
+
 	   $this->adresse = db_insert($this->tbl_adresse)
 	    ->fields(array(
 		   'strasse' => $this->strasse,
@@ -539,7 +544,8 @@ Class eventformular extends aae_data_helper {
 		   'adresszusatz' => $this->adresszusatz,
 		   'plz' => $this->plz,
 		   'bezirk' => $this->ort,
-		   'gps' => $this->gps,
+		   'gps_lat' => $gps[0],
+       'gps_long' => $gps[1]
 		 ))
 		 ->execute();
 
@@ -548,11 +554,16 @@ Class eventformular extends aae_data_helper {
 	  foreach ($this->resultAdresse as $row) {
 	    // Abfrage, ob GPS-Angaben gemacht wurden
 
-	    if (strlen($this->gps) != 0 && strlen($row->gps) == 0 ) {
+	    if (strlen($this->gps) != 0 && strlen($row->gps) == 0) {
         // Ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
-	      // Update der Adresse
+
+        $gps = explode(',', $this->gps, 2);
+
 	      $adresse_updated = db_update($this->tbl_adresse)
-	 	     ->fields(array( 'gps' => $this->gps ))
+	 	     ->fields(array(
+          'gps_lat' => $gps[0],
+          'gps_long' => $gps[1]
+         ))
 	       ->condition('ADID', $row->ADID, '=')
 	       ->execute();
 	    }
@@ -574,15 +585,16 @@ Class eventformular extends aae_data_helper {
 		'bild' => $this->bild,
 		'kurzbeschreibung' => $this->kurzbeschreibung,
 		'ersteller' => $this->user_id,
-    'created' => date('Y-m-d H:i:s', time())
+    'created' => date('Y-m-d H:i:s', time()),
+    'recurring_event_type' => ($this->eventRecurres && !empty($this->eventRecurringType) ? '1' : NULL)
 	  ))
 	 ->execute();
 
 	 // Falls Akteur angegeben wurde:
     if (!empty($this->veranstalter)) {
 
-	    $akteurevents = db_insert($this->tbl_akteur_events)
-   	   ->fields(array(
+	    db_insert($this->tbl_akteur_events)
+   	  ->fields(array(
 		   'AID' => $this->veranstalter,
 	     'EID' => $this->event_id,
 	    ))
@@ -611,15 +623,12 @@ Class eventformular extends aae_data_helper {
  		   ->execute();
 
  		} else {
-
- 		  foreach ($resultSparte as $row) {
- 		    $sparte_id = $row->KID;
- 		  }
-
+ 		 foreach ($resultSparte as $row) {
+ 		   $sparte_id = $row->KID;
+ 		 }
  		}
 
  		// Event & Tag in Tabelle $tbl_hat_sparte einfügen
-
  		$insertAkteurSparte = db_insert($this->tbl_event_sparte)
  		  ->fields(array(
  		    'hat_EID' => $this->event_id,
@@ -628,6 +637,47 @@ Class eventformular extends aae_data_helper {
  		  ->execute();
  	  }
  	 }
+
+  if ($this->eventRecurres && !empty($this->eventRecurringType)) {
+
+   $datePeriod = NULL;
+
+   switch ($this->eventRecurringType) {
+     case '2' :
+      $datePeriod = 'P1W';
+     break;
+     case '3' :
+      $datePeriod = 'P2W';
+     break;
+     case '4' :
+      $datePeriod = 'P1M';
+     break;
+     case '5' :
+      $datePeriod = 'P2M';
+     break;
+   }
+
+  for ($i = 0; $i < 5; $i++) {
+
+   $start = new DateTime($startQuery);
+   $start->add(new DateInterval($datePeriod));
+   $startQuery = $start->format('Y-m-d H:i:s');
+   
+   $ende = new DateTime($endeQuery);
+   $ende->add(new DateInterval($datePeriod));
+   $endeQuery = $ende->format('Y-m-d H:i:s');
+
+   $recurringEvent = db_insert($this->tbl_event)
+    ->fields(array(
+    'start_ts' => $startQuery,
+    'ende_ts' => $endeQuery,
+		'parent_EID' => $this->event_id,
+    'recurring_event_type' => $this->eventRecurringType
+   ))
+   ->execute();
+
+   }
+  }
 
     // Tell Drupal about the new eventprofil/ID-item
     $parentItem = db_query(

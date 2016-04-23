@@ -4,7 +4,7 @@ $(document).ready(function(){
     displayDropdownOnFocus : true,
     onRemoveToken : function(value, e){
 
-      if((parseFloat(value) == parseInt(value)) && !isNaN(value)) {
+     if((parseFloat(value) == parseInt(value)) && !isNaN(value)) {
        $('form').append('<input type="hidden" name="removedTags[]" value="'+value+'" />');
       }
 
@@ -15,6 +15,11 @@ $(document).ready(function(){
    // manually set veranstalter from "private" to the first Akteur available in list
    $('#veranstalter option:eq(1)').attr('selected','selected');
   }
+
+  $('.page-events-new .switch-paddle').click(function(){
+   // alert($('#eventRecurres').attr('checked'));
+   $('#eventRecurresData').slideDown(2000);
+  });
 
   $("#eventStartdatumInput,#eventEnddatumInput").Zebra_DatePicker({'readonly_element' : false, format : 'Y-m-d'});
 
@@ -35,8 +40,8 @@ $(document).ready(function(){
   }
 
   $('form').submit(function(){
-    $('#beschreibung').html(CKEDITOR.instances.beschreibung.getData());
-    $('#kurzbeschreibung').html(CKEDITOR.instances.kurzbeschreibung.getData());
+   $('#beschreibung').html(CKEDITOR.instances.beschreibung.getData());
+   $('#kurzbeschreibung').html(CKEDITOR.instances.kurzbeschreibung.getData());
   });
 
   $('#veranstalter').change(function(){

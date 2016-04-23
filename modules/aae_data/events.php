@@ -139,7 +139,6 @@ Class events extends aae_data_helper {
 
   // Get the actual results
   $this->filteredEventIds = $this->getDuplicates($this->filteredEventIds, $this->numFilters);
-
   $this->hasFilters = ($this->numFilters >= 1) ? true : false;
 
   // Auswahl aller Events in Reihenfolge ihres Starts
@@ -188,8 +187,16 @@ Class events extends aae_data_helper {
   } else {
 
   // Add specific data from other tables... we don't need no joins, yah'
-
   foreach ($resultEvents as $event) {
+    
+   if (!empty($event->parent_EID)){
+    $parentData = db_select($this->tbl_event,'e')->fields('e')->condition('EID', $event->parent_EID);
+    /*$resultEvents[$counter] = (isset($resultEvents[$event->parent_EID]) && !empty($resultEvents[$event->parent_EID]))
+    ? $resultEvents[$event->parent_EID]
+    : $parentData->execute()->fetchAll();*/
+    $resultEvents[$counter] = $parentData->execute()->fetchAssoc();
+    $event->EID = $event->parent_EID;
+   }
 
     //Selektion der Tags
     $resultSparten = db_select($this->tbl_event_sparte, 's')
@@ -218,7 +225,9 @@ Class events extends aae_data_helper {
      ->fields('ae', array('AID'))
      ->condition('EID', $event->EID, '=')
      ->execute()
-     ->fetchObject();
+     ->fetchObject(); 
+     
+    // array_merge(x, wichtiger);
 
     $resultAkteur = db_select($this->tbl_akteur, 'a')
      ->fields('a',array('AID','name','bild'))
@@ -226,12 +235,13 @@ Class events extends aae_data_helper {
      ->execute()
      ->fetchAll();
 
-   // Hack: add variable to $resultEvents-object
+   // Hack: add variables to $resultEvents-object
    $resultEvents[$counter] = (array)$resultEvents[$counter];
    $resultEvents[$counter]['tags'] = $sparten;
    $resultEvents[$counter]['akteur'] = $resultAkteur;
    $resultEvents[$counter]['start'] = new DateTime($event->start_ts);
    $resultEvents[$counter]['ende'] = new DateTime($event->ende_ts);
+   $resultEvents[$counter]['eventRecurringType'] = $event->recurring_event_type;
    $resultEvents[$counter] = (object)$resultEvents[$counter];
 
    $counter++;
@@ -242,7 +252,6 @@ Class events extends aae_data_helper {
   $resultTagCloud = db_query_range('SELECT COUNT(*) AS count, s.KID, s.kategorie FROM {aae_data_sparte} s INNER JOIN {aae_data_event_hat_sparte} hs ON s.KID = hs.hat_KID GROUP BY hs.hat_KID HAVING COUNT(*) > 0 ORDER BY count DESC', 0, 8);
 
   $itemsCount = db_query("SELECT COUNT(EID) AS count FROM " . $this->tbl_event)->fetchField();
-
 
   // Ausgabe der Events
   ob_start(); // Aktiviert "Render"-modus
@@ -268,5 +277,4 @@ Class events extends aae_data_helper {
    exit();
 
  } // end function rss()
-
 } // end class events

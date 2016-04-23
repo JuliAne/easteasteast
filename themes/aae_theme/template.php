@@ -13,19 +13,26 @@ function aae_preprocess_html(&$variables) {
     )
    ),
    'theme-color' => array(
-   '#tag' => 'meta',
-   '#attributes' => array(
+    '#tag' => 'meta',
+    '#attributes' => array(
      'name' => 'theme-color',
      'content' => '#2199E8',
     )
    ),
    'msapplication-navbutton-color' => array(
-   '#tag' => 'meta',
-   '#attributes' => array(
+    '#tag' => 'meta',
+    '#attributes' => array(
      'name' => 'msapplication-navbutton-color',
      'content' => '#2199E8',
     )
    ),
+   'description' => array(
+    '#tag' => 'meta',
+    '#attributes' => array(
+     'name' => 'description',
+     'content' => t('Deine Stadtteilplattform für den Leipziger Osten: Lerne Akteure & Events aus Deinem Bezirk kennen.'),
+    )
+   )
   );
 
   foreach ($html_heads as $key => $data) {
@@ -172,19 +179,19 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
     $form['links']['#markup'] = '';
 
     $form['actions']['submit']['#attributes']['class'][] = 'large-12 columns medium button';
-    $form['actions']['submit']['#value'] = 'Anmelden';
+    $form['actions']['submit']['#value'] = t('Anmelden');
     $form['name']['#description'] = '';
     $form['pass']['#description'] = '';
 
   } else if ( TRUE === in_array( $form_id, array('search_block', 'user_block_form')) )  {
 
     $form['actions']['submit']['#attributes']['class'][] = 'small button';
-    $form['actions']['submit']['#value'] = 'Suchen';
+    $form['actions']['submit']['#value'] = t('Suchen');
 
   } else {
 
     $form['actions']['submit']['#attributes']['class'][] = 'small button';
-    $form['actions']['submit']['#value'] = 'Absenden';
+    $form['actions']['submit']['#value'] = t('Absenden');
     $form['actions']['preview']['#attributes']['class'][] = 'small button secondary';
 
   }

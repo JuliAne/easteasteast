@@ -762,7 +762,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 .jEntryPrev {
   padding: 6px;
   height: 250px;
-  background-color: #fff;
+  background-color: rgba(255,255,255,0.9);
   margin-bottom: 10px;
 }
 
@@ -784,7 +784,11 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 .jEntry .jEntryContent p {
   line-height: 1.5em;
   opacity: 0;
-  text-align: right;
+  text-align: left;
+}
+
+.jEntry .jEntryContent p, .jEntry .jEntryContent p a {
+ font-family: 'Lora','Open Sans',sans-serif;
 }
 
 .jEntry:hover .jEntryContent p {

@@ -30,8 +30,8 @@
 
      <div class="jEntryContent large-8 right columns">
       <h3><a href="<?= $url; ?>"><?= $node->title; ?></a></h3>
-      <?= substr($node->body['und'][0]['value'],0,205); ?>
-      <p><a href="<?= $url; ?>"><?= t('Weiterlesen'); ?>...</a></p>
+      <?= substr($node->body['und'][0]['value'],0,200); ?>
+      <p><a href="<?= $url; ?>" title="<?= t('Weiterlesen'); ?>"><?= t('Weiterlesen'); ?>...</a></p>
      </div>
     </div><!-- /.article -->
 

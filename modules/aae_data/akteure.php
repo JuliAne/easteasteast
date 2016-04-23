@@ -210,7 +210,7 @@ $akteure = db_select($this->tbl_akteur, 'a')
    preg_match("/(\S+\s*){0,$numwords}/", $akteur->beschreibung, $regs);
 
    $adresse = db_select($this->tbl_adresse, 'ad')
-    ->fields('ad', array('bezirk','gps'))
+    ->fields('ad', array('bezirk','gps_lat','gps_long'))
     ->condition('ADID', $akteur->adresse, '=')
     ->execute()
     ->fetchObject();
@@ -233,7 +233,7 @@ $akteure = db_select($this->tbl_akteur, 'a')
    // Hack: add variable to $resultAkteure-object
    $resultAkteure[$counter] = (array)$resultAkteure[$counter];
    $resultAkteure[$counter]['bezirk'] = $bezirk->bezirksname;
-   $resultAkteure[$counter]['gps'] = ($adresse->gps != 'Ermittle Geo-Koordinaten...' ? $adresse->gps : '');
+   $resultAkteure[$counter]['gps'] = ($adresse->gps_lat != 'Ermittle Geo-Koordinaten...' && !empty($adresse->gps_lat) ? $adresse->gps_lat.','.$adresse->gps_long : '');
    $resultAkteure[$counter]['renderSmallName'] = $renderSmallName;
    $resultAkteure[$counter]['kurzbeschreibung'] = trim($regs[0]);
    $resultAkteure[$counter]['renderBigImg'] = $renderBigImg;

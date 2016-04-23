@@ -1,3 +1,10 @@
+<?php $recurringEventTypes = array(
+   '2' => t('Wöchentliche Wiederholung'),
+   '3' => t('2-wöchentliche Wiederholung'),
+   '4' => t('Monatliche Wiederholung'),
+   '5' => t('2-monatliche Wiederholung')
+  ); ?>
+ 
 <header id="eventsPageHeader" class="pageHeader">
   <h2><?= $itemsCount; ?> Veranstaltungen/Events <a href="<?= base_path(); ?>events/rss" title="Alle Events als RSS-Feed"><img id="svg_logo" src="<?= base_path().path_to_theme(); ?>/img/rss.svg" /></a></h2>
   <p>Finde Workshops, Kreativwerkstätten, Märkte, Versammlungen und mehr.</p>
@@ -81,7 +88,7 @@
   <div id="events_content" class="large-9 small-12 columns">
 
    <ul class="tabs" id="events-tabs" style="margin-bottom:22px;">
-    <li class="tabs-title<?= ($this->getOldEvents || $this->hasFilters ? '' : ' is-active'); ?>"><a href="<?= base_path(); ?>events"<?= ($this->getOldEvents ? '' : ' aria-selected="true"'); ?>>Demnächst</a></li>
+    <li class="tabs-title<?= ($this->getOldEvents || $this->hasFilters ? '' : ' is-active'); ?>"><a href="<?= base_path(); ?>events"<?= ($this->getOldEvents || $this->hasFilters ? '' : ' aria-selected="true"'); ?>>Demnächst</a></li>
     <li class="tabs-title<?= ($this->getOldEvents && !$this->hasFilters ? ' is-active' : ''); ?>"><a href="<?= base_path(); ?>events/old"<?= ($this->getOldEvents ? ' aria-selected="true"' : ''); ?>>Vergangene Events</a></li>
     <?php if ($this->hasFilters) : ?><li class="tabs-title is-active"><a href="#" aria-selected="true">Filterergebnisse (<?= count($resultEvents); ?>)</a></li><?php endif; ?>
      <!--label>Darstellung:</label>//$_SERVER[REQUEST_URI];-->
@@ -100,25 +107,25 @@
 
  <?php elseif (is_array($resultEvents) && !empty($resultEvents)) : ?>
   <?php foreach($resultEvents as $key => $event): ?>
-
    <?php if ($event->start->format('m.Y') != $cur_month) : ?>
     <div class="large-12 columns"><h4><?= $this->monat_lang[$event->start->format('m')]; ?> <?= $event->start->format('Y'); ?></h4></div>
    <?php endif; $cur_month = $event->start->format('m.Y'); ?>
 
-   <div class="large-6 columns small-6 columns aaeEvent<?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? ' today' : ''; ?>">
+   <div class="large-6 columns small-6 columns aaeEvent<?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? ' today' : ''; ?><?= (!empty($event->eventRecurringType) ? ' eventRecurres' : ''); ?>">
 
    <div class="date large-2 columns button secondary round"><?= $event->start->format('d'); ?><br /><?= $this->monat_short[$event->start->format('m')]; ?></div>
    <div class="content large-9 columns">
    <header>
     <p><a style="line-height:1.6em;" href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>"><strong><?= $event->name; ?></strong></a><br />
-    <span><?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? '<a href="#">Heute,</a> ' : ''; ?><?php if($event->start->format('H:i') !== '00:00') echo $event->start->format('H:i'); ?><?php if($event->ende->format('H:i') !== '00:00') echo ' - '. $event->ende->format('H:i'); ?></span></p>
+    <span><?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? '<a href="#">Heute,</a> ' : ''; ?><?php if($event->start->format('H:i') !== '00:00') echo $event->start->format('H:i'); ?><?php if($event->ende->format('H:i') !== '00:00') echo ' - '. $event->ende->format('H:i'); ?></span>
+    <?= (!empty($event->eventRecurringType) ? '<span>'.$recurringEventTypes[$event->eventRecurringType].'</span>' : ''); ?></p>
     <p>
      <?php foreach($event->tags as $tag) : ?>
      <a class="tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow">#<?= $tag->kategorie; ?></a>
      <?php endforeach; ?>
     </p>
    </header>
-   <?php if (!empty($event->kurzbeschreibung)): ?>
+   <?php if (!empty($event->kurzbeschreibung) && (empty($event->eventRecurringType))) : ?>
     <div class="divider"></div>
     <div class="event-content">
       <?php $numwords = 30; preg_match("/(\S+\s*){0,$numwords}/", $event->kurzbeschreibung, $regs); ?>

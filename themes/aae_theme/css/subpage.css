@@ -200,21 +200,34 @@ p.licensetext:hover {
 .aaeEvent.today .content {
   border-color: #FF5217;
 }
+.aaeEvent.eventRecurres .content {
+  border-color: #d4ff0a;
+}
+.aaeEvent.eventRecurres .content:before {
+  border-color: transparent #d4ff0a transparent transparent;
+}
+.aaeEvent.eventRecurres a {
+  color: #d4ff0a;
+}
+.aaeEvent.eventRecurres .date {
+  border-color: #d4ff0a;
+}
+.aaeEvent.eventRecurres:hover .date {
+  border-color: #d4ff0a;
+}
 
 .aaeEvent.today .content:before {
   border-color:transparent #FF5217 transparent transparent;
 }
-
- .aaeEvent.today a {
-   color: #FF5217;
- }
-
- .aaeEvent.today .date {
-   border-color: #FF5217;
- }
- .aaeEvent.today:hover .date {
-   border-color: #FF5217;
- }
+.aaeEvent.today a {
+  color: #FF5217;
+}
+.aaeEvent.today .date {
+  border-color: #FF5217;
+}
+.aaeEvent.today:hover .date {
+  border-color: #FF5217;
+}
 
  #filter #timespace .slider {
    margin-bottom: 0;
@@ -263,6 +276,28 @@ p.licensetext:hover {
   background-size: 29px;
   background-repeat: no-repeat;
   background-position: center center;
+}
+
+.page-events-new .switch-paddle, .page-eventprofil-edit .switch-paddle {
+ margin-top: 29px;
+}
+
+.page-events-new .switch-paddle:after, .page-eventprofil-edit .switch-paddle:after {
+  background-image: url(../img/event_recurres.svg);
+  background-size: 23px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 0.8;
+}
+
+#eventRecurresData {
+ background: #efefef;
+ overflow: hidden;
+ height: auto;
+}
+
+#eventRecurresData p {
+ padding: 10px 0;
 }
 
 .pageHeader p {

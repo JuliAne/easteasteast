@@ -1,7 +1,13 @@
+<?php $recurringEventTypes = array(
+   '2' => t('Wöchentliche Wiederholung'),
+   '3' => t('2-wöchentliche Wiederholung'),
+   '4' => t('Monatliche Wiederholung'),
+   '5' => t('2-monatliche Wiederholung')
+  ); ?>
 <div class="row">
  <h3>Event <?= ($this->target == 'update' ? t('bearbeiten') : t('anlegen')); ?></h3>
  <?php if ($this->target == 'update') : ?>
- <a href="<?= base_path(); ?>eventprofil/<?= $this->event_id; ?>/remove" class="small secondary button round right" style="margin-top:-37px;" title="Event löschen?">Löschen</a>
+ <a href="<?= base_path(); ?>eventprofil/<?= $this->event_id; ?>/remove" class="small secondary button round right" style="margin-top:-37px;" title="<?= t('Event löschen?'); ?>"><?= t('Löschen'); ?></a>
  <?php endif; ?>
  <div class="divider" style="margin-bottom: 25px;"></div>
 
@@ -32,7 +38,7 @@
   <div class="large-4 columns">
   <label><?= t('Veranstalter'); ?>:</label>
   <select name="veranstalter" id="veranstalter">
-  <option value="0">Privat</option>
+  <option value="0"><?= t('Privat'); ?></option>
   <?php if (is_array($this->resultakteure) && !empty($this->resultakteure)) :
     foreach ($this->resultakteure as $akteur) : ?>
     <option value="<?= $akteur[0]->AID; ?>" <?php echo ($akteur[0]->AID == $this->veranstalter ? 'selected="selected"' : '') ?>><?= $akteur[0]->name; ?></option>
@@ -40,6 +46,10 @@
   <?php endif; ?>
   </select>
   </div>
+
+  <div class="row">
+   <fieldset class="fieldset">
+   <legend><?= t('Datum'); ?></legend>
 
    <div class="large-3 columns">
     <label>Start (Datum, <span class="pflichtfeld">Pflichtfeld</span>): <?= $this->fehler['start']; ?>
@@ -53,18 +63,47 @@
     </label>
    </div>
 
-   <div class="large-3 columns">
+   <div class="large-2 columns">
     <label>Von... (Uhrzeit): <?= $this->fehler['zeit_von']; ?>
-     <input type="text" id="eventZeitvonInput" name="zeit_von" value="<?= ($this->hat_zeit_von ? $this->zeit_von : ''); ?>" placeholder="<?= t("von (Uhrzeit: hh:mm)"); ?>">
+     <input type="text" id="eventZeitvonInput" name="zeit_von" value="<?= ($this->hat_zeit_von ? $this->zeit_von : ''); ?>" placeholder="<?= t("Uhrzeit: hh:mm"); ?>">
     </label>
    </div>
 
-   <div class="large-3 columns">
+   <div class="large-2 columns">
     <label>...Bis (Uhrzeit): <?= $this->fehler['zeit_bis']; ?>
-     <input type="text" id="eventZeitbisInput" name="zeit_bis" value="<?= ($this->hat_zeit_bis ? $this->zeit_bis : ''); ?>" placeholder="<?= t("bis (Uhrzeit: hh:mm)"); ?>">
+     <input type="text" id="eventZeitbisInput" name="zeit_bis" value="<?= ($this->hat_zeit_bis ? $this->zeit_bis : ''); ?>" placeholder="<?= t("Uhrzeit: hh:mm"); ?>">
     </label>
    </div>
 
+   <div class="large-2 columns">
+    <input class="switch-input" id="eventRecurres" type="checkbox" name="eventRecurres"<?= ($this->eventRecurres || isset($_POST['eventRecurres']) ? 'checked="checked"' : ''); ?>>
+    <label class="switch-paddle" for="eventRecurres" title="<?= t('Sich wiederholendes Event?'); ?>">
+    <span class="show-for-sr"><?= t('Sich wiederholendes Event?'); ?></span>
+   </div>
+
+   <div id="eventRecurresData" class="large-12 columns"<?= (!empty($this->recurringEventType) || isset($_POST['eventRecurres']) ? '' : ' style="heiht:0;"'); ?>>
+
+    <p class="large-12 columns licensetext"><strong>Wiederkehrende Veranstaltung.</strong> Beta-Feature: Einzelne Events können auf der Eventseite entfernt werden.</p>
+
+    <div class="large-4 left columns">
+     <label><?= t('Rhytmus:'); ?> <?= $this->fehler['ort']; ?>
+
+     <select id="eventRecurringType" name="eventRecurringType">
+     <?php foreach ($recurringEventTypes as $key => $value) : ?>
+      <option value="<?= $key; ?>" <?= ($key == $this->recurringEventType || $key == $_POST['eventRecurringType'] ? 'selected="selected"' : '') ?>><?= $value; ?></option>
+     <?php endforeach; ?>
+     </select></label>
+    </div>
+
+    <div class="large-4 left columns">
+     <label><?= t('Bis max. zum:'); ?> <?= $this->fehler['zeit_bis']; ?>
+      <input type="text" id="eventZeitbisInput" name="zeit_bis" value="" placeholder="<?= t("Endtag")." (yyyy-mm-dd)"; ?>">
+     </label>
+    </div>
+
+   </div>
+
+   </fieldset>
   </div><!-- /.row -->
 
   <div class="row">
@@ -142,10 +181,10 @@
     </div>
     <?php endif; ?>
 
-    <p><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf Leipziger-Ecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
-    <p>Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefelder zu beschreiben.</p><br />
-    <p>Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte.</p>
-    <p>Bildmaterial sollte abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
+    <p class="licensetext"><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf Leipziger-Ecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
+    <p class="licensetext">Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefelder zu beschreiben.</p><br />
+    <p class="licensetext">Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte.</p>
+    <p class="licensetext">Bildmaterial sollte abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
    </fieldset>
   </div>
 

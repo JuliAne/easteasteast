@@ -535,11 +535,19 @@ function ajax_requests($id) {
 
    default :
     // U mad? Unbekannter Funktionsaufruf, weg damit...
+    echo '{"error" : "Unknown AJAX method"}';
     exit();
    break;
 
   }
  }
+
+/**
+ * Funktion zum Säubern der DB-Bestände
+ */
+function aae_install_clear_db_contents() {
+
+}
 
 /**
  * Funktion zum Einlesen aller Stadtteile

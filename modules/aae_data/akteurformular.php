@@ -297,16 +297,20 @@ drupal_add_html_head($og_title, 'og_title'); */
    */
   private function akteurSpeichern() {
 
-	$this->adresse = db_insert($this->tbl_adresse)
-	 ->fields(array(
-	  'strasse' => $this->strasse,
-	  'nr' => $this->nr,
-	  'adresszusatz' => $this->adresszusatz,
-	  'plz' => $this->plz,
-	  'bezirk' => $this->ort,
-	  'gps' => $this->gps
-   ))
-	 ->execute();
+   $gps = explode(',', $adresse->gps, 2);
+
+
+   $this->adresse = db_insert($this->tbl_adresse)
+	  ->fields(array(
+	   'strasse' => $this->strasse,
+	   'nr' => $this->nr,
+	   'adresszusatz' => $this->adresszusatz,
+	   'plz' => $this->plz,
+	   'bezirk' => $this->ort,
+	   'gps_lat' => $gps[0],
+     'gps_long' => $gps[1]
+    ))
+	  ->execute();
 
    //Wenn Bilddatei ausgewählt wurde...
 
@@ -459,6 +463,8 @@ drupal_add_html_head($og_title, 'og_title'); */
      ->execute()
      ->fetchObject();
 
+    $gps = explode(',', $this->gps, 2);
+
 	  $updateAdresse = db_update($this->tbl_adresse)
 	  	->fields(array(
 		  'strasse' => $this->strasse,
@@ -466,7 +472,8 @@ drupal_add_html_head($og_title, 'og_title'); */
 		  'adresszusatz' => $this->adresszusatz,
 		  'plz' => $this->plz,
 		  'bezirk' => $this->ort,
-		  'gps' => $this->gps,
+		  'gps_lat' => $gps[0],
+      'gps_long' => $gps[1]
 		 ))
      ->condition('ADID', $akteurAdresse->adresse, '=')
 		 ->execute();
@@ -645,25 +652,20 @@ drupal_add_html_head($og_title, 'og_title'); */
 
     //Adressdaten aus DB holen:
     $resultAdresse = db_select($this->tbl_adresse, 'd')
-     ->fields('d', array(
-	    'strasse',
-	    'nr',
-	    'adresszusatz',
-	    'plz',
-	    'bezirk',
-	    'gps'
-	   ))
+     ->fields('d')
 	   ->condition('ADID', $this->adresse, '=')
      ->execute();
 
     // Speichern der Adressdaten in den Arbeitsvariablen
     foreach ($resultAdresse as $row) {
+     $gps = explode(',', $row->gps, 2);
+
 	   $this->strasse = $row->strasse;
 	   $this->nr = $row->nr;
 	   $this->adresszusatz = $row->adresszusatz;
 	   $this->plz = $row->plz;
 	   $this->ort = $row->bezirk;
-	   $this->gps = $row->gps;
+	   $this->gps = $row->gps_lat.','.$row->gps_long;
     }
 
     $resultSparten = db_select($this->tbl_hat_sparte, 'hs')

@@ -46,7 +46,7 @@ function aae_data_schema() {
 	)
   );
   $schema ['aae_data_adresse'] = array(
-  'description' => 'Tabelle für Adressen',
+  'description' => 'Table for Adresses',
 	'fields' => array(
 	  'ADID' => array('description' => 'ID für Adressen', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'strasse' => array('description' => 'Straßenname', 'type' => 'varchar', 'length' => 64, 'not null' => FALSE, 'default' => ''),
@@ -54,7 +54,8 @@ function aae_data_schema() {
 	  'bezirk' => array('description' => 'Bezirk', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
 	  'nr' => array('description' => 'Hausnummer', 'type' => 'varchar', 'length' => 8, 'not null' => FALSE, 'default' => ''),
 	  'plz' => array('description' => 'Postleitzahl', 'type' => 'varchar', 'length' => 8, 'not null' => FALSE, 'default' => ''),
-	  'gps' => array('description' => 'GPS-Koordinaten für Karte', 'type' => 'varchar', 'length' => 100, 'not null' => FALSE, 'default' => ''),
+    'gps_lat' => array('description' => 'GPS-Koordinaten (Latitude)', 'type' => 'varchar', 'length' => 50, 'not null' => FALSE, 'default' => ''),
+	  'gps_long' => array('description' => 'GPS-Koordinaten (Longitude)', 'type' => 'varchar', 'length' => 50, 'not null' => FALSE, 'default' => ''),
 	),
 	'primary key' => array('ADID'),
 	'foreign keys' => array(
@@ -62,10 +63,10 @@ function aae_data_schema() {
 	),
   );
   $schema ['aae_data_event'] = array(
-  'description' => 'Tabelle für Events',
+  'description' => 'Table for Events',
 	'fields' => array(
 	  'EID' => array('description' => 'ID für Events', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
-	  'name' => array('description' => 'Eventname', 'type' => 'varchar', 'length' => 64, 'not null' => TRUE),
+	  'name' => array('description' => 'Eventname', 'type' => 'varchar', 'length' => 64, 'not null' => FALSE),
 	  'kurzbeschreibung' => array('description' => 'Kurze inhaltliche Erläuterung', 'type' => 'text', 'length' => 'medium', 'not null' => FALSE, 'default' => 0),
 	  'bild' => array('description' => 'Pfad zum Foto', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
 	  'ort' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
@@ -73,6 +74,8 @@ function aae_data_schema() {
 	  'ersteller' => array('description' => 'ID von User, der Event angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
     'start_ts' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Startzeit des Events als Timestamp'),
     'ende_ts' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Endzeit des Events als Timestamp'),
+    'parent_EID' => array( 'type' => 'varchar', 'length' => 5, 'not null' => FALSE, 'description' => 'NOT NULL if event recurres'),
+    'recurring_event_type' => array( 'type' => 'varchar', 'length' => 1, 'not null' => FALSE, 'description' => '1: has children, 2: returns weekly, 3: returns 2-weekly, 4: returns monthly, 5: returns 2-monthly'),
     'created' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Created als Timestamp'),
     'modified' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Modified als Timestamp')
 	),
@@ -109,7 +112,7 @@ function aae_data_schema() {
   $schema ['aae_data_sparte'] = array(
   'description' => 'Tabelle für Sparten/Zielgruppen',
 	'fields' => array(
-	  'KID' => array('description' => 'ID für Kategorien', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'KID' => array('description' => 'ID für Kategorien', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE), /* TYPE: SERIAL?! RLY? */
 	  'kategorie' => array('description' => 'Kategorie für Sparte oder Zielgruppe', 'type' => 'varchar', 'length' => 100, 'not null' => TRUE),
 	),
 	'primary key' => array('KID'),
@@ -319,6 +322,64 @@ function aae_data_update_7106() {
 
 }
 
+
+/**
+ * Implements hook_update_N().
+ * Divide geo-data into longitude and latitude, make events recurrable, clear
+ * duplicates within database.
+ */
+function aae_data_update_7107() {
+
+  // aae_install_clear_db_contents()
+
+  $newSchemaAdresse = array(
+    'gps_lat' => array('description' => 'GPS-Koordinaten (Latitude)', 'type' => 'varchar', 'length' => 50, 'not null' => FALSE, 'default' => ''),
+    'gps_long' => array('description' => 'GPS-Koordinaten (Longitude)', 'type' => 'varchar', 'length' => 50, 'not null' => FALSE, 'default' => ''),
+  );
+
+  $newSchemaEvents = array(
+    'parent_EID' => array( 'type' => 'varchar', 'length' => 5, 'not null' => FALSE, 'description' => 'Not NULL if event recurres'),
+    'recurring_event_type' => array( 'type' => 'varchar', 'length' => 1, 'not null' => FALSE, 'description' => '1: has children, 2: returns weekly, 3: returns 2-weekly, 4: returns monthly, 5: returns 2-monthly'),
+  );
+
+  foreach ($newSchemaAdresse as $key => $field) {
+     if (!db_field_exists('aae_data_adresse', $key)) {
+       db_add_field('aae_data_adresse', $key, $field);
+     }
+   }
+
+  foreach ($newSchemaEvents as $key => $field) {
+     if (!db_field_exists('aae_data_event', $key)) {
+       db_add_field('aae_data_event', $key, $field);
+     }
+   }
+
+   $allAdressen = db_select('aae_data_adresse','ad')
+    ->fields('ad', array('ADID', 'gps'));
+
+
+   $allAdressen = $allAdressen->execute()->fetchAll();
+
+   foreach ($allAdressen as $adresse) {
+
+    if (!empty($adresse->gps)) {
+
+    $gps = explode(',', $adresse->gps, 2);
+
+    db_update('aae_data_adresse')
+     ->fields(array(
+      'gps_lat' => $gps[0],
+      'gps_long' => $gps[1]
+     ))
+     ->condition('ADID', $adresse->ADID)
+     ->execute();
+
+    }
+   }
+
+  db_drop_field('aae_data_adresse', 'gps');
+}
+
 /**
  * Implements hook_install().
  * Wird bei Installation des Moduls ausgeführt, NACH hook_schema()
@@ -346,4 +407,5 @@ function aae_data_uninstall() {
  */
 function aae_data_disable() {
   //drupal_uninstall_schema('aae_data');
+  //Deny access to API
 }
