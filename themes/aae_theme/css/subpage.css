@@ -215,7 +215,6 @@ p.licensetext:hover {
 .aaeEvent.eventRecurres:hover .date {
   border-color: #d4ff0a;
 }
-
 .aaeEvent.today .content:before {
   border-color:transparent #FF5217 transparent transparent;
 }

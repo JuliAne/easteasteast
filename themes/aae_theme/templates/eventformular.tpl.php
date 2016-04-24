@@ -75,13 +75,13 @@
     </label>
    </div>
 
-   <div class="large-2 columns">
-    <input class="switch-input" id="eventRecurres" type="checkbox" name="eventRecurres"<?= ($this->eventRecurres || isset($_POST['eventRecurres']) ? 'checked="checked"' : ''); ?>>
+   <div class="switch large-2 columns" style="text-align:right;">
+    <input class="switch-input" id="eventRecurres" type="checkbox" name="eventRecurres"<?= (!empty($this->recurringEventType) || isset($_POST['eventRecurres']) ? ' checked="checked"' : ''); ?>>
     <label class="switch-paddle" for="eventRecurres" title="<?= t('Sich wiederholendes Event?'); ?>">
     <span class="show-for-sr"><?= t('Sich wiederholendes Event?'); ?></span>
    </div>
 
-   <div id="eventRecurresData" class="large-12 columns"<?= (!empty($this->recurringEventType) || isset($_POST['eventRecurres']) ? '' : ' style="heiht:0;"'); ?>>
+   <div id="eventRecurresData" class="large-12 columns"<?= (!empty($this->recurringEventType) || isset($_POST['eventRecurres']) ? '' : ' style="display:none;"'); ?>>
 
     <p class="large-12 columns licensetext"><strong>Wiederkehrende Veranstaltung.</strong> Beta-Feature: Einzelne Events können auf der Eventseite entfernt werden.</p>
 
@@ -95,9 +95,9 @@
      </select></label>
     </div>
 
-    <div class="large-4 left columns">
-     <label><?= t('Bis max. zum:'); ?> <?= $this->fehler['zeit_bis']; ?>
-      <input type="text" id="eventZeitbisInput" name="zeit_bis" value="" placeholder="<?= t("Endtag")." (yyyy-mm-dd)"; ?>">
+    <div class="large-4 columns" style="float:left !important;">
+     <label><?= t('Bis max. zum:'); ?> <?= $this->fehler['eventRecurresTill']; ?>
+      <input type="text" id="eventRecurresTill" name="eventRecurresTill" value="<?= (!$this->eventRecurresTill == '1000-01-01' ? $this->eventRecurresTill : ''); ?>" placeholder="<?= t("Endtag")." (yyyy-mm-dd)"; ?>">
      </label>
     </div>
 

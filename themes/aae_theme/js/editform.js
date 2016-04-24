@@ -16,9 +16,12 @@ $(document).ready(function(){
    $('#veranstalter option:eq(1)').attr('selected','selected');
   }
 
-  $('.page-events-new .switch-paddle').click(function(){
-   // alert($('#eventRecurres').attr('checked'));
-   $('#eventRecurresData').slideDown(2000);
+  $('.page-events-new .switch-paddle,.page-eventprofil-edit .switch-paddle').click(function(){
+   if ($('#eventRecurres').prop('checked')){
+    $('#eventRecurresData').fadeOut('fast');
+   } else {
+    $('#eventRecurresData').fadeIn('fast'); 
+   }
   });
 
   $("#eventStartdatumInput,#eventEnddatumInput").Zebra_DatePicker({'readonly_element' : false, format : 'Y-m-d'});
