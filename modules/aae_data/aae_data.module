@@ -145,8 +145,8 @@ function aae_data_block_view($delta = '') {
 
     case 'aae_journal':
 
-     $nodes = aae_data_helper::getJournalEntries(3);
-     $block['content'] = aae_data_helper::render('/templates/journal_latest_posts.tpl.php', array('nodes' => $nodes));
+     $nodes = Drupal\AaeData\aae_data_helper::getJournalEntries(3);
+     $block['content'] = Drupal\AaeData\aae_data_helper::render('/templates/journal_latest_posts.tpl.php', array('nodes' => $nodes));
      break;
   }
 
@@ -349,7 +349,7 @@ function event_ics_download() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventprofil.php';
 
-  $ics = new aae_eventprofil();
+  $ics = new Drupal\AaeData\aae_eventprofil();
   return $ics->ics_download();
 }
 
@@ -361,7 +361,7 @@ function akteur_vcard_download() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurprofil.php';
 
-  $vcard = new aae_akteurprofil();
+  $vcard = new Drupal\AaeData\aae_akteurprofil();
   return $vcard->vcard_download();
 }
 
@@ -370,9 +370,9 @@ function akteur_vcard_download() {
  */
 function akteure_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/akteure.php';
+  include $modulePath . '/akteurepage.php';
 
-  $akteur = new akteure();
+  $akteur = new Drupal\AaeData\akteurepage();
   return $akteur->run();
 }
 
@@ -383,7 +383,7 @@ function akteurformular_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurformular.php';
 
-  $akteur = new akteurformular();
+  $akteur = new Drupal\AaeData\akteurformular();
 
   return $akteur->run();
 }
@@ -395,7 +395,7 @@ function akteurprofil_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurprofil.php';
 
-  $akteurprofil = new aae_akteurprofil();
+  $akteurprofil = new Drupal\AaeData\akteurprofil();
 
   return $akteurprofil->run();
 }
@@ -407,7 +407,7 @@ function akteuredit_page($aid = 0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurformular.php';
 
-  $aae_akteur = new akteurformular('update');
+  $aae_akteur = new Drupal\AaeData\akteurformular('update');
 
   $path = current_path();
   $path_alias = drupal_lookup_path('alias', $path);
@@ -422,7 +422,7 @@ function akteurloeschen_page($eid=0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurprofil.php';
 
-  $aae_akteur = new aae_akteurprofil();
+  $aae_akteur = new Drupal\AaeData\akteurprofil();
 
   return $aae_akteur->removeAkteur();
 }
@@ -432,20 +432,20 @@ function akteurloeschen_page($eid=0) {
  */
 function events_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/events.php';
+  include $modulePath . '/eventspage.php';
 
-  $event = new events();
+  $event = new Drupal\AaeData\eventspage();
   return $event->run();
 }
 
 /**
- * Baut die Seite fuer die Events
+ * Baut die Seite fuer den Events-RSS-Feed
  */
 function events_rss() {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/events.php';
+  include $modulePath . '/eventspage.php';
 
-  $event = new events();
+  $event = new Drupal\AaeData\eventspage();
   return $event->rss();
 }
 
@@ -456,7 +456,7 @@ function eventprofil_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventprofil.php';
 
-  $aae_event = new aae_eventprofil();
+  $aae_event = new Drupal\AaeData\eventprofil();
 
   return $aae_event->run();
 }
@@ -468,7 +468,7 @@ function eventloeschen_page($eid = 0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventprofil.php';
 
-  $aae_event = new aae_eventprofil();
+  $aae_event = new Drupal\AaeData\eventprofil();
   return $aae_event->removeEvent();
 }
 
@@ -480,10 +480,10 @@ function eventedit_page($aid = 0) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventformular.php';
 
-  $event = new eventformular('update');
+  $event = new Drupal\AaeData\eventformular('update');
 
-  $path = current_path();
-  $path_alias = drupal_lookup_path('alias', $path);
+  $path = current_path(); #kann raus
+  $path_alias = drupal_lookup_path('alias', $path); #kann raus
 
   return $event->run();
 }
@@ -496,7 +496,7 @@ function eventformular_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventformular.php';
 
-  $event = new eventformular();
+  $event = new Drupal\AaeData\eventformular();
 
   $path = current_path();
   $path_alias = drupal_lookup_path('alias', $path);
@@ -513,7 +513,7 @@ function ajax_requests($id) {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/aae_data_ajax_requests.php';
 
-  $request = new aae_data_ajax_requests();
+  $request = new Drupal\AaeData\aae_data_ajax_requests();
 
   $path = current_path();
   $explodedpath = explode("/", $path);
@@ -543,9 +543,33 @@ function ajax_requests($id) {
  }
 
 /**
- * Funktion zum Säubern der DB-Bestände
+ * Funktion zum Vereinheitlichen der DB-Bestände
+ * FETTES TODO
  */
 function aae_install_clear_db_contents() {
+
+ // Unify phone-numbers
+
+ /*$u=str_replace(" ", "", $u);
+ $u=str_replace("---", "", $u);
+ $u=str_replace("/", "-", $u);
+ return $u;
+
+ // Unify URL's
+ if (strpos($u,'http')===false) { $u='http://'.$u; }
+ return $u;
+
+  // Remove doubled-tags SMARTLY
+
+  $adressen = db_select('aae_data_adresse', 'a')
+   ->fields('a')
+   ->execute()
+   ->fetchAll();
+
+   foreach ($adressen as $adresse) {
+    /* if (empty($adresse->strasse) && empty($adresse->adresszusatz)
+        && empty ($adresse->bezirk)
+   }*/
 
 }
 

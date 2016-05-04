@@ -8,23 +8,12 @@
  * oder geupdatet.
  */
 
+namespace Drupal\AaeData;
+use Drupal\AaeData\events;
+
 Class eventformular extends aae_data_helper {
 
-  //$tbl_event
-  var $name = "";
-  var $veranstalter = "";
-  var $start = "";
-  var $ende = "";
-  var $zeit_von = "";
-  var $zeit_bis = "";
-  var $hat_zeit_von = true;
-  var $hat_zeit_bis = true;
-  var $eventRecurres;
-  var $bild = "";
-  var $kurzbeschreibung = "";
-  var $url = "";
-  var $created = "";
-  var $modified = "";
+  #var $uses = array('events');
 
   //$tbl_adresse
   var $strasse = "";
@@ -42,18 +31,19 @@ Class eventformular extends aae_data_helper {
   var $freigabe = true;   //Variable zur Freigabe: muss true sein
   var $fehler = array(); // In diesem Array werden alle Fehler gespeichert
 
-  var $user_id;
   var $event_id;
   var $resultakteure;
   var $resultbezirke;
   var $target = '';
   var $removedTags;
   var $removedPic;
+  var $eventRecurres;
+  var $eventRecurringType;
+  var $eventRecurresTill;
 
   function __construct($action = false) {
 
-   global $user;
-   $this->user_id = $user->uid;
+   parent::__construct();
 
    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
    if ($action == 'update')
@@ -122,7 +112,7 @@ Class eventformular extends aae_data_helper {
     $this->removedPic = $this->clearContent($_POST['removeCurrentPic']);
     $this->eventRecurres = $this->clearContent($_POST['eventRecurres']);
     $this->eventRecurringType = $this->clearContent($_POST['eventRecurringType']);
-
+    $this->eventRecurresTill = $this->clearContent($_POST['eventRecurresTill']);
     //-------------------------------------
 
     if (empty($this->name)) {
@@ -130,13 +120,18 @@ Class eventformular extends aae_data_helper {
 	   $this->freigabe = false;
     }
 
-    if (strlen($this->start) != 0 && DateTime::createFromFormat('Y-m-d', $this->start) == false) {
+    if (strlen($this->start) != 0 && \DateTime::createFromFormat('Y-m-d', $this->start) == false) {
       $this->fehler['start'] = t("Bitte ein (gültiges) Startdatum angeben!");
       $this->freigabe = false;
     }
 
-    if (strlen($this->ende) != 0 && DateTime::createFromFormat('Y-m-d', $this->ende) == false) {
+    if (strlen($this->ende) != 0 && \DateTime::createFromFormat('Y-m-d', $this->ende) == false) {
       $this->fehler['ende'] = t("Bitte ein (gültiges) Enddatum angeben!");
+      $this->freigabe = false;
+    }
+
+    if (strlen($this->eventRecurresTill) != 0 && \DateTime::createFromFormat('Y-m-d', $this->eventRecurresTill) == false) {
+      $this->fehler['eventRecurresTill'] = t("Bitte ein (gültiges) Maximaldatum angeben!");
       $this->freigabe = false;
     }
 
@@ -150,12 +145,12 @@ Class eventformular extends aae_data_helper {
      $this->freigabe = false;
     }
 
-    if (!empty($this->zeit_von) && DateTime::createFromFormat('H:i', $this->zeit_von) == false) {
+    if (!empty($this->zeit_von) && \DateTime::createFromFormat('H:i', $this->zeit_von) == false) {
      $this->fehler['zeit_von'] = t("Bitte eine (gültige) Start-Uhrzeit angeben!");
      $this->freigabe = false;
     }
 
-    if (!empty($this->zeit_bis) && DateTime::createFromFormat('H:i', $this->zeit_bis) == false) {
+    if (!empty($this->zeit_bis) && \DateTime::createFromFormat('H:i', $this->zeit_bis) == false) {
      $this->fehler['zeit_bis'] = t("Bitte eine (gültige) End-Uhrzeit angeben!");
      $this->freigabe = false;
     }
@@ -439,15 +434,15 @@ Class eventformular extends aae_data_helper {
    */
   private function eventGetFields() {
 
-    //Auswahl der Daten des ausgewählten Events
     $resultEvent = db_select($this->tbl_event, 'e')
      ->fields('e')
 	   ->condition('EID', $this->event_id)
      ->execute();
 
     foreach ($resultEvent as $row) {
-     $startTime = new DateTime($row->start_ts);
-     $endeTime  = new DateTime($row->ende_ts);
+     $startTime = new \DateTime($row->start_ts);
+     $endeTime  = new \DateTime($row->ende_ts);
+     $maxRecurreTime = new \DateTime($row->event_recurres_till);
      $this->hat_zeit_von = ($startTime->format('s') == '01') ? true : false;
      $this->hat_zeit_bis = ($endeTime->format('s') == '01') ? true : false;
 
@@ -460,9 +455,10 @@ Class eventformular extends aae_data_helper {
      $this->url = $row->url;
      $this->bild = $row->bild;
      $this->kurzbeschreibung = $row->kurzbeschreibung;
-     $this->created = new DateTime($row->created);
-     $this->modified = new DateTime($row->modified);
+     $this->created = new \DateTime($row->created);
+     $this->modified = new \DateTime($row->modified);
      $this->recurringEventType = $row->recurring_event_type;
+     $this->eventRecurresTill = $maxRecurreTime->format('Y-m-d');
     }
 
     $resultVeranstalter = db_select($this->tbl_akteur_events, 'a')
@@ -523,6 +519,7 @@ Class eventformular extends aae_data_helper {
    }
 
 	 //Abfrage, ob Adresse bereits in Adresstabelle
+   // TODO Do not save empty adresses -> need for adress-class
 	 $this->resultAdresse = db_select($this->tbl_adresse, 'a')
 	  ->fields('a', array('ADID', 'gps_lat', 'gps_long'))
 	  ->condition('strasse', $this->strasse, '=')
@@ -586,7 +583,8 @@ Class eventformular extends aae_data_helper {
 		'kurzbeschreibung' => $this->kurzbeschreibung,
 		'ersteller' => $this->user_id,
     'created' => date('Y-m-d H:i:s', time()),
-    'recurring_event_type' => ($this->eventRecurres && !empty($this->eventRecurringType) ? '1' : NULL)
+    'recurring_event_type' => ($this->eventRecurres && !empty($this->eventRecurringType) ? '1' : NULL),
+    'event_recurres_till' => ($this->eventRecurres && !empty($this->eventRecurresTill) ? $this->eventRecurresTill : '1000-01-01 00:00:00')
 	  ))
 	 ->execute();
 
@@ -640,43 +638,8 @@ Class eventformular extends aae_data_helper {
 
   if ($this->eventRecurres && !empty($this->eventRecurringType)) {
 
-   $datePeriod = NULL;
+   $this->events->__addEventChildren($startQuery, $endQuery);
 
-   switch ($this->eventRecurringType) {
-     case '2' :
-      $datePeriod = 'P1W';
-     break;
-     case '3' :
-      $datePeriod = 'P2W';
-     break;
-     case '4' :
-      $datePeriod = 'P1M';
-     break;
-     case '5' :
-      $datePeriod = 'P2M';
-     break;
-   }
-
-  for ($i = 0; $i < 5; $i++) {
-
-   $start = new DateTime($startQuery);
-   $start->add(new DateInterval($datePeriod));
-   $startQuery = $start->format('Y-m-d H:i:s');
-   
-   $ende = new DateTime($endeQuery);
-   $ende->add(new DateInterval($datePeriod));
-   $endeQuery = $ende->format('Y-m-d H:i:s');
-
-   $recurringEvent = db_insert($this->tbl_event)
-    ->fields(array(
-    'start_ts' => $startQuery,
-    'ende_ts' => $endeQuery,
-		'parent_EID' => $this->event_id,
-    'recurring_event_type' => $this->eventRecurringType
-   ))
-   ->execute();
-
-   }
   }
 
     // Tell Drupal about the new eventprofil/ID-item
@@ -706,13 +669,12 @@ Class eventformular extends aae_data_helper {
     drupal_set_message(t('Das Event wurde erfolgreich erstellt!'));
 	  header("Location: ". $base_url ."/eventprofil/" . $this->event_id);
 
-  } // END function event_speichern()
+  } // END function eventSpeichern()
 
 
   /**
    * Darstellung der Formularinformationen
    */
-
   private function eventDisplay() {
 
     if (array_intersect(array('administrator'), $user->roles)) {

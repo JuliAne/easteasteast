@@ -327,3 +327,17 @@ p.licensetext:hover {
   background-size: 100%;
   background-position: center center;
 }
+#events_content #calendar .dates li {
+  width: 14.2%;
+  padding-right: 16px;
+  padding-top: 35px;
+  text-align: right;
+  border-right: 1px solid #F1EFEF;
+  border-bottom: 1px solid #F1EFEF;
+  height: 60px;
+  transition: 0.3s background-color;
+  margin: 0 !important;
+}
+#events_content #calendar .dates li:hover {
+  background-color: #F1EFEF;
+}

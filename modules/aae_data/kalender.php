@@ -1,20 +1,31 @@
 <?php
 /**
  * Stellt einen Kalender fuer die Events dar
+ * Copyright: The Internetz
+ * TODO: Umstellen auf namespaces / Klassenmodell
+ * TODO: Etwaige Doppelungen raus (Speicherintensive Date-Ermittlung)
  */
+
+namespace Drupal\AaeData;
+#use Drupal\AaeData\events;
 
 class kalender extends aae_data_helper {
 
  private $dayLabels = array("Mo","Di","Mi","Do","Fr","Sa","So");
- private $currentYear=0;
- private $currentMonth=0;
- private $currentDay=0;
- private $currentDate=null;
- private $daysInMonth=0;
- private $naviHref= null;
+ private $currentYear = 0;
+ private $currentMonth = 0;
+ private $currentDay = 0;
+ private $currentDate = null;
+ private $daysInMonth = 0;
+ private $naviHref = null;
+ private $year  = null;
+ private $month = null;
+ private $eventsForMonth = array();
+ #private $events;
 
  public function __construct(){
-
+  include_once('models/events.php');
+  $this->events = new events();
  }
 
  public function run(){
@@ -24,23 +35,21 @@ class kalender extends aae_data_helper {
  }
 
  public function show() {
-  $year  == null;
-  $month == null;
 
-   if (null == $year && isset($_GET['year'])) {
-     $year = $_GET['year'];
-   } else if (null == $year) {
-   $year = date("Y", time());
+   if (null == $this->year && isset($_GET['year'])) {
+     $this->year = $this->clearContent($_GET['year']);
+   } else if (null == $this->year) {
+     $this->year = date('Y');
    }
-   if (null == $month && isset($_GET['month'])) {
-   $month = $_GET['month'];
-   } else if (null == $month) {
-     $month = date("m", time());
+   if (null == $this->month && isset($_GET['month'])) {
+     $this->month = $this->clearContent($_GET['month']);
+   } else if (null == $this->month) {
+     $this->month = date('m');
    }
 
-   $this->currentYear = $year;
-   $this->currentMonth = $month;
-   $this->daysInMonth=$this->_daysInMonth($month, $year);
+   $this->currentYear = $this->year;
+   $this->currentMonth = $this->month;
+   $this->daysInMonth = $this->_daysInMonth($this->month, $this->year);
    $content = '<div id="calendar">' .
      '<div class="box">' .
        $this->_createNavi().
@@ -50,14 +59,26 @@ class kalender extends aae_data_helper {
        $content .= '<div class="clear"></div>';
        $content .= '<ul class="dates">';
 
-         $weeksInMonth = $this->_weeksInMonth($month, $year);
-         // Create weeks in a month
-         for ($i=0; $i<$weeksInMonth; $i++) {
-         //Create days in a week
-           for ($j=1;$j<=7;$j++) {
-             $content .= $this->_showDay($i * 7 + $j);
-           }
-         }
+
+       $eventsResults = $this->events->getEvents(array(
+        'start_ts' => (new \DateTime($this->year.'-'.$this->month.'-01'))->format('Y-m-d 00:00:00'),
+        //THE FOLLOWING LINE NEEDS A REVIEW / COULD BE REUSED FOR EVENTS THAT ARE LONGER THAN 1 DAY
+        //'ende_ts' => (new \DateTime(date('Y-m-t', mktime(0, 0, 0, $this->month, 1, $this->year))))->format('Y-m-d 23:59:59'),
+       ), array('start_ts', 'name'));
+
+      // Sort'em
+      foreach ($eventsResults as $eventData) {
+       $day = (!substr($eventData->start->format('d'),0,1)) ? substr($eventData->start->format('d'),1,2) : $eventData->start->format('d');
+       $this->eventsForMonth[$day][] = $eventData;
+      }
+
+      $weeksInMonth = $this->_weeksInMonth($this->month, $this->year);
+
+      for ($i=0; $i < $weeksInMonth; $i++) {
+       for ($j=1;$j<=7;$j++) {
+         $content .= $this->_showDay($i * 7 + $j);
+       }
+      }
 
        $content .= '</ul>';
        $content .= '<div class="clear"></div>';
@@ -70,6 +91,7 @@ class kalender extends aae_data_helper {
   * create the li element for ul
   */
  private function _showDay($cellNumber) {
+
    if ($this->currentDay == 0) {
      $firstDayOfTheWeek = date('N', strtotime($this->currentYear . '-' . $this->currentMonth . '-01'));
      if (intval($cellNumber) == intval($firstDayOfTheWeek)) {
@@ -79,26 +101,14 @@ class kalender extends aae_data_helper {
    if (($this->currentDay != 0) && ($this->currentDay <= $this->daysInMonth)) {
      $this->currentDate = date('Y-m-d', strtotime($this->currentYear . '-' . $this->currentMonth . '-' . $this->currentDay));
      $cellContent = $this->currentDay;
-
      //$events = null;
 
-     // DB-Abfrage aller Events, die an diesem Tag stattfinden
-     $resultEvents = db_select($this->tbl_event, 'e')
-       ->fields('e', array(
-       'start_ts',
-       'name',
-       'EID',
-       ))
-       ->condition('start_ts', $this->currentDate . '%', 'LIKE')
-       // WHERE -> FILTERS!
-       ->orderBy('name', 'ASC')
-       ->execute();
 
-     foreach ($resultEvents as $row) {
-      $events .= $row->name.' ';
+     foreach ($this->eventsForMonth[$this->currentDay] as $row) {
+      $events .= $row->name.'&#10';
      }
 
-     $countrows = $resultEvents->rowCount();
+     $countrows = count($this->eventsForMonth[$this->currentDay]);
      $this->currentDay++;
 
    } else {
@@ -146,12 +156,6 @@ class kalender extends aae_data_helper {
   * calculate number of weeks in a particular month
   */
  private function _weeksInMonth($month=null, $year=null) {
-   if (null == ($year)) {
-     $year =  date("Y",time());
-   }
-   if (null == ($month)) {
-     $month = date("m",time());
-   }
 
    // find number of days in this month
    $daysInMonths = $this->_daysInMonth($month,$year);
@@ -160,7 +164,7 @@ class kalender extends aae_data_helper {
    $monthStartDay = date('N',strtotime($year . '-' . $month . '-01'));
 
    if ($monthEndingDay < $monthStartDay) {
-     $numOfweeks++;
+    $numOfweeks++;
    }
    return $numOfweeks;
  }
@@ -169,12 +173,6 @@ class kalender extends aae_data_helper {
   * calculate number of days in a particular month
   */
  private function _daysInMonth($month=null, $year=null) {
-   if (null == ($year)) {
-     $year =  date("Y",time());
-   }
-   if (null == ($month)) {
-     $month = date("m",time());
-   }
    return date('t',strtotime($year . '-' . $month . '-01'));
  }
 

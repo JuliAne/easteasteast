@@ -1,5 +1,7 @@
 <?php
 
+namespace Drupal\AaeData;
+
  /**
   * Kleine Helferklasse (!=model) für wiederkehrende Funktionen, Variablen
   *  & Pfade. Gerne erweiterbar :)
@@ -21,49 +23,58 @@
    var $tbl_akteur_events = "aae_data_akteur_hat_event";
    var $tbl_event_sparte = "aae_data_event_hat_sparte";
 
-   // Image-path's. TODO Make 'em managable by backend
+   // Image-path's. TODO: Make 'em managable by backend
    var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/pictures/aae/";
    var $localbildpfad = "/opt/lampp/htdocs/drupal/sites/default/files/pictures/aae/";
    var $testbildpfad = "/var/www/virtual/grinch/test.leipziger-ecken.de/sites/default/files/pictures/aae/";
    var $short_bildpfad = "sites/default/files/pictures/aae/";
 
-   // Mapbox-Data
+   // Mapbox-API-Data
    var $mapboxAccessToken = "pk.eyJ1IjoibWF0emVsb3QiLCJhIjoiM3JrY3dQTSJ9.IGSonCNVbK5UzSYoxrgMjg";
    var $mapboxMap = "matzelot.ke3420oc";
    var $mapboxDefaultView = "51.336, 12.433";
    var $mapboxDefaultZoom = "13";
 
+   var $uses;
    var $servercheck;
+   var $modulePath;
 
-   var $monat_short = array(
-     '01' => 'Jan',
-     '02' => 'Feb',
-     '03' => 'Mär',
-     '04' => 'Apr',
-     '05' => 'Mai',
-     '06' => 'Jun',
-     '07' => 'Jul',
-     '08' => 'Sep',
-     '09' => 'Aug',
-     '10' => 'Okt',
-     '11' => 'Nov',
-     '12' => 'Dez',
-   );
+   var $monat_short;
+   var $monat_lang;
 
-   var $monat_lang = array(
-    '01' => 'Januar',
-    '02' => 'Februar',
-    '03' => 'März',
-    '04' => 'April',
-    '05' => 'Mai',
-    '06' => 'Juni',
-    '07' => 'Juli',
-    '08' => 'August',
-    '09' => 'September',
-    '10' => 'Oktober',
-    '11' => 'November',
-    '12' => 'Dezember',
-   );
+   function __construct(){
+
+    $this->monat_lang = array(
+    '01' => t('Januar'),
+    '02' => t('Februar'),
+    '03' => t('März'),
+    '04' => t('April'),
+    '05' => t('Mai'),
+    '06' => t('Juni'),
+    '07' => t('Juli'),
+    '08' => t('August'),
+    '09' => t('September'),
+    '10' => t('Oktober'),
+    '11' => t('November'),
+    '12' => t('Dezember'),
+    );
+
+    foreach ($this->monat_lang as $key => $monat) {
+     $this->monat_short[$key] = substr($monat, 0, 3);
+    }
+
+    global $user;
+    $this->user_id = $user->uid;
+    $this->modulePath = drupal_get_path('module', 'aae_data');
+
+    if (isset($this->uses) && is_array($this->uses)) {
+     foreach ($this->uses as $aae_model) {
+       include_once $this->modulePath . '/models/'.$aae_model.'.php';
+       $this->{$aae_model} = new $aae_model();
+     }
+    }
+
+   }
 
    /**
     *  Einfache Funktion zum Filtern von POST- und GET-Daten ("escape-function")
@@ -71,7 +82,6 @@
     *  Entfernt Whitespaces (oder andere Zeichen) am Anfang und Ende eines Strings und
     *  filtert HTML um XSS Attacken vorzubeugen.
     */
-
    public function clearContent($trimTag) {
      $clear = trim($trimTag);
      //return strip_tags($clear);
@@ -80,7 +90,7 @@
 
    public function getJournalEntries($limit = 5) {
 
-    $query = new EntityFieldQuery();
+    $query = new \EntityFieldQuery();
     $query->entityCondition('entity_type', 'node')
      ->entityCondition('bundle', 'article')
      ->propertyCondition('status', 1)
@@ -210,7 +220,8 @@
 
   /*
    * function getAllTags($type)
-   * returns all given tags - sortable for only events / akteure
+   * TODO: To be put in xy-models
+   * @return All given tags - sortable for only events / akteure
    */
 
   protected function getAllTags($type) {

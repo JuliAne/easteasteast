@@ -4,6 +4,8 @@
  *
  */
 
+namespace Drupal\AaeData;
+
 class aae_eventprofil extends aae_data_helper {
 
  public function run(){
@@ -68,9 +70,9 @@ class aae_eventprofil extends aae_data_helper {
 
   // Hack: add times to $resultEvent-object
   $resultEvent = (object)$resultEvent;
-  $resultEvent->start = new DateTime($resultEvent->start_ts);
-  $resultEvent->ende = new DateTime($resultEvent->ende_ts);
-  $resultEvent->created = new DateTime($resultEvent->created);
+  $resultEvent->start = new \DateTime($resultEvent->start_ts);
+  $resultEvent->ende = new \DateTime($resultEvent->ende_ts);
+  $resultEvent->created = new \DateTime($resultEvent->created);
   $resultEvent = (object)$resultEvent;
 
   $akteurId = db_select($this->tbl_akteur_events, 'ae')
@@ -138,6 +140,7 @@ class aae_eventprofil extends aae_data_helper {
   $map = false;
 
   if (!empty($resultAdresse->gps)) {
+    //TODO lat_long?
     $this->addMapContent($resultAdresse->gps, array('gps' => $resultAdresse->gps, 'name' => $resultEvent->name, 'strasse' => $resultAdresse->strasse, 'nr' => $resultAdresse->nr));
     $map = true;
   }
@@ -151,6 +154,7 @@ class aae_eventprofil extends aae_data_helper {
  /**
   * @function removeEvent
   * Removes an event from DB
+  * TODO: Put into $this->event->removeEvent()
   */
 
  public function removeEvent(){
@@ -204,7 +208,7 @@ class aae_eventprofil extends aae_data_helper {
   if (isset($_POST['submit'])) {
 
    $resultEvent = db_select($this->tbl_event, 'e')
-    ->fields('e', array('bild'))
+    ->fields('e', array('bild','recurring_event_type'))
     ->condition('EID', $event_id, '=')
     ->execute()
     ->fetchAssoc();
@@ -221,11 +225,18 @@ class aae_eventprofil extends aae_data_helper {
    ->condition('hat_EID', $event_id, '=')
    ->execute();
 
-   // remove profile-image (if possible)
+   // remove children-items, if given
+   if (!empty($resultEvent->recurring_event_type)) {
+    db_delete($this->tbl_event)
+     ->condition('parent_EID', $event_id)
+     ->execute();
+   }
+
+   // remove profile-image
    $bild = end(explode('/', $resultEvent['bild']));
 
    if (file_exists($this->short_bildpfad.$bild)) {
-    unlink($this->short_bildpfad.$bild);
+    @unlink($this->short_bildpfad.$bild);
    }
 
    menu_link_delete(NULL, 'eventprofil/'.$event_id);
@@ -240,7 +251,7 @@ class aae_eventprofil extends aae_data_helper {
  $pathThisFile = $_SERVER['REQUEST_URI'];
 
  return '<div class="callout row">
- <h4><strong>Möchten Sie dieses Event wirklich löschen?</strong></h4><br />
+ <h4><strong>'.t('Möchten Sie dieses Event wirklich löschen?').'</strong></h4><br />
  <form action='.$pathThisFile.' method="POST" enctype="multipart/form-data">
    <input name="event_id" type="hidden" id="eventEIDInput" value="'.$event_id.'" />
    <a class="secondary button" href="javascript:history.go(-1)">Abbrechen</a>
@@ -275,8 +286,8 @@ class aae_eventprofil extends aae_data_helper {
    $var .= "BEGIN:VEVENT\n";
 
    foreach ($resultEvent as $row) {
-    $start = new DateTime($row->start_ts);
- 	 $ende  = new DateTime($row->ende_ts);
+    $start = new \DateTime($row->start_ts);
+ 	 $ende  = new \DateTime($row->ende_ts);
  	 $name = $row->name;
  	 $ort = $row->ort;
  	 $eid = $row->EID;
@@ -286,10 +297,10 @@ class aae_eventprofil extends aae_data_helper {
    $resultAdresse = db_select($this->tbl_adresse, 'a')
     ->fields('a', array(
      'strasse',
- 	  'nr',
- 	  'adresszusatz',
- 	  'plz',
- 	 ))
+ 	   'nr',
+ 	   'adresszusatz',
+ 	   'plz',
+ 	  ))
     ->condition('ADID', $ort)
     ->execute();
 

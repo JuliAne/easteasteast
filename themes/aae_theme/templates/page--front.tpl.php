@@ -18,7 +18,7 @@
  include_once('header.tpl.php');
  $path = drupal_get_path('module', 'aae_data');
  include_once $path . '/aae_blocks.php';
- $blocks = new aae_blocks();
+ $blocks = new Drupal\AaeData\aae_blocks();
  include_once 'slider_settings.php';
  $counts = $blocks->count_projects_events();
 

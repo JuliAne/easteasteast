@@ -39,7 +39,7 @@
       <div class="divider"></div>
 
         <?php require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
-              $blocks = new aae_blocks();
+              $blocks = new Drupal\AaeData\aae_blocks();
 
               foreach($blocks->print_my_akteure() as $myAkteur) : ?>
 

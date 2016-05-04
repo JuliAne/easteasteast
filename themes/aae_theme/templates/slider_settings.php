@@ -23,7 +23,7 @@
 *
 */
 
-$blocks = new aae_blocks();
+$blocks = new Drupal\AaeData\aae_blocks();
 $counts = $blocks->count_projects_events();
 
 $sliders = array(

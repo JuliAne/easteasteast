@@ -13,9 +13,10 @@
 */
 
 
-$modulePath = drupal_get_path('module', 'aae_data');
-include_once $modulePath . '/aae_data_helper.php';
+#$modulePath = drupal_get_path('module', 'aae_data');
+#include_once $modulePath . '/aae_data_helper.php';
 
+namespace Drupal\AaeData;
 
 Class aae_blocks extends aae_data_helper {
 
@@ -38,8 +39,8 @@ public function print_letzte_events($limit = 6) {
 
    // Hack: add variable to $resultEvents-object
    $resultEvents[$counter] = (array)$resultEvents[$counter];
-   $resultEvents[$counter]['start'] = new DateTime($event->start_ts);
-   $resultEvents[$counter]['ende'] = new DateTime($event->ende_ts);
+   $resultEvents[$counter]['start'] = new \DateTime($event->start_ts);
+   $resultEvents[$counter]['ende'] = new \DateTime($event->ende_ts);
    $resultEvents[$counter] = (object)$resultEvents[$counter];
 
   }

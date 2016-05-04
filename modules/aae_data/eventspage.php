@@ -1,11 +1,13 @@
 <?php
 /**
- * @file events.php
+ * @file eventspage.php
  * Listet alle Events auf.
  * Filterbar nach Datum, Tags, keywords, Bezirken und Zeitraum
  */
 
-Class events extends aae_data_helper {
+namespace Drupal\AaeData;
+
+Class eventspage extends aae_data_helper {
 
  var $presentationMode;
  var $getOldEvents;
@@ -188,7 +190,7 @@ Class events extends aae_data_helper {
 
   // Add specific data from other tables... we don't need no joins, yah'
   foreach ($resultEvents as $event) {
-    
+
    if (!empty($event->parent_EID)){
     $parentData = db_select($this->tbl_event,'e')->fields('e')->condition('EID', $event->parent_EID);
     /*$resultEvents[$counter] = (isset($resultEvents[$event->parent_EID]) && !empty($resultEvents[$event->parent_EID]))
@@ -225,9 +227,7 @@ Class events extends aae_data_helper {
      ->fields('ae', array('AID'))
      ->condition('EID', $event->EID, '=')
      ->execute()
-     ->fetchObject(); 
-     
-    // array_merge(x, wichtiger);
+     ->fetchObject();
 
     $resultAkteur = db_select($this->tbl_akteur, 'a')
      ->fields('a',array('AID','name','bild'))
@@ -239,8 +239,8 @@ Class events extends aae_data_helper {
    $resultEvents[$counter] = (array)$resultEvents[$counter];
    $resultEvents[$counter]['tags'] = $sparten;
    $resultEvents[$counter]['akteur'] = $resultAkteur;
-   $resultEvents[$counter]['start'] = new DateTime($event->start_ts);
-   $resultEvents[$counter]['ende'] = new DateTime($event->ende_ts);
+   $resultEvents[$counter]['start'] = new \DateTime($event->start_ts);
+   $resultEvents[$counter]['ende'] = new \DateTime($event->ende_ts);
    $resultEvents[$counter]['eventRecurringType'] = $event->recurring_event_type;
    $resultEvents[$counter] = (object)$resultEvents[$counter];
 

@@ -5,7 +5,9 @@
  * Filterbar nach Keyword, Tag und Bezirk.
  */
 
-Class akteure extends aae_data_helper {
+namespace Drupal\AaeData;
+
+Class akteurepage extends aae_data_helper {
 
  var $presentationMode;
  var $maxAkteure;

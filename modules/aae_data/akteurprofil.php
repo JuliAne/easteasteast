@@ -3,7 +3,9 @@
  * Zeigt das Profil eines Akteurs an.
  */
 
-class aae_akteurprofil extends aae_data_helper {
+namespace Drupal\AaeData;
+
+class akteurprofil extends aae_data_helper {
 
  public function run(){
 

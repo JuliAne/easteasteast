@@ -1,8 +1,11 @@
 <?php
 
-/** Klasse zum handeln von Ajax-request's. Sollte eine funktion zu groß
+/**
+ *  Klasse zum handeln von Ajax-request's. Sollte eine funktion zu groß
  *  werden, kann diese natürlich gerne in eine eigene Datei ausgelagert werden
  */
+
+namespace Drupal\AaeData;
 
 Class aae_data_ajax_requests extends aae_data_helper {
 
