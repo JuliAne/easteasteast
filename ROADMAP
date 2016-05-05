@@ -1,0 +1,53 @@
+ROADMAP
+
+V 0.6 (-> Events-Rework) (06/2016):
+
+- Feature: Wiederkehrende Veranstaltungen (Ticket #63)
+  - Prozesse "Speicherung, Bearbeitung, Löschen" in Events-Modell auslagern
+  - Graphische Integration in Kalender, Eventspage und Eventprofil
+- Feature: Freunde einladen (#6)
+- Ersetzen des Template-Contents durch dynamische Sprach-Platzhalter (>90%)
+- Verbesserungen der OO-Architektur, u.a. durch namespaces
+
+
+V 0.7:
+
+- Feature: "Festival-Veranstaltungen", entsprechende graphische Einbindung (needs ticket!)
+- Facebook Events-API (Ticket #81)
+- Kalender: Mehrtägige Events kenntlich machen
+- Überarbeitung Journal(-Beitrags)-Darstellung (mehr Bilder & Co.)
+
+
+V 0.8:
+
+- Internationalisierung: AAE-Modul testweise auf englisch übersetzen,
+  langfristig deutsch-arabisch sprechende Partner finden (Ticket #82)
+- Abschluss Redesign Startseite (Issue #77)
+- SEO, Integration social-meta-tags auf allen Seiten #65 #14
+
+(V 0.8.5:)
+- Modul konfigurierbar machen via Backend
+- Ggf. Integration in Views-Modul zur Verwaltung von Events & Akteuren
+
+
+V 0.9:
+
+- Verschönerung Inhaltsseiten (FAQ & Leipziger Osten -> Texter gesucht)
+- Erster API-Ansatz
+- Übersichtsseite für Benutzer (#57)
+- Integration Messages-API, um Zeit-nahe Portalsnachrichten zu generieren
+
+
+V 1.0 Alpha (ggf. auch alles früher):
+
+- API (read-only) mit Ausgabe ins JSON- / RDF-Format
+- Ressourcen-Feature
+- 100% responsive Interface
+- Alle benötigten Module in den AAE-Modul-Ordner
+- Klares Finanzierungsmodell
+
+_ _ _
+
+Noch offen, ungeklärter Stand:
+
+- Integration RSS-Feeds von Akteuren aus Leipziger Osten in das Interface/Journal

@@ -41,8 +41,19 @@ namespace Drupal\AaeData;
 
    var $monat_short;
    var $monat_lang;
+   var $dayNames;
 
    function __construct(){
+
+    $this->dayNames = array(
+     t('Montag'),
+     t('Dienstag'),
+     t('Mittwoch'),
+     t('Donnerstag'),
+     t('Freitag'),
+     t('Samstag'),
+     t('Sonntag')
+    );
 
     $this->monat_lang = array(
     '01' => t('Januar'),

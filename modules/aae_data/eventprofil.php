@@ -6,7 +6,7 @@
 
 namespace Drupal\AaeData;
 
-class aae_eventprofil extends aae_data_helper {
+class eventprofil extends aae_data_helper {
 
  public function run(){
 

@@ -67,7 +67,7 @@ public function print_letzte_akteure($limit = 4) {
   foreach ($resultAkteure as $counter => $akteur) {
 
    $adresse = db_select($this->tbl_adresse, 'ad')
-    ->fields('ad', array('bezirk','gps'))
+    ->fields('ad', array('bezirk'))
     ->condition('ADID', $akteur->adresse, '=')
     ->execute()
     ->fetchAssoc();

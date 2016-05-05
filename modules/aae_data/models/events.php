@@ -5,6 +5,7 @@ namespace Drupal\AaeData;
 Class events extends aae_data_helper {
 
   //$tbl_event
+  var $event_id = "";
   var $name = "";
   var $veranstalter = "";
   var $start = "";
@@ -139,6 +140,13 @@ Class events extends aae_data_helper {
   return $resultEvents;
 
  }
+
+  public function getTags($eid = null){
+
+   $tags = db_query('SELECT s.KID, s.kategorie FROM {aae_data_sparte} s JOIN {aae_data_event_hat_sparte} ehs WHERE s.KID = ehs.hat_KID ORDER BY s.kategorie DESC');
+   return $tags->fetchAll();
+
+  }
 
   private function __addEventChildren($startQuery, $endQuery){
 

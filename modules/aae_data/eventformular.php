@@ -45,6 +45,9 @@ Class eventformular extends aae_data_helper {
 
    parent::__construct();
 
+   require_once('models/events.php');
+   $this->event = new events();
+
    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
    if ($action == 'update')
 	  $this->target = 'update';
@@ -62,7 +65,7 @@ Class eventformular extends aae_data_helper {
 
     $path = current_path();
     $explodedpath = explode("/", $path);
-    $this->event_id = $explodedpath[1];
+    $this->event->event_id = $explodedpath[1];
     $output = '';
 
     if (isset($_POST['submit'])) {
@@ -92,7 +95,7 @@ Class eventformular extends aae_data_helper {
    */
   private function eventCheckPost() {
 
-    $this->name = $this->clearContent($_POST['name']);
+    $this->event->name = $this->clearContent($_POST['name']);
     $this->veranstalter = $this->clearContent($_POST['veranstalter']);
     $this->start = $this->clearContent($_POST['start']);
     $this->url = $this->clearContent($_POST['url']);
@@ -322,7 +325,7 @@ Class eventformular extends aae_data_helper {
    $b = end(explode('/', $this->removedPic));
 
    if (file_exists($this->short_bildpfad.$b))
-     unlink($this->short_bildpfad.$b);
+     @unlink($this->short_bildpfad.$b);
 
    if ($_POST['oldPic'] == $this->removedPic)
      $this->bild = '';
@@ -367,6 +370,17 @@ Class eventformular extends aae_data_helper {
      }
     }
 
+    // If eventRecurringType or eventMaxRecurr changes
+    if ($this->eventRecurres && !empty($this->eventRecurringType)) {
+
+     // $this->event->__removeEventChildren($this->event->event_id)
+     // recreate new
+    }
+    // if eventRecurres set to false
+    // $this->event->__removeEventChildren($this->event->event_id)
+    //...
+
+
     // Update Tags
     if (is_array($this->sparten) && !empty($this->sparten)) {
 
@@ -384,7 +398,7 @@ Class eventformular extends aae_data_helper {
       ->execute();
 
       if ($resultsparte->rowCount() == 0) {
-        // Tag in DB einfügen
+
        $sparte_id = db_insert($this->tbl_sparte)
         ->fields(array('kategorie' => $sparte))
         ->execute();
@@ -419,7 +433,7 @@ Class eventformular extends aae_data_helper {
      }
     }
 
-    // Call hooks
+    // Call hooks (TODO)
     module_invoke_all('hook_event_modified');
 
     if (session_status() == PHP_SESSION_NONE) session_start();
@@ -518,8 +532,7 @@ Class eventformular extends aae_data_helper {
     $this->bild = $this->upload_image($_FILES['bild']);
    }
 
-	 //Abfrage, ob Adresse bereits in Adresstabelle
-   // TODO Do not save empty adresses -> need for adress-class
+	 // Abfrage, ob Adresse bereits in Adresstabelle
 	 $this->resultAdresse = db_select($this->tbl_adresse, 'a')
 	  ->fields('a', array('ADID', 'gps_lat', 'gps_long'))
 	  ->condition('strasse', $this->strasse, '=')

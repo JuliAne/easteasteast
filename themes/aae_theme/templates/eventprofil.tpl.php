@@ -24,10 +24,9 @@
   <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>eventprofil/<?= $resultEvent->EID; ?>/edit" title="<?= t('Event bearbeiten'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" /><?= t('Bearbeiten'); ?></a></div>
  <?php endif; ?>
   <div class="large-5 columns right" style="text-align: right;">
-
-   <a href="<?= base_path(); ?>eventprofil/<?= $resultEvent->EID; ?>/ics_download/" title="Event Als .ical exportieren">Export (iCal)</a>
+   <a href="<?= base_path(); ?>eventprofil/<?= $resultEvent->EID; ?>/ics_download/" title="<?= t('Event Als .ical exportieren'); ?>">Export (iCal)</a>
    <a href="https://leipziger-ecken.de/contact" title="<?= t('Dieses Event wurde unbefugt erstellt? Melden Sie sich hier.'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" /><?= t('Melden'); ?></a>
-   <a href="#share" class="popup-link" title="Event in den sozialen Netzwerken teilen"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" /><?= t('Teilen'); ?></a>
+   <a href="#share" class="popup-link" title="<?= t('Event in den sozialen Netzwerken teilen'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" /><?= t('Teilen'); ?></a>
    <div id="share" class="popup large-3 columns">
     <a target="_blank" href="https://twitter.com/intent/tweet?text=<?php global $base_url; echo $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Twitter')); ?>" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/social-twitter.svg"><span></span></a>
     <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Facebook')); ?>" class="fb button"><img alt="Facebook" src="<?= base_path().path_to_theme(); ?>/img/social-facebook.svg"><span></span></a>
@@ -59,6 +58,12 @@
        <br /><strong style="color:rgb(96,94,94);">Bis: </strong>
        <?= ($resultEvent->ende->format('Ymd') !== '10000101' ? '<a href="'.base_path().'events/?day='.$resultEvent->ende->format('Y-m-d').'" rel="nofollow" itemprop="endDate" content="'.$resultEvent->ende->format('Y-m-d').'">'.$resultEvent->ende->format('d.m.Y').'</a>' : ''); ?>
        <?= ($resultEvent->ende->format('s') == '01' ? ' '.$resultEvent->ende->format('H:i').' Uhr' : ''); ?>
+    <?php endif; ?>
+    <?php if (!empty($resultEvent->children)) : ?>
+     <br /><strong><?= t('Weitere Termine:'); ?></strong><br />
+     <?php foreach ($resultEvent->children as $child) : ?>
+       
+     <?php endforeach; ?>
     <?php endif; ?>
     </p>
    </div>
