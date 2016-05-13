@@ -23,7 +23,7 @@
   font-style: normal; }
 
 *,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,input,textarea,p,blockquote,th,td {
-  font-family: "Open Sans", sans-serif;
+  /*font-family: "Open Sans", sans-serif;*/
   letter-spacing: normal;
   padding: 0px;
   margin: 0px;
@@ -32,6 +32,10 @@
   line-height: 1;
   box-sizing: border-box;
   list-style: none;
+}
+
+html, body {
+	font-family: "Open Sans", sans-serif;
 }
 
 .row {
