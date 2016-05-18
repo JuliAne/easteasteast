@@ -164,6 +164,7 @@ namespace Drupal\AaeData;
   protected function addMapContent($geoCord = '', $pointData = '', $markerData = '') {
 
     if (empty($geoCord)) $geoCord = $this->mapboxDefaultView;
+    
 
     drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
     drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js');

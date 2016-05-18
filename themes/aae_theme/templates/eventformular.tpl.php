@@ -31,7 +31,7 @@
 
   <div class="large-4 columns">
    <label><?= t('Eventwebsite'); ?>: <!--<?= $this->fehler['url']; ?>-->
-    <input type="text" id="eventURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= t('URL'); ?>">
+    <input type="url" id="eventURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= t('URL'); ?>">
    </label>
   </div>
 
@@ -53,13 +53,13 @@
 
    <div class="large-3 columns">
     <label>Start (Datum, <span class="pflichtfeld">Pflichtfeld</span>): <?= $this->fehler['start']; ?>
-     <input type="text" id="eventStartdatumInput" name="start" value="<?= $this->start; ?>" placeholder="<?= t("Starttag")." (yyyy-mm-dd)"; ?>" required/>
+     <input type="date" id="eventStartdatumInput" name="start" value="<?= $this->start; ?>" placeholder="<?= t("Starttag")." (yyyy-mm-dd)"; ?>" required/>
     </label>
    </div>
 
    <div class="large-3 columns">
     <label>Ende (Datum): <?= $this->fehler['ende']; ?>
-     <input type="text" id="eventEnddatumInput" name="ende" value="<?= ($this->ende != '1000-01-01' ? $this->ende : ''); ?>" placeholder="<?= t("Endtag")." (yyyy-mm-dd)"; ?>">
+     <input type="date" id="eventEnddatumInput" name="ende" value="<?= ($this->ende != '1000-01-01' ? $this->ende : ''); ?>" placeholder="<?= t("Endtag")." (yyyy-mm-dd)"; ?>">
     </label>
    </div>
 
@@ -71,22 +71,22 @@
 
    <div class="large-2 columns">
     <label>...Bis (Uhrzeit): <?= $this->fehler['zeit_bis']; ?>
-     <input type="text" id="eventZeitbisInput" name="zeit_bis" value="<?= ($this->hat_zeit_bis ? $this->zeit_bis : ''); ?>" placeholder="<?= t("Uhrzeit: hh:mm"); ?>">
+     <input type="text" id="eventZeitbisInput" name="zeit_bis" value="<?= ($this->hat_zeit_bis ? $this->zeit_bis : ''); ?>" placeholder="<?= t("Uhrzeit: hh:mm"); ?>" data-zdp_pair="#eventRecurresTill">
     </label>
    </div>
 
    <div class="switch large-2 columns" style="text-align:right;">
-    <input class="switch-input" id="eventRecurres" type="checkbox" name="eventRecurres"<?= (!empty($this->recurringEventType) || isset($_POST['eventRecurres']) ? ' checked="checked"' : ''); ?>>
+    <input class="switch-input" id="eventRecurres" type="checkbox" name="eventRecurres"<?= ($this->eventRecurres || isset($_POST['eventRecurres']) ? ' checked="checked"' : ''); ?>>
     <label class="switch-paddle" for="eventRecurres" title="<?= t('Sich wiederholendes Event?'); ?>">
     <span class="show-for-sr"><?= t('Sich wiederholendes Event?'); ?></span>
    </div>
 
    <div id="eventRecurresData" class="large-12 columns"<?= (!empty($this->recurringEventType) || isset($_POST['eventRecurres']) ? '' : ' style="display:none;"'); ?>>
 
-    <p class="large-12 columns licensetext"><strong>Wiederkehrende Veranstaltung.</strong> Beta-Feature: Einzelne Events können auf der Eventseite entfernt werden.</p>
+    <p class="large-12 columns licensetext"><strong>Wiederkehrende Veranstaltung.</strong> Beta-Feature! Setzt die Termine für einen abfolgenden Events-Rhytmus. Einzelne Termine auf der Eventseite entfernt werden.</p>
 
     <div class="large-4 left columns">
-     <label><?= t('Rhytmus:'); ?> <?= $this->fehler['ort']; ?>
+     <label><?= t('Rhytmus:'); ?> <?= $this->fehler['eventRecurres']; ?>
 
      <select id="eventRecurringType" name="eventRecurringType">
      <?php foreach ($recurringEventTypes as $key => $value) : ?>
@@ -97,7 +97,7 @@
 
     <div class="large-4 columns" style="float:left !important;">
      <label><?= t('Bis max. zum:'); ?> <?= $this->fehler['eventRecurresTill']; ?>
-      <input type="text" id="eventRecurresTill" name="eventRecurresTill" value="<?= (!$this->eventRecurresTill == '1000-01-01' ? $this->eventRecurresTill : ''); ?>" placeholder="<?= t("Endtag")." (yyyy-mm-dd)"; ?>">
+      <input type="date" id="eventRecurresTill" name="eventRecurresTill" value="<?= ($this->eventRecurresTill != '1000-01-01' ? $this->eventRecurresTill : ''); ?>" placeholder="<?= t("Endtag")." (yyyy-mm-dd)"; ?>">
      </label>
     </div>
 
@@ -130,7 +130,7 @@
 
    <div class="large-4 columns">
     <label>PLZ: <?= $this->fehler['plz']; ?>
-      <input type="text" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= t("PLZ"); ?>">
+      <input type="text" pattern="[0-9]{5}" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= t("PLZ"); ?>">
     </label>
    </div>
 
@@ -194,13 +194,17 @@
     <label><?= t('Kategorien:'); ?> <?= $this->fehler['sparten']; ?></label>
 
     <select id="eventSpartenInput" multiple="multiple" class="tokenize" name="sparten[]">
+      
+    <?php if (!empty($this->sparten)) : ?>
     <?php foreach ($this->sparten as $sparte) : ?>
      <?php if (is_array($sparte)) : ?>
       <option selected value="<?= $sparte[0]->KID; ?>"><?php echo $sparte[0]->kategorie; ?></option>
      <?php else : ?>
-      <option selected value="<?= $sparte; ?>"><?= $sparte; ?></option>
+     <?= var_dump($sparte); ?>
+      <option selected value="<?= $sparte->KID; ?>"><?= $sparte->kategorie; ?></option>
       <?php endif; ?>
     <?php endforeach;?>
+    <?php endif; ?>
 
     <?php foreach ($this->all_sparten as $sparte) : ?>
      <option value="<?php echo $sparte->KID; ?>"><?php echo $sparte->kategorie; ?></option>

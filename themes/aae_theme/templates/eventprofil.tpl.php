@@ -6,6 +6,21 @@
  overflow: hidden;
 }
 </style>
+<?php if ($this->isOwner) : ?>
+<script type="text/javascript">
+ function ajaxRemoveAppointment(elem,eid) {
+  $.ajax({
+    url: "../ajax/removeEvent/" + eid,
+   })
+  .done(function(data) {
+   alert(data);
+   if (data == '') {
+    $(elem).fadeOut('slow');
+   }
+  }
+ }
+</script>
+<?php endif; ?>
 <div id="eventprofil"<?= ($map) ? ' class="hasMap"' : ''; ?>>
 
 <?php
@@ -20,7 +35,7 @@
 
 <div class="aaeActionBar">
  <div class="row" style="margin: 0 auto;">
- <?php if ($okay) : ?>
+ <?php if ($this->isOwner) : ?>
   <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>eventprofil/<?= $resultEvent->EID; ?>/edit" title="<?= t('Event bearbeiten'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" /><?= t('Bearbeiten'); ?></a></div>
  <?php endif; ?>
   <div class="large-5 columns right" style="text-align: right;">
@@ -57,15 +72,18 @@
      <?php if ($resultEvent->ende->format('Ymd') !== '10000101' || $resultEvent->ende->format('s') == '01') : ?>
        <br /><strong style="color:rgb(96,94,94);">Bis: </strong>
        <?= ($resultEvent->ende->format('Ymd') !== '10000101' ? '<a href="'.base_path().'events/?day='.$resultEvent->ende->format('Y-m-d').'" rel="nofollow" itemprop="endDate" content="'.$resultEvent->ende->format('Y-m-d').'">'.$resultEvent->ende->format('d.m.Y').'</a>' : ''); ?>
-       <?= ($resultEvent->ende->format('s') == '01' ? ' '.$resultEvent->ende->format('H:i').' Uhr' : ''); ?>
+       <?= ($resultEvent->ende->format('s') == '01' ? ' '.$resultEvent->ende->format('H:i').' Uhr' : ''); ?></p>
     <?php endif; ?>
-    <?php if (!empty($resultEvent->children)) : ?>
-     <br /><strong><?= t('Weitere Termine:'); ?></strong><br />
-     <?php foreach ($resultEvent->children as $child) : ?>
-       
-     <?php endforeach; ?>
-    <?php endif; ?>
-    </p>
+    <?php if (!empty($resultEvent->childrenEvents)) : ?>
+     <ul style="padding-left:44px;">
+      <br /><strong><?= t('Weitere Termine:'); ?></strong><br />
+      <?php foreach ($resultEvent->childrenEvents as $event) : ?>
+       <?php $adminFeature = ($this->isOwner ? ' class="removeAppointment" title="'.t('Termin entfernen').'" onclick="javascript:ajaxRemoveAppointment('.$event->EID.');"' : ''); ?>
+       <li<?= $adminFeature; ?>><a href="<?= base_path().'events/?day='.$event->start->format('Y-m-d'); ?>" rel="nofollow">
+       <?= $event->start->format('d.m.Y'); ?></a></li>
+      <?php endforeach; ?>
+      </ul>
+     <?php endif; ?>
    </div>
 
 </div>
@@ -89,10 +107,10 @@
    </li>
   </ol>
 
- <?php if (!empty($sparten)) : ?>
+ <?php if (!empty($resultEvent->tags)) : ?>
   <aside id="eventSparten">
-  <?php foreach ($sparten as $row) : ?>
-     <a href="<?= base_path(); ?>events/?filterTags[]=<?= $row->KID; ?>" rel="nofollow" title="<?= t('Zeige alle mit !kategorie getaggten Events',array('!kategorie'=>$row->kategorie)); ?>">#<?= strtolower($row->kategorie); ?></a>
+  <?php foreach ($resultEvent->tags as $row) : ?>
+   <a href="<?= base_path(); ?>events/?filterTags[]=<?= $row->KID; ?>" rel="nofollow" title="<?= t('Zeige alle mit !kategorie getaggten Events',array('!kategorie'=>$row->kategorie)); ?>">#<?= strtolower($row->kategorie); ?></a>
   <?php endforeach; ?>
   </aside>
  <?php endif; ?>
@@ -107,37 +125,34 @@
  <h4 style="padding: 10px 0;">Veranstalter</h4>
   <section itemscope itemprop="location"  itemtype="http://schema.org/Place">
 
-  <?php if (!empty($resultAdresse->gps)) : $gps = explode(',', $resultAdresse->gps); ?>
+  <?php if (!empty($resultEvent->adresse->gps_lat)) : ?>
    <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-    <meta itemprop="latitude" content="<?= $gps[0]; ?>" />
-    <meta itemprop="longitude" content="<?= $gps[1]; ?>" />
+    <meta itemprop="latitude" content="<?= $resultEvent->adresse->gps_lat; ?>" />
+    <meta itemprop="longitude" content="<?= $resultEvent->adresse->gps_long; ?>" />
    </div>
-    <?php endif; ?>
+  <?php endif; ?>
 
-  <?php foreach ($ersteller as $row2) : ?>
-   <p><strong><?= t('Erstellt von'); ?>:</strong> <?= $row2->name; ?> am <?= $resultEvent->created->format('d.m.Y'); ?></p>
-  <?php endforeach; ?>
-
-   <?php if (empty($resultAkteur)) : ?>
+   <p><strong><?= t('Erstellt von'); ?>:</strong> <?= $resultEvent->ersteller->name; ?> am <?= $resultEvent->created->format('d.m.Y'); ?></p>
+   <?php if (empty($resultEvent->akteur)) : ?>
    <p><strong><?= t('Privater Veranstalter'); ?></strong></p>
    <?php else : ?>
-   <p><strong><?= t('Akteur'); ?>:</strong> <a href="<?= base_path(); ?>akteurprofil/<?= $resultAkteur['AID']; ?>" title="<?= t('Profil von !username besuchen',array('!username'=>$resultAkteur['name'])); ?>" itemprop="name"><?= $resultAkteur['name']; ?></a></p>
+   <p><strong><?= t('Akteur'); ?>:</strong> <a href="<?= base_path(); ?>akteurprofil/<?= $resultEvent->akteur->AID; ?>" title="<?= t('Profil von !username besuchen',array('!username'=> $resultEvent->akteur->name)); ?>" itemprop="name"><?= $resultEvent->akteur->name; ?></a></p>
    <?php endif; ?>
 
-   <?php if (!empty($resultAdresse)) : ?>
+   <?php if (!empty($resultEvent->adresse)) : ?>
     <div id="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
     <p><strong><?= t('Ort'); ?>:</strong>
 
-    <?php if (!empty($resultAdresse->strasse) && !empty($resultAdresse->nr)) : ?>
-     <span itemprop="streetAddress"><?= $resultAdresse->strasse.' '.$resultAdresse->nr; ?></span>
+    <?php if (!empty($resultEvent->adresse->strasse) && !empty($resultEvent->adresse->nr)) : ?>
+     <span itemprop="streetAddress"><?= $resultEvent->adresse->strasse.' '.$resultEvent->adresse->nr; ?></span>
     <?php endif; ?>
 
-   <?php if (!empty($resultAdresse->plz)) : ?>
-      - <span itemprop="postalCode"><?= $resultAdresse->plz; ?></span> <span itemprop="addressLocality">Leipzig</span>
+   <?php if (!empty($resultEvent->adresse->plz)) : ?>
+      - <span itemprop="postalCode"><?= $resultEvent->adresse->plz; ?></span> <span itemprop="addressLocality">Leipzig</span>
    <?php endif; ?>
 
-   <?php if (!empty($resultBezirk->bezirksname)) : ?>
-    <?= $resultBezirk->bezirksname; ?>
+   <?php if (!empty($resultEvent->adresse->bezirksname)) : ?>
+    <?= $resultEvent->adresse->bezirksname; ?>
    <?php endif; ?>
 
   </p><?php endif; ?>

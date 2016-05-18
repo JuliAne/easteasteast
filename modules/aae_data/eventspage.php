@@ -2,7 +2,7 @@
 /**
  * @file eventspage.php
  * Listet alle Events auf.
- * Filterbar nach Datum, Tags, keywords, Bezirken und Zeitraum
+ * Filterbar (via Model) nach Datum, Tags, keywords, Bezirken und Zeitraum
  */
 
 namespace Drupal\AaeData;
@@ -13,10 +13,12 @@ Class eventspage extends aae_data_helper {
  var $getOldEvents;
  var $hasFilters = false;
  var $filter = array();
- var $filteredEventIds = array();
- var $filteredTags = array();
- var $filteredBezirke = array();
- var $numFilters = 0;
+ 
+ public function __construct(){
+  require_once('models/events.php');
+  $this->events = new events();
+  parent::__construct();
+ }
 
  public function run(){
 
@@ -27,7 +29,7 @@ Class eventspage extends aae_data_helper {
   }
 
   if (isset($_GET['filterTags']) && !empty($_GET['filterTags'])) {
-   $this->filter['tags'] = $_GET['filterTags'];
+   $this->filter['tags'] = $_GET['filterTags']; # Becomes escaped in model
   }
 
   if (isset($_GET['filterKeyword']) && !empty($_GET['filterKeyword'])) {
@@ -35,148 +37,68 @@ Class eventspage extends aae_data_helper {
   }
 
   if (isset($_GET['filterBezirke']) && !empty($_GET['filterBezirke'])) {
-   $this->filter['bezirke'] = $_GET['filterBezirke'];
+   $this->filter['bezirke'] = $_GET['filterBezirke']; # Becomes escaped in model
+  }
+  
+  if (isset($_GET['timespan']) && !empty($_GET['timespan'])) {
+   # We get a ...?timespan=02.16-05.16&...
+   $timespan = explode('-',$this->clearContent($_GET['timespan']));
+   $begin = explode('.',$timespan[0]);
+   $end = explode('.',$timespan[1]);
+   
+   $start = array(
+    '0' => array(
+     'date' => (new \DateTime($begin[1].'-'.$begin[0].'-01'))->format('Y-m-d 00:00:00'),
+     'operator' => '>='
+    ),
+    '1' => array(
+     'date' => (new \DateTime(date('Y-m-t', mktime(0, 0, 0, $end[0]-1, 1, $end[1]))))->format('Y-m-d 23:59:59'),
+     'operator' => '<='
+    )
+   );
+   
   }
 
   // Paginator: Auf welcher Seite befinden wir uns?
   $explodedPath = explode("/", $this->clearContent(current_path()));
   $currentPageNr = ($explodedPath[1] == '') ? '1' : $explodedPath[1];
-
-  $this->getOldEvents = ($explodedPath[1] == 'old') ? true : false;
-
+  $orderBy = 'ASC';
+  
+  if (!isset($start)) {
+  
+   if ($explodedPath[1] == 'old') {
+     
+    $start = array(
+     '0' => array(
+      'date' => (new \DateTime(date()))->format('Y-m-d 00:00:00'),
+      'operator' => '<'
+     )
+    );
+    $orderBy = 'DESC';
+    $this->getOldEvents = 1;
+  
+  } else {
+  
+    $start = array(
+     '0' => array(
+      'date' => (new \DateTime(date()))->format('Y-m-d 00:00:00'),
+      'operator' => '>='
+     )
+    );
+   }
+   
+  }
+  
   //-----------------------------------
 
-  $resultTags = $this->getAllTags('events');
+  $resultTags = $this->events->getAllTags();
   $resultBezirke = $this->getAllBezirke('events');
-
-  // Filter nach Tags, falls gesetzt
-
-  if (isset($this->filter['tags'])){
-
-   $sparten = db_select($this->tbl_event_sparte, 'hs')
-    ->fields('hs', array('hat_EID'));
-
-   $and = db_and();
-
-   foreach ($this->filter['tags'] as $tag) {
-
-    $this->numFilters++;
-    $tag = $this->clearContent($tag);
-    $this->filteredTags[$tag] = $tag;
-    $and->condition('hat_KID', $tag, '=');
-
-   }
-
-   $filterSparten = $sparten->condition($and)
-    ->execute()
-    ->fetchAll();
-
-   foreach ($filterSparten as $sparte){
-    $this->filteredEventIds[] = $sparte->hat_EID;
-   }
-
-  } // end Tag-Filter
-
-  if (isset($this->filter['bezirke'])){
-
-   foreach ($this->filter['bezirke'] as $bezirk) {
-
-    $this->numFilters++;
-    $bezirkId = $this->clearContent($bezirk);
-    $this->filteredBezirke[$bezirkId] = $bezirkId;
-
-    $adressen = db_select($this->tbl_adresse, 'a')
-     ->fields('a', array('ADID'))
-     ->condition('bezirk', $bezirkId, '=')
-     ->execute()
-     ->fetchAll();
-
-    foreach ($adressen as $adresse) {
-     $filterBezirke = db_select($this->tbl_event, 'e')
-      ->fields('e', array('EID'))
-      ->condition('ort', $adresse->ADID)
-      ->execute()
-      ->fetchAll();
-
-     foreach ($filterBezirke as $bezirk) {
-      $this->filteredEventIds[] = $bezirk->EID;
-     }
-    }
-   }
-  } // end Bezirke-Filter
-
-  if (isset($this->filter['keyword'])) {
-
-   $this->numFilters++;
-   $or = db_or()
-   ->condition('name', '%'.$this->filter['keyword'].'%', 'LIKE')
-   ->condition('kurzbeschreibung', '%'.$this->filter['keyword'].'%', 'LIKE');
-
-   $filterKeyword = db_select($this->tbl_event, 'e')
-    ->fields('e', array('EID'))
-    ->condition($or)
-    ->execute()
-    ->fetchAll();
-
-   foreach ($filterKeyword as $keyword){
-    $this->filteredEventIds[] = $keyword->EID;
-   }
-
-  } // end Keyword-Filter
-
-  if (isset($this->filter['day'])) {
-
-   $this->numFilters++;
-
-   $resultDays = db_select($this->tbl_event, 'e')
-    ->fields('e', array('EID'))
-    ->condition('start_ts', $this->filter['day'].'%', 'LIKE')
-    ->execute()
-    ->fetchAll();
-
-   foreach ($resultDays as $day){
-    $this->filteredEventIds[] = $day->EID;
-   }
-  } // end Day-Filter
-
-  // Get the actual results
-  $this->filteredEventIds = $this->getDuplicates($this->filteredEventIds, $this->numFilters);
-  $this->hasFilters = ($this->numFilters >= 1) ? true : false;
-
-  // Auswahl aller Events in Reihenfolge ihres Starts
-  $rEvents = db_select($this->tbl_event, 'a')
-   ->fields('a')
-   ->orderBy('start_ts', 'ASC');
-
-  if ($this->getOldEvents) {
-
-   $rEvents->where('DATE(start_ts) < CURDATE()');
-   $rEvents->orderBy('start_ts', 'DESC');
-
-  } else if (!$this->getOldEvents && !$this->hasFilters) {
-   $rEvents->where('DATE(start_ts) >= CURDATE()');
+  
+  if (!empty($this->filter)) {
+   $resultEvents = $this->events->getEvents(array('filter' => $this->filter, 'start' => $start), 'normal', false, $orderBy);
+  } else {
+   $resultEvents = $this->events->getEvents(array('start' => $start), 'normal', false, $orderBy);
   }
-
-  if ($this->hasFilters && !empty($this->filteredEventIds)){
-
-   $or = db_or();
-
-   foreach ($this->filteredEventIds as $event){
-    $or->condition('EID', $event);
-   }
-
-   $rEvents->condition($or);
-
- } else if ($this->hasFilters && empty($this->filteredEventIds)) {
-
-   // No results :/
-   $rEvents->condition('name', 'assdf55asdf216we');
-
- }
-
-  $resultEvents = $rEvents->execute()->fetchAll();
-
-  $counter = 0;
 
   if ($this->presentationMode == 'calendar') {
 
@@ -186,71 +108,9 @@ Class eventspage extends aae_data_helper {
    $kal = new kalender();
    $resultKalender = $kal->show();
 
-  } else {
-
-  // Add specific data from other tables... we don't need no joins, yah'
-  foreach ($resultEvents as $event) {
-
-   if (!empty($event->parent_EID)){
-    $parentData = db_select($this->tbl_event,'e')->fields('e')->condition('EID', $event->parent_EID);
-    /*$resultEvents[$counter] = (isset($resultEvents[$event->parent_EID]) && !empty($resultEvents[$event->parent_EID]))
-    ? $resultEvents[$event->parent_EID]
-    : $parentData->execute()->fetchAll();*/
-    $resultEvents[$counter] = $parentData->execute()->fetchAssoc();
-    $event->EID = $event->parent_EID;
-   }
-
-    //Selektion der Tags
-    $resultSparten = db_select($this->tbl_event_sparte, 's')
-     ->fields('s', array( 'hat_KID' ))
-     ->condition('hat_EID', $event->EID, '=')
-     ->execute();
-
-    $countSparten = $resultSparten->rowCount();
-    $sparten = array();
-
-    if ($countSparten != 0) {
-
-     foreach ($resultSparten as $row) {
-      $resultSpartenName = db_select($this->tbl_sparte, 'sp')
-      ->fields('sp')
-      ->condition('KID', $row->hat_KID, '=')
-      ->execute();
-
-      foreach ($resultSpartenName as $row1) {
-       $sparten[] = $row1;
-      }
-     }
-    }
-
-    $akteurId = db_select($this->tbl_akteur_events, 'ae')
-     ->fields('ae', array('AID'))
-     ->condition('EID', $event->EID, '=')
-     ->execute()
-     ->fetchObject();
-
-    $resultAkteur = db_select($this->tbl_akteur, 'a')
-     ->fields('a',array('AID','name','bild'))
-     ->condition('AID', $akteurId->AID)
-     ->execute()
-     ->fetchAll();
-
-   // Hack: add variables to $resultEvents-object
-   $resultEvents[$counter] = (array)$resultEvents[$counter];
-   $resultEvents[$counter]['tags'] = $sparten;
-   $resultEvents[$counter]['akteur'] = $resultAkteur;
-   $resultEvents[$counter]['start'] = new \DateTime($event->start_ts);
-   $resultEvents[$counter]['ende'] = new \DateTime($event->ende_ts);
-   $resultEvents[$counter]['eventRecurringType'] = $event->recurring_event_type;
-   $resultEvents[$counter] = (object)$resultEvents[$counter];
-
-   $counter++;
-
-   }
   }
 
   $resultTagCloud = db_query_range('SELECT COUNT(*) AS count, s.KID, s.kategorie FROM {aae_data_sparte} s INNER JOIN {aae_data_event_hat_sparte} hs ON s.KID = hs.hat_KID GROUP BY hs.hat_KID HAVING COUNT(*) > 0 ORDER BY count DESC', 0, 8);
-
   $itemsCount = db_query("SELECT COUNT(EID) AS count FROM " . $this->tbl_event)->fetchField();
 
   // Ausgabe der Events

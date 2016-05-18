@@ -5,8 +5,8 @@ $(document).ready(function(){
     onRemoveToken : function(value, e){
 
      if((parseFloat(value) == parseInt(value)) && !isNaN(value)) {
-       $('form').append('<input type="hidden" name="removedTags[]" value="'+value+'" />');
-      }
+      $('form').append('<input type="hidden" name="removedTags[]" value="'+value+'" />');
+     }
 
     }
   });
@@ -24,11 +24,18 @@ $(document).ready(function(){
    }
   });
 
-  $("#eventStartdatumInput,#eventEnddatumInput").Zebra_DatePicker({'readonly_element' : false, format : 'Y-m-d'});
-
+  $("#eventStartdatumInput,#eventEnddatumInput,.page-events-new #eventRecurresTill,.page-eventprofil-edit #eventRecurresTill").Zebra_DatePicker({
+    readonly_element : false,
+    format : 'Y-m-d',
+    days : ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+    months : ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+    lang_clear_date : 'Löschen',
+    show_select_today : 'Heute'
+   });
+  
   $(document).on('change', '#eventBildInput,#akteurBildInput', function(){
    $(this).parent().find('label').html($(this).val());
-  } );
+  });
 
   if ($('#currentPic').length){
    $('#currentPic a').click(function(){

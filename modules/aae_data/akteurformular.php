@@ -9,6 +9,8 @@
  * und via ->run() aufgerufen.
  *
  */
+ 
+namespace Drupal\AaeData;
 
 Class akteurformular extends aae_data_helper {
 
@@ -646,8 +648,8 @@ drupal_add_html_head($og_title, 'og_title'); */
 	   $this->beschreibung = $row->beschreibung;
 	   $this->oeffnungszeiten = $row->oeffnungszeiten;
      $this->barrierefrei = $row->barrierefrei;
-     $this->created = new DateTime($row->created);
-     $this->modified = new DateTime($row->modified);
+     $this->created = new \DateTime($row->created);
+     $this->modified = new \DateTime($row->modified);
     }
 
     //Adressdaten aus DB holen:

@@ -7,7 +7,7 @@
 
 <?php if (!$this->freigabe) : ?>
 <div class="callout alert">
- <p>Akteur konnte nicht gespeichert werden, da folgende Fehler vorliegen:</p><br />
+ <p><?= t('Akteur konnte nicht gespeichert werden, da folgende Fehler vorliegen:'); ?></p><br />
   <?php foreach($this->fehler as $f) : ?>
     <p><strong><?= $f; ?></strong></p>
   <?php endforeach; ?>
@@ -21,30 +21,30 @@
     <div class="large-6 columns">
       <?= $this->fehler['name']; ?>
       <label>Name <span class="pflichtfeld">(Pflichtfeld)</span>:
-        <input type="text" id="akteurNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= $this->ph_name; ?>" required>
+        <input type="text" id="akteurNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= $this->ph_name; ?>" required />
       </label>
     </div>
 
     <div class="large-6 columns">
      <label>Email-Adresse <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['email']; ?>
-      <input type="email" id="akteurEmailInput" name ="email" value="<?= $this->email; ?>" placeholder="<?= $this->ph_email; ?>" required>
+      <input type="email" id="akteurEmailInput" name="email" value="<?= $this->email; ?>" placeholder="<?= $this->ph_email; ?>" required />
      </label>
     </div>
 
  </div><!-- /.row -->
 
   <fieldset class="Adresse fieldset row">
-   <legend>Adresse</legend>
+   <legend><?= t('Adresse'); ?></legend>
 
    <div class="large-4 columns">
     <label>Straße: <?= $this->fehler['strasse']; ?>
-     <input type="text" id="StrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= $this->ph_strasse; ?>">
+     <input type="text" id="StrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= $this->ph_strasse; ?>" />
     </label>
    </div>
 
    <div class="large-1 columns">
     <label>Nr.: <?= $this->fehler['nr']; ?>
-     <input type="text" id="NrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= $this->ph_nr; ?>">
+     <input type="text" id="NrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= $this->ph_nr; ?>" />
     </label>
    </div>
 
@@ -52,11 +52,11 @@
     <label>Adresszusatz: <?= $this->fehler['adresszusatz']; ?>
      <input type="text" id="AdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= $this->ph_adresszusatz; ?>">
     </label>
-   </div>
+   </div> 
 
    <div class="large-3 columns">
     <label>PLZ: <?= $this->fehler['plz']; ?>
-      <input type="text" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= $this->ph_plz; ?>">
+      <input type="text" pattern="[0-9]{5}" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= $this->ph_plz; ?>">
     </label>
    </div>
 
@@ -151,7 +151,7 @@
         <img src="<?= base_path().path_to_theme(); ?>/img/rss.svg" style="width:18px;float:left;margin-right:10px;" />
         <p>Hier haben Sie die Möglichkeit, einen bestehenden <strong>RSS-Feed</strong> (bspw. ihres Blogs) in das Profil einzubinden.</p>
         <p class="licensetext" style="padding-bottom: 8px;">Hinweis: Nicht mit diesem Profil zusammenhängende Feeds können ggf. entfernt werden. Eine Aktualisierung des Feeds erfolgt im Tagestakt.</p>
-        <input type="text" name="rssFeed" placholder="URL zum RSS-Feed" value="<?= $this->rssFeed->url; ?>" />
+        <input type="url" name="rssFeed" placholder="URL zum RSS-Feed" value="<?= $this->rssFeed->url; ?>" />
       </div>
 
       <div class="tabs-panel" id="psonstiges">
@@ -164,7 +164,7 @@
 
         <div class="large-4 columns">
          <label><?= t('Projektwebsite'); ?>: <?= $this->fehler['url']; ?>
-          <input type="text" id="akteurURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= $this->ph_url; ?>">
+          <input type="url" id="akteurURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= $this->ph_url; ?>">
          </label>
         </div>
 

@@ -6,7 +6,7 @@
   ); ?>
  
 <header id="eventsPageHeader" class="pageHeader">
-  <h2><?= $itemsCount; ?> Veranstaltungen/Events <a href="<?= base_path(); ?>events/rss" title="Alle Events als RSS-Feed"><img id="svg_logo" src="<?= base_path().path_to_theme(); ?>/img/rss.svg" /></a></h2>
+  <h2><?= $itemsCount; ?> Veranstaltungen/Events <a href="<?= base_path(); ?>events/rss" title="<?= t('Alle Events als RSS-Feed'); ?>"><img id="svg_logo" src="<?= base_path().path_to_theme(); ?>/img/rss.svg" /></a></h2>
   <p>Finde Workshops, Kreativwerkstätten, Märkte, Versammlungen und mehr.</p>
 </header>
 
@@ -15,17 +15,17 @@
   <aside class="aae-sidebar large-3 columns right">
 
   <?php if(user_is_logged_in()) : ?>
-   <a class="medium button hollow round larg-12 columns" href="<?= base_path(); ?>events/new">+ Event hinzufügen</a><br />
+   <a class="medium button hollow round larg-12 columns" href="<?= base_path(); ?>events/new"><?= t('+ Event hinzufügen'); ?></a><br />
   <?php else : ?>
-   <a class="login_first medium button hollow round large-12 columns" href="<?= base_path(); ?>user/login" title="Bitte zunächst einloggen.">+ Event hinzufügen (Login)</a><br />
+   <a class="login_first medium button hollow round large-12 columns" href="<?= base_path(); ?>user/login" title="<?= t('Bitte zunächst einloggen.'); ?>"><?= t('+ Event hinzufügen'); ?> (<?= t('Login'); ?>)</a><br />
    <?php endif; ?>
 
   <div id="filter" class="large-12 columns">
 
    <div class="large-12 columns" id="removeFilter">
-    <h4 class="left">Filter</h4>
-    <a class="small button right hide-for-medium" style="padding:4px 10px;margin-left:5px;" href="#" title="Zeige Filter" onclick="javascript:$('#filter .large-12').slideDown(400);">&#x25BE;</a>
-    <a class="small secondary button right" style="padding:4px 10px;" href="<?= base_path(); ?>events/" title="Alle Filter entfernen">X</a>
+    <h4 class="left"><?= t('Filter'); ?></h4>
+    <a class="small button right hide-for-medium" style="padding:4px 10px;margin-left:5px;" href="#" title="<?= t('Zeige Filter'); ?>" onclick="javascript:$('#filter .large-12').slideDown(400);">&#x25BE;</a>
+    <a class="small secondary button right" style="padding:4px 10px;" href="<?= base_path(); ?>events/" title="<?= t('Alle Filter entfernen.'); ?>">X</a>
     <div class="divider"></div>
    </div>
 
@@ -33,30 +33,30 @@
 
     <form id="filterForm" method="GET" action="<?= base_path(); ?>events">
 
-     <label for="filterKeyword">Schlagwort:</label>
+     <label for="filterKeyword"><?= t('Schlagwort:'); ?></label>
      <input name="filterKeyword" id="filterKeywordInput" type="text" <?= (isset($this->filter['keyword']) ? 'value="'.$this->filter['keyword'].'"' : ''); ?>/>
 
-     <label for="filterTags">Tags:</label>
+     <label for="filterTags"><?= t('Tags:'); ?></label>
      <select name="filterTags[]" id="eventSpartenInput" multiple="multiple" class="tokenize">
      <?php foreach ($resultTags as $tag) : ?>
-       <option value="<?= $tag->KID; ?>"<?= ($this->filteredTags[$tag->KID] == $tag->KID ? ' selected="selected"' : ''); ?>><?= $tag->kategorie; ?></option>
+      <option value="<?= $tag->KID; ?>"<?= (in_array($tag->KID,$this->filter['tags']) ? ' selected="selected"' : ''); ?>><?= $tag->kategorie; ?></option>
      <?php endforeach; ?>
      </select>
 
    </div>
    <div class="large-12 columns">
 
-     <label for="filterBezirke">Bezirke:</label>
+     <label for="filterBezirke"><?= t('Bezirke:'); ?></label>
      <select name="filterBezirke[]" id="eventBezirkInput" multiple="multiple" class="tokenize">
      <?php foreach ($resultBezirke as $bezirk) : ?>
-       <option value="<?= $bezirk->BID; ?>"<?php echo ($this->filteredBezirke[$bezirk->BID] == $bezirk->BID ? ' selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
+      <option value="<?= $bezirk->BID; ?>"<?= (in_array($bezirk->BID,$this->filter['bezirke']) ? ' selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
      <?php endforeach; ?>
    </select>
 
    </div>
    <div id="timespace" class="large-12 columns">
 
-    <label>Zeitraum:</label>
+    <label><?= t('Zeitraum:'); ?></label>
 
     <div class="slider" data-slider>
      <span class="slider-handle sh-1" data-slider-handle role="slider" tabindex="1"></span>
@@ -72,13 +72,13 @@
 
        for ($i=0; $i<= 6; $i++) {
         $month = ($curMonth + $i > 12) ? ($curMonth-12) + $i : $curMonth + $i;
-        echo '<li class="'.$this->monat_short[($month < 10 ? '0' : '').$month].'">'.$this->monat_short[($month < 10 ? '0' : '').$month].'</li>';
+        echo '<li data-month="'.($month < 10 ? '0' : '').$month.'.'.($month < $curMonth ? date('Y')+1 : date('Y')).'">'.$this->monat_short[($month < 10 ? '0' : '').$month].'</li>';
        } ?>
      </ul>
     </div>
 
     <div class="large-12 columns">
-     <input type="submit" class="medium button large-12 columns" id="eventSubmit" name="submit" value="Filter anwenden">
+     <input type="submit" class="medium button large-12 columns" id="eventSubmit" name="submit" value="<?= t('Filter anwenden'); ?>">
     </div>
 
    </form>
@@ -90,20 +90,20 @@
    <ul class="tabs" id="events-tabs" style="margin-bottom:22px;">
     <li class="tabs-title<?= ($this->getOldEvents || $this->hasFilters ? '' : ' is-active'); ?>"><a href="<?= base_path(); ?>events"<?= ($this->getOldEvents || $this->hasFilters ? '' : ' aria-selected="true"'); ?>>Demnächst</a></li>
     <li class="tabs-title<?= ($this->getOldEvents && !$this->hasFilters ? ' is-active' : ''); ?>"><a href="<?= base_path(); ?>events/old"<?= ($this->getOldEvents ? ' aria-selected="true"' : ''); ?>>Vergangene Events</a></li>
-    <?php if ($this->hasFilters) : ?><li class="tabs-title is-active"><a href="#" aria-selected="true">Filterergebnisse (<?= count($resultEvents); ?>)</a></li><?php endif; ?>
+    <?php if (!empty($this->filters)) : ?><li class="tabs-title is-active"><a href="#" aria-selected="true"><?= t('Filterergebnisse'); ?> (<?= count($resultEvents); ?>)</a></li><?php endif; ?>
      <!--label>Darstellung:</label>//$_SERVER[REQUEST_URI];-->
     <ul id="presentationFilter" class="button-group round large-3 columns right">
-     <li><a href="<?= base_path(); ?>events" name="timeline" class="small button <?php echo ($this->presentationMode !== 'calendar' ? 'active' : 'secondary'); ?>" title="Darstellung als Timeline"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
-     <li><a href="<?= base_path(); ?>events/?presentation=calendar" name="kalender" class="small button <?php echo ($this->presentationMode == 'calendar' ? 'active' : 'secondary'); ?>" title="Darstellung als Kalender"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
+     <li><a href="<?= base_path(); ?>events" name="timeline" class="small button <?php echo ($this->presentationMode !== 'calendar' ? 'active' : 'secondary'); ?>" title="<?= t('Darstellung als Timeline'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
+     <li><a href="<?= base_path(); ?>events/?presentation=calendar" name="kalender" class="small button <?php echo ($this->presentationMode == 'calendar' ? 'active' : 'secondary'); ?>" title="<?= t('Darstellung als Kalender'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
     </ul>
 
    </ul>
 
  <?php if (isset($resultKalender) && !empty($resultKalender)) : ?>
 
-   <div id="aae_calendar">
+  <div id="aae_calendar">
    <?= $resultKalender; ?>
-   </div>
+  </div>
 
  <?php elseif (is_array($resultEvents) && !empty($resultEvents)) : ?>
   <?php foreach($resultEvents as $key => $event): ?>
@@ -135,15 +135,14 @@
    </div>
 
    <div class="akteurData large-10 columns">
-   <?php foreach ($event->akteur as $akteur) : ?>
-    <p><a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil von !username', array('!username' => $akteur->name)); ?>"><img src="<?= $akteur->bild; ?>" /><?= $akteur->name; ?></a></p>
-   <?php endforeach; ?>
+    <p><a href="<?= base_path().'akteurprofil/'.$event->akteur->AID; ?>" title="<?= t('Akteurprofil von !username', array('!username' => $event->akteur->name)); ?>"><img src="<?= $event->akteur->bild; ?>" /><?= $event->akteur->name; ?></a></p>
    </div>
+   
   </div>
  <?php endforeach; else : ?>
 
-   <p style="text-align:center;">Es wurden leider keine Events mit diesen Angaben gefunden...</p>
-   <p style="text-align:center;"><a href="<?= base_path(); ?>events">Alle Filter entfernen.</a></p>
+   <p style="text-align:center;"><?= t('Es wurden leider keine Events mit diesen Angaben gefunden...'); ?></p>
+   <p style="text-align:center;"><a href="<?= base_path(); ?>events"><?= t('Alle Filter entfernen.'); ?></a></p>
 
  <?php endif; ?>
 
@@ -155,7 +154,7 @@
 
     <?php for ($i=1; $i<=$maxPages; $i++) {
      if ($i == $currentPageNr) echo '<li class="current"><a href="#">'.$i.'</a></li>';
-     else echo '<li><a href="'.base_path().'Events/'.$i.'">'.$i.'</a></li>';
+     else echo '<li><a href="'.base_path().'events/'.$i.'">'.$i.'</a></li>';
      //<!-- <li class="unavailable"><a href="">&hellip;</a></li>-->
      } ?>
 
@@ -165,10 +164,10 @@
 
   <div class="large-12 columns">
 
-    <div class="divider"></div>
+   <div class="divider"></div>
 
    <aside class="tagcloud">
-    <h4><img class="cloudimg" src="<?= base_path().path_to_theme(); ?>/img/cloud.svg" />Tagcloud</h4>
+    <h4><img class="cloudimg" src="<?= base_path().path_to_theme(); ?>/img/cloud.svg" /><?= t('Populäre Tags'); ?></h4>
 
     <?php foreach ($resultTagCloud as $tag) : ?>
       <a class="tagc-<?= ($tag->count >= 5 ? '5' : $tag->count); ?> tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow">#<?= $tag->kategorie; ?></a>

@@ -59,12 +59,18 @@ class kalender extends aae_data_helper {
        $content .= '<div class="clear"></div>';
        $content .= '<ul class="dates">';
 
-
        $eventsResults = $this->events->getEvents(array(
-        'start_ts' => (new \DateTime($this->year.'-'.$this->month.'-01'))->format('Y-m-d 00:00:00'),
-        //THE FOLLOWING LINE NEEDS A REVIEW / COULD BE REUSED FOR EVENTS THAT ARE LONGER THAN 1 DAY
-        //'ende_ts' => (new \DateTime(date('Y-m-t', mktime(0, 0, 0, $this->month, 1, $this->year))))->format('Y-m-d 23:59:59'),
-       ), array('start_ts', 'name'));
+        'start' => array(
+          '0' => array(
+           'date' => (new \DateTime($this->year.'-'.$this->month.'-01'))->format('Y-m-d 00:00:00'),
+           'operator' => '>='
+          ),
+          '1' => array(
+           'date' => (new \DateTime(date('Y-m-t', mktime(0, 0, 0, $this->month, 1, $this->year))))->format('Y-m-d 23:59:59'),
+           'operator' => '<='
+          )
+        )
+       ), 'minimal');
 
       // Sort'em
       foreach ($eventsResults as $eventData) {

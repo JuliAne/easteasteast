@@ -532,6 +532,10 @@ function ajax_requests($id) {
    case ('getKalender') :
     $request->getKalender();
    break;
+   
+   case ('removeEvent') :
+    $request->removeEvent($id);
+   break;
 
    default :
     // U mad? Unbekannter Funktionsaufruf, weg damit...

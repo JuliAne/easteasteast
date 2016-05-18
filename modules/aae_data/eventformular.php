@@ -9,29 +9,42 @@
  */
 
 namespace Drupal\AaeData;
-use Drupal\AaeData\events;
+#use Drupal\AaeData\events;
 
 Class eventformular extends aae_data_helper {
 
-  #var $uses = array('events');
+  var $event_id = '';
+  var $name = '';
+  var $veranstalter = '';
+  var $start = ''; # day-start
+  var $ende = ''; # day-end
+  var $zeit_von = ''; # time-start
+  var $zeit_bis = ''; # time-end
+  var $hat_zeit_von = true;
+  var $hat_zeit_bis = true;
+  var $bild = '';
+  var $kurzbeschreibung = '';
+  var $url = '';
+  var $created = '';
+  var $modified = '';
 
   //$tbl_adresse
-  var $strasse = "";
-  var $nr = "";
-  var $adresszusatz = "";
-  var $plz = "";
-  var $ort = "";
-  var $gps = "";
-  var $adresse = "";
+  /*var $strasse = '';
+  var $nr = '';
+  var $adresszusatz = '';
+  var $plz = '';
+  var $ort = '';
+  var $gps = '';*/
+  var $adresse = '';
 
   //$tbl_sparte
-  var $sparten = "";
+  var $sparten = '';
   var $all_sparten = ''; // Zur Darstellung des tokenizer (#akteurSpartenInput)
 
   var $freigabe = true;   //Variable zur Freigabe: muss true sein
   var $fehler = array(); // In diesem Array werden alle Fehler gespeichert
 
-  var $event_id;
+  var $akteur_id;
   var $resultakteure;
   var $resultbezirke;
   var $target = '';
@@ -63,9 +76,8 @@ Class eventformular extends aae_data_helper {
    */
   public function run() {
 
-    $path = current_path();
-    $explodedpath = explode("/", $path);
-    $this->event->event_id = $explodedpath[1];
+    $explodedpath = explode("/", current_path());
+    $this->event_id = $this->clearContent($explodedpath[1]);
     $output = '';
 
     if (isset($_POST['submit'])) {
@@ -91,11 +103,11 @@ Class eventformular extends aae_data_helper {
 
   /**
    * Wird ausgeführt, wenn auf "Speichern" gedrückt wird
-   * @returns $this->freigabe
+   * @return $this->freigabe : boolean
    */
   private function eventCheckPost() {
 
-    $this->event->name = $this->clearContent($_POST['name']);
+    $this->name = $this->clearContent($_POST['name']);
     $this->veranstalter = $this->clearContent($_POST['veranstalter']);
     $this->start = $this->clearContent($_POST['start']);
     $this->url = $this->clearContent($_POST['url']);
@@ -116,6 +128,7 @@ Class eventformular extends aae_data_helper {
     $this->eventRecurres = $this->clearContent($_POST['eventRecurres']);
     $this->eventRecurringType = $this->clearContent($_POST['eventRecurringType']);
     $this->eventRecurresTill = $this->clearContent($_POST['eventRecurresTill']);
+
     //-------------------------------------
 
     if (empty($this->name)) {
@@ -123,17 +136,17 @@ Class eventformular extends aae_data_helper {
 	   $this->freigabe = false;
     }
 
-    if (strlen($this->start) != 0 && \DateTime::createFromFormat('Y-m-d', $this->start) == false) {
+    if (strlen($this->start) != 0 && $this->__validateDate($this->start) === false) {
       $this->fehler['start'] = t("Bitte ein (gültiges) Startdatum angeben!");
       $this->freigabe = false;
     }
 
-    if (strlen($this->ende) != 0 && \DateTime::createFromFormat('Y-m-d', $this->ende) == false) {
+    if (strlen($this->ende) != 0 && $this->__validateDate($this->ende) === false) {
       $this->fehler['ende'] = t("Bitte ein (gültiges) Enddatum angeben!");
       $this->freigabe = false;
     }
 
-    if (strlen($this->eventRecurresTill) != 0 && \DateTime::createFromFormat('Y-m-d', $this->eventRecurresTill) == false) {
+    if (strlen($this->eventRecurresTill) != 0 && $this->__validateDate($this->eventRecurresTill) === false) {
       $this->fehler['eventRecurresTill'] = t("Bitte ein (gültiges) Maximaldatum angeben!");
       $this->freigabe = false;
     }
@@ -147,13 +160,13 @@ Class eventformular extends aae_data_helper {
      $this->fehler['kurzbeschreibung'] = t("Ein paar Beschreibungs-Zeilen werden Dir einfallen...");
      $this->freigabe = false;
     }
-
-    if (!empty($this->zeit_von) && \DateTime::createFromFormat('H:i', $this->zeit_von) == false) {
+   
+    if (!empty($this->zeit_von) && $this->__validateDate($this->zeit_von, 'H:i') === false) {
      $this->fehler['zeit_von'] = t("Bitte eine (gültige) Start-Uhrzeit angeben!");
      $this->freigabe = false;
     }
 
-    if (!empty($this->zeit_bis) && \DateTime::createFromFormat('H:i', $this->zeit_bis) == false) {
+    if (!empty($this->zeit_bis) && $this->__validateDate($this->zeit_bis, 'H:i') === false) {
      $this->fehler['zeit_bis'] = t("Bitte eine (gültige) End-Uhrzeit angeben!");
      $this->freigabe = false;
     }
@@ -233,7 +246,7 @@ Class eventformular extends aae_data_helper {
 
       $spartenName = db_select($this->tbl_sparte, 's')
        ->fields('s', array('kategorie'))
-       ->condition('KID', $sparte, '=')
+       ->condition('KID', $sparte)
        ->execute()
        ->fetchObject();
 
@@ -268,15 +281,9 @@ Class eventformular extends aae_data_helper {
 	  ->condition('bezirk', $this->ort, '=')
 	  ->execute();
 
-  /*  TODO Felix: Überarbeite Funktion zum Adresspeichern
-     $resultEvent = db_select($this->tbl_event, 'e')
-     ->fields('ort') = ADID
-     ->condition('EID', $this->event_id)
-     ->execute(); */
+  /*  TODO Felix: Überarbeite Funktion zum Adresspeichern */
 
-    $i = $this->resultAdresse->rowCount();
-
-    if ($i == 0) {
+    if ($this->resultAdresse->rowCount() == 0) {
      // Adresse nicht vorhanden
      $gps = explode(',', $this->gps, 2);
 
@@ -295,6 +302,8 @@ Class eventformular extends aae_data_helper {
     } else {
       // Adresse bereits vorhanden
       foreach ($this->resultAdresse as $row) {
+      // TODO CHECK: $first call $this->resultAdresse->fetchObject()?
+        
 	    // Abfrage, ob GPS-Angaben gemacht wurden
         if (strlen($this->gps) != 0 && strlen($row->gps) == 0 ) {
         //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
@@ -317,7 +326,7 @@ Class eventformular extends aae_data_helper {
   } else if (isset($_POST['oldPic'])) {
    $this->bild = $this->clearContent($_POST['oldPic']);
   }
-
+  
   // remove current picture manually
 
   if (!empty($this->removedPic)) {
@@ -330,11 +339,43 @@ Class eventformular extends aae_data_helper {
    if ($_POST['oldPic'] == $this->removedPic)
      $this->bild = '';
 
-  }
+  }    
 
   $startQuery = $this->start.' '.(!empty($this->zeit_von) ? $this->zeit_von.':01' : '00:00:00');
   $endeQuery  = (!empty($this->ende) ? $this->ende : '1000-01-01').' '.(!empty($this->zeit_bis) ? $this->zeit_bis.':01' : '00:00:00');
+  
+  // Has event children? Which type? Set them new?
+  $eventStatus = db_select($this->tbl_event, 'e')
+   ->fields('e', array('start_ts','ende_ts','recurring_event_type','event_recurres_till'))
+   ->condition('EID', $this->event_id, '=')
+   ->execute();
+   
+  $status = $eventStatus->fetchObject();
+  
+  if ($this->eventRecurres == 'on' && (($status->recurring_event_type != $this->eventRecurringType) 
+                                        || ((new \DateTime($status->event_recurres_till))->format('Y-m-d') != $this->eventRecurresTill)
+                                        || ($status->start_ts != $startQuery)
+                                        || ($status->ende_ts != $endeQuery))) {
+                                          
+   // Repeat-staus or any dates changed: Recreate child-events with new params
+   $this->event->removeEventChildren($this->event_id);
+   $recurresTill = (!empty($this->eventRecurresTill)) ? (new \DateTime($this->eventRecurresTill))->format('Y-m-d') : NULL;
+   $this->event->addEventChildren($this->event_id, $this->eventRecurringType, $startQuery, $endeQuery, $recurresTill);
 
+  } else if ($this->eventRecurres != 'on' && $status->recurring_event_type >= 2) {
+   
+   // "Event recurres"   turned off
+   $this->event->removeEventChildren($this->event_id);
+   $this->eventRecurringType = NULL;
+   
+  } else if ($this->eventRecurres == 'on' && empty($status->recurring_event_type)){
+    
+    // "Event recurres" turned on -> Create Event Children
+    $recurresTill = (!empty($this->eventRecurresTill)) ? (new \DateTime($this->eventRecurresTill))->format('Y-m-d') : NULL;
+    $this->event->addEventChildren($this->event_id, $this->eventRecurringType, $startQuery, $endeQuery, $recurresTill);
+   
+  }
+  
 	$eventUpdate = db_update($this->tbl_event)
    ->fields(array(
 		'name' => $this->name,
@@ -344,6 +385,7 @@ Class eventformular extends aae_data_helper {
 		'ende_ts' => $endeQuery,
 		'bild' => $this->bild,
 		'kurzbeschreibung' => $this->kurzbeschreibung,
+    'recurring_event_type' => $this->eventRecurringType,
     'modified' => date('Y-m-d H:i:s', time())
 	 ))
 	 ->condition('EID', $this->event_id, '=')
@@ -369,17 +411,6 @@ Class eventformular extends aae_data_helper {
 
      }
     }
-
-    // If eventRecurringType or eventMaxRecurr changes
-    if ($this->eventRecurres && !empty($this->eventRecurringType)) {
-
-     // $this->event->__removeEventChildren($this->event->event_id)
-     // recreate new
-    }
-    // if eventRecurres set to false
-    // $this->event->__removeEventChildren($this->event->event_id)
-    //...
-
 
     // Update Tags
     if (is_array($this->sparten) && !empty($this->sparten)) {
@@ -448,87 +479,44 @@ Class eventformular extends aae_data_helper {
    */
   private function eventGetFields() {
 
-    $resultEvent = db_select($this->tbl_event, 'e')
-     ->fields('e')
-	   ->condition('EID', $this->event_id)
-     ->execute();
-
+    $resultEvent = $this->event->GetEvents(array('EID' => $this->event_id), 'complete');
+    
     foreach ($resultEvent as $row) {
-     $startTime = new \DateTime($row->start_ts);
-     $endeTime  = new \DateTime($row->ende_ts);
-     $maxRecurreTime = new \DateTime($row->event_recurres_till);
-     $this->hat_zeit_von = ($startTime->format('s') == '01') ? true : false;
-     $this->hat_zeit_bis = ($endeTime->format('s') == '01') ? true : false;
-
+     $this->akteur_id = $row->akteur->AID;
+     $this->hat_zeit_von = ($row->start->format('s') == '01') ? true : false;
+     $this->hat_zeit_bis = ($row->ende->format('s') == '01') ? true : false;
      $this->name = $row->name;
      $this->ort = $row->ort;
-     $this->start = $startTime->format('Y-m-d');
-     $this->ende = $endeTime->format('Y-m-d');
-     $this->zeit_von = $startTime->format('H:i');
-     $this->zeit_bis = $endeTime->format('H:i');
+     $this->start = $row->start->format('Y-m-d');
+     $this->ende = $row->ende->format('Y-m-d');
+     $this->zeit_von = $row->start->format('H:i');
+     $this->zeit_bis = $row->ende->format('H:i');
      $this->url = $row->url;
      $this->bild = $row->bild;
      $this->kurzbeschreibung = $row->kurzbeschreibung;
-     $this->created = new \DateTime($row->created);
-     $this->modified = new \DateTime($row->modified);
+     $this->created = $row->created;
+     $this->modified = $row->modified;
+     $this->eventRecurres = ($row->recurring_event_type >= 1);
      $this->recurringEventType = $row->recurring_event_type;
-     $this->eventRecurresTill = $maxRecurreTime->format('Y-m-d');
+     $this->eventRecurresTill = $row->eventRecurresTill->format('Y-m-d');
+     #$this->childrenEvents = $row->childrenEvents
+     $this->strasse = $row->adresse->strasse;
+	   $this->nr = $row->adresse->nr;
+	   $this->adresszusatz = $row->adresse->adresszusatz;
+	   $this->plz = $row->adresse->plz;
+	   $this->ort = $row->adresse->bezirk;
+	   $this->gps = (!empty($row->adresse->gps_lat)) ? $row->adresse->gps_lat.','.$row->adresse->gps_long : '';
     }
+    
+    $this->sparten = $this->event->getTags($this->event_id);
 
-    $resultVeranstalter = db_select($this->tbl_akteur_events, 'a')
-     ->fields('a', array( 'AID' ))
-	   ->condition('EID', $this->event_id, '=')
-     ->execute();
-
-     foreach ($resultVeranstalter as $row) {
-      $this->veranstalter = $row->AID;
-     }
-
-    $akteur_id = $this->veranstalter;
-
-    //Adressdaten aus DB holen:
-    $this->resultAdresse = db_select($this->tbl_adresse, 'd')
-     ->fields('d')
-	   ->condition('ADID', $this->ort, '=')
-     ->execute();
-
-    //Speichern der Adressdaten in den Arbeitsvariablen
-    foreach ($this->resultAdresse as $row) {
-	   $this->strasse = $row->strasse;
-	   $this->nr = $row->nr;
-	   $this->adresszusatz = $row->adresszusatz;
-	   $this->plz = $row->plz;
-	   $this->ort = $row->bezirk;
-	   $this->gps = $row->gps_lat.','.$row->gps_long;
-    }
-
-    $resultSparten = db_select($this->tbl_event_sparte, 'es')
-     ->fields('es')
-     ->condition('hat_EID', $this->event_id, '=')
-     ->execute()
-     ->fetchAll();
-
-    $sparten = array();
-
-    foreach($resultSparten as $sparte) {
-
-     $sparten[] = db_select($this->tbl_sparte, 's')
-     ->fields('s')
-     ->condition('KID', $sparte->hat_KID, '=')
-     ->execute()
-     ->fetchAll();
-
-    }
-
-    $this->sparten = $sparten;
-
-  } // END function eventUpdaten()
+  } // END function eventGetFields()
 
 
   private function eventSpeichern() {
 
    if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
-    // TODO $this->check_image_compatibility($_FILES['bild'])
+    // TODO $this->__check_image_compatibility($_FILES['bild'])
     $this->bild = $this->upload_image($_FILES['bild']);
    }
 
@@ -584,7 +572,7 @@ Class eventformular extends aae_data_helper {
 
   $startQuery = $this->start.' '.(!empty($this->zeit_von) ? $this->zeit_von.':01' : '00:00:00');
   $endeQuery  = (!empty($this->ende) ? $this->ende : '1000-01-01').' '.(!empty($this->zeit_bis) ? $this->zeit_bis.':01' : '00:00:00');
-
+  
 	$this->event_id = db_insert($this->tbl_event)
    ->fields(array(
 		'name' => $this->name,
@@ -596,8 +584,8 @@ Class eventformular extends aae_data_helper {
 		'kurzbeschreibung' => $this->kurzbeschreibung,
 		'ersteller' => $this->user_id,
     'created' => date('Y-m-d H:i:s', time()),
-    'recurring_event_type' => ($this->eventRecurres && !empty($this->eventRecurringType) ? '1' : NULL),
-    'event_recurres_till' => ($this->eventRecurres && !empty($this->eventRecurresTill) ? $this->eventRecurresTill : '1000-01-01 00:00:00')
+    'recurring_event_type' => ($this->eventRecurres && !empty($this->eventRecurringType) ? $this->eventRecurringType : NULL),
+    'event_recurres_till' => ($this->eventRecurres && !empty($this->eventRecurresTill) ? $this->eventRecurresTill.' 00:00:00' : '1000-01-01 00:00:00')
 	  ))
 	 ->execute();
 
@@ -614,7 +602,9 @@ Class eventformular extends aae_data_helper {
   	}
 
     if (is_array($this->sparten) && !empty($this->sparten)) {
-
+      
+     $this->sparten = array_unique($this->sparten);
+     
      foreach ($this->sparten as $id => $sparte) {
  		 // Tag bereits in DB?
 
@@ -624,7 +614,7 @@ Class eventformular extends aae_data_helper {
 
  		 $resultSparte = db_select($this->tbl_sparte, 's')
  		  ->fields('s')
- 		  ->condition('KID', $sparte, '=')
+ 		  ->condition('KID', $sparte)
  		  ->execute();
 
   		if ($resultSparte->rowCount() == 0) {
@@ -649,11 +639,12 @@ Class eventformular extends aae_data_helper {
  	  }
  	 }
 
-  if ($this->eventRecurres && !empty($this->eventRecurringType)) {
+   if ($this->eventRecurres == 'on' && !empty($this->eventRecurringType)) {
+   
+    $recurresTill = (!empty($this->eventRecurresTill)) ? (new \DateTime($this->eventRecurresTill))->format('Y-m-d') : NULL;
+    $this->event->addEventChildren($this->event_id, $this->eventRecurringType, $startQuery, $endeQuery, $recurresTill);
 
-   $this->events->__addEventChildren($startQuery, $endQuery);
-
-  }
+   }
 
     // Tell Drupal about the new eventprofil/ID-item
     $parentItem = db_query(
@@ -689,6 +680,8 @@ Class eventformular extends aae_data_helper {
    * Darstellung der Formularinformationen
    */
   private function eventDisplay() {
+    
+    global $user;
 
     if (array_intersect(array('administrator'), $user->roles)) {
 
@@ -717,10 +710,10 @@ Class eventformular extends aae_data_helper {
     }
 
     $this->resultbezirke = db_select($this->tbl_bezirke, 'b')
-     ->fields('b', array( 'BID', 'bezirksname' ))
+     ->fields('b')
      ->execute();
 
-    $all_sparten = $this->getAllTags();
+    $this->all_sparten = $this->event->getTags();
 
     foreach ($all_sparten as $id => $sparte) {
      $this->all_sparten[$id] = $sparte;
@@ -728,5 +721,11 @@ Class eventformular extends aae_data_helper {
 
     return $this->render('/templates/eventformular.tpl.php');
 
-  } // END function eventDisplay()
+ } // END function eventDisplay()
+  
+ private function __validateDate($date, $format = 'Y-m-d'){
+   $d = \DateTime::createFromFormat($format, $date);
+   #print_r(\DateTime::getLastErrors());
+   return $d && $d->format($format) == $date;
+ }
 } // END class eventformular()

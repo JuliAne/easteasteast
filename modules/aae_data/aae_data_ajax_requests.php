@@ -10,10 +10,10 @@ namespace Drupal\AaeData;
 Class aae_data_ajax_requests extends aae_data_helper {
 
 /**
- * @function akteurkontakt()
+ * @function getAkteurKontakt()
  *
  * Gibt div wider, welcher Kontaktinformationen zum Akteur beinhaltet.
- * Aufgerufen über das Akteurprofil
+ * Aufgerufen über das Akteurprofil.
  */
 
  public function getAkteurKontakt($id) {
@@ -67,7 +67,7 @@ Class aae_data_ajax_requests extends aae_data_helper {
   * Dient dem Einblenden eines neuen Kalender-Monat's im Footer
   */
 
-  function getKalender(){
+ public function getKalender(){
 
     $modulePath = drupal_get_path('module', 'aae_data');
     include_once $modulePath . '/kalender.php';
@@ -75,7 +75,20 @@ Class aae_data_ajax_requests extends aae_data_helper {
     $kal = new kalender();
     echo $kal->run();
 
-
   }
+  
+  /**
+   * @function removeEvent()
+   */
+   public function removeEvent($eid){
+     
+    db_delete($this->tbl_event)
+    ->condition('EID', $eid, '=')
+    ->execute();
+    
+    return true;
+     
+   }
+  
 }
 ?>

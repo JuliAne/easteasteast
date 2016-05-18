@@ -98,5 +98,5 @@ button.Zebra_DatePicker_Icon                { display: block; position: absolute
 button.Zebra_DatePicker_Icon_Disabled       { background-image: url('calendar-disabled.png') }
 
 /* don't set vertical margins! */
-button.Zebra_DatePicker_Icon                { margin: 0 0 0 3px }
-button.Zebra_DatePicker_Icon_Inside         { margin: 0 3px 0 0 }
+button.Zebra_DatePicker_Icon                { margin: 0 8px 0 3px; }
+button.Zebra_DatePicker_Icon_Inside         { margin: 0 3px 0 0; }

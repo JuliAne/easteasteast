@@ -1,64 +1,50 @@
 <?php
 /**
  * eventprofil.php zeigt das Profil eines Events an.
- *
  */
 
 namespace Drupal\AaeData;
 
 class eventprofil extends aae_data_helper {
 
- public function run(){
+ var $akteur_id = '';
+ var $isOwner = 0;
+
+ public function __construct(){
 
   global $user;
+  require_once('models/events.php');
+  $this->event = new events();
+
+ }
+
+ public function run(){
 
   $explodedpath = explode("/", current_path());
-  $eventId = $this->clearContent($explodedpath[1]);
+  $event_id = $this->clearContent($explodedpath[1]);
 
-  //Prüfen, wer Schreibrechte hat
   //Sicherheitsschutz, ob User entsprechende Rechte hat
-
   $resultAkteurId = db_select($this->tbl_akteur_events, 'e')
-   ->fields('e', array( 'AID' ))
-   ->condition('EID', $eventId, '=')
+   ->fields('e', array('AID'))
+   ->condition('EID', $event_id, '=')
+   ->execute()
+   ->fetchObject();
+   
+  global $user;
+
+  // Show "Edit"-Button?
+  $this->akteur_id = $resultAkteurId->AID;
+  $resultUser = db_select($this->tbl_hat_user, 'u')
+   ->fields('u')
+   ->condition('hat_AID', $this->akteur_id, '=')
+   ->condition('hat_UID', $user->uid, '=')
    ->execute();
+   
+  if ($resultUser->rowCount() == 1 || array_intersect(array('administrator'), $user->roles)) $this->isOwner = 1;
 
-  $akteurId = "";
-  $okay = ""; // Gibt an, ob Zugang erlaubt wird oder nicht
-
-  foreach ($resultAkteurId as $row) {
-
-   $akteurId = $row->AID; //Akteur speichern
-
-   //Prüfen ob Schreibrecht vorliegt: ob User zu dem Akteur gehört
-   $resultUser = db_select($this->tbl_hat_user, 'u')
-    ->fields('u', array(
-      'hat_UID',
-      'hat_AID',
-    ))
-    ->condition('hat_AID', $akteurId, '=')
-    ->condition('hat_UID', $user->uid, '=')
-    ->execute();
-
-   if ($resultUser->rowCount() == 1) {
-    $okay = 1; //Zugang erlaubt
-   }
-  }
-
- //Abfrage, ob User Ersteller des Events ist:
- $ersteller = db_select($this->tbl_event, 'e')
-  ->fields('e', array( 'ersteller' ))
-  ->condition('ersteller', $user->uid, '=')
-  ->execute();
-
- if ($ersteller->rowCount() == 1 || array_intersect(array('administrator'), $user->roles)) $okay = 1;
-
-  $event = db_select($this->tbl_event, 'a')
-   ->fields('a')
-   ->condition('EID', $eventId, '=');
-
-  $resultEvent = $event->execute()->fetchAssoc();
-
+  $resultEvent = $this->event->getEvents(array('EID' => $event_id), 'complete');
+  $resultEvent = $resultEvent[0];
+  
   if (empty($resultEvent)) {
   // Event nicht vorhanden
 
@@ -68,178 +54,73 @@ class eventprofil extends aae_data_helper {
 
   }
 
-  // Hack: add times to $resultEvent-object
-  $resultEvent = (object)$resultEvent;
-  $resultEvent->start = new \DateTime($resultEvent->start_ts);
-  $resultEvent->ende = new \DateTime($resultEvent->ende_ts);
-  $resultEvent->created = new \DateTime($resultEvent->created);
-  $resultEvent = (object)$resultEvent;
-
-  $akteurId = db_select($this->tbl_akteur_events, 'ae')
-   ->fields('ae', array('AID'))
-   ->condition('EID', $eventId, '=')
-   ->execute()
-   ->fetchAssoc();
-
-  $resultAkteur = db_select($this->tbl_akteur, 'a')
-   ->fields('a',array('AID','name'))
-   ->condition('AID', $akteurId['AID'], '=')
-   ->execute()
-   ->fetchAssoc();
-
-  //Selektion der Tags
-  $resultSparten = db_select($this->tbl_event_sparte, 's')
-   ->fields('s', array( 'hat_KID' ))
-   ->condition('hat_EID', $eventId, '=')
-   ->execute();
-
-  $countSparten = $resultSparten->rowCount();
-  $sparten = array();
-
-
-  if ($countSparten != 0) {
-
-   foreach ($resultSparten as $row) {
-    $resultSpartenName = db_select($this->tbl_sparte, 'sp')
-	  ->fields('sp')
-	  ->condition('KID', $row->hat_KID, '=')
-	  ->execute();
-
-	  foreach ($resultSpartenName as $row1) {
-	   $sparten[] = $row1;
-	  }
-  }
- }
-
- //Ersteller (USER!) aus DB holen
- $ersteller = db_select("users", 'u')
-  ->fields('u', array('name' ))
-  ->condition('uid', $resultEvent->ersteller, '=')
-  ->execute();
-
- //Adresse des Akteurs
- $resultAdresse = db_select($this->tbl_adresse, 'b')
-  ->fields('b', array())
-  ->condition('ADID', $resultEvent->ort, '=')
-  ->execute();
-
-  foreach ($resultAdresse as $adresse) {
-   $resultAdresse = $adresse; // Kleiner Fix, um EIN Objekt zu generieren
-  }
-
-  //Bezirksnamen
-  $resultBezirk = db_select($this->tbl_bezirke, 'z')
-   ->fields('z', array( 'bezirksname' ))
-   ->condition('BID', $resultAdresse->bezirk, '=')
-   ->execute();
-
-  foreach ($resultBezirk as $bezirk) {
-   $resultBezirk = $bezirk; // Kleiner Fix, um EIN Objekt zu generieren
-  }
-
   $map = false;
 
-  if (!empty($resultAdresse->gps)) {
-    //TODO lat_long?
-    $this->addMapContent($resultAdresse->gps, array('gps' => $resultAdresse->gps, 'name' => $resultEvent->name, 'strasse' => $resultAdresse->strasse, 'nr' => $resultAdresse->nr));
-    $map = true;
+  if (!empty($resultEvent->adresse->gps_lat)) {
+   $this->addMapContent($resultEvent->adresse->gps_lat.','.$resultEvent->adresse->gps_long, array('name' => $resultEvent->name, 'strasse' => $resultEvent->adresse->strasse, 'nr' => $resultEvent->adresse->nr));
+   # works?
+   $map = true;
   }
 
   ob_start(); // Aktiviert "Render"-modus
   include_once path_to_theme() . '/templates/eventprofil.tpl.php';
   return ob_get_clean(); // Übergabe des gerenderten "eventprofil.tpl.php"
 
-} // end public function run()
+ } // end public function run()
 
  /**
   * @function removeEvent
   * Removes an event from DB
-  * TODO: Put into $this->event->removeEvent()
+  * TODO: Put DB-Zeugs into $this->event->removeEvent()
   */
 
  public function removeEvent(){
-
+ 
   global $user;
   $user_id = $user->uid;
-
-  $okay = 0;
 
   $explodedpath = explode("/", current_path());
   $event_id = $this->clearContent($explodedpath[1]);
 
-  if (!user_is_logged_in()) {
-   drupal_access_denied();
-  }
+  if (!user_is_logged_in())
+    drupal_access_denied();
 
-  //Sicherheitsschutz, ob User entsprechende Rechte hat
+  // Sicherheitsschutz, ob User entsprechende Rechte hat
   $resultAkteurEvent = db_select($this->tbl_akteur_events, 'e')
    ->fields('e')
-   ->condition('EID', $event_id, '=')
-   ->execute();
+   ->condition('EID', $event_id)
+   ->execute()
+   ->fetchObject();
 
-  foreach ($resultAkteurEvent as $row) {
+   $akteur_id = $resultAkteurEvent->AID;
 
-   $akteur_id = $row->AID;
-
-   //Prüfen ob Schreibrecht vorliegt: ob User zu dem Akteur gehört
+   // Prüfen ob Schreibrecht vorliegt: ob User zu dem Akteur gehört
    $resultUser = db_select($this->tbl_hat_user, 'u')
     ->fields('u')
     ->condition('hat_AID', $akteur_id, '=')
     ->condition('hat_UID', $user_id, '=')
     ->execute();
 
-    $okay = ($resultUser->rowCount()) ? 1 : 0;
-  }
+   $this->isOwner = ($resultUser->rowCount()) ? 1 : 0;
 
-  // Abfrage, ob User Ersteller des Events ist:
-   $ersteller = db_select($this->tbl_event, 'e')
+   // Abfrage, ob User Ersteller des Events ist:
+   /*$ersteller = db_select($this->tbl_event, 'e')
    ->fields('e', array('ersteller'))
    ->condition('ersteller', $user->uid, '=')
-   ->execute();
+   ->execute(); 
 
-   $okay = ($ersteller->rowCount()) ? 1 : 0;
-
-  if (!array_intersect(array('administrator'), $user->roles) || !$okay) {
-   drupal_access_denied();
+   $this->isOwner = ($ersteller->rowCount()) ? 1 : 0; */
+  if (!$this->isOwner) {
+   if (!array_intersect(array('administrator'), $user->roles)) {
+    drupal_access_denied();
+   }
   }
 
 //-----------------------------------
 
   if (isset($_POST['submit'])) {
 
-   $resultEvent = db_select($this->tbl_event, 'e')
-    ->fields('e', array('bild','recurring_event_type'))
-    ->condition('EID', $event_id, '=')
-    ->execute()
-    ->fetchAssoc();
-
-   db_delete($this->tbl_akteur_events)
-    ->condition('EID', $event_id, '=')
-    ->execute();
-
-   db_delete($this->tbl_event)
-    ->condition('EID', $event_id, '=')
-    ->execute();
-
-   db_delete($this->tbl_event_sparte)
-   ->condition('hat_EID', $event_id, '=')
-   ->execute();
-
-   // remove children-items, if given
-   if (!empty($resultEvent->recurring_event_type)) {
-    db_delete($this->tbl_event)
-     ->condition('parent_EID', $event_id)
-     ->execute();
-   }
-
-   // remove profile-image
-   $bild = end(explode('/', $resultEvent['bild']));
-
-   if (file_exists($this->short_bildpfad.$bild)) {
-    @unlink($this->short_bildpfad.$bild);
-   }
-
-   menu_link_delete(NULL, 'eventprofil/'.$event_id);
+   $this->event->removeEvent($event_id);
 
    if (session_status() == PHP_SESSION_NONE) session_start();
    drupal_set_message(t('Das Event wurde gelöscht.'));
@@ -287,10 +168,10 @@ class eventprofil extends aae_data_helper {
 
    foreach ($resultEvent as $row) {
     $start = new \DateTime($row->start_ts);
- 	 $ende  = new \DateTime($row->ende_ts);
- 	 $name = $row->name;
- 	 $ort = $row->ort;
- 	 $eid = $row->EID;
+ 	  $ende  = new \DateTime($row->ende_ts);
+ 	  $name = $row->name;
+ 	  $ort = $row->ort;
+ 	  $eid = $row->EID;
     $beschreibung = $row->kurzbeschreibung;
    }
 
