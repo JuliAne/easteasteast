@@ -513,7 +513,7 @@ transform: rotate(-10deg);
 
 .section .event {
   height: auto;
-  min-height: 74px;
+  min-height: 90px;
 }
 
 .section#journal .content h1 {
@@ -573,18 +573,18 @@ transform: rotate(-10deg);
 }
 
 .pcard:hover header {
- background-size: 115%;
+ /*background-size: 115%;*/
 }
 
-.pcard:hover header h3 {
- opacity: 0.6;
+.pcard:hover h3, .pcard:hover h3 a {
+ color: #1585cf;
 }
 
 .pcard header {
  height: 150px;
  min-width: 256px;
  background-image: url(../img/project_bg.png);
- background-size: 112%;
+ background-size: 100%;
  transition: 0.4s background-size;
  display: table-cell;
  vertical-align: bottom;
@@ -596,6 +596,10 @@ transform: rotate(-10deg);
 
 #projects-akteure .pcard header {
  min-width: 274px;
+}
+
+.pcard .akteur-content p,  .pcard .akteur-content li {
+	color: #555;
 }
 
 .pcard header a {
@@ -621,16 +625,22 @@ transform: rotate(-10deg);
  text-align: center;
 } */
 
-.pcard header h3 {
+.pcard h3 {
  padding: 13px;
- background: rgba(0,0,0,0.5);
+ background: #F1EFEF;
  padding: 13px;
- font-size: 1.2em;
+ font-size: 0.9em;
  text-align: center;
+ line-height: 1.5em;
  transition: 0.25s opacity;
 }
 
-.pcard header.renderSmallName h3 {
+.pcard:hover h3 {
+	background: #dfdfdf;
+
+}
+
+.pcard .renderSmallName h3 {
   font-size: 1.05em;
 }
 
@@ -659,9 +669,14 @@ transform: rotate(-10deg);
 
 .pcard .plocation {
  text-align: center;
- opacity: 0.8;
+ opacity: 1;
  padding-top: 0;
  line-height: 25px;
+ color: grey;
+}
+
+.pcard:hover .plocation {
+	color: #555;
 }
 
 .pcard .plocation img {
@@ -669,8 +684,8 @@ transform: rotate(-10deg);
   margin-right: 6px;
 }
 
-.pcard header h3 .plocation {
- color: #ececec;
+.pcard h3 .plocation {
+ color: grey;
 }
 
 .pcard footer {

@@ -99,11 +99,13 @@
 
 <?php foreach($resultAkteure as $akteur): ?>
   <div class="large-4 large-offset-1 small-5 small-offset-1 columns pcard">
+  <a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">
    <header <?= (!empty($akteur->bild) ? 'style="background-image:url('.$akteur->bild.');" ' : ''); ?>class="<?= ($akteur->renderSmallName ? 'renderSmallName ' : ''); ?><?= ($akteur->renderBigImg ? 'renderBigImg' : ''); ?>">
-     <h3><a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>"><?= $akteur->name; ?></a></h3>
     </header>
+    <h3><?= $akteur->name; ?></h3>
+    </a>
     <section>
-      <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?>
+      <?php if (!empty($akteur->bezirk)) : ?><a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>"><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p></a><?php endif; ?>
       <?php if (!empty($akteur->beschreibung)): ?>
       <div class="divider"></div>
         <div class="akteur-content">
