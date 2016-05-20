@@ -443,6 +443,11 @@ html.fp-enabled,
 
 #projects-akteure .pcard header {
   border-bottom: 1px solid lightgrey;
+  width: 274px;
+  height: 150px;
+  background-position: center;
+  /* Make the background image cover the area of the <div>, and clip the excess */
+  background-size: cover;
 }
 
 #projects-akteure .pcard:hover header {

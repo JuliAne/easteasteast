@@ -592,6 +592,11 @@ transform: rotate(-10deg);
 
 .pcard header.renderBigImg {
  /*height: 220px;*/
+  width: 256px;
+  height: 150px;
+  background-position: center;
+  /* Make the background image cover the area of the <div>, and clip the excess */
+  background-size: cover;
 }
 
 #projects-akteure .pcard header {
