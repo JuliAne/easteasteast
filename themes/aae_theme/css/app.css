@@ -1350,6 +1350,11 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 	border-bottom: 1px solid lightgrey;
 	display: block;
 	vertical-align: middle;
+  	width: 256px;
+  	height: 150px;
+  	background-position: center;
+  	/* Make the background image cover the area of the <div>, and clip the excess */
+  	background-size: cover;
 }
 
 #akteure-content section .akteur-content p, #akteure-content section .akteur-content li, .content .event-content li, .content .event-content p{
