@@ -582,7 +582,7 @@ transform: rotate(-10deg);
 
 .pcard header {
  height: 150px;
- min-width: 256px;
+ /*min-width: 256px;*/
  background-image: url(../img/project_bg.png);
  background-size: 100%;
  transition: 0.4s background-size;
@@ -871,6 +871,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 
 #akteure .pcard {
   width: 30%;
+  /*width: 256px;*/
   margin-left: 2.333%;
   float: none;
   display: inline-block;
@@ -1348,7 +1349,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 
 #akteure-content .pcard header{
 	border-bottom: 1px solid lightgrey;
-	display: block;
+	display: table-cell;
 	vertical-align: middle;
   	width: 256px;
   	height: 150px;
