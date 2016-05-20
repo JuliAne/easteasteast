@@ -1341,6 +1341,12 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
  width: 75% !important;
 }
 
+#akteure-content .pcard header{
+	border-bottom: 1px solid lightgrey;
+	display: block;
+	vertical-align: middle;
+}
+
 #akteure-content section .akteur-content p, #akteure-content section .akteur-content li, .content .event-content li, .content .event-content p{
  padding-bottom: 0.7em;
  word-wrap: break-word;

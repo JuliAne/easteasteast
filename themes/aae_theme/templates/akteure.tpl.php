@@ -102,6 +102,8 @@
   <a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">
    <header <?= (!empty($akteur->bild) ? 'style="background-image:url('.$akteur->bild.');" ' : ''); ?>class="<?= ($akteur->renderSmallName ? 'renderSmallName ' : ''); ?><?= ($akteur->renderBigImg ? 'renderBigImg' : ''); ?>">
     </header>
+    </a>
+    <a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">
     <h3><?= $akteur->name; ?></h3>
     </a>
     <section>
