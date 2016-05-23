@@ -430,8 +430,8 @@ html.fp-enabled,
   color: #007095!important;
 }
 
-#projects-akteure .pcard header.renderSmallName {
-  background-size: 102%;
+#projects-akteure .pcard header {
+  background-color: #fff;
 }
 
 #projects-akteure .pcard section {
