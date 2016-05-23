@@ -554,7 +554,7 @@ transform: rotate(-10deg);
 }
 
 .pcard {
-  background-color: #fff;
+  /*background-color: #fff;*/
   box-shadow: 0 1px 1px #b8b8b8;
   transition: 0.3s box-shadow;
 }
@@ -569,7 +569,7 @@ transform: rotate(-10deg);
 }
 
 .pcard:hover {
- box-shadow: 0 1px 2px #989797;
+ box-shadow: 0 1px 3px #989797;
 }
 
 .pcard:hover header {
@@ -577,7 +577,7 @@ transform: rotate(-10deg);
 }
 
 .pcard:hover h3, .pcard:hover h3 a {
- color: #1585cf;
+ color: #007095
 }
 
 .pcard header {
@@ -632,17 +632,12 @@ transform: rotate(-10deg);
 
 .pcard h3 {
  padding: 13px;
- background: #F1EFEF;
+ background-color: rgba(255,255,255,0.9);
  padding: 13px;
  font-size: 0.9em;
  text-align: center;
  line-height: 1.5em;
- transition: 0.25s opacity;
-}
-
-.pcard:hover h3 {
-	background: #dfdfdf;
-
+ /*transition: 0.25s opacity;*/
 }
 
 .pcard .renderSmallName h3 {

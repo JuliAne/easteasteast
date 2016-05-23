@@ -416,8 +416,22 @@ html.fp-enabled,
 }
 
 #projects-akteure .pcard h3{
-  padding: 10px 12px;
+  padding: 10px 15px;
   min-height: 90px;
+}
+
+#projects-akteure .pcard h3 p.akteurname {
+  min-height: 45px;
+  font-size: 0.95em;
+  line-height: 1.45em;
+}
+
+#projects-akteure .pcard:hover h3 p.akteurname{
+  color: #007095!important;
+}
+
+#projects-akteure .pcard header.renderSmallName {
+  background-size: 102%;
 }
 
 #projects-akteure .pcard section {
@@ -437,8 +451,7 @@ html.fp-enabled,
 }
 
 #projects-akteure .pcard:hover h3 {
-  color: #2199E8!important;
-  opacity: 1 !important;
+  background: #F1EFEF;
 }
 
 #projects-akteure .pcard header {
