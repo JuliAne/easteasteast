@@ -23,7 +23,7 @@
   font-style: normal; }
 
 *,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,input,textarea,p,blockquote,th,td {
-  font-family: "Open Sans", sans-serif;
+  /*font-family: "Open Sans", sans-serif;*/
   letter-spacing: normal;
   padding: 0px;
   margin: 0px;
@@ -32,6 +32,10 @@
   line-height: 1;
   box-sizing: border-box;
   list-style: none;
+}
+
+html, body {
+	font-family: "Open Sans", sans-serif;
 }
 
 .row {
@@ -509,7 +513,7 @@ transform: rotate(-10deg);
 
 .section .event {
   height: auto;
-  min-height: 74px;
+  min-height: 90px;
 }
 
 .section#journal .content h1 {
@@ -550,7 +554,7 @@ transform: rotate(-10deg);
 }
 
 .pcard {
-  background-color: #fff;
+  /*background-color: #fff;*/
   box-shadow: 0 1px 1px #b8b8b8;
   transition: 0.3s box-shadow;
 }
@@ -565,33 +569,42 @@ transform: rotate(-10deg);
 }
 
 .pcard:hover {
- box-shadow: 0 1px 2px #989797;
+ box-shadow: 0 1px 3px #989797;
 }
 
 .pcard:hover header {
- background-size: 115%;
+ /*background-size: 115%;*/
 }
 
-.pcard:hover header h3 {
- opacity: 0.6;
+.pcard:hover h3, .pcard:hover h3 a {
+ color: #007095
 }
 
 .pcard header {
  height: 150px;
- min-width: 256px;
+ /*min-width: 256px;*/
  background-image: url(../img/project_bg.png);
- background-size: 112%;
+ background-size: 100%;
  transition: 0.4s background-size;
  display: table-cell;
  vertical-align: bottom;
 }
 
 .pcard header.renderBigImg {
- height: 220px;
+ /*height: 220px;*/
+  width: 256px;
+  height: 150px;
+  background-position: center;
+  /* Make the background image cover the area of the <div>, and clip the excess */
+  background-size: cover;
 }
 
 #projects-akteure .pcard header {
  min-width: 274px;
+}
+
+.pcard .akteur-content p,  .pcard .akteur-content li {
+	color: #555;
 }
 
 .pcard header a {
@@ -617,16 +630,17 @@ transform: rotate(-10deg);
  text-align: center;
 } */
 
-.pcard header h3 {
+.pcard h3 {
  padding: 13px;
- background: rgba(0,0,0,0.5);
+ background-color: rgba(255,255,255,0.9);
  padding: 13px;
- font-size: 1.2em;
+ font-size: 0.9em;
  text-align: center;
- transition: 0.25s opacity;
+ line-height: 1.5em;
+ /*transition: 0.25s opacity;*/
 }
 
-.pcard header.renderSmallName h3 {
+.pcard .renderSmallName h3 {
   font-size: 1.05em;
 }
 
@@ -655,9 +669,14 @@ transform: rotate(-10deg);
 
 .pcard .plocation {
  text-align: center;
- opacity: 0.8;
+ opacity: 1;
  padding-top: 0;
  line-height: 25px;
+ color: grey;
+}
+
+.pcard:hover .plocation {
+	color: #555;
 }
 
 .pcard .plocation img {
@@ -665,8 +684,8 @@ transform: rotate(-10deg);
   margin-right: 6px;
 }
 
-.pcard header h3 .plocation {
- color: #ececec;
+.pcard h3 .plocation {
+ color: grey;
 }
 
 .pcard footer {
@@ -851,6 +870,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 
 #akteure .pcard {
   width: 30%;
+  /*width: 256px;*/
   margin-left: 2.333%;
   float: none;
   display: inline-block;
@@ -1323,6 +1343,17 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 #akteure-content {
  /* Prevents stalactite.js-inline-CSS */
  width: 75% !important;
+}
+
+#akteure-content .pcard header{
+	border-bottom: 1px solid lightgrey;
+	display: table-cell;
+	vertical-align: middle;
+  	width: 256px;
+  	height: 150px;
+  	background-position: center;
+  	/* Make the background image cover the area of the <div>, and clip the excess */
+  	background-size: cover;
 }
 
 #akteure-content section .akteur-content p, #akteure-content section .akteur-content li, .content .event-content li, .content .event-content p{

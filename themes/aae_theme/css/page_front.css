@@ -389,9 +389,9 @@ html.fp-enabled,
 }
 
 .section .aaeHeadline {
-  margin-bottom: 45px;
+  margin-bottom: 25px;
   margin-top: 30px;
-  padding-bottom: 54px;
+  padding-bottom: 45px;
   border-bottom: 1px solid #fff;
 }
 
@@ -404,11 +404,34 @@ html.fp-enabled,
  float: right;
 }
 
+#projects-akteure .large-3 {
+  margin-bottom: 25px;
+}
+
 #projects-akteure .pcard {
  border: 1px solid #F1EFEF;
  border-radius: 1px;
  transition: border 0.25s;
  overflow: hidden;
+}
+
+#projects-akteure .pcard h3{
+  padding: 10px 15px;
+  min-height: 90px;
+}
+
+#projects-akteure .pcard h3 p.akteurname {
+  min-height: 45px;
+  font-size: 0.95em;
+  line-height: 1.45em;
+}
+
+#projects-akteure .pcard:hover h3 p.akteurname{
+  color: #007095!important;
+}
+
+#projects-akteure .pcard header {
+  background-color: #fff;
 }
 
 #projects-akteure .pcard section {
@@ -424,16 +447,20 @@ html.fp-enabled,
 }
 
 #projects-akteure .pcard:hover {
- border: 1px solid #2199E8;
+ border: 1px solid #1585cf;
 }
 
 #projects-akteure .pcard:hover h3 {
-  color: #2199E8!important;
-  opacity: 1 !important;
+  background: #F1EFEF;
 }
 
 #projects-akteure .pcard header {
   border-bottom: 1px solid lightgrey;
+  width: 274px;
+  height: 150px;
+  background-position: center;
+  /* Make the background image cover the area of the <div>, and clip the excess */
+  background-size: cover;
 }
 
 #projects-akteure .pcard:hover header {
@@ -479,7 +506,7 @@ html.fp-enabled,
 
 .large3-events {
   transition: all 0.25s;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
   overflow: hidden;
 }
 
