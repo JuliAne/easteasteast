@@ -6,18 +6,17 @@
  overflow: hidden;
 }
 </style>
-<?php if ($this->isOwner) : ?>
+<?php if ($this->isOwner) : ?>  
 <script type="text/javascript">
  function ajaxRemoveAppointment(elem,eid) {
   $.ajax({
-    url: "../ajax/removeEvent/" + eid,
+    url: "../ajax/removeEventChildren/" + eid,
    })
   .done(function(data) {
-   alert(data);
-   if (data == '') {
+   if (data) {
     $(elem).fadeOut('slow');
    }
-  }
+  });
  }
 </script>
 <?php endif; ?>
@@ -75,11 +74,12 @@
        <?= ($resultEvent->ende->format('s') == '01' ? ' '.$resultEvent->ende->format('H:i').' Uhr' : ''); ?></p>
     <?php endif; ?>
     <?php if (!empty($resultEvent->childrenEvents)) : ?>
-     <ul style="padding-left:44px;">
-      <br /><strong><?= t('Weitere Termine:'); ?></strong><br />
+     <div class="divider"></div>
+     <ul style="padding-left:100px;font-size:0.9em;padding-bottom:15px;">
+      <li style="line-height:1.7em;"><strong><?= t('Weitere Termine:'); ?></strong></li>
       <?php foreach ($resultEvent->childrenEvents as $event) : ?>
-       <?php $adminFeature = ($this->isOwner ? ' class="removeAppointment" title="'.t('Termin entfernen').'" onclick="javascript:ajaxRemoveAppointment('.$event->EID.');"' : ''); ?>
-       <li<?= $adminFeature; ?>><a href="<?= base_path().'events/?day='.$event->start->format('Y-m-d'); ?>" rel="nofollow">
+       <?php $adminFeature = ($this->isOwner ? ' class="removeAppointment" title="'.t('Termin entfernen').'" onclick="javascript:ajaxRemoveAppointment(this,'.$event->EID.');return false;"' : ''); ?>
+       <li<?= $adminFeature; ?> style="line-height:1.4em;"><a href="<?= base_path().'events/?day='.$event->start->format('Y-m-d'); ?>" rel="nofollow">
        <?= $event->start->format('d.m.Y'); ?></a></li>
       <?php endforeach; ?>
       </ul>
@@ -122,7 +122,7 @@
   </div>
  <?php endif; ?>
 
- <h4 style="padding: 10px 0;">Veranstalter</h4>
+ <h4 style="padding: 10px 0;"><?= t('Veranstalter'); ?></h4>
   <section itemscope itemprop="location"  itemtype="http://schema.org/Place">
 
   <?php if (!empty($resultEvent->adresse->gps_lat)) : ?>
@@ -132,7 +132,7 @@
    </div>
   <?php endif; ?>
 
-   <p><strong><?= t('Erstellt von'); ?>:</strong> <?= $resultEvent->ersteller->name; ?> am <?= $resultEvent->created->format('d.m.Y'); ?></p>
+   <p><strong><?= t('Erstellt von'); ?>:</strong> <?= $resultEvent->ersteller->name; ?> <?= t('am'); ?> <?= $resultEvent->created->format('d.m.Y'); ?></p>
    <?php if (empty($resultEvent->akteur)) : ?>
    <p><strong><?= t('Privater Veranstalter'); ?></strong></p>
    <?php else : ?>

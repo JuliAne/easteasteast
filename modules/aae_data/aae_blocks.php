@@ -6,46 +6,30 @@
 * Ein paar Hilfsfunktion für das Theme...
 * @use require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
 *
-* @function print_letzte_events
+* @function print_next_events
 * @function print_letzte_akteure
 * @function count_projects_events
 * @function print_my_akteure
 */
-
-
-#$modulePath = drupal_get_path('module', 'aae_data');
-#include_once $modulePath . '/aae_data_helper.php';
 
 namespace Drupal\AaeData;
 
 Class aae_blocks extends aae_data_helper {
 
 /**
- * Kleiner, interner(!) Block zum Anzeigen der letzten drei (=$limit) eingetragenen Events.
  * Wird in templates/page--front.tpl.php aufgerufen.
  */
+public function print_next_events($limit = 6) {
 
-public function print_letzte_events($limit = 6) {
+ require_once('models/events.php');
+ $this->events = new events();
 
  //Show furthest of latest 6 events first
- $events = db_select($this->tbl_event, 'a')
-  ->fields('a')
-  ->orderBy('created', 'DESC')
-  ->range(0, $limit);
+ $events = $this->events->getEvents(array(
+  'limit' => $limit
+ ), 'normal', false, 'ASC');
 
-  $resultEvents = $events->execute()->fetchAll();
-
-  foreach ($resultEvents as $counter => $event){
-
-   // Hack: add variable to $resultEvents-object
-   $resultEvents[$counter] = (array)$resultEvents[$counter];
-   $resultEvents[$counter]['start'] = new \DateTime($event->start_ts);
-   $resultEvents[$counter]['ende'] = new \DateTime($event->ende_ts);
-   $resultEvents[$counter] = (object)$resultEvents[$counter];
-
-  }
-
-  return $resultEvents;
+  return $events;
 }
 
 

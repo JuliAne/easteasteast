@@ -4,7 +4,7 @@
    '4' => t('Monatliche Wiederholung'),
    '5' => t('2-monatliche Wiederholung')
   ); ?>
- 
+
 <header id="eventsPageHeader" class="pageHeader">
   <h2><?= $itemsCount; ?> Veranstaltungen/Events <a href="<?= base_path(); ?>events/rss" title="<?= t('Alle Events als RSS-Feed'); ?>"><img id="svg_logo" src="<?= base_path().path_to_theme(); ?>/img/rss.svg" /></a></h2>
   <p>Finde Workshops, Kreativwerkstätten, Märkte, Versammlungen und mehr.</p>
@@ -93,8 +93,8 @@
     <?php if (!empty($this->filters)) : ?><li class="tabs-title is-active"><a href="#" aria-selected="true"><?= t('Filterergebnisse'); ?> (<?= count($resultEvents); ?>)</a></li><?php endif; ?>
      <!--label>Darstellung:</label>//$_SERVER[REQUEST_URI];-->
     <ul id="presentationFilter" class="button-group round large-3 columns right">
-     <li><a href="<?= base_path(); ?>events" name="timeline" class="small button <?php echo ($this->presentationMode !== 'calendar' ? 'active' : 'secondary'); ?>" title="<?= t('Darstellung als Timeline'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
-     <li><a href="<?= base_path(); ?>events/?presentation=calendar" name="kalender" class="small button <?php echo ($this->presentationMode == 'calendar' ? 'active' : 'secondary'); ?>" title="<?= t('Darstellung als Kalender'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
+     <li class="right"><a href="<?= base_path(); ?>events" name="timeline" class="small button <?php echo ($this->presentationMode !== 'calendar' ? 'active' : 'secondary'); ?>" title="<?= t('Darstellung als Timeline'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
+     <li class="right"><a href="<?= base_path(); ?>events/?presentation=calendar" name="kalender" class="small button <?php echo ($this->presentationMode == 'calendar' ? 'active' : 'secondary'); ?>" title="<?= t('Darstellung als Kalender'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
     </ul>
 
    </ul>
@@ -115,10 +115,9 @@
 
    <div class="date large-2 columns button secondary round"><?= $event->start->format('d'); ?><br /><?= $this->monat_short[$event->start->format('m')]; ?></div>
    <div class="content large-9 columns">
-   <header>
+   <header<?= (!empty($event->eventRecurringType) ? ' title="'.$recurringEventTypes[$event->eventRecurringType].'"' : ''); ?>>
     <p><a style="line-height:1.6em;" href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>"><strong><?= $event->name; ?></strong></a><br />
-    <span><?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? '<a href="#">Heute,</a> ' : ''; ?><?php if($event->start->format('H:i') !== '00:00') echo $event->start->format('H:i'); ?><?php if($event->ende->format('H:i') !== '00:00') echo ' - '. $event->ende->format('H:i'); ?></span>
-    <?= (!empty($event->eventRecurringType) ? '<span>'.$recurringEventTypes[$event->eventRecurringType].'</span>' : ''); ?></p>
+    <span><?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? '<a href="#">Heute,</a> ' : ''; ?><?php if($event->start->format('H:i') !== '00:00') echo $event->start->format('H:i'); ?><?php if($event->ende->format('H:i') !== '00:00') echo ' - '. $event->ende->format('H:i'); ?><?= (!empty($event->eventRecurringType) ? '  '.$recurringEventTypes[$event->eventRecurringType] : ''); ?></span></p>
     <p>
      <?php foreach($event->tags as $tag) : ?>
      <a class="tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow">#<?= $tag->kategorie; ?></a>
@@ -137,7 +136,7 @@
    <div class="akteurData large-10 columns">
     <p><a href="<?= base_path().'akteurprofil/'.$event->akteur->AID; ?>" title="<?= t('Akteurprofil von !username', array('!username' => $event->akteur->name)); ?>"><img src="<?= $event->akteur->bild; ?>" /><?= $event->akteur->name; ?></a></p>
    </div>
-   
+
   </div>
  <?php endforeach; else : ?>
 
@@ -170,7 +169,7 @@
     <h4><img class="cloudimg" src="<?= base_path().path_to_theme(); ?>/img/cloud.svg" /><?= t('Populäre Tags'); ?></h4>
 
     <?php foreach ($resultTagCloud as $tag) : ?>
-      <a class="tagc-<?= ($tag->count >= 5 ? '5' : $tag->count); ?> tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow">#<?= $tag->kategorie; ?></a>
+      <a class="tagc-<?= (($tag->count / 2) >= 5 ? '5' : ceil($tag->count / 2)); ?> tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow">#<?= $tag->kategorie; ?></a>
     <?php endforeach; ?>
     </aside>
 

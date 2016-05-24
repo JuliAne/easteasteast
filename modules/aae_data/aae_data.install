@@ -76,7 +76,7 @@ function aae_data_schema() {
     'ende_ts' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Endzeit des Events als Timestamp'),
     'parent_EID' => array( 'type' => 'varchar', 'length' => 5, 'not null' => FALSE, 'description' => 'NOT NULL if event recurres'),
     'recurring_event_type' => array( 'type' => 'varchar', 'length' => 1, 'not null' => FALSE, 'description' => '2: returns weekly, 3: returns 2-weekly, 4: returns monthly, 5: returns 2-monthly'),
-    'event_recurres_till' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Maximaler Wiederholungszeitpunkt für wiederkehrende Events'), 
+    'event_recurres_till' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Maximaler Wiederholungszeitpunkt für wiederkehrende Events'),
     'created' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Created als Timestamp'),
     'modified' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Modified als Timestamp')
 	),
@@ -331,7 +331,7 @@ function aae_data_update_7106() {
  */
 function aae_data_update_7107() {
 
-  // aae_install_clear_db_contents()
+  aae_install_clear_db_contents();
 
   $newSchemaAdresse = array(
     'gps_lat' => array('description' => 'GPS-Koordinaten (Latitude)', 'type' => 'varchar', 'length' => 50, 'not null' => FALSE, 'default' => ''),
@@ -341,7 +341,7 @@ function aae_data_update_7107() {
   $newSchemaEvents = array(
     'parent_EID' => array( 'type' => 'varchar', 'length' => 5, 'not null' => FALSE, 'description' => 'Not NULL if event recurres'),
     'recurring_event_type' => array( 'type' => 'varchar', 'length' => 1, 'not null' => FALSE, 'description' => 'Rhytm - 2: returns weekly, 3: returns 2-weekly, 4: returns monthly, 5: returns 2-monthly'),
-    'event_recurres_till' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Maximaler Wiederholungszeitpunkt für wiederkehrende Events'), 
+    'event_recurres_till' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Maximaler Wiederholungszeitpunkt für wiederkehrende Events'),
   );
 
   foreach ($newSchemaAdresse as $key => $field) {

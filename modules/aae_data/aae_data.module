@@ -349,7 +349,7 @@ function event_ics_download() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/eventprofil.php';
 
-  $ics = new Drupal\AaeData\aae_eventprofil();
+  $ics = new Drupal\AaeData\eventprofil();
   return $ics->ics_download();
 }
 
@@ -361,7 +361,7 @@ function akteur_vcard_download() {
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/akteurprofil.php';
 
-  $vcard = new Drupal\AaeData\aae_akteurprofil();
+  $vcard = new Drupal\AaeData\akteurprofil();
   return $vcard->vcard_download();
 }
 
@@ -533,8 +533,8 @@ function ajax_requests($id) {
     $request->getKalender();
    break;
    
-   case ('removeEvent') :
-    $request->removeEvent($id);
+   case ('removeEventChildren') :
+    $request->removeEventChildren($id);
    break;
 
    default :
@@ -551,30 +551,65 @@ function ajax_requests($id) {
  * FETTES TODO
  */
 function aae_install_clear_db_contents() {
+  
+ $aae = new \Drupal\AaeData\aae_data_helper();
 
- // Unify phone-numbers
+ // Unify Akteure-URL's and -numbers
+ $akteure = db_select($aae->tbl_akteur, 'a')
+  ->fields('a', array('url', 'telefon'))
+  ->execute();
+  
+ foreach ($akteure->fetchAssoc() as $akteur){
+   
+  if (strpos($akteur->url, 'http') === false && strpos($akteur->url, 'https') === false) { 
+   db_update($aae->tbl_akteur)
+    ->fields(array(
+     'url' => 'http://'.$akteur->url
+    ))
+    ->condition('AID', $akteur->AID)
+    ->execute();
+  }
+  
+  db_update($aae->tbl_akteur)
+   ->fields(array(
+    'telefon' => str_replace(" ", "", str_replace("---", "", str_replace("/", "-", $akteur->telefon)))
+   ))
+   ->condition('AID', $akteur->AID)
+   ->execute();
+  
+ }
 
- /*$u=str_replace(" ", "", $u);
- $u=str_replace("---", "", $u);
- $u=str_replace("/", "-", $u);
- return $u;
-
- // Unify URL's
- if (strpos($u,'http')===false) { $u='http://'.$u; }
- return $u;
-
-  // Remove doubled-tags SMARTLY
-
-  $adressen = db_select('aae_data_adresse', 'a')
-   ->fields('a')
-   ->execute()
-   ->fetchAll();
-
-   foreach ($adressen as $adresse) {
-    /* if (empty($adresse->strasse) && empty($adresse->adresszusatz)
-        && empty ($adresse->bezirk)
-   }*/
-
+  // Remove double tags for Events & Akteure
+  $allTags = db_select($aae->tbl_sparte, 's')
+   ->fields('s')
+   ->execute();
+  
+  $tags = array();  
+  
+  foreach ($allTags->fetchAssoc() as $tag){
+   
+   if (isset($tags[$tag->kategorie])) {
+    
+    db_update($aae->tbl_hat_sparte)
+     ->fields(array(
+      'hat_KID' => $tags[$tag->kategorie]
+     ))
+     ->condtion('hat_KID', $tag->KID)
+     ->execute();
+     
+    db_update($aae->tbl_event_sparte)
+     ->fields(array(
+      'hat_KID' => $tags[$tag->kategorie]
+     ))
+     ->condtion('hat_KID', $tag->KID)
+     ->execute();
+    
+   } else {
+ 
+    $tags[$tag->kategorie] = $tag->KID;
+   
+   } 
+  }
 }
 
 /**

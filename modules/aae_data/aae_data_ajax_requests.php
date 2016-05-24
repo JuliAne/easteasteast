@@ -8,6 +8,10 @@
 namespace Drupal\AaeData;
 
 Class aae_data_ajax_requests extends aae_data_helper {
+  
+ public function __construct(){
+  parent::__construct();
+ }
 
 /**
  * @function getAkteurKontakt()
@@ -63,8 +67,7 @@ Class aae_data_ajax_requests extends aae_data_helper {
 
  /**
   * @function getKalender()
-  *
-  * Dient dem Einblenden eines neuen Kalender-Monat's im Footer
+  * Dient dem Einblenden eines neuen Kalender-Monats im Footer
   */
 
  public function getKalender(){
@@ -80,13 +83,47 @@ Class aae_data_ajax_requests extends aae_data_helper {
   /**
    * @function removeEvent()
    */
-   public function removeEvent($eid){
+   public function removeEventChildren($eid){
+    
+    $eid = $this->clearContent($eid);
+    
+    if (!user_is_logged_in())
+     drupal_access_denied();
+    
+    $parentEID = db_select($this->tbl_event,'e')
+     ->fields('e', array('parent_EID'))
+     ->condition('EID', $eid)
+     ->execute()
+     ->fetchObject();
+
+    // Sicherheitsschutz, ob User entsprechende Rechte hat
+    $resultAkteurEvent = db_select($this->tbl_akteur_events, 'e')
+     ->fields('e')
+     ->condition('EID', $parentEID->parent_EID)
+     ->execute()
+     ->fetchObject();
+
+    $akteur_id = $resultAkteurEvent->AID;
+   
+    // Prüfen ob Schreibrecht vorliegt: ob User zu dem Akteur gehört
+    $resultUser = db_select($this->tbl_hat_user, 'u')
+     ->fields('u')
+     ->condition('hat_AID', $akteur_id)
+     ->condition('hat_UID', $this->user_id)
+     ->execute();
+
+    if (!$resultUser->rowCount()) {
+     if (!array_intersect(array('administrator'), $user->roles)) {
+      echo '0';
+      exit();
+     }
+    }
      
     db_delete($this->tbl_event)
-    ->condition('EID', $eid, '=')
-    ->execute();
+     ->condition('EID', $eid, '=')
+     ->execute();
     
-    return true;
+   echo '1';
      
    }
   

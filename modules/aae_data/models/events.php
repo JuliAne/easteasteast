@@ -44,6 +44,12 @@ Class events extends aae_data_helper {
 
     switch ($key) {
       
+     case ('limit') :
+     
+     $events->range(0,$condition);
+     
+     break;
+      
      case ('start_ts') :
      case ('start') :
      

@@ -109,10 +109,12 @@ class kalender extends aae_data_helper {
      $cellContent = $this->currentDay;
      //$events = null;
 
-
+    # echo $this->currentDay;
+    if (!empty($this->eventsForMonth[$this->currentDay])){
      foreach ($this->eventsForMonth[$this->currentDay] as $row) {
       $events .= $row->name.'&#10';
      }
+    } 
 
      $countrows = count($this->eventsForMonth[$this->currentDay]);
      $this->currentDay++;

@@ -103,18 +103,11 @@ class eventprofil extends aae_data_helper {
 
    $this->isOwner = ($resultUser->rowCount()) ? 1 : 0;
 
-   // Abfrage, ob User Ersteller des Events ist:
-   /*$ersteller = db_select($this->tbl_event, 'e')
-   ->fields('e', array('ersteller'))
-   ->condition('ersteller', $user->uid, '=')
-   ->execute(); 
-
-   $this->isOwner = ($ersteller->rowCount()) ? 1 : 0; */
-  if (!$this->isOwner) {
-   if (!array_intersect(array('administrator'), $user->roles)) {
-    drupal_access_denied();
+   if (!$this->isOwner) {
+    if (!array_intersect(array('administrator'), $user->roles)) {
+     drupal_access_denied();
+    }
    }
-  }
 
 //-----------------------------------
 

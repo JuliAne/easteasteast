@@ -1008,7 +1008,6 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 #footer .row {
   background-color: rgba(255,255,255,0.8);
   padding: 15px 20px 25px 20px;
-  width: 75%;
   min-width: 350px;
 }
 
@@ -1392,4 +1391,8 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   padding: 5px 11px;
   margin-top: -30px;
   float: right;
+}
+
+.button, .panel {
+  border-radius: 2px;
 }

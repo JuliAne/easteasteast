@@ -79,24 +79,24 @@
 
     <div class="row">
      <div class="aaeHeadline">
-      <h1><span><strong><?= t('Neueste Veranstaltungen'); ?></strong></span></h1>
+      <h1><span><strong><?= t('Nächste Veranstaltungen'); ?></strong></span></h1>
       <a href="<?= base_path(); ?>events/rss" id="rss" class="small button" title="<?= t('Alle Events als RSS-Feed abonnieren'); ?>"><img id="svg_logo" src="/sites/all/themes/aae_theme/img/rss.svg"></a>
       <a href="<?= base_path(); ?>events" id="allevents" class="small button frontpage"><?= t('Alle Events'); ?></a>
      </div>
     </div>
     <div class="row">
       <?php
-      // Lade "letzte Events"-Block
-      foreach ($blocks->print_letzte_events() as $event) : ?>
+      // Lade "next Events"-Block
+      foreach ($blocks->print_next_events() as $event) : ?>
         <div class="large-6 small-6 columns large3-events">
         <a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>">
-          <button class="date"><?= $event->start->format('d'); ?><br/><?= $monat_short[$event->start->format('m')]; ?></button>
+         <button class="date"><?= $event->start->format('d'); ?><br/><?= $monat_short[$event->start->format('m')]; ?></button>
         </a>
         <a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>">
           <div class="events-align event">
             <h4><?= $event->name; ?></h4>
             <div class="divider"></div>
-            <aside><!--<img src="<?= base_path().path_to_theme(); ?>/img/clock.svg" />--><?= $event->start->format('H:i'); ?><?php if ($event->ende->format('H:i') != '00:00') :?> - <?= $event->ende->format('H:i'); ?><?php endif; ?></aside>
+            <aside><?= ($event->start->format('H:i') != '00:00' ? $event->start->format('H:i') : ''); ?><?php if ($event->ende->format('H:i') != '00:00') :?> - <?= $event->ende->format('H:i'); ?><?php endif; ?></aside>
           </div>
         </a>
       </div>

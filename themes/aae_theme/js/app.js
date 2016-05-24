@@ -16,12 +16,15 @@ $(document).ready(function() {
  });
 
  $('#timespace .slider').on('moved.zf.slider', function() {
-  var leftS = $('#timespace .sh-1').css('left');
-  var rightS = $('#timespace .sh-2').css('left');
 
-  //$('#timespace ul')
+  $('#timespace ul li').css({'font-weight':'normal'}).removeClass('activeTime');
 
-  //14.25
+  var leftS = Math.ceil(parseInt($('#timespace .sh-1').css('left'))/31);
+  var rightS = Math.ceil(parseInt($('#timespace .sh-2').css('left'))/31);
+  for (i = leftS; i <= rightS; i++){
+   $('#timespace ul li').eq(i).css({'font-weight':'bold'}).addClass('activeTime');
+  }
+
  });
 
  $('.login_first').click(function(){
@@ -85,15 +88,25 @@ $(document).ready(function() {
   var that = $(this);
   $('#presentationFilter').find('.active').removeClass('active').addClass('secondary');
   that.removeClass('secondary').addClass('active');
-  $('#filterForm').submit();
+  if ($(that).attr('name') == 'map'){
+   return false;
+  } else {
+   $('#filterForm').submit();
+  }
  });
 
  $('#filterForm').submit(function(){
+  $('#presentationFilter input[type="submit"]').remove();
   if ($('#akteure #filter').length){
+   // akteurepage.tpl
    // Add selected presentation mode to URL
    var presentationValue = $('#presentationFilter').find('.active').attr('name');
    $('<input />').attr('type', 'hidden').attr('name', 'presentation').attr('value', presentationValue).appendTo('#filterForm');
+  } else if ($('#events #filter').length && $('#timespace .activeTime').length){
+   // eventspage.tpl
+   $('<input />').attr('type', 'hidden').attr('name', 'timespan').attr('value', $('#timespace .activeTime').first().attr('data-month') + '-' + $('#timespace .activeTime').last().attr('data-month')).appendTo('#filterForm');
   }
+  return true;
  });
 
  $('#inviteBtn').click(function(){
@@ -121,7 +134,10 @@ $(document).ready(function() {
 
  $(document).keyup(function(e) {
   // Closes lightbox when hitting "escape".
-  if (e.keyCode == 27) $('.aaeModal .button.closeBtn').click();
+  if (e.keyCode == 27) {
+   $('.aaeModal .button.closeBtn').click();
+   $('#alert').fadeOut('fast');
+  }
  });
 
  setHandlers();

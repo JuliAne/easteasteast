@@ -63,7 +63,7 @@ p.licensetext:hover {
  color: grey;
  width: 100%;
  text-align: center;
- padding-bottom: 12px;
+ padding-bottom: 15px;
 }
 /*
 #events_content h4 ~ .date {
@@ -170,7 +170,7 @@ p.licensetext:hover {
   margin-top: 5px;
   margin-bottom: 12px;
   text-align: right;
-  padding-right: 16px;
+  padding-right: 38px;
 }
 
 .aaeEvent .akteurData:hover a {
@@ -201,19 +201,22 @@ p.licensetext:hover {
   border-color: #FF5217;
 }
 .aaeEvent.eventRecurres .content {
-  border-color: #d4ff0a;
+  /*border-color: #d4ff0a;*/
+  border: none;
+  padding-bottom: 0;
 }
 .aaeEvent.eventRecurres .content:before {
-  border-color: transparent #d4ff0a transparent transparent;
+  /*border-color: transparent #d4ff0a transparent transparent;*/
+  border: none;
 }
 .aaeEvent.eventRecurres a {
-  color: #d4ff0a;
+  color: #777;
 }
-.aaeEvent.eventRecurres .date {
+/*.aaeEvent.eventRecurres .date {
   border-color: #d4ff0a;
-}
+}*/
 .aaeEvent.eventRecurres:hover .date {
-  border-color: #d4ff0a;
+  border-color: #777;
 }
 .aaeEvent.today .content:before {
   border-color:transparent #FF5217 transparent transparent;
@@ -240,6 +243,7 @@ p.licensetext:hover {
   float: left;
   font-size: 0.75em;
   padding: 0 6px;
+  font-weight: bold;
  }
 
  #filter #timespace ul li.selected {
@@ -340,4 +344,12 @@ p.licensetext:hover {
 }
 #events_content #calendar .dates li:hover {
   background-color: #F1EFEF;
+}
+
+.removeAppointment a {
+  transition: 0.25s all;
+}
+.removeAppointment a:hover {
+  color: red;
+  padding-left: 4px;
 }
