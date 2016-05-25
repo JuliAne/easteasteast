@@ -552,14 +552,13 @@ function ajax_requests($id) {
  */
 function aae_install_clear_db_contents() {
   
- $aae = new \Drupal\AaeData\aae_data_helper();
-
- // Unify Akteure-URL's and -numbers
+ $aae = new \Drupal\AaeData\aae_data_helper();// Unify Akteure-URL's and -numbers
  $akteure = db_select($aae->tbl_akteur, 'a')
-  ->fields('a', array('url', 'telefon'))
+  ->fields('a', array('AID', 'url', 'telefon'))
   ->execute();
   
- foreach ($akteure->fetchAssoc() as $akteur){
+ foreach ($akteure->fetchAll() as $akteur){
+ 
    
   if (strpos($akteur->url, 'http') === false && strpos($akteur->url, 'https') === false) { 
    db_update($aae->tbl_akteur)
@@ -586,22 +585,48 @@ function aae_install_clear_db_contents() {
   
   $tags = array();  
   
-  foreach ($allTags->fetchAssoc() as $tag){
+  foreach ($allTags->fetchAll() as $tag){
    
    if (isset($tags[$tag->kategorie])) {
     
-    db_update($aae->tbl_hat_sparte)
-     ->fields(array(
-      'hat_KID' => $tags[$tag->kategorie]
-     ))
-     ->condtion('hat_KID', $tag->KID)
+    // akteure_tags
+    // Avoid PDOException
+    $availTags = db_select($aae->tbl_hat_sparte, 'hs')
+     ->fields('hs')
+     ->condition('hat_KID', $tag->KID)
      ->execute();
      
-    db_update($aae->tbl_event_sparte)
-     ->fields(array(
-      'hat_KID' => $tags[$tag->kategorie]
-     ))
-     ->condtion('hat_KID', $tag->KID)
+    foreach ($availTags->fetchAll() as $aTag) {
+     if (!db_select($aae->tbl_hat_sparte,'hs')->fields('hs')->condition('hat_AID',$aTag->hat_AID)->condition('hat_KID',$tags[$tag->kategorie])->execute()->rowCount()){
+      db_update($aae->tbl_hat_sparte)
+       ->fields(array(
+       'hat_KID' => $tags[$tag->kategorie]
+       ))
+       ->condition('hat_KID', $tag->KID)
+       ->execute();
+     }
+    }
+     
+    // events_tags
+    // Avoid PDOException
+    $availTags = db_select($aae->tbl_event_sparte, 'es')
+     ->fields('es')
+     ->condition('hat_KID', $tag->KID)
+     ->execute();
+    
+    foreach ($availTags->fetchAll() as $aTag) {
+     if (!db_select($aae->tbl_event_sparte,'es')->fields('es')->condition('hat_EID',$aTag->hat_EID)->condition('hat_KID',$tags[$tag->kategorie])->execute()->rowCount()){
+      db_update($aae->tbl_event_sparte)
+       ->fields(array(
+       'hat_KID' => $tags[$tag->kategorie]
+       ))
+       ->condition('hat_KID', $tag->KID)
+       ->execute();
+     }
+    }
+     
+    db_delete($aae->tbl_sparte)
+     ->condition('KID', $tag->KID)
      ->execute();
     
    } else {
