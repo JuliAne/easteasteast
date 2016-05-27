@@ -299,7 +299,7 @@ html.fp-enabled,
 #slideSection .slide p {
   margin-bottom: 45px;
   font-size: 1.25em;
-  font-family: /*'Lora',*/'Open Sans', serif !important;
+  font-family: 'Lora','Open Sans', serif !important;
   font-weight: 100;
   padding: 2px 10px;
   margin: 0 auto;
@@ -309,7 +309,7 @@ html.fp-enabled,
 }
 
 #slideSection .slide p.slogan strong {
-  font-family: /*'Lora',*/'Open Sans', serif !important;
+  font-family: 'Lora','Open Sans', serif !important;
 }
 
 #slideSection .slide.whiteText h1, #slideSection .slide.whiteText p {
@@ -427,7 +427,7 @@ html.fp-enabled,
 }
 
 #projects-akteure .pcard:hover h3 p.akteurname{
-  color: #007095!important;
+  color: #1585cf!important;
 }
 
 #projects-akteure .pcard header {
@@ -451,7 +451,7 @@ html.fp-enabled,
 }
 
 #projects-akteure .pcard:hover h3 {
-  background: #F1EFEF;
+  background: rgba(255,255,255,0.9);
 }
 
 #projects-akteure .pcard header {
@@ -475,6 +475,10 @@ html.fp-enabled,
   display: none;
 }
 
+#projects-akteure .pcard .plocation, #projects-akteure .pcard:hover .plocation {
+  font-weight: normal;
+}
+
 #projects-akteure .pcard:hover .plocation {
   opacity: 1;
 }
@@ -496,12 +500,12 @@ html.fp-enabled,
  height: 120px;
  border: 1px solid #F1EFEF;
  border-radius: 3px;
- padding: 10px;
+ padding: 4px 8px;
  background-color: rgba(255,255,255,0.8);
  display: table-cell;
  vertical-align: middle;
  width: 74%!important;
- border-bottom: 3px solid #fff;
+ /*border-bottom: 3px solid #fff;*/
 }
 
 .large3-events {
@@ -531,15 +535,24 @@ html.fp-enabled,
 }
 
 .event h4 {
-  color: #228cd1;
+ color: #2199E8;
+ font-size: 0.9em;
+ line-height: 1.4em;
+ font-weight: 700;
+ font-family: "Open Sans", sans-serif;
+ min-height: 40px;
 }
 
 .event:hover h4 {
-  color: #2199E8;
+  color: #1585cf;
 }
 
-.event aside, .event:hover aside {
-  color: #111;
+.event aside {
+  color: grey;
+}
+
+.event:hover aside {
+  color: #555;
 }
 
 .large3-events:hover .event {
