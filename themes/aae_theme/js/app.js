@@ -6,13 +6,15 @@ $(document).ready(function() {
  setInterval(function(){$('#alert').slideUp('slow')}, 10000);
 
  $(document).scroll(function(){
+ if ($(window).width() > '390'){   
   if($(window).scrollTop()>1){
    $('#mainnav').addClass('scrolled');
    $('.pace-progress').addClass('pace-scrolled');
   } else {
    $('#mainnav').removeClass('scrolled');
    $('.pace-progress').removeClass('pace-scrolled');
-  }
+  } 
+ }
  });
 
  $('#timespace .slider').on('moved.zf.slider', function() {

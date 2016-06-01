@@ -688,7 +688,7 @@ function aae_data_refresh_recurring_events(){
    ),
    [] => array(
     'key' => 'event_recurres_till',
-    'condition' => (new \DateTime(date()))->format('Y.m.d H:i:s'),
+    'condition' => date('Y.m.d H:i:s'),
     'operator' => '>='
    )
   ), 'minimal');
@@ -700,7 +700,7 @@ function aae_data_refresh_recurring_events(){
    // Get all children of event that will occur in future
    $eChildren = $events->getEvents(array(
     'parent_EID' => $eParent->EID,
-    'start' => (new \DateTime(date()))->format('Y.m.d H:i:s')
+    'start' => date('Y.m.d H:i:s')
    ), 'minimal');
    
    $newChildren = 1; // Parent-element
