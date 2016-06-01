@@ -364,7 +364,7 @@ Class eventformular extends aae_data_helper {
 
   } else if ($this->eventRecurres != 'on' && $status->recurring_event_type >= 2) {
    
-   // "Event recurres"   turned off
+   // "Event recurres" turned off
    $this->event->removeEventChildren($this->event_id);
    $this->eventRecurringType = NULL;
    
@@ -499,7 +499,6 @@ Class eventformular extends aae_data_helper {
      $this->eventRecurres = ($row->recurring_event_type >= 1);
      $this->recurringEventType = $row->recurring_event_type;
      $this->eventRecurresTill = $row->eventRecurresTill->format('Y-m-d');
-     #$this->childrenEvents = $row->childrenEvents
      $this->strasse = $row->adresse->strasse;
 	   $this->nr = $row->adresse->nr;
 	   $this->adresszusatz = $row->adresse->adresszusatz;
@@ -646,25 +645,31 @@ Class eventformular extends aae_data_helper {
 
    }
 
-    // Tell Drupal about the new eventprofil/ID-item
+    // Tell Drupal about the new eventprofil/ID-item, get Bezirksname
     $parentItem = db_query(
      "SELECT menu_links.mlid
       FROM {menu_links} menu_links
       WHERE menu_name = :menu_name AND link_path = :link_path",
       array(":menu_name" => "navigation", ":link_path" => 'events'));
-
+    
+    $bezirk = db_select($this->tbl_bezirke, 'b')
+     ->fields('b')
+     ->condition('BID', $this->ort)
+     ->execute();
+    
     $plid = $parentItem->fetchObject();
-
+    $bezirk = trim(preg_replace("/\(\w+\)/", "", $bezirk->fetchObject()->bezirksname));
+    
     $item = array(
      'menu_name' => 'navigation',
      'weight' => 1,
-     'link_title' => t('Eventprofil von !username', array('!username' => $this->name)),
+     'link_title' => t('!name am !datum in !ort, Leipzig | Events', array('!name' => $this->name, '!datum' => (new \DateTime($startQuery))->format('d.m.Y'),'!ort' => $bezirk)),
      'module' => 'aae_data',
      'link_path' => 'eventprofil/'.$this->event_id,
      'plid' => $plid->mlid
     );
-
     menu_link_save($item);
+    # SEO: ['options']['attributes']['description'] ?
 
     // Call hooks
     module_invoke_all('hook_event_created');

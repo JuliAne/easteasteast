@@ -88,10 +88,9 @@
   <div id="events_content" class="large-9 small-12 columns">
 
    <ul class="tabs" id="events-tabs" style="margin-bottom:22px;">
-    <li class="tabs-title<?= ($this->getOldEvents || $this->hasFilters ? '' : ' is-active'); ?>"><a href="<?= base_path(); ?>events"<?= ($this->getOldEvents || $this->hasFilters ? '' : ' aria-selected="true"'); ?>>Demnächst</a></li>
-    <li class="tabs-title<?= ($this->getOldEvents && !$this->hasFilters ? ' is-active' : ''); ?>"><a href="<?= base_path(); ?>events/old"<?= ($this->getOldEvents ? ' aria-selected="true"' : ''); ?>>Vergangene Events</a></li>
-    <?php if (!empty($this->filters)) : ?><li class="tabs-title is-active"><a href="#" aria-selected="true"><?= t('Filterergebnisse'); ?> (<?= count($resultEvents); ?>)</a></li><?php endif; ?>
-     <!--label>Darstellung:</label>//$_SERVER[REQUEST_URI];-->
+    <li class="tabs-title<?= ($this->getOldEvents || !empty($this->filter) ? '' : ' is-active'); ?>"><a href="<?= base_path(); ?>events"<?= ($this->getOldEvents || !empty($this->filter) ? '' : ' aria-selected="true"'); ?>>Demnächst</a></li>
+    <li class="tabs-title<?= ($this->getOldEvents && empty($this->filter) ? ' is-active' : ''); ?>"><a href="<?= base_path(); ?>events/old"<?= ($this->getOldEvents ? ' aria-selected="true"' : ''); ?>>Vergangene Events</a></li>
+    <?php if (!empty($this->filter)) : ?><li class="tabs-title is-active"><a href="#" aria-selected="true"><?= t('Filterergebnisse'); ?> (<?= count($resultEvents); ?>)</a></li><?php endif; ?>
     <ul id="presentationFilter" class="button-group round large-3 columns right">
      <li class="right"><a href="<?= base_path(); ?>events" name="timeline" class="small button <?php echo ($this->presentationMode !== 'calendar' ? 'active' : 'secondary'); ?>" title="<?= t('Darstellung als Timeline'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
      <li class="right"><a href="<?= base_path(); ?>events/?presentation=calendar" name="kalender" class="small button <?php echo ($this->presentationMode == 'calendar' ? 'active' : 'secondary'); ?>" title="<?= t('Darstellung als Kalender'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
@@ -132,10 +131,12 @@
     </div>
    <?php endif; ?>
    </div>
-
+   
+   <?php if (!empty($event->akteur)) : ?>
    <div class="akteurData large-10 columns">
     <p><a href="<?= base_path().'akteurprofil/'.$event->akteur->AID; ?>" title="<?= t('Akteurprofil von !username', array('!username' => $event->akteur->name)); ?>"><img src="<?= $event->akteur->bild; ?>" /><?= $event->akteur->name; ?></a></p>
    </div>
+   <?php endif; ?>
 
   </div>
  <?php endforeach; else : ?>

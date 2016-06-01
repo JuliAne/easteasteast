@@ -145,6 +145,7 @@ class kalender extends aae_data_helper {
      '<div class="header">'.
        '<a class="prev" href="'.base_path().'ajax/getKalender/?month=' . sprintf('%02d',$preMonth) . '&year=' . $preYear . '" rel="nofollow"><<</a>'.
          '<span class="title">' . date('Y M',strtotime($this->currentYear . '-' . $this->currentMonth . '-1')) . '</span>'.
+         // $this->monat_lang[01];
        '<a class="next" href="'.base_path().'ajax/getKalender/?month=' . sprintf("%02d", $nextMonth) . '&year=' . $nextYear . '" rel="nofollow">>></a>'.
      '</div>';
  }

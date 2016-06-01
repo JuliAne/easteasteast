@@ -24,9 +24,10 @@ Class events extends aae_data_helper {
  }
 
  /*
-  * @return Event-object
-  * @param $conditions : array
-  * @param $fields : integer: MINIMAL output (= good for date-calculation),
+  * @return Event-object, keyed by EID (for performance purposes when using children)
+            start, ende, created, modified & eventRecurresTill: DateTime-objects
+  * @param $conditions : array : Custom operators supported
+  * @param $fields : integer: MINIMAL output (= puuurfect for date-calculation),
   *                           NORMAL output (= full table-row),
   *                           COMPLETE (= joins all other tables)
   */
@@ -69,7 +70,7 @@ Class events extends aae_data_helper {
      case ('end') :
       $events->condition('ende_ts', $condition, '<=');
       $events->condition('ende', '1000-01-01 00:00:00', '!=');
-      // TODO for API: Make various end-values possible
+      // TODO for API: Make multiple end-values possible
       break;
       
      case ('filter') :
@@ -84,34 +85,41 @@ Class events extends aae_data_helper {
    $rEvents->condition($or); */
      break;
      
-     default : 
-      $events->condition($key, $condition, '=');
+     default :
+      if (is_array($condition)) {
+       foreach ($condition as $s){
+        #$s['operator'] = ($s['operator'] == 'p=' ? '>=' : $s['operator']);
+        $events->condition($s['key'], $s['condition'], $s['operator']);
+       }
+      } else {
+       $events->condition($key, $condition, '=');
+      }
       break;
     }
 
    }
 
    $events->orderBy('start_ts', $orderBy);
-   $resultEvents = $events->execute()->fetchAll();
+   $resultEvents = $events->execute()->fetchAllAssoc('EID');
 
-   // Add specific data from other tables...
-   $counter = 0;
+   // Format & add specific data from other tables...
 
    foreach ($resultEvents as $event) {
+     
+    $realEID = $event->EID;
 
     if (!empty($event->parent_EID) && !$calledRecursively){
-     // Erbe vom Eltern-Element
-     // TODO: Improve Query-performance
+     // Inherit from parent
      $parentData = db_select($this->tbl_event,'e')->fields('e')->condition('EID', $event->parent_EID);
-     /*$resultEvents[$counter] = (isset($resultEvents[$event->parent_EID]) && !empty($resultEvents[$event->parent_EID]))
+     
+     $resultEvents[$realEID] = (isset($resultEvents[$event->parent_EID]) && !empty($resultEvents[$event->parent_EID]))
      ? $resultEvents[$event->parent_EID]
-     : $parentData->execute()->fetchAll(); */
-     $resultEvents[$counter] = $parentData->execute()->fetchAssoc();
+     : $parentData->execute()->fetchAssoc();
      $event->EID = $event->parent_EID;
     }
 
     // Hack: add variables to $resultEvents-object
-    $resultEvents[$counter] = (array)$resultEvents[$counter];
+    $resultEvents[$realEID] = (array)$resultEvents[$realEID];
 
     if ($fields == 'complete') {
 
@@ -119,8 +127,7 @@ Class events extends aae_data_helper {
 
       $childrenEvents = $this->getEvents(array('parent_EID' => $conditions['EID']), 'minimal', true);
       if (!empty($childrenEvents))
-       $resultEvents[$counter]['childrenEvents'] = $childrenEvents;
-      #???
+       $resultEvents[$realEID]['childrenEvents'] = $childrenEvents;
      }
 
      $ersteller = db_select("users", 'u')
@@ -128,17 +135,17 @@ Class events extends aae_data_helper {
       ->condition('uid', $event->ersteller, '=')
       ->execute();
 
-     $resultEvents[$counter]['ersteller'] = $ersteller->fetchObject();
+     $resultEvents[$realEID]['ersteller'] = $ersteller->fetchObject();
 
      // Adresse + Bezirk - HATING DRUPAL JOINS IN PARTICULAR
      $resultAdresse = db_query('SELECT * FROM {aae_data_adresse} b INNER JOIN {aae_data_bezirke} bz ON bz.BID = b.bezirk WHERE b.ADID = :adresse', array(':adresse'=>$event->ort));
-     $resultEvents[$counter]['adresse'] = $resultAdresse->fetchObject();
+     $resultEvents[$realEID]['adresse'] = $resultAdresse->fetchObject();
 
      // Tags
      $sparten = array();
      $sparten = $this->getTags($event->EID);
 
-     $resultEvents[$counter]['tags'] = $sparten;
+     $resultEvents[$realEID]['tags'] = $sparten;
 
    } if ($fields == 'complete' || $fields == 'normal') {
 
@@ -155,19 +162,17 @@ Class events extends aae_data_helper {
       ->fetchObject();
      // Could return full akteure->getAkteure(...)-object...
 
-     $resultEvents[$counter]['akteur'] = $resultAkteur;
+     $resultEvents[$realEID]['akteur'] = $resultAkteur;
 
     }
 
-    $resultEvents[$counter]['start'] = new \DateTime($event->start_ts);
-    $resultEvents[$counter]['ende'] = new  \DateTime($event->ende_ts);
-    $resultEvents[$counter]['created'] = new  \DateTime($event->created);
-    $resultEvents[$counter]['modified'] = new  \DateTime($event->modified);
-    $resultEvents[$counter]['eventRecurresTill'] = new \DateTime($event->event_recurres_till);
-    $resultEvents[$counter]['eventRecurringType'] = $event->recurring_event_type;
-    $resultEvents[$counter] = (object)$resultEvents[$counter];
-
-    $counter++;
+    $resultEvents[$realEID]['start'] = new \DateTime($event->start_ts);
+    $resultEvents[$realEID]['ende'] = new  \DateTime($event->ende_ts);
+    $resultEvents[$realEID]['created'] = new  \DateTime($event->created);
+    $resultEvents[$realEID]['modified'] = new  \DateTime($event->modified);
+    $resultEvents[$realEID]['eventRecurresTill'] = new \DateTime($event->event_recurres_till);
+    $resultEvents[$realEID]['eventRecurringType'] = $event->recurring_event_type;
+    $resultEvents[$realEID] = (object)$resultEvents[$realEID];
 
   }
 
@@ -392,11 +397,5 @@ Class events extends aae_data_helper {
   
   return $this->getDuplicates($filteredEventIds, $numFilters);
    
-  }
-  
-  private function __beautifyPhoneNbr($nbr){
-   $nbr = str_replace("---", "", trim($nbr));
-   return str_replace("/", "-", $nbr);
-  }
-
+ }
 }

@@ -23,7 +23,6 @@
   font-style: normal; }
 
 *,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,input,textarea,p,blockquote,th,td {
-  /*font-family: "Open Sans", sans-serif;*/
   letter-spacing: normal;
   padding: 0px;
   margin: 0px;
@@ -169,7 +168,11 @@ button.button, #actions {
 
 #block-invite-invite-add-invite-by-email .content {
   margin-top: 0;
-  width: 80%;
+  width: 100%;
+}
+
+#block-invite-invite-add-invite-by-email .field-name-field-invitation-email-address input {
+  width: 250px !important;
 }
 
 #block-invite-invite-add-invite-by-email .description {

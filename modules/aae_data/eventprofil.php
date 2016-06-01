@@ -43,7 +43,7 @@ class eventprofil extends aae_data_helper {
   if ($resultUser->rowCount() == 1 || array_intersect(array('administrator'), $user->roles)) $this->isOwner = 1;
 
   $resultEvent = $this->event->getEvents(array('EID' => $event_id), 'complete');
-  $resultEvent = $resultEvent[0];
+  $resultEvent = $resultEvent[$event_id];
   
   if (empty($resultEvent)) {
   // Event nicht vorhanden

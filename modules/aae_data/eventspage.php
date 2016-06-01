@@ -41,7 +41,8 @@ Class eventspage extends aae_data_helper {
   }
   
   if (isset($_GET['timespan']) && !empty($_GET['timespan'])) {
-   # We get a ...?timespan=02.16-05.16&...
+   # Input: ...?timespan=02.16-05.16&...
+   $this->filter['bla'] = 'bla';
    $timespan = explode('-',$this->clearContent($_GET['timespan']));
    $begin = explode('.',$timespan[0]);
    $end = explode('.',$timespan[1]);

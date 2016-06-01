@@ -2,12 +2,13 @@ ROADMAP
 
 V 0.6 (-> Events-Rework) (06/2016):
 
-- Feature: Wiederkehrende Veranstaltungen (Ticket #63)
-  - Prozesse "Speicherung, Bearbeitung, Löschen" in Events-Modell auslagern
-  - Graphische Integration in Kalender, Eventspage und Eventprofil
-- Feature: Freunde einladen (#6)
-- Ersetzen des Template-Contents durch dynamische Sprach-Platzhalter (>90%)
-- Verbesserungen der OO-Architektur, u.a. durch namespaces
+- Feature: Wiederkehrende Veranstaltungen (Ticket #63) - ✓
+  - Prozesse "Speicherung, Bearbeitung, Löschen" in Events-Modell auslagern - ✓
+  - Graphische Integration in Kalender, Eventspage und Eventprofil - ✓
+  - Cronjob, welcher immer für fünf Sub-Events sorgt - ✓
+- Feature: Freunde einladen (#6) - ~
+- Ersetzen des Template-Contents durch dynamische Sprach-Platzhalter (>90%) - ✓
+- Verbesserungen der OO-Architektur, u.a. durch namespaces ✓
 
 
 V 0.7:
@@ -51,3 +52,4 @@ _ _ _
 Noch offen, ungeklärter Stand:
 
 - Integration RSS-Feeds von Akteuren aus Leipziger Osten in das Interface/Journal
+- Einrichtung "aae_data_termine" & "aae_data_event_hat_termine", um mehr Dynamik zu schaffen.

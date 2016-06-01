@@ -180,7 +180,7 @@
      <a href="#"><?= t('Eventbild löschen.'); ?></a>
     </div>
     <?php endif; ?>
-
+    <p class="licensetext">Wir empfehlen, Bilder im <strong>Format 3:2</strong> hochzuladen (bspw. 640 x 400 Pixel)</p><br />
     <p class="licensetext"><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf Leipziger-Ecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
     <p class="licensetext">Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefelder zu beschreiben.</p><br />
     <p class="licensetext">Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte.</p>

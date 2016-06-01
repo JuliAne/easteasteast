@@ -141,7 +141,7 @@
            <a href="#"><?= t('Akteurbild löschen.'); ?></a>
           </div>
         <?php endif; ?>
-
+      <p class="licensetext">Wir empfehlen, Bilder im <strong>Format 3:2</strong> hochzuladen (bspw. 640 x 400 Pixel)</p><br />
       <p class="licensetext"><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf leipziger-ecken.de stimmen sie auch einer etwaigen Nutzung dieser Daten durch andere zu.</p>
       <p class="licensetext">Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten, wenn er den Urheber nennt. Wir bitten Sie, ihre Daten nach bestem (Ge-)wissen über die Eingabefeldern zu beschreiben.</p><br />
       <p class="licensetext">Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte. Bildmaterial sollte vorher abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>

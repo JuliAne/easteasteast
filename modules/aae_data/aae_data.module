@@ -2,14 +2,18 @@
 
  $modulePath = drupal_get_path('module', 'aae_data');
  include_once $modulePath . '/aae_data_helper.php';
+ 
+  aae_data_refresh_recurring_events();
 
 /*
 * Implements hook_data_cron()
 * Cronjob, der von Drupal automatisch aufgerufen wird.
+*/
 
 function aae_data_cron() {
-  //....
-} */
+  #aae_data_refresh_recurring_events();
+  #aae_data_refresh_facebook_events();
+}
 
 function aae_data_user_login(&$edit, $account){
   drupal_set_message(t('Willkommen, <strong>!name</strong>!', array('!name'=>$account->name)));
@@ -30,7 +34,6 @@ function aae_data_user_logout($account) {
  * Implements hook_block_info().
  * Make AAE-custom blocks available.
  */
-
 function aae_data_block_info() {
 
   $blocks['aae_journal'] = array(
@@ -119,8 +122,8 @@ function aae_data_default_message_type() {
  */
 
 function aae_data_akteur_created(){
-  // doesn't work...
-  echo 'd'; exit();
+  // doesn't work... maybe call hook_akteur...?!
+  #echo 'd'; exit();
 
   $message = message_create('firstmessage', array(), 'bla');
   $wrapper = entity_metadata_wrapper('message', $message);
@@ -548,17 +551,15 @@ function ajax_requests($id) {
 
 /**
  * Funktion zum Vereinheitlichen der DB-Bestände
- * FETTES TODO
  */
 function aae_install_clear_db_contents() {
-  
- $aae = new \Drupal\AaeData\aae_data_helper();// Unify Akteure-URL's and -numbers
+   
+ // Unify Akteure-URL's and -numbers
  $akteure = db_select($aae->tbl_akteur, 'a')
   ->fields('a', array('AID', 'url', 'telefon'))
   ->execute();
   
  foreach ($akteure->fetchAll() as $akteur){
- 
    
   if (strpos($akteur->url, 'http') === false && strpos($akteur->url, 'https') === false) { 
    db_update($aae->tbl_akteur)
@@ -577,15 +578,37 @@ function aae_install_clear_db_contents() {
    ->execute();
   
  }
+ 
+ // Make "str." to "straße" & "ss" to "ß"
+ $adressen = db_select($aae->tbl_adresse, 'a')
+  ->fields('a')
+  ->execute();
+ 
+ foreach ($adressen->fetchAll() as $adresse){
+  if (strpos($adresse->strasse, 'str.')){
+   db_update($aae->tbl_adresse)
+    ->fields(array(
+     'strasse' => str_replace('str.','straße',$adresse->strasse)
+    ))
+    ->condition('ADID', $adresse->ADID)->execute();
+  }
+  if (strpos($adresse->strasse, 'strasse')){
+   db_update($aae->tbl_adresse)
+    ->fields(array(
+     'strasse' => str_replace('strasse','straße',$adresse->strasse)
+    ))
+    ->condition('ADID', $adresse->ADID)->execute();
+  }
+ }
 
-  // Remove double tags for Events & Akteure
-  $allTags = db_select($aae->tbl_sparte, 's')
-   ->fields('s')
-   ->execute();
+ // Remove double tags for Events & Akteure
+ $allTags = db_select($aae->tbl_sparte, 's')
+  ->fields('s')
+  ->execute();
   
-  $tags = array();  
+ $tags = array();  
   
-  foreach ($allTags->fetchAll() as $tag){
+ foreach ($allTags->fetchAll() as $tag){
    
    if (isset($tags[$tag->kategorie])) {
     
@@ -633,8 +656,134 @@ function aae_install_clear_db_contents() {
  
     $tags[$tag->kategorie] = $tag->KID;
    
-   } 
+  } 
+ }
+}
+
+/**
+ * Called by aae_data_cronjob()
+ *
+ * Checks each recurring event (that has passed) for more dates
+ * that have passed and adds up to 5 new sub-event-dates.
+ * TODO: Nutze Anpassungen an tbl-events-termine, um einzeln gelöschte
+ * Termine zu berücksichtigen.
+ */
+function aae_data_refresh_recurring_events(){
+  
+  require_once('models/events.php');
+  $events = new \Drupal\AaeData\events();
+  
+  // Get all event parents
+  $eParents = $events->getEvents(array(
+   'start' => (new \DateTime(date()))->format('Y.m.d H:i:s'),
+   [] => array(
+    'key' => 'recurring_event_type',
+    'condition' => '2',
+    'operator' => '>='
+   ),
+   [] => array(
+    'key' => 'parent_EID',
+    'condition' => '',
+    'operator' => '='
+   ),
+   [] => array(
+    'key' => 'event_recurres_till',
+    'condition' => (new \DateTime(date()))->format('Y.m.d H:i:s'),
+    'operator' => '>='
+   )
+  ), 'minimal');
+  
+  $countAddedEvents = 0;
+  
+  foreach ($eParents as $eParent){
+    
+   // Get all children of event that will occur in future
+   $eChildren = $events->getEvents(array(
+    'parent_EID' => $eParent->EID,
+    'start' => (new \DateTime(date()))->format('Y.m.d H:i:s')
+   ), 'minimal');
+   
+   $newChildren = 1; // Parent-element
+   if (count($eChildren) < 4){
+    $newChildren = 1 + (4-count($eChildren));
+   }
+   
+   for ($i=0;$i==$newChildren;$i++){
+    $events->addEventChildren($eParent->EID, $eParent->recurring_event_type, end($eChildren->start_ts), end($eChildren->ende_ts));
+    $countAddedEvents++;
+   }
   }
+  
+  if ($countAddedEvents){
+   // Some humanoid debugging, to be removed
+   $msg = "Der Aae-Data-Cron wurde aufgerufen und hat ".$countAddedEvents." neue Events erstellt".
+   mail('info@leipziger-ecken.de', 'AAE DATA Debugger', $msg);
+  }
+      
+   
+    
+    // TODO: Reset event-title to next date
+    /*
+        // Tell Drupal about the new eventprofil/ID-item
+    $parentItem = db_query(
+     "SELECT menu_links.mlid
+      FROM {menu_links} menu_links
+      WHERE menu_name = :menu_name AND link_path = :link_path",
+      array(":menu_name" => "navigation", ":link_path" => 'events'));
+
+    $plid = $parentItem->fetchObject();
+
+    $item = array(
+     'menu_name' => 'navigation',
+     'weight' => 1,
+     'link_title' => t('Event "!name" am !datum in !ort, Leipzig', array('!name' => $this->name, '!datum' => ,'!ort' => $this->ort)),
+     'module' => 'aae_data',
+     'link_path' => 'eventprofil/'.$this->event_id,
+     'plid' => $plid->mlid
+    );
+
+    menu_link_save($item);
+
+    // Call hooks
+    module_invoke_all('hook_event_created'); */
+    
+
+ # }
+}
+
+/**
+ * Implements hook_libraries_info().
+ 
+function aae_data_libraries_info() {
+  $libraries['facebook-php-sdk-v4'] = array(
+    'name' => 'Facebook PHP SDK v4',
+    'vendor url' => 'https://github.com/facebook/facebook-php-sdk-v4',
+    'download url' => 'https://github.com/facebook/facebook-php-sdk-v4/releases',
+    'version arguments' => array(
+      'file' => 'README.md',
+      // pattern to search for: Stable-4.0.23
+      'pattern' => '@Stable-(\d*\.\d*\.\d*)@'
+    ),
+    'xautoload' => function($adapter) {
+      $adapter->add('Facebook', 'src');
+    },
+  );
+  return $libraries;
+} */
+
+function aae_data_refresh_facebook_events(){
+  /*
+ use Facebook\FacebookSession;
+use Facebook\FacebookRedirectLoginHelper;
+use Facebook\FacebookSDKException;
+use Facebook\FacebookRequest;
+use Facebook\FacebookRequestException;
+use Facebook\GraphObject;
+
+  $login_helper = new FacebookRedirectLoginHelper($return_url);
+
+
+*/
 }
 
 /**

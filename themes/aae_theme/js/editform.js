@@ -86,8 +86,9 @@ $(document).ready(function(){
 
     if (strasse.slice(-1) == '.') {
       // Replace characters to optimize query-results
-      strasse = strasse.replace('.', 'asse');
-      strasse = strasse.replace('ß', 'ss');
+      strasse = strasse.replace('.', 'aße');
+      strasse = strasse.replace('ss', 'ß');
+      $('#StrasseInput').val(strasse);
     }
 
     $('#GPSInput').val('Ermittle Geo-Koordinaten...');
