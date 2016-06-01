@@ -19,9 +19,16 @@ class eventprofil extends aae_data_helper {
  }
 
  public function run(){
+   
+  global $user;
 
   $explodedpath = explode("/", current_path());
   $event_id = $this->clearContent($explodedpath[1]);
+
+  $resultEvent = $this->event->getEvents(array('EID' => $event_id), 'complete');
+  $resultEvent = $resultEvent[$event_id];
+  
+  if ($resultEvent->ersteller != $user->uid) {
 
   //Sicherheitsschutz, ob User entsprechende Rechte hat
   $resultAkteurId = db_select($this->tbl_akteur_events, 'e')
@@ -29,8 +36,6 @@ class eventprofil extends aae_data_helper {
    ->condition('EID', $event_id, '=')
    ->execute()
    ->fetchObject();
-   
-  global $user;
 
   // Show "Edit"-Button?
   $this->akteur_id = $resultAkteurId->AID;
@@ -40,10 +45,12 @@ class eventprofil extends aae_data_helper {
    ->condition('hat_UID', $user->uid, '=')
    ->execute();
    
-  if ($resultUser->rowCount() == 1 || array_intersect(array('administrator'), $user->roles)) $this->isOwner = 1;
-
-  $resultEvent = $this->event->getEvents(array('EID' => $event_id), 'complete');
-  $resultEvent = $resultEvent[$event_id];
+  if ($resultUser->rowCount() == 1 || array_intersect(array('administrator'), $user->roles))
+    $this->isOwner = 1;
+    
+  } else {
+   $this->isOwner = 1;
+  }
   
   if (empty($resultEvent)) {
   // Event nicht vorhanden

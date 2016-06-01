@@ -21,8 +21,8 @@ $(document).ready(function() {
 
   $('#timespace ul li').css({'font-weight':'normal'}).removeClass('activeTime');
 
-  var leftS = Math.ceil(parseInt($('#timespace .sh-1').css('left'))/31);
-  var rightS = Math.ceil(parseInt($('#timespace .sh-2').css('left'))/31);
+  var leftS = Math.ceil(parseInt($('#timespace .sh-1').css('left'))/33);
+  var rightS = Math.ceil(parseInt($('#timespace .sh-2').css('left'))/33);
   for (i = leftS; i <= rightS; i++){
    $('#timespace ul li').eq(i).css({'font-weight':'bold'}).addClass('activeTime');
   }

@@ -77,6 +77,8 @@ Class eventspage extends aae_data_helper {
     );
     $orderBy = 'DESC';
     $this->getOldEvents = 1;
+    
+    drupal_set_title(t('Vergangene Events'));
   
   } else {
   

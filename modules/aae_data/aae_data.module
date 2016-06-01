@@ -2,8 +2,6 @@
 
  $modulePath = drupal_get_path('module', 'aae_data');
  include_once $modulePath . '/aae_data_helper.php';
- 
-  aae_data_refresh_recurring_events();
 
 /*
 * Implements hook_data_cron()
@@ -11,7 +9,7 @@
 */
 
 function aae_data_cron() {
-  #aae_data_refresh_recurring_events();
+  aae_data_refresh_recurring_events();
   #aae_data_refresh_facebook_events();
 }
 
