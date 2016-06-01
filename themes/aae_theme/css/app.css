@@ -580,7 +580,7 @@ transform: rotate(-10deg);
 }
 
 .pcard:hover h3, .pcard:hover h3 a {
- color: #007095
+ color: #1585cf;
 }
 
 .pcard header {
@@ -635,11 +635,12 @@ transform: rotate(-10deg);
 
 .pcard h3 {
  padding: 13px;
- background-color: rgba(255,255,255,0.9);
- padding: 13px;
+ background-color: rgba(255,255,255,0.8);
  font-size: 0.9em;
  text-align: center;
- line-height: 1.5em;
+ line-height: 1.6em;
+ font-weight: 700;
+ font-family: "Open Sans", sans-serif;
  /*transition: 0.25s opacity;*/
 }
 
@@ -936,6 +937,14 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 .event aside img {
  width: 16px;
  margin-right: 5px;
+}
+
+#events header h3 {
+ background-color: rgba(255,255,255,0.8);
+ font-size: 0.9em;
+ line-height: 1.6em;
+ font-weight: 700;
+ font-family: "Open Sans", sans-serif;
 }
 
 /*FOOTER section settings*/
