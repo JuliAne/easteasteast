@@ -61,12 +61,18 @@ class eventprofil extends aae_data_helper {
 
   }
 
-  $map = false;
-
+  $showMap = false;
   if (!empty($resultEvent->adresse->gps_lat)) {
-   $this->addMapContent($resultEvent->adresse->gps_lat.','.$resultEvent->adresse->gps_long, array('name' => $resultEvent->name, 'strasse' => $resultEvent->adresse->strasse, 'nr' => $resultEvent->adresse->nr));
-   # works?
-   $map = true;
+  
+   $showMap = true;
+   $koordinaten = $resultEvent->adresse->gps_lat.','.$resultEvent->adresse->gps_long;
+   $this->addMapContent($koordinaten, array(
+    'gps' => $koordinaten,
+    'name' => $resultEvent->name,
+    'strasse' => $resultEvent->adresse->strasse,
+    'nr' => $resultEvent->adresse->nr
+   ));
+  
   }
 
   ob_start(); // Aktiviert "Render"-modus

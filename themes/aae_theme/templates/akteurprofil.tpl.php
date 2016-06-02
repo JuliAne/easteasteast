@@ -71,7 +71,7 @@
   <div class="divider"></div>
   <?php endif; ?>
 
-	<?php if (!empty($aResult['adresse']->gps)) : ?>
+	<?php if ($showMap) : ?>
 	<div id="map" style="width: 100%; height: 180px;"></div>
 	<?php endif; ?>
 

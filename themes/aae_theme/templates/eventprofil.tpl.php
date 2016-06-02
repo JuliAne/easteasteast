@@ -20,16 +20,16 @@
  }
 </script>
 <?php endif; ?>
-<div id="eventprofil"<?= ($map) ? ' class="hasMap"' : ''; ?>>
+<div id="eventprofil"<?= ($showMap) ? ' class="hasMap"' : ''; ?>>
 
 <?php
  $style = 'style="';
  if (!empty($resultEvent->bild)) $style .= "background-image:url('".$resultEvent->bild."');";
- if ($map) $style .= "filter:none !important;-webkit-filter:none !important;padding-top:38px;";
+ if ($showMap) $style .= "filter:none !important;-webkit-filter:none !important;padding-top:38px;";
  $style .= '"'; ?>
 
 <header id="header" <?= $style; ?>>
- <?php if ($map) : ?><div id="map" style="height:280px;width:100%;margin-bottom:20px;"></div><?php endif; ?>
+ <?php if ($showMap) : ?><div id="map" style="height:280px;width:100%;margin-bottom:20px;"></div><?php endif; ?>
 </header>
 
 <div class="aaeActionBar">

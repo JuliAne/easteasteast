@@ -75,12 +75,12 @@ class akteurprofil extends aae_data_helper {
    array(':aid' => $akteur_id));
 
   $resultEvents = $events->fetchAll();
-
+  $showMap = false;
+  
   // Generiere Mapbox-taugliche Koordinaten, übergebe diese ans Frontend
-
-  if (!empty($aResult['adresse']->gps)) {
-
-    $koordinaten = $aResult['adresse']->gps;
+  if (!empty($aResult['adresse']->gps_lat)) {
+    $showMap = true;
+    $koordinaten = $aResult['adresse']->gps_lat.','.$aResult['adresse']->gps_long;
     $this->addMapContent($koordinaten, array(
      'gps' => $koordinaten,
      'name' => $aResult['adresse']->name,
