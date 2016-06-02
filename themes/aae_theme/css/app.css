@@ -1439,3 +1439,5 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 .button, .panel {
   border-radius: 2px;
 }
+
+#edit-field-invitation-email-subject, #edit-field-invitation-email-body, #edit-token-help { display:none; }

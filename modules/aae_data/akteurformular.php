@@ -296,11 +296,11 @@ drupal_add_html_head($og_title, 'og_title'); */
 
   /**
    * Schreibt Daten in DB
+   * Vereinheitliche Funktion zum Adressspeichern
    */
   private function akteurSpeichern() {
 
-   $gps = explode(',', $adresse->gps, 2);
-
+   $gps = explode(',', $this->gps, 2);
 
    $this->adresse = db_insert($this->tbl_adresse)
 	  ->fields(array(

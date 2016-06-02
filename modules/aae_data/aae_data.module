@@ -551,6 +551,8 @@ function ajax_requests($id) {
  * Funktion zum Vereinheitlichen der DB-Bestände
  */
 function aae_install_clear_db_contents() {
+  
+ $aae = new \Drupal\AaeData\aae_data_helper();
    
  // Unify Akteure-URL's and -numbers
  $akteure = db_select($aae->tbl_akteur, 'a')

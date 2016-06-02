@@ -2,6 +2,7 @@ $(document).ready(function(){
 
   $('#eventSpartenInput').tokenize({
     displayDropdownOnFocus : true,
+    newElements : true,
     onRemoveToken : function(value, e){
 
      if((parseFloat(value) == parseInt(value)) && !isNaN(value)) {
@@ -87,7 +88,7 @@ $(document).ready(function(){
     if (strasse.slice(-1) == '.') {
       // Replace characters to optimize query-results
       strasse = strasse.replace('.', 'aße');
-      strasse = strasse.replace('ss', 'ß');
+      strasse = strasse.replace('strasse', 'straße');
       $('#StrasseInput').val(strasse);
     }
 
