@@ -57,6 +57,9 @@ Class eventformular extends aae_data_helper {
   function __construct($action = false) {
 
    parent::__construct();
+   
+   $explodedpath = explode("/", current_path());
+   $this->event_id = $this->clearContent($explodedpath[1]);
 
    require_once('models/events.php');
    $this->event = new events();
@@ -65,7 +68,7 @@ Class eventformular extends aae_data_helper {
    if ($action == 'update')
 	  $this->target = 'update';
 
-   if (!user_is_logged_in())
+   if (!user_is_logged_in() || !$this->event->isAuthorized($this->event_id, $this->user_id))
 	  drupal_access_denied();
 
   }
@@ -76,8 +79,6 @@ Class eventformular extends aae_data_helper {
    */
   public function run() {
 
-    $explodedpath = explode("/", current_path());
-    $this->event_id = $this->clearContent($explodedpath[1]);
     $output = '';
 
     if (isset($_POST['submit'])) {

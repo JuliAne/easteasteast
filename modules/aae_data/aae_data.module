@@ -33,6 +33,13 @@ function aae_data_user_logout($account) {
  * Make AAE-custom blocks available.
  */
 function aae_data_block_info() {
+  
+  $blocks['aae_festival_neustadt'] = array(
+    'info' => 'Alle Events des Neustadt-Festivals',
+    'cache' => DRUPAL_NO_CACHE,
+    'status' => TRUE,
+    'region' => 'footer'
+  );  
 
   $blocks['aae_journal'] = array(
     'info' => 'Latest blog-posts. Called on start- and journal-page (see theme).',
@@ -138,6 +145,9 @@ function aae_data_block_view($delta = '') {
   $block = array();
 
   switch ($delta) {
+    
+    case 'aae_festival_neustadt' :
+     $block['content'] = events_page(true);
 
     case 'aae_footer_desc':
 
@@ -431,9 +441,12 @@ function akteurloeschen_page($eid=0) {
 /**
  * Baut die Seite fuer die Events
  */
-function events_page() {
+function events_page($isFestival = false) {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/eventspage.php';
+  include_once $modulePath . '/eventspage.php';
+  
+  if ($isFestival) 
+    $_SESSION['isFestival'] = true;
 
   $event = new Drupal\AaeData\eventspage();
   return $event->run();
@@ -444,7 +457,7 @@ function events_page() {
  */
 function events_rss() {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/eventspage.php';
+  include_once $modulePath . '/eventspage.php';
 
   $event = new Drupal\AaeData\eventspage();
   return $event->rss();
@@ -704,8 +717,8 @@ function aae_data_refresh_recurring_events(){
    ), 'minimal');
    
    $newChildren = 1; // Parent-element
-   if (count($eChildren) < 4){
-    $newChildren = 1 + (4-count($eChildren));
+   if (count($eChildren) < 5){
+    $newChildren = 1 + (5-count($eChildren));
    }
    
    for ($i=0;$i==$newChildren;$i++){
@@ -714,13 +727,12 @@ function aae_data_refresh_recurring_events(){
    }
   }
   
-  if ($countAddedEvents){
+  if ($countAddedEvents >= 1){
    // Some humanoid debugging, to be removed
    $msg = "Der Aae-Data-Cron wurde aufgerufen und hat ".$countAddedEvents." neue Events erstellt".
    mail('info@leipziger-ecken.de', 'AAE DATA Debugger', $msg);
   }
       
-   
     
     // TODO: Reset event-title to next date
     /*
@@ -750,7 +762,7 @@ function aae_data_refresh_recurring_events(){
 
  # }
 }
-
+  
 /**
  * Implements hook_libraries_info().
  

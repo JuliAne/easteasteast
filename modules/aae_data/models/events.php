@@ -179,6 +179,42 @@ Class events extends aae_data_helper {
   return $resultEvents;
 
  }
+ 
+ /* 
+ *  Checks whether user has permission to edit event
+ *
+ *  @return boolean
+ *  @param event_id
+ *  @param user_id
+ */
+ public function isAuthorized($eId, $uId, $erstellerId = NULL){
+  
+  global $user;
+  
+  if ($erstellerId == $uId || array_intersect(array('administrator'), $user->roles))
+    return true;
+ 
+  $resultAkteurId = db_select($this->tbl_akteur_events, 'e')
+   ->fields('e', array('AID'))
+   ->condition('EID', $eId)
+   ->execute()
+   ->fetchObject();
+  
+  $resultAkteurHasUser = db_select($this->tbl_hat_user, 'u')
+   ->fields('u')
+   ->condition('hat_AID', $resultAkteurId->AID)
+   ->condition('hat_UID', $uId)
+   ->execute();
+   
+  if ($resultAkteurHasUser->rowCount() == 1) {
+   return true;
+  } else {
+    return false;
+  }
+  
+   
+  
+ }
 
   public function getTags($eid = null){
    
