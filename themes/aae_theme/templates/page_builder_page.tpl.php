@@ -1,4 +1,5 @@
 <?php
+
 // Hardcoded FB Open Graph Data stuff
 $og_title = array(
   '#tag' => 'meta',
@@ -40,8 +41,8 @@ drupal_add_html_head($og_desc, 'og_description');
 </header>
 
 <aside id="neustadtIntro" class="row">
- <div id="festivalEvents"><img src="<?= base_path().path_to_theme(); ?>/img/festival_event.png" /><strong><?= count($resultEvents); ?></strong> Veranstaltungen</div>
- <div id="festivalAkteur"><img src="<?= base_path().path_to_theme(); ?>/img/festival_akteur.png" /><strong>12</strong> Akteure</div>
+ <div id="festivalEvents"><img src="<?= base_path().path_to_theme(); ?>/img/festival_event.png" /><strong id="festivalEventsCount">0</strong> Veranstaltungen</div>
+ <div id="festivalAkteur"><img src="<?= base_path().path_to_theme(); ?>/img/festival_akteur.png" /><strong id="festivalAkteureCount">0</strong> Akteure</div>
  <div id="festivalLocation"><img src="<?= base_path().path_to_theme(); ?>/img/festival_location.png" /><strong>Neustadt</strong> & <strong>Volkmarsdorf</strong></div>
 </aside>
 
@@ -49,14 +50,13 @@ drupal_add_html_head($og_desc, 'og_description');
   <div id="events_content" class="large-12 small-12 columns">
 
    <ul class="tabs large-12 columns" id="events-tabs">
-   
-    <?php $path = explode("/", $this->clearContent(current_path())); ?>
+    <?php $path = explode("/", current_path()); ?>
    
     <li class="tabs-title<?= ($path[1] == '' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16"<?= ($path[1] == '' ? ' aria-selected="true"' : ''); ?>>Startseite</a></li>
-    <li class="tabs-title<?= ($path[1] == 'das-festival' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16/das-festival"<?= ($this->getOldEvents ? ' aria-selected="true"' : ''); ?>>Das Festival</a></li>
-    <li class="tabs-title<?= ($this->presentationMode == 'calendar' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16?presentation=calendar"<?= ($this->presentationMode == 'calendar' ? ' aria-selected="true"' : ''); ?>>Kalender</a></li>
+    <li class="tabs-title<?= ($path[1] == 'das-festival' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16/das-festival"<?php /*($this->getOldEvents ? ' aria-selected="true"' : ''); */ ?>>Das Festival</a></li>
+    <li class="tabs-title<?php /*($this->presentationMode == 'calendar' ? ' is-active' : ''); */ ?>"><a href="https://leipziger-ecken.de/kunstfest16?presentation=calendar"<?php /*($this->presentationMode == 'calendar' ? ' aria-selected="true"' : ''); */ ?>>Kalender</a></li>
     <li class="tabs-title<?= ($path[1] == 'impressionen' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16/impressionen"<?= ($path[1] == 'impressionen' ? ' aria-selected="true"' : ''); ?>>Impressionen</a></li>
-    <?php if ($this->user_id == 238) : ?>
+    <?php global $user; if ($user->uid == 238) : ?>
     <li class="right tabs-title"><a href="https://leipziger-ecken.de/admin/page-builder">+ Seite hinzufügen</a></li>
     <?php endif; ?>
     
@@ -65,7 +65,6 @@ drupal_add_html_head($og_desc, 'og_description');
      <li class="right">
     <a target="_blank" href="https://www.facebook.com/Kunstfest-Neustadt-1436373796669812/" title="Besuch uns auf Facebook!" class="fb button"><img alt="Facebook" src="<?= base_path().path_to_theme(); ?>/img/social-facebook.svg"><span></span></a></li>
     </ul>
-
    </ul>
    
    <!-- PAGE BUILDER CONTENT -->

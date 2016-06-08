@@ -192,7 +192,7 @@ Class events extends aae_data_helper {
   
   if (empty($erstellerId)){
    $erstellerId = db_select($this->tbl_event,'e')
-    ->fields(array('ersteller'))
+    ->fields('e', array('ersteller'))
     ->condition('EID', $eId)
     ->execute();
    

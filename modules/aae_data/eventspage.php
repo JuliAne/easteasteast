@@ -12,7 +12,7 @@ Class eventspage extends aae_data_helper {
  var $presentationMode;
  var $getOldEvents = false;
  var $hasFilters = false;
- #var $isBlock;
+ var $isBlock;
  var $filter = array();
  
  public function __construct($isBlock = false){
@@ -21,7 +21,6 @@ Class eventspage extends aae_data_helper {
   
   require_once('models/events.php');
   $this->events = new events();
-  # TODO: Check for boolean as Drupal adds params manually to function-call
   $this->isBlock = $isBlock;
   
  }
@@ -129,12 +128,14 @@ Class eventspage extends aae_data_helper {
   // Ausgabe der Events
   ob_start(); // Aktiviert "Render"-modus
   if ($this->isBlock) {
-   include_once path_to_theme() . '/templates/neustadt_eventsblock.tpl.php';
+   $themePath = drupal_get_path('theme',$GLOBALS['theme']);
+   drupal_add_js($themePath.'/js/CountUp.js');
+   include_once $themePath . '/templates/neustadt_eventsblock.tpl.php';
+   echo ob_get_clean();
   } else {
    include_once path_to_theme() . '/templates/events.tpl.php';
+   return ob_get_clean(); // Übergabe des gerenderten "events.tpl"
   }
-  return ob_get_clean(); // Übergabe des gerenderten "events.tpl"
-
  } // end function run()
 
  public function rss(){

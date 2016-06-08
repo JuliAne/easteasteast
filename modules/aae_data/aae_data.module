@@ -38,7 +38,7 @@ function aae_data_block_info() {
     'info' => 'Alle Events des Neustadt-Festivals',
     'cache' => DRUPAL_NO_CACHE,
     'status' => TRUE,
-    'region' => 'content'
+    /*'region' => 'content'*/
   );  
 
   $blocks['aae_journal'] = array(

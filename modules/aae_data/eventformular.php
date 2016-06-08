@@ -602,6 +602,15 @@ Class eventformular extends aae_data_helper {
     'event_recurres_till' => ($this->eventRecurres && !empty($this->eventRecurresTill) ? $this->eventRecurresTill.' 00:00:00' : '1000-01-01 00:00:00')
 	  ))
 	 ->execute();
+   
+   if ($this->isFestival){
+    db_update($this->tbl_event)
+     ->fields(array(
+      'recurring_event_type' => '6'
+     ))
+     ->condition('EID', $this->event_id)
+     ->execute();
+   }
 
 	 // Falls Akteur angegeben wurde:
     if (!empty($this->veranstalter)) {

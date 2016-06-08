@@ -391,6 +391,7 @@ function aae_data_install() {
   if (module_exists('aggregator')) {
     aggregator_save_category(array('title' => 'aae-feeds', 'description' => 'Feeds integrated and being used by AAE-module'));
   }
+  // TODO: Link to aae-data-admin-config
 }
 
 /**
