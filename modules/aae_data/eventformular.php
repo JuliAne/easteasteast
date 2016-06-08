@@ -71,14 +71,14 @@ Class eventformular extends aae_data_helper {
 	  $this->target = 'update';
     if (!user_is_logged_in() || !$this->event->isAuthorized($this->event_id, $this->user_id)){
   	 drupal_access_denied();
-     #exit();
+     drupal_exit();
     }
     
    } else {
 
     if (!user_is_logged_in()){
 	   drupal_access_denied();
-     #exit();
+     drupal_exit();
     }
      
    }

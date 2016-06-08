@@ -69,8 +69,10 @@ class eventprofil extends aae_data_helper {
   $explodedpath = explode("/", current_path());
   $event_id = $this->clearContent($explodedpath[1]);
 
-  if (!user_is_logged_in() || !$this->event->isAuthorized($event_id, $this->user_id))
-    drupal_access_denied();
+  if (!user_is_logged_in() || !$this->event->isAuthorized($event_id, $this->user_id)){
+   drupal_access_denied();
+   drupal_exit();
+  }
 
   if (isset($_POST['submit'])) {
 
