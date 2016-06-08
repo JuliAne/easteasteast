@@ -11,14 +11,14 @@ $og_image = array(
   '#tag' => 'meta',
   '#attributes' => array(
     'property' => 'og:image',
-    'content' => $img_url,
+    'content' => 'nachfüllen!',
   ),
 );
 $og_desc = array(
  '#tag' => 'meta',
  '#attributes' => array(
    'property' => 'og:description',
-   'content' => text_summary($body_field[0]['#markup']),
+   'content' => 'festivalbeschreib',
  ),
 );
  
