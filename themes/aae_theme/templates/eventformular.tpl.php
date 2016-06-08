@@ -39,9 +39,9 @@
   <label><?= t('Veranstalter'); ?>:</label>
   <select name="veranstalter" id="veranstalter">
   <option value="0"><?= t('Privat'); ?></option>
-  <?php if (is_array($this->resultakteure) && !empty($this->resultakteure)) :
-    foreach ($this->resultakteure as $akteur) : ?>
-    <option value="<?= $akteur[0]->AID; ?>" <?php echo ($akteur[0]->AID == $this->veranstalter ? 'selected="selected"' : '') ?>><?= $akteur[0]->name; ?></option>
+  <?php if (is_array($this->resultAkteure) && !empty($this->resultAkteure)) :
+    foreach ($this->resultAkteure as $akteur) : ?>
+    <option value="<?= $akteur->AID; ?>" <?php echo ($akteur->AID == $this->veranstalter ? 'selected="selected"' : '') ?>><?= $akteur->name; ?></option>
    <?php endforeach; ?>
   <?php endif; ?>
   </select>
@@ -83,7 +83,7 @@
 
    <div id="eventRecurresData" class="large-12 columns"<?= (!empty($this->recurringEventType) || isset($_POST['eventRecurres']) ? '' : ' style="display:none;"'); ?>>
 
-    <p class="large-12 columns licensetext"><strong>Wiederkehrende Veranstaltung.</strong> Beta-Feature! Setzt die Termine für einen abfolgenden Events-Rhytmus. Einzelne Termine auf der Eventseite entfernt werden.</p>
+    <p class="large-12 columns licensetext"><strong>Wiederkehrende Veranstaltung.</strong> Beta-Feature! Setzt automatisch bis zu fünf Termine für einen abfolgenden Events-Rhytmus. Einzelne Termine können auf dem folgenden Eventprofil entfernt werden.</p>
 
     <div class="large-4 left columns">
      <label><?= t('Rhytmus:'); ?> <?= $this->fehler['eventRecurres']; ?>
@@ -108,34 +108,34 @@
 
   <div class="row">
   <fieldset class="Adresse fieldset">
-   <legend>Adresse</legend>
+   <legend><?= t('Adresse'); ?></legend>
 
    <div class="large-4 columns">
-    <label>Straße: <?= $this->fehler['strasse']; ?>
+    <label><?= t('Straße'); ?>: <?= $this->fehler['strasse']; ?>
      <input type="text" id="StrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= t("Strasse"); ?>">
     </label>
    </div>
 
    <div class="large-1 columns">
-    <label>Nr.: <?= $this->fehler['nr']; ?>
+    <label><?= t('Nr.'); ?>: <?= $this->fehler['nr']; ?>
      <input type="text" id="NrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= t("Hausnummer"); ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
-    <label>Adresszusatz: <?= $this->fehler['adresszusatz']; ?>
+    <label><?= t('Adresszusatz'); ?>: <?= $this->fehler['adresszusatz']; ?>
      <input type="text" id="AdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= t("Adresszusatz"); ?>">
     </label>
    </div>
 
    <div class="large-4 columns">
-    <label>PLZ: <?= $this->fehler['plz']; ?>
+    <label><?= t('PLZ'); ?>: <?= $this->fehler['plz']; ?>
       <input type="text" pattern="[0-9]{5}" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= t("PLZ"); ?>">
     </label>
    </div>
 
    <div class="large-4 columns">
-  <label>Bezirk: <?= $this->fehler['ort']; ?>
+  <label><?= t('Bezirk'); ?>: <?= $this->fehler['ort']; ?>
 
   <select name="ort">
    <option value="" selected="selected"><?= t('Bezirk auswählen'); ?></option>
@@ -147,7 +147,7 @@
  </div>
 
   <div class="large-4 columns">
-  <label>Geodaten (Karte): <?= $this->fehler['gps']; ?>
+  <label><?= t('Geodaten (Karte)'); ?>: <?= $this->fehler['gps']; ?>
    <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= t("GPS Koordinaten"); ?>">
   </label>
   <p id="show_coordinates" style="display:none;"><a href="#" target="_blank"><?= t('Zeige Koordinaten auf Karte'); ?></a></p>
@@ -158,7 +158,7 @@
  <div class="row">
 
   <div class="large-12 columns">
-  <label>Beschreibung. In der Vorschau erscheinen die ersten 30 Wörter <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['kurzbeschreibung']; ?>
+  <label><?= t('Beschreibung. In der Vorschau erscheinen die ersten 30 Wörter'); ?> <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['kurzbeschreibung']; ?>
    <textarea name="kurzbeschreibung" id="kurzbeschreibung" cols="45" rows="3" placeholder="<?= t("Beschreibungstext"); ?>"><?= $this->kurzbeschreibung; ?></textarea>
   </label>
   <script>CKEDITOR.replace('kurzbeschreibung', { toolbar : 'Basic' });</script>
@@ -216,13 +216,17 @@
  <div class="row">
  <?php if ($this->target == 'update' && !empty($resultEvent->created)) : ?>
   <?php if ($this->created->format('d.m.Y') != '01.01.1000') : ?>
-  <p style="color:grey;">Event eingetragen am <?= $this->created->format('d.m.Y, H:i'); ?> Uhr.
-  <?php if ($this->modified->format('d.m.Y') != '01.01.1000' && $this->modified->format('H:i') != date('H:i')) : ?> Zuletzt aktualisiert am <?= $this->modified->format('d.m.Y, H:i'); ?> Uhr.<?php endif; ?>
+  <p style="color:grey;"><?= t('Event eingetragen am'); ?> <?= $this->created->format('d.m.Y, H:i'); ?> Uhr.
+  <?php if ($this->modified->format('d.m.Y') != '01.01.1000' && $this->modified->format('H:i') != date('H:i')) : ?> <?= t('Zuletzt aktualisiert am'); ?> <?= $this->modified->format('d.m.Y, H:i'); ?> <?= t('Uhr'); ?>.<?php endif; ?>
   </p><div class="divider" style="margin:17px 0;"></div>
   <?php endif; ?>
  <?php endif; ?>
 
+  <?php if ($this->isFestival) : ?>
+  <input type="submit" class="left button" id="eventSubmit" name="submit" value="<?= t('Festivalevent speichern und weiter...'); ?>">
+  <?php else : ?>
   <input type="submit" class="left button" id="eventSubmit" name="submit" value="<?= t('Speichern'); ?>">
+  <?php endif; ?>
   <a class="secondary right button" href="<?= base_path(); ?>events" title="<?= t('Zurück zu den Events'); ?>"><?= t('Abbrechen'); ?></a>
 
 </div>

@@ -88,7 +88,6 @@ Class events extends aae_data_helper {
      default :
       if (is_array($condition)) {
        foreach ($condition as $s){
-        #$s['operator'] = ($s['operator'] == 'p=' ? '>=' : $s['operator']);
         $events->condition($s['key'], $s['condition'], $s['operator']);
        }
       } else {
@@ -127,7 +126,8 @@ Class events extends aae_data_helper {
 
       $childrenEvents = $this->getEvents(array('parent_EID' => $conditions['EID']), 'minimal', true);
       if (!empty($childrenEvents))
-       $resultEvents[$realEID]['childrenEvents'] = $childrenEvents;
+        $resultEvents[$realEID]['childrenEvents'] = $childrenEvents;
+     
      }
 
      $ersteller = db_select("users", 'u')
@@ -160,7 +160,6 @@ Class events extends aae_data_helper {
       ->condition('AID', $akteurId->AID)
       ->execute()
       ->fetchObject();
-     // Could return full akteure->getAkteure(...)-object...
 
      $resultEvents[$realEID]['akteur'] = $resultAkteur;
 
@@ -212,20 +211,18 @@ Class events extends aae_data_helper {
     return false;
   }
   
-   
-  
  }
 
-  public function getTags($eid = null){
+ public function getTags($eid = null){
    
-   if (empty($eid)) {
-    $tags = db_query('SELECT s.KID, s.kategorie FROM {aae_data_sparte} s JOIN {aae_data_event_hat_sparte} ehs WHERE s.KID = ehs.hat_KID ORDER BY s.kategorie DESC');
-   } else {
-    $tags = db_query('SELECT s.KID, s.kategorie FROM {aae_data_sparte} s JOIN {aae_data_event_hat_sparte} ehs WHERE s.KID = ehs.hat_KID AND ehs.hat_EID = :eid ORDER BY s.kategorie DESC', array(':eid'=>$eid));
-   }
-   return $tags->fetchAll();
-
+  if (empty($eid)) {
+   $tags = db_query('SELECT s.KID, s.kategorie FROM {aae_data_sparte} s JOIN {aae_data_event_hat_sparte} ehs WHERE s.KID = ehs.hat_KID ORDER BY s.kategorie DESC');
+  } else {
+   $tags = db_query('SELECT s.KID, s.kategorie FROM {aae_data_sparte} s JOIN {aae_data_event_hat_sparte} ehs WHERE s.KID = ehs.hat_KID AND ehs.hat_EID = :eid ORDER BY s.kategorie DESC', array(':eid'=>$eid));
   }
+  return $tags->fetchAll();
+
+ }
 
   public function addEventChildren($parent_EID, $eventRecurringType, $startQuery, $endQuery, $eventRecurresTill = null){
    
@@ -418,6 +415,21 @@ Class events extends aae_data_helper {
     $filteredEventIds[] = $day->EID;
    }
   } // end Day-Filter
+  
+  if (isset($filter['AID'])) {
+    
+   $numFilters++;
+   $resultAkteur = db_select($this->tbl_akteur_events, 'ae')
+    ->fields('ae')
+    ->condition('AID', $filter['AID'])
+    ->execute()
+    ->fetchAll();
+    
+   foreach ($resultAkteur as $akteur){
+    $filteredEventIds[] = $akteur->EID;
+   }
+   
+  } // end AkteurID-Filter
   
   if (!empty($filteredEventIds)) {
    $filteredEventChildrenIds = db_select($this->tbl_event, 'e')

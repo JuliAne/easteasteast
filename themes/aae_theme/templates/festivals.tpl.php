@@ -1,4 +1,77 @@
 <?php
+// Hardcoded FB Open Graph Data stuff
+$og_title = array(
+  '#tag' => 'meta',
+  '#attributes' => array(
+    'property' => 'og:title',
+    'content' => 'Kunstfest Neustadt 2016',
+  ),
+);
+$og_image = array(
+  '#tag' => 'meta',
+  '#attributes' => array(
+    'property' => 'og:image',
+    'content' => $img_url,
+  ),
+);
+$og_desc = array(
+ '#tag' => 'meta',
+ '#attributes' => array(
+   'property' => 'og:description',
+   'content' => text_summary($body_field[0]['#markup']),
+ ),
+);
+ 
+drupal_add_html_head($og_title, 'og_title');
+drupal_add_html_head($og_image, 'og_image');
+drupal_add_html_head($og_desc, 'og_description');
+
+?>
+
+<style type="text/css">
+#footer {background-image:unset;}
+</style>
+
+<div id="neustadtPageBg"></div>
+
+<header id="neustadtPageHeader" class="pageHeader">
+  <h2>Kunstfest Neustadt <a href="<?= base_path(); ?>events/rss" title="<?= t('Alle Events als RSS-Feed'); ?>"><img id="svg_logo" src="<?= base_path().path_to_theme(); ?>/img/rss.svg" /></a></h2>
+  <p>16. - 19. Juli 2016. Kreativ, aber herzlich.</p>
+</header>
+
+<aside id="neustadtIntro" class="row">
+ <div id="festivalEvents"><img src="<?= base_path().path_to_theme(); ?>/img/festival_event.png" /><strong><?= count($resultEvents); ?></strong> Veranstaltungen</div>
+ <div id="festivalAkteur"><img src="<?= base_path().path_to_theme(); ?>/img/festival_akteur.png" /><strong>12</strong> Akteure</div>
+ <div id="festivalLocation"><img src="<?= base_path().path_to_theme(); ?>/img/festival_location.png" /><strong>Neustadt</strong> & <strong>Volkmarsdorf</strong></div>
+</aside>
+
+<div id="events" class="neustadtEvents row">
+  <div id="events_content" class="large-12 small-12 columns">
+
+   <ul class="tabs large-12 columns" id="events-tabs">
+   
+    <?php $path = explode("/", $this->clearContent(current_path())); ?>
+   
+    <?php print render($page['mainnav']); ?>
+    <li class="tabs-title<?= ($path[1] == '' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16"<?= ($path[1] == '' ? ' aria-selected="true"' : ''); ?>>Startseite</a></li>
+    <li class="tabs-title<?= ($path[1] == 'das-festival' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16/das-festival"<?= ($this->getOldEvents ? ' aria-selected="true"' : ''); ?>>Das Festival</a></li>
+    <li class="tabs-title<?= ($this->presentationMode == 'calendar' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16?presentation=calendar"<?= ($this->presentationMode == 'calendar' ? ' aria-selected="true"' : ''); ?>>Kalender</a></li>
+    <li class="tabs-title<?= ($path[1] == 'impressionen' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16/impressionen"<?= ($path[1] == 'impressionen' ? ' aria-selected="true"' : ''); ?>>Impressionen</a></li>
+    <?php if ($this->user_id == 238) : ?>
+    <li class="right tabs-title"><a href="https://leipziger-ecken.de/admin/page-builder">+ Seite hinzufügen</a></li>
+    <?php endif; ?>
+    
+    <ul id="presentationFilter" class="button-group round large-3 columns right">
+     <li class="right"><a target="_blank" href="https://twitter.com/intent/tweet?text=<?php global $base_url; echo $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Twitter')); ?>" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/social-twitter.svg"><span></span></a></li>
+     <li class="right">
+    <a target="_blank" href="https://www.facebook.com/Kunstfest-Neustadt-1436373796669812/" title="Besuch uns auf Facebook!" class="fb button"><img alt="Facebook" src="<?= base_path().path_to_theme(); ?>/img/social-facebook.svg"><span></span></a></li>
+    </ul>
+
+   </ul>
+   
+   <!-- PAGE BUILDER CONTENT -->
+   
+   <?php
 $data = !empty($page->data) ? unserialize($page->data) : array();
 
 $rows = isset($data['rows']) ? $data['rows'] : array();
@@ -7,12 +80,6 @@ if (!empty($rows)) {
 }
 $columns_arr = $data['columns'];
 $elements_arr = $data['elements'];
-
-$festivalLinks = db_query("SELECT * FROM {pagebuilder} WHERE active = 1")->fetchAll();
-foreach ($festivalLinks as $link){
- db_query("SELECT * FROM {url_alias}")
-}
-
 ?>
 <?php if (!empty($rows)): ?>
   <div id="page-builder-page-<?php print $page->id; ?>" class="page-builder-wrapper">
@@ -116,3 +183,18 @@ foreach ($festivalLinks as $link){
     <?php endforeach; ?>
   </div>
 <?php endif; ?>
+   <!-- END -->
+   
+  <?php #require_once('neustadt_eventsblock.tpl.php'); ?>
+
+</div>
+ </div>
+ 
+ <div id="festivalFooter" class="row">
+  <h4>Sponsoren & Kooperationen</h4>
+  <div class="large-3 columns"><img src="<?= base_path().path_to_theme(); ?>/neustadt/sponsor_leipzig.png" /></div>
+  <div class="large-3 columns"><img src="<?= base_path().path_to_theme(); ?>/neustadt/sponsor_osten.jpg" /></div>
+  <div class="large-3 columns"><img src="<?= base_path().path_to_theme(); ?>/neustadt/sponsor_kuwi.jpg" /></div>
+  <div class="large-3 columns" style="padding-top: 25px;"><img src="<?= base_path().path_to_theme(); ?>/neustadt/sponsor_piloten.png" /></div>
+
+ </div>

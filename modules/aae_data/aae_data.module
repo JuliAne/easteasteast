@@ -38,7 +38,7 @@ function aae_data_block_info() {
     'info' => 'Alle Events des Neustadt-Festivals',
     'cache' => DRUPAL_NO_CACHE,
     'status' => TRUE,
-    'region' => 'footer'
+    'region' => 'content'
   );  
 
   $blocks['aae_journal'] = array(
@@ -441,14 +441,12 @@ function akteurloeschen_page($eid=0) {
 /**
  * Baut die Seite fuer die Events
  */
-function events_page($isFestival = false) {
+function events_page($isBlock = false) {
+  
   $modulePath = drupal_get_path('module', 'aae_data');
   include_once $modulePath . '/eventspage.php';
-  
-  if ($isFestival) 
-    $_SESSION['isFestival'] = true;
 
-  $event = new Drupal\AaeData\eventspage();
+  $event = new Drupal\AaeData\eventspage($isBlock);
   return $event->run();
 }
 

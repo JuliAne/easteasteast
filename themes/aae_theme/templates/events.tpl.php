@@ -110,14 +110,14 @@
     <div class="large-12 columns"><h4><?= $this->monat_lang[$event->start->format('m')]; ?> <?= $event->start->format('Y'); ?></h4></div>
    <?php endif; $cur_month = $event->start->format('m.Y'); ?>
 
-   <div class="large-6 columns small-6 columns aaeEvent<?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? ' today' : ''; ?><?= (!empty($event->eventRecurringType) ? ' eventRecurres' : ''); ?>">
+   <div class="large-6 columns small-6 columns aaeEvent<?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? ' today' : ''; ?><?= (!empty($event->eventRecurringType) && ($event->eventRecurringType <= 5) ? ' eventRecurres' : ''); ?><?= ($event->eventRecurringType == 6 ? ' isFestival' : ''); ?>">
 
    <div class="date large-2 columns button secondary round"><?= $event->start->format('d'); ?><br /><?= $this->monat_short[$event->start->format('m')]; ?></div>
    <div class="content large-9 columns">
    <header<?= (!empty($event->eventRecurringType) ? ' title="'.$recurringEventTypes[$event->eventRecurringType].'"' : ''); ?>>
-    <h3><a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>"><?= $event->name; ?></a></h3>
+    <h3><a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>"><?= $event->name; ?></a><?= ($event->eventRecurringType == 6 ? ' - Neustädter Kunstfest' : ''); ?></h3>
     <p><span><?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? '<a href="#">Heute,</a> ' : ''; ?><?php if($event->start->format('H:i') !== '00:00') echo $event->start->format('H:i'); ?><?php if($event->ende->format('H:i') !== '00:00') echo ' - '. $event->ende->format('H:i'); ?><?= (!empty($event->eventRecurringType) ? '  '.$recurringEventTypes[$event->eventRecurringType] : ''); ?></span></p>
-    <p>
+    <p class="aaeEventTags">
      <?php foreach($event->tags as $tag) : ?>
      <a class="tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow">#<?= $tag->kategorie; ?></a>
      <?php endforeach; ?>
@@ -170,7 +170,7 @@
     <h4><img class="cloudimg" src="<?= base_path().path_to_theme(); ?>/img/cloud.svg" /><?= t('Populäre Tags'); ?></h4>
 
     <?php foreach ($resultTagCloud as $tag) : ?>
-      <a class="tagc-<?= (($tag->count / 2) >= 5 ? '5' : ceil($tag->count / 2)); ?> tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow">#<?= $tag->kategorie; ?></a>
+      <a class="tagc-<?= (($tag->count / 3) >= 5 ? '5' : ceil($tag->count / 3)); ?> tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow">#<?= $tag->kategorie; ?></a>
     <?php endforeach; ?>
     </aside>
 
