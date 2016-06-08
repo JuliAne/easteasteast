@@ -21,7 +21,6 @@ Class akteurepage extends aae_data_helper {
 
  public function run(){
 
-
   global $user;
 
   /*  ...to be put within function invite->hasAddedAkteur()...
@@ -39,7 +38,7 @@ Class akteurepage extends aae_data_helper {
 
   $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) ? $this->clearContent($_GET['presentation']) : 'boxen');
 
-  $this->maxAkteure = (isset($_GET['display_number']) && !empty($_GET['display_number']) ? $this->clearContent($_GET['display_number']) : '25' );
+  $this->maxAkteure = (isset($_GET['display_number']) && !empty($_GET['display_number']) ? $this->clearContent($_GET['display_number']) : '40' );
 
   if (isset($_GET['filterTags']) && !empty($_GET['filterTags'])) {
    $this->filter['tags'] = $_GET['filterTags'];

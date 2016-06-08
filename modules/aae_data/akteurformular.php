@@ -3,10 +3,8 @@
  * akteurformular.php stellt ein Formular dar,
  * in welches alle Informationen über einen Akteur
  * eingetragen UND bearbeitet werden koennen.
- * Einzige Pflichtfelder sind bisher Name, Emailadresse und Bezirk.
  *
- * Die Klasse akteurformular wird in aae_data.module initialisiert (s. __construct)
- * und via ->run() aufgerufen.
+ * Einzige Pflichtfelder sind bisher Name, Emailadresse und Bezirk.
  *
  */
  
@@ -79,14 +77,15 @@ Class akteurformular extends aae_data_helper {
   //-----------------------------------
 
   function __construct($action) {
+    
+   parent::__construct();
 
    if (!user_is_logged_in()) {
     drupal_access_denied();
+    drupal_exit();
    }
 
    $this->modulePath = drupal_get_path('module', 'aae_data');
-   global $user;
-   $this->user_id = $user->uid;
 
    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
    if ($action == 'update') {

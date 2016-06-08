@@ -100,7 +100,7 @@ Class eventspage extends aae_data_helper {
   
   //-----------------------------------
 
-  $resultTags = $this->events->getAllTags();
+  $resultTags = $this->events->getTags();
   $resultBezirke = $this->getAllBezirke('events');
   
   if (!empty($this->filter)) {
@@ -127,14 +127,19 @@ Class eventspage extends aae_data_helper {
   
   // Ausgabe der Events
   ob_start(); // Aktiviert "Render"-modus
+  
   if ($this->isBlock) {
+    
    $themePath = drupal_get_path('theme',$GLOBALS['theme']);
    drupal_add_js($themePath.'/js/CountUp.js');
    include_once $themePath . '/templates/neustadt_eventsblock.tpl.php';
    echo ob_get_clean();
+   
   } else {
+    
    include_once path_to_theme() . '/templates/events.tpl.php';
    return ob_get_clean(); // Übergabe des gerenderten "events.tpl"
+  
   }
  } // end function run()
 

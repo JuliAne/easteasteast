@@ -129,8 +129,10 @@ public function removeAkteur(){
  $explodedpath = explode("/", current_path());
  $akteur_id = $this->clearContent($explodedpath[1]);
 
- if(!user_is_logged_in())
+ if (!user_is_logged_in()) {
   drupal_access_denied();
+  drupal_exit();
+ }
 
  // Prüfen ob Schreibrecht vorliegt
  $resultUser = db_select($this->tbl_hat_user, 'u')
@@ -144,6 +146,7 @@ public function removeAkteur(){
  if (!array_intersect(array('redakteur','administrator'), $user->roles)) {
   if ($hat_recht != 1) {
    drupal_access_denied();
+   drupal_exit();
   }
  }
 

@@ -26,7 +26,9 @@ $(document).ready(function(){
   });
 
   $("#eventStartdatumInput,#eventEnddatumInput,.page-events-new #eventRecurresTill,.page-eventprofil-edit #eventRecurresTill").Zebra_DatePicker({
+    /* TODO get lang-vars from inline-code */
     readonly_element : false,
+    direction : true,
     format : 'Y-m-d',
     days : ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
     months : ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],

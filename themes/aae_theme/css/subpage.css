@@ -134,9 +134,13 @@ p.licensetext:hover {
   padding: 3px 0;
 }
 
+.aaeEvent .aaeEventDate {
+ float: left;
+ max-width: 28%;
+}
+
 .aaeEvent .aaeEventTags {
  float: right;
- margin-top: -22px;
  max-width: 70%;
 }
 

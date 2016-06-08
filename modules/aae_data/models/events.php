@@ -199,8 +199,9 @@ Class events extends aae_data_helper {
    $erstellerId = $erstellerId->fetchObject();   
   }
   
-  if ($erstellerId == $uId || array_intersect(array('administrator'), $user->roles))
-    return true;
+  if ($erstellerId == $uId || array_intersect(array('administrator'), $user->roles)){
+   return true;
+  }
  
   $resultAkteurId = db_select($this->tbl_akteur_events, 'e')
    ->fields('e', array('AID'))
@@ -229,7 +230,7 @@ Class events extends aae_data_helper {
   } else {
    $tags = db_query('SELECT s.KID, s.kategorie FROM {aae_data_sparte} s JOIN {aae_data_event_hat_sparte} ehs WHERE s.KID = ehs.hat_KID AND ehs.hat_EID = :eid ORDER BY s.kategorie DESC', array(':eid'=>$eid));
   }
-  return $tags->fetchAll();
+  return $tags->fetchAllAssoc('KID');
 
  }
 

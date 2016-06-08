@@ -2,7 +2,7 @@
 
  $modulePath = drupal_get_path('module', 'aae_data');
  include_once $modulePath . '/aae_data_helper.php';
-
+ 
 /*
 * Implements hook_data_cron()
 * Cronjob, der von Drupal automatisch aufgerufen wird.
@@ -11,6 +11,7 @@
 function aae_data_cron() {
   aae_data_refresh_recurring_events();
   #aae_data_refresh_facebook_events();
+  #aae_install_clear_db_contents();
 }
 
 function aae_data_user_login(&$edit, $account){
@@ -56,20 +57,6 @@ function aae_data_block_info() {
   );
 
   return $blocks;
-}
-
-/**
- * Implements hook_block_view_MODULE_DELTA_alter().
- * Improve the default "Invite"-block
- */
-
-function aae_data_block_view_invite_invite_add_invite_by_email_alter(&$data, $bla) {
-  //print_r($data['content']);
-//exit();
-
-  //  $data['content']['#entity']['und']['0']['#description'] = 'derda';
-
-  return $data;
 }
 
 /*

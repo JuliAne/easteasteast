@@ -10,7 +10,7 @@
    <?php if ($event->start->format('d') != $cur_day) : ?>
     <div class="large-12 columns" style="padding:10px 0;"><h4><?= $this->dayNames[date('N', $event->start->getTimestamp())-1]; ?>, <?= $event->start->format('d'); ?>. Juli</h4></div>
    <?php endif; $cur_day = $event->start->format('d'); ?>
-   <div class="large-6 columns small-6 columns aaeEvent<?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? ' today' : ''; ?><?= (!empty($event->eventRecurringType) ? ' eventRecurres' : ''); ?>">
+   <div class="large-6 columns small-6 columns aaeEvent<?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? ' today' : ''; ?>">
 
    <div class="date large-2 columns button secondary round">Ab<br /><?= $event->start->format('H:i')  ; ?></div>
    <div class="content large-9 columns">
@@ -37,7 +37,7 @@
   </div>
  <?php endforeach; else : ?>
 
-   <p style="text-align:center;"><?= t('Es wurden leider keine Events mit diesen Angaben gefunden...'); ?></p>
+   <p style="text-align:center;"><?= t('Es wurden noch keine Events angelegt...'); ?></p>
    <p style="text-align:center;"><a href="<?= base_path(); ?>events"><?= t('Alle Filter entfernen.'); ?></a></p>
 
  <?php endif; ?>
