@@ -52,7 +52,6 @@ drupal_add_html_head($og_desc, 'og_description');
    
     <?php $path = explode("/", $this->clearContent(current_path())); ?>
    
-    <?php print render($page['mainnav']); ?>
     <li class="tabs-title<?= ($path[1] == '' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16"<?= ($path[1] == '' ? ' aria-selected="true"' : ''); ?>>Startseite</a></li>
     <li class="tabs-title<?= ($path[1] == 'das-festival' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16/das-festival"<?= ($this->getOldEvents ? ' aria-selected="true"' : ''); ?>>Das Festival</a></li>
     <li class="tabs-title<?= ($this->presentationMode == 'calendar' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16?presentation=calendar"<?= ($this->presentationMode == 'calendar' ? ' aria-selected="true"' : ''); ?>>Kalender</a></li>

@@ -10,7 +10,7 @@ namespace Drupal\AaeData;
 Class eventspage extends aae_data_helper {
 
  var $presentationMode;
- var $getOldEvents;
+ var $getOldEvents = false;
  var $hasFilters = false;
  #var $isBlock;
  var $filter = array();

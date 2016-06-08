@@ -445,8 +445,8 @@ function events_page($isBlock = false) {
   
   $modulePath = drupal_get_path('module', 'aae_data');
   include_once $modulePath . '/eventspage.php';
-
-  $event = new Drupal\AaeData\eventspage($isBlock);
+  
+  $event = new Drupal\AaeData\eventspage((!is_bool($isBlock)) ? false : $isBlock);
   return $event->run();
 }
 

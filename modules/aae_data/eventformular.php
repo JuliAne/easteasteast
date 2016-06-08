@@ -66,11 +66,22 @@ Class eventformular extends aae_data_helper {
    $this->event = new events();
 
    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
-   if ($action == 'update')
-	   $this->target = 'update';
+   if ($action == 'update') {
+     
+	  $this->target = 'update';
+    if (!user_is_logged_in() || !$this->event->isAuthorized($this->event_id, $this->user_id)){
+  	 drupal_access_denied();
+     #exit();
+    }
+    
+   } else {
 
-   if (!user_is_logged_in() || !$this->event->isAuthorized($this->event_id, $this->user_id))
+    if (!user_is_logged_in()){
 	   drupal_access_denied();
+     #exit();
+    }
+     
+   }
      
    $this->isFestival = ($this->user_id == 238);
 

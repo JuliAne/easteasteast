@@ -190,6 +190,15 @@ Class events extends aae_data_helper {
   
   global $user;
   
+  if (empty($erstellerId)){
+   $erstellerId = db_select($this->tbl_event,'e')
+    ->fields(array('ersteller'))
+    ->condition('EID', $eId)
+    ->execute();
+   
+   $erstellerId = $erstellerId->fetchObject();   
+  }
+  
   if ($erstellerId == $uId || array_intersect(array('administrator'), $user->roles))
     return true;
  
