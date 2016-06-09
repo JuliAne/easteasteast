@@ -186,20 +186,18 @@ Class events extends aae_data_helper {
  *  @param event_id
  *  @param user_id
  */
- public function isAuthorized($eId, $uId, $erstellerId = NULL){
+ public function isAuthorized($eId, $uId){
   
   global $user;
   
-  if (empty($erstellerId)){
-   $erstellerId = db_select($this->tbl_event,'e')
-    ->fields('e', array('ersteller'))
-    ->condition('EID', $eId)
-    ->execute();
+  $erstellerId = db_select($this->tbl_event,'e')
+   ->fields('e', array('ersteller'))
+   ->condition('EID', $eId)
+   ->execute();
    
-   $erstellerId = $erstellerId->fetchObject();   
-  }
+  $erstellerId = $erstellerId->fetchObject();
   
-  if ($erstellerId == $uId || array_intersect(array('administrator'), $user->roles)){
+  if ($erstellerId->ersteller == $uId || array_intersect(array('administrator'), $user->roles)){
    return true;
   }
  
@@ -218,7 +216,7 @@ Class events extends aae_data_helper {
   if ($resultAkteurHasUser->rowCount() == 1) {
    return true;
   } else {
-    return false;
+   return false;
   }
   
  }

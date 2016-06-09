@@ -27,7 +27,7 @@ class eventprofil extends aae_data_helper {
   $resultEvent = $this->event->getEvents(array('EID' => $event_id), 'complete');
   $resultEvent = $resultEvent[$event_id];
   
-  if ($this->event->isAuthorized($event_id, $this->user_id, $resultEvent->ersteller))
+  if ($this->event->isAuthorized($event_id, $this->user_id))
     $this->isOwner = true;
   
   if (empty($resultEvent)) {
