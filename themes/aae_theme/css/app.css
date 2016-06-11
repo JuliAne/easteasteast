@@ -804,7 +804,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   opacity: 0;
 }
 
-.jEntry .jEntryContent p {
+.jEntry .jEntryContent .summary {
   line-height: 1.5em;
   opacity: 0;
   text-align: left;
@@ -814,7 +814,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
  font-family: 'Lora','Open Sans',sans-serif;
 }
 
-.jEntry:hover .jEntryContent p {
+.jEntry:hover .jEntryContent .summary {
   opacity: 1;
 }
 

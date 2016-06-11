@@ -1,22 +1,4 @@
-<!--
-<?php
-  foreach ($nodes as $node) :
-
-   $url = url('node/' . $node->nid, array('absolute' => TRUE)); ?>
-
-   <div class="row article" style="padding: 8px 0;">
-    <div class="large-2 small-3 columns" style="background-image:url('<?php if (!empty($node->field_image['und'][0]['filename'])) : ?><?= base_path().'sites/default/files/styles/large/public/field/image/'.$node->field_image['und'][0]['filename']; ?><?php else: ?><?= base_path().'sites/all/themes/aae_theme/img/journal_bg.png'; ?><?php endif; ?>');"></div>
-
-    <div class="large-8 large-offset-2 small-7 columns" style="text-align:right;">
-     <h3><a href="<?= $url; ?>"><?= $node->title; ?></a></h3>
-     <p style="padding: 10px 0;line-height:1.5em;"><?= substr($node->body['und'][0]['value'],0,260); ?>...</p>
-     <p>Von <strong><?= $node->name; ?></strong> - <a href="<?= $url; ?>#comments"><?= $node->comment_count; ?> <?= t('Kommentare'); ?></a></p>
-    </div>
-   </div>
-
-   <?php endforeach; ?>
- -->
- <div class="row">
+<div class="row">
  <?php
    foreach ($nodes as $node) :
 
@@ -24,14 +6,13 @@
 
   <div class="large-3 jEntry columns">
 
-     <div class="jEntryPrev large-12 columns">
+    <div class="jEntryPrev large-12 columns">
 
      <div class="jEntryImg large-2 columns" style="background-image:url('<?php if (!empty($node->field_image['und'][0]['filename'])) : ?><?= base_path().'sites/default/files/styles/large/public/field/image/'.$node->field_image['und'][0]['filename']; ?><?php else: ?><?= base_path().'sites/all/themes/aae_theme/img/journal_bg.png'; ?><?php endif; ?>');"></div>
-
      <div class="jEntryContent large-8 right columns">
       <h3><a href="<?= $url; ?>"><?= $node->title; ?></a></h3>
-      <?= substr($node->body['und'][0]['value'],0,200); ?>
-      <p><a href="<?= $url; ?>" title="<?= t('Weiterlesen'); ?>"><?= t('Weiterlesen'); ?>...</a></p>
+      <div class="summary"><?= preg_replace('/<h[1-6]>(.*?)<\/h[1-6]>/', '<p>$1</p>', text_summary($node->body['und'][0]['value'], 'filtered_html', 200)); ?>
+      <p><a href="<?= $url; ?>" title="<?= t('Weiterlesen'); ?>"><?= t('Weiterlesen'); ?>...</a></p></div>
      </div>
     </div><!-- /.article -->
 
@@ -45,7 +26,7 @@
      </div>
     </div>
 
-</div>
+ </div>
 
-    <?php endforeach; ?>
-  </div>
+<?php endforeach; ?>
+</div>

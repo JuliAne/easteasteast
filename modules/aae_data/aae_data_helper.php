@@ -122,19 +122,16 @@ namespace Drupal\AaeData;
 
    protected function upload_image($bild,$servercheck = null) {
 
-    $image = new Imagick($bild['tmp_name']);
+    $image = new \Imagick($bild['tmp_name']);
     $image->setImageBackgroundColor('white'); // Entfernt Transparenz bein png's
     $image->scaleImage(800, 400, true);
     $image = $image->flattenImages(); // Deprecated!
     $image->setImageCompressionQuality(90); // = Idealer Wert???
     $image->setImageFormat('jpg'); // see also: $image->getImageFormat();
 
-    $servername_local = "localhost";
-    $servername_test = "test.leipziger-ecken.de";
-
-    if($_SERVER['SERVER_NAME'] == $servername_local ){
+    if($_SERVER['SERVER_NAME'] == "localhost"){
       $image->writeImage($this->localbildpfad.substr(md5($bild['name']),0,18).'.jpg');
-    } elseif ($_SERVER['SERVER_NAME'] == $servername_test) {
+    } elseif ($_SERVER['SERVER_NAME'] == "test.leipziger-ecken.de") {
       $image->writeImage($this->testbildpfad.substr(md5($bild['name']),0,18).'.jpg');
     }else{
       $image->writeImage($this->bildpfad.substr(md5($bild['name']),0,18).'.jpg');
@@ -151,9 +148,11 @@ namespace Drupal\AaeData;
     * @return rendered HTML
     */
 
-  public function render($tpl, $setVars) {
-
-    extract($setVars);
+  public function render($tpl, $setVars = NULL) {
+   
+    if ($setVars) {
+     extract($setVars);
+    }
 
     ob_start(); // Aktiviert "Render"-modus
     include_once path_to_theme().$tpl;
