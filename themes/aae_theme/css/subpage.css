@@ -299,6 +299,11 @@ p.licensetext:hover {
   background-position: center center;
 }
 
+#festival_switch .switch-paddle:after {
+  content: '+A?';
+  color: #000;
+}
+
 .page-events-new .switch-paddle, .page-eventprofil-edit .switch-paddle {
  margin-top: 29px;
 }

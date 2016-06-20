@@ -4,7 +4,6 @@ package = "Custom Modules"
 core = 7.x
 version = "7.x-1.6"
 dependencies[] = ckeditor
-dependencies[] = views
 dependencies[] = message
 configure = admin/config/aae_data
 datestamp = "2015-08-31"

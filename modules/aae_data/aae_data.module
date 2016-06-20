@@ -7,7 +7,6 @@
 * Implements hook_data_cron()
 * Cronjob, der von Drupal automatisch aufgerufen wird.
 */
-
 function aae_data_cron() {
   aae_data_refresh_recurring_events();
   #aae_data_refresh_facebook_events();
@@ -249,7 +248,7 @@ function aae_data_menu() {
 
   //Menuitem "Events"
   $items['events'] = array(
-    'title' => 'Events',
+    'title' => t('Events'),
     'page callback' => 'events_page',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
@@ -258,7 +257,7 @@ function aae_data_menu() {
 
   //Menuitem "Eventformular"
   $items['events/new'] = array(
-    'title' => 'Eventformular',
+    'title' => t('Eventformular'),
     'page callback' => 'eventformular_page',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
@@ -267,7 +266,7 @@ function aae_data_menu() {
 
   //Menuitem "Events/RSS"
   $items['events/rss'] = array(
-    'title' => 'Events',
+    'title' => t('Events RSS-Feed'),
     'page callback' => 'events_rss',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
@@ -305,6 +304,25 @@ function aae_data_menu() {
   $items['eventprofil/%/edit'] = array(
     'title' => t('Event bearbeiten'),
     'page callback' => 'eventedit_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
+  
+  //Admin-item "Add festival"
+  $items['festivals/new'] = array(
+    'title' => t('Festivalformular'),
+    'page callback' => 'festivalformular_page',
+    'access arguments' => array('access content'),
+  #  EDIT
+    'type' => MENU_NORMAL_ITEM,
+    'access callback' => TRUE,
+  );
+  
+  //Admin-item "festivaledit"
+  $items['festivals/%/edit'] = array(
+    'title' => t('Festival bearbeiten'),
+    'page callback' => 'festivaledit_page',
     'access arguments' => array('access content'),
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
@@ -423,6 +441,28 @@ function akteurloeschen_page($eid=0) {
   $aae_akteur = new Drupal\AaeData\akteurprofil();
 
   return $aae_akteur->removeAkteur();
+}
+
+/* Festivals */
+function festivalformular_page($fid=0){
+   $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/festivalformular.php';
+
+  $aae_akteur = new Drupal\AaeData\festivalformular();
+
+  $path = current_path();
+  $path_alias = drupal_lookup_path('alias', $path);
+
+  return $aae_akteur->run();
+}
+
+function festivaledit_page($fid=0){
+   $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/festivalformular.php';
+
+  $aae_akteur = new Drupal\AaeData\festivalformular('update');
+
+  return $aae_akteur->run();
 }
 
 /**

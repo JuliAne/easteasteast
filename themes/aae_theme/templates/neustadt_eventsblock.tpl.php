@@ -8,7 +8,7 @@
   
   <?php foreach($resultEvents as $key => $event): ?>
    <?php if ($event->start->format('d') != $cur_day) : ?>
-    <div class="large-12 columns" style="padding:10px 0;"><h4><?= $this->dayNames[date('N', $event->start->getTimestamp())-1]; ?>, <?= $event->start->format('d'); ?>. <?= $this->monat_short[$event->start->format('m')]; ?></h4></div>
+    <div class="large-12 columns" style="padding:10px 0;"><h4><?= $this->dayNames[date('N', $event->start->getTimestamp())-1]; ?>, <?= $event->start->format('d'); ?>. <?= $this->monat_lang[$event->start->format('m')]; ?></h4></div>
    <?php endif; $cur_day = $event->start->format('d'); ?>
    <div class="large-6 columns small-6 columns aaeEvent<?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? ' today' : ''; ?>">
 

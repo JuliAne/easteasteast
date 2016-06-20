@@ -1,17 +1,13 @@
 <?php
 /**
- * akteurformular.php stellt ein Formular dar,
- * in welches alle Informationen über einen Akteur
+ * festivalformular.php stellt ein Hilfs-Formular dar,
+ * in welches grundlegende Informationen über ein Festival
  * eingetragen UND bearbeitet werden koennen.
- *
- * Einzige Pflichtfelder sind bisher Name, Emailadresse und Bezirk.
- *
- * TODO: Place in translation-placeholders
  */
  
 namespace Drupal\AaeData;
 
-Class akteurformular extends aae_data_helper {
+Class festivalformular extends aae_data_helper {
 
   // $tbl_akteur
   var $name = "";
@@ -24,21 +20,9 @@ Class akteurformular extends aae_data_helper {
   var $bild = "";
   var $beschreibung = "";
   var $oeffnungszeiten = "";
-  var $barrierefrei = "";
   var $created = "";
   var $modified = "";
 
-  // $tbl_adresse
-  var $strasse = "";
-  var $nr = "";
-  var $adresszusatz = "";
-  var $plz = "";
-  var $ort = "";
-  var $gps = "";
-
-  // $tbl_tag
-  var $sparten = "";
-  var $all_sparten = ''; // Ermöglicht Tokenizer-plugin im Frontend
 
   var $akteur_id = "";
   var $user_id = "";
@@ -46,12 +30,11 @@ Class akteurformular extends aae_data_helper {
   var $freigabe = true; // Variable zur Freigabe: muss true sein
 
   // $tbl_akteur
-  var $ph_name = "Name des Vereins/ der Organisation";
+  var $ph_name = "Name des Festivals";
   var $ph_email = "E-mail Addresse";
   var $ph_telefon = "Telefonnummer";
   var $ph_url = "Website";
-  var $ph_ansprechpartner = "Kontaktperson";
-  var $ph_funktion = "Funktion der Kontaktperson";
+  var $ph_fUrl = "Steht hier 'kunstfest16', wird daraus https://leipziger-ecken.de/kunstfest16";
   var $ph_bild = "Dateiname mit Endung";
   var $ph_beschreibung = "Beschreibungstext. In der Vorschau werden die ersten 30 Wörter angezeigt.";
   var $ph_oeffnungszeiten = "Öffnungszeiten";
@@ -64,52 +47,34 @@ Class akteurformular extends aae_data_helper {
   var $ph_ort = "Bezirk";
   var $ph_gps = "GPS-Addresskoordinaten";
 
-  // $tbl_akteur_hat_Sparte
-  var $countsparten = "";
-  var $sparte_id = "";
-
   var $resultbezirke = "";
   var $target = "";
   var $modulePath;
-  var $removedTags;
-  var $removedPic;
-  var $rssFeed = "";
 
   //-----------------------------------
 
   function __construct($action) {
     
    parent::__construct();
+   global $user;
 
-   if (!user_is_logged_in()) {
+   if (!array_intersect(array('administrator', 'festival'), $user->roles)) {
     drupal_access_denied();
     drupal_exit();
    }
-
-   $this->modulePath = drupal_get_path('module', 'aae_data');
 
    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
    if ($action == 'update') {
     $this->target = 'update';
    }
+   
   } // END Constructor
 
   /**
    *  Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
    *  @returns $profileHTML;
    */
-
   public function run() {
-
-  /*  $og_title = array(
-  '#tag' => 'meta',
-  '#attributes' => array(
-    'property' => 'og:title',
-    'content' => 'bla',
-  ),
-);
-
-drupal_add_html_head($og_title, 'og_title'); */
 
     $path = current_path();
     $explodedpath = explode("/", $path);
@@ -124,17 +89,18 @@ drupal_add_html_head($og_title, 'og_title'); */
 	     } else {
 		    $this->akteurSpeichern();
 	     }
-       $output = $this->akteurDisplay();
+       $output = $this->festivalDisplay();
       } else {
-	    $output = $this->akteurDisplay();
+	    $output = $this->festivalDisplay();
       }
     } else {
       // Was passiert, wenn Seite zum ersten mal gezeigt wird?
       // Lade Feld-Werte via ID (akteurGetFields) und gebe diese aus
       if ($this->target == 'update') {
-	    $this->akteurGetFields();
+	     $this->akteurGetFields();
+       # $this->festival = new festival();
       }
-      $output = $this->akteurDisplay();
+      $output = $this->festivalDisplay();
     }
 
     return $output;
@@ -142,7 +108,7 @@ drupal_add_html_head($og_title, 'og_title'); */
 
   /**
    * Wird ausgeführt, wenn auf "Speichern" geklickt wird
-   * @return $this->freigabe [boolean]
+   * @return $this->freigabe : boolean
    */
 
   private function akteurCheckPost() {
@@ -210,85 +176,6 @@ drupal_add_html_head($og_title, 'og_title'); */
      $this->freigabe = false;
     }
 
-    if (strlen($this->ansprechpartner) > 100){
-	   $this->fehler['ansprechpartner'] = "Bitte geben Sie einen kürzeren Ansprechpartner an.";
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->funktion) > 100) {
-	   $this->fehler['funktion'] = "Bitte geben Sie eine kürzere Funktion an.";
-     $this->freigabe = false;
-    }
-
-    if (strlen($this->beschreibung) > 65000) {
-	   $this->fehler['beschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->oeffnungszeiten) > 200) {
-	   $this->fehler['oeffnungszeiten'] = "Bitte geben Sie kürzere Oeffnungszeiten an.";
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->strasse) > 100) {
- 	   $this->fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->nr) > 100) {
-	   $this->fehler['nr'] = "Bitte geben Sie eine kürzere Nummer an.";
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->adresszusatz) > 100) {
-	   $this->fehler['adresszusatz'] = "Bitte geben Sie einen kürzeren Adresszusatz an.";
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->plz) > 100) {
-	   $this->fehler['plz '] = "Bitte geben Sie eine kürzere PLZ an.";
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->gps) > 100) {
-	   $this->fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->rssFeed) > 400) {
-
-    }
-
-    if ($this->gps == 'Ermittle Geo-Koordinaten...') $this->gps = '';
-
-    // Um die bereits gewählten Tag's anzuzeigen benötigen wir deren Namen...
-    if ($this->freigabe == false) {
-
-     $neueSparten = array();
-
-     foreach($this->sparten as $sparte) {
-
-      $sparte = strtolower($this->clearContent($sparte));
-
-      if (is_numeric($sparte)) {
-
-      $spartenName = db_select($this->tbl_sparte, 's')
-       ->fields('s', array('kategorie'))
-       ->condition('KID', $sparte, '=')
-       ->execute()
-       ->fetchAll();
-
-       $neueSparten[$sparte] = $spartenName[0]->kategorie;
-
-     } else {
-
-      $neueSparten[] = $sparte;
-
-     }
-    }
-     $this->sparten = $neueSparten;
-   }
-
     return $this->freigabe;
 
   } // END akteurCheckPost
@@ -296,9 +183,8 @@ drupal_add_html_head($og_title, 'og_title'); */
 
   /**
    * Schreibt Daten in DB
-   * Vereinheitliche Funktion zum Adressspeichern
    */
-  private function akteurSpeichern() {
+  private function festivalSpeichern() {
 
    $gps = explode(',', $this->gps, 2);
 
@@ -344,24 +230,7 @@ drupal_add_html_head($og_title, 'og_title'); */
 	    'hat_AID' => $this->akteur_id,
     ))
 	 ->execute();
-
-   if (module_exists('aggregator') && !empty($this->rssFeed)) {
-
-    $feed = array(
-     'category' => 'aae-feeds',
-     'title' => 'aae-feed-'.$this->akteur_id,
-     'description' => t('Feed for AAE-User :username', array(':username' => $this->name)),
-     'url' => $this->rssFeed,
-     'refresh' => '86400',
-     'link' => base_path().'akteurprofil/'.$this->akteur_id,
-     'block' => 0
-    );
-
-    aggregator_save_feed($feed);
-    aggregator_refresh($feed);
-
-   }
-
+   
   // Tell Drupal about new akteurprofil/ID-item
 
   $parentItem = db_query(
@@ -379,84 +248,24 @@ drupal_add_html_head($og_title, 'og_title'); */
     'module' => 'aae_data',
     'link_path' => 'akteurprofil/'.$this->akteur_id,
     'plid' => $plid->mlid
+    // FUNCTION -> Festivalpage?
    );
 
    menu_link_save($item);
 
-   if (is_array($this->sparten) && !empty($this->sparten)) {
-
-    $this->sparten = array_unique($this->sparten);
-
-    foreach ($this->sparten as $id => $sparte) {
-		// Tag bereits in DB?
-
-    $sparte = strtolower($this->clearContent($sparte));
-
-    $sparte_id = '';
-
-		$resultsparte = db_select($this->tbl_sparte, 's')
-		  ->fields('s')
-		  ->condition('KID', $sparte, '=')
-		  ->execute();
-
-		if ($resultsparte->rowCount() == 0) {
-     // Tag in DB einfügen
-		 $sparte_id = db_insert($this->tbl_sparte)
-		  ->fields(array('kategorie' => $sparte))
-		  ->execute();
-
-		} else {
-
-		  foreach ($resultsparte as $row) {
-		    $sparte_id = $row->KID;
-		  }
-
-		}
-
-		// Akteur & Tag in Tabelle $tbl_hat_sparte einfügen
-
-		$insertAkteurSparte = db_insert($this->tbl_hat_sparte)
-		  ->fields(array(
-		    'hat_AID' => $this->akteur_id,
-		    'hat_KID' => $sparte_id,
-		  ))
-		  ->execute();
-	  }
-	 }
-
-   // Call hooks
-   module_invoke_all('hook_akteur_created');
-
    if (session_status() == PHP_SESSION_NONE) session_start();
-   drupal_set_message(t('Ihr Akteurprofil wurde erfolgreich erstellt!'));
+   drupal_set_message(t('Das Festival wurde erfolgreich erstellt!'));
    header('Location: '. $base_url . '/akteurprofil/' . $this->akteur_id);
 
-  } // END function akteurSpeichern()
+  } // END function festivalSpeichern()
 
-  /**
-   * Akteurinformationen aktualisieren in DB
-   */
-  private function akteurUpdaten() {
+  private function festivalUpdaten() {
 
     //Wenn Bilddatei ausgewählt wurde...
     if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
      $this->bild = $this->upload_image($_FILES['bild']);
     } else if (isset($_POST['oldPic'])) {
      $this->bild = $this->clearContent($_POST['oldPic']);
-    }
-
-    if (!empty($this->removedTags) && is_array($this->removedTags)) {
-
-     foreach($this->removedTags as $tag) {
-
-      $tag = $this->clearContent($tag);
-
-      db_delete($this->tbl_hat_sparte)
-       ->condition('hat_KID', $tag, '=')
-       ->condition('hat_AID', $this->akteur_id, '=')
-       ->execute();
-
-     }
     }
 
     $akteurAdresse = db_select($this->tbl_akteur, 'a')
@@ -480,20 +289,6 @@ drupal_add_html_head($og_title, 'og_title'); */
      ->condition('ADID', $akteurAdresse->adresse, '=')
 		 ->execute();
 
-    // remove current picture manually
-
-    if (!empty($this->removedPic)) {
-
-     $b = end(explode('/', $this->removedPic));
-
-     if (file_exists($this->short_bildpfad.$b)) {
-      unlink($this->short_bildpfad.$b);
-     }
-
-     if ($_POST['oldPic'] == $this->removedPic) $this->bild = '';
-
-    }
-
 	  $updateAkteur = db_update($this->tbl_akteur)
      ->fields(array(
 	    'name' => $this->name,
@@ -511,114 +306,12 @@ drupal_add_html_head($og_title, 'og_title'); */
 	   ->condition('AID', $this->akteur_id, '=')
 	   ->execute();
 
-     if (module_exists('aggregator')) {
-
-       $akteurFeed = db_select('aggregator_feed', 'af')
-        ->fields('af', array('fid','url'))
-        ->condition('title', 'aae-feed-'.$this->akteur_id)
-        ->execute();
-
-       $hasFeed = $akteurFeed->rowCount();
-       $akteurFeed = $akteurFeed->fetchObject();
-
-     if (!empty($this->rssFeed) && $hasFeed){
-
-      // rewrite RSS-path of Feed
-      $feedUpdate = db_update('aggregator_feed')
-       ->fields(array('url' => $this->rssFeed))
-       ->condition('title', 'aae-feed-'.$this->akteur_id)
-       ->execute();
-
-      //remove all current feed items
-      db_delete('aggregator_item')
-       ->condition('fid', $hasFeed);
-
-     } else if (!empty($this->rssFeed) && !$hasFeed) {
-
-     $feed = array(
-      'category' => 'aae-feeds',
-      'title' => 'aae-feed-'.$this->akteur_id,
-      'description' => t('Feed for AAE-User :username', array(':username' => $this->name)),
-      'url' => $this->rssFeed,
-      'refresh' => '86400', // daily
-      'link' => base_path().'akteurprofil/'.$this->akteur_id,
-      'block' => 0
-     );
-     aggregator_save_feed($feed);
-     aggregator_refresh($feed);
-
-    } else if (empty($this->rssFeed) && $hasFeed && $akteurFeed->url != $this->rssFeed) {
-
-     // remove akteur-feed and its items
-
-     db_delete('aggregator_feed')
-      ->condition('fid', $akteurFeed->fid)
-      ->execute();
-     db_delete('aggregator_item')
-      ->condition('fid', $akteurFeed->fid)
-      ->execute();
-
-    }
-   }
-
-   // Update Tags
-
-   if (is_array($this->sparten) && !empty($this->sparten)) {
-
-    $this->sparten = array_unique($this->sparten);
-
-    foreach ($this->sparten as $sparte) {
-  	// Tag bereits in DB?
-
-    $sparte_id = '';
-    $sparte = strtolower($this->clearContent($sparte));
-
-  	$resultsparte = db_select($this->tbl_sparte, 's')
-  	 ->fields('s')
-  	 ->condition('KID', $sparte, '=')
-  	 ->execute();
-
-    if ($resultsparte->rowCount() == 0) {
-     // Tag in DB einfügen
-     $sparte_id = db_insert($this->tbl_sparte)
-  	   ->fields(array('kategorie' => $sparte))
-  	 	 ->execute();
-
-  	} else {
-
-  	  foreach ($resultsparte as $row) {
-  	    $sparte_id = $row->KID;
-  	  }
-  	}
-
-    // Hat der Akteur dieses Tag bereits zugeteilt?
-
-    $hatAkteurSparte = db_select($this->tbl_hat_sparte, 'hs')
-     ->fields('hs')
-     ->condition('hat_KID', $sparte_id, '=')
-     ->condition('hat_AID', $this->akteur_id, '=')
-     ->execute();
-
-     if ($hatAkteurSparte->rowCount() == 0) {
-      // Nein, daher rein damit
-
-      db_insert($this->tbl_hat_sparte)
-      ->fields(array(
-       'hat_AID' => $this->akteur_id,
-       'hat_KID' => $sparte_id
-       ))
-      ->execute();
-
-     }
-    }
-   }
-
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
-    drupal_set_message(t('Ihr Akteurprofil wurde erfolgreich bearbeitet!'));
+    drupal_set_message(t('Das Festival wurde erfolgreich bearbeitet!'));
    	header("Location: ". $base_url ."/akteurprofil/" . $this->akteur_id);
 
-  } // END function akteurUpdaten()
+  } // END function festivalUpdaten()
 
   /**
    * Holen der Akteursattribute aus DB (Aufgerufen bei akteuredit/)
@@ -670,47 +363,28 @@ drupal_add_html_head($og_title, 'og_title'); */
 	   $this->gps = $row->gps_lat.','.$row->gps_long;
     }
 
-    $resultSparten = db_select($this->tbl_hat_sparte, 'hs')
-     ->fields('hs')
-     ->condition('hat_AID', $this->akteur_id, '=')
-     ->execute()
-     ->fetchAll();
-
-    $sparten = array();
-
-    foreach($resultSparten as $sparte) {
-
-     $sparten[] = db_select($this->tbl_sparte, 's')
-     ->fields('s')
-     ->condition('KID', $sparte->hat_KID, '=')
-     ->execute()
-     ->fetchAll();
-
-    }
-
-    $this->sparten = $sparten;
-
   } // END function akteurGetFields()
 
 
   /**
    * Darstellung des Formulars
    */
-  private function akteurDisplay() {
+  private function festivalDisplay() {
 
     $this->resultBezirke = db_select($this->tbl_bezirke, 'b')
-     ->fields('b', array( 'BID', 'bezirksname' ))
-     ->execute();
-
-    $this->all_sparten = db_select($this->tbl_sparte, 's')
-     ->fields('s')
+     ->fields('b', array('BID', 'bezirksname'))
      ->execute()
      ->fetchAll();
 
+    $this->resultAllAkteure = db_select($this->tbl_akteur, 'a')
+     ->fields('a', array('AID', 'name'))
+     ->execute()
+     ->fetchAll();
+     
     ob_start(); // Aktiviert "Render"-modus
-    include_once path_to_theme() . '/templates/akteurformular.tpl.php';
-    return ob_get_clean(); // Übergabe des gerenderten "akteurformular.tpl"
+    include_once path_to_theme() . '/templates/festivalformular.tpl.php';
+    return ob_get_clean();
 
-  } // END function akteurDisplay()
+  } // END function festivalDisplay()
 
-} // END class akteurformular
+} // END class festivalformular

@@ -332,6 +332,10 @@ Class events extends aae_data_helper {
 
   }
   
+  public function accessibleAkteure($uId){
+    
+  }
+  
   private function __filterEvents($filter){
     
    $filteredEventIds = array();
