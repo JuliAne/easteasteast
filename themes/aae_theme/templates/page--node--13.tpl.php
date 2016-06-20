@@ -19,7 +19,7 @@
 	</div>
 
 	<div id="contentRow" class="row">
-	<?php print render($page['content']); ?><?php print render($page['journal_latest_posts']); ?>
+	<?php print render($page['content']); ?>
     </div>
 	<?php include_once('footer.tpl.php'); ?>
 
