@@ -142,6 +142,45 @@ function aae_data_schema() {
 	  'Akteur' => array('table' => 'aae_data_akteur', 'columns' => array('AID' => 'AID'))
 	),
   );
+  
+  /* Festival-schema */
+   $schema ['aae_data_festival'] = array(
+  'description' => 'Table for Festivals',
+	'fields' => array(
+	  'FID' => array('description' => 'Festival ID', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'name' => array('description' => 'Festivalname', 'type' => 'varchar', 'length' => 64, 'not null' => FALSE),
+	  'template_data' => array('description' => 'Only a badass uses serialized data :p', 'type' => 'text', 'length' => 'medium', 'not null' => FALSE, 'default' => 0),
+	  'bild' => array('description' => 'Pfad zum Foto', 'type' => 'varchar', 'length' => 500, 'not null' => FALSE, 'default' => ''),
+	  'ort' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+	  'url' => array('description' => 'Link zur eigenen Homepage', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
+	  'ersteller' => array('description' => 'ID von User, der Event angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
+    'start_ts' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Startzeit des Events als Timestamp'),
+    'ende_ts' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Endzeit des Events als Timestamp'),
+    'parent_EID' => array( 'type' => 'varchar', 'length' => 5, 'not null' => FALSE, 'description' => 'NOT NULL if event recurres'),
+    'recurring_event_type' => array( 'type' => 'varchar', 'length' => 1, 'not null' => FALSE, 'description' => '2: returns weekly, 3: returns 2-weekly, 4: returns monthly, 5: returns 2-monthly'),
+    'event_recurres_till' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Maximaler Wiederholungszeitpunkt für wiederkehrende Events'),
+    'created' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Created als Timestamp'),
+    'modified' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Modified als Timestamp')
+	),
+	'primary key' => array('FID'),
+	'foreign keys' => array(
+	  'Eventadresse' => array('table' => 'aae_data_adresse', 'columns' => array('ort' => 'ADID')),
+	  'User' => array('table' => 'user', 'columns' => array('ersteller' => 'uid'))
+	),
+  );
+  $schema ['aae_data_akteur_hat_festival'] = array(
+  'description' => 'Connects FID with AID',
+	'fields' => array(
+	  'hat_FID' => array('description' => 'ID of festival', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+	  'hat_AID' => array('description' => 'ID of akteur', 'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE),
+    'is_owner' => array('description' => 'Is festival-organizer?', 'type' =>  'int', 'size' => 'tiny', 'not null' => FALSE, 'default' => '')
+	),
+	'primary key' => array('hat_FID', 'hat_AID'),
+	'foreign keys' => array(
+	  'Festival' => array('table' => 'aae_data_festival', 'columns' => array('hat_FID' => 'FID')),
+	  'Akteur' => array('table' => 'aae_data_akteur', 'columns' => array('hat_AID' => 'AID'))
+	),
+  );
 
   return $schema;
 }

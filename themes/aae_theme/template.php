@@ -76,7 +76,8 @@ function aae_preprocess_html(&$variables) {
     drupal_add_html_head($data, $key);
   }
 
-  drupal_add_feed(base_path().'events/rss');
+  drupal_add_feed(base_path().'rss.xml', t('Stadtteiljournal'));
+  drupal_add_feed(base_path().'events/rss', t('Alle kommenden Veranstaltungen'));
 
   drupal_add_js(path_to_theme().'/js/jquery-1.11.3.min.js', array('scope'=>'header'));
 

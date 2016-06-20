@@ -538,6 +538,7 @@ function ajax_requests($id) {
 
    default :
     // U mad? Unbekannter Funktionsaufruf, weg damit...
+    drupal_add_http_header('Content-Type', 'application/json');
     echo '{"error" : "Unknown AJAX method"}';
     exit();
    break;

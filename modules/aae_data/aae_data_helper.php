@@ -119,25 +119,41 @@ namespace Drupal\AaeData;
     return $nodes;
 
    }
+   
+   protected function check_image_compatibility($img){
+    
+    $image = new \Imagick($img['tmp_name']);
+    $formats = array('jpeg','jpg','png','gif','bmp');
+   
+    if (!in_array(strtolower($image->getImageFormat()), $formats)) {
+     return t('Ungültiges Dateiformat (erlaubt: Jpeg, png, gif, bmp)');
+    } elseif ($image->getimagesize() > 4194304) {
+     return t('Die max. Bildgröße beträgt lediglich 4MB');
+    } else {
+     return true;
+    }
+    
+   }
 
-   protected function upload_image($bild,$servercheck = null) {
+   protected function upload_image($img,$servercheck = null) {
 
-    $image = new \Imagick($bild['tmp_name']);
+    $image = new \Imagick($img['tmp_name']);    
+    
     $image->setImageBackgroundColor('white'); // Entfernt Transparenz bein png's
     $image->scaleImage(800, 400, true);
     $image = $image->flattenImages(); // Deprecated!
     $image->setImageCompressionQuality(90); // = Idealer Wert???
     $image->setImageFormat('jpg'); // see also: $image->getImageFormat();
 
-    if($_SERVER['SERVER_NAME'] == "localhost"){
-      $image->writeImage($this->localbildpfad.substr(md5($bild['name']),0,18).'.jpg');
+    if ($_SERVER['SERVER_NAME'] == "localhost"){
+      $image->writeImage($this->localbildpfad.substr(md5($img['name']),0,18).'.jpg');
     } elseif ($_SERVER['SERVER_NAME'] == "test.leipziger-ecken.de") {
-      $image->writeImage($this->testbildpfad.substr(md5($bild['name']),0,18).'.jpg');
-    }else{
-      $image->writeImage($this->bildpfad.substr(md5($bild['name']),0,18).'.jpg');
+      $image->writeImage($this->testbildpfad.substr(md5($img['name']),0,18).'.jpg');
+    } else {
+      $image->writeImage($this->bildpfad.substr(md5($img['name']),0,18).'.jpg');
     }
 
-    return base_path() . $this->short_bildpfad.substr(md5($bild['name']),0,18) . '.jpg';
+    return base_path() . $this->short_bildpfad.substr(md5($img['name']),0,18) . '.jpg';
 
    }
 

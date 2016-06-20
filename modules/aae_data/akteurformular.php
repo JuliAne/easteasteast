@@ -173,8 +173,8 @@ drupal_add_html_head($og_title, 'og_title'); */
      $this->freigabe = false;
     }
 
-    if (empty($this->email)) {
-     $this->fehler['email'] = "Bitte eine Emailadresse eingeben!";
+    if (empty($this->email) || !valid_email_adress($this->email)) {
+     $this->fehler['email'] = "Bitte eine (gültige) Emailadresse eingeben!";
 	   $this->freigabe = false;
     }
 

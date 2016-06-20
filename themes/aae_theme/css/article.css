@@ -93,7 +93,7 @@
   border-radius: 3px;
   margin: 10px 0;
 }
-#comments .comment .new {
+#comments .comment .new, .filter-wrapper {
   display: none;
 }
 #comments .comment .submitted {

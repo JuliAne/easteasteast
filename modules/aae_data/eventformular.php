@@ -242,11 +242,19 @@ Class eventformular extends aae_data_helper {
     }
 
     if ($this->gps == t('Ermittle Geo-Koordinaten...')) $this->gps = '';
-
+    
     /*if (!empty($this->gps) && preg_match('\s.\s,\s.\s',$this->gps)==0) {
       echo ':/';
       exit(); } */
-
+print_r($this->bild); echo ' b '.$this->bild; exit();
+    if ($this->bild){
+     $errMsg = $this->check_image_compatibility($this->bild);
+     if (!is_bool($errMsg)) {
+      $this->fehler['bild'] = $errMsg;
+      $this->freitage = false;
+     }
+    }
+    
     // Um die bereits gewählten Tag's anzuzeigen benötigen wir deren Namen...
     if ($this->freigabe == false) {
 
@@ -530,7 +538,6 @@ Class eventformular extends aae_data_helper {
   private function eventSpeichern() {
 
    if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
-    // TODO $this->__check_image_compatibility($_FILES['bild'])
     $this->bild = $this->upload_image($_FILES['bild']);
    }
 

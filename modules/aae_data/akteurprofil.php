@@ -6,20 +6,21 @@
 namespace Drupal\AaeData;
 
 class akteurprofil extends aae_data_helper {
+  
+ public function __construct(){
+  parent::__construct();
+ }
 
  public function run(){
 
   $explodedpath = explode("/", current_path());
   $akteur_id = $this->clearContent($explodedpath[1]);
 
-  global $user;
-  $user_id = $user->uid;
-
   //Prüfen ob Schreibrecht vorliegt
   $resultUser = db_select($this->tbl_hat_user, 'u')
   ->fields('u')
   ->condition('hat_AID', $akteur_id, '=')
-  ->condition('hat_UID', $user_id, '=')
+  ->condition('hat_UID', $this->user_id, '=')
   ->execute();
 
   // Anzeige Edit-Button?
@@ -123,9 +124,6 @@ class akteurprofil extends aae_data_helper {
 
 public function removeAkteur(){
 
- global $user;
- $user_id = $user->uid;
-
  $explodedpath = explode("/", current_path());
  $akteur_id = $this->clearContent($explodedpath[1]);
 
@@ -138,7 +136,7 @@ public function removeAkteur(){
  $resultUser = db_select($this->tbl_hat_user, 'u')
   ->fields('u', array('hat_UID', 'hat_AID'))
   ->condition('hat_AID', $akteur_id, '=')
-  ->condition('hat_UID', $user_id, '=')
+  ->condition('hat_UID', $this->user_id, '=')
   ->execute();
 
  $hat_recht = $resultUser->rowCount();

@@ -5,21 +5,21 @@ $og_title = array(
   '#tag' => 'meta',
   '#attributes' => array(
     'property' => 'og:title',
-    'content' => 'Kunstfest Neustadt 2016',
+    'content' => 'Kunstfest Neustadt 2016 | 02. - 10. Juli | Bildungsferne so nah?',
   ),
 );
 $og_image = array(
   '#tag' => 'meta',
   '#attributes' => array(
     'property' => 'og:image',
-    'content' => 'nachfüllen!',
+    'content' => 'https://leipziger-ecken.de/sites/all/themes/aae_theme/neustadt/kunstfest_bg.jpg',
   ),
 );
 $og_desc = array(
  '#tag' => 'meta',
  '#attributes' => array(
    'property' => 'og:description',
-   'content' => 'festivalbeschreib',
+   'content' => 'Bildungsferne - so nah? Offenes Kunsfest am Neustädter Markt vom 02. - 10. Juli 2016',
  ),
 );
  
@@ -37,7 +37,7 @@ drupal_add_html_head($og_desc, 'og_description');
 
 <header id="neustadtPageHeader" class="pageHeader">
   <h2>Kunstfest Neustadt <a href="<?= base_path(); ?>events/rss" title="<?= t('Alle Events als RSS-Feed'); ?>"><img id="svg_logo" src="<?= base_path().path_to_theme(); ?>/img/rss.svg" /></a></h2>
-  <p>16. - 19. Juli 2016. Kreativ, aber herzlich.</p>
+  <p>Bildungsferne - so nah? 02. - 10. Juli 2016.</p>
 </header>
 
 <aside id="neustadtIntro" class="row">
@@ -50,18 +50,20 @@ drupal_add_html_head($og_desc, 'og_description');
   <div id="events_content" class="large-12 small-12 columns">
 
    <ul class="tabs large-12 columns" id="events-tabs">
-    <?php $path = explode("/", current_path()); ?>
+    <?php #$path = explode("/", current_path());
+          // Need a universal menu-method here!
+          $path = request_uri(); ?>
    
-    <li class="tabs-title<?= ($path[1] == '' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16"<?= ($path[1] == '' ? ' aria-selected="true"' : ''); ?>>Startseite</a></li>
-    <li class="tabs-title<?= ($path[1] == 'das-festival' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16/das-festival"<?php /*($this->getOldEvents ? ' aria-selected="true"' : ''); */ ?>>Das Festival</a></li>
-    <li class="tabs-title<?php /*($this->presentationMode == 'calendar' ? ' is-active' : ''); */ ?>"><a href="https://leipziger-ecken.de/kunstfest16?presentation=calendar"<?php /*($this->presentationMode == 'calendar' ? ' aria-selected="true"' : ''); */ ?>>Kalender</a></li>
-    <li class="tabs-title<?= ($path[1] == 'impressionen' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16/impressionen"<?= ($path[1] == 'impressionen' ? ' aria-selected="true"' : ''); ?>>Impressionen</a></li>
+    <li class="tabs-title<?= ($path == '/kunstfest16' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16"<?= ($path == '/kunstfest16' ? ' aria-selected="true"' : ''); ?>>Startseite</a></li>
+    <li class="tabs-title"><a href="https://leipziger-ecken.de/akteurprofil/86">Das Festival</a></li>
+    <li class="tabs-title<?= ($path == '/kunstfest16?presentation=calendar' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16?presentation=calendar"<?= ($path == '/kunstfest16?presentation=calendar' ? ' aria-selected="true"' : ''); ?>>Kalender</a></li>
+    <li class="tabs-title<?= ($path == '/kunstfest16/impressionen' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/kunstfest16/impressionen"<?= ($path == '/kunstfest16/impressionen' ? ' aria-selected="true"' : ''); ?>>Impressionen</a></li>
     <?php global $user; if ($user->uid == 238) : ?>
     <li class="right tabs-title"><a href="https://leipziger-ecken.de/admin/page-builder">+ Seite hinzufügen</a></li>
     <?php endif; ?>
     
     <ul id="presentationFilter" class="button-group round large-3 columns right">
-     <li class="right"><a target="_blank" href="https://twitter.com/intent/tweet?text=<?php global $base_url; echo $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Twitter')); ?>" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/social-twitter.svg"><span></span></a></li>
+     <li class="right"><a target="_blank" href="mailto:kontakt@poege-haus.de" title="Das Pöge-Haus kontaktieren" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/paperplane.svg"><span></span></a></li>
      <li class="right">
     <a target="_blank" href="https://www.facebook.com/Kunstfest-Neustadt-1436373796669812/" title="Besuch uns auf Facebook!" class="fb button"><img alt="Facebook" src="<?= base_path().path_to_theme(); ?>/img/social-facebook.svg"><span></span></a></li>
     </ul>
@@ -190,9 +192,8 @@ $elements_arr = $data['elements'];
  
  <div id="festivalFooter" class="row">
   <h4>Sponsoren & Kooperationen</h4>
-  <div class="large-3 columns"><img src="<?= base_path().path_to_theme(); ?>/neustadt/sponsor_leipzig.png" /></div>
-  <div class="large-3 columns"><img src="<?= base_path().path_to_theme(); ?>/neustadt/sponsor_osten.jpg" /></div>
-  <div class="large-3 columns"><img src="<?= base_path().path_to_theme(); ?>/neustadt/sponsor_kuwi.jpg" /></div>
-  <div class="large-3 columns" style="padding-top: 25px;"><img src="<?= base_path().path_to_theme(); ?>/neustadt/sponsor_piloten.png" /></div>
+  <div class="large-3 large-offset-1 columns"><img src="<?= base_path().path_to_theme(); ?>/neustadt/sponsor_leipzig.png" /></div>
+  <div class="large-3 large-offset-1 columns" style="padding-top:7px;"><img src="<?= base_path().path_to_theme(); ?>/neustadt/sponsor_hww.png" /></div>
+  <div class="large-3 large-offset-1 columns" style="width:15%"><img src="<?= base_path().path_to_theme(); ?>/neustadt/sponsor_nmb.png" /></div>
 
  </div>
