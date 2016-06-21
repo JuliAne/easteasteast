@@ -7,6 +7,9 @@
 #leHeader p {padding-top:27px;width:550px; }
 .row {max-width:1150px;}
 .region-content {margin-top:50px;}
+table {vertical-align:top;display:inline-block;padding:5px 20px;width:33%;border:0 !important}
+table tbody {border:none !important;}
+table tbody h4 {color:#358ec6;}
 </style>
 <div id="lePage" class="singlesite">
 
