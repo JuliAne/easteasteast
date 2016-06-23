@@ -726,6 +726,11 @@ function aae_data_refresh_recurring_events(){
     'operator' => '='
    ),
    [] => array(
+     'key' => 'recurring_event_type',
+     'condition' => '6',
+     'operator' => '<'
+   ),
+   [] => array(
     'key' => 'event_recurres_till',
     'condition' => date('Y.m.d H:i:s'),
     'operator' => '>='
