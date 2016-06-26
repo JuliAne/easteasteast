@@ -85,7 +85,7 @@ p.licensetext:hover {
   padding-left: 0;
   animation-name: event;
   animation-duration: 0.5s;
-  float: left!important;
+  float: right!important;
 }
 
 .aaeEvent.outdated {
