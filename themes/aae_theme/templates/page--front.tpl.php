@@ -41,8 +41,8 @@
     <p>Deine Stadtteilplattform: Erfahre mehr über Vereine, Initiativen und Akteure aus Deiner Umgebung,</p>
     <p>werde Teil der Community und registriere dich.</p>
     <p class="slogan"><strong>Offen. Lokal. Vernetzt.</strong></p>
-    <a href="<?= base_path(); ?>faq"><button class="button radius transparent">Mehr erfahren...</button></a>
-    <a href="<?= base_path(); ?>user/login"><button id="homeLoginBtn" class="button radius transparent hollow">Einloggen</button></a>
+    <a href="<?= base_path(); ?>leipziger-ecken-das-projekt"><button class="button radius transparent"><?= t('Mehr erfahren...'); ?></button></a>
+    <a href="<?= base_path(); ?>user/login"><button id="homeLoginBtn" class="button radius transparent hollow"><?= t('Einloggen'); ?></button></a>
   </div>
 
   <div class="slide whiteText" id="slide1">

@@ -85,7 +85,7 @@ p.licensetext:hover {
   padding-left: 0;
   animation-name: event;
   animation-duration: 0.5s;
-  float: left!important;
+  float: right!important;
 }
 
 .aaeEvent.outdated {
@@ -102,17 +102,17 @@ p.licensetext:hover {
  to {opacity:1;margin-top:10;}
 }
 
-.aaeEvent:hover .date {
+.aaeEvent:hover .date, .aaeEvent.isFestival .date {
   border: 3px solid #2199E8;
   background: #F1EFEF;
   color: grey;
 }
 
-.aaeEvent:hover .content {
+.aaeEvent:hover .content, .aaeEvent.isFestival .content {
   border-color: #2199E8;
 }
 
-.aaeEvent:hover .content:before {
+.aaeEvent:hover .content:before, .aaeEvent.isFestival .content:before {
   border-color: transparent #2199E8 transparent transparent;
 }
 
@@ -132,6 +132,24 @@ p.licensetext:hover {
 .aaeEvent header strong {
   font-size: 1.2em;
   padding: 3px 0;
+}
+
+.aaeEvent .aaeEventDate {
+ float: left;
+ max-width: 28%;
+}
+
+.aaeEvent .aaeEventTags {
+ float: right;
+ max-width: 70%;
+}
+
+.aaeEvent header:after {
+  content: '';
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
 }
 
 .aaeEvent .divider {
@@ -279,6 +297,11 @@ p.licensetext:hover {
   background-size: 29px;
   background-repeat: no-repeat;
   background-position: center center;
+}
+
+#festival_switch .switch-paddle:after {
+  content: '+A?';
+  color: #000;
 }
 
 .page-events-new .switch-paddle, .page-eventprofil-edit .switch-paddle {

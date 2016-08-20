@@ -8,19 +8,18 @@ namespace Drupal\AaeData;
 class eventprofil extends aae_data_helper {
 
  var $akteur_id = '';
- var $isOwner = 0;
+ var $isOwner = false;
 
  public function __construct(){
+   
+  parent::__construct();
 
-  global $user;
   require_once('models/events.php');
   $this->event = new events();
 
  }
 
  public function run(){
-   
-  global $user;
 
   $explodedpath = explode("/", current_path());
   $event_id = $this->clearContent($explodedpath[1]);
@@ -28,29 +27,8 @@ class eventprofil extends aae_data_helper {
   $resultEvent = $this->event->getEvents(array('EID' => $event_id), 'complete');
   $resultEvent = $resultEvent[$event_id];
   
-  if ($resultEvent->ersteller != $user->uid) {
-
-  //Sicherheitsschutz, ob User entsprechende Rechte hat
-  $resultAkteurId = db_select($this->tbl_akteur_events, 'e')
-   ->fields('e', array('AID'))
-   ->condition('EID', $event_id, '=')
-   ->execute()
-   ->fetchObject();
-
-  // Show "Edit"-Button?
-  $this->akteur_id = $resultAkteurId->AID;
-  $resultUser = db_select($this->tbl_hat_user, 'u')
-   ->fields('u')
-   ->condition('hat_AID', $this->akteur_id, '=')
-   ->condition('hat_UID', $user->uid, '=')
-   ->execute();
-   
-  if ($resultUser->rowCount() == 1 || array_intersect(array('administrator'), $user->roles))
-    $this->isOwner = 1;
-    
-  } else {
-   $this->isOwner = 1;
-  }
+  if ($this->event->isAuthorized($event_id, $this->user_id))
+    $this->isOwner = true;
   
   if (empty($resultEvent)) {
   // Event nicht vorhanden
@@ -83,46 +61,18 @@ class eventprofil extends aae_data_helper {
 
  /**
   * @function removeEvent
-  * Removes an event from DB
-  * TODO: Put DB-Zeugs into $this->event->removeEvent()
+  * Returns interface for removing an event
   */
 
  public function removeEvent(){
- 
-  global $user;
-  $user_id = $user->uid;
 
   $explodedpath = explode("/", current_path());
   $event_id = $this->clearContent($explodedpath[1]);
 
-  if (!user_is_logged_in())
-    drupal_access_denied();
-
-  // Sicherheitsschutz, ob User entsprechende Rechte hat
-  $resultAkteurEvent = db_select($this->tbl_akteur_events, 'e')
-   ->fields('e')
-   ->condition('EID', $event_id)
-   ->execute()
-   ->fetchObject();
-
-   $akteur_id = $resultAkteurEvent->AID;
-
-   // Prüfen ob Schreibrecht vorliegt: ob User zu dem Akteur gehört
-   $resultUser = db_select($this->tbl_hat_user, 'u')
-    ->fields('u')
-    ->condition('hat_AID', $akteur_id, '=')
-    ->condition('hat_UID', $user_id, '=')
-    ->execute();
-
-   $this->isOwner = ($resultUser->rowCount()) ? 1 : 0;
-
-   if (!$this->isOwner) {
-    if (!array_intersect(array('administrator'), $user->roles)) {
-     drupal_access_denied();
-    }
-   }
-
-//-----------------------------------
+  if (!user_is_logged_in() || !$this->event->isAuthorized($event_id, $this->user_id)){
+   drupal_access_denied();
+   drupal_exit();
+  }
 
   if (isset($_POST['submit'])) {
 

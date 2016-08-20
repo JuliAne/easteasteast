@@ -79,6 +79,9 @@
 
   <div id="project-contact" class="pcard">
    <a href="#"><button class="button"><?= t('Kontaktieren'); ?></button></a>
+   <?php if ($aResult['row1']->AID == '86') : ?>
+   <a href="https://leipziger-ecken.de/kunstfest16"><button class="festival button" style="background:#fff;margin-top:2px;color:#2199e8;">Veranstalter des Kunstfest Neustadt 2016</button></a>
+   <?php endif; ?>
   </div>
 
  </aside>
