@@ -27,7 +27,7 @@ public function print_next_events($limit = 6) {
  //Show furthest of latest 6 events first
  $events = $this->events->getEvents(array(
   'limit' => $limit
- ), 'normal', false, 'ASC');
+ ), 'normal', false, 'DESC');
 
   return $events;
 }
