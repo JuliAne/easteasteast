@@ -3,11 +3,10 @@
  * akteurformular.php stellt ein Formular dar,
  * in welches alle Informationen über einen Akteur
  * eingetragen UND bearbeitet werden koennen.
+ *
  * Einzige Pflichtfelder sind bisher Name, Emailadresse und Bezirk.
  *
- * Die Klasse akteurformular wird in aae_data.module initialisiert (s. __construct)
- * und via ->run() aufgerufen.
- *
+ * TODO: Place in translation-placeholders
  */
  
 namespace Drupal\AaeData;
@@ -79,14 +78,15 @@ Class akteurformular extends aae_data_helper {
   //-----------------------------------
 
   function __construct($action) {
+    
+   parent::__construct();
 
    if (!user_is_logged_in()) {
     drupal_access_denied();
+    drupal_exit();
    }
 
    $this->modulePath = drupal_get_path('module', 'aae_data');
-   global $user;
-   $this->user_id = $user->uid;
 
    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
    if ($action == 'update') {
@@ -170,88 +170,88 @@ drupal_add_html_head($og_title, 'og_title'); */
     //-------------------------------------
 
     if (empty($this->name)) {
-     $this->fehler['name'] = "Bitte einen Organisationsnamen eingeben!";
+     $this->fehler['name'] = t("Bitte einen Organisationsnamen eingeben!");
      $this->freigabe = false;
     }
 
-    if (empty($this->email)) {
-     $this->fehler['email'] = "Bitte eine Emailadresse eingeben!";
+    if (empty($this->email) || !valid_email_address($this->email)) {
+     $this->fehler['email'] = t("Bitte eine (gültige) Emailadresse eingeben!");
 	   $this->freigabe = false;
     }
 
     if (empty($this->ort)) {
-     $this->fehler['ort'] = "Bitte einen Bezirk auswählen!";
+     $this->fehler['ort'] = t("Bitte einen Bezirk auswählen!");
      $this->freigabe = false;
     }
 
     // Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
     if (strlen($this->name) > 64) {
-	   $this->fehler['name'] = "Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.";
+	   $this->fehler['name'] = t("Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->email) > 100) {
-	   $this->fehler['email'] = "Bitte geben Sie eine kürzere Emailadresse an.";
+	   $this->fehler['email'] = t("Bitte geben Sie eine kürzere Emailadresse an.");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->telefon) > 100) {
- 	   $this->fehler['telefon'] = "Bitte geben Sie eine kürzere Telefonnummer an.";
+ 	   $this->fehler['telefon'] = t("Bitte geben Sie eine kürzere Telefonnummer an.");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->url) > 100) {
-	   $this->fehler['url'] = "Bitte geben Sie eine kürzere URL an.";
+	   $this->fehler['url'] = t("Bitte geben Sie eine kürzere URL an.");
 	   $this->freigabe = false;
     }
 
     if (!empty($this->url) && preg_match('/\A(http:\/\/|https:\/\/)(\w*[.|-]\w*)*\w+\.[a-z]{2,3}(\/.*)*\z/',$this->url)==0) {
-     $this->fehler['url'] = "Bitte eine gültige URL zur Akteurswebseite eingeben! (z.B. <i>http://meinakteur.de</i>)";
+     $this->fehler['url'] = t("Bitte eine gültige URL zur Akteurswebseite eingeben! (z.B. <i>http://meinakteur.de</i>)");
      $this->freigabe = false;
     }
 
     if (strlen($this->ansprechpartner) > 100){
-	   $this->fehler['ansprechpartner'] = "Bitte geben Sie einen kürzeren Ansprechpartner an.";
+	   $this->fehler['ansprechpartner'] = t("Bitte geben Sie einen kürzeren Ansprechpartner an.");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->funktion) > 100) {
-	   $this->fehler['funktion'] = "Bitte geben Sie eine kürzere Funktion an.";
+	   $this->fehler['funktion'] = t("Bitte geben Sie eine kürzere Funktion an.");
      $this->freigabe = false;
     }
 
     if (strlen($this->beschreibung) > 65000) {
-	   $this->fehler['beschreibung'] = "Bitte geben Sie eine kürzere Beschreibung an.";
+	   $this->fehler['beschreibung'] = t("Bitte geben Sie eine kürzere Beschreibung an.");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->oeffnungszeiten) > 200) {
-	   $this->fehler['oeffnungszeiten'] = "Bitte geben Sie kürzere Oeffnungszeiten an.";
+	   $this->fehler['oeffnungszeiten'] = t("Bitte geben Sie kürzere Oeffnungszeiten an.");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->strasse) > 100) {
- 	   $this->fehler['strasse'] = "Bitte geben Sie einen kürzeren Strassennamen an.";
+ 	   $this->fehler['strasse'] = t("Bitte geben Sie einen kürzeren Strassennamen an.");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->nr) > 100) {
-	   $this->fehler['nr'] = "Bitte geben Sie eine kürzere Nummer an.";
+	   $this->fehler['nr'] = t("Bitte geben Sie eine kürzere Nummer an.");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->adresszusatz) > 100) {
-	   $this->fehler['adresszusatz'] = "Bitte geben Sie einen kürzeren Adresszusatz an.";
+	   $this->fehler['adresszusatz'] = t("Bitte geben Sie einen kürzeren Adresszusatz an.");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->plz) > 100) {
-	   $this->fehler['plz '] = "Bitte geben Sie eine kürzere PLZ an.";
+	   $this->fehler['plz '] = t("Bitte geben Sie eine kürzere PLZ an.");
 	   $this->freigabe = false;
     }
 
     if (strlen($this->gps) > 100) {
-	   $this->fehler['gps'] = "Bitte geben Sie kürzere GPS-Daten an.";
+	   $this->fehler['gps'] = t("Bitte geben Sie kürzere GPS-Daten an.");
 	   $this->freigabe = false;
     }
 

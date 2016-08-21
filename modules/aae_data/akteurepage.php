@@ -18,9 +18,17 @@ Class akteurepage extends aae_data_helper {
  var $filteredTags = array();
  var $filteredBezirke = array();
  var $numFilters = 0;
+ 
+ public function __construct(){
+  
+  parent::__construct();
+  #require_once('models/akteure.php');
+  
+  #$this->akteure = new akteure();
+  
+ }
 
  public function run(){
-
 
   global $user;
 
@@ -39,7 +47,7 @@ Class akteurepage extends aae_data_helper {
 
   $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) ? $this->clearContent($_GET['presentation']) : 'boxen');
 
-  $this->maxAkteure = (isset($_GET['display_number']) && !empty($_GET['display_number']) ? $this->clearContent($_GET['display_number']) : '25' );
+  $this->maxAkteure = (isset($_GET['display_number']) && !empty($_GET['display_number']) ? $this->clearContent($_GET['display_number']) : '40' );
 
   if (isset($_GET['filterTags']) && !empty($_GET['filterTags'])) {
    $this->filter['tags'] = $_GET['filterTags'];
@@ -77,78 +85,6 @@ Class akteurepage extends aae_data_helper {
 
  // Filter nach Tags, falls gesetzt
 
- if (isset($this->filter['tags'])){
-
-  $sparten = db_select($this->tbl_hat_sparte, 'hs')
-   ->fields('hs', array('hat_AID'));
-
-  $and = db_and();
-
-  foreach($this->filter['tags'] as $tag) {
-
-   $this->numFilters++;
-   $tag = $this->clearContent($tag);
-   $this->filteredTags[$tag] = $tag;
-   $and->condition('hat_KID', $tag, '=');
-
-  }
-
- $filterSparten = $sparten->condition($and)
-  ->execute()
-  ->fetchAll();
-
- foreach ($filterSparten as $sparte){
-  $this->filteredAkteurIds[] = $sparte->hat_AID;
- }
-} // end Tag-Filter
-
-if (isset($this->filter['bezirke'])){
-
- foreach ($this->filter['bezirke'] as $bezirk) {
-
-  $this->numFilters++;
-  $bezirkId = $this->clearContent($bezirk);
-  $this->filteredBezirke[$bezirkId] = $bezirkId;
-
-  $adressen = db_select($this->tbl_adresse, 'a')
-   ->fields('a', array('ADID'))
-   ->condition('bezirk', $bezirkId, '=')
-   ->execute()
-   ->fetchAll();
-
-  foreach ($adressen as $adresse) {
-
-   $filterBezirke = db_select($this->tbl_akteur, 'a')
-     ->fields('a', array('AID'))
-     ->condition('adresse', $adresse->ADID, '=')
-     ->execute()
-     ->fetchAll();
-
-    foreach ($filterBezirke as $bezirk) {
-     $this->filteredAkteurIds[] = $bezirk->AID;
-    }
-   }
-  }
- } // end Bezirke-Filter
-
-if (isset($this->filter['keyword'])) {
-
- $this->numFilters++;
-
- $or = db_or()
-  ->condition('name', '%'.$this->filter['keyword'].'%', 'LIKE')
-  ->condition('beschreibung', '%'.$this->filter['keyword'].'%', 'LIKE');
-
- $filterKeyword = db_select($this->tbl_akteur, 'e')
-  ->fields('e', array('AID'))
-  ->condition($or)
-  ->execute()
-  ->fetchAll();
-
- foreach ($filterKeyword as $keyword){
-  $this->filteredAkteurIds[] = $keyword->AID;
- }
-} // end Keyword-Filter
 
 $this->hasFilters = ($this->numFilters >= 1) ? true : false;
 $this->filteredAkteurIds = $this->getDuplicates($this->filteredAkteurIds, $this->numFilters);

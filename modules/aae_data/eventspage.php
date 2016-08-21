@@ -10,19 +10,25 @@ namespace Drupal\AaeData;
 Class eventspage extends aae_data_helper {
 
  var $presentationMode;
- var $getOldEvents;
+ var $getOldEvents = false;
  var $hasFilters = false;
+ var $isBlock;
  var $filter = array();
  
- public function __construct(){
+ public function __construct($isBlock = false){
+   
+  parent::__construct();
+  
   require_once('models/events.php');
   $this->events = new events();
-  parent::__construct();
+  $this->isBlock = $isBlock;
+  
  }
 
  public function run(){
 
   $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) && $_GET['presentation'] == 'calendar') ? 'calendar' : 'timeline';
+  #$this->isBlock = (strpos($_SERVER['REQUEST_URI'], 'neustadt') > 1);
 
   if (isset($_GET['day']) && !empty($_GET['day'])) {
    $this->filter['day'] = $this->clearContent($_GET['day']);
@@ -42,7 +48,7 @@ Class eventspage extends aae_data_helper {
   
   if (isset($_GET['timespan']) && !empty($_GET['timespan'])) {
    # Input: ...?timespan=02.16-05.16&...
-   $this->filter['bla'] = 'bla';
+   #$this->filter['bla'] = 'bla';
    $timespan = explode('-',$this->clearContent($_GET['timespan']));
    $begin = explode('.',$timespan[0]);
    $end = explode('.',$timespan[1]);
@@ -60,7 +66,7 @@ Class eventspage extends aae_data_helper {
    
   }
 
-  // Paginator: Auf welcher Seite befinden wir uns?
+  // Paginator
   $explodedPath = explode("/", $this->clearContent(current_path()));
   $currentPageNr = ($explodedPath[1] == '') ? '1' : $explodedPath[1];
   $orderBy = 'ASC';
@@ -94,13 +100,16 @@ Class eventspage extends aae_data_helper {
   
   //-----------------------------------
 
-  $resultTags = $this->events->getAllTags();
+  $resultTags = $this->events->getTags();
   $resultBezirke = $this->getAllBezirke('events');
   
   if (!empty($this->filter)) {
    $resultEvents = $this->events->getEvents(array('filter' => $this->filter, 'start' => $start), 'normal', false, $orderBy);
+  } else if ($this->isBlock) {
+   // AID = Kunstfest Neustadt + Adress-Info 238
+   $resultEvents = $this->events->getEvents(array('ersteller' => 238), 'complete', false, $orderBy);
   } else {
-   $resultEvents = $this->events->getEvents(array('start' => $start), 'normal', false, $orderBy);
+   $resultEvents = $this->events->getEvents(array('start' => $start), 'complete', false, $orderBy);
   }
 
   if ($this->presentationMode == 'calendar') {
@@ -113,14 +122,25 @@ Class eventspage extends aae_data_helper {
 
   }
 
-  $resultTagCloud = db_query_range('SELECT COUNT(*) AS count, s.KID, s.kategorie FROM {aae_data_sparte} s INNER JOIN {aae_data_event_hat_sparte} hs ON s.KID = hs.hat_KID GROUP BY hs.hat_KID HAVING COUNT(*) > 0 ORDER BY count DESC', 0, 8);
+  $resultTagCloud = db_query_range('SELECT COUNT(*) AS count, s.KID, s.kategorie FROM {aae_data_sparte} s INNER JOIN {aae_data_event_hat_sparte} hs ON s.KID = hs.hat_KID GROUP BY hs.hat_KID HAVING COUNT(*) > 0 ORDER BY count DESC', 0, 10);
   $itemsCount = db_query("SELECT COUNT(EID) AS count FROM " . $this->tbl_event)->fetchField();
-
+  
   // Ausgabe der Events
   ob_start(); // Aktiviert "Render"-modus
-  include_once path_to_theme() . '/templates/events.tpl.php';
-  return ob_get_clean(); // Übergabe des gerenderten "events.tpl"
-
+  
+  if ($this->isBlock) {
+    
+   $themePath = drupal_get_path('theme',$GLOBALS['theme']);
+   drupal_add_js($themePath.'/js/CountUp.js');
+   include_once $themePath . '/templates/neustadt_eventsblock.tpl.php';
+   echo ob_get_clean();
+   
+  } else {
+    
+   include_once path_to_theme() . '/templates/events.tpl.php';
+   return ob_get_clean(); // Übergabe des gerenderten "events.tpl"
+  
+  }
  } // end function run()
 
  public function rss(){

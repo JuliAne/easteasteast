@@ -29,23 +29,24 @@ Class eventformular extends aae_data_helper {
   var $modified = '';
 
   //$tbl_adresse
-  /*var $strasse = '';
+  var $strasse = '';
   var $nr = '';
   var $adresszusatz = '';
   var $plz = '';
   var $ort = '';
-  var $gps = '';*/
+  var $gps = '';
   var $adresse = '';
 
   //$tbl_sparte
   var $sparten = '';
   var $all_sparten = ''; // Zur Darstellung des tokenizer (#akteurSpartenInput)
-
-  var $freigabe = true;   //Variable zur Freigabe: muss true sein
+  
+  var $isFestival;
+  var $freigabe = true;  // Variable zur Freigabe: muss true sein
   var $fehler = array(); // In diesem Array werden alle Fehler gespeichert
 
   var $akteur_id;
-  var $resultakteure;
+  var $resultAkteure;
   var $resultbezirke;
   var $target = '';
   var $removedTags;
@@ -57,16 +58,32 @@ Class eventformular extends aae_data_helper {
   function __construct($action = false) {
 
    parent::__construct();
+   
+   $explodedpath = explode("/", current_path());
+   $this->event_id = $this->clearContent($explodedpath[1]);
 
    require_once('models/events.php');
    $this->event = new events();
 
    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
-   if ($action == 'update')
+   if ($action == 'update') {
+     
 	  $this->target = 'update';
+    if (!user_is_logged_in() || !$this->event->isAuthorized($this->event_id, $this->user_id)){
+  	 drupal_access_denied();
+     drupal_exit();
+    }
+    
+   } else {
 
-   if (!user_is_logged_in())
-	  drupal_access_denied();
+    if (!user_is_logged_in()){
+	   drupal_access_denied();
+     drupal_exit();
+    }
+     
+   }
+     
+   $this->isFestival = ($this->user_id == 238);
 
   }
 
@@ -76,8 +93,6 @@ Class eventformular extends aae_data_helper {
    */
   public function run() {
 
-    $explodedpath = explode("/", current_path());
-    $this->event_id = $this->clearContent($explodedpath[1]);
     $output = '';
 
     if (isset($_POST['submit'])) {
@@ -227,11 +242,19 @@ Class eventformular extends aae_data_helper {
     }
 
     if ($this->gps == t('Ermittle Geo-Koordinaten...')) $this->gps = '';
-
+    
     /*if (!empty($this->gps) && preg_match('\s.\s,\s.\s',$this->gps)==0) {
       echo ':/';
       exit(); } */
-
+/*print_r($this->bild); echo ' b '.$this->bild; exit();
+    if ($this->bild){
+     $errMsg = $this->check_image_compatibility($this->bild);
+     if (!is_bool($errMsg)) {
+      $this->fehler['bild'] = $errMsg;
+      $this->freigabe = false;
+     }
+    } */
+    
     // Um die bereits gewählten Tag's anzuzeigen benötigen wir deren Namen...
     if ($this->freigabe == false) {
 
@@ -515,7 +538,6 @@ Class eventformular extends aae_data_helper {
   private function eventSpeichern() {
 
    if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
-    // TODO $this->__check_image_compatibility($_FILES['bild'])
     $this->bild = $this->upload_image($_FILES['bild']);
    }
 
@@ -587,6 +609,15 @@ Class eventformular extends aae_data_helper {
     'event_recurres_till' => ($this->eventRecurres && !empty($this->eventRecurresTill) ? $this->eventRecurresTill.' 00:00:00' : '1000-01-01 00:00:00')
 	  ))
 	 ->execute();
+   
+   if ($this->isFestival){
+    db_update($this->tbl_event)
+     ->fields(array(
+      'recurring_event_type' => '6'
+     ))
+     ->condition('EID', $this->event_id)
+     ->execute();
+   }
 
 	 // Falls Akteur angegeben wurde:
     if (!empty($this->veranstalter)) {
@@ -676,8 +707,12 @@ Class eventformular extends aae_data_helper {
 
     if (session_status() == PHP_SESSION_NONE) session_start();
     drupal_set_message(t('Das Event wurde erfolgreich erstellt!'));
-	  header("Location: ". $base_url ."/eventprofil/" . $this->event_id);
-
+	  
+    if ($this->isFestival) {
+     header("Location: ". $base_url ."/events/new");
+    } else {
+     header("Location: ". $base_url ."/eventprofil/" . $this->event_id);
+    }
   } // END function eventSpeichern()
 
 
@@ -691,9 +726,10 @@ Class eventformular extends aae_data_helper {
     if (array_intersect(array('administrator'), $user->roles)) {
 
       // Zeige Admin alle Akteure
-      $this->resultakteure = db_select($this->tbl_akteur, 'a')
+      $this->resultAkteure = db_select($this->tbl_akteur, 'a')
        ->fields('a', array( 'AID', 'name' ))
-       ->execute();
+       ->execute()
+       ->fetchAll();
 
     } else {
 
@@ -706,11 +742,11 @@ Class eventformular extends aae_data_helper {
 
       foreach($user_hat_akteure as $akteur) {
 
-       $this->resultakteure[] = db_select($this->tbl_akteur, 'a')
+       $this->resultAkteure[] = db_select($this->tbl_akteur, 'a')
        ->fields('a', array('AID', 'name'))
-       ->condition('AID', $akteur->hat_AID, '=')
+       ->condition('AID', $akteur->hat_AID)
        ->execute()
-       ->fetchAll();
+       ->fetchObject();
      }
     }
 
