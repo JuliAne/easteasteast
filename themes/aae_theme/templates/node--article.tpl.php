@@ -7,12 +7,13 @@
  <div class="aaeActionBar">
   <div class="row">
    <?php if (array_intersect(array('redakteur','administrator'), $user->roles)) : ?>
-    <div class="large-3 large-offset-1 columns"><a href="<?= $node_url; ?>/edit" title="Artikel bearbeiten"><img src="<?= base_path().$theme_path; ?>/img/manage.svg" />Bearbeiten</a></div>
+    <div class="large-3 large-offset-1 columns"><a href="<?= $node_url; ?>/edit" title="Artikel bearbeiten"><img src="<?= base_path().$theme_path; ?>/img/manage.svg" /><?= t('Bearbeiten'); ?></a></div>
     <?php endif; ?>
 
-   <div class="large-4 columns right" style="text-align: right;">
+   <div class="large-6 columns right" style="text-align: right;">
+    <a href="https://leipziger-ecken.de/rss.xml" title="<?= t('Beiträge als RSS'); ?>"><img src="<?= base_path().$theme_path; ?>/img/rss_small_icon.svg" /><?= t('Abonnieren'); ?></a>
     <a href="#comments" title="<?= $comment_count; ?> Kommentar(e)"><img src="<?= base_path().$theme_path; ?>/img/comments.svg" /><?= $comment_count; ?> Kommentar(e)</a>
-    <a href="#share" class="popup-link" title="Journalbeitrag in den sozialen Netzwerken posten"><img src="<?= base_path().$theme_path; ?>/img/share.svg" />Teilen</a>
+    <a href="#share" class="popup-link" title="Journalbeitrag in den sozialen Netzwerken posten"><img src="<?= base_path().$theme_path; ?>/img/share.svg" /><?= t('Teilen'); ?></a>
 
     <div id="share" class="popup large-3 columns">
 

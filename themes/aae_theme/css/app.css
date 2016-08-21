@@ -634,7 +634,7 @@ transform: rotate(-10deg);
 } */
 
 .pcard h3 {
- padding: 13px;
+ padding-top: 13px;
  background-color: rgba(255,255,255,0.8);
  font-size: 0.9em;
  text-align: center;
@@ -675,7 +675,7 @@ transform: rotate(-10deg);
  text-align: center;
  opacity: 1;
  padding-top: 0;
- line-height: 25px;
+ line-height: 16px;
  color: grey;
 }
 
@@ -804,7 +804,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   opacity: 0;
 }
 
-.jEntry .jEntryContent p {
+.jEntry .jEntryContent .summary {
   line-height: 1.5em;
   opacity: 0;
   text-align: left;
@@ -814,7 +814,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
  font-family: 'Lora','Open Sans',sans-serif;
 }
 
-.jEntry:hover .jEntryContent p {
+.jEntry:hover .jEntryContent .summary {
   opacity: 1;
 }
 
@@ -1148,6 +1148,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   #mainnav #actions {margin-right: 10px;}
   #fullpage { margin-top: 40px;}
   #fullpage #slideSection h1 { padding-top:10px;padding-bottom:30px; }
+  #hitMeScrollMe {display:none;}
   .fp-slides .slide {background-size:300% !important;}
   #fullpage .section {font-size:0.9em;}
   #fullpage .pcard {width:47% !important;}
@@ -1339,17 +1340,17 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 .tagcloud .tag.tagc-2 {
   font-size: 1em;
 }
-
 .tagcloud .tag.tagc-3 {
   font-size: 1.1em;
 }
-
 .tagcloud .tag.tagc-4 {
   font-size: 1.2em;
 }
-
 .tagcloud .tag.tagc-5 {
   font-size: 1.35em;
+}
+.tagcloud .tag.tagc-5 {
+  font-size: 1.45em;
 }
 
 #akteure-content {
@@ -1441,3 +1442,85 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 }
 
 #edit-field-invitation-email-subject, #edit-field-invitation-email-body, #edit-token-help { display:none; }
+
+#neustadtPageBg {
+ position: fixed;
+ z-index: -1;
+ width: 100%;
+ height: 100%;
+ background-color: #fff;
+ background: url(../neustadt/kunstfest_bg.jpg) repeat-x;
+ background-attachment: fixed;
+ background-position: center 85px;
+ left: 0;
+ top: 0;
+}
+#neustadtPageHeader {
+  background: none;
+  position: unset;
+  color: #000;
+  height: 290px;
+}
+#neustadtPageHeader h2, #neustadtPageHeader p {
+ background: rgba(255,255,255,0.9);
+ padding: 17px 0;
+ display: none;
+}
+.neustadtEvents #presentationFilter li a {
+ background-color: #e8e7e7 !important;
+}
+.neustadtEvents {
+  background: #fff;
+  padding-top: 20px;
+}
+.neustadtEvents #events-tabs {
+  /*border: none !important;*/
+  margin: 0 auto;
+  margin-bottom: 30px;
+  /*margin-left: 16.66667%;*/
+}
+.neustadtEvents #events-tabs li {
+  background: none;
+}
+.neustadtEvents #events-tabs li a {
+  font-size: 14px;
+  padding: 1.3rem 2rem;
+}
+.neustadtEvents #events-tabs li:hover a {
+  font-weight: bold;
+}
+.neustadtEvents #presentationFilter li a { padding: 10px 13px !important; }
+.neustadtEvents #presentationFilter li a:hover {
+  background-color: #61b8f1;
+}
+.neustadtEvents #events_content {
+ padding-bottom: 20px;
+}
+#neustadtIntro {
+ height: 100px;
+ background:url(../img/festival_intro_bg.png) repeat-x;
+ box-shadow: inset 0 1px 1px 0 rgba(255,255,255,0.7);
+}
+#neustadtIntro div {
+ width: 33.3%;
+ float: left;
+ text-align: center;
+ padding-top: 14px;
+}
+#neustadtIntro div img{
+ padding-right: 10px;
+}
+#festivalFooter {
+ margin-top: 50px;
+ text-align:center;
+}
+#festivalFooter h4 {
+ padding-bottom: 25px;
+}
+#festivalFooter div {
+ opacity: 0.85;
+ transition: 0.25s opacity;
+}
+#festivalFooter div:hover {
+  opacity: 1;
+}
