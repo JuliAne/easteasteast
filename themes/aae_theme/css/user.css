@@ -1,0 +1,11 @@
+p.secondary { color:grey;text-align: center;padding-bottom: 6px;}
+.callout.warning {background-image:none !important;}
+.accordion .accordion-content ul { padding:12px;font-size:0.9em; }
+.accordion .accordion-content ul li { padding-top:5px;}
+.accordion { margin-bottom: 15px; }
+#editProfileBtn { margin-top:-35px; }
+#widget-invite {opacity: 0.8;transition:opacity 0.25s; }
+#widget-invite:hover {opacity:1;}
+#widget-invite h5 { margin-bottom: 10px; }
+#widget-invite form { margin-top:10px; }
+#widget-invite form input[type=submit] { width: 100%; }
