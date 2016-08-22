@@ -18,11 +18,10 @@ function aae_data_user_login(&$edit, $account){
 }
 
 function aae_data_simple_fb_connect_login($account){
-  drupal_set_message(t('Willkommen, <strong>!name</strong>!', array('!name'=>$account->name)));
+  aae_data_user_login();
 }
 
 function aae_data_user_logout($account) {
-
   // Funktioniert nicht, weil Drupal Sessions löscht...workaround?!
   if (session_status() == PHP_SESSION_NONE) session_start();
   drupal_set_message(t('Ausgeloggt. Komm` bald wieder!'));
@@ -35,7 +34,7 @@ function aae_data_user_logout($account) {
 function aae_data_block_info() {
   
   $blocks['aae_festival_neustadt'] = array(
-    'info' => 'Alle Events des Neustadt-Festivals',
+    'info' => 'Alle Events eines Festivals',
     'cache' => DRUPAL_NO_CACHE,
     'status' => TRUE,
     /*'region' => 'content'*/
@@ -245,7 +244,7 @@ function aae_data_menu() {
     'type' => MENU_NORMAL_ITEM,
     'access callback' => TRUE,
   );
-
+  
   //Menuitem "Events"
   $items['events'] = array(
     'title' => t('Events'),
@@ -794,7 +793,7 @@ function aae_data_refresh_recurring_events(){
  # }
 }
   
-/**
+/*
  * Implements hook_libraries_info().
  
 function aae_data_libraries_info() {
@@ -826,8 +825,8 @@ use Facebook\GraphObject;
   $login_helper = new FacebookRedirectLoginHelper($return_url);
 
 
-*/
-}
+ */
+} 
 
 /**
  * Funktion zum Einlesen aller Stadtteile
@@ -906,6 +905,7 @@ function aae_install_insert_bezirke() {
     'Eutritzsch (Nord)',
     'Seehausen (Nord)',
     'Wiederitzsch (Nord)',
+    'Stadtweit'
   );
 
   $i = 0;

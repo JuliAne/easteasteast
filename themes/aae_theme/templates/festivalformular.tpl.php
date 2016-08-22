@@ -1,3 +1,27 @@
+<script type="text/javascript">
+ $(document).ready(function(){
+  $('#festivalAkteureInput').tokenize({
+    displayDropdownOnFocus : true,
+    newElements : false,
+    onRemoveToken : function(value, e){
+
+     if((parseFloat(value) == parseInt(value)) && !isNaN(value)) {
+      $('form').append('<input type="hidden" name="removedAkteur[]" value="'+value+'" />');
+     }
+
+    }
+  });
+
+  $('#festivalOwner').change(function(e){
+    if ($(this).find('option:selected').attr('value') == 'newAkteur'){
+     $('#newAkteurAdresse').fadeIn('fast');
+    } else {
+     $('#newAkteurAdresse').fadeOut('fast');
+    }
+  });
+  
+ });
+</script> 
 <div class="row">
 <h3>Festival <?php echo ($this->target == 'update' ? 'bearbeiten' : 'anlegen'); ?></h3>
 <?php if ($this->target == 'update') : ?>
@@ -43,11 +67,10 @@
     <p>Festivalinhaber: <strong>NAME</strong></p>
    <?php else : ?>
 
-   <label>Festivalinhaber <span class="pflichtfeld">(Pflichtfeld, kann nur EINAMLIG vergeben werden)</span>: <?= $this->fehler['ort']; ?>
-
-   <select name="festivalOwner">
-    <option value="newActor" selected="selected">+ Akteur anlegen</option>
-    <?php foreach ($this->resultAllAkteure as $akteur) : ?>
+   <label>Festivalinhaber <span class="pflichtfeld">(Pflichtfeld, kann nur EINAMLIG vergeben werden)</span>:
+   <select id="festivalOwner" name="festivalOwner">
+    <option value="newAkteur" selected="selected">+ Akteur anlegen</option>
+    <?php foreach ($this->resultOwnAkteure as $akteur) : ?>
     <option value="<?= $akteur->AID; ?>"><?= $akteur->name; ?></option>
     <?php endforeach; ?>
    </select>
@@ -62,8 +85,9 @@
     </div>
 
  </div><!-- /.row -->
-
-  <fieldset class="Adresse fieldset row">
+ 
+ <?php if ($this->target != 'update') : ?>
+  <fieldset id="newAkteurAdresse" class="Adresse fieldset row">
    <legend>Neuer Akteur: Basisinformationen & Name</legend>
    
    <div class="large-2 columns">
@@ -95,7 +119,6 @@
       <input type="text" pattern="[0-9]{5}" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= $this->ph_plz; ?>">
     </label>
    </div>
-
    <div class="large-4 columns">
 
   <label>Bezirk <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['ort']; ?>
@@ -121,6 +144,8 @@
 </div>
 
 </fieldset>
+<?php endif; ?>
+
 
 <div class="row">
 
@@ -165,19 +190,32 @@
       </div>
       
        <div class="tabs-panel" id="pakteure">
-        <p class="licensetext">Sollten </p>
-        <input type="text" name="psponsoren[]" placholder="URL zum Icon" />
-        <input type="text" name="psponsoren[]" placholder="URL zum Icon" />
-        <p><a href="#">+ Weiteren Link einfügen</a></p>
+       
       </div>
 
     </div>
   </div>
 </div>
 
-  <div class="row" style="margin-top:15px;">
+ <div class="row" style="margin-top:15px;">
+  <div class="large-12 columns">
+  
+  <label>Authorisierte Akteure</label>
+  <select id="festivalAkteureInput" multiple="multiple" class="tokenize" name="festivalAkteure[]">
+      
+    <?php if (!empty($this->akteure)) : ?>
+    <?php foreach ($this->festivalAkteure as $festivalAkteur) : ?>
+     <option selected value="<?= $festivalAkteur->AID; ?>"><?= $festivalAkteur->name; ?></option>
+    <?php endforeach;?>
+    <?php endif; ?>
 
+    <?php foreach ($this->allAkteure as $akteur) : ?>
+     <option value="<?= $akteur->AID; ?>"><?= $akteur->name; ?></option>
+    <?php endforeach;?>
+    </select>
+  </div>
  </div>
+ 
  <div class="row">
  <?php if ($this->target == 'update' && !empty($this->created)) : ?>
   <?php if ($this->created->format('d.m.Y') != '01.01.1000') : ?>

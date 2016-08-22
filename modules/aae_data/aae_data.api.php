@@ -2,6 +2,7 @@
 
 /**
  * @file
+ * TODO, yet useless!
  * Hooks provided by the AAE-module.
  * Yet only used to interact with message-module
  *

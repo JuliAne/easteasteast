@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+ 
   $('#eventSpartenInput').tokenize({
     displayDropdownOnFocus : true,
     newElements : true,
@@ -13,8 +13,9 @@ $(document).ready(function(){
   });
 
   if ($('#veranstalter').length && $('#veranstalter').find('option:selected').attr('value')=='0'){
-   // manually set veranstalter from "private" to the first Akteur available in list
+   // manually set veranstalter from "private" to the first Akteur/Festival available in list
    $('#veranstalter option:eq(1)').attr('selected','selected');
+   $('#veranstalter').change(); // not working, JQuery issue?! :(
   }
 
   $('.page-events-new .switch-paddle,.page-eventprofil-edit .switch-paddle').click(function(){
@@ -42,7 +43,7 @@ $(document).ready(function(){
 
   if ($('#currentPic').length){
    $('#currentPic a').click(function(){
-     var r = confirm("Bild wirklich löschen?");
+     var r = confirm('Bild wirklich löschen?');
      if (r == true) {
       $('#currentPic img').fadeOut('slow');
       $('#currentPic a').fadeOut('slow');
@@ -60,10 +61,18 @@ $(document).ready(function(){
   $('#veranstalter').change(function(){
 
     var actionUrl = $(this).find('option:selected').attr('value');
+    
+    if ($(this).find('option:selected').hasClass('isFestival')){
+     $('#eventSubmit').attr('value', $('#festivalSubmitText').html());
+     $('#recurrSwitch, #eventRecurresData').fadeOut('fast');
+    } else {
+     $('#eventSubmit').attr('value', $('#submitText').html());
+     $('#recurrSwitch').fadeIn('fast');
+    }
 
     if (actionUrl !== 0) {
 
-    $.get("../ajax/getAkteurAdresse/" + actionUrl, function(data) {
+    $.get("/ajax/getAkteurAdresse/" + actionUrl, function(data) {
 
      if (data.substring(2) !== '') {
       var obj = jQuery.parseJSON(data);

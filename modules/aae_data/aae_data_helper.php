@@ -4,7 +4,7 @@ namespace Drupal\AaeData;
 
  /**
   * Kleine Helferklasse (!=model) für wiederkehrende Funktionen, Variablen
-  *  & Pfade. Gerne erweiterbar :)
+  * & Pfade. Gerne erweiterbar :)
   *
   * TODO: Konfigurationsdaten via Backend verwaltbar machen
   *
@@ -22,6 +22,8 @@ namespace Drupal\AaeData;
    var $tbl_event = "aae_data_event";
    var $tbl_akteur_events = "aae_data_akteur_hat_event";
    var $tbl_event_sparte = "aae_data_event_hat_sparte";
+   var $tbl_festival = "aae_data_festival";
+   var $tbl_hat_festivals = "aae_data_akteur_hat_festival";
 
    // Image-path's. TODO: Make 'em managable by backend
    var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/pictures/aae/";
@@ -94,9 +96,9 @@ namespace Drupal\AaeData;
     *  filtert HTML um XSS Attacken vorzubeugen.
     */
    public function clearContent($trimTag) {
-     $clear = trim($trimTag);
-     //return strip_tags($clear);
-     return filter_xss($clear, $allowed_tags = array('a', 'em', 'strong', 'cite', 'blockquote', 'img', 'ul', 'ol', 'li', 'dl', 'dt', 'dd', 'br', 'video', 'p'));
+    $clear = trim($trimTag);
+    //return strip_tags($clear);
+    return filter_xss($clear, $allowed_tags = array('a', 'em', 'strong', 'cite', 'blockquote', 'img', 'ul', 'ol', 'li', 'dl', 'dt', 'dd', 'br', 'video', 'p'));
    }
 
    public function getJournalEntries($limit = 5) {
@@ -112,8 +114,8 @@ namespace Drupal\AaeData;
     $nodes = array();
 
     if (isset($result['node'])) {
-      $nids = array_keys($result['node']);
-      $nodes = node_load_multiple($nids);
+     $nids = array_keys($result['node']);
+     $nodes = node_load_multiple($nids);
     }
 
     return $nodes;

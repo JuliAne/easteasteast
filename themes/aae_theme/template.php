@@ -163,6 +163,10 @@ function aae_preprocess_html(&$variables) {
     addAkteurEventsAddEditHead();
 
   break;
+  
+  case ('festivals') :
+    addAkteurEventsAddEditHead();
+  break;
 
   default:
 
@@ -179,7 +183,7 @@ function aae_preprocess_html(&$variables) {
   }
 } // END function aae_preprocess_html
 
-// small function for paths /add and /edit
+// Helper function for aae-forms (../add & ../edit)
 function addAkteurEventsAddEditHead(){
   drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
   drupal_add_js(path_to_theme().'/js/jquery.tokenize.js');

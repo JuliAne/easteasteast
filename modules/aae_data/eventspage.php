@@ -48,7 +48,6 @@ Class eventspage extends aae_data_helper {
   
   if (isset($_GET['timespan']) && !empty($_GET['timespan'])) {
    # Input: ...?timespan=02.16-05.16&...
-   #$this->filter['bla'] = 'bla';
    $timespan = explode('-',$this->clearContent($_GET['timespan']));
    $begin = explode('.',$timespan[0]);
    $end = explode('.',$timespan[1]);
@@ -66,7 +65,7 @@ Class eventspage extends aae_data_helper {
    
   }
 
-  // Paginator
+  // Paginator (will be replaced by AJAX-calls)
   $explodedPath = explode("/", $this->clearContent(current_path()));
   $currentPageNr = ($explodedPath[1] == '') ? '1' : $explodedPath[1];
   $orderBy = 'ASC';
@@ -106,8 +105,8 @@ Class eventspage extends aae_data_helper {
   if (!empty($this->filter)) {
    $resultEvents = $this->events->getEvents(array('filter' => $this->filter, 'start' => $start), 'normal', false, $orderBy);
   } else if ($this->isBlock) {
-   // AID = Kunstfest Neustadt + Adress-Info 238
-   $resultEvents = $this->events->getEvents(array('ersteller' => 238), 'complete', false, $orderBy);
+   $resultEvents = $this->events->getEvents(array('FID' => $_SESSION['fid']), 'complete', false, $orderBy);
+   unset($_SESSION['fid']);
   } else {
    $resultEvents = $this->events->getEvents(array('start' => $start), 'complete', false, $orderBy);
   }

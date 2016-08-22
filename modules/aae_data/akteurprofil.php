@@ -43,7 +43,6 @@ class akteurprofil extends aae_data_helper {
  } else {
 
    // Watch out for possible RSS-Feeds...
-
   if (module_exists('aggregator')) {
 
    $feed = db_query('SELECT fid, title, block, url FROM {aggregator_feed} WHERE title = :title', array(':title' => 'aae-feed-'.$akteur_id))->fetchObject();
@@ -67,8 +66,7 @@ class akteurprofil extends aae_data_helper {
 
   }
 
-  // Ziehe Informationen über Events vom Akteur
-
+  // Ziehe Informationen über Events + Festivals vom Akteur
   $events = db_query('
    SELECT * FROM {aae_data_event} AS e JOIN {aae_data_akteur_hat_event} AS he
    WHERE he.EID = e.EID AND he.AID = :aid
@@ -76,6 +74,15 @@ class akteurprofil extends aae_data_helper {
    array(':aid' => $akteur_id));
 
   $resultEvents = $events->fetchAll();
+
+  $festivals = db_query('
+   SELECT * FROM {aae_data_festival} AS f JOIN {aae_data_akteur_hat_festival} AS hf
+   WHERE hf.hat_FID = f.FID AND hf.hat_AID = :aid
+   ORDER BY name DESC',
+   array(':aid' => $akteur_id));
+
+  $resultFestivals = $festivals->fetchAll();
+
   $showMap = false;
   
   // Generiere Mapbox-taugliche Koordinaten, übergebe diese ans Frontend
@@ -99,16 +106,16 @@ class akteurprofil extends aae_data_helper {
 
   if (!empty($kategorien)) {
 
-  foreach($kategorien as $kategorie) {
+   foreach($kategorien as $kategorie) {
 
-   $resultTags[] = db_select($this->tbl_sparte, 't')
-   ->fields('t')
-   ->condition('KID', $kategorie->hat_KID, '=')
-   ->execute()
-   ->fetchObject();
+    $resultTags[] = db_select($this->tbl_sparte, 't')
+    ->fields('t')
+    ->condition('KID', $kategorie->hat_KID, '=')
+    ->execute()
+    ->fetchObject();
 
+   }
   }
- }
 
   ob_start(); // Aktiviert "Render"-modus
   include_once path_to_theme() . '/templates/akteurprofil.tpl.php';

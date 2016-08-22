@@ -77,6 +77,7 @@ function aae_data_schema() {
     'parent_EID' => array( 'type' => 'varchar', 'length' => 5, 'not null' => FALSE, 'description' => 'NOT NULL if event recurres'),
     'recurring_event_type' => array( 'type' => 'varchar', 'length' => 1, 'not null' => FALSE, 'description' => '2: returns weekly, 3: returns 2-weekly, 4: returns monthly, 5: returns 2-monthly'),
     'event_recurres_till' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Maximaler Wiederholungszeitpunkt für wiederkehrende Events'),
+    'FID' => array( 'type' => 'varchar', 'length' => 5, 'not null' => FALSE, 'description' => 'Festival-ID, if its a festival'),
     'created' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Created als Timestamp'),
     'modified' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Modified als Timestamp')
 	),
@@ -84,7 +85,8 @@ function aae_data_schema() {
 	'foreign keys' => array(
 	  'Eventadresse' => array('table' => 'aae_data_adresse', 'columns' => array('ort' => 'ADID')),
 	  'User' => array('table' => 'user', 'columns' => array('ersteller' => 'uid'))
-	),
+	  // TODO: Add FID -> aae_data_festival
+  ),
   );
   $schema ['aae_data_akteur_hat_sparte'] = array(
   'description' => 'Hilfstabelle für Sparten/Zielgruppen',
@@ -144,8 +146,9 @@ function aae_data_schema() {
   );
   
   /* Festival-schema */
+  /* TODO - Add FALIAS : string?! */
    $schema ['aae_data_festival'] = array(
-  'description' => 'Table for Festivals',
+  'description' => 'Table for festivals',
 	'fields' => array(
 	  'FID' => array('description' => 'Festival ID', 'type' => 'serial', 'unsigned' => TRUE, 'not null' => TRUE),
 	  'name' => array('description' => 'Festivalname', 'type' => 'varchar', 'length' => 64, 'not null' => FALSE),
@@ -168,6 +171,7 @@ function aae_data_schema() {
 	  'User' => array('table' => 'user', 'columns' => array('ersteller' => 'uid'))
 	),
   );
+  /* TODO: */
   $schema ['aae_data_akteur_hat_festival'] = array(
   'description' => 'Connects FID with AID',
 	'fields' => array(
@@ -420,6 +424,16 @@ function aae_data_update_7107() {
 
   db_drop_field('aae_data_adresse', 'gps');
 }
+
+/**
+ * Implements hook_update_N().
+ * Add festival functionality to module (aae_data_festival & aae_data_akteur_festival),
+ * add bezirksname "Stadtweit"
+ * add aae_data_events.FID
+ */
+/*function aae_data_update_7108() {
+
+}*/
 
 /**
  * Implements hook_install().

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\AaeData;
+namespace Drupal\AaeData; # \events?
 
 /*
 *  Small wannabe-model class that delivers methods
@@ -12,12 +12,13 @@ namespace Drupal\AaeData;
 
 Class events extends aae_data_helper {
 
-  public function __construct() {
+ public function __construct() {
    parent::__construct();
-  }
+ }
 
  /*TODO For API CLASS:
-   private $allowed_selectors = array('adresse','akteur','tags'); */
+   private $allowed_selectors = array('adresse','akteur','tags');
+   */
 
  public function setEvent($data) {
   # TODO
@@ -147,7 +148,9 @@ Class events extends aae_data_helper {
 
      $resultEvents[$realEID]['tags'] = $sparten;
 
-   } if ($fields == 'complete' || $fields == 'normal') {
+   }
+   
+   if ($fields == 'complete' || $fields == 'normal') {
 
      $akteurId = db_select($this->tbl_akteur_events, 'ae')
       ->fields('ae', array('AID'))
@@ -160,15 +163,25 @@ Class events extends aae_data_helper {
       ->condition('AID', $akteurId->AID)
       ->execute()
       ->fetchObject();
-
+    
      $resultEvents[$realEID]['akteur'] = $resultAkteur;
 
+     if (!empty($event->FID)) {
+      // TODO: Outsource into festivals-model, ->get('normal')
+      $resultFestival = db_select($this->tbl_festival, 'f')
+       ->fields('f')
+       ->condition('FID', $event->FID)
+       ->execute()
+       ->fetchObject();
+      
+      $resultEvents[$realEID]['festival'] = $resultFestival;
+     }
     }
 
     $resultEvents[$realEID]['start'] = new \DateTime($event->start_ts);
-    $resultEvents[$realEID]['ende'] = new  \DateTime($event->ende_ts);
-    $resultEvents[$realEID]['created'] = new  \DateTime($event->created);
-    $resultEvents[$realEID]['modified'] = new  \DateTime($event->modified);
+    $resultEvents[$realEID]['ende'] = new \DateTime($event->ende_ts);
+    $resultEvents[$realEID]['created'] = new \DateTime($event->created);
+    $resultEvents[$realEID]['modified'] = new \DateTime($event->modified);
     $resultEvents[$realEID]['eventRecurresTill'] = new \DateTime($event->event_recurres_till);
     $resultEvents[$realEID]['eventRecurringType'] = $event->recurring_event_type;
     $resultEvents[$realEID] = (object)$resultEvents[$realEID];
@@ -187,8 +200,6 @@ Class events extends aae_data_helper {
  *  @param user_id
  */
  public function isAuthorized($eId, $uId){
-  
-  global $user;
   
   $erstellerId = db_select($this->tbl_event,'e')
    ->fields('e', array('ersteller'))
@@ -219,6 +230,57 @@ Class events extends aae_data_helper {
    return false;
   }
   
+ }
+ 
+ /**
+  * returns festival-ids and aliase that user has access to
+  * TODO: Put into festivals-model, return real names from festival-table, etc.
+  */
+ public function userHasFestivals($uid){
+  
+  $resultFestivals = array();
+  $fIds = array(); // Helper to avoid doubled festival-IDs (e.g. if user has multiple akteure who manage a festival)
+
+  $resultUserAkteure = db_select($this->tbl_hat_user, 'hu')
+   ->fields('hu', array('hat_AID'))
+   ->condition('hat_UID', $uid)
+   ->execute()
+   ->fetchAll();
+
+  if (!empty($resultUserAkteure)){
+
+  foreach ($resultUserAkteure as $akteur){
+
+   $akteurHasFestivals = db_select($this->tbl_hat_festivals, 'hf')
+   ->fields('hf', array('hat_FID'))
+   ->condition('hat_AID', $akteur->hat_AID)
+   ->execute()
+   ->fetchAll();
+   
+   foreach ($akteurHasFestivals as $festival){
+    if (!isset($fIds[$festival->hat_FID])){
+      
+     $fIds[$festival->hat_FID] = 1;
+
+     $fname = db_select($this->tbl_festival, 'f')
+      ->fields('f', array('name'))
+      ->condition('FID', $festival->hat_FID)
+      ->execute()
+      ->fetchObject();
+
+     $festivalIds[] = array(
+      'FID' => $festival->hat_FID,
+      'name' => $fname->name,
+     );
+
+    }
+   }
+
+  }
+  }
+  
+  return $festivalIds;
+
  }
 
  public function getTags($eid = null){

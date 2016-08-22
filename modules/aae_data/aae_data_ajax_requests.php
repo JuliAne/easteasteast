@@ -39,7 +39,7 @@ Class aae_data_ajax_requests extends aae_data_helper {
  /**
   * @function getAkteurAdresse()
   *
-  * Gibt Adresse eines Akteurs wieder, welche (wie in eventformular) zur
+  * Gibt Adresse eines Akteurs wieder, welche (wie im eventformular) zur
   * dynamischen Anzeige dient
   */
 
@@ -47,21 +47,36 @@ Class aae_data_ajax_requests extends aae_data_helper {
 
    $akteur_id = $this->clearContent($id);
 
-   if (!is_numeric($akteur_id) || $akteur_id == 0) exit();
+   if (!is_numeric($akteur_id)){
+
+    // Festival = Get festival-admin-akteur
+    $fAkteurId = db_select($this->tbl_festival, 'f')
+      ->fields('f', array('admin'))
+      ->condition('FID', str_replace('f','',$akteur_id))
+      ->execute()
+      ->fetchObject();
+
+    $akteur_id = $fAkteurId->admin;
+     
+   }
+
+   if (empty($akteur_id) || $akteur_id == 0)
+     drupal_exit();
 
    $akteurAdresse = db_select($this->tbl_akteur, 'a')
     ->fields('a', array('adresse'))
     ->condition('AID', $akteur_id)
     ->execute()
-    ->fetchAll();
+    ->fetchObject();
 
    $resultAdresse = db_select($this->tbl_adresse, 'ad')
     ->fields('ad')
-    ->condition('ADID', $akteurAdresse[0]->adresse, '=')
+    ->condition('ADID', $akteurAdresse->adresse)
     ->execute()
-    ->fetchAll();
+    ->fetchObject();
 
-    echo json_encode($resultAdresse[0]);
+    echo json_encode($resultAdresse);
+    drupal_exit();
 
  }
 

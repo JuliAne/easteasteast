@@ -38,11 +38,21 @@
   <div class="large-4 columns">
   <label><?= t('Veranstalter'); ?>:</label>
   <select name="veranstalter" id="veranstalter">
+  <!-- TODO for /edit: If private was selected, mark it and modify JS -->
   <option value="0"><?= t('Privat'); ?></option>
-  <?php if (is_array($this->resultAkteure) && !empty($this->resultAkteure)) :
-    foreach ($this->resultAkteure as $akteur) : ?>
-    <option value="<?= $akteur->AID; ?>" <?php echo ($akteur->AID == $this->veranstalter ? 'selected="selected"' : '') ?>><?= $akteur->name; ?></option>
+  <?php if ($this->festivals && is_array($this->festivals)) : ?>
+   <optgroup label="<?= t('Festivals'); ?>">
+   <?php foreach ($this->festivals as $festival) : ?>
+    <option class="isFestival" value="f<?= $festival['FID']; ?>"<?= ($festival['FID'] == $this->FID ? ' selected="selected"' : ''); ?>><?= $festival['name']; ?></option>
    <?php endforeach; ?>
+   </optgroup>
+  <?php endif; ?>
+  <?php if (is_array($this->resultAkteure) && !empty($this->resultAkteure)) : ?>
+   <optgroup label="<?= t('Akteure'); ?>">
+   <?php foreach ($this->resultAkteure as $akteur) : ?>
+    <option value="<?= $akteur->AID; ?>" <?= ($akteur->AID == $this->veranstalter ? 'selected="selected"' : '') ?>><?= $akteur->name; ?></option>
+   <?php endforeach; ?>
+   </optgroup>
   <?php endif; ?>
   </select>
   </div>
@@ -75,13 +85,13 @@
     </label>
    </div>
 
-   <div class="switch large-2 columns" style="text-align:right;">
-    <input class="switch-input" id="eventRecurres" type="checkbox" name="eventRecurres"<?= ($this->eventRecurres || isset($_POST['eventRecurres']) ? ' checked="checked"' : ''); ?>>
+   <div id="recurrSwitch" class="switch large-2 columns" style="text-align:right;<?= (!empty($this->FID) ? 'display:none;' : ''); ?>">
+    <input class="switch-input" id="eventRecurres" type="checkbox" name="eventRecurres"<?= (empty($this->FID) && ($this->eventRecurres || isset($_POST['eventRecurres'])) ? ' checked="checked"' : ''); ?>>
     <label class="switch-paddle" for="eventRecurres" title="<?= t('Sich wiederholendes Event?'); ?>">
     <span class="show-for-sr"><?= t('Sich wiederholendes Event?'); ?></span>
    </div>
 
-   <div id="eventRecurresData" class="large-12 columns"<?= (!empty($this->recurringEventType) || isset($_POST['eventRecurres']) ? '' : ' style="display:none;"'); ?>>
+   <div id="eventRecurresData" class="large-12 columns"<?= (empty($this->FID) && (!empty($this->recurringEventType) || isset($_POST['eventRecurres'])) ? '' : ' style="display:none;"'); ?>>
 
     <p class="large-12 columns licensetext"><strong>Wiederkehrende Veranstaltung.</strong> Beta-Feature! Setzt automatisch bis zu fünf Termine für einen abfolgenden Events-Rhytmus. Einzelne Termine können auf dem folgenden Eventprofil entfernt werden.</p>
 
@@ -182,8 +192,8 @@
     <?php endif; ?>
     <p class="licensetext">Wir empfehlen, Bilder im <strong>Format 3:2</strong> hochzuladen (bspw. 640 x 400 Pixel)</p><br />
     <p class="licensetext"><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf Leipziger-Ecken.de stimmen sie auch einer Nutzung ihrer angezeigten Daten durch andere zu.</p>
-    <p class="licensetext">Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten sie ihre Daten nach besten Wissen und Gewissen über die Eingabefelder zu beschreiben.</p><br />
-    <p class="licensetext">Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte.</p>
+    <p class="licensetext">Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten wenn er den Urheber nennt. Wir bitten Sie, Ihre Daten nach besten Wissen und Gewissen über die Eingabefelder zu beschreiben.</p><br />
+    <p class="licensetext">Wir übernehmen keinerlei Haftung für Schadensersatzforderung (o.ä.) in Bezug auf Dritte.</p>
     <p class="licensetext">Bildmaterial sollte abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
    </fieldset>
   </div>
@@ -200,9 +210,9 @@
      <?php if (is_array($sparte)) : ?>
       <option selected value="<?= $sparte[0]->KID; ?>"><?php echo $sparte[0]->kategorie; ?></option>
      <?php else : ?>
-     <?= var_dump($sparte); ?>
+     <!--<?= var_dump($sparte); ?>-->
       <option selected value="<?= $sparte->KID; ?>"><?= $sparte->kategorie; ?></option>
-      <?php endif; ?>
+     <?php endif; ?>
     <?php endforeach;?>
     <?php endif; ?>
 
@@ -221,12 +231,10 @@
   </p><div class="divider" style="margin:17px 0;"></div>
   <?php endif; ?>
  <?php endif; ?>
-
-  <?php if ($this->isFestival) : ?>
-  <input type="submit" class="left button" id="eventSubmit" name="submit" value="<?= t('Festivalevent speichern und weiter...'); ?>">
-  <?php else : ?>
-  <input type="submit" class="left button" id="eventSubmit" name="submit" value="<?= t('Speichern'); ?>">
-  <?php endif; ?>
+ 
+  <div id="festivalSubmitText" style="display:none;"><?= t('Festivalevent speichern und weiter...'); ?></div>
+  <div id="submitText" style="display:none;"><?= t('Speichern'); ?></div>
+  <input type="submit" class="left button" id="eventSubmit" name="submit" value="<?= t('Speichern'); ?>"> 
   <a class="secondary right button" href="<?= base_path(); ?>events" title="<?= t('Zurück zu den Events'); ?>"><?= t('Abbrechen'); ?></a>
 
 </div>

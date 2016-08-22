@@ -5,7 +5,7 @@
  * eingetragen werden können.
  * Pflichtfelder sind (bisher): Name, Veranstalter, Datum (Anfang) & Beschreibung
  * Anschließend werden die Daten gefiltert in die DB-Tabellen eingetragen
- * oder geupdatet.
+ * oder geupdatet (s. $this->target).
  */
 
 namespace Drupal\AaeData;
@@ -41,7 +41,9 @@ Class eventformular extends aae_data_helper {
   var $sparten = '';
   var $all_sparten = ''; // Zur Darstellung des tokenizer (#akteurSpartenInput)
   
-  var $isFestival;
+  var $isFestival = false; // Only for submit-actions
+  var $festivals;
+  var $FID; // Only for edit-mode
   var $freigabe = true;  // Variable zur Freigabe: muss true sein
   var $fehler = array(); // In diesem Array werden alle Fehler gespeichert
 
@@ -83,7 +85,7 @@ Class eventformular extends aae_data_helper {
      
    }
      
-   $this->isFestival = ($this->user_id == 238);
+   $this->festivals = $this->event->userHasFestivals($this->user_id);
 
   }
 
@@ -284,7 +286,11 @@ Class eventformular extends aae_data_helper {
      $this->sparten = $neueSparten;
    }
 
-    return $this->freigabe;
+   if (!is_numeric($this->veranstalter)){
+    $this->isFestival = true;
+   }
+   
+   return $this->freigabe;
 
   } // END function eventCheckPost()
 
@@ -420,7 +426,6 @@ Class eventformular extends aae_data_helper {
 	  ->execute();
 
    // remove tags manually
-
    if (!empty($this->removedTags) && is_array($this->removedTags)) {
 
     foreach($this->removedTags as $tag) {
@@ -441,8 +446,8 @@ Class eventformular extends aae_data_helper {
      $this->sparten = array_unique($this->sparten);
 
      foreach ($this->sparten as $id => $sparte) {
-     // Tag bereits in DB?
 
+     // Tag bereits in DB?
      $sparte_id = '';
      $sparte = strtolower($this->clearContent($sparte));
 
@@ -528,6 +533,7 @@ Class eventformular extends aae_data_helper {
 	   $this->plz = $row->adresse->plz;
 	   $this->ort = $row->adresse->bezirk;
 	   $this->gps = (!empty($row->adresse->gps_lat)) ? $row->adresse->gps_lat.','.$row->adresse->gps_long : '';
+     $this->FID = $row->FID;
     }
     
     $this->sparten = $this->event->getTags($this->event_id);
@@ -537,9 +543,13 @@ Class eventformular extends aae_data_helper {
 
   private function eventSpeichern() {
 
-   if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
-    $this->bild = $this->upload_image($_FILES['bild']);
-   }
+   $festival_id = NULL;
+
+   if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) // TODO: && $this->imageUploadable()
+     $this->bild = $this->upload_image($_FILES['bild']);
+
+   if ($this->isFestival)
+    $festival_id = str_replace('f','',$this->veranstalter);
 
 	 // Abfrage, ob Adresse bereits in Adresstabelle
 	 $this->resultAdresse = db_select($this->tbl_adresse, 'a')
@@ -606,26 +616,27 @@ Class eventformular extends aae_data_helper {
 		'ersteller' => $this->user_id,
     'created' => date('Y-m-d H:i:s', time()),
     'recurring_event_type' => ($this->eventRecurres && !empty($this->eventRecurringType) ? $this->eventRecurringType : NULL),
-    'event_recurres_till' => ($this->eventRecurres && !empty($this->eventRecurresTill) ? $this->eventRecurresTill.' 00:00:00' : '1000-01-01 00:00:00')
-	  ))
+    'event_recurres_till' => ($this->eventRecurres && !empty($this->eventRecurresTill) ? $this->eventRecurresTill.' 00:00:00' : '1000-01-01 00:00:00'),
+	  'FID' => $festival_id,
+    ))
 	 ->execute();
    
-   if ($this->isFestival){
+   if (!empty($this->isFestival)){
     db_update($this->tbl_event)
      ->fields(array(
-      'recurring_event_type' => '6'
+     'recurring_event_type' => '6'
      ))
      ->condition('EID', $this->event_id)
      ->execute();
    }
 
 	 // Falls Akteur angegeben wurde:
-    if (!empty($this->veranstalter)) {
+    if (!empty($this->veranstalter) && !($this->isFestival)) {
 
-	    db_insert($this->tbl_akteur_events)
+	   db_insert($this->tbl_akteur_events)
    	  ->fields(array(
-		   'AID' => $this->veranstalter,
-	     'EID' => $this->event_id,
+		  'AID' => $this->veranstalter,
+	    'EID' => $this->event_id,
 	    ))
 	    ->execute();
 
@@ -736,7 +747,7 @@ Class eventformular extends aae_data_helper {
       // Akteure abfragen, die in DB und für welche User Schreibrechte hat
       $user_hat_akteure = db_select($this->tbl_hat_user, 'hu')
        ->fields('hu')
-       ->condition('hat_UID', $this->user_id, '=')
+       ->condition('hat_UID', $this->user_id)
        ->execute()
        ->fetchAll();
 

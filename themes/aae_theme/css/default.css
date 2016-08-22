@@ -33,7 +33,7 @@
 .Zebra_DatePicker .dp_daypicker td,
 .Zebra_DatePicker .dp_daypicker th,
 .Zebra_DatePicker .dp_monthpicker td,
-.Zebra_DatePicker .dp_yearpicker td         { width: 30px; border: 1px solid #BBB; background: #DEDEDE url('../images/metallic/default-date.png') repeat-x top; color: #666 }
+.Zebra_DatePicker .dp_yearpicker td         { width: 30px; border: 1px solid #BBB; background: #DEDEDE /*url('../images/metallic/default-date.png') repeat-x top*/; color: #666 }
 
 .Zebra_DatePicker,
 .Zebra_DatePicker .dp_header .dp_hover,

@@ -2,7 +2,7 @@
 /**
  * festivalformular.php stellt ein Hilfs-Formular dar,
  * in welches grundlegende Informationen über ein Festival
- * eingetragen UND bearbeitet werden koennen.
+ * eingetragen & bearbeitet werden koennen.
  */
  
 namespace Drupal\AaeData;
@@ -23,7 +23,6 @@ Class festivalformular extends aae_data_helper {
   var $created = "";
   var $modified = "";
 
-
   var $akteur_id = "";
   var $user_id = "";
   var $fehler = array();
@@ -36,7 +35,7 @@ Class festivalformular extends aae_data_helper {
   var $ph_url = "Website";
   var $ph_fUrl = "Steht hier 'kunstfest16', wird daraus https://leipziger-ecken.de/kunstfest16";
   var $ph_bild = "Dateiname mit Endung";
-  var $ph_beschreibung = "Beschreibungstext. In der Vorschau werden die ersten 30 Wörter angezeigt.";
+  var $ph_beschreibung = "Beschreibungstext des Festivals: Slogan, Datum, etc...";
   var $ph_oeffnungszeiten = "Öffnungszeiten";
 
   // $tbl_adresse
@@ -375,11 +374,34 @@ Class festivalformular extends aae_data_helper {
      ->fields('b', array('BID', 'bezirksname'))
      ->execute()
      ->fetchAll();
-
-    $this->resultAllAkteure = db_select($this->tbl_akteur, 'a')
+    
+    // TODO
+    $this->festivalAkteure = db_select($this->tbl_akteur, 'a')
      ->fields('a', array('AID', 'name'))
      ->execute()
      ->fetchAll();
+     
+    $this->allAkteure = db_select($this->tbl_akteur, 'a')
+     ->fields('a', array('AID', 'name'))
+     ->execute()
+     ->fetchAll();
+    
+    // Akteure abfragen, die in DB und für welche User Schreibrechte hat
+    $user_hat_akteure = db_select($this->tbl_hat_user, 'hu')
+     ->fields('hu')
+     ->condition('hat_UID', $this->user_id)
+     ->execute()
+     ->fetchAll();
+
+    foreach ($user_hat_akteure as $akteur) {
+
+     $this->resultOwnAkteure[] = db_select($this->tbl_akteur, 'a')
+      ->fields('a', array('AID', 'name'))
+      ->condition('AID', $akteur->hat_AID)
+      ->execute()
+      ->fetchObject();
+      
+     }
      
     ob_start(); // Aktiviert "Render"-modus
     include_once path_to_theme() . '/templates/festivalformular.tpl.php';

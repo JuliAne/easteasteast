@@ -133,8 +133,10 @@
   <?php endif; ?>
 
    <p><strong><?= t('Erstellt von'); ?>:</strong> <?= $resultEvent->ersteller->name; ?> <?= t('am'); ?> <?= $resultEvent->created->format('d.m.Y'); ?></p>
-   <?php if (empty($resultEvent->akteur)) : ?>
+   <?php if (empty($resultEvent->akteur) && !isset($resultEvent->festival)) : ?>
    <p><strong><?= t('Privater Veranstalter'); ?></strong></p>
+   <?php elseif (empty($resultEvent->akteur) && isset($resultEvent->festival)) : ?>
+   <p><strong><?= t('Teil des'); ?> <a href="<?= base_path().$resultEvent->festival->alias; ?>" title="<?= t('Zur Festivalseite'); ?>"><?= $resultEvent->festival->name; ?></a></strong></p>
    <?php else : ?>
    <p><strong><?= t('Akteur'); ?>:</strong> <a href="<?= base_path(); ?>akteurprofil/<?= $resultEvent->akteur->AID; ?>" title="<?= t('Profil von !username besuchen',array('!username'=> $resultEvent->akteur->name)); ?>" itemprop="name"><?= $resultEvent->akteur->name; ?></a></p>
    <?php endif; ?>

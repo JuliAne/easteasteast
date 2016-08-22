@@ -85,7 +85,11 @@ p.licensetext:hover {
   padding-left: 0;
   animation-name: event;
   animation-duration: 0.5s;
-  float: right!important;
+  float: right !important;
+}
+
+#next-events .aaeEvent { /* Akteure-page */
+  float: unset !important;
 }
 
 .aaeEvent.outdated {
