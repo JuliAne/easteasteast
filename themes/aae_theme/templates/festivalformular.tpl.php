@@ -52,13 +52,13 @@
     <div class="large-4 columns">
       <?= $this->fehler['name']; ?>
       <label>Name <span class="pflichtfeld">(Pflichtfeld)</span>:
-        <input type="text" id="akteurNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= $this->ph_name; ?>" required />
+        <input type="text" id="akteurNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= t('Name des Festivals'); ?>" required />
       </label>
     </div>
 
     <div class="large-4 columns">
      <label>Email-Adresse <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['email']; ?>
-      <input type="email" id="akteurEmailInput" name="email" value="<?= $this->email; ?>" placeholder="<?= $this->ph_email; ?>" required />
+      <input type="email" id="akteurEmailInput" name="email" value="<?= $this->email; ?>" placeholder="<?= t('E-mail Adresse'); ?>" required />
      </label>
     </div>    
     
@@ -80,7 +80,7 @@
    
    <div class="large-12 columns">
     <label>Festival-URL <span class="pflichtfeld">(Pflichtfeld, kann nur EINMALIG vergeben werden)</span>:
-      <input type="url" id="akteurEmailInput" name="fUrl" value="<?= $this->url; ?>" placeholder="<?= $this->ph_fUrl; ?>" required />
+      <input type="url" id="akteurEmailInput" name="fUrl" value="<?= $this->url; ?>" placeholder="Steht hier 'kunstfest16', wird daraus https://leipziger-ecken.de/kunstfest16" required />
      </label>
     </div>
 
@@ -98,25 +98,25 @@
 
    <div class="large-3 columns">
     <label>Straße: <?= $this->fehler['strasse']; ?>
-     <input type="text" id="StrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= $this->ph_strasse; ?>" />
+     <input type="text" id="StrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= t('Straße'); ?>" />
     </label>
    </div>
 
    <div class="large-1 columns">
     <label>Nr.: <?= $this->fehler['nr']; ?>
-     <input type="text" id="NrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= $this->ph_nr; ?>" />
+     <input type="text" id="NrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= t('Hausnummer'); ?>" />
     </label>
    </div>
 
    <div class="large-3 columns">
     <label>Adresszusatz: <?= $this->fehler['adresszusatz']; ?>
-     <input type="text" id="AdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= $this->ph_adresszusatz; ?>">
+     <input type="text" id="AdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= t('Adresszusatz'); ?>">
     </label>
    </div> 
 
    <div class="large-3 columns">
     <label>PLZ: <?= $this->fehler['plz']; ?>
-      <input type="text" pattern="[0-9]{5}" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= $this->ph_plz; ?>">
+      <input type="text" pattern="[0-9]{5}" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= t('PLZ'); ?>">
     </label>
    </div>
    <div class="large-4 columns">
@@ -138,20 +138,19 @@
 
   <div class="large-4 columns">
   <label>Geodaten (Karte): <?= $this->fehler['gps']; ?>
-   <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= $this->ph_gps; ?>">
+   <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= t('GPS-Adresskoordinaten'); ?>">
   </label>
-  <p id="show_coordinates" style="display:none;"><a href="#" target="_blank">Zeige Koordinaten auf Karte</a></p>
+  <p id="show_coordinates" style="display:none;"><a href="#" target="_blank"><?= t('Zeige Koordinaten auf Karte'); ?></a></p>
 </div>
 
 </fieldset>
 <?php endif; ?>
 
-
 <div class="row">
 
   <div class="large-12 columns">
   <label>Beschreibungstext für den Header (max. 1 Zeile)
-   <textarea name="beschreibung" id="beschreibung" cols="45" rows="3" placeholder="<?= $this->ph_beschreibung; ?>"><?= $this->beschreibung; ?></textarea>
+   <textarea name="beschreibung" id="beschreibung" cols="45" rows="3" placeholder="Beschreibungstext des Festivals: Slogan, Datum, etc..."><?= $this->beschreibung; ?></textarea>
   </label>
   <script>CKEDITOR.replace('beschreibung');</script>
  </div>

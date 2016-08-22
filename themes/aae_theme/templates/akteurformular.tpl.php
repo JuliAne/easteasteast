@@ -20,14 +20,14 @@
  <div class="row">
     <div class="large-6 columns">
       <?= $this->fehler['name']; ?>
-      <label>Name <span class="pflichtfeld">(Pflichtfeld)</span>:
-        <input type="text" id="akteurNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= $this->ph_name; ?>" required />
+      <label>Name <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>:
+        <input type="text" id="akteurNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= t('Name des Vereins / der Organisation'); ?>" required />
       </label>
     </div>
 
     <div class="large-6 columns">
-     <label>Email-Adresse <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['email']; ?>
-      <input type="email" id="akteurEmailInput" name="email" value="<?= $this->email; ?>" placeholder="<?= $this->ph_email; ?>" required />
+     <label>Email-Adresse <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>: <?= $this->fehler['email']; ?>
+      <input type="email" id="akteurEmailInput" name="email" value="<?= $this->email; ?>" placeholder="<?= t('E-mail Adresse'); ?>" required />
      </label>
     </div>
 
@@ -38,41 +38,41 @@
 
    <div class="large-4 columns">
     <label>Straße: <?= $this->fehler['strasse']; ?>
-     <input type="text" id="StrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= $this->ph_strasse; ?>" />
+     <input type="text" id="StrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= t('Straße'); ?>" />
     </label>
    </div>
 
    <div class="large-1 columns">
     <label>Nr.: <?= $this->fehler['nr']; ?>
-     <input type="text" id="NrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= $this->ph_nr; ?>" />
+     <input type="text" id="NrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= t('Hausnummer'); ?>" />
     </label>
    </div>
 
    <div class="large-3 columns">
     <label>Adresszusatz: <?= $this->fehler['adresszusatz']; ?>
-     <input type="text" id="AdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= $this->ph_adresszusatz; ?>">
+     <input type="text" id="AdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= t('Adresszusatz'); ?>">
     </label>
    </div> 
 
    <div class="large-3 columns">
     <label>PLZ: <?= $this->fehler['plz']; ?>
-      <input type="text" pattern="[0-9]{5}" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= $this->ph_plz; ?>">
+      <input type="text" pattern="[0-9]{5}" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= t('PLZ'); ?>">
     </label>
    </div>
 
    <div id="akteur_access" class="switch large-1 columns">
     <input class="switch-input" id="barrierefrei" type="checkbox" name="barrierefrei"<?= ($this->barrierefrei || isset($_POST['barrierefrei']) ? ' checked="checked"' : ''); ?>>
-    <label class="switch-paddle" for="barrierefrei" title="Barrierefreier Zugang?">
-     <span class="show-for-sr">Barrierefreier Zugang?</span>
+    <label class="switch-paddle" for="barrierefrei" title="<?= t('Barrierefreier Zugang?'); ?>">
+     <span class="show-for-sr"><?= t('Barrierefreier Zugang?'); ?></span>
    </label>
    </div>
 
    <div class="large-4 columns">
 
-  <label>Bezirk <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['ort']; ?>
+  <label><?= t('Bezirk'); ?> <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>: <?= $this->fehler['ort']; ?>
 
   <select name="ort">
-   <option value="" selected="selected">Bezirk auswählen</option>
+   <option value="" selected="selected">- <?= t('Bezirk auswählen'); ?> -</option>
    <?php foreach ($this->resultBezirke as $bezirk) : ?>
     <?php if ($bezirk->BID == $this->ort) : ?>
     <option value="<?= $bezirk->BID; ?>" selected="selected"><?= $bezirk->bezirksname; ?></option>
@@ -85,10 +85,10 @@
  </div>
 
   <div class="large-4 columns">
-  <label>Geodaten (Karte): <?= $this->fehler['gps']; ?>
-   <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= $this->ph_gps; ?>">
+  <label><?= t('Geodaten (Karte)'); ?>: <?= $this->fehler['gps']; ?>
+   <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= t('GPS-Adresskoordinaten'); ?>">
   </label>
-  <p id="show_coordinates" style="display:none;"><a href="#" target="_blank">Zeige Koordinaten auf Karte</a></p>
+  <p id="show_coordinates" style="display:none;"><a href="#" target="_blank"><?= t('Zeige Koordinaten auf Karte'); ?></a></p>
 </div>
 
 </fieldset>
@@ -96,14 +96,14 @@
 <div class="row">
 
  <div class="large-6 columns">
-  <label>Ansprechpartner: <?= $this->fehler['ansprechpartner']; ?>
-   <input type="text" id="akteurAnsprechpartnerInput" name="ansprechpartner" value="<?= $this->ansprechpartner; ?>" placeholder="<?= $this->ph_ansprechpartner; ?>">
+  <label><?= t('Ansprechpartner'); ?>: <?= $this->fehler['ansprechpartner']; ?>
+   <input type="text" id="akteurAnsprechpartnerInput" name="ansprechpartner" value="<?= $this->ansprechpartner; ?>" placeholder="<?= t('Kontaktperson'); ?>">
   </label>
  </div>
 
  <div class="large-6 columns">
-  <label>Rolle des Ansprechpartners: <?= $this->fehler['funktion']; ?>
-   <input type="text" id="akteurFunktionInput" name="funktion" value="<?= $this->funktion; ?>" placeholder="<?= $this->ph_funktion; ?>">
+  <label><?= t('Rolle des Ansprechpartners'); ?>: <?= $this->fehler['funktion']; ?>
+   <input type="text" id="akteurFunktionInput" name="funktion" value="<?= $this->funktion; ?>" placeholder="<?= t('Funktion der Kontaktperson'); ?>">
   </label>
   </div>
 
@@ -112,8 +112,8 @@
 <div class="row">
 
   <div class="large-12 columns">
-  <label>Beschreibung. In der Vorschau erscheinen die ersten 30 Wörter. <?= $this->fehler['beschreibung']; ?>
-   <textarea name="beschreibung" id="beschreibung" cols="45" rows="3" placeholder="<?= $this->ph_beschreibung; ?>"><?= $this->beschreibung; ?></textarea>
+  <label><?= t('Beschreibungstext. In der Vorschau werden die ersten 30 Wörter angezeigt.'); ?> <?= $this->fehler['beschreibung']; ?>
+   <textarea name="beschreibung" id="beschreibung" cols="45" rows="3" placeholder="<?= t('Beschreibungstext. In der Vorschau werden die ersten 30 Wörter angezeigt.'); ?>"><?= $this->beschreibung; ?></textarea>
   </label>
   <script>CKEDITOR.replace('beschreibung');</script>
  </div>
@@ -158,19 +158,19 @@
 
         <div class="large-4 columns">
          <label><?= t('Öffnungszeiten'); ?>: <?= $this->fehler['oeffnungszeiten']; ?>
-          <input type="text" id="akteurOeffnungszeitenInput" name="oeffnungszeiten" value="<?= $this->oeffnungszeiten; ?>" placeholder="<?= $this->ph_oeffnungszeiten; ?>">
+          <input type="text" id="akteurOeffnungszeitenInput" name="oeffnungszeiten" value="<?= $this->oeffnungszeiten; ?>" placeholder="<?= t('Öffnungszeiten'); ?>">
          </label>
         </div>
 
         <div class="large-4 columns">
          <label><?= t('Projektwebsite'); ?>: <?= $this->fehler['url']; ?>
-          <input type="url" id="akteurURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= $this->ph_url; ?>">
+          <input type="url" id="akteurURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= t('Website'); ?>">
          </label>
         </div>
 
         <div class="large-4 columns">
          <label><?= t('Telefonnummer'); ?>: <?= $this->fehler['telefon']; ?>
-          <input type="text" id="akteurTelefonInput" name="telefon" value="<?= $this->telefon; ?>" placeholder="<?= $this->ph_telefon; ?>">
+          <input type="text" id="akteurTelefonInput" name="telefon" value="<?= $this->telefon; ?>" placeholder="<?= t('Telefonnummer'); ?>">
          </label>
         </div>
 

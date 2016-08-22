@@ -65,7 +65,7 @@ Class events extends aae_data_helper {
      } else {
       $events->condition('start_ts', $condition, '>=');
      }
-      break;
+     break;
       
      case ('ende_ts') :
      case ('end') :

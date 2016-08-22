@@ -45,25 +45,6 @@ Class akteurformular extends aae_data_helper {
   var $fehler = array();
   var $freigabe = true; // Variable zur Freigabe: muss true sein
 
-  // $tbl_akteur
-  var $ph_name = "Name des Vereins/ der Organisation";
-  var $ph_email = "E-mail Addresse";
-  var $ph_telefon = "Telefonnummer";
-  var $ph_url = "Website";
-  var $ph_ansprechpartner = "Kontaktperson";
-  var $ph_funktion = "Funktion der Kontaktperson";
-  var $ph_bild = "Dateiname mit Endung";
-  var $ph_beschreibung = "Beschreibungstext. In der Vorschau werden die ersten 30 Wörter angezeigt.";
-  var $ph_oeffnungszeiten = "Öffnungszeiten";
-
-  // $tbl_adresse
-  var $ph_strasse = "Strasse";
-  var $ph_nr = "Hausnummer";
-  var $ph_adresszusatz = "Adresszusatz";
-  var $ph_plz = "PLZ";
-  var $ph_ort = "Bezirk";
-  var $ph_gps = "GPS-Addresskoordinaten";
-
   // $tbl_akteur_hat_Sparte
   var $countsparten = "";
   var $sparte_id = "";

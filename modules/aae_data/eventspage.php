@@ -28,7 +28,6 @@ Class eventspage extends aae_data_helper {
  public function run(){
 
   $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) && $_GET['presentation'] == 'calendar') ? 'calendar' : 'timeline';
-  #$this->isBlock = (strpos($_SERVER['REQUEST_URI'], 'neustadt') > 1);
 
   if (isset($_GET['day']) && !empty($_GET['day'])) {
    $this->filter['day'] = $this->clearContent($_GET['day']);
@@ -47,7 +46,7 @@ Class eventspage extends aae_data_helper {
   }
   
   if (isset($_GET['timespan']) && !empty($_GET['timespan'])) {
-   # Input: ...?timespan=02.16-05.16&...
+   # Input: ...?timespan=02.16-05.16
    $timespan = explode('-',$this->clearContent($_GET['timespan']));
    $begin = explode('.',$timespan[0]);
    $end = explode('.',$timespan[1]);
@@ -106,7 +105,7 @@ Class eventspage extends aae_data_helper {
    $resultEvents = $this->events->getEvents(array('filter' => $this->filter, 'start' => $start), 'normal', false, $orderBy);
   } else if ($this->isBlock) {
    $resultEvents = $this->events->getEvents(array('FID' => $_SESSION['fid']), 'complete', false, $orderBy);
-   unset($_SESSION['fid']);
+   unset($_SESSION['fid']); # 2b improved soon
   } else {
    $resultEvents = $this->events->getEvents(array('start' => $start), 'complete', false, $orderBy);
   }
@@ -143,6 +142,8 @@ Class eventspage extends aae_data_helper {
  } // end function run()
 
  public function rss(){
+
+   // TODO: Add params to generate events for akteur/festival only
 
    header("Content-type: text/xml");
    echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";

@@ -1,38 +1,11 @@
 <?php
 /**
- * @file akteure.php
+ * @file akteurepage.php
  * Listet alle Akteure auf.
- * Filterbar nach Keyword, Tag und Bezirk.
+ * Filterbar nach Keyword, Tags und Bezirk.
  */
 
-namespace Drupal\AaeData;
-
-Class akteurepage extends aae_data_helper {
-
- var $presentationMode;
- var $maxAkteure;
- var $sparten;
- var $hasFilters = false;
- var $filter = array();
- var $filteredAkteurIds;
- var $filteredTags = array();
- var $filteredBezirke = array();
- var $numFilters = 0;
- 
- public function __construct(){
-  
-  parent::__construct();
-  #require_once('models/akteure.php');
-  
-  #$this->akteure = new akteure();
-  
- }
-
- public function run(){
-
-  global $user;
-
-  /*  ...to be put within function invite->hasAddedAkteur()...
+/* TODO-stuff: 2b put within function invite->hasAddedAkteur()...
 
   $values = array(
   'arguments' => array(
@@ -42,87 +15,10 @@ Class akteurepage extends aae_data_helper {
 
   $message = message_create('aae_message', $values);
   $wrapper = entity_metadata_wrapper('message', $message);
-  $wrapper->save(); */
+  $wrapper->save(); 
 
+ __
 
-  $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) ? $this->clearContent($_GET['presentation']) : 'boxen');
-
-  $this->maxAkteure = (isset($_GET['display_number']) && !empty($_GET['display_number']) ? $this->clearContent($_GET['display_number']) : '40' );
-
-  if (isset($_GET['filterTags']) && !empty($_GET['filterTags'])) {
-   $this->filter['tags'] = $_GET['filterTags'];
-  }
-
-  if (isset($_GET['filterKeyword']) && !empty($_GET['filterKeyword'])) {
-   $this->filter['keyword'] = $this->clearContent($_GET['filterKeyword']);
-  }
-
-  if (isset($_GET['filterBezirke']) && !empty($_GET['filterBezirke'])) {
-   $this->filter['bezirke'] = $_GET['filterBezirke'];
-  }
-
- //-----------------------------------
-
- // Paginator: Auf welcher Seite befinden wir uns?
- $explodedPath = explode("/", current_path());
- $currentPageNr = ($explodedPath[1] == '' ? '1' : $explodedPath[1]);
-
- $itemsCount = db_query("SELECT COUNT(AID) AS count FROM " . $this->tbl_akteur)->fetchField();
-
- // Paginator: Wie viele Seiten gibt es?
- $maxPages = ceil($itemsCount / $this->maxAkteure);
-
- if ($currentPageNr > $maxPages) {
- // Diese URL gibt es nicht, daher zurueck...
-  header("Location: Akteure/" . $maxPages);
- } elseif ($currentPageNr > 1) {
-  $start = $this->maxAkteure * ($currentPageNr - 1);
-  $ende = $this->maxAkteure * $currentPageNr;
- } else {
-  $start = 0;
-  $ende = $this->maxAkteure;
- }
-
- // Filter nach Tags, falls gesetzt
-
-
-$this->hasFilters = ($this->numFilters >= 1) ? true : false;
-$this->filteredAkteurIds = $this->getDuplicates($this->filteredAkteurIds, $this->numFilters);
-
-// Auswahl aller Akteure
-$akteure = db_select($this->tbl_akteur, 'a')
- ->fields('a', array(
-	'AID',
-  'name',
-  'beschreibung',
-  'bild',
-  'adresse'
- ))
- ->orderBy('created', DESC)
- ->orderBy('name', ASC)
- ->range($start, $ende);
-
- if ($this->hasFilters && !empty($this->filteredAkteurIds)) {
-
-  $or = db_or();
-
-  foreach ($this->filteredAkteurIds as $akteur) {
-   $or->condition('AID', $akteur, '=');
-  }
-
-  $akteure->condition($or);
-  $akteure->range(0,9999);
-
- } else if ($this->hasFilters && empty($this->filteredAkteurIds)) {
-
-   // Keine Akteure mit entsprechendem Tag gefunden, daher negatives resultAkteure
-   $akteure->condition('name', 'LASDFJKASDFSKFDLJ', '=');
-
- }
-
- $resultAkteure = $akteure->execute()->fetchAll();
-
- /*
  TODO: Check for user_akteure and mark them by CSS-class .userIsAkteur
 
  if (user_is_logged_in()) {
@@ -134,32 +30,72 @@ $akteure = db_select($this->tbl_akteur, 'a')
   $userHasAkteure = $userHasAkteure->fetchAll();
 } */
 
-  // Get additional data
+namespace Drupal\AaeData;
+
+Class akteurepage extends aae_data_helper {
+
+ var $presentationMode;
+ var $maxAkteure;
+ var $sparten;
+ var $hasFilters = false;
+ var $filter = array();
+ 
+ public function __construct(){
+  
+  parent::__construct();
+  
+  require_once('models/akteure.php');
+  $this->akteure = new akteure();
+  
+ }
+
+ public function run(){
+
+  $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) ? $this->clearContent($_GET['presentation']) : 'boxen');
+  $this->maxAkteure = (isset($_GET['display_number']) && !empty($_GET['display_number']) ? $this->clearContent($_GET['display_number']) : '40');
+
+  if (isset($_GET['filterTags']) && !empty($_GET['filterTags'])) {
+   $this->filter['tags'] = $_GET['filterTags']; # Becomes escaped in model
+  }
+
+  if (isset($_GET['filterKeyword']) && !empty($_GET['filterKeyword'])) {
+   $this->filter['keyword'] = $this->clearContent($_GET['filterKeyword']);
+  }
+
+  if (isset($_GET['filterBezirke']) && !empty($_GET['filterBezirke'])) {
+   $this->filter['bezirke'] = $_GET['filterBezirke']; # Becomes escaped in model
+  }
+
+  // Paginator (will be replaced by dynamic AJAX-loads)
+  $explodedPath = explode("/", $this->clearContent(current_path()));
+  $currentPageNr = ($explodedPath[1] == '' ? '1' : $explodedPath[1]);
+  $itemsCount = db_query("SELECT COUNT(AID) AS count FROM " . $this->tbl_akteur)->fetchField();
+  $maxPages = ceil($itemsCount / $this->maxAkteure); # How many pages?
+  # TODO, if filtered, too much page-numbers
+  if ($currentPageNr > $maxPages) {
+   // Diese URL gibt es nicht, daher zurueck...
+   header('Location: '. $base_url . '/akteure/' . $maxPages);
+  } elseif ($currentPageNr > 1) {
+   $start = $this->maxAkteure * ($currentPageNr - 1);
+   $ende = $this->maxAkteure * $currentPageNr;
+  } else {
+   $start = 0;
+   $ende = $this->maxAkteure;
+  }
+
+  $resultAkteure = $this->akteure->getAkteure(array('range' => array('start' => $start, 'end' => $ende),'filter' => $this->filter), 'minimal');
+
+  // Prepare for rendering
   foreach ($resultAkteure as $counter => $akteur) {
+   
    $renderSmallName = false;
+   $renderBigImg = false;
    $akName = explode(" ", $akteur->name);
 
    foreach ($akName as $name) {
-    if (strlen($name) >= 17 || strlen($akteur->name) >= 30) $renderSmallName = true;
+    if (strlen($name) >= 17 || strlen($akteur->name) >= 30)
+      $renderSmallName = true;
    }
-
-   // Get short-text
-   $numwords = 30;
-   preg_match("/(\S+\s*){0,$numwords}/", $akteur->beschreibung, $regs);
-
-   $adresse = db_select($this->tbl_adresse, 'ad')
-    ->fields('ad', array('bezirk','gps_lat','gps_long'))
-    ->condition('ADID', $akteur->adresse, '=')
-    ->execute()
-    ->fetchObject();
-
-   $bezirk = db_select($this->tbl_bezirke, 'b')
-    ->fields('b')
-    ->condition('BID', $adresse->bezirk, '=')
-    ->execute()
-    ->fetchObject();
-
-   $renderBigImg = false;
 
    // Check image-relations, adjust height via CSS-Class
    if (!empty($akteur->bild)){
@@ -170,10 +106,7 @@ $akteure = db_select($this->tbl_akteur, 'a')
 
    // Hack: add variable to $resultAkteure-object
    $resultAkteure[$counter] = (array)$resultAkteure[$counter];
-   $resultAkteure[$counter]['bezirk'] = $bezirk->bezirksname;
-   $resultAkteure[$counter]['gps'] = ($adresse->gps_lat != 'Ermittle Geo-Koordinaten...' && !empty($adresse->gps_lat) ? $adresse->gps_lat.','.$adresse->gps_long : '');
    $resultAkteure[$counter]['renderSmallName'] = $renderSmallName;
-   $resultAkteure[$counter]['kurzbeschreibung'] = trim($regs[0]);
    $resultAkteure[$counter]['renderBigImg'] = $renderBigImg;
    $resultAkteure[$counter] = (object)$resultAkteure[$counter];
 
@@ -199,7 +132,6 @@ $akteure = db_select($this->tbl_akteur, 'a')
    $this->addMapContent('','',array('something' => 'bla'));
   }
 
-
   $resultBezirkeRelevance = db_query_range('SELECT COUNT(*) AS count, b.BID, b.bezirksname FROM {aae_data_bezirke} b
                                             INNER JOIN {aae_data_adresse} ad ON b.BID = ad.bezirk
                                             INNER JOIN {aae_data_akteur} a ON a.adresse = ad.ADID
@@ -210,7 +142,7 @@ $akteure = db_select($this->tbl_akteur, 'a')
 
   ob_start(); // Aktiviert "Render"-modus
   include_once path_to_theme().'/templates/akteure.tpl.php';
-  return ob_get_clean(); // Uebergabe des gerenderten Template's
+  return ob_get_clean(); // Uebergabe des gerenderten Templates
 
  }
 } // end class akteure

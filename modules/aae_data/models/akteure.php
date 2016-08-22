@@ -40,12 +40,75 @@ Class akteure extends aae_data_helper {
  
  /*
   * @return Akteure-object, keyed by AID
-  * @param $condition : array
+  * @param $condition : array : see akteurepage.php for examples
+  * @param $fields : integer : MINIMAL output (=prev-mode)
+  *                            NORMAL output
   *
   */
-
  public function getAkteure($conditions = NULL, $fields = 'normal', $orderBy = 'name') {
-  # TODO
+  
+  $akteure = db_select($this->tbl_akteur, 'a');
+
+  if ($fields == 'minimal'){
+   $akteure->fields('a', array('AID','name','beschreibung','bild','adresse'));
+  } else {
+   $akteure->fields('a');
+  }
+
+  foreach ($conditions as $key => $condition){
+   
+   switch ($key) {
+    
+    case ('range') :
+     $akteure->range($condition['start'],$condition['end']);
+    break;
+
+    case('filter') :
+     if (!empty($conditions['filter']))
+       $akteure->condition('AID', $this->__filterAkteure($conditions['filter']));
+    break;
+
+    default :
+     $akteure->condition($key, $condition);
+    break;
+
+   }
+
+  }
+
+  $akteure->orderBy('created', DESC)
+          ->orderBy('name', ASC); #TODO, make dynamic
+
+  $resultAkteure = $akteure->execute()->fetchAllAssoc('AID');
+
+  foreach ($resultAkteure as $counter => $akteur){
+
+   $numwords = 30;
+   preg_match("/(\S+\s*){0,$numwords}/", $akteur->beschreibung, $regs);
+
+   $adresse = db_select($this->tbl_adresse, 'ad')
+    ->fields('ad', array('bezirk','gps_lat','gps_long'))
+    ->condition('ADID', $akteur->adresse)
+    ->execute()
+    ->fetchObject();
+
+   $bezirk = db_select($this->tbl_bezirke, 'b')
+    ->fields('b')
+    ->condition('BID', $adresse->bezirk)
+    ->execute()
+    ->fetchObject();
+
+   // Hack: add variable to $resultAkteure-object
+   $resultAkteure[$counter] = (array)$resultAkteure[$counter];
+   $resultAkteure[$counter]['bezirk'] = $bezirk->bezirksname;
+   $resultAkteure[$counter]['gps'] = ($adresse->gps_lat != 'Ermittle Geo-Koordinaten...' && !empty($adresse->gps_lat) ? $adresse->gps_lat.','.$adresse->gps_long : '');
+   $resultAkteure[$counter]['kurzbeschreibung'] = trim($regs[0]);
+   $resultAkteure[$counter] = (object)$resultAkteure[$counter];
+
+  }
+
+  return $resultAkteure;
+
  }
  
  public function setAkteur($data){
@@ -61,41 +124,41 @@ Class akteure extends aae_data_helper {
    ->fetchObject();
   
   $resultEvents = db_select($this->tbl_akteur_events, 'ae')
-  ->fields('ae')
-  ->condition('AID', $aId)
-  ->execute()
-  ->fetchAll();
+   ->fields('ae')
+   ->condition('AID', $aId)
+   ->execute()
+   ->fetchAll();
 
- foreach($resultEvents as $event){
-  db_delete($this->tbl_event)
+  foreach($resultEvents as $event){
+   db_delete($this->tbl_event)
    ->condition('EID', $event->EID)
    ->execute();
- }
+  }
 
- db_delete($this->tbl_akteur_events)
+  db_delete($this->tbl_akteur_events)
   ->condition('AID', $aId)
   ->execute();
 
- db_delete($this->tbl_hat_user)
+  db_delete($this->tbl_hat_user)
   ->condition('hat_AID', $aId)
   ->execute();
 
- db_delete($this->tbl_akteur)
+  db_delete($this->tbl_akteur)
   ->condition('AID', $aId)
   ->execute();
 
- db_delete($this->tbl_hat_sparte)
+  db_delete($this->tbl_hat_sparte)
   ->condition('hat_AID', $aId)
   ->execute();
 
- // remove profile-image (if possible)
- $bild = end(explode('/', $resultAkteur->bild));
+  // remove profile-image (if possible)
+  $bild = end(explode('/', $resultAkteur->bild));
 
- if (file_exists($this->short_bildpfad.$bild)) {
-  unlink($this->short_bildpfad.$bild);
- }
+  if (file_exists($this->short_bildpfad.$bild)) {
+   unlink($this->short_bildpfad.$bild);
+  }
 
- menu_link_delete(NULL, 'akteurprofil/'.$aId);
+  menu_link_delete(NULL, 'akteurprofil/'.$aId);
   
  }
  
@@ -130,7 +193,7 @@ Class akteure extends aae_data_helper {
     $filteredAkteurIds[] = $sparte->hat_AID;
    }
    
-  } // end Tag-Filter
+  } // end Tags-Filter
 
   if (isset($filter['bezirke'])){
 
@@ -180,21 +243,8 @@ Class akteure extends aae_data_helper {
    }
   } // end Keyword-Filter
   
- 
-  if (!empty($filteredEventIds)) {
-   $filteredEventChildrenIds = db_select($this->tbl_event, 'e')
-    ->fields('e',array('EID'))
-    ->condition('parent_EID', $filteredEventIds)
-    ->execute();
-    
-   foreach ($filteredEventChildrenIds->fetchAll() as $child){
-    $filteredEventIds[] = $child->EID;
-   }
-  }
-  
-  return $this->getDuplicates($filteredEventIds, $numFilters);
+  return $this->getDuplicates($filteredAkteurIds, $numFilters);
    
-  
  }
  
 }

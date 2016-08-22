@@ -50,8 +50,4 @@ Class festival extends aae_data_helper {
   # TODO
  }
  
- public function setAkteur($data){
-  # TODO
- }
- 
 }

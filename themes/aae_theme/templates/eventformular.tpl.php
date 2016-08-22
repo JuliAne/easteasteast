@@ -5,7 +5,7 @@
    '5' => t('2-monatliche Wiederholung')
   ); ?>
 <div class="row">
- <h3>Event <?= ($this->target == 'update' ? t('bearbeiten') : t('anlegen')); ?></h3>
+ <h3><?= t('Event'); ?> <?= ($this->target == 'update' ? t('bearbeiten') : t('anlegen')); ?></h3>
  <?php if ($this->target == 'update') : ?>
  <a href="<?= base_path(); ?>eventprofil/<?= $this->event_id; ?>/remove" class="small secondary button round right" style="margin-top:-37px;" title="<?= t('Event löschen?'); ?>"><?= t('Löschen'); ?></a>
  <?php endif; ?>
@@ -62,7 +62,7 @@
    <legend><?= t('Datum'); ?></legend>
 
    <div class="large-3 columns">
-    <label>Start (Datum, <span class="pflichtfeld">Pflichtfeld</span>): <?= $this->fehler['start']; ?>
+    <label>Start (Datum, <span class="pflichtfeld"><?= t('Pflichtfeld'); ?></span>): <?= $this->fehler['start']; ?>
      <input type="date" id="eventStartdatumInput" name="start" value="<?= $this->start; ?>" placeholder="<?= t("Starttag")." (yyyy-mm-dd)"; ?>" required/>
     </label>
    </div>
@@ -148,7 +148,7 @@
   <label><?= t('Bezirk'); ?>: <?= $this->fehler['ort']; ?>
 
   <select name="ort">
-   <option value="" selected="selected"><?= t('Bezirk auswählen'); ?></option>
+   <option value="" selected="selected">- <?= t('Bezirk auswählen'); ?> -</option>
    <?php foreach ($this->resultbezirke as $bezirk) : ?>
     <option value="<?= $bezirk->BID; ?>" <?php echo ($bezirk->BID == $this->ort ? 'selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
    <?php endforeach; ?>
@@ -168,7 +168,7 @@
  <div class="row">
 
   <div class="large-12 columns">
-  <label><?= t('Beschreibung. In der Vorschau erscheinen die ersten 30 Wörter'); ?> <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['kurzbeschreibung']; ?>
+  <label><?= t('Beschreibung. In der Vorschau erscheinen die ersten 30 Wörter'); ?> <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>: <?= $this->fehler['kurzbeschreibung']; ?>
    <textarea name="kurzbeschreibung" id="kurzbeschreibung" cols="45" rows="3" placeholder="<?= t("Beschreibungstext"); ?>"><?= $this->kurzbeschreibung; ?></textarea>
   </label>
   <script>CKEDITOR.replace('kurzbeschreibung', { toolbar : 'Basic' });</script>

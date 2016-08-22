@@ -28,34 +28,13 @@ Class festivalformular extends aae_data_helper {
   var $fehler = array();
   var $freigabe = true; // Variable zur Freigabe: muss true sein
 
-  // $tbl_akteur
-  var $ph_name = "Name des Festivals";
-  var $ph_email = "E-mail Addresse";
-  var $ph_telefon = "Telefonnummer";
-  var $ph_url = "Website";
-  var $ph_fUrl = "Steht hier 'kunstfest16', wird daraus https://leipziger-ecken.de/kunstfest16";
-  var $ph_bild = "Dateiname mit Endung";
-  var $ph_beschreibung = "Beschreibungstext des Festivals: Slogan, Datum, etc...";
-  var $ph_oeffnungszeiten = "Öffnungszeiten";
-
-  // $tbl_adresse
-  var $ph_strasse = "Strasse";
-  var $ph_nr = "Hausnummer";
-  var $ph_adresszusatz = "Adresszusatz";
-  var $ph_plz = "PLZ";
-  var $ph_ort = "Bezirk";
-  var $ph_gps = "GPS-Addresskoordinaten";
-
   var $resultbezirke = "";
   var $target = "";
   var $modulePath;
 
-  //-----------------------------------
-
   function __construct($action) {
     
    parent::__construct();
-   global $user;
 
    if (!array_intersect(array('administrator', 'festival'), $user->roles)) {
     drupal_access_denied();
