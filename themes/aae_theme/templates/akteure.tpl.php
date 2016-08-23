@@ -16,7 +16,7 @@
   <div id="filter" class="large-12 columns">
 
   <div class="large-12 columns" id="removeFilter">
-   <h4 class="left">Filter</h4>
+   <h4 class="left"><?= t('Filter'); ?></h4>
    <a class="small button right hide-for-medium" style="padding:4px 10px;margin-left:5px;" href="#" title="<?= t('Zeige Filter'); ?>" onclick="javascript:$('#filterForm').slideDown(400);">&#x25BE;</a>
    <a class="small secondary button right" style="padding:4px 10px;" href="<?= base_path(); ?>akteure" title="<?= t('Alle Filter entfernen'); ?>">X</a>
    <div class="divider"></div>
@@ -99,23 +99,22 @@
 
 <?php foreach($resultAkteure as $akteur): ?>
   <div class="large-4 large-offset-1 small-5 small-offset-1 columns pcard">
-  <a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">
-   <header <?= (!empty($akteur->bild) ? 'style="background-image:url('.$akteur->bild.');" ' : ''); ?>class="<?= ($akteur->renderSmallName ? 'renderSmallName ' : ''); ?><?= ($akteur->renderBigImg ? 'renderBigImg' : ''); ?>">
-    </header>
-    </a>
-    <a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">
+   <a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">
+    <header <?= (!empty($akteur->bild) ? 'style="background-image:url('.$akteur->bild.');" ' : ''); ?>class="<?= ($akteur->renderSmallName ? 'renderSmallName ' : ''); ?><?= ($akteur->renderBigImg ? 'renderBigImg' : ''); ?>"></header>
+   </a>
+   <a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">
     <h3><?= $akteur->name; ?></h3>
-    </a>
-    <section>
-      <?php if (!empty($akteur->bezirk)) : ?><a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>"><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p></a><?php endif; ?>
-      <?php if (!empty($akteur->beschreibung)): ?>
+   </a>
+   <section>
+     <?php if (!empty($akteur->bezirk)) : ?><a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>"><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk->bezirksname; ?></p></a><?php endif; ?>
+     <?php if (!empty($akteur->beschreibung)): ?>
       <div class="divider"></div>
         <div class="akteur-content">
           <p><?= $akteur->kurzbeschreibung; ?> <a class="weiterlesen" href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">...weiterlesen</a></p>
         </div>
-      <?php endif; ?>
-    </section>
-   </div>
+     <?php endif; ?>
+   </section>
+  </div>
  <?php endforeach; ?>
 
  <?php else : ?>

@@ -37,25 +37,25 @@
    <legend><?= t('Adresse'); ?></legend>
 
    <div class="large-4 columns">
-    <label>Straße: <?= $this->fehler['strasse']; ?>
+    <label><?= t('Straße'); ?>: <?= $this->fehler['strasse']; ?>
      <input type="text" id="StrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= t('Straße'); ?>" />
     </label>
    </div>
 
    <div class="large-1 columns">
-    <label>Nr.: <?= $this->fehler['nr']; ?>
+    <label><?= t('Nr.'); ?>: <?= $this->fehler['nr']; ?>
      <input type="text" id="NrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= t('Hausnummer'); ?>" />
     </label>
    </div>
 
    <div class="large-3 columns">
-    <label>Adresszusatz: <?= $this->fehler['adresszusatz']; ?>
+    <label><?= t('Adresszusatz'); ?>: <?= $this->fehler['adresszusatz']; ?>
      <input type="text" id="AdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= t('Adresszusatz'); ?>">
     </label>
    </div> 
 
    <div class="large-3 columns">
-    <label>PLZ: <?= $this->fehler['plz']; ?>
+    <label><?= t('PLZ'); ?>: <?= $this->fehler['plz']; ?>
       <input type="text" pattern="[0-9]{5}" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= t('PLZ'); ?>">
     </label>
    </div>
@@ -73,7 +73,7 @@
 
   <select name="ort">
    <option value="" selected="selected">- <?= t('Bezirk auswählen'); ?> -</option>
-   <?php foreach ($this->resultBezirke as $bezirk) : ?>
+   <?php foreach ($this->allBezirke as $bezirk) : ?>
     <?php if ($bezirk->BID == $this->ort) : ?>
     <option value="<?= $bezirk->BID; ?>" selected="selected"><?= $bezirk->bezirksname; ?></option>
     <?php else : ?>
@@ -190,14 +190,14 @@
 
     <?php foreach ($this->sparten as $sparte) : ?>
      <?php if (is_array($sparte)) : ?>
-     <option selected value="<?= $sparte[0]->KID; ?>"><?php echo $sparte[0]->kategorie; ?></option>
+     <option selected value="<?= $sparte[0]->KID; ?>"><?= $sparte[0]->kategorie; ?></option>
      <?php else : ?>
      <option selected value="<?= $sparte; ?>"><?= $sparte; ?></option>
      <?php endif; ?>
     <?php endforeach;?>
 
-    <?php foreach ($this->all_sparten as $sparte) : ?>
-     <option value="<?php echo $sparte->KID; ?>"><?php echo $sparte->kategorie; ?></option>
+    <?php foreach ($this->allTags as $tag) : ?>
+     <option value="<?= $tag->KID; ?>"><?= $tag->kategorie; ?></option>
     <?php endforeach;?>
     </select>
 

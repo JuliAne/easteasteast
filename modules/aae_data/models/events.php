@@ -197,9 +197,14 @@ Class events extends aae_data_helper {
  *
  *  @return boolean
  *  @param event_id
- *  @param user_id
+ *  @param user_id (optional)
+ *
  */
- public function isAuthorized($eId, $uId){
+ public function isAuthorized($eId, $uId = NULL){
+
+  global $user;
+
+  $uId = (empty($uId) ? $this->user_id : $uId);
   
   $erstellerId = db_select($this->tbl_event,'e')
    ->fields('e', array('ersteller'))
@@ -208,7 +213,7 @@ Class events extends aae_data_helper {
    
   $erstellerId = $erstellerId->fetchObject();
   
-  if ($erstellerId->ersteller == $uId || array_intersect(array('administrator'), $user->roles)){
+  if ($erstellerId->ersteller == $uId || in_array('administrator', $user->roles)){
    return true;
   }
  

@@ -45,35 +45,36 @@ Class akteurformular extends aae_data_helper {
   var $fehler = array();
   var $freigabe = true; // Variable zur Freigabe: muss true sein
 
-  // $tbl_akteur_hat_Sparte
+  // $tbl_akteur_hat_sparte
   var $countsparten = "";
   var $sparte_id = "";
 
   var $resultbezirke = "";
   var $target = "";
-  var $modulePath;
   var $removedTags;
   var $removedPic;
   var $rssFeed = "";
-
-  //-----------------------------------
 
   function __construct($action) {
     
    parent::__construct();
 
-   if (!user_is_logged_in()) {
+   $explodedpath = explode("/", current_path());
+   $this->akteur_id = $this->clearContent($explodedpath[1]);
+   require_once('models/akteure.php');
+   $this->akteur = new akteure();
+
+   if (!user_is_logged_in() || !$this->akteur->akteurExists($this->akteur_id)) {
     drupal_access_denied();
     drupal_exit();
    }
-
-   $this->modulePath = drupal_get_path('module', 'aae_data');
 
    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
    if ($action == 'update') {
     $this->target = 'update';
    }
-  } // END Constructor
+
+  }
 
   /**
    *  Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
@@ -82,25 +83,15 @@ Class akteurformular extends aae_data_helper {
 
   public function run() {
 
-  /*  $og_title = array(
-  '#tag' => 'meta',
-  '#attributes' => array(
-    'property' => 'og:title',
-    'content' => 'bla',
-  ),
-);
-
-drupal_add_html_head($og_title, 'og_title'); */
-
-    $path = current_path();
-    $explodedpath = explode("/", $path);
-    $this->akteur_id = $this->clearContent($explodedpath[1]);
-
     $output = '';
 
     if (isset($_POST['submit'])) {
       if ($this->akteurCheckPost()) {
 	     if ($this->target == 'update') {
+        if (!$this->akteur->isAuthorized($this->akteur_id)){
+         drupal_access_denied();
+         drupal_exit();
+        }
 	      $this->akteurUpdaten();
 	     } else {
 		    $this->akteurSpeichern();
@@ -111,9 +102,9 @@ drupal_add_html_head($og_title, 'og_title'); */
       }
     } else {
       // Was passiert, wenn Seite zum ersten mal gezeigt wird?
-      // Lade Feld-Werte via ID (akteurGetFields) und gebe diese aus
+      // Lade Feld-Werte via akteurGetFields
       if ($this->target == 'update') {
-	    $this->akteurGetFields();
+	     $this->akteurGetFields();
       }
       $output = $this->akteurDisplay();
     }
@@ -123,7 +114,7 @@ drupal_add_html_head($og_title, 'og_title'); */
 
   /**
    * Wird ausgeführt, wenn auf "Speichern" geklickt wird
-   * @return $this->freigabe [boolean]
+   * @return $this->freigabe : boolean
    */
 
   private function akteurCheckPost() {
@@ -237,12 +228,12 @@ drupal_add_html_head($og_title, 'og_title'); */
     }
 
     if (strlen($this->rssFeed) > 400) {
-
+     # TODO
     }
 
     if ($this->gps == 'Ermittle Geo-Koordinaten...') $this->gps = '';
 
-    // Um die bereits gewählten Tag's anzuzeigen benötigen wir deren Namen...
+    // Um die bereits gewählten Tags anzuzeigen benötigen wir deren Namen...
     if ($this->freigabe == false) {
 
      $neueSparten = array();
@@ -606,20 +597,15 @@ drupal_add_html_head($og_title, 'og_title'); */
    */
   private function akteurGetFields() {
 
-    // Auswahl der Daten des ausgewählten Akteurs:
-    $resultakteur = db_select($this->tbl_akteur, 'c')
-     ->fields('c')
-	   ->condition('AID', $this->akteur_id, '=')
-     ->execute();
+    $resultAkteur = $this->akteur->getAkteure(array('AID' => $this->akteur_id), 'complete');
 
     if (module_exists('aggregator')) {
      $this->rssFeed = aggregator_feed_load('aae-feed-'.$this->akteur_id);
     }
 
     // Speichern der Daten in den Arbeitsvariablen
-    foreach ($resultakteur as $row) {
+    foreach ($resultAkteur as $row) {
 	   $this->name = $row->name;
-     $this->adresse = $row->adresse;
 	   $this->email = $row->email;
 	   $this->telefon = $row->telefon;
 	   $this->url = $row->url;
@@ -631,45 +617,16 @@ drupal_add_html_head($og_title, 'og_title'); */
      $this->barrierefrei = $row->barrierefrei;
      $this->created = new \DateTime($row->created);
      $this->modified = new \DateTime($row->modified);
-    }
-
-    //Adressdaten aus DB holen:
-    $resultAdresse = db_select($this->tbl_adresse, 'd')
-     ->fields('d')
-	   ->condition('ADID', $this->adresse, '=')
-     ->execute();
-
-    // Speichern der Adressdaten in den Arbeitsvariablen
-    foreach ($resultAdresse as $row) {
-     $gps = explode(',', $row->gps, 2);
-
-	   $this->strasse = $row->strasse;
-	   $this->nr = $row->nr;
-	   $this->adresszusatz = $row->adresszusatz;
-	   $this->plz = $row->plz;
-	   $this->ort = $row->bezirk;
-	   $this->gps = $row->gps_lat.','.$row->gps_long;
-    }
-
-    $resultSparten = db_select($this->tbl_hat_sparte, 'hs')
-     ->fields('hs')
-     ->condition('hat_AID', $this->akteur_id, '=')
-     ->execute()
-     ->fetchAll();
-
-    $sparten = array();
-
-    foreach($resultSparten as $sparte) {
-
-     $sparten[] = db_select($this->tbl_sparte, 's')
-     ->fields('s')
-     ->condition('KID', $sparte->hat_KID, '=')
-     ->execute()
-     ->fetchAll();
+     $this->adresse = $row->adresse->ADID;
+	   $this->strasse = $row->adresse->strasse;
+	   $this->nr = $row->adresse->nr;
+	   $this->adresszusatz = $row->adresse->adresszusatz;
+	   $this->plz = $row->adresse->plz;
+	   $this->ort = $row->bezirk->BID;
+	   $this->gps = $row->gps;
+     $this->sparten = $row->tags;
 
     }
-
-    $this->sparten = $sparten;
 
   } // END function akteurGetFields()
 
@@ -679,11 +636,12 @@ drupal_add_html_head($og_title, 'og_title'); */
    */
   private function akteurDisplay() {
 
-    $this->resultBezirke = db_select($this->tbl_bezirke, 'b')
-     ->fields('b', array( 'BID', 'bezirksname' ))
-     ->execute();
+    $this->allBezirke = db_select($this->tbl_bezirke, 'b')
+     ->fields('b')
+     ->execute()
+     ->fetchAll();
 
-    $this->all_sparten = db_select($this->tbl_sparte, 's')
+    $this->allTags = db_select($this->tbl_sparte, 's')
      ->fields('s')
      ->execute()
      ->fetchAll();

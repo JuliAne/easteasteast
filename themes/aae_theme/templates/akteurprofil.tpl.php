@@ -82,7 +82,7 @@
    <?php if (!empty($resultFestivals) && is_array($resultFestivals)) :
     foreach ($resultFestivals as $festival) : ?>
    <a href="https://leipziger-ecken.de/<?= $festival->alias; ?>"><button class="festival button" style="background:#fff;margin-top:2px;color:#2199e8;">
-   <?= ($festival->admin == $aResult['row1']->AID ? t('Veranstalter') : t('Teilnehmer')); ?> des <?= $festival->name; ?></button></a>
+   <?= ($festival->admin == $aResult['row1']->AID ? t('Veranstalter') : t('Teilnehmer')); ?> <?= t('des'); ?> <?= $festival->name; ?></button></a>
     <?php endforeach; endif; ?>
   </div>
 

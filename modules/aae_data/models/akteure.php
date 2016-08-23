@@ -20,28 +20,41 @@ Class akteure extends aae_data_helper {
   * Checks whether user owns akteur
   * @return boolean
  */
- public function isAuthorized($aId, $uId){
-     
+ public function isAuthorized($aId, $uId = NULL){
+
   global $user;
+
+  $uId = (empty($uId) ? $this->user_id : $uId);
   
   $resultUser = db_select($this->tbl_hat_user, 'u')
    ->fields('u')
    ->condition('hat_AID', $aId)
-   ->condition('hat_UID', $this->user_id)
+   ->condition('hat_UID', $uId)
    ->execute();
 
-  if ($resultUser->rowCount() || !array_intersect(array('redakteur','administrator'), $user->roles)) {
+  if ($resultUser->rowCount() || in_array('administrator', $user->roles)) {
    return true;
   } else {
    return false;
   }
   
  }
+
+ public function akteurExists($aId){
+
+  $resultAkteur = db_select($this->tbl_akteur, 'a')
+   ->fields('a', array('AID'))
+   ->condition('AID', $aId)
+   ->execute();
+
+  return $resultAkteur->rowCount();
+
+ }
  
  /*
   * @return Akteure-object, keyed by AID
   * @param $condition : array : see akteurepage.php for examples
-  * @param $fields : integer : MINIMAL output (=prev-mode)
+  * @param $fields : integer : MINIMAL output (=preview-mode)
   *                            NORMAL output
   *
   */
@@ -77,7 +90,7 @@ Class akteure extends aae_data_helper {
   }
 
   $akteure->orderBy('created', DESC)
-          ->orderBy('name', ASC); #TODO, make dynamic
+          ->orderBy('name', ASC); #TODO: make dynamic
 
   $resultAkteure = $akteure->execute()->fetchAllAssoc('AID');
 
@@ -86,11 +99,14 @@ Class akteure extends aae_data_helper {
    $numwords = 30;
    preg_match("/(\S+\s*){0,$numwords}/", $akteur->beschreibung, $regs);
 
-   $adresse = db_select($this->tbl_adresse, 'ad')
-    ->fields('ad', array('bezirk','gps_lat','gps_long'))
-    ->condition('ADID', $akteur->adresse)
-    ->execute()
-    ->fetchObject();
+   $adresse = db_select($this->tbl_adresse, 'ad');
+   if ($fields == 'complete'){
+     $adresse->fields('ad');
+   } else {
+     $adresse->fields('ad', array('bezirk','gps_lat','gps_long'));
+   }
+
+   $adresse = $adresse->condition('ADID', $akteur->adresse)->execute()->fetchObject();
 
    $bezirk = db_select($this->tbl_bezirke, 'b')
     ->fields('b')
@@ -100,9 +116,36 @@ Class akteure extends aae_data_helper {
 
    // Hack: add variable to $resultAkteure-object
    $resultAkteure[$counter] = (array)$resultAkteure[$counter];
-   $resultAkteure[$counter]['bezirk'] = $bezirk->bezirksname;
+   $resultAkteure[$counter]['adresse'] = $adresse;
+   $resultAkteure[$counter]['bezirk'] = $bezirk;
    $resultAkteure[$counter]['gps'] = ($adresse->gps_lat != 'Ermittle Geo-Koordinaten...' && !empty($adresse->gps_lat) ? $adresse->gps_lat.','.$adresse->gps_long : '');
    $resultAkteure[$counter]['kurzbeschreibung'] = trim($regs[0]);
+
+   if ($fields == 'complete'){
+
+    // get Tags
+    $resultTags = db_select($this->tbl_hat_sparte, 'ht')
+     ->fields('ht')
+     ->condition('hat_AID', $akteur->AID)
+     ->execute()
+     ->fetchAll();
+
+    $tags = array();
+
+    foreach($resultTags as $tag) {
+
+     $tags[] = db_select($this->tbl_sparte, 's')
+     ->fields('s')
+     ->condition('KID', $tag->hat_KID)
+     ->execute()
+     ->fetchAll();
+
+    }
+
+    $resultAkteure[$counter]['tags'] = $tags;
+    
+   }
+
    $resultAkteure[$counter] = (object)$resultAkteure[$counter];
 
   }

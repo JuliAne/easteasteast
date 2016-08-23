@@ -36,6 +36,8 @@ Class festivalformular extends aae_data_helper {
     
    parent::__construct();
 
+   global $user;
+
    if (!array_intersect(array('administrator', 'festival'), $user->roles)) {
     drupal_access_denied();
     drupal_exit();

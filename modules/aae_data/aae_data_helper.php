@@ -44,6 +44,7 @@ namespace Drupal\AaeData;
    var $monat_short;
    var $monat_lang;
    var $dayNames;
+   var $user_id;
 
    function __construct(){
 
@@ -90,8 +91,8 @@ namespace Drupal\AaeData;
    }
 
    /**
-    *  Einfache Funktion zum Filtern von POST- und GET-Daten ("escape-function")
-    *  Da Drupal automatisch PDO verwendet, brauchen wir hier nicht allzu viel.
+    *  Einfache Funktion zum Filtern von POST- und GET-Daten ("escapen")
+    *  Da Drupal automatisch PDO verwendet, brauchen wir hier nicht allzu viel für DB-queries.
     *  Entfernt Whitespaces (oder andere Zeichen) am Anfang und Ende eines Strings und
     *  filtert HTML um XSS Attacken vorzubeugen.
     */
