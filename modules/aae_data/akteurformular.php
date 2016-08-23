@@ -104,7 +104,12 @@ Class akteurformular extends aae_data_helper {
       // Was passiert, wenn Seite zum ersten mal gezeigt wird?
       // Lade Feld-Werte via akteurGetFields
       if ($this->target == 'update') {
-	     $this->akteurGetFields();
+       if (!$this->akteur->isAuthorized($this->akteur_id)){
+        drupal_access_denied();
+        drupal_exit();
+       } else {
+	      $this->akteurGetFields();
+       }
       }
       $output = $this->akteurDisplay();
     }
