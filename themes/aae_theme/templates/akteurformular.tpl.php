@@ -164,7 +164,7 @@
 
         <div class="large-4 columns">
          <label><?= t('Projektwebsite'); ?>: <?= $this->fehler['url']; ?>
-          <input type="url" id="akteurURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= t('Website'); ?>">
+          <input type="text" id="akteurURLInput" name="url" value="<?= $this->url; ?>" placeholder="<?= t('Website'); ?>">
          </label>
         </div>
 
