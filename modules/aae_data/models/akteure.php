@@ -31,7 +31,7 @@ Class akteure extends aae_data_helper {
    ->condition('hat_AID', $aId)
    ->condition('hat_UID', $uId)
    ->execute();
-
+echo in_array('administrator', $user->roles); exit();
   if ($resultUser->rowCount() || in_array('administrator', $user->roles)) {
    return true;
   } else {
@@ -119,7 +119,7 @@ Class akteure extends aae_data_helper {
    $resultAkteure[$counter]['adresse'] = $adresse;
    $resultAkteure[$counter]['bezirk'] = $bezirk;
    $resultAkteure[$counter]['gps'] = ($adresse->gps_lat != 'Ermittle Geo-Koordinaten...' && !empty($adresse->gps_lat) ? $adresse->gps_lat.','.$adresse->gps_long : '');
-   $resultAkteure[$counter]['kurzbeschreibung'] = trim($regs[0]);
+   $resultAkteure[$counter]['kurzbeschreibung'] = trim(strip_tags($regs[0],'<p>'));
 
    if ($fields == 'complete'){
 

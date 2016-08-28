@@ -73,6 +73,7 @@ class akteurprofil extends aae_data_helper {
   
   // Generiere Mapbox-taugliche Koordinaten, übergebe diese ans Frontend
   if (!empty($aResult['adresse']->gps_lat)) {
+
     $showMap = true;
     $koordinaten = $aResult['adresse']->gps_lat.','.$aResult['adresse']->gps_long;
     $this->addMapContent($koordinaten, array(
@@ -86,7 +87,7 @@ class akteurprofil extends aae_data_helper {
 
   $kategorien = db_select($this->tbl_hat_sparte, 'a')
   ->fields('a', array('hat_KID'))
-  ->condition('hat_AID', $akteur_id, '=')
+  ->condition('hat_AID', $akteur_id)
   ->execute()
   ->fetchAll();
 
@@ -96,7 +97,7 @@ class akteurprofil extends aae_data_helper {
 
     $resultTags[] = db_select($this->tbl_sparte, 't')
     ->fields('t')
-    ->condition('KID', $kategorie->hat_KID, '=')
+    ->condition('KID', $kategorie->hat_KID)
     ->execute()
     ->fetchObject();
 
@@ -182,11 +183,11 @@ public function removeAkteur(){
    $var .= "FN:".$resultAkteur->ansprechpartner."\r\n";
    $var .= "TZ:".date('O')."\r\n";
    $var .= "EMAIL;TYPE=PREF,INTERNET:".$resultAkteur->email."\r\n";
-   $var .= "SOURCE:http://leipzger-ecken.de/download_vcard/".$resultAkteur->AID."\r\n";
-   $var .= "URL:http://leipziger-ecken.de/akteurprofil/".$resultAkteur->AID."\r\n";
+   $var .= "SOURCE:https://leipzger-ecken.de/download_vcard/".$resultAkteur->AID."\r\n";
+   $var .= "URL:https://leipziger-ecken.de/akteurprofil/".$resultAkteur->AID."\r\n";
 
    if (!empty($resultAkteur->bild)){
-    $var .= "PHOTO;VALUE=URL;TYPE=JPEG:http://leipziger-ecken.de".$resultAkteur->bild."\r\n";
+    $var .= "PHOTO;VALUE=URL;TYPE=JPEG:https://leipziger-ecken.de".$resultAkteur->bild."\r\n";
    }
 
    if (!empty($resultAdresse->strasse) && !empty($resultAdresse->nr) && !empty($resultAdresse->plz)){

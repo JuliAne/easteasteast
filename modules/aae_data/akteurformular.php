@@ -6,7 +6,6 @@
  *
  * Einzige Pflichtfelder sind bisher Name, Emailadresse und Bezirk.
  *
- * TODO: Place in translation-placeholders
  */
  
 namespace Drupal\AaeData;
@@ -64,7 +63,7 @@ Class akteurformular extends aae_data_helper {
    require_once('models/akteure.php');
    $this->akteur = new akteure();
 
-   if (!user_is_logged_in() || !$this->akteur->akteurExists($this->akteur_id)) {
+   if (!user_is_logged_in() || ($action == 'update' && !$this->akteur->akteurExists($this->akteur_id))) {
     drupal_access_denied();
     drupal_exit();
    }

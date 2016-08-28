@@ -121,7 +121,7 @@ Class akteurepage extends aae_data_helper {
 
     if (!empty($akteur->gps)) {
      $beschreibung = (!empty($akteur->kurzbeschreibung)) ? ' - '.$akteur->kurzbeschreibung.'...' : '';
-     $js .= '['.$akteur->gps.',"<a href=\''.base_path().'akteurprofil/'.$akteur->AID.'\'>'.$akteur->name.'</a>'.$beschreibung.'"],';
+     $js .= '['.$akteur->gps.',"<a href=\''.base_path().'akteurprofil/'.$akteur->AID.'\'>'.$akteur->name.'</a>'.strip_tags($beschreibung, '<p>').'"],';
     }
 
    }
@@ -130,6 +130,7 @@ Class akteurepage extends aae_data_helper {
    drupal_add_js($js, 'inline');
    // Needed to add Map-Files:
    $this->addMapContent('','',array('something' => 'bla'));
+   
   }
 
   $resultBezirkeRelevance = db_query_range('SELECT COUNT(*) AS count, b.BID, b.bezirksname FROM {aae_data_bezirke} b

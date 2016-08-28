@@ -1456,6 +1456,19 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
  top: 0;
 }
 
+#helpfestPageBg {
+ position: fixed;
+ z-index: -1;
+ width: 100%;
+ height: 100%;
+ background-color: #fff;
+ background: url(../helpfest/bg.jpg) repeat-x;
+ background-attachment: fixed;
+ background-position: center top;
+ left: 0;
+ top: 0;
+}
+
 #neustadtPageBg {
  position: fixed;
  z-index: -1;

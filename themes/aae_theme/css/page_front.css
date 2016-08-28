@@ -61,20 +61,6 @@ html.fp-enabled,
     width: 100%;
     height: 100%;
 }
-
-/*.row {
-    max-width: 62.5rem!important;
-} */
-
-#projects-events .fp-tableCell h1 span, #projects-akteure .fp-tableCell h1 span{
-/*    background-color: rgba(255,255,255,0.6);
-    border-radius: 3px; */
-}
-
-#journal .fp-tableCell h1 span{
- /*   background-color: rgba(255,255,255,0.6); */
-}
-
 .fp-slidesContainer {
     float: left;
     position: relative;
@@ -256,11 +242,6 @@ html.fp-enabled,
   padding: 0 0 0 0;
   transition: 0.3s all;
 }
-
-/*#imgSlideSection.blurme .slide {
-  opacity: 0.8;
-}*/
-
 #slideSection #hitMeScrollMe {
  position: fixed;
  left: 48%;
@@ -291,11 +272,6 @@ html.fp-enabled,
   font-size: 3.5em;
   margin-bottom: 8px;
 }
-
-#slideSection .slide h1, #slideSection .slide p {
-  /*text-shadow: 0 0 4px rgb(46, 46, 46);*/
-}
-
 #slideSection .slide p {
   margin-bottom: 45px;
   font-size: 1.25em;
@@ -435,11 +411,11 @@ html.fp-enabled,
 }
 
 #projects-akteure .pcard section {
-  background: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.9);
 }
 
 #projects-akteure .pcard:hover section {
-  background: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.95);
 }
 
 #projects-akteure .pcard:hover .divider {
@@ -451,7 +427,7 @@ html.fp-enabled,
 }
 
 #projects-akteure .pcard:hover h3 {
-  background: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.95);
 }
 
 #projects-akteure .pcard header {
@@ -501,7 +477,7 @@ html.fp-enabled,
  border: 1px solid #F1EFEF;
  border-radius: 3px;
  padding: 4px 8px;
- background-color: rgba(255,255,255,0.8);
+ background-color: rgba(255,255,255,0.9);
  display: table-cell;
  vertical-align: middle;
  width: 74%!important;
@@ -547,6 +523,10 @@ html.fp-enabled,
   color: #1585cf;
 }
 
+.noTime h4 {
+  padding-top: 25px;
+}
+
 .event aside {
   color: grey;
 }
@@ -557,7 +537,7 @@ html.fp-enabled,
 
 .large3-events:hover .event {
   border-color: #2199E8;
-  background-color: rgba(255,255,255,0.9);
+  background-color: rgba(255,255,255,0.95);
 }
 
 .large3-events:hover .event .divider {

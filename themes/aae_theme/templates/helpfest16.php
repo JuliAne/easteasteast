@@ -33,11 +33,11 @@ drupal_add_html_head($og_desc, 'og_description');*/
 #footer {background-image:unset;}
 </style>
 
-<div id="freiraumPageBg"></div>
+<div id="helpfestPageBg"></div>
 
 <header id="neustadtPageHeader" class="pageHeader">
-  <h2>Freiraum Festival <a href="<?= base_path(); ?>events/rss" title="<?= t('Alle Events als RSS-Feed'); ?>"><img id="svg_logo" src="<?= base_path().path_to_theme(); ?>/img/rss.svg" /></a></h2>
-  <p>10.09.2016 | 4 Viertel | 25 Orte</p>
+  <h2>help* Festival<a href="<?= base_path(); ?>events/rss" title="<?= t('Alle Events als RSS-Feed'); ?>"><img id="svg_logo" src="<?= base_path().path_to_theme(); ?>/img/rss.svg" /></a></h2>
+  <p>02.09. - 02.10.2016</p>
 </header>
 
 <aside id="neustadtIntro" class="row">
@@ -54,18 +54,18 @@ drupal_add_html_head($og_desc, 'og_description');*/
           // Need a universal menu-method here!
           $path = request_uri(); ?>
    
-    <li class="tabs-title<?= ($path == '/freiraum16' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/freiraum16"<?= ($path == '/freiraum16' ? ' aria-selected="true"' : ''); ?>>Startseite</a></li>
-    <li class="tabs-title"><a href="https://leipziger-ecken.de/akteurprofil/90">Das Festival</a></li>
-    <li class="tabs-title<?= ($path == '/freiraum16?presentation=calendar' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/freiraum16?presentation=calendar"<?= ($path == '/kunstfest16?presentation=calendar' ? ' aria-selected="true"' : ''); ?>>Kalender</a></li>
-    <li class="tabs-title"><a href="http://freiraumleipzig.de">Offiziele Website</a></li>
+    <li class="tabs-title<?= ($path == '/helpfest16' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/helpfest16"<?= ($path == '/freiraum16' ? ' aria-selected="true"' : ''); ?>>Startseite</a></li>
+    <li class="tabs-title"><a href="https://leipziger-ecken.de/akteurprofil/91">Das Festival</a></li>
+    <li class="tabs-title<?= ($path == '/helpfest16?presentation=calendar' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/helpfest16?presentation=calendar"<?= ($path == '/helpfest16?presentation=calendar' ? ' aria-selected="true"' : ''); ?>>Kalender</a></li>
+    <li class="tabs-title"><a href="http://baumit.weebly.com/festival.html">Offiziele Website</a></li>
     <?php global $user; if ($user->uid == 238) : ?>
     <li class="right tabs-title"><a href="https://leipziger-ecken.de/admin/page-builder">+ Seite hinzufügen</a></li>
     <?php endif; ?>
     
     <ul id="presentationFilter" class="button-group round large-3 columns right">
-     <li class="right"><a target="_blank" href="mailto:mail@djh-leipzig.de" title="Das Japanische Haus e.V. kontaktieren" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/paperplane.svg"><span></span></a></li>
+     <li class="right"><a target="_blank" href="mailto:ariane@eexistence.de" title="Ariane Jedlitschka (Organisatorin) kontaktieren" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/paperplane.svg"><span></span></a></li>
      <li class="right">
-    <a target="_blank" href="https://www.facebook.com/freiraum.ostlichter/" title="Besuch' uns auf Facebook!" class="fb button"><img alt="Facebook" src="<?= base_path().path_to_theme(); ?>/img/social-facebook.svg"><span></span></a></li>
+    <!--<a target="_blank" href="https://www.facebook.com/freiraum.ostlichter/" title="Besuch' uns auf Facebook!" class="fb button"><img alt="Facebook" src="<?= base_path().path_to_theme(); ?>/img/social-facebook.svg"><span></span></a></li>-->
     </ul>
    </ul>
    
@@ -191,7 +191,9 @@ $elements_arr = $data['elements'];
  </div>
  
  <div id="festivalFooter" class="row">
+  <p style="text-align:right;color:#fff;opacity:0.8;">&copy; Freeimages.com / Penny Mathews</p>
+ <!--
   <h4>Organisiert und gefördert durch:</h4>
   <div class="large-12 columns"><img src="<?= base_path().path_to_theme(); ?>/freiraum/sponsors.png" /></div>
-
+-->
  </div>

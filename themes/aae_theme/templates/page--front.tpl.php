@@ -87,17 +87,17 @@
     <div class="row">
       <?php
       // Lade "next Events"-Block
-      foreach ($blocks->print_next_events() as $event) : ?>
-        <div class="large-6 small-6 columns large3-events">
-        <a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>">
+      foreach ($blocks->print_next_events() as $event) :
+        $time = ($event->start->format('H:i') != '00:00' ? $event->start->format('H:i') : '').($event->ende->format('H:i') != '00:00' ? ' - '.$event->ende->format('H:i') : ''); ?>
+        <div class="large-6 small-6 columns large3-events<?= (empty($time) ? ' noTime' : ''); ?>">
+        <a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>" title="<?= t('Event aufrufen'); ?>">
          <button class="date"><?= $event->start->format('d'); ?><br/><?= $monat_short[$event->start->format('m')]; ?></button>
         </a>
-        <a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>">
-          <div class="events-align event">
-            <h4><?= $event->name; ?></h4>
-            <div class="divider"></div>
-            <aside><?= ($event->start->format('H:i') != '00:00' ? $event->start->format('H:i') : ''); ?><?php if ($event->ende->format('H:i') != '00:00') :?> - <?= $event->ende->format('H:i'); ?><?php endif; ?></aside>
-          </div>
+        <a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>" title="<?= t('Event aufrufen'); ?>">
+         <div class="events-align event">
+          <h4><?= $event->name; ?></h4>
+          <?php if (!empty($time)) : ?><div class="divider"></div><aside><?= $time; ?></aside><?php endif; ?>
+         </div>
         </a>
       </div>
       <?php endforeach; ?>

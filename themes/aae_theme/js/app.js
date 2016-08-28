@@ -1,5 +1,10 @@
 $(document).ready(function() {
 
+/* FOR akteure- and events-AJAX-loader:
+    if ($(document).height() <= $(window).scrollTop() + $(window).height()) {
+        alert("End Of The Page");
+    } */
+
  activePopupId = false;
  activePopupCaller = false;
 

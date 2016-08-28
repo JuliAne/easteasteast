@@ -1,14 +1,14 @@
 <div class="row">
-<h3>Akteur <?php echo ($this->target == 'update' ? 'bearbeiten' : 'anlegen'); ?></h3>
+<h3><?= t('Akteur'); ?> <?php echo ($this->target == 'update' ? 'bearbeiten' : 'anlegen'); ?></h3>
 <?php if ($this->target == 'update') : ?>
-<a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/remove" class="small secondary button round right" style="margin-top:-37px;">Löschen</a>
+<a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/remove" class="small secondary button round right" style="margin-top:-37px;"><?= t('Löschen'); ?></a>
 <?php endif; ?>
 <div class="divider" style="margin-bottom: 25px;"></div>
 
 <?php if (!$this->freigabe) : ?>
 <div class="callout alert">
  <p><?= t('Akteur konnte nicht gespeichert werden, da folgende Fehler vorliegen:'); ?></p><br />
-  <?php foreach($this->fehler as $f) : ?>
+  <?php foreach ($this->fehler as $f) : ?>
     <p><strong><?= $f; ?></strong></p>
   <?php endforeach; ?>
 </div>
@@ -184,7 +184,7 @@
 
   <div class="large-12 columns">
 
-    <label>Kategorien: <?= $this->fehler['sparten']; ?></label>
+    <label><?= t('Kategorien'); ?>: <?= $this->fehler['sparten']; ?></label>
 
     <select id="eventSpartenInput" multiple="multiple" class="tokenize" name="sparten[]">
 
@@ -207,8 +207,8 @@
  <div class="row">
  <?php if ($this->target == 'update' && !empty($this->created)) : ?>
   <?php if ($this->created->format('d.m.Y') != '01.01.1000') : ?>
-   <p style="color:grey;">Akteur eingetragen am <?= $this->created->format('d.m.Y, H:i'); ?> Uhr.
-   <?php if ($this->modified->format('d.m.Y') != '01.01.1000' && $this->modified->format('H:i') != date('H:i')) : ?> Zuletzt aktualisiert am <?= $this->modified->format('d.m.Y, H:i'); ?> Uhr.<?php endif; ?>
+   <p style="color:grey;"><?= t('Akteur'); ?> <?= t('eingetragen am'); ?> <?= $this->created->format('d.m.Y, H:i'); ?> Uhr.
+   <?php if ($this->modified->format('d.m.Y') != '01.01.1000' && $this->modified->format('H:i') != date('H:i')) : ?> <?= t('Zuletzt aktualisiert am'); ?> <?= $this->modified->format('d.m.Y, H:i'); ?> <?= t('Uhr'); ?>.<?php endif; ?>
    </p><div class="divider" style="margin:17px 0;"></div>
   <?php endif; ?>
  <?php endif; ?>

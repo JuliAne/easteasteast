@@ -31,26 +31,25 @@
 
      <?php if (!user_is_logged_in()) : ?>
       <ul class="tabs large-12 columns" data-tabs id="mainnav-tabs">
-       <li class="tabs-title is-active"><a href="#panelLogin" aria-selected="true">Login</a></li>
+       <li class="tabs-title is-active"><a href="#panelLogin" aria-selected="true"><?= t('Login'); ?></a></li>
        <li class="tabs-title"><a href="#panelRegister"><?= t('Registrieren'); ?></a></li>
       </ul>
       <?php else : ?>
-      <h5 style="padding-top: 8px;"><?= t('Hallo, <strong>!username</strong>.', array('!username' => $user->name)); ?></h5>
+      <h5 style="padding: 10px 0;"><?= t('Hallo, <strong>!username</strong>.', array('!username' => $user->name)); ?></h5>
       <div class="divider"></div>
+      <?php require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
+            $blocks = new Drupal\AaeData\aae_blocks();
+            $myAkteure = $blocks->print_my_akteure();
 
-        <?php require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
-              $blocks = new Drupal\AaeData\aae_blocks();
-
-              foreach($blocks->print_my_akteure() as $myAkteur) : ?>
-
-        <p><a href="<?= base_path(); ?>akteurprofil/<?= $myAkteur[0]->AID; ?>"><?= $myAkteur[0]->name; ?></a></p>
-
-        <?php endforeach; ?>
-
-        <a href="<?= base_path(); ?>akteure/new" class="large-12 columns small button">+ <?= t('Akteur erstellen'); ?></a>
+            if (!empty($myAkteure)) : ?>
+            <p><?= t('Meine Akteure'); ?>:</p>
+            <?php foreach($myAkteure as $myAkteur) : ?>
+            <p><a href="<?= base_path(); ?>akteurprofil/<?= $myAkteur[0]->AID; ?>"><?= $myAkteur[0]->name; ?></a></p>
+        <?php endforeach; endif; ?>
+        <a href="<?= base_path(); ?>akteure/new" class="large-12 columns small button" style="margin:5px 0;">+ <?= t('Akteur erstellen'); ?></a>
+        <a href="<?= base_path(); ?>events/new" class="large-12 columns small hollow button">+ <?= t('Event erstellen'); ?></a>
      <?php endif; ?>
 
-     <div class="divider"></div>
      <?php if(!user_is_logged_in()) : ?>
      <div class="tabs-content" data-tabs-content="mainnav-tabs">
       <div class="tabs-panel is-active" id="panelLogin">
@@ -58,7 +57,7 @@
        <?php if (module_exists('simple_fb_connect')) : ?>
        <a href="<?= base_path(); ?>user/simple-fb-connect" class="small button large-12 columns hollow" title="<?= t('Mit Facebook anmelden') ?>"><img src="<?= base_path().path_to_theme(); ?>/img/social-facebook-blue.svg" /><?= t('Mit Facebook anmelden');?></a>
        <?php endif; ?>
-       <p><a href="<?= base_path(); ?>user/password"><?= t('Passwort vergessen?'); ?></a></p>
+       <p><a href="<?= base_path(); ?>user/password" style="color:grey;"><?= t('Passwort vergessen?'); ?></a></p>
       </div>
       <div class="tabs-panel" id="panelRegister">
        <p><strong>Neu hier?</strong> Registriere Dich kostenfrei, um die Leipziger Ecken voll nutzen zu können und zu einem schöneren Platz für uns alle zu machen. <a href="<?= base_path(); ?>faq" title="FAQ öffnen">Zum "Wieso & warum?"</a></p><br />
@@ -69,7 +68,7 @@
       </div>
      </div>
      <?php else : ?>
-     <p><a href="<?= base_path(); ?>user/<?= $user->uid; ?>/edit"><?= t('Einstellungen'); ?></a> | <a href="<?= base_path(); ?>user/logout">Logout</a></p><br />
+     <p><a href="<?= base_path(); ?>user/<?= $user->uid; ?>/edit" style="color:grey;"><?= t('Einstellungen'); ?></a> | <a href="<?= base_path(); ?>user/logout" style="color:grey;"><?= t('Logout'); ?></a></p><br />
      <?php endif; ?>
 
 
