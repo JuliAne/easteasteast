@@ -31,7 +31,7 @@ Class akteure extends aae_data_helper {
    ->condition('hat_AID', $aId)
    ->condition('hat_UID', $uId)
    ->execute();
-echo in_array('administrator', $user->roles); exit();
+   
   if ($resultUser->rowCount() || in_array('administrator', $user->roles)) {
    return true;
   } else {
