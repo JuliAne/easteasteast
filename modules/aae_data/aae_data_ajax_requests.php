@@ -1,8 +1,8 @@
 <?php
 
 /**
- *  Klasse zum handeln von Ajax-request's. Sollte eine funktion zu groß
- *  werden, kann diese natürlich gerne in eine eigene Datei ausgelagert werden
+ *  Class to handle Ajax-requests
+ *  TODO: Connect with models, if necessary
  */
 
 namespace Drupal\AaeData;
@@ -28,7 +28,7 @@ Class aae_data_ajax_requests extends aae_data_helper {
 
   $resultAkteur = db_select($this->tbl_akteur, 'a')
    ->fields('a', array('name','email','telefon','ansprechpartner','funktion'))
-   ->condition('AID', $akteur_id, '=')
+   ->condition('AID', $akteur_id)
    ->execute()
    ->fetchAll();
 
@@ -135,7 +135,7 @@ Class aae_data_ajax_requests extends aae_data_helper {
     }
      
     db_delete($this->tbl_event)
-     ->condition('EID', $eid, '=')
+     ->condition('EID', $eid)
      ->execute();
     
    echo '1';

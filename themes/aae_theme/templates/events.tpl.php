@@ -6,7 +6,7 @@
   ); ?>
 
 <header id="eventsPageHeader" class="pageHeader">
-  <h2><?= $itemsCount; ?> Veranstaltungen/Events <a href="<?= base_path(); ?>events/rss" title="<?= t('Alle Events als RSS-Feed'); ?>"><img id="svg_logo" src="<?= base_path().path_to_theme(); ?>/img/rss.svg" /></a></h2>
+  <h2><?= $itemsCount; ?> Veranstaltungen & Events <a href="<?= base_path(); ?>events/rss" title="<?= t('Alle Events als RSS-Feed'); ?>"><img id="svg_logo" src="<?= base_path().path_to_theme(); ?>/img/rss.svg" /></a></h2>
   <p>Finde Workshops, Kreativwerkstätten, Märkte, Versammlungen und mehr.</p>
 </header>
 
@@ -83,6 +83,18 @@
 
    </form>
   </div>
+  
+  <?php if (!empty($festivals)) : ?>
+  <div class="tagcloud akteure-tc large-12 columns" style="margin-top:0;">
+   <h4><?= t('Festivals'); ?></h4>
+   <ul>
+   <?php foreach ($festivals as $festival) : ?>
+    <li><a href="<?= base_path().$festival->alias; ?>"><?= $festival->name; ?></a>
+   <?php endforeach; ?> 
+   </ul>
+   </div>
+  <?php endif; ?>
+
   </aside>
 
   <div id="events_content" class="large-9 small-12 columns">
@@ -90,6 +102,7 @@
    <ul class="tabs" id="events-tabs" style="margin-bottom:22px;">
     <li class="tabs-title<?= ($this->getOldEvents || !empty($this->filter) ? '' : ' is-active'); ?>"><a href="<?= base_path(); ?>events"<?= ($this->getOldEvents || !empty($this->filter) ? '' : ' aria-selected="true"'); ?>>Demnächst</a></li>
     <li class="tabs-title<?= ($this->getOldEvents && empty($this->filter) ? ' is-active' : ''); ?>"><a href="<?= base_path(); ?>events/old"<?= ($this->getOldEvents ? ' aria-selected="true"' : ''); ?>>Vergangene Events</a></li>
+    <!--<li class="tabs-title"><a href="#">In meiner Nähe</a></li>-->
     <?php if (!empty($this->filter)) : ?><li class="tabs-title is-active"><a href="#" aria-selected="true"><?= t('Filterergebnisse'); ?> (<?= count($resultEvents); ?>)</a></li><?php endif; ?>
     <ul id="presentationFilter" class="button-group round large-3 columns right">
      <li class="right"><a href="<?= base_path(); ?>events" name="timeline" class="small button <?php echo ($this->presentationMode !== 'calendar' ? 'active' : 'secondary'); ?>" title="<?= t('Darstellung als Timeline'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>

@@ -2,7 +2,7 @@
 
 function aae_preprocess_html(&$variables) {
 
- // Add theme-specific meta-tags
+ // Add theme-specific meta-tags to HTML-head
   $html_heads = array(
    'viewport' => array(
     '#tag' => 'meta',
@@ -22,7 +22,7 @@ function aae_preprocess_html(&$variables) {
     '#tag' => 'meta',
     '#attributes' => array(
      'name' => 'manifest',
-     'content' => path_to_theme().'/icons/manifest.json',
+     'content' => base_path().path_to_theme().'/icons/manifest.json',
     )
    ),
    'icon' => array(
@@ -31,7 +31,7 @@ function aae_preprocess_html(&$variables) {
      'rel' => 'icon',
      'type' => 'image/png',
      'sizes' => '32x32',
-     'href' => path_to_theme().'/icons/favicon-32x32.png',
+     'href' => base_path().path_to_theme().'/icons/favicon-32x32.png',
     )
    ),
    'apple-touch-icon' => array(
@@ -39,7 +39,7 @@ function aae_preprocess_html(&$variables) {
     '#attributes' => array(
      'rel' => 'apple-touch-icon',
      'sizes' => '60x60',
-     'href' => path_to_theme().'/icons/apple-icon-60x60.png',
+     'href' => base_path().path_to_theme().'/icons/apple-icon-60x60.png',
     )
    ),
    'msapplication-navbutton-color' => array(
@@ -60,7 +60,7 @@ function aae_preprocess_html(&$variables) {
     '#tag' => 'meta',
     '#attributes' => array(
      'name' => 'msapplication-TileImage',
-     'content' => path_to_theme().'/icons/ms-icon-144x144.png',
+     'content' => base_path().path_to_theme().'/icons/ms-icon-144x144.png',
     )
    ),
    'description' => array(

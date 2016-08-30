@@ -93,14 +93,14 @@
 
    <div id="eventRecurresData" class="large-12 columns"<?= (empty($this->FID) && (!empty($this->recurringEventType) || isset($_POST['eventRecurres'])) ? '' : ' style="display:none;"'); ?>>
 
-    <p class="large-12 columns licensetext"><strong>Wiederkehrende Veranstaltung.</strong> Beta-Feature! Setzt automatisch bis zu fünf Termine für einen abfolgenden Events-Rhytmus. Einzelne Termine können auf dem folgenden Eventprofil entfernt werden.</p>
+    <p class="large-12 columns licensetext"><strong>Wiederkehrende Veranstaltung.</strong> Beta-Feature; Setzt automatisch bis zu fünf Termine in einem abfolgenden Events-Rhytmus. Einzelne Termine können in der Terminliste auf der Eventseite entfernt werden.</p>
 
     <div class="large-4 left columns">
      <label><?= t('Rhytmus:'); ?> <?= $this->fehler['eventRecurres']; ?>
 
      <select id="eventRecurringType" name="eventRecurringType">
      <?php foreach ($recurringEventTypes as $key => $value) : ?>
-      <option value="<?= $key; ?>" <?= ($key == $this->recurringEventType || $key == $_POST['eventRecurringType'] ? 'selected="selected"' : '') ?>><?= $value; ?></option>
+      <option value="<?= $key; ?>"<?= ($key == $this->recurringEventType || $key == $_POST['eventRecurringType'] ? ' selected="selected"' : '') ?>><?= $value; ?></option>
      <?php endforeach; ?>
      </select></label>
     </div>

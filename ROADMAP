@@ -13,18 +13,18 @@ V 0.6 (-> Events-Rework) (06/2016):
 
 V 0.7:
 
-- Feature: "Festival-Veranstaltungen", entsprechende graphische Einbindung (ticket-nr.?!) - ~
+- Feature: "Festival-Veranstaltungen", entsprechende graphische Einbindung (Ticket #83) - ~
 - Facebook Events-API (Ticket #81)
 - Kalender: Mehrtägige Events kenntlich machen
-- Überarbeitung Journal(-Beitrags)-Darstellung (mehr Bilder & Co.)
-
+- Überarbeitung Journal(-Beitrags)-Darstellung (mehr Bilder, Sidebar mit Akteurs-Infos)
+- Autoload einbauen & Tags- und Adress-Funktionen universalisieren
 
 V 0.8:
 
 - Internationalisierung: AAE-Modul testweise auf englisch übersetzen,
   langfristig deutsch-arabisch sprechende Partner finden (Ticket #82)
 - Abschluss Redesign Startseite (Issue #77)
-- SEO, Integration social-meta-tags auf allen Seiten #65 #14
+- SEO, Integration social-meta-tags auf allen Seiten (#65 #14)
 
 (V 0.8.5:)
 - Modul konfigurierbar machen via Backend
@@ -35,7 +35,7 @@ V 0.9:
 
 - Verschönerung Inhaltsseiten (FAQ & Leipziger Osten -> Texter gesucht)
 - Erster API-Ansatz
-- Übersichtsseite für Benutzer (#57)
+- Übersichtsseite für Benutzer, modulares Intro-Fenster nach Login/Erstregistrierung   (#57)
 - Integration Messages-API, um Zeit-nahe Portalsnachrichten zu generieren
 
 

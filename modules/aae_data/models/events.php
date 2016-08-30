@@ -239,18 +239,23 @@ Class events extends aae_data_helper {
  
  /**
   * returns festival-ids and aliase that user has access to
-  * TODO: Put into festivals-model, return real names from festival-table, etc.
+  * TODO: Put into festivals-model
   */
  public function userHasFestivals($uid){
+
+  global $user;
   
   $resultFestivals = array();
-  $fIds = array(); // Helper to avoid doubled festival-IDs (e.g. if user has multiple akteure who manage a festival)
+  $fIds = array(); // Helper to avoid doubled festival-IDs (e.g. if user owns multiple akteure who manage a festival)
 
   $resultUserAkteure = db_select($this->tbl_hat_user, 'hu')
-   ->fields('hu', array('hat_AID'))
-   ->condition('hat_UID', $uid)
-   ->execute()
-   ->fetchAll();
+   ->fields('hu', array('hat_AID'));
+
+  if (!in_array('administrator', $user->roles)) {
+   $resultUserAkteure->condition('hat_UID', $uid);
+  }
+
+  $resultUserAkteure = $resultUserAkteure->execute()->fetchAll();
 
   if (!empty($resultUserAkteure)){
 

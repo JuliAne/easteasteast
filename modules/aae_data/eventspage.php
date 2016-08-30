@@ -123,6 +123,11 @@ Class eventspage extends aae_data_helper {
   $resultTagCloud = db_query_range('SELECT COUNT(*) AS count, s.KID, s.kategorie FROM {aae_data_sparte} s INNER JOIN {aae_data_event_hat_sparte} hs ON s.KID = hs.hat_KID GROUP BY hs.hat_KID HAVING COUNT(*) > 0 ORDER BY count DESC', 0, 10);
   $itemsCount = db_query("SELECT COUNT(EID) AS count FROM " . $this->tbl_event)->fetchField();
   
+  $festivals = db_select($this->tbl_festival, 'f')
+    ->fields('f', array('name','alias'))
+    ->execute()
+    ->fetchAll();
+
   // Ausgabe der Events
   ob_start(); // Aktiviert "Render"-modus
   

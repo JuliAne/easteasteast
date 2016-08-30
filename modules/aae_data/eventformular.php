@@ -86,6 +86,7 @@ Class eventformular extends aae_data_helper {
    }
      
    $this->festivals = $this->event->userHasFestivals($this->user_id);
+  # print_r($this->festivals); exit();
 
   }
 
@@ -303,14 +304,14 @@ Class eventformular extends aae_data_helper {
 	 // Abfrage, ob Adresse bereits in Adresstabelle
 	 $this->resultAdresse = db_select($this->tbl_adresse, 'a')
 	  ->fields('a', array('ADID', 'gps_lat', 'gps_long'))
-	  ->condition('strasse', $this->strasse, '=')
-	  ->condition('nr', $this->nr, '=')
-	  ->condition('adresszusatz', $this->adresszusatz, '=')
-	  ->condition('plz', $this->plz, '=')
-	  ->condition('bezirk', $this->ort, '=')
+	  ->condition('strasse', $this->strasse)
+	  ->condition('nr', $this->nr)
+	  ->condition('adresszusatz', $this->adresszusatz)
+	  ->condition('plz', $this->plz)
+	  ->condition('bezirk', $this->ort)
 	  ->execute();
 
-  /*  TODO Felix: Überarbeite Funktion zum Adresspeichern */
+  /*  TODO Felix: Überarbeite & vereinheitliche Funktion zum Adresspeichern */
 
     if ($this->resultAdresse->rowCount() == 0) {
      // Adresse nicht vorhanden
@@ -343,7 +344,7 @@ Class eventformular extends aae_data_helper {
           'gps_lat' => $gps[0],
           'gps_long' => $gps[1]
          ))
-	       ->condition('ADID', $row->ADID, '=')
+	       ->condition('ADID', $row->ADID)
 	       ->execute();
 	    }
 	    $this->adresse = $row->ADID;
@@ -376,26 +377,25 @@ Class eventformular extends aae_data_helper {
   // Has event children? Which type? Set them new?
   $eventStatus = db_select($this->tbl_event, 'e')
    ->fields('e', array('start_ts','ende_ts','recurring_event_type','event_recurres_till'))
-   ->condition('EID', $this->event_id, '=')
+   ->condition('EID', $this->event_id)
    ->execute();
    
   $status = $eventStatus->fetchObject();
   
-  if ($this->eventRecurres == 'on' && (($status->recurring_event_type != $this->eventRecurringType) 
-                                        || ((new \DateTime($status->event_recurres_till))->format('Y-m-d') != $this->eventRecurresTill)
-                                        || ($status->start_ts != $startQuery)
-                                        || ($status->ende_ts != $endeQuery))) {
+  if ($this->eventRecurres == 'on' && $status->recurring_event_type < 6 && (($status->recurring_event_type != $this->eventRecurringType) 
+                                                                             || ((new \DateTime($status->event_recurres_till))->format('Y-m-d') != $this->eventRecurresTill)
+                                                                             || ($status->start_ts != $startQuery)
+                                                                             || ($status->ende_ts != $endeQuery))) {
                                           
    // Repeat-staus or any dates changed: Recreate child-events with new params
    $this->event->removeEventChildren($this->event_id);
    $recurresTill = (!empty($this->eventRecurresTill)) ? (new \DateTime($this->eventRecurresTill))->format('Y-m-d') : NULL;
    $this->event->addEventChildren($this->event_id, $this->eventRecurringType, $startQuery, $endeQuery, $recurresTill);
 
-  } else if ($this->eventRecurres != 'on' && $status->recurring_event_type >= 2) {
+  } else if ($this->eventRecurres != 'on' && $status->recurring_event_type >= 2 && $status->recurring_event_type < 6) {
    
    // "Event recurres" turned off
    $this->event->removeEventChildren($this->event_id);
-   $this->eventRecurringType = NULL;
    
   } else if ($this->eventRecurres == 'on' && empty($status->recurring_event_type)){
     
@@ -414,15 +414,15 @@ Class eventformular extends aae_data_helper {
 		'ende_ts' => $endeQuery,
 		'bild' => $this->bild,
 		'kurzbeschreibung' => $this->kurzbeschreibung,
-    'recurring_event_type' => $this->eventRecurringType,
+    'recurring_event_type' => ($this->eventRecurres == 'on' ? $this->eventRecurringType : ''),
     'modified' => date('Y-m-d H:i:s', time())
 	 ))
-	 ->condition('EID', $this->event_id, '=')
+	 ->condition('EID', $this->event_id)
 	 ->execute();
 
 	 $akteurEventUpdate = db_update($this->tbl_akteur_events)
-   	->fields(array(	'AID' => $this->veranstalter ))
-	  ->condition('EID', $this->event_id, '=')
+   	->fields(array('AID' => $this->veranstalter))
+	  ->condition('EID', $this->event_id)
 	  ->execute();
 
    // remove tags manually
@@ -433,8 +433,8 @@ Class eventformular extends aae_data_helper {
      $tag = $this->clearContent($tag);
 
      db_delete($this->tbl_event_sparte)
-      ->condition('hat_KID', $tag, '=')
-      ->condition('hat_EID', $this->event_id, '=')
+      ->condition('hat_KID', $tag)
+      ->condition('hat_EID', $this->event_id)
       ->execute();
 
      }
@@ -453,7 +453,7 @@ Class eventformular extends aae_data_helper {
 
      $resultsparte = db_select($this->tbl_sparte, 's')
       ->fields('s')
-      ->condition('KID', $sparte, '=')
+      ->condition('KID', $sparte)
       ->execute();
 
       if ($resultsparte->rowCount() == 0) {
@@ -474,8 +474,8 @@ Class eventformular extends aae_data_helper {
 
        $hatEventSparte = db_select($this->tbl_event_sparte, 'es')
         ->fields('es')
-        ->condition('hat_EID', $this->event_id, '=')
-        ->condition('hat_KID', $sparte_id, '=')
+        ->condition('hat_EID', $this->event_id)
+        ->condition('hat_KID', $sparte_id)
         ->execute();
 
         if ($hatEventSparte->rowCount() == 0) {
@@ -549,16 +549,16 @@ Class eventformular extends aae_data_helper {
      $this->bild = $this->upload_image($_FILES['bild']);
 
    if ($this->isFestival)
-    $festival_id = str_replace('f','',$this->veranstalter);
+     $festival_id = str_replace('f','',$this->veranstalter);
 
 	 // Abfrage, ob Adresse bereits in Adresstabelle
 	 $this->resultAdresse = db_select($this->tbl_adresse, 'a')
 	  ->fields('a', array('ADID', 'gps_lat', 'gps_long'))
-	  ->condition('strasse', $this->strasse, '=')
-	  ->condition('nr', $this->nr, '=')
-	  ->condition('adresszusatz', $this->adresszusatz, '=')
-	  ->condition('plz', $this->plz, '=')
-	  ->condition('bezirk', $this->ort, '=')
+	  ->condition('strasse', $this->strasse)
+	  ->condition('nr', $this->nr)
+	  ->condition('adresszusatz', $this->adresszusatz)
+	  ->condition('plz', $this->plz)
+	  ->condition('bezirk', $this->ort)
 	  ->execute();
 
     // Wenn ja: Holen der ID der Adresse, wenn nein: einfuegen
@@ -575,8 +575,8 @@ Class eventformular extends aae_data_helper {
 		   'bezirk' => $this->ort,
 		   'gps_lat' => $gps[0],
        'gps_long' => $gps[1]
-		 ))
-		 ->execute();
+		  ))
+		  ->execute();
 
 	 } else {
 
@@ -593,7 +593,7 @@ Class eventformular extends aae_data_helper {
           'gps_lat' => $gps[0],
           'gps_long' => $gps[1]
          ))
-	       ->condition('ADID', $row->ADID, '=')
+	       ->condition('ADID', $row->ADID)
 	       ->execute();
 	    }
 
@@ -623,9 +623,7 @@ Class eventformular extends aae_data_helper {
    
    if (!empty($this->isFestival)){
     db_update($this->tbl_event)
-     ->fields(array(
-     'recurring_event_type' => '6'
-     ))
+     ->fields(array('recurring_event_type' => '6'))
      ->condition('EID', $this->event_id)
      ->execute();
    }
