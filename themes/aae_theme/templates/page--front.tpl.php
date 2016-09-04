@@ -8,8 +8,8 @@
   '05' => 'Mai',
   '06' => 'Jun',
   '07' => 'Jul',
-  '08' => 'Sep',
-  '09' => 'Aug',
+  '08' => 'Aug',
+  '09' => 'Sep',
   '10' => 'Okt',
   '11' => 'Nov',
   '12' => 'Dez',
@@ -121,7 +121,7 @@
        <header <?= (!empty($akteur->bild) ? 'style="background-image:url('.$akteur->bild.');"' : ''); ?><?= ($akteur->renderSmallName ? ' class="renderSmallName"' : ''); ?>>
         </header>
          <h3><p class="akteurname"><?= $akteur->name; ?></p>
-             <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?></h3>
+         <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?></h3>
         <section style="display:none;">
           <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?>
         </section>

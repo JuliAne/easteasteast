@@ -3,7 +3,7 @@
 /**
 * @file aae_blocks.php
 *
-* Ein paar Hilfsfunktion für das Theme...
+* Ein paar Hilfsfunktion für das Theme, v.a. Startseite...
 * @use require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
 *
 * @function print_next_events
@@ -24,10 +24,16 @@ public function print_next_events($limit = 6) {
  require_once('models/events.php');
  $this->events = new events();
 
- //Show furthest of latest 6 events first
+ // Show furthest of latest 6 events first
  $events = $this->events->getEvents(array(
-  'limit' => $limit
- ), 'normal', false, 'DESC');
+  'limit' => $limit,
+  'start' => array(
+     '0' => array(
+      'date' => (new \DateTime(date()))->format('Y-m-d 00:00:00'),
+      'operator' => '>='
+     )
+    )
+ ), 'normal', false, 'ASC');
 
   return $events;
 }
