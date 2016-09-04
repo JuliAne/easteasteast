@@ -100,6 +100,7 @@ Class akteure extends aae_data_helper {
    preg_match("/(\S+\s*){0,$numwords}/", $akteur->beschreibung, $regs);
 
    $adresse = db_select($this->tbl_adresse, 'ad');
+   
    if ($fields == 'complete'){
      $adresse->fields('ad');
    } else {

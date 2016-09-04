@@ -28,15 +28,18 @@ Class events extends aae_data_helper {
   * @return Event-object, keyed by EID (for performance purposes when using children)
             start, ende, created, modified & eventRecurresTill: DateTime-objects
   * @param $conditions : array : Custom operators supported
-  * @param $fields : integer: MINIMAL output (= puuurfect for date-calculation),
+  * @param $fields : integer: EID (= EID only)
+                              MINIMAL output (= puuurfect for date-calculation),
   *                           NORMAL output (= full table-row),
   *                           COMPLETE (= joins all other tables)
   */
  public function getEvents($conditions = NULL, $fields = 'normal', $calledRecursively = false, $orderBy = 'ASC') {
    
    $events = db_select($this->tbl_event, 'e');
-
-   if ($fields == 'minimal') {
+   
+   if ($fields == 'EID'){
+    $events->fields('e', array('EID'));
+   } else if ($fields == 'minimal') {
     $events->fields('e', array('EID','name','start_ts','ende_ts','parent_EID','created','modified'));
    } else {
     $events->fields('e');
@@ -48,7 +51,7 @@ Class events extends aae_data_helper {
       
      case ('limit') :
      
-     $events->range(0,$condition);
+     $events->range(0, $condition);
      
      break;
       
@@ -75,26 +78,19 @@ Class events extends aae_data_helper {
       break;
       
      case ('filter') :
-      
       $events->condition('EID', $this->__filterEvents($conditions['filter']));
-      /*    $or = db_or();
-
-   foreach ($this->filteredEventIds as $event){
-    $or->condition('EID', $event);
-   }
-
-   $rEvents->condition($or); */
      break;
      
      default :
-      if (is_array($condition)) {
+      if (is_array($condition) && $key != 'EID') {
        foreach ($condition as $s){
         $events->condition($s['key'], $s['condition'], $s['operator']);
        }
       } else {
-       $events->condition($key, $condition, '=');
+       $events->condition($key, $condition);
       }
       break;
+
     }
 
    }
@@ -133,7 +129,7 @@ Class events extends aae_data_helper {
 
      $ersteller = db_select("users", 'u')
       ->fields('u', array('name'))
-      ->condition('uid', $event->ersteller, '=')
+      ->condition('uid', $event->ersteller)
       ->execute();
 
      $resultEvents[$realEID]['ersteller'] = $ersteller->fetchObject();
@@ -154,7 +150,7 @@ Class events extends aae_data_helper {
 
      $akteurId = db_select($this->tbl_akteur_events, 'ae')
       ->fields('ae', array('AID'))
-      ->condition('EID', $event->EID, '=')
+      ->condition('EID', $event->EID)
       ->execute()
       ->fetchObject();
 
@@ -173,7 +169,6 @@ Class events extends aae_data_helper {
        ->condition('FID', $event->FID)
        ->execute()
        ->fetchObject();
-      
       $resultEvents[$realEID]['festival'] = $resultFestival;
      }
     }

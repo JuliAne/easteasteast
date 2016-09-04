@@ -1,7 +1,9 @@
 <?php
 /**
  * @file eventspage.php
- * Listet alle Events auf.
+ *
+ * Listet alle Events als Timeline oder Kalender auf.
+ * Auch als Block für Festivals einsetzbar (Filterung erfordert automatisch).  
  * Filterbar (via Model) nach Datum, Tags, keywords, Bezirken und Zeitraum
  */
 
@@ -102,20 +104,20 @@ Class eventspage extends aae_data_helper {
   $resultBezirke = $this->getAllBezirke('events');
   
   if (!empty($this->filter)) {
-   $resultEvents = $this->events->getEvents(array('filter' => $this->filter, 'start' => $start), 'normal', false, $orderBy);
+   $resultEvents = $this->events->getEvents(array('filter' => $this->filter, 'start' => $start), ($this->presentationMode == 'calendar' ? 'EID' : 'normal'), false, $orderBy);
   } else if ($this->isBlock) {
-   $resultEvents = $this->events->getEvents(array('FID' => $_SESSION['fid']), 'complete', false, $orderBy);
+   $resultEvents = $this->events->getEvents(array('FID' => $_SESSION['fid']), ($this->presentationMode == 'calendar' ? 'EID' : 'complete'), false, $orderBy);
    unset($_SESSION['fid']); # 2b improved soon
-  } else {
+  } else if ($this->presentationMode != 'calendar')  {
    $resultEvents = $this->events->getEvents(array('start' => $start), 'complete', false, $orderBy);
   }
 
   if ($this->presentationMode == 'calendar') {
 
-   $modulePath = drupal_get_path('module', 'aae_data');
-   include_once $modulePath . '/kalender.php';
-
-   $kal = new kalender();
+   include_once $this->modulePath . '/kalender.php';
+   
+   // New: We allow calendar-results to become filtered as well...
+   $kal = new kalender((isset($resultEvents) ? (empty($resultEvents) ? 'empty' : $resultEvents) : null));
    $resultKalender = $kal->show();
 
   }
@@ -133,9 +135,8 @@ Class eventspage extends aae_data_helper {
   
   if ($this->isBlock) {
     
-   $themePath = drupal_get_path('theme',$GLOBALS['theme']);
-   drupal_add_js($themePath.'/js/CountUp.js');
-   include_once $themePath . '/templates/neustadt_eventsblock.tpl.php';
+   drupal_add_js($this->themePath.'/js/CountUp.js');
+   include_once $this->themePath . '/templates/festival_events_block.tpl.php';
    echo ob_get_clean();
    
   } else {

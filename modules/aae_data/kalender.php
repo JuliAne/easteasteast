@@ -1,9 +1,13 @@
 <?php
 /**
- * Stellt einen Kalender fuer die Events dar
+ * @file kalender.php
+ *
+ * Stellt einen monatlichen Events-kalender dar
  * Copyright: The Internetz
  * TODO: Umstellen auf namespaces / Klassenmodell
  * TODO: Etwaige Doppelungen raus (Speicherintensive Date-Ermittlung)
+ * TODO: Escape $_GET-Array
+ * TODO: Put HTML into template
  */
 
 namespace Drupal\AaeData;
@@ -21,17 +25,36 @@ class kalender extends aae_data_helper {
  private $year  = null;
  private $month = null;
  private $eventsForMonth = array();
- #private $events;
+ private $alreadyFilteredEIDs = array();
 
- public function __construct(){
+ public function __construct($filteredEIDs = NULL){
+   
+  parent::__construct();
+
   include_once('models/events.php');
   $this->events = new events();
+
+  if (empty($filteredEIDs) && isset($_GET['EID'])){
+   foreach ($_GET['EID'] as $eid){
+    $filteredEIDs[$eid]['EID'] = $this->clearContent($eid);
+    $filteredEIDs[$eid] = (object)$filteredEIDs[$eid];
+   }
+  }
+ 
+  if ($filteredEIDs){
+   if ($filteredEIDs == 'empty'){
+    $this->alreadyFilteredEIDs[] = 999999; // = 0 results
+   } else {
+    foreach ($filteredEIDs as $EID){
+     $this->alreadyFilteredEIDs[] = $EID->EID;
+    }
+   }
+  }
+
  }
 
  public function run(){
-
   return $this->show();
-
  }
 
  public function show() {
@@ -59,7 +82,7 @@ class kalender extends aae_data_helper {
        $content .= '<div class="clear"></div>';
        $content .= '<ul class="dates">';
 
-       $eventsResults = $this->events->getEvents(array(
+       $eventsQuery = array(
         'start' => array(
           '0' => array(
            'date' => (new \DateTime($this->year.'-'.$this->month.'-01'))->format('Y-m-d 00:00:00'),
@@ -70,7 +93,13 @@ class kalender extends aae_data_helper {
            'operator' => '<='
           )
         )
-       ), 'minimal');
+       );
+
+       if (!empty($this->alreadyFilteredEIDs)) {
+        $eventsQuery['EID'] = $this->alreadyFilteredEIDs;  
+       }
+
+       $eventsResults = $this->events->getEvents($eventsQuery, 'minimal');
 
       // Sort'em
       foreach ($eventsResults as $eventData) {
@@ -136,17 +165,19 @@ class kalender extends aae_data_helper {
   * create navigation
   */
  private function _createNavi() {
+
    $nextMonth = $this->currentMonth==12?1:intval($this->currentMonth)+1;
    $nextYear = $this->currentMonth==12?intval($this->currentYear)+1:$this->currentYear;
    $preMonth = $this->currentMonth==1?12:intval($this->currentMonth)-1;
    $preYear = $this->currentMonth==1?intval($this->currentYear)-1:$this->currentYear;
+   $filterParam = (!empty($this->alreadyFilteredEIDs) ? '&EID[]='.implode('&EID[]=',$this->alreadyFilteredEIDs) : NULL);
 
    return
      '<div class="header">'.
-       '<a class="prev" href="'.base_path().'ajax/getKalender/?month=' . sprintf('%02d',$preMonth) . '&year=' . $preYear . '" rel="nofollow"><<</a>'.
+       '<a class="prev" href="'.base_path().'ajax/getKalender/?month=' . sprintf('%02d',$preMonth) . '&year=' . $preYear . $filterParam .'" rel="nofollow"><<</a>'.
          '<span class="title">' . date('Y M',strtotime($this->currentYear . '-' . $this->currentMonth . '-1')) . '</span>'.
          // $this->monat_lang[01];
-       '<a class="next" href="'.base_path().'ajax/getKalender/?month=' . sprintf("%02d", $nextMonth) . '&year=' . $nextYear . '" rel="nofollow">>></a>'.
+       '<a class="next" href="'.base_path().'ajax/getKalender/?month=' . sprintf("%02d", $nextMonth) . '&year=' . $nextYear . $filterParam .'" rel="nofollow">>></a>'.
      '</div>';
  }
 

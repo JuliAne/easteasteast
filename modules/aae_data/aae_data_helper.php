@@ -6,13 +6,13 @@ namespace Drupal\AaeData;
   * Kleine Helferklasse (!=model) für wiederkehrende Funktionen, Variablen
   * & Pfade. Gerne erweiterbar :)
   *
-  * TODO: Konfigurationsdaten via Backend verwaltbar machen
+  * TODO: Konfigurations- und Pfaddaten via Backend verwaltbar machen
   *
   */
 
  Class aae_data_helper {
 
-   // DB-Tabellen
+   // DB-Tables
    var $tbl_hat_sparte = "aae_data_akteur_hat_sparte";
    var $tbl_adresse = "aae_data_adresse";
    var $tbl_akteur = "aae_data_akteur";
@@ -25,7 +25,7 @@ namespace Drupal\AaeData;
    var $tbl_festival = "aae_data_festival";
    var $tbl_hat_festivals = "aae_data_akteur_hat_festival";
 
-   // Image-path's. TODO: Make 'em managable by backend
+   // Image-paths
    var $bildpfad = "/var/www/virtual/grinch/leipziger-ecken.de/sites/default/files/pictures/aae/";
    var $localbildpfad = "/opt/lampp/htdocs/drupal/sites/default/files/pictures/aae/";
    var $testbildpfad = "/var/www/virtual/grinch/test.leipziger-ecken.de/sites/default/files/pictures/aae/";
@@ -40,6 +40,7 @@ namespace Drupal\AaeData;
    var $uses;
    var $servercheck;
    var $modulePath;
+   var $themePath;
 
    var $monat_short;
    var $monat_lang;
@@ -80,7 +81,9 @@ namespace Drupal\AaeData;
     global $user;
     $this->user_id = $user->uid;
     $this->modulePath = drupal_get_path('module', 'aae_data');
-
+    $this->themePath = drupal_get_path('theme', $GLOBALS['theme']);
+   
+    # obsolet:
     if (isset($this->uses) && is_array($this->uses)) {
      foreach ($this->uses as $aae_model) {
        include_once $this->modulePath . '/models/'.$aae_model.'.php';
@@ -91,7 +94,7 @@ namespace Drupal\AaeData;
    }
 
    /**
-    *  Einfache Funktion zum Filtern von POST- und GET-Daten ("escapen")
+    *  Einfache Funktion zum Filtern von POST- und GET-Daten ("escape-function")
     *  Da Drupal automatisch PDO verwendet, brauchen wir hier nicht allzu viel für DB-queries.
     *  Entfernt Whitespaces (oder andere Zeichen) am Anfang und Ende eines Strings und
     *  filtert HTML um XSS Attacken vorzubeugen.
@@ -123,6 +126,7 @@ namespace Drupal\AaeData;
 
    }
    
+   /* TODO: Untested function */
    protected function check_image_compatibility($img){
     
     $image = new \Imagick($img['tmp_name']);
@@ -175,7 +179,7 @@ namespace Drupal\AaeData;
 
     ob_start(); // Aktiviert "Render"-modus
     include_once path_to_theme().$tpl;
-    return ob_get_clean(); // Uebergabe des gerenderten Template's
+    return ob_get_clean(); // Uebergabe des gerenderten Templates
 
   }
 
@@ -288,7 +292,8 @@ namespace Drupal\AaeData;
    return (empty($result)) ? NULL : $result;
 
   } // end protected function getDuplicates
-
+  
+  /* Kann raus: */
   protected function in_array_r($needle, $haystack, $strict = true) {
 	    foreach ($haystack as $item) {
 	        if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {

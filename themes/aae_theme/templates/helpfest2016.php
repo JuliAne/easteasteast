@@ -54,9 +54,9 @@ drupal_add_html_head($og_desc, 'og_description');*/
           // Need a universal menu-method here!
           $path = request_uri(); ?>
    
-    <li class="tabs-title<?= ($path == '/helpfest16' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/helpfest16"<?= ($path == '/freiraum16' ? ' aria-selected="true"' : ''); ?>>Startseite</a></li>
+    <li class="tabs-title<?= ($path == '/helpfest2016' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/helpfest2016"<?= ($path == '/helpfest2016' ? ' aria-selected="true"' : ''); ?>>Startseite</a></li>
     <li class="tabs-title"><a href="https://leipziger-ecken.de/akteurprofil/91">Das Festival</a></li>
-    <li class="tabs-title<?= ($path == '/helpfest16?presentation=calendar' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/helpfest16?presentation=calendar"<?= ($path == '/helpfest16?presentation=calendar' ? ' aria-selected="true"' : ''); ?>>Kalender</a></li>
+    <li class="tabs-title<?= ($path == '/helpfest2016?presentation=calendar' ? ' is-active' : ''); ?>"><a href="https://leipziger-ecken.de/helpfest2016?presentation=calendar"<?= ($path == '/helpfest2016?presentation=calendar' ? ' aria-selected="true"' : ''); ?>>Kalender</a></li>
     <li class="tabs-title"><a href="http://baumit.weebly.com/festival.html">Offiziele Website</a></li>
     <?php global $user; if ($user->uid == 238) : ?>
     <li class="right tabs-title"><a href="https://leipziger-ecken.de/admin/page-builder">+ Seite hinzufügen</a></li>
@@ -185,8 +185,6 @@ $elements_arr = $data['elements'];
 <?php endif; ?>
    <!-- END -->
    
-  <?php #require_once('neustadt_eventsblock.tpl.php'); ?>
-
 </div>
  </div>
  

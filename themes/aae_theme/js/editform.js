@@ -12,8 +12,9 @@ $(document).ready(function(){
     }
   });
 
-  if ($('#veranstalter').length && $('#veranstalter').find('option:selected').attr('value')=='0'){
-   // manually set veranstalter from "private" to the first Akteur/Festival available in list
+  if ($('#veranstalter').length && $('#veranstalter').find('option:selected').attr('value')==0 && !$('#veranstalter').find('option:selected').hasClass('isPrivate')){
+   // if "privat" not selected: Set veranstalter from "private" to the first Akteur/Festival available in list
+   alert(':()'); 
    $('#veranstalter option:eq(1)').attr('selected','selected');
    $('#veranstalter').change(); // not working, JQuery issue?! :(
   }

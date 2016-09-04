@@ -243,7 +243,7 @@ input[type=submit].isSubmitButton{
 }
 
 #mainnav.scrolled ul.menu li ul li {
- height: 35px;
+ height: 42px;
  padding-top: 8px;
 }
 
@@ -326,10 +326,14 @@ transform: rotate(-10deg);
  text-align: center;
 }
 
+#mainnav ul.menu li:not(.first) ul {
+ margin-left: -13px;
+}
+
 #mainnav ul.menu li ul li {
  width: 100%;
  border-right: none;
- height: 40px;
+ height: 42px;
  border-bottom: 1px solid #ecedec;
  padding: 3px 0;
  margin-left: 0;
@@ -430,6 +434,9 @@ transform: rotate(-10deg);
 .tabs-title > a:focus, .tabs-title > a[aria-selected="true"] {
   background: #fff;
 }
+.tabs-title:not(.is-active){
+  border-left: 1px solid #ecedec;
+}
 
 .tabs-title.is-active {
   border-bottom: 1px solid #2199e8;
@@ -451,6 +458,59 @@ transform: rotate(-10deg);
 
 #mainnav #actions #login-popup p {
  padding-bottom: 1px;
+}
+
+#karibu-modal {
+ z-index: 9;
+ display: block;
+}
+
+#karibu {
+ position: absolute;
+ z-index: 10;
+ height: 360px;
+ width: 100%;
+ background: #348cc6;
+ color: #fff;
+ padding-top: 100px;
+}
+
+#karibu .closeBtn {
+ border-color: #0c4d78;
+ color: #0c4d78;
+ margin-top: -70px;
+ float: right;
+}
+
+#karibu .large-12.columns {
+  text-align: center;
+}
+
+#karibu .large-12.columns p {
+ padding-bottom: 25px;
+ border-bottom: 1px solid #fff;
+ color: #232323;
+}
+
+#karibu .large-3.columns {
+ padding-top: 30px;
+ border-right: 1px solid #fff;
+ text-align: right;
+ opacity: 0.85;
+ transform: 0.25s opacity;
+ cursor: pointer;
+}
+
+#karibu .large-3.columns:last-child {
+ border-right: none;
+}
+
+#karibu .large-3.columns:hover {
+  opacity: 1;
+}
+
+#karibu .large-3.columns img {
+  float: left;
 }
 
 .aaeActionBar {
@@ -483,7 +543,7 @@ transform: rotate(-10deg);
  padding-top: 10px;
  margin-top: 17px;
  border-radius: 0;
- margin-left: 70px;
+ margin-left: 369px;/*prev:70px*/
 }
 
 #eventprofil .aaeActionBar #share {
@@ -1297,6 +1357,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 
 .tagcloud.akteure-tc {
   margin-top: 20px;
+  padding-bottom: 20px;
   opacity: 0.75;
   transition: opacity 0.25s;
 }

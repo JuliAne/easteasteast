@@ -1,6 +1,7 @@
 <?php
 /**
  * @file eventformular.php
+ *
  * Stellt ein Formular dar, in welches alle Informationen über eine Veranstaltung
  * eingetragen werden können.
  * Pflichtfelder sind (bisher): Name, Veranstalter, Datum (Anfang) & Beschreibung
@@ -42,7 +43,7 @@ Class eventformular extends aae_data_helper {
   var $all_sparten = ''; // Zur Darstellung des tokenizer (#akteurSpartenInput)
   
   var $isFestival = false; // Only for submit-actions
-  var $festivals;
+  var $ownedFestivals;
   var $FID; // Only for edit-mode
   var $freigabe = true;  // Variable zur Freigabe: muss true sein
   var $fehler = array(); // In diesem Array werden alle Fehler gespeichert
@@ -85,9 +86,6 @@ Class eventformular extends aae_data_helper {
      
    }
      
-   $this->festivals = $this->event->userHasFestivals($this->user_id);
-  # print_r($this->festivals); exit();
-
   }
 
   /**
@@ -264,7 +262,7 @@ Class eventformular extends aae_data_helper {
      $neueSparten = array();
      $this->sparten = array_unique($this->sparten);
 
-     foreach($this->sparten as $sparte) {
+     foreach ($this->sparten as $sparte) {
 
       $sparte = strtolower($this->clearContent($sparte));
 
@@ -301,6 +299,9 @@ Class eventformular extends aae_data_helper {
    */
   private function eventUpdaten() {
 
+   if ($this->isFestival)
+     $this->FID = str_replace('f','',$this->veranstalter);
+
 	 // Abfrage, ob Adresse bereits in Adresstabelle
 	 $this->resultAdresse = db_select($this->tbl_adresse, 'a')
 	  ->fields('a', array('ADID', 'gps_lat', 'gps_long'))
@@ -311,7 +312,7 @@ Class eventformular extends aae_data_helper {
 	  ->condition('bezirk', $this->ort)
 	  ->execute();
 
-  /*  TODO Felix: Überarbeite & vereinheitliche Funktion zum Adresspeichern */
+    //  TODO: Überarbeite & vereinheitliche Funktion zum Adresspeichern
 
     if ($this->resultAdresse->rowCount() == 0) {
      // Adresse nicht vorhanden
@@ -358,7 +359,7 @@ Class eventformular extends aae_data_helper {
   }
   
   // remove current picture manually
-
+  // TODO: Check for universal functionality
   if (!empty($this->removedPic)) {
 
    $b = end(explode('/', $this->removedPic));
@@ -369,7 +370,7 @@ Class eventformular extends aae_data_helper {
    if ($_POST['oldPic'] == $this->removedPic)
      $this->bild = '';
 
-  }    
+  }
 
   $startQuery = $this->start.' '.(!empty($this->zeit_von) ? $this->zeit_von.':01' : '00:00:00');
   $endeQuery  = (!empty($this->ende) ? $this->ende : '1000-01-01').' '.(!empty($this->zeit_bis) ? $this->zeit_bis.':01' : '00:00:00');
@@ -415,11 +416,28 @@ Class eventformular extends aae_data_helper {
 		'bild' => $this->bild,
 		'kurzbeschreibung' => $this->kurzbeschreibung,
     'recurring_event_type' => ($this->eventRecurres == 'on' ? $this->eventRecurringType : ''),
+    'FID' => $this->FID,
     'modified' => date('Y-m-d H:i:s', time())
 	 ))
 	 ->condition('EID', $this->event_id)
 	 ->execute();
 
+   if (!empty($this->isFestival)){
+     db_update($this->tbl_event)
+     ->fields(array('recurring_event_type' => '6'))
+     ->condition('EID', $this->event_id)
+     ->execute();
+
+     $this->veranstalter = db_select($this->tbl_festival, 'f')
+      ->fields('f', array('admin'))
+      ->condition('FID', $this->FID)
+      ->execute()
+      ->fetchObject();
+
+     $this->veranstalter = $this->veranstalter->admin;
+   }
+   
+   // TODO: Do db_insert if events was private before
 	 $akteurEventUpdate = db_update($this->tbl_akteur_events)
    	->fields(array('AID' => $this->veranstalter))
 	  ->condition('EID', $this->event_id)
@@ -497,7 +515,12 @@ Class eventformular extends aae_data_helper {
 
     if (session_status() == PHP_SESSION_NONE) session_start();
     drupal_set_message(t('Das Event wurde erfolgreich bearbeitet!'));
-  	header('Location: '. $base_url .'/eventprofil/' . $this->event_id);
+  
+  	if ($this->isFestival) {
+     header('Location: '. $base_url .'/events/new');
+    } else {
+     header('Location: '. $base_url .'/eventprofil/' . $this->event_id);
+    }
 
   } // END function eventUpdaten()
 
@@ -508,7 +531,7 @@ Class eventformular extends aae_data_helper {
   private function eventGetFields() {
 
     $resultEvent = $this->event->GetEvents(array('EID' => $this->event_id), 'complete');
-    
+
     foreach ($resultEvent as $row) {
      $this->akteur_id = $row->akteur->AID;
      $this->hat_zeit_von = ($row->start->format('s') == '01') ? true : false;
@@ -534,8 +557,9 @@ Class eventformular extends aae_data_helper {
 	   $this->ort = $row->adresse->bezirk;
 	   $this->gps = (!empty($row->adresse->gps_lat)) ? $row->adresse->gps_lat.','.$row->adresse->gps_long : '';
      $this->FID = $row->FID;
+     $this->veranstalter = $row->ersteller;
     }
-    
+
     $this->sparten = $this->event->getTags($this->event_id);
 
   } // END function eventGetFields()
@@ -543,13 +567,11 @@ Class eventformular extends aae_data_helper {
 
   private function eventSpeichern() {
 
-   $festival_id = NULL;
-
-   if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) // TODO: && $this->imageUploadable()
+   if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) // TODO: try-catch with $this->imageUploadable()
      $this->bild = $this->upload_image($_FILES['bild']);
 
    if ($this->isFestival)
-     $festival_id = str_replace('f','',$this->veranstalter);
+     $this->FID = str_replace('f','',$this->veranstalter);
 
 	 // Abfrage, ob Adresse bereits in Adresstabelle
 	 $this->resultAdresse = db_select($this->tbl_adresse, 'a')
@@ -617,19 +639,27 @@ Class eventformular extends aae_data_helper {
     'created' => date('Y-m-d H:i:s', time()),
     'recurring_event_type' => ($this->eventRecurres && !empty($this->eventRecurringType) ? $this->eventRecurringType : NULL),
     'event_recurres_till' => ($this->eventRecurres && !empty($this->eventRecurresTill) ? $this->eventRecurresTill.' 00:00:00' : '1000-01-01 00:00:00'),
-	  'FID' => $festival_id,
+	  'FID' => $this->FID,
     ))
 	 ->execute();
    
    if (!empty($this->isFestival)){
-    db_update($this->tbl_event)
+     db_update($this->tbl_event)
      ->fields(array('recurring_event_type' => '6'))
      ->condition('EID', $this->event_id)
      ->execute();
+
+     $this->veranstalter = db_query($this->tbl_akteur_festivals, 'f')
+      ->fields('f', array('admin'))
+      ->condition('FID', $this->FID)
+      ->execute()
+      ->fetchObject();
+
+     $this->veranstalter = $this->veranstalter->admin;
    }
 
-	 // Falls Akteur angegeben wurde:
-    if (!empty($this->veranstalter) && !($this->isFestival)) {
+	 // if Veranstalter != 'privat'
+    if (!empty($this->veranstalter)) {
 
 	   db_insert($this->tbl_akteur_events)
    	  ->fields(array(
@@ -669,7 +699,7 @@ Class eventformular extends aae_data_helper {
  		}
 
  		// Event & Tag in Tabelle $tbl_hat_sparte einfügen
- 		$insertAkteurSparte = db_insert($this->tbl_event_sparte)
+ 		$insertEventSparte = db_insert($this->tbl_event_sparte)
  		  ->fields(array(
  		    'hat_EID' => $this->event_id,
  		    'hat_KID' => $sparte_id,
@@ -764,10 +794,11 @@ Class eventformular extends aae_data_helper {
      ->execute();
 
     $this->all_sparten = $this->event->getTags();
-
-    foreach ($all_sparten as $id => $sparte) {
+   /* foreach ($all_sparten as $id => $sparte) {
      $this->all_sparten[$id] = $sparte;
-    }
+    }*/
+
+    $this->ownedFestivals = $this->event->userHasFestivals($this->user_id);
 
     return $this->render('/templates/eventformular.tpl.php');
 

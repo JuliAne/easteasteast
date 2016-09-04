@@ -92,3 +92,28 @@
 
  </div>
 </div>
+
+<!-- TODO: -->
+<div id="karibu-modal" class="aaeModalX" style="display:none;">
+ <div id="karibu">
+  <div class="row">
+    <div class="large-12 columns">
+     <h3>Herzlich willkommen bei den Leipziger Ecken!</h3>
+     <p class="headline">Wir arbeiten ständig daran die besten zu sein, sir!</p>
+     <div class="button hollow closeBtn" title="<?= t('Fenster schließen'); ?>">x</div>
+    </div>
+
+    <div class="large-3 large-offset-1 columns">
+     <h4><img src="<?= base_path().path_to_theme(); ?>/img/akteur_icon.png" />Akteure</h4>
+     <p>Jetzt akteur anlegen</p>
+    </div>
+    <div class="large-3 large-offset-1 columns">
+     <h4><img src="<?= base_path().path_to_theme(); ?>/img/events_icon.png" />Events</h4>
+    </div>
+    <div class="large-3 large-offset-1 columns">
+     <h4><img src="<?= base_path().path_to_theme(); ?>/img/journal_icon.png" />Dranbleiben</h4>
+    </div>
+
+  </div>
+ </div>
+</div>

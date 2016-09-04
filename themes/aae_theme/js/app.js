@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-/* FOR akteure- and events-AJAX-loader:
+/* For akteure- and events-AJAX-loader:
     if ($(document).height() <= $(window).scrollTop() + $(window).height()) {
         alert("End Of The Page");
     } */
@@ -103,25 +103,28 @@ $(document).ready(function() {
  });
 
  $('#filterForm').submit(function(){
+
   $('#presentationFilter input[type="submit"]').remove();
+  // Prepare GET-method & add selected presentation mode
+  var presentationValue = $('#presentationFilter').find('.active').attr('name');
+  $('<input />').attr('type', 'hidden').attr('name', 'presentation').attr('value', presentationValue).appendTo('#filterForm');
+
   if ($('#akteure #filter').length){
    // akteurepage.tpl
-   // Add selected presentation mode to URL
-   var presentationValue = $('#presentationFilter').find('.active').attr('name');
-   $('<input />').attr('type', 'hidden').attr('name', 'presentation').attr('value', presentationValue).appendTo('#filterForm');
-  } else if ($('#events #filter').length && $('#timespace .activeTime').length){
+   // - placeholder -
+  } else if ($('#events #filter').length && $('#timespace .activeTime').length && presentationValue != 'calendar'){
    // eventspage.tpl
+   // Allow filtering for timespan; but only in timeline-mode!
    $('<input />').attr('type', 'hidden').attr('name', 'timespan').attr('value', $('#timespace .activeTime').first().attr('data-month') + '-' + $('#timespace .activeTime').last().attr('data-month')).appendTo('#filterForm');
   }
   return true;
+
  });
 
  $('#inviteBtn').click(function(){
    $('.aaeModal').fadeIn('slow');
 
-   $('.aaeModal .button.closeBtn').click(function(){
-    $('.aaeModal').fadeOut('slow');
-   });
+   setHandlers();
  })
 
  $('#project-contact a').click(function(){
@@ -140,7 +143,7 @@ $(document).ready(function() {
  });
 
  $(document).keyup(function(e) {
-  // Closes lightbox when hitting "escape".
+  // Closes lightbox when hitting "ESC".
   if (e.keyCode == 27) {
    $('.aaeModal .button.closeBtn').click();
    $('#alert').fadeOut('fast');
@@ -153,29 +156,23 @@ $(document).ready(function() {
 
 setHandlers = function(){
 
-$('#calendar .next').click(function(){
+$('#calendar .next, #calendar .prev').click(function(){
 
  $('#calendar').fadeOut('slow');
 
  $.get($(this).attr('href'), function(data){
    $('#aae_calendar').html(data);
    setHandlers();
- })
+ });
 
  return false;
 });
 
-$('#calendar .prev').click(function(){
-
- $('#calendar').fadeOut('slow');
-
- $.get($(this).attr('href'), function(data){
-   $('#aae_calendar').html(data);
-   setHandlers();
- })
-
-
- return false;
-});
+ $('.aaeModal .button.closeBtn').click(function(){
+  $('.aaeModal').fadeOut('slow');
+  if ($('#karibu').length){
+   $('#karibu').remove();
+  }
+ });
 
 }

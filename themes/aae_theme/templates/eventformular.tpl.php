@@ -38,11 +38,10 @@
   <div class="large-4 columns">
   <label><?= t('Veranstalter'); ?>:</label>
   <select name="veranstalter" id="veranstalter">
-  <!-- TODO for /edit: If private was selected, mark it and modify JS -->
-  <option value="0"><?= t('Privat'); ?></option>
-  <?php if ($this->festivals && is_array($this->festivals)) : ?>
+  <option value="0"<?= ($this->target == 'update' && empty($akteur->AID) && empty($this->FID) ? ' class="isPrivate" selected="selected"' : ''); ?>><?= t('Privat'); ?></option>
+  <?php if ($this->ownedFestivals && is_array($this->ownedFestivals)) : ?>
    <optgroup label="<?= t('Festivals'); ?>">
-   <?php foreach ($this->festivals as $festival) : ?>
+   <?php foreach ($this->ownedFestivals as $festival) : ?>
     <option class="isFestival" value="f<?= $festival['FID']; ?>"<?= ($festival['FID'] == $this->FID ? ' selected="selected"' : ''); ?>><?= $festival['name']; ?></option>
    <?php endforeach; ?>
    </optgroup>
@@ -50,7 +49,7 @@
   <?php if (is_array($this->resultAkteure) && !empty($this->resultAkteure)) : ?>
    <optgroup label="<?= t('Akteure'); ?>">
    <?php foreach ($this->resultAkteure as $akteur) : ?>
-    <option value="<?= $akteur->AID; ?>" <?= ($akteur->AID == $this->veranstalter ? 'selected="selected"' : '') ?>><?= $akteur->name; ?></option>
+    <option value="<?= $akteur->AID; ?>"<?= (($akteur->AID == $this->akteur_id && empty($this->FID)) ? 'selected="selected"' : '') ?>><?= $akteur->name; ?></option>
    <?php endforeach; ?>
    </optgroup>
   <?php endif; ?>
