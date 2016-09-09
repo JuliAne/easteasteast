@@ -7,9 +7,10 @@
 * @use require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
 *
 * @function print_next_events
-* @function print_letzte_akteure
+* @function print_letzte_akteure -> TODO: Integrate with <model></model>
 * @function count_projects_events
 * @function print_my_akteure
+*
 */
 
 namespace Drupal\AaeData;
@@ -58,13 +59,13 @@ public function print_letzte_akteure($limit = 4) {
 
    $adresse = db_select($this->tbl_adresse, 'ad')
     ->fields('ad', array('bezirk'))
-    ->condition('ADID', $akteur->adresse, '=')
+    ->condition('ADID', $akteur->adresse)
     ->execute()
     ->fetchAssoc();
 
    $bezirk = db_select($this->tbl_bezirke, 'b')
     ->fields('b')
-    ->condition('BID', $adresse['bezirk'], '=')
+    ->condition('BID', $adresse['bezirk'])
     ->execute()
     ->fetchAssoc();
 

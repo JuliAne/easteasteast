@@ -1,36 +1,44 @@
 <?php
 /**
- * festivalformular.php stellt ein Hilfs-Formular dar,
- * in welches grundlegende Informationen über ein Festival
- * eingetragen & bearbeitet werden koennen.
+ * @file festivalformular.php
+ * 
+ * Stellt ein Hilfs-Formular dar, in welches grundlegende
+ * Informationen über ein Festival eingetragen & bearbeitet werden können.
  */
  
 namespace Drupal\AaeData;
 
 Class festivalformular extends aae_data_helper {
 
+  // $tbl_festival
+  var $name = '';
+  var $email = '';
+  var $url = '';
+  var $bild = '';
+  var $beschreibung = '';
+  var $festivalAkteur; // akteure-object
+  var $sponsoren;
+  var $created = '';
+  var $modified = '';
+
   // $tbl_akteur
-  var $name = "";
-  var $adresse = "";
-  var $email = "";
-  var $telefon = "";
-  var $url = "";
-  var $ansprechpartner = "";
-  var $funktion = "";
-  var $bild = "";
-  var $beschreibung = "";
-  var $oeffnungszeiten = "";
-  var $created = "";
-  var $modified = "";
-
-  var $akteur_id = "";
-  var $user_id = "";
+  // Only relevant for festivalSpeichern()!
+  var $akName = '';
+  var $akStrasse = '';
+  var $akNr = '';
+  var $akAdresszusatz = '';
+  var $akPlz = '';
+  var $akOrt = '';
+  var $akGps = '';
+  
+  // misc
   var $fehler = array();
-  var $freigabe = true; // Variable zur Freigabe: muss true sein
+  var $freigabe = true;
 
-  var $resultbezirke = "";
-  var $target = "";
-  var $modulePath;
+  var $resultBezirke = '';
+  var $allAkteure; // akteure-object
+  var $authorizedAkteure; // akteure-object
+  var $target = '';
 
   function __construct($action) {
     
@@ -41,44 +49,46 @@ Class festivalformular extends aae_data_helper {
    if (!array_intersect(array('administrator', 'festival'), $user->roles)) {
     drupal_access_denied();
     drupal_exit();
+   } else {
+     # if update -> needs to be admin or global admin
    }
 
-   // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
+   require_once('models/akteure.php');
+   require_once('models/festivals.php');
+   $this->akteure = new akteure();
+   $this->festival = new festivals();
+
    if ($action == 'update') {
     $this->target = 'update';
    }
    
-  } // END Constructor
+  }
 
   /**
    *  Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
-   *  @returns $profileHTML;
+   *  @returns $output;
    */
   public function run() {
 
-    $path = current_path();
-    $explodedpath = explode("/", $path);
+    $explodedpath = explode('/', current_path());
     $this->akteur_id = $this->clearContent($explodedpath[1]);
 
     $output = '';
 
     if (isset($_POST['submit'])) {
-      if ($this->akteurCheckPost()) {
+      if ($this->festivalCheckPost()) {
 	     if ($this->target == 'update') {
-	      $this->akteurUpdaten();
+	      $this->festivalUpdaten();
 	     } else {
-		    $this->akteurSpeichern();
+		    $this->festivalSpeichern();
 	     }
        $output = $this->festivalDisplay();
       } else {
 	    $output = $this->festivalDisplay();
       }
     } else {
-      // Was passiert, wenn Seite zum ersten mal gezeigt wird?
-      // Lade Feld-Werte via ID (akteurGetFields) und gebe diese aus
       if ($this->target == 'update') {
-	     $this->akteurGetFields();
-       # $this->festival = new festival();
+	     $this->festivalGetFields();
       }
       $output = $this->festivalDisplay();
     }
@@ -91,32 +101,33 @@ Class festivalformular extends aae_data_helper {
    * @return $this->freigabe : boolean
    */
 
-  private function akteurCheckPost() {
-
+  private function festivalCheckPost() {
+    
+    // For Festival:
     $this->name = $this->clearContent($_POST['name']);
     $this->email = $this->clearContent($_POST['email']);
-    $this->telefon = $this->clearContent($_POST['telefon']);
-    $this->url = $this->clearContent($_POST['url']);
-    $this->ansprechpartner = $this->clearContent($_POST['ansprechpartner']);
-    $this->funktion = $this->clearContent($_POST['funktion']);
-    if (isset($_POST['bild'])) $this->bild = $_POST['bild'];
+    $this->festivalAkteur = $this->clearContent($_POST['festivalAkteur']);
+    $this->alias = $this->clearContent($_POST['alias']);
     $this->beschreibung = $this->clearContent($_POST['beschreibung']);
-    $this->oeffnungszeiten = $this->clearContent($_POST['oeffnungszeiten']);
-    $this->strasse = $this->clearContent($_POST['strasse']);
-    $this->nr = $this->clearContent($_POST['nr']);
-    $this->adresszusatz = $this->clearContent($_POST['adresszusatz']);
-    $this->plz = $this->clearContent($_POST['plz']);
-    $this->ort = $this->clearContent($_POST['ort']);
-    $this->gps = $this->clearContent($_POST['gps']);
-    $this->sparten = $_POST['sparten'];
-    $this->removedTags = $_POST['removedTags'];
-    $this->removedPic = $_POST['removeCurrentPic'];
-    $this->rssFeed = $this->clearContent($_POST['rssFeed']);
+    if (isset($_POST['bild'])) $this->bild = $_POST['bild'];
+    $this->sponsoren = $_POST['sponsoren'];
+    $this->authorizedAkteure = $_POST['authorizedAkteure'];
+
+    // For Akteur, if "+ Neuer Akteur" selected
+    if ($this->festivalAkteur == 'newAkteur'){
+     $this->akName = $this->clearContent($_POST['akName']);
+     $this->akStrasse = $this->clearContent($_POST['akStrasse']);
+     $this->akNr = $this->clearContent($_POST['akNr']);
+     $this->akAdresszusatz = $this->clearContent($_POST['akAdresszusatz']);
+     $this->akPlz = $this->clearContent($_POST['akPlz']);
+     $this->akOrt = $this->clearContent($_POST['akOrt']);
+     $this->akGps = $this->clearContent($_POST['akGps']);
+    }
 
     //-------------------------------------
 
     if (empty($this->name)) {
-     $this->fehler['name'] = "Bitte einen Organisationsnamen eingeben!";
+     $this->fehler['name'] = "Bitte einen Organisations- bzw. Festivalnamen eingeben!";
      $this->freigabe = false;
     }
 
@@ -289,24 +300,17 @@ Class festivalformular extends aae_data_helper {
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
     drupal_set_message(t('Das Festival wurde erfolgreich bearbeitet!'));
-   	header("Location: ". $base_url ."/akteurprofil/" . $this->akteur_id);
+   	header('Location: '. $base_url .'/' . $this->alias);
 
   } // END function festivalUpdaten()
 
-  /**
-   * Holen der Akteursattribute aus DB (Aufgerufen bei akteuredit/)
-   */
-  private function akteurGetFields() {
+  private function festivalGetFields() {
 
     // Auswahl der Daten des ausgewählten Akteurs:
     $resultakteur = db_select($this->tbl_akteur, 'c')
      ->fields('c')
 	   ->condition('AID', $this->akteur_id, '=')
      ->execute();
-
-    if (module_exists('aggregator')) {
-     $this->rssFeed = aggregator_feed_load('aae-feed-'.$this->akteur_id);
-    }
 
     // Speichern der Daten in den Arbeitsvariablen
     foreach ($resultakteur as $row) {
@@ -356,33 +360,14 @@ Class festivalformular extends aae_data_helper {
      ->execute()
      ->fetchAll();
     
-    // TODO
-    $this->festivalAkteure = db_select($this->tbl_akteur, 'a')
-     ->fields('a', array('AID', 'name'))
-     ->execute()
-     ->fetchAll();
+    $this->ownedAkteure = $this->akteure->getAkteure(array(
+      'filter' => array(
+       'uid' => $this->user_id
+      )
+     ), 'ultraminimal'
+    );
      
-    $this->allAkteure = db_select($this->tbl_akteur, 'a')
-     ->fields('a', array('AID', 'name'))
-     ->execute()
-     ->fetchAll();
-    
-    // Akteure abfragen, die in DB und für welche User Schreibrechte hat
-    $user_hat_akteure = db_select($this->tbl_hat_user, 'hu')
-     ->fields('hu')
-     ->condition('hat_UID', $this->user_id)
-     ->execute()
-     ->fetchAll();
-
-    foreach ($user_hat_akteure as $akteur) {
-
-     $this->resultOwnAkteure[] = db_select($this->tbl_akteur, 'a')
-      ->fields('a', array('AID', 'name'))
-      ->condition('AID', $akteur->hat_AID)
-      ->execute()
-      ->fetchObject();
-      
-     }
+    $this->allAkteure = $this->akteure->getAkteure(NULL, 'ultraminimal');
      
     ob_start(); // Aktiviert "Render"-modus
     include_once path_to_theme() . '/templates/festivalformular.tpl.php';

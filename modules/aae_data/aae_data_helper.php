@@ -82,14 +82,6 @@ namespace Drupal\AaeData;
     $this->user_id = $user->uid;
     $this->modulePath = drupal_get_path('module', 'aae_data');
     $this->themePath = drupal_get_path('theme', $GLOBALS['theme']);
-   
-    # obsolet:
-    if (isset($this->uses) && is_array($this->uses)) {
-     foreach ($this->uses as $aae_model) {
-       include_once $this->modulePath . '/models/'.$aae_model.'.php';
-       $this->{$aae_model} = new $aae_model();
-     }
-    }
 
    }
 
@@ -256,7 +248,6 @@ namespace Drupal\AaeData;
    * TODO: To be put in xy-models
    * @return All given tags - sortable for only events / akteure
    */
-
   protected function getAllTags($type) {
 
    if ($type == 'events'){
@@ -292,17 +283,27 @@ namespace Drupal\AaeData;
    return (empty($result)) ? NULL : $result;
 
   } // end protected function getDuplicates
-  
-  /* Kann raus: */
-  protected function in_array_r($needle, $haystack, $strict = true) {
-	    foreach ($haystack as $item) {
-	        if (($strict ? $item === $needle : $item == $needle) || (is_array($item) && in_array_r($needle, $item, $strict))) {
-	            return true;
-	        }
-	    }
-	    return false;
-  }
 
+  /* TODO: Documentate function */
+
+  protected function __db_action($tbl, $fields, $condition = NULL, $putTimestamp = false){
+
+   if ($putTimestamp){
+    $fields[($condition ? 'updated' : 'created')] = date('Y-m-d H:i:s', time());
+   }
+
+   if ($tbl == $this->tbl_akteur && !$condition){ # || $this->tbl_events
+    $fields['ersteller'] = $this->user_id;
+   }
+      
+   if ($condition){
+     db_update($tbl)->fields($fields)->condition($condition[0], $condition[1])->execute();
+     return $condition[1];
+   } else {
+     return db_insert($tbl)->fields($fields)->execute();
+   }
+
+  } // end protected function __db_action
 
  }
 ?>

@@ -7,6 +7,8 @@
  * Pflichtfelder sind (bisher): Name, Veranstalter, Datum (Anfang) & Beschreibung
  * Anschließend werden die Daten gefiltert in die DB-Tabellen eingetragen
  * oder geupdatet (s. $this->target).
+ *
+ * TODO: Integrate with akteure- and festivals-models
  */
 
 namespace Drupal\AaeData;
@@ -62,7 +64,7 @@ Class eventformular extends aae_data_helper {
 
    parent::__construct();
    
-   $explodedpath = explode("/", current_path());
+   $explodedpath = explode('/', current_path());
    $this->event_id = $this->clearContent($explodedpath[1]);
 
    require_once('models/events.php');

@@ -12,7 +12,7 @@ namespace Drupal\AaeData;
 *       $this->festival = new festival();
 */
 
-Class festival extends aae_data_helper {
+Class festivals extends aae_data_helper {
 
  public function __construct() {
   parent::__construct();

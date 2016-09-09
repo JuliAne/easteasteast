@@ -1,68 +1,28 @@
 <?php
 /**
- * akteurformular.php stellt ein Formular dar,
- * in welches alle Informationen über einen Akteur
- * eingetragen UND bearbeitet werden koennen.
+ * @file akteurformular.php
  *
- * Einzige Pflichtfelder sind bisher Name, Emailadresse und Bezirk.
+ * Stellt ein Formular dar, in welches alle Informationen über
+ * einen Akteur eingetragen & bearbeitet werden koennen.
+ *
+ * Einzige Pflichtfelder sind bisher Name, Email-adresse und Bezirk.
  *
  */
  
 namespace Drupal\AaeData;
 
-Class akteurformular extends aae_data_helper {
+Class akteurformular extends akteure {
 
-  // $tbl_akteur
-  var $name = "";
-  var $adresse = "";
-  var $email = "";
-  var $telefon = "";
-  var $url = "";
-  var $ansprechpartner = "";
-  var $funktion = "";
-  var $bild = "";
-  var $beschreibung = "";
-  var $oeffnungszeiten = "";
-  var $barrierefrei = "";
-  var $created = "";
-  var $modified = "";
-
-  // $tbl_adresse
-  var $strasse = "";
-  var $nr = "";
-  var $adresszusatz = "";
-  var $plz = "";
-  var $ort = "";
-  var $gps = "";
-
-  // $tbl_tag
-  var $sparten = "";
-  var $all_sparten = ''; // Ermöglicht Tokenizer-plugin im Frontend
-
-  var $akteur_id = "";
-  var $user_id = "";
-  var $fehler = array();
-  var $freigabe = true; // Variable zur Freigabe: muss true sein
-
-  // $tbl_akteur_hat_sparte
-  var $countsparten = "";
-  var $sparte_id = "";
-
-  var $resultbezirke = "";
-  var $target = "";
-  var $removedTags;
-  var $removedPic;
-  var $rssFeed = "";
-
-  function __construct($action) {
+ function __construct($action) {
     
    parent::__construct();
 
-   $explodedpath = explode("/", current_path());
+   $explodedpath = explode('/', current_path());
    $this->akteur_id = $this->clearContent($explodedpath[1]);
-   require_once('models/akteure.php');
+  # require_once('models/akteure.php');
    $this->akteur = new akteure();
-
+   
+   // Check for permissions
    if (!user_is_logged_in() || ($action == 'update' && !$this->akteur->akteurExists($this->akteur_id))) {
     drupal_access_denied();
     drupal_exit();
@@ -73,7 +33,7 @@ Class akteurformular extends aae_data_helper {
     $this->target = 'update';
    }
 
-  }
+ }
 
   /**
    *  Funktion, welche reihenweise POST-Werte auswertet, abspeichert bzw. ausgibt.
@@ -82,9 +42,7 @@ Class akteurformular extends aae_data_helper {
 
   public function run() {
 
-    $output = '';
-
-    if (isset($_POST['submit'])) {
+    /*if (isset($_POST['submit'])) {
       if ($this->akteurCheckPost()) {
 	     if ($this->target == 'update') {
         if (!$this->akteur->isAuthorized($this->akteur_id)){
@@ -95,9 +53,9 @@ Class akteurformular extends aae_data_helper {
 	     } else {
 		    $this->akteurSpeichern();
 	     }
-       $output = $this->akteurDisplay();
+        $output = $this->akteurDisplay();
       } else {
-	    $output = $this->akteurDisplay();
+	     $output = $this->akteurDisplay();
       }
     } else {
       // Was passiert, wenn Seite zum ersten mal gezeigt wird?
@@ -111,9 +69,27 @@ Class akteurformular extends aae_data_helper {
        }
       }
       $output = $this->akteurDisplay();
+    } */ 
+
+    if (isset($_POST['submit'])) {
+    
+    } else {
+
+      // Load input-values via akteure-model
+      if ($this->target == 'update') {
+
+       if (!$this->akteur->isAuthorized($this->akteur_id)){
+        drupal_access_denied();
+        drupal_exit();
+       } else {
+	      $this->akteurGetFields();
+       }
+
+      }
+
     }
 
-    return $output;
+    return $this->akteurDisplay();
   }
 
   /**
@@ -123,126 +99,13 @@ Class akteurformular extends aae_data_helper {
 
   private function akteurCheckPost() {
 
-    $this->name = $this->clearContent($_POST['name']);
-    $this->email = $this->clearContent($_POST['email']);
-    $this->telefon = $this->clearContent($_POST['telefon']);
-    $this->url = $this->clearContent($_POST['url']);
-    $this->ansprechpartner = $this->clearContent($_POST['ansprechpartner']);
-    $this->funktion = $this->clearContent($_POST['funktion']);
-    if (isset($_POST['bild'])) $this->bild = $_POST['bild'];
-    $this->beschreibung = $this->clearContent($_POST['beschreibung']);
-    $this->oeffnungszeiten = $this->clearContent($_POST['oeffnungszeiten']);
-    $this->strasse = $this->clearContent($_POST['strasse']);
-    $this->nr = $this->clearContent($_POST['nr']);
-    $this->adresszusatz = $this->clearContent($_POST['adresszusatz']);
-    $this->plz = $this->clearContent($_POST['plz']);
-    $this->ort = $this->clearContent($_POST['ort']);
-    $this->gps = $this->clearContent($_POST['gps']);
-    $this->sparten = $_POST['sparten'];
-    $this->removedTags = $_POST['removedTags'];
-    $this->removedPic = $_POST['removeCurrentPic'];
-    $this->rssFeed = $this->clearContent($_POST['rssFeed']);
-
-    //-------------------------------------
-
-    if (empty($this->name)) {
-     $this->fehler['name'] = t("Bitte einen Organisationsnamen eingeben!");
-     $this->freigabe = false;
-    }
-
-    if (empty($this->email) || !valid_email_address($this->email)) {
-     $this->fehler['email'] = t("Bitte eine (gültige) Emailadresse eingeben!");
-	   $this->freigabe = false;
-    }
-
-    if (empty($this->ort)) {
-     $this->fehler['ort'] = t("Bitte einen Bezirk auswählen!");
-     $this->freigabe = false;
-    }
-
-    // Abfrage, ob Einträge nicht länger als in DB-Zeichen lang sind.
-    if (strlen($this->name) > 64) {
-	   $this->fehler['name'] = t("Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.");
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->email) > 100) {
-	   $this->fehler['email'] = t("Bitte geben Sie eine kürzere Emailadresse an.");
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->telefon) > 100) {
- 	   $this->fehler['telefon'] = t("Bitte geben Sie eine kürzere Telefonnummer an.");
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->url) > 100) {
-	   $this->fehler['url'] = t("Bitte geben Sie eine kürzere URL an.");
-	   $this->freigabe = false;
-    }
-
-    if (!empty($this->url) && preg_match('/\A(http:\/\/|https:\/\/)(\w*[.|-]\w*)*\w+\.[a-z]{2,3}(\/.*)*\z/',$this->url)==0) {
-     $this->fehler['url'] = t("Bitte eine gültige URL zur Akteurswebseite eingeben! (z.B. <i>http://meinakteur.de</i>)");
-     $this->freigabe = false;
-    }
-
-    if (strlen($this->ansprechpartner) > 100){
-	   $this->fehler['ansprechpartner'] = t("Bitte geben Sie einen kürzeren Ansprechpartner an.");
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->funktion) > 100) {
-	   $this->fehler['funktion'] = t("Bitte geben Sie eine kürzere Funktion an.");
-     $this->freigabe = false;
-    }
-
-    if (strlen($this->beschreibung) > 65000) {
-	   $this->fehler['beschreibung'] = t("Bitte geben Sie eine kürzere Beschreibung an.");
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->oeffnungszeiten) > 200) {
-	   $this->fehler['oeffnungszeiten'] = t("Bitte geben Sie kürzere Oeffnungszeiten an.");
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->strasse) > 100) {
- 	   $this->fehler['strasse'] = t("Bitte geben Sie einen kürzeren Strassennamen an.");
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->nr) > 100) {
-	   $this->fehler['nr'] = t("Bitte geben Sie eine kürzere Nummer an.");
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->adresszusatz) > 100) {
-	   $this->fehler['adresszusatz'] = t("Bitte geben Sie einen kürzeren Adresszusatz an.");
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->plz) > 100) {
-	   $this->fehler['plz '] = t("Bitte geben Sie eine kürzere PLZ an.");
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->gps) > 100) {
-	   $this->fehler['gps'] = t("Bitte geben Sie kürzere GPS-Daten an.");
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->rssFeed) > 400) {
-     # TODO
-    }
-
-    if ($this->gps == 'Ermittle Geo-Koordinaten...') $this->gps = '';
-
+    # here: try -> catch
     // Um die bereits gewählten Tags anzuzeigen benötigen wir deren Namen...
     if ($this->freigabe == false) {
 
      $neueSparten = array();
 
-     foreach($this->sparten as $sparte) {
+     foreach ($this->sparten as $sparte) {
 
       $sparte = strtolower($this->clearContent($sparte));
 
@@ -250,7 +113,7 @@ Class akteurformular extends aae_data_helper {
 
       $spartenName = db_select($this->tbl_sparte, 's')
        ->fields('s', array('kategorie'))
-       ->condition('KID', $sparte, '=')
+       ->condition('KID', $sparte)
        ->execute()
        ->fetchAll();
 
@@ -262,7 +125,7 @@ Class akteurformular extends aae_data_helper {
 
      }
     }
-     $this->sparten = $neueSparten;
+    $this->sparten = $neueSparten;
    }
 
     return $this->freigabe;
@@ -272,9 +135,15 @@ Class akteurformular extends aae_data_helper {
 
   /**
    * Schreibt Daten in DB
-   * Vereinheitliche Funktion zum Adressspeichern
+   * TODO: Vereinheitliche Funktion zum Adressspeichern
    */
   private function akteurSpeichern() {
+
+   // Wenn Bilddatei ausgewählt wurde...
+
+   if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
+    $this->bild = $this->upload_image($_FILES['bild']);
+   }
 
    $gps = explode(',', $this->gps, 2);
 
@@ -289,12 +158,6 @@ Class akteurformular extends aae_data_helper {
      'gps_long' => $gps[1]
     ))
 	  ->execute();
-
-   //Wenn Bilddatei ausgewählt wurde...
-
-   if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
-    $this->bild = $this->upload_image($_FILES['bild']);
-   }
 
 	 $this->akteur_id = db_insert($this->tbl_akteur)
    	->fields(array(
@@ -372,7 +235,7 @@ Class akteurformular extends aae_data_helper {
 
 		$resultsparte = db_select($this->tbl_sparte, 's')
 		  ->fields('s')
-		  ->condition('KID', $sparte, '=')
+		  ->condition('KID', $sparte)
 		  ->execute();
 
 		if ($resultsparte->rowCount() == 0) {
@@ -390,7 +253,6 @@ Class akteurformular extends aae_data_helper {
 		}
 
 		// Akteur & Tag in Tabelle $tbl_hat_sparte einfügen
-
 		$insertAkteurSparte = db_insert($this->tbl_hat_sparte)
 		  ->fields(array(
 		    'hat_AID' => $this->akteur_id,
@@ -414,7 +276,7 @@ Class akteurformular extends aae_data_helper {
    */
   private function akteurUpdaten() {
 
-    //Wenn Bilddatei ausgewählt wurde...
+    // Wenn Bilddatei ausgewählt wurde...
     if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
      $this->bild = $this->upload_image($_FILES['bild']);
     } else if (isset($_POST['oldPic'])) {
@@ -428,8 +290,8 @@ Class akteurformular extends aae_data_helper {
       $tag = $this->clearContent($tag);
 
       db_delete($this->tbl_hat_sparte)
-       ->condition('hat_KID', $tag, '=')
-       ->condition('hat_AID', $this->akteur_id, '=')
+       ->condition('hat_KID', $tag)
+       ->condition('hat_AID', $this->akteur_id)
        ->execute();
 
      }
@@ -437,7 +299,7 @@ Class akteurformular extends aae_data_helper {
 
     $akteurAdresse = db_select($this->tbl_akteur, 'a')
      ->fields('a', array('adresse'))
-     ->condition('AID', $this->akteur_id, '=')
+     ->condition('AID', $this->akteur_id)
      ->execute()
      ->fetchObject();
 
@@ -453,7 +315,7 @@ Class akteurformular extends aae_data_helper {
 		  'gps_lat' => $gps[0],
       'gps_long' => $gps[1]
 		 ))
-     ->condition('ADID', $akteurAdresse->adresse, '=')
+     ->condition('ADID', $akteurAdresse->adresse)
 		 ->execute();
 
     // remove current picture manually
@@ -484,7 +346,7 @@ Class akteurformular extends aae_data_helper {
 		  'oeffnungszeiten' => $this->oeffnungszeiten,
       'modified' => date('Y-m-d H:i:s', time())
 	   ))
-	   ->condition('AID', $this->akteur_id, '=')
+	   ->condition('AID', $this->akteur_id)
 	   ->execute();
 
      if (module_exists('aggregator')) {
@@ -551,7 +413,7 @@ Class akteurformular extends aae_data_helper {
 
   	$resultsparte = db_select($this->tbl_sparte, 's')
   	 ->fields('s')
-  	 ->condition('KID', $sparte, '=')
+  	 ->condition('KID', $sparte)
   	 ->execute();
 
     if ($resultsparte->rowCount() == 0) {
@@ -571,8 +433,8 @@ Class akteurformular extends aae_data_helper {
 
     $hatAkteurSparte = db_select($this->tbl_hat_sparte, 'hs')
      ->fields('hs')
-     ->condition('hat_KID', $sparte_id, '=')
-     ->condition('hat_AID', $this->akteur_id, '=')
+     ->condition('hat_KID', $sparte_id)
+     ->condition('hat_AID', $this->akteur_id)
      ->execute();
 
      if ($hatAkteurSparte->rowCount() == 0) {
@@ -601,36 +463,11 @@ Class akteurformular extends aae_data_helper {
    */
   private function akteurGetFields() {
 
-    $resultAkteur = $this->akteur->getAkteure(array('AID' => $this->akteur_id), 'complete');
+   $this->akteur->__setSingleAkteurVars($this->akteur->getAkteure(array('AID' => $this->akteur_id), 'complete')[0]);
 
-    if (module_exists('aggregator')) {
-     $this->rssFeed = aggregator_feed_load('aae-feed-'.$this->akteur_id);
-    }
-
-    // Speichern der Daten in den Arbeitsvariablen
-    foreach ($resultAkteur as $row) {
-	   $this->name = $row->name;
-	   $this->email = $row->email;
-	   $this->telefon = $row->telefon;
-	   $this->url = $row->url;
-	   $this->ansprechpartner = $row->ansprechpartner;
-	   $this->funktion = $row->funktion;
-	   $this->bild = $row->bild;
-	   $this->beschreibung = $row->beschreibung;
-	   $this->oeffnungszeiten = $row->oeffnungszeiten;
-     $this->barrierefrei = $row->barrierefrei;
-     $this->created = new \DateTime($row->created);
-     $this->modified = new \DateTime($row->modified);
-     $this->adresse = $row->adresse->ADID;
-	   $this->strasse = $row->adresse->strasse;
-	   $this->nr = $row->adresse->nr;
-	   $this->adresszusatz = $row->adresse->adresszusatz;
-	   $this->plz = $row->adresse->plz;
-	   $this->ort = $row->bezirk->BID;
-	   $this->gps = $row->gps;
-     $this->sparten = $row->tags;
-
-    }
+   if (module_exists('aggregator')) {
+    $this->rssFeed = aggregator_feed_load('aae-feed-'.$this->akteur_id);
+   }
 
   } // END function akteurGetFields()
 
