@@ -125,7 +125,7 @@
 
    <div class="large-6 columns small-12 columns aaeEvent<?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? ' today' : ''; ?><?= (!empty($event->eventRecurringType) && ($event->eventRecurringType <= 5) ? ' eventRecurres' : ''); ?><?= ($event->eventRecurringType == 6 ? ' isFestival' : ''); ?>" itemscope itemtype="http://schema.org/Event"><!-- TODO: Make /SocialEvent -->
    <!-- Some microdata to enrich events-snippets for alien engines -->
-   <?= (!empty($event->bild) ? '<meta itemprop="image" content="https://leipziger-ecken.de'.$event->bild.'"' : ''); ?>
+   <?= (!empty($event->bild) ? '<meta itemprop="image" content="'.$base_root.$event->bild.'" />' : ''); ?>
    <meta itemprop="startDate" content="<?= $event->start->format('Y-m-dTH:i'); ?>" />
    <meta itemprop="endDate" content="<?= $event->ende->format('Y-m-dTH:i'); ?>" />
    <?php if (!empty($event->adresse->gps_lat)) : ?>
@@ -145,7 +145,7 @@
    <div class="date large-2 small-3 columns button secondary round"><?= $event->start->format('d'); ?><br /><?= $this->monat_short[$event->start->format('m')]; ?></div>
    <div class="content large-9 small-9 columns">
    <header<?= (!empty($event->eventRecurringType) ? ' title="'.$recurringEventTypes[$event->eventRecurringType].'"' : ''); ?>>
-    <h3><a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>" itemprop="name" content="<?= $event->name; ?>" title="<?= t('Eventprofil aufrufen'); ?>"><?= $event->name; ?></a><?= ($event->eventRecurringType == 6 ? ' - '.$event->festival->name : ''); ?></h3>
+    <h3><a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>" itemprop="name" content="<?= htmlspecialchars($event->name); ?>" title="<?= t('Eventprofil aufrufen'); ?>"><?= $event->name; ?></a><?= ($event->eventRecurringType == 6 ? ' - '.$event->festival->name : ''); ?></h3>
     <p class="aaeEventDate"><span><?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? '<a href="#">'.t('Heute').',</a> ' : ''; ?><?php if($event->start->format('H:i') !== '00:00') echo $event->start->format('H:i'); ?><?php if($event->ende->format('H:i') !== '00:00') echo ' - '. $event->ende->format('H:i'); ?><?= (!empty($event->eventRecurringType) ? '  '.$recurringEventTypes[$event->eventRecurringType] : ''); ?></span></p>
     <p class="aaeEventTags">
      <?php foreach($event->tags as $tag) : ?>

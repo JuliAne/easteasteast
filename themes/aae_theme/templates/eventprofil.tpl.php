@@ -51,7 +51,7 @@
   </div>
  </div><!-- /.aaeActionBar -->
 
- <div id="project" class="row" itemscope itemtype="http://schema.org/SocialEvent">
+ <div id="project" class="row" itemscope itemtype="http://schema.org/Event">
   <?php global $base_root; ?>
   <meta itemprop="url" content="<?= $base_root .'/eventprofil/'.$resultEvent->EID; ?>" />
   <meta itemprop="name" content="<?= $resultEvent->name; ?>" />
