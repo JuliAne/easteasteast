@@ -44,18 +44,18 @@
 <form action="#" method="POST" enctype="multipart/form-data">
 
  <div class="row">
-    <div class="large-4 columns">
-      <?= $this->fehler['name']; ?>
-      <label><?= t('Name'); ?> <span class="pflichtfeld">(Pflichtfeld)</span>:
-        <input type="text" id="akteurNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= t('Name des Festivals'); ?>" required />
-      </label>
-    </div>
+   <div class="large-4 columns">
+    <?= $this->fehler['name']; ?>
+    <label><?= t('Name'); ?> <span class="pflichtfeld">(Pflichtfeld)</span>:
+     <input type="text" id="akteurNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= t('Name des Festivals'); ?>" required />
+    </label>
+   </div>
 
-    <div class="large-4 columns">
-     <label><?= t('Email-Adresse'); ?> <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['email']; ?>
-      <input type="email" id="akteurEmailInput" name="email" value="<?= $this->email; ?>" placeholder="<?= t('E-mail Adresse'); ?>" required />
-     </label>
-    </div>    
+   <div class="large-4 columns">
+    <label><?= t('Email-Adresse'); ?> <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['email']; ?>
+     <input type="email" id="akteurEmailInput" name="email" value="<?= $this->email; ?>" placeholder="<?= t('E-mail Adresse'); ?>" required />
+    </label>
+   </div>    
     
    <div class="large-4 columns">
    <?php if ($this->target == 'update') : ?>
@@ -72,54 +72,61 @@
    <?php endif; ?>   
    </div>
    
-   <div class="large-12 columns">
-    <label>Festival-URL <span class="pflichtfeld">(Pflichtfeld, kann nur EINMALIG vergeben werden)</span>:
-      <input type="text" id="akteurEmailInput" name="alias" value="<?= $this->alias; ?>" placeholder="Steht hier 'kunstfest16', wird daraus https://leipziger-ecken.de/kunstfest16" required<?= ($this->target == 'update' ? ' disabled' : ''); ?> />
-     </label>
-    </div>
+   <div class="large-6 columns">
+    <label><?= t('Festival-URL'); ?> <span class="pflichtfeld">(Pflichtfeld, kann nur EINMALIG vergeben werden)</span>:
+      <input type="text" id="festivalUrlInput" name="alias" value="<?= $this->alias; ?>" placeholder="Steht hier 'kunstfest16', wird daraus https://leipziger-ecken.de/kunstfest16" required<?= ($this->target == 'update' ? ' disabled' : ''); ?> />
+    </label>
+   </div>
+
+   <div class="large-6 columns">
+    <label><?= t('Offiziele Homepage'); ?>:
+      <input type="text" id="festivalHomepageInput" name="homepage" value="<?= $this->homepage; ?>" placeholder="Link zu offizieler Website" />
+    </label>
+   </div>
 
  </div><!-- /.row -->
  
  <?php if ($this->target != 'update') : ?>
-  <fieldset id="newAkteurAdresse" class="Adresse fieldset row">
+  <fieldset id="newAkteurAdresse" class="Adresse fieldset row" style="margin:20px 0;">
    <legend>Neuer Akteur: Basis-informationen</legend>
-   <p>Hinweis: Jedes Festival benötigt einen Akteur, dessen Profil mit dem Festival verknüpft wird und als Info-Seite dient.</p>
-   <p>Sollte bereits ein zuständiger Akteur bestehen, wählen Sie diesen bitte oben unter "Veranstalter" aus!</p>
+   <p style="text-align:center;padding-top:15px;opacity:0.8;"><strong>Hinweis:</strong> Jedes Festival benötigt einen Akteur, dessen Profil mit dem Festival verknüpft wird und als Info-Seite dient.</p>
+   <p style="text-align:center;padding-bottom:15px;opacity:0.8;">Sollte bereits ein zuständiger Akteur bestehen, wählen Sie diesen bitte oben unter "Festivalinhaber" aus!</p>
    
    <div class="large-2 columns">
     <label><?= t('Name') ?>: <?= $this->fehler['akName']; ?>
-     <input type="text" id="AkteurnameInput" name="akName" placeholder="Name des neuen Akteurs" value="<?= $this->akName; ?>" />
+     <input type="text" id="AkteurnameInput" name="akteur[name]" placeholder="Name des neuen Akteurs" value="<?= $this->akteur->name; ?>" />
     </label>
    </div>
 
    <div class="large-3 columns">
     <label><?= t('Straße'); ?>: <?= $this->fehler['akStrasse']; ?>
-     <input type="text" id="StrasseInput" name="akStrasse" value="<?= $this->akStrasse; ?>" placeholder="<?= t('Straße'); ?>" />
+     <input type="text" id="StrasseInput" name="akteur[adresse][strasse]" value="<?= $this->akteur->adresse->strasse; ?>" placeholder="<?= t('Straße'); ?>" />
     </label>
    </div>
 
    <div class="large-1 columns">
     <label><?= t('Hausnummer'); ?>: <?= $this->fehler['akNr']; ?>
-     <input type="text" id="NrInput" name="akNr" value="<?= $this->akNr; ?>" placeholder="<?= t('Hausnummer'); ?>" />
+     <input type="text" id="NrInput" name="akteur[adresse][nr]" value="<?= $this->akteur->adresse->nr; ?>" placeholder="<?= t('Hausnummer'); ?>" />
     </label>
    </div>
 
    <div class="large-3 columns">
     <label><?= t('Adresszusatz'); ?>: <?= $this->fehler['akAdresszusatz']; ?>
-     <input type="text" id="AdresszusatzInput" name="akAdresszusatz" value="<?= $this->akAdresszusatz; ?>" placeholder="<?= t('Adresszusatz'); ?>">
+     <input type="text" id="AdresszusatzInput" name="akteur[adresse][adresszusatz]" value="<?= $this->akteur->adresse->adresszusatz; ?>" placeholder="<?= t('Adresszusatz'); ?>">
     </label>
    </div> 
 
    <div class="large-3 columns">
     <label><?= t('PLZ'); ?>: <?= $this->fehler['akPlz']; ?>
-      <input type="text" pattern="[0-9]{5}" id="PLZInput" name="akPlz" value="<?= $this->akPlz; ?>" placeholder="<?= t('PLZ'); ?>">
+      <input type="text" pattern="[0-9]{5}" id="PLZInput" name="akteur[adresse][plz]" value="<?= $this->akteur->adresse->plz; ?>" placeholder="<?= t('PLZ'); ?>">
     </label>
    </div>
    <div class="large-4 columns">
 
   <label><?= t('Bezirk'); ?> <span class="pflichtfeld">(Pflichtfeld)</span>: <?= $this->fehler['ort']; ?>
 
-  <select name="akOrt">
+  <select name="akteur[adresse][bezirk]">
+  <!-- TODO with selected things?!!!! -->
    <option value="" selected="selected">- <?= t('Bezirk auswählen'); ?> -</option>
    <?php foreach ($this->resultBezirke as $bezirk) : ?>
     <option value="<?= $bezirk->BID; ?>"<?= ($bezirk->BID == $this->akOrt ? ' selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
@@ -130,7 +137,7 @@
 
   <div class="large-4 columns">
   <label><?= t('Geodaten (Karte)'); ?>: <?= $this->fehler['akGps']; ?>
-   <input type="text" id="GPSInput" name="akGps" value="<?= $this->akGps; ?>" placeholder="<?= t('GPS-Adresskoordinaten'); ?>">
+   <input type="text" id="GPSInput" name="akteur[adresse][gps]" value="<?= $this->akteur->adresse->gps; ?>" placeholder="<?= t('GPS-Adresskoordinaten'); ?>">
   </label>
   <p id="show_coordinates" style="display:none;"><a href="#" target="_blank"><?= t('Zeige Koordinaten auf Karte'); ?></a></p>
 </div>

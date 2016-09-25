@@ -5,12 +5,12 @@
 <?php endif; ?>
 <div class="divider" style="margin-bottom: 25px;"></div>
 
-<?php if (!$this->freigabe) : ?>
+<?php if (!empty($this->fehler)) : ?>
 <div class="callout alert">
  <p><?= t('Akteur konnte nicht gespeichert werden, da folgende Fehler vorliegen:'); ?></p><br />
-  <?php foreach ($this->fehler as $f) : ?>
-    <p><strong><?= $f; ?></strong></p>
-  <?php endforeach; ?>
+ <?php foreach ($this->fehler as $f) : ?>
+  <p><strong><?= $f; ?></strong></p>
+ <?php endforeach; ?>
 </div>
 <?php endif; ?>
 </div>
@@ -19,14 +19,13 @@
 
  <div class="row">
     <div class="large-6 columns">
-      <?= $this->fehler['name']; ?>
-      <label>Name <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>:
+      <label><?= t('Name'); ?> <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>: <?= $this->fehler['name']; ?>
         <input type="text" id="akteurNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= t('Name des Vereins / der Organisation'); ?>" required />
       </label>
     </div>
 
     <div class="large-6 columns">
-     <label>Email-Adresse <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>: <?= $this->fehler['email']; ?>
+     <label><?= t('Email-Adresse'); ?> <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>: <?= $this->fehler['email']; ?>
       <input type="email" id="akteurEmailInput" name="email" value="<?= $this->email; ?>" placeholder="<?= t('E-mail Adresse'); ?>" required />
      </label>
     </div>
@@ -38,25 +37,25 @@
 
    <div class="large-4 columns">
     <label><?= t('Straße'); ?>: <?= $this->fehler['strasse']; ?>
-     <input type="text" id="StrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= t('Straße'); ?>" />
+     <input type="text" id="StrasseInput" name="adresse[strasse]" value="<?= $this->adresse->strasse; ?>" placeholder="<?= t('Straße'); ?>" />
     </label>
    </div>
 
    <div class="large-1 columns">
     <label><?= t('Nr.'); ?>: <?= $this->fehler['nr']; ?>
-     <input type="text" id="NrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= t('Hausnummer'); ?>" />
+     <input type="text" id="NrInput" name="adresse[nr]" value="<?= $this->adresse->nr; ?>" placeholder="<?= t('Hausnummer'); ?>" />
     </label>
    </div>
 
    <div class="large-3 columns">
     <label><?= t('Adresszusatz'); ?>: <?= $this->fehler['adresszusatz']; ?>
-     <input type="text" id="AdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= t('Adresszusatz'); ?>">
+     <input type="text" id="AdresszusatzInput" name="adresse[adresszusatz]" value="<?= $this->adresse->adresszusatz; ?>" placeholder="<?= t('Adresszusatz'); ?>">
     </label>
    </div> 
 
    <div class="large-3 columns">
     <label><?= t('PLZ'); ?>: <?= $this->fehler['plz']; ?>
-      <input type="text" pattern="[0-9]{5}" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= t('PLZ'); ?>">
+      <input type="text" pattern="[0-9]{5}" id="PLZInput" name="adresse[plz]" value="<?= $this->adresse->plz; ?>" placeholder="<?= t('PLZ'); ?>">
     </label>
    </div>
 
@@ -71,14 +70,10 @@
 
   <label><?= t('Bezirk'); ?> <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>: <?= $this->fehler['ort']; ?>
 
-  <select name="ort">
-   <option value="" selected="selected">- <?= t('Bezirk auswählen'); ?> -</option>
+  <select name="adresse[bezirk]">
+   <option value="" <?= (empty($this->adresse->bezirk) ? ' selected="selected"' : ''); ?>>- <?= t('Bezirk auswählen'); ?> -</option>
    <?php foreach ($this->allBezirke as $bezirk) : ?>
-    <?php if ($bezirk->BID == $this->ort) : ?>
-    <option value="<?= $bezirk->BID; ?>" selected="selected"><?= $bezirk->bezirksname; ?></option>
-    <?php else : ?>
-    <option value="<?= $bezirk->BID; ?>"><?= $bezirk->bezirksname; ?></option>
-    <?php endif; ?>
+    <option value="<?= $bezirk->BID; ?>"<?= ($bezirk->BID == $this->adresse->bezirk ? ' selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
    <?php endforeach; ?>
   </select>
   </label>
@@ -86,7 +81,7 @@
 
   <div class="large-4 columns">
   <label><?= t('Geodaten (Karte)'); ?>: <?= $this->fehler['gps']; ?>
-   <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= t('GPS-Adresskoordinaten'); ?>">
+   <input type="text" id="GPSInput" name="adresse[gps]" value="<?= $this->adresse->gps; ?>" placeholder="<?= t('GPS-Adresskoordinaten'); ?>">
   </label>
   <p id="show_coordinates" style="display:none;"><a href="#" target="_blank"><?= t('Zeige Koordinaten auf Karte'); ?></a></p>
 </div>
@@ -124,7 +119,7 @@
   <div class="medium-3 columns">
     <ul class="tabs vertical" id="example-vert-tabs" data-tabs>
       <li class="tabs-title is-active"><a href="#pbild" aria-selected="true"><?= t('Akteurbild'); ?></a></li>
-      <li class="tabs-title"><a href="#prss">RSS-Integration <i>(Beta)</i></a></li>
+      <li class="tabs-title"><a href="#prss"><?= t('RSS-Integration'); ?> <i>(Beta)</i></a></li>
       <li class="tabs-title"><a href="#psonstiges"><?= t('Sonstige Informationen'); ?></a></li>
     </ul>
     </div>
@@ -141,11 +136,12 @@
            <a href="#"><?= t('Akteurbild löschen.'); ?></a>
           </div>
         <?php endif; ?>
+      <!-- TODO: Make .licensetext editable via backend -->
       <p class="licensetext">Wir empfehlen, Bilder im <strong>Format 3:2</strong> hochzuladen (bspw. 640 x 400 Pixel)</p><br />
       <p class="licensetext"><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf leipziger-ecken.de stimmen sie auch einer etwaigen Nutzung dieser Daten durch andere zu.</p>
       <p class="licensetext">Wir veröffentlichen alle Inhalte unter der Free cultural Licence <i>„CC-By 4.0 international“</i> - Dies bedeutet jeder darf ihre Daten nutzen und bearbeiten, wenn er den Urheber nennt. Wir bitten Sie, ihre Daten nach bestem (Ge-)wissen über die Eingabefeldern zu beschreiben.</p><br />
       <p class="licensetext">Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte. Bildmaterial sollte vorher abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
-
+      <!-- END TODO -->
        </div>
       <div class="tabs-panel" id="prss">
         <img src="<?= base_path().path_to_theme(); ?>/img/rss.svg" style="width:18px;float:left;margin-right:10px;" />
@@ -180,19 +176,19 @@
   </div>
 </div>
 
-  <div class="row" style="margin-top:15px;">
+ <div class="row" style="margin-top:15px;">
 
   <div class="large-12 columns">
 
     <label><?= t('Kategorien'); ?>: <?= $this->fehler['sparten']; ?></label>
 
-    <select id="eventSpartenInput" multiple="multiple" class="tokenize" name="sparten[]">
+    <select id="eventSpartenInput" multiple="multiple" class="tokenize" name="tags[]">
 
-    <?php foreach ($this->sparten as $sparte) : ?>
-     <?php if (is_array($sparte)) : ?>
-     <option selected value="<?= $sparte[0]->KID; ?>"><?= $sparte[0]->kategorie; ?></option>
+    <?php foreach ($this->tags as $tag) : ?>
+     <?php if (is_array($tag)) : ?>
+     <option selected value="<?= $tag[0]->KID; ?>"><?= $tag[0]->kategorie; ?></option>
      <?php else : ?>
-     <option selected value="<?= $sparte; ?>"><?= $sparte; ?></option>
+     <option selected value="<?= $tag; ?>"><?= $tag; ?></option>
      <?php endif; ?>
     <?php endforeach;?>
 
@@ -207,7 +203,7 @@
  <div class="row">
  <?php if ($this->target == 'update' && !empty($this->created)) : ?>
   <?php if ($this->created->format('d.m.Y') != '01.01.1000') : ?>
-   <p style="color:grey;"><?= t('Akteur'); ?> <?= t('eingetragen am'); ?> <?= $this->created->format('d.m.Y, H:i'); ?> Uhr.
+   <p style="color:grey;"><?= t('Akteur'); ?> <?= t('eingetragen am'); ?> <?= $this->created->format('d.m.Y, H:i'); ?> <?= t('Uhr'); ?>.
    <?php if ($this->modified->format('d.m.Y') != '01.01.1000' && $this->modified->format('H:i') != date('H:i')) : ?> <?= t('Zuletzt aktualisiert am'); ?> <?= $this->modified->format('d.m.Y, H:i'); ?> <?= t('Uhr'); ?>.<?php endif; ?>
    </p><div class="divider" style="margin:17px 0;"></div>
   <?php endif; ?>

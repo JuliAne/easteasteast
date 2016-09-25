@@ -66,11 +66,11 @@
 
    <div id="project-info" class="pcard" style="margin-top:5px;">
      <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" /></span>
-     <strong style="color:rgb(96,94,94);">Start: </strong><a href="<?= base_path(); ?>events/?day=<?= $resultEvent->start->format('Y-m-d'); ?>" rel="nofollow" itemprop="startDate" content="<?= $resultEvent->start->format('Y-m-d'); ?>"><?= $resultEvent->start->format('d.m.Y'); ?></a>
+     <strong style="color:rgb(96,94,94);">Start: </strong><a href="<?= base_path(); ?>events/?day=<?= $resultEvent->start->format('Y-m-d'); ?>" rel="nofollow" itemprop="startDate" content="<?= $resultEvent->start->format('Y-m-dTH:i'); ?>"><?= $resultEvent->start->format('d.m.Y'); ?></a>
      <?= ($resultEvent->start->format('s') == '01' ? ', '.$resultEvent->start->format('H:i').' Uhr' : ''); ?>
      <?php if ($resultEvent->ende->format('Ymd') !== '10000101' || $resultEvent->ende->format('s') == '01') : ?>
        <br /><strong style="color:rgb(96,94,94);">Bis: </strong>
-       <?= ($resultEvent->ende->format('Ymd') !== '10000101' ? '<a href="'.base_path().'events/?day='.$resultEvent->ende->format('Y-m-d').'" rel="nofollow" itemprop="endDate" content="'.$resultEvent->ende->format('Y-m-d').'">'.$resultEvent->ende->format('d.m.Y').'</a>' : ''); ?>
+       <?= ($resultEvent->ende->format('Ymd') !== '10000101' ? '<a href="'.base_path().'events/?day='.$resultEvent->ende->format('Y-m-d').'" rel="nofollow" itemprop="endDate" content="'.$resultEvent->ende->format('Y-m-dTH:i').'">'.$resultEvent->ende->format('d.m.Y').'</a>' : ''); ?>
        <?= ($resultEvent->ende->format('s') == '01' ? ' '.$resultEvent->ende->format('H:i').' Uhr' : ''); ?></p>
     <?php endif; ?>
     <?php if (!empty($resultEvent->childrenEvents)) : ?>
@@ -138,7 +138,7 @@
    <?php elseif (isset($resultEvent->festival)) : ?>
    <p><strong><?= t('Teil des'); ?> <a href="<?= base_path().$resultEvent->festival->alias; ?>" title="<?= t('Zur Festivalseite'); ?>"><?= $resultEvent->festival->name; ?></a></strong></p>
    <?php else : ?>
-   <p><strong><?= t('Akteur'); ?>:</strong> <a href="<?= base_path(); ?>akteurprofil/<?= $resultEvent->akteur->AID; ?>" title="<?= t('Profil von !username besuchen',array('!username'=> $resultEvent->akteur->name)); ?>" itemprop="name"><?= $resultEvent->akteur->name; ?></a></p>
+   <p><strong><?= t('Akteur'); ?>:</strong> <a href="<?= base_path(); ?>akteurprofil/<?= $resultEvent->akteur->AID; ?>" title="<?= t('Akteurprofil von !username besuchen',array('!username'=> $resultEvent->akteur->name)); ?>" itemprop="name"><?= $resultEvent->akteur->name; ?></a></p>
    <?php endif; ?>
 
    <?php if (!empty($resultEvent->adresse)) : ?>

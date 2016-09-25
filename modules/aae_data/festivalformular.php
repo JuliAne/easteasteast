@@ -8,28 +8,10 @@
  
 namespace Drupal\AaeData;
 
-Class festivalformular extends aae_data_helper {
+Class festivalformular extends festivals {
 
   // $tbl_festival
-  var $name = '';
-  var $email = '';
-  var $url = '';
-  var $bild = '';
-  var $beschreibung = '';
-  var $festivalAkteur; // akteure-object
-  var $sponsoren;
-  var $created = '';
-  var $modified = '';
 
-  // $tbl_akteur
-  // Only relevant for festivalSpeichern()!
-  var $akName = '';
-  var $akStrasse = '';
-  var $akNr = '';
-  var $akAdresszusatz = '';
-  var $akPlz = '';
-  var $akOrt = '';
-  var $akGps = '';
   
   // misc
   var $fehler = array();
@@ -52,11 +34,6 @@ Class festivalformular extends aae_data_helper {
    } else {
      # if update -> needs to be admin or global admin
    }
-
-   require_once('models/akteure.php');
-   require_once('models/festivals.php');
-   $this->akteure = new akteure();
-   $this->festival = new festivals();
 
    if ($action == 'update') {
     $this->target = 'update';

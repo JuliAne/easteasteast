@@ -142,13 +142,20 @@ $(document).ready(function() {
   });
  });
 
- $(document).keyup(function(e) {
-  // Closes lightbox when hitting "ESC".
-  if (e.keyCode == 27) {
+ // Closes lightbox when hitting "ESC".
+ window.addEventListener("keydown", function (event) {
+     
+  if (event.defaultPrevented) {
+    return; // Should do nothing if the key event was already consumed.
+  }
+
+  if (event.key == "Escape") {
    $('.aaeModal .button.closeBtn').click();
    $('#alert').fadeOut('fast');
   }
- });
+
+  event.preventDefault();
+}, true);
 
  setHandlers();
 

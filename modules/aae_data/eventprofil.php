@@ -152,7 +152,7 @@ class eventprofil extends aae_data_helper {
    $var .= "END:VEVENT\n";
    $var .= "END:VCALENDAR\n";
 
-   header('Content-Type: text/plain');
+   header('Content-Type: text/ics');
    header('Content-Length: ' . strlen($var));
    header('Content-Disposition: attachment; filename="' . $name . '.ics"');
 

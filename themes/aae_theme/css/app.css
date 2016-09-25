@@ -333,7 +333,7 @@ transform: rotate(-10deg);
 #mainnav ul.menu li ul li {
  width: 100%;
  border-right: none;
- height: 42px;
+ height: auto;
  border-bottom: 1px solid #ecedec;
  padding: 3px 0;
  margin-left: 0;
@@ -1230,10 +1230,11 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   .tagcloud { display:none; }
   #akteure .pcard { width: 41.66667%;overflow: hidden; }
   #akteure .pcard header { min-width:205px !important; }
-  .pageHeader {background-size:123% !important;background-position:top center !important;}
+  .pageHeader {background-size:150% !important;background-position:top center !important;}
   #eventsPageHeader {color:#fff!important;}
   .large3-events { float: none;vertical-align: top;display: inline-block;max-width: 49%;}
   .aaeModal .content {width:85% !important;}
+  .singlesite #footer {height:auto;background-repeat:repeat;}
 
   #events #filter, #akteure #filter {margin-bottom:20px;}
   #events #filter .large-12, #akteure #filter #filterForm { display:none; }

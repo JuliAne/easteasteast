@@ -110,7 +110,7 @@
   <?php if (!empty($resultTags)) : ?>
   <aside id="akteurSparten">
   <?php foreach ($resultTags as $tag) : ?>
-   <a href="<?= base_path(); ?>akteure/?tags[]=<?= $tag->KID; ?>" rel="nofollow" title="<?= t('Zeige alle mit !kategorie getaggten Akteure', array('!kategorie' => $tag->kategorie)); ?>">#<?= strtolower($tag->kategorie); ?></a>
+   <a href="<?= base_path(); ?>akteure/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow" title="<?= t('Zeige alle mit !kategorie getaggten Akteure', array('!kategorie' => $tag->kategorie)); ?>">#<?= strtolower($tag->kategorie); ?></a>
   <?php endforeach; ?>
   </aside>
   <?php endif; ?>
@@ -120,7 +120,7 @@
     <ul class="tabs" data-tabs>
      <li class="tabs-title is-active"><a href="#pdesc" aria-selected="true"><?= t('Beschreibung'); ?></a></li>
      <?php if (!empty($resultEvents)) : ?><li class="tabs-title"><a href="#pevents"><?= t('Veranstaltungen'); ?></a></li><?php endif; ?>
-     <?php if (!empty($aResult['rssFeed'])) : ?><li class="tabs-title"><a href="#prss">RSS-Feed</i></a></li><?php endif; ?>
+     <?php if (!empty($aResult['rssFeed'])) : ?><li class="tabs-title"><a href="#prss"><?= t('RSS-Feed'); ?></i></a></li><?php endif; ?>
     </ul>
    </div>
 

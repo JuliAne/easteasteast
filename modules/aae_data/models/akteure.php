@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\AaeData\Akteur;
+namespace Drupal\AaeData;
 
 /*
 *  Small wannabe-model class that delivers methods
@@ -29,21 +29,11 @@ Class akteure extends aae_data_helper {
  var $created = '';
  var $modified = '';
 
- // $tbl_adresse
- var $strasse = '';
- var $nr = '';
- var $adresszusatz = '';
- var $plz = '';
- var $ort = '';
- var $gps = '';
-
  // $tbl_tag
- var $sparten = '';
+ var $tags = '';
 
  var $akteur_id = '';
- #var $user_id = '';
  var $fehler = array();
- var $freigabe = true; // Variable zur Freigabe: muss true sein
 
  // $tbl_akteur_hat_sparte
  var $countSparten = '';
@@ -162,6 +152,7 @@ Class akteure extends aae_data_helper {
     ->fetchObject();
 
    // Hack: add variable to $resultAkteure-object
+   # TODO: Put bezirk + gps into adress-object?!
    $resultAkteure[$counter] = (array)$resultAkteure[$counter];
    $resultAkteure[$counter]['adresse'] = $adresse;
    $resultAkteure[$counter]['bezirk'] = $bezirk;
@@ -201,54 +192,36 @@ Class akteure extends aae_data_helper {
 
  }
 
- private function __setSingleAkteurVars($data){
+ protected function __setSingleAkteurVars($data){
+   
+  # print_r($data);
+  # exit();
 
-  $this->name = $this->clearContent($data['name']);
-  $this->email = $this->clearContent($data['email']);
-  $this->telefon = $this->clearContent($data['telefon']);
-  $this->url = $this->clearContent($data['url']);
-  $this->ansprechpartner = $this->clearContent($data['ansprechpartner']);
-  $this->funktion = $this->clearContent($data['funktion']);
-  if (isset($data['bild'])) $this->bild = $data['bild'];
-  $this->beschreibung = $this->clearContent($data['beschreibung']);
-  $this->oeffnungszeiten = $this->clearContent($data['oeffnungszeiten']);
-  $this->strasse = $this->clearContent($data['strasse']);
-  $this->nr = $this->clearContent($data['nr']);
-  $this->adresszusatz = $this->clearContent($data['adresszusatz']);
-  $this->plz = $this->clearContent($data['plz']);
-  $this->ort = $this->clearContent($data['ort']);
-  $this->gps = $this->clearContent($data['gps']);
-  $this->sparten = $data['sparten'];
-  $this->removedTags = $data['removedTags'];
-  $this->removedPic = $data['removeCurrentPic'];
-  $this->rssFeed = $this->clearContent($data['rssFeed']);
-
-  /* Formerl: akteurGetFields()
-
-  	   $this->name = $row->name;
-	   $this->email = $row->email;
-	   $this->telefon = $row->telefon;
-	   $this->url = $row->url;
-	   $this->ansprechpartner = $row->ansprechpartner;
-	   $this->funktion = $row->funktion;
-	   $this->bild = $row->bild;
-	   $this->beschreibung = $row->beschreibung;
-	   $this->oeffnungszeiten = $row->oeffnungszeiten;
-     $this->barrierefrei = $row->barrierefrei;
-     $this->created = new \DateTime($row->created);
-     $this->modified = new \DateTime($row->modified);
-     $this->adresse = $row->adresse->ADID;
-	   $this->strasse = $row->adresse->strasse;
-	   $this->nr = $row->adresse->nr;
-	   $this->adresszusatz = $row->adresse->adresszusatz;
-	   $this->plz = $row->adresse->plz;
-	   $this->ort = $row->bezirk->BID;
-	   $this->gps = $row->gps;
-     $this->sparten = $row->tags; */
+  $this->name = $this->clearContent($data->name);
+  $this->email = $this->clearContent($data->email);
+  $this->telefon = $this->clearContent($data->telefon);
+  $this->url = $this->clearContent($data->url);
+  $this->ansprechpartner = $this->clearContent($data->ansprechpartner);
+  $this->funktion = $this->clearContent($data->funktion);
+  if (isset($data->bild)) $this->bild = $data->bild;
+  $this->beschreibung = $this->clearContent($data->beschreibung);
+  $this->oeffnungszeiten = $this->clearContent($data->oeffnungszeiten);
+  $this->adresse = $this->clearContent($data->adresse);
+  $this->bezirk = $this->clearContent($data->bezirk);
+  $this->gps = $this->clearContent($data->gps);
+  $this->tags = $data->tags;
+  $this->removedTags = $data->removedTags;
+  $this->removedPic = $data->removeCurrentPic;
+  $this->rssFeed = $this->clearContent($data->rssFeed);
+  $this->created = new \DateTime($row->created);
+  $this->modified = new \DateTime($row->modified);
+  $this->adresse = $data->adresse;
 
  }
  
  public function setUpdateAkteur($data, $defaultAID = NULL){
+
+ # print_r($data); exit();
   
   $this->__setSingleAkteurVars($data);
 
@@ -262,7 +235,7 @@ Class akteure extends aae_data_helper {
    $this->fehler['email'] = t('Bitte eine (gültige) Emailadresse eingeben!');
   }
 
-  if (empty($this->ort)) {
+  if (empty($this->adresse->bezirk)) {
    $this->fehler['ort'] = t('Bitte einen Bezirk auswählen!');
   }
 
@@ -302,23 +275,23 @@ Class akteure extends aae_data_helper {
 	 $this->fehler['oeffnungszeiten'] = t('Bitte geben Sie kürzere Öffnungszeiten an.');
   }
 
-  if (strlen($this->strasse) > 100) {
+  if (strlen($this->adresse->strasse) > 100) {
  	 $this->fehler['strasse'] = t('Bitte geben Sie einen kürzeren Strassennamen an.');
   }
 
-  if (strlen($this->nr) > 100) {
+  if (strlen($this->adresse->nr) > 100) {
 	 $this->fehler['nr'] = t('Bitte geben Sie eine kürzere Hausnummer an.');
   }
 
-  if (strlen($this->adresszusatz) > 100) {
+  if (strlen($this->adresse->adresszusatz) > 100) {
 	 $this->fehler['adresszusatz'] = t('Bitte geben Sie einen kürzeren Adresszusatz an.');
   }
 
-  if (strlen($this->plz) > 100) {
-	 $this->fehler['plz '] = t('Bitte geben Sie eine kürzere PLZ an.');
+  if (strlen($this->adresse->plz) > 100) {
+	 $this->fehler['plz'] = t('Bitte geben Sie eine kürzere PLZ an.');
   }
 
-  if (strlen($this->gps) > 100) {
+  if (strlen($this->adresse->gps) > 100) {
    $this->fehler['gps'] = t('Bitte geben Sie kürzere GPS-Daten an.');
   }
 
@@ -328,8 +301,9 @@ Class akteure extends aae_data_helper {
 
   if ($this->gps == 'Ermittle Geo-Koordinaten...') $this->gps = '';
 
-  if (is_array($this->fehler) && !empty($this->fehler)) {
-   throw new FieldException($this->fehler);
+  if (false) {
+    print_r($this->fehler);
+   throw new \Exception(/*$this->fehler*/'bla');
   }
 
   // INSERT- or UPDATE-Action:
@@ -381,14 +355,14 @@ Class akteure extends aae_data_helper {
    }
   }
 
-  $gps = explode(',', $this->gps, 2);
+  $gps = explode(',', $this->adresse->gps, 2);
 
   $this->adresse = $this->__db_action($this->tbl_adresse, array(
-	 'strasse' => $this->strasse,
-	 'nr' => $this->nr,
-	 'adresszusatz' => $this->adresszusatz,
-	 'plz' => $this->plz,
-	 'bezirk' => $this->ort,
+	 'strasse' => $this->adresse->strasse,
+	 'nr' => $this->adresse->nr,
+	 'adresszusatz' => $this->adresse->adresszusatz,
+	 'plz' => $this->adresse->plz,
+	 'bezirk' => $this->adresse->bezirk, # = BID
 	 'gps_lat' => $gps[0],
    'gps_long' => $gps[1]
   ), $akteurAdress);
@@ -487,25 +461,25 @@ Class akteure extends aae_data_helper {
 
   // Update or insert Tags
 
-  if (is_array($this->sparten) && !empty($this->sparten)) {
+  if (is_array($this->tags) && !empty($this->tags)) {
 
-   $this->sparten = array_unique($this->sparten);
+   $this->tags = array_unique($this->tags);
 
-   foreach ($this->sparten as $sparte) {
+   foreach ($this->tags as $tag) {
 
-    $sparte_id = '';
-    $sparte = strtolower($this->clearContent($sparte));
+    $tagId = '';
+    $tag = strtolower($this->clearContent($tag));
 
-  	$resultSparte = db_select($this->tbl_sparte, 's')
+  	$resultTag = db_select($this->tbl_sparte, 's')
   	 ->fields('s')
-  	 ->condition('KID', $sparte)
+  	 ->condition('KID', $tag)
   	 ->execute();
 
     // Tag already existing?...
-    if ($resultSparte->rowCount() == 0) {
+    if ($resultTag->rowCount() == 0) {
 
      // ...Nope!
-     $sparteId = db_insert($this->tbl_sparte)
+     $tagId = db_insert($this->tbl_sparte)
   	   ->fields(array('kategorie' => $sparte))
   	 	 ->execute();
 
@@ -513,7 +487,7 @@ Class akteure extends aae_data_helper {
      
      // ...YIP!
   	 foreach ($resultSparte as $row) {
-  	   $sparteId = $row->KID;
+  	   $tagId = $row->KID;
   	 }
 
   	}
@@ -521,18 +495,18 @@ Class akteure extends aae_data_helper {
     if (!empty($defaultAID)) {
 
      // Hat der Akteur dieses Tag bereits zugeteilt?
-     $hatAkteurSparte = db_select($this->tbl_hat_sparte, 'hs')
+     $hatAkteurTag = db_select($this->tbl_hat_sparte, 'hs')
       ->fields('hs')
-      ->condition('hat_KID', $sparteId)
+      ->condition('hat_KID', $tagId)
       ->condition('hat_AID', $this->akteur_id)
       ->execute();
 
-     if ($hatAkteurSparte->rowCount() == 0) {
+     if ($hatAkteurTag->rowCount() == 0) {
 
       db_insert($this->tbl_hat_sparte)
       ->fields(array(
        'hat_AID' => $this->akteur_id,
-       'hat_KID' => $sparteId
+       'hat_KID' => $tagId
        ))
       ->execute();
 
@@ -552,6 +526,7 @@ Class akteure extends aae_data_helper {
 
  }
  
+ /* TODO: Use native events-model-functions! */
  public function removeAkteur($aId){
      
   $resultAkteur = db_select($this->tbl_akteur, 'a')

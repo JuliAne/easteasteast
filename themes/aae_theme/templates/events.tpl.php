@@ -26,7 +26,7 @@
     <h4 class="left"><?= t('Filter'); ?></h4>
     <a class="small button right hide-for-medium" style="padding:4px 10px;margin-left:5px;" href="#" title="<?= t('Zeige Filter'); ?>" onclick="javascript:$('#filter .large-12').slideDown(400);">&#x25BE;</a>
     <a class="small secondary button right" style="padding:4px 10px;" href="<?= base_path(); ?>events/" title="<?= t('Alle Filter entfernen.'); ?>">X</a>
-    <div class="divider"></div>
+    <div class="divider hide-for-small-only"></div>
    </div>
 
    <div class="large-12 columns">
@@ -104,7 +104,7 @@
     <li class="tabs-title<?= ($this->getOldEvents && empty($this->filter) ? ' is-active' : ''); ?>"><a href="<?= base_path(); ?>events/old"<?= ($this->getOldEvents ? ' aria-selected="true"' : ''); ?>><?= t('Vergangene Events'); ?></a></li>
     <!--<li class="tabs-title"><a href="#"><?= t('NEU: In meiner Nähe'); ?></a></li>-->
     <?php if (!empty($this->filter)) : ?><li class="tabs-title is-active"><a href="#" aria-selected="true"><?= t('Filterergebnisse'); ?> (<?= count($resultEvents); ?>)</a></li><?php endif; ?>
-    <ul id="presentationFilter" class="button-group round large-3 columns right">
+    <ul id="presentationFilter" class="button-group round large-3 columns hide-for-small-only right">
      <li class="right"><a href="<?= base_path(); ?>events" name="timeline" class="small button <?= ($this->presentationMode !== 'calendar' ? 'active' : 'secondary'); ?>" title="<?= t('Darstellung als Timeline'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
      <li class="right"><a href="<?= base_path(); ?>events/?presentation=calendar" name="calendar" class="small button <?= ($this->presentationMode == 'calendar' ? 'active' : 'secondary'); ?>" title="<?= t('Darstellung als Kalender'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
     </ul>
@@ -118,21 +118,38 @@
   </div>
 
  <?php elseif (is_array($resultEvents) && !empty($resultEvents)) : ?>
-  <?php foreach ($resultEvents as $key => $event): ?>
+  <?php foreach ($resultEvents as $key => $event): global $base_root; ?>
    <?php if ($event->start->format('m.Y') != $cur_month) : ?>
     <div class="large-12 columns"><h4><?= $this->monat_lang[$event->start->format('m')]; ?> <?= $event->start->format('Y'); ?></h4></div>
    <?php endif; $cur_month = $event->start->format('m.Y'); ?>
 
-   <div class="large-6 columns small-6 columns aaeEvent<?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? ' today' : ''; ?><?= (!empty($event->eventRecurringType) && ($event->eventRecurringType <= 5) ? ' eventRecurres' : ''); ?><?= ($event->eventRecurringType == 6 ? ' isFestival' : ''); ?>">
+   <div class="large-6 columns small-12 columns aaeEvent<?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? ' today' : ''; ?><?= (!empty($event->eventRecurringType) && ($event->eventRecurringType <= 5) ? ' eventRecurres' : ''); ?><?= ($event->eventRecurringType == 6 ? ' isFestival' : ''); ?>" itemscope itemtype="http://schema.org/Event"><!-- TODO: Make /SocialEvent -->
+   <!-- Some microdata to enrich events-snippets for alien engines -->
+   <?= (!empty($event->bild) ? '<meta itemprop="image" content="https://leipziger-ecken.de'.$event->bild.'"' : ''); ?>
+   <meta itemprop="startDate" content="<?= $event->start->format('Y-m-dTH:i'); ?>" />
+   <meta itemprop="endDate" content="<?= $event->ende->format('Y-m-dTH:i'); ?>" />
+   <?php if (!empty($event->adresse->gps_lat)) : ?>
+   <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+    <meta itemprop="latitude" content="<?= $event->adresse->gps_lat; ?>" />
+    <meta itemprop="longitude" content="<?= $event->adresse->gps_long; ?>" />
+   </div>
+   <?php endif; ?>
+   <?php if (!empty($event->adresse->strasse) && !empty($event->adresse->nr) && !empty($event->adresse->plz)) : ?>
+    <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+     <meta itemprop="streetAddress" content="<?= $event->adresse->strasse.' '.$event->adresse->nr; ?>" />
+     <meta itemprop="postalCode" content="<?= $event->adresse->plz; ?>" />
+     <meta itemprop="addressLocality" content="Leipzig" />
+    </div>
+   <?php endif; ?>
 
-   <div class="date large-2 columns button secondary round"><?= $event->start->format('d'); ?><br /><?= $this->monat_short[$event->start->format('m')]; ?></div>
-   <div class="content large-9 columns">
+   <div class="date large-2 small-3 columns button secondary round"><?= $event->start->format('d'); ?><br /><?= $this->monat_short[$event->start->format('m')]; ?></div>
+   <div class="content large-9 small-9 columns">
    <header<?= (!empty($event->eventRecurringType) ? ' title="'.$recurringEventTypes[$event->eventRecurringType].'"' : ''); ?>>
-    <h3><a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>"><?= $event->name; ?></a><?= ($event->eventRecurringType == 6 ? ' - '.$event->festival->name : ''); ?></h3>
-    <p class="aaeEventDate"><span><?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? '<a href="#">Heute,</a> ' : ''; ?><?php if($event->start->format('H:i') !== '00:00') echo $event->start->format('H:i'); ?><?php if($event->ende->format('H:i') !== '00:00') echo ' - '. $event->ende->format('H:i'); ?><?= (!empty($event->eventRecurringType) ? '  '.$recurringEventTypes[$event->eventRecurringType] : ''); ?></span></p>
+    <h3><a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>" itemprop="name" content="<?= $event->name; ?>" title="<?= t('Eventprofil aufrufen'); ?>"><?= $event->name; ?></a><?= ($event->eventRecurringType == 6 ? ' - '.$event->festival->name : ''); ?></h3>
+    <p class="aaeEventDate"><span><?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? '<a href="#">'.t('Heute').',</a> ' : ''; ?><?php if($event->start->format('H:i') !== '00:00') echo $event->start->format('H:i'); ?><?php if($event->ende->format('H:i') !== '00:00') echo ' - '. $event->ende->format('H:i'); ?><?= (!empty($event->eventRecurringType) ? '  '.$recurringEventTypes[$event->eventRecurringType] : ''); ?></span></p>
     <p class="aaeEventTags">
      <?php foreach($event->tags as $tag) : ?>
-     <a class="tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow">#<?= $tag->kategorie; ?></a>
+     <a class="tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow" title="<?= t('Zeige alle mit !kategorie getaggten Events',array('!kategorie'=>$tag->kategorie)); ?>">#<?= $tag->kategorie; ?></a>
      <?php endforeach; ?>
     </p>
    </header>
@@ -140,14 +157,14 @@
     <div class="divider"></div>
     <div class="event-content">
       <?php $numwords = 30; preg_match("/(\S+\s*){0,$numwords}/", $event->kurzbeschreibung, $regs); ?>
-      <div class="eventDesc"><p><?= strip_tags(trim($regs[0])); ?> <a class="weiterlesen" href="<?= base_path().'eventprofil/'.$event->EID; ?>">...<?= t('weiterlesen'); ?></a></p></div>
+      <div class="eventDesc" itemprop="description"><p><?= strip_tags(trim($regs[0])); ?> <a class="weiterlesen" href="<?= base_path().'eventprofil/'.$event->EID; ?>" title="<?= t('Eventprofil aufrufen'); ?>" itemprop="url" content="<?= $base_root .'/eventprofil/'.$event->EID; ?>">...<?= t('weiterlesen'); ?></a></p></div>
     </div>
    <?php endif; ?>
    </div>
    
    <?php if (!empty($event->akteur)) : ?>
-   <div class="akteurData large-10 columns">
-    <p><a href="<?= base_path().'akteurprofil/'.$event->akteur->AID; ?>" title="<?= t('Akteurprofil von !username', array('!username' => $event->akteur->name)); ?>"><img src="<?= $event->akteur->bild; ?>" /><?= $event->akteur->name; ?></a></p>
+   <div class="akteurData large-10 small-12 columns">
+    <p><a href="<?= base_path().'akteurprofil/'.$event->akteur->AID; ?>" title="<?= t('Akteurprofil von !username besuchen', array('!username' => $event->akteur->name)); ?>"><img src="<?= $event->akteur->bild; ?>" /><?= $event->akteur->name; ?></a></p>
    </div>
    <?php endif; ?>
 

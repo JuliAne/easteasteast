@@ -19,11 +19,10 @@ Class akteurformular extends akteure {
 
    $explodedpath = explode('/', current_path());
    $this->akteur_id = $this->clearContent($explodedpath[1]);
-  # require_once('models/akteure.php');
    $this->akteur = new akteure();
    
    // Check for permissions
-   if (!user_is_logged_in() || ($action == 'update' && !$this->akteur->akteurExists($this->akteur_id))) {
+   if (!user_is_logged_in() || ($action == 'update' && !$this->akteurExists($this->akteur_id))) {
     drupal_access_denied();
     drupal_exit();
    }
@@ -72,18 +71,30 @@ Class akteurformular extends akteure {
     } */ 
 
     if (isset($_POST['submit'])) {
+
+	     if ($this->target == 'update') {
+        if (!$this->isAuthorized($this->akteur_id)){
+         drupal_access_denied();
+         drupal_exit();
+        }
+	      $this->akteurUpdaten();
+	     } else {
+		    $this->akteurSpeichern();
+	     }
     
     } else {
 
       // Load input-values via akteure-model
       if ($this->target == 'update') {
 
-       if (!$this->akteur->isAuthorized($this->akteur_id)){
+       if (!$this->isAuthorized($this->akteur_id)){
         drupal_access_denied();
         drupal_exit();
        } else {
 	      $this->akteurGetFields();
        }
+
+      } else {
 
       }
 
@@ -99,7 +110,7 @@ Class akteurformular extends akteure {
 
   private function akteurCheckPost() {
 
-    # here: try -> catch
+    # Umbennen: failed_post or sth ?!
     // Um die bereits gewählten Tags anzuzeigen benötigen wir deren Namen...
     if ($this->freigabe == false) {
 
@@ -140,7 +151,7 @@ Class akteurformular extends akteure {
   private function akteurSpeichern() {
 
    // Wenn Bilddatei ausgewählt wurde...
-
+/*
    if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
     $this->bild = $this->upload_image($_FILES['bild']);
    }
@@ -262,8 +273,10 @@ Class akteurformular extends akteure {
 	  }
 	 }
 
-   // Call hooks
-   module_invoke_all('hook_akteur_created');
+   // Call hooks 
+   module_invoke_all('hook_akteur_created'); */
+
+   $this->setUpdateAkteur($data);
 
    if (session_status() == PHP_SESSION_NONE) session_start();
    drupal_set_message(t('Ihr Akteurprofil wurde erfolgreich erstellt!'));
@@ -276,6 +289,7 @@ Class akteurformular extends akteure {
    */
   private function akteurUpdaten() {
 
+/*
     // Wenn Bilddatei ausgewählt wurde...
     if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
      $this->bild = $this->upload_image($_FILES['bild']);
@@ -449,6 +463,18 @@ Class akteurformular extends akteure {
 
      }
     }
+   } */
+   
+   // Turn arrays to objects...
+   $data = (object)$_POST;
+   $data->adresse = (object)$_POST['adresse'];
+
+   try {
+     $this->setUpdateAkteur($data, $this->akteur_id);
+   } catch (\Exception $e) {
+     echo $e;
+     print_r($this->fehler);
+     exit();
    }
 
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
@@ -463,7 +489,7 @@ Class akteurformular extends akteure {
    */
   private function akteurGetFields() {
 
-   $this->akteur->__setSingleAkteurVars($this->akteur->getAkteure(array('AID' => $this->akteur_id), 'complete')[0]);
+   $this->__setSingleAkteurVars(reset($this->getAkteure(array('AID' => $this->akteur_id), 'complete')));
 
    if (module_exists('aggregator')) {
     $this->rssFeed = aggregator_feed_load('aae-feed-'.$this->akteur_id);

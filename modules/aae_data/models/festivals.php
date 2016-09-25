@@ -14,8 +14,25 @@ namespace Drupal\AaeData;
 
 Class festivals extends aae_data_helper {
 
+ // $tbl_festivals
+ var $name = '';
+ var $email = '';
+ var $admin = '';
+ var $alias = '';
+ var $homepage = '';
+ var $beschreibung = '';
+ var $bild = '';
+ var $sponsoren = '';
+ var $created = '';
+ var $modified = '';
+
+ var $festivalAkteur;
+
  public function __construct() {
+
   parent::__construct();
+  $this->akteure = new akteure();
+  
  }
  
  /*
@@ -46,8 +63,12 @@ Class festivals extends aae_data_helper {
   *
   */
 
- public function getFestival($conditions = NULL, $fields = 'normal', $orderBy = 'name') {
+ protected function getFestival($conditions = NULL, $fields = 'normal', $orderBy = 'name') {
   # TODO
+ }
+
+ protected function setFestival(){
+
  }
  
 }

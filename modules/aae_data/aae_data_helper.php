@@ -10,6 +10,8 @@ namespace Drupal\AaeData;
   *
   */
 
+  spl_autoload_register(array((new aae_data_helper), 'aae_autoload'));
+
  Class aae_data_helper {
 
    // DB-Tables
@@ -82,6 +84,15 @@ namespace Drupal\AaeData;
     $this->user_id = $user->uid;
     $this->modulePath = drupal_get_path('module', 'aae_data');
     $this->themePath = drupal_get_path('theme', $GLOBALS['theme']);
+
+   }
+
+   public function aae_autoload($class){
+
+    $class = explode('\\', $class)[2];
+    include_once('models/'. $class .'.php');
+    $class = __NAMESPACE__ . '\\' . $class;
+   # $this->{$class} = new $class();
 
    }
 
@@ -289,7 +300,7 @@ namespace Drupal\AaeData;
   protected function __db_action($tbl, $fields, $condition = NULL, $putTimestamp = false){
 
    if ($putTimestamp){
-    $fields[($condition ? 'updated' : 'created')] = date('Y-m-d H:i:s', time());
+    $fields[($condition ? 'modified' : 'created')] = date('Y-m-d H:i:s', time());
    }
 
    if ($tbl == $this->tbl_akteur && !$condition){ # || $this->tbl_events

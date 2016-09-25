@@ -1,4 +1,11 @@
-ROADMAP
+ROADMAP Leipziger-Ecken.de
+________________________________
+
+
+Legende: ✓ = Erledigt (Backlog)
+         ~ = Work in progress
+         
+_______________________________
 
 V 0.6 (-> Events-Rework) (06/2016):
 
@@ -11,13 +18,14 @@ V 0.6 (-> Events-Rework) (06/2016):
 - Verbesserungen der OO-Architektur, u.a. durch namespaces ✓
 
 
-V 0.7:
+V 0.7 (-> Modularisierung, Festivals):
 
 - Feature: "Festival-Veranstaltungen", entsprechende graphische Einbindung (Ticket #83) - ~
 - Facebook Events-API (Ticket #81)
 - Kalender: Mehrtägige Events kenntlich machen
 - Überarbeitung Journal(-Beitrags)-Darstellung (mehr Bilder, Sidebar mit Akteurs-Infos)
-- Autoload einbauen & Tags- und Adress-Funktionen universalisieren
+- Autoload einbauen, Models fertig stellen & Tags- und Adress-Funktionen universalisieren - ~
+- Meta: Events (sowohl im Profil als auch auf Eventspage) nach schema.org lesbar machen - ✓
 
 V 0.8:
 
