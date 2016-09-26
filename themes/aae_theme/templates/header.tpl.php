@@ -13,7 +13,7 @@
   <input type="checkbox" id="responsive-menu" name="responsive-menu" class="show-for-small-only" title="<?= t('Zeige/Verstecke Menü'); ?>">
   <label for="responsive-menu" onclick="javascript:$('#mainnav').removeClass('scrolled');"></label>
 
-  <a href="<?= base_path(); ?>"><img id="logo" class="left" src="<?= base_path().path_to_theme(); ?>/img/logo_new_new.png" /></a>
+  <a href="<?= base_path(); ?>"><img id="logo" class="left" src="<?= base_path().path_to_theme(); ?>/img/logo_new_new.png" alt="Leipziger Ecken Logo" title="<?= t('Zur Startseite'); ?>" /></a>
 
   <?php print render($page['mainnav']); global $user ?>
  </nav>

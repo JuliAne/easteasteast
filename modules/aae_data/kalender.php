@@ -155,9 +155,9 @@ class kalender extends aae_data_helper {
 
    }
    if ($countrows == 0) {
-     return '<li id="li-' . $this->currentDate . '" class="' . ($cellNumber%7==1?' start ':($cellNumber%7==0?' end ':' ')) . ($cellContent==null?'mask':'') . '">' . $cellContent . '</li>';
+     return '<li class="' . ($cellNumber%7==1?'start ':($cellNumber%7==0?'end ':' ')) . ($cellContent==null?' mask':'') . '">' . $cellContent . '</li>';
    } else {
-     return '<li id="event" data-nr="'.$countrows.'" title="'.$events.'" class="' . ($cellNumber%7==1?' start ':($cellNumber%7==0?' end ':' ')) . ($cellContent==null?'mask':'') . '"><a href="'.base_path().'events/?day=' . $this->currentDate . '" rel="nofollow">' . $cellContent . '</a></li>';
+     return '<li data-nr="'.$countrows.'" title="'.$events.'" class="' . ($cellNumber%7==1?'start ':($cellNumber%7==0?'end ':' ')) . ($cellContent==null?' mask':'') . '"><a href="'.base_path().'events/?day=' . $this->currentDate . '" rel="nofollow">' . $cellContent . '</a></li>';
    }
  }
 

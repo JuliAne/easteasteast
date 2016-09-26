@@ -128,14 +128,17 @@
    <?= (!empty($event->bild) ? '<meta itemprop="image" content="'.$base_root.$event->bild.'" />' : ''); ?>
    <meta itemprop="startDate" content="<?= $event->start->format('Y-m-dTH:i'); ?>" />
    <meta itemprop="endDate" content="<?= $event->ende->format('Y-m-dTH:i'); ?>" />
+   <meta itemprop="url" content="<?= $base_root .'/eventprofil/'.$event->EID; ?>" />
    <?php if (!empty($event->adresse->gps_lat)) : ?>
+   <!--
    <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
     <meta itemprop="latitude" content="<?= $event->adresse->gps_lat; ?>" />
     <meta itemprop="longitude" content="<?= $event->adresse->gps_long; ?>" />
    </div>
+   -->
    <?php endif; ?>
    <?php if (!empty($event->adresse->strasse) && !empty($event->adresse->nr) && !empty($event->adresse->plz)) : ?>
-    <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+    <div itemprop="location" itemscope itemtype="http://schema.org/PostalAddress">
      <meta itemprop="streetAddress" content="<?= $event->adresse->strasse.' '.$event->adresse->nr; ?>" />
      <meta itemprop="postalCode" content="<?= $event->adresse->plz; ?>" />
      <meta itemprop="addressLocality" content="Leipzig" />
@@ -148,17 +151,19 @@
     <h3><a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>" itemprop="name" content="<?= htmlspecialchars($event->name); ?>" title="<?= t('Eventprofil aufrufen'); ?>"><?= $event->name; ?></a><?= ($event->eventRecurringType == 6 ? ' - '.$event->festival->name : ''); ?></h3>
     <p class="aaeEventDate"><span><?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? '<a href="#">'.t('Heute').',</a> ' : ''; ?><?php if($event->start->format('H:i') !== '00:00') echo $event->start->format('H:i'); ?><?php if($event->ende->format('H:i') !== '00:00') echo ' - '. $event->ende->format('H:i'); ?><?= (!empty($event->eventRecurringType) ? '  '.$recurringEventTypes[$event->eventRecurringType] : ''); ?></span></p>
     <p class="aaeEventTags">
-     <?php foreach($event->tags as $tag) : ?>
+    <?php foreach($event->tags as $tag) : ?>
      <a class="tag" href="<?= base_path(); ?>events/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow" title="<?= t('Zeige alle mit !kategorie getaggten Events',array('!kategorie'=>$tag->kategorie)); ?>">#<?= $tag->kategorie; ?></a>
-     <?php endforeach; ?>
+    <?php endforeach; ?>
     </p>
    </header>
    <?php if (!empty($event->kurzbeschreibung) && (empty($event->eventRecurringType))) : ?>
     <div class="divider"></div>
     <div class="event-content">
       <?php $numwords = 30; preg_match("/(\S+\s*){0,$numwords}/", $event->kurzbeschreibung, $regs); ?>
-      <div class="eventDesc" itemprop="description"><p><?= strip_tags(trim($regs[0])); ?> <a class="weiterlesen" href="<?= base_path().'eventprofil/'.$event->EID; ?>" title="<?= t('Eventprofil aufrufen'); ?>" itemprop="url" content="<?= $base_root .'/eventprofil/'.$event->EID; ?>">...<?= t('weiterlesen'); ?></a></p></div>
+      <div class="eventDesc" itemprop="description"><p><?= strip_tags(trim($regs[0])); ?> <a class="weiterlesen" href="<?= base_path().'eventprofil/'.$event->EID; ?>" title="<?= t('Eventprofil aufrufen'); ?>">...<?= t('weiterlesen'); ?></a></p></div>
     </div>
+   <?php else : ?>
+    <meta itemprop="description" content="<?= strip_tags(trim($regs[0])); ?>" />
    <?php endif; ?>
    </div>
    
