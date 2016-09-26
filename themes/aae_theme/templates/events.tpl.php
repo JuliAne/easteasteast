@@ -125,9 +125,16 @@
 
    <div class="large-6 columns small-12 columns aaeEvent<?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? ' today' : ''; ?><?= (!empty($event->eventRecurringType) && ($event->eventRecurringType <= 5) ? ' eventRecurres' : ''); ?><?= ($event->eventRecurringType == 6 ? ' isFestival' : ''); ?>" itemscope itemtype="http://schema.org/Event"><!-- TODO: Make /SocialEvent -->
    <!-- Some microdata to enrich events-snippets for alien engines -->
-   <?= (!empty($event->bild) ? '<meta itemprop="image" content="'.$base_root.$event->bild.'" />' : ''); ?>
+   <?php if (!empty($event->bild)) : ?>
+   <meta itemprop="image" content="<?= $base_root.$event->bild; ?>" />
+   <?php else : ?>
+   <meta itemprop="image" content="<?= base_root.path_to_theme(); ?>/img/logo_new_new.png" />
+   <?php endif; ?>
    <meta itemprop="startDate" content="<?= $event->start->format('Y-m-dTH:i'); ?>" />
+   <?php if (empty($event->eventRecurringType)) : ?>
    <meta itemprop="endDate" content="<?= $event->ende->format('Y-m-dTH:i'); ?>" />
+   <!-- TODO: ELSE ?! -->
+   <?php endif; ?>
    <meta itemprop="url" content="<?= $base_root .'/eventprofil/'.$event->EID; ?>" />
    <?php if (!empty($event->adresse->gps_lat)) : ?>
    <!--
@@ -137,13 +144,18 @@
    </div>
    -->
    <?php endif; ?>
-   <?php if (!empty($event->adresse->strasse) && !empty($event->adresse->nr) && !empty($event->adresse->plz)) : ?>
-    <div itemprop="location" itemscope itemtype="http://schema.org/PostalAddress">
-     <meta itemprop="streetAddress" content="<?= $event->adresse->strasse.' '.$event->adresse->nr; ?>" />
-     <meta itemprop="postalCode" content="<?= $event->adresse->plz; ?>" />
-     <meta itemprop="addressLocality" content="Leipzig" />
-    </div>
+   <div itemprop="location" itemscope itemtype="http://schema.org/PostalAddress">
+   <?php if (!empty($event->adresse->strasse) && !empty($event->adresse->nr) && !empty($event->adresse->plz) && !empty($event->akteur->name)) : ?>
+    <meta itemprop="name" content="<?= $event->akteur->name; ?>" />
+    <meta itemprop="streetAddress" content="<?= $event->adresse->strasse.' '.$event->adresse->nr; ?>" />
+    <meta itemprop="postalCode" content="<?= $event->adresse->plz; ?>" />
+   <?php else : ?>
+    <meta itemprop="name" content="Leipziger Osten" />
+    <meta itemprop="streetAddress" content="<?= t('Keine Angabe'); ?>" />
+    <meta itemprop="postalCode" content="04315" />
    <?php endif; ?>
+    <meta itemprop="addressLocality" content="Leipzig" />
+   </div>
 
    <div class="date large-2 small-3 columns button secondary round"><?= $event->start->format('d'); ?><br /><?= $this->monat_short[$event->start->format('m')]; ?></div>
    <div class="content large-9 small-9 columns">
