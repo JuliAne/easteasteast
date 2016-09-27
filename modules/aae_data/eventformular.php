@@ -585,7 +585,7 @@ Class eventformular extends aae_data_helper {
 	  ->condition('bezirk', $this->ort)
 	  ->execute();
 
-    // Wenn ja: Holen der ID der Adresse, wenn nein: einfuegen
+    // Wenn ja: Holen der ID der Adresse, wenn nein: einfügen
     if ($this->resultAdresse->rowCount() == 0) {
 
      $gps = explode(',', $this->gps, 2);
@@ -735,7 +735,7 @@ Class eventformular extends aae_data_helper {
     $item = array(
      'menu_name' => 'navigation',
      'weight' => 1,
-     'link_title' => t('!name am !datum in !ort, Leipzig | Events', array('!name' => $this->name, '!datum' => (new \DateTime($startQuery))->format('d.m.Y'),'!ort' => $bezirk)),
+     'link_title' => t('!name am !datum in !ort | Events', array('!name' => $this->name, '!datum' => (new \DateTime($startQuery))->format('d.m.Y'),'!ort' => $bezirk)),
      'module' => 'aae_data',
      'link_path' => 'eventprofil/'.$this->event_id,
      'plid' => $plid->mlid

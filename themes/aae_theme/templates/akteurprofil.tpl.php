@@ -10,15 +10,15 @@
  <div class="content"></div>
 </aside>
 
-<header id="header" <?php if ($aResult['row1']->bild != '') : ?> style="background-image:url('<?= $row->bild; ?>');"<?php endif; ?>></header>
+<header id="header" <?php if ($this->bild != '') : ?> style="background-image:url('<?= $this->bild; ?>');"<?php endif; ?>></header>
 
 <div class="aaeActionBar">
  <div class="row">
   <?php if ($hat_recht): ?>
-  <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>akteurprofil/<?= $akteur_id; ?>/edit" title="<?= t('Akteur bearbeiten'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" /><?= t('Bearbeiten'); ?></a></div>
+  <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/edit" title="<?= t('Akteur bearbeiten'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" /><?= t('Bearbeiten'); ?></a></div>
   <?php endif; ?>
   <div class="large-6 columns right" style="text-align: right;">
-   <a href="<?= base_path(); ?>akteurprofil/<?= $aResult['row1']->AID; ?>/vcard_download" title="Akteur als .vcard exportieren">Export (VCard)</a>
+   <a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/vcard_download" title="Akteur als .vcard exportieren">Export (VCard)</a>
    <a href="https://leipziger-ecken.de/contact" title="<?= t('Das Profil wurde unbefugt erstellt? Melden Sie sich hier.'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" /><?= t('Melden'); ?></a>
    <a href="#share" class="popup-link" title="Akteursseite in den sozialen Netzwerken posten"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" /><?= t('Teilen'); ?></a>
    <div id="share" class="popup large-3 columns">
@@ -26,7 +26,7 @@
  echo $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen', array('!network' => 'Twitter')); ?>" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/social-twitter.svg"><span></span></a>
      <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen', array('!network' => 'Facebook')); ?>" class="fb button"><img alt="Facebook" src="<?= base_path().path_to_theme(); ?>/img/social-facebook.svg"><span></span></a>
      <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen', array('!network' => 'Google+')); ?>" class="g_plus button"><img alt="Google+" src="<?= base_path().path_to_theme(); ?>/img/social-googleplus-outline.svg"><span></span></a>
-     <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $aResult['row1']->name; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="<?= t('Auf !network teilen', array('!network' => 'Diaspora / Friendica')); ?>"><img alt="Federated networks" src="<?= base_path().path_to_theme(); ?>/img/social-diaspora.png"></a>
+     <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $this->name; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="<?= t('Auf !network teilen', array('!network' => 'Diaspora / Friendica')); ?>"><img alt="Federated networks" src="<?= base_path().path_to_theme(); ?>/img/social-diaspora.png"></a>
    </div>
   </div>
  </div>
@@ -34,39 +34,39 @@
 
 <div id="project" class="row" itemscope itemtype="http://schema.org/Organization">
  <?php global $base_root; ?>
- <meta itemprop="name" content="<?= $aResult['row1']->name; ?>" />
- <meta itemprop="url" content="<?= $base_root.'/akteurprofil/'.$aResult['row1']->AID; ?>" />
+ <meta itemprop="name" content="<?= $this->name; ?>" />
+ <meta itemprop="url" content="<?= $base_root.'/akteurprofil/'.$this->akteur_id; ?>" />
 
  <aside class="left large-4 columns">
 
   <div class="pcard">
-   <header <?php if (!empty($aResult['row1']->bild)) echo 'style="background-image:url('.$aResult['row1']->bild.');"'; ?>>
-  	<?php if (!empty($aResult['row1']->bild)) echo '<img src="'.$aResult['row1']->bild.'" style="visbility:hidden;" itemprop="logo" alt="'. t('Logo von !username', array('!username' => $aResult['row1']->name)) .'"/>';
+   <header <?php if (!empty($this->bild)) echo 'style="background-image:url('.$this->bild.');"'; ?>>
+  	<?php if (!empty($this->bild)) echo '<img src="'.$this->bild.'" style="visbility:hidden;" itemprop="logo" alt="'. t('Logo von !username', array('!username' => $this->name)) .'"/>';
 	        else echo '<img src="'.base_path().path_to_theme().'/img/project_bg.png" style="visibility:hidden;" />';	?>
 	 </header>
 	</div>
 
 	<div id="project-info" class="pcard">
-	<?php if (!empty($aResult['row1']->oeffnungszeiten)) : ?>
-	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" title="<?= t('Öffnunszeiten'); ?>" /></span><?= $aResult['row1']->oeffnungszeiten; ?></p>
+	<?php if (!empty($this->oeffnungszeiten)) : ?>
+	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" title="<?= t('Öffnunszeiten'); ?>" /></span><?= $this->oeffnungszeiten; ?></p>
 	 <div class="divider"></div>
 	 <?php endif; ?>
 
 	 <!-- TODO: Zu ergänzen mit "Bezirk" in strong-case's -->
-   <?php if (!empty($aResult['adresse']->strasse) || !empty($aResult['adresse']->plz)) : ?>
+   <?php if (!empty($this->adresse->strasse) || !empty($this->adresse->plz)) : ?>
    <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" title="<?= t('Adresse'); ?>" /></span>
-   <span itemprop="streetAddress"><?= $aResult['adresse']->strasse; ?> <?= $aResult['adresse']->nr; ?></span><br />
-   <?php if (!empty($aResult['adresse']->plz)) : ?><span itemprop="postalCode"><?= $aResult['adresse']->plz; ?></span> <span itemprop="addressLocality">Leipzig</span></p><?php endif; ?>
+   <span itemprop="streetAddress"><?= $this->adresse->strasse; ?> <?= $this->adresse->nr; ?></span><br />
+   <?php if (!empty($this->adresse->plz)) : ?><span itemprop="postalCode"><?= $this->adresse->plz; ?></span> <span itemprop="addressLocality">Leipzig</span></p><?php endif; ?>
    </div><div class="divider"></div>
    <?php endif; ?>
 
-   <?php if (!empty($aResult['row1']->url)) : ?>
-	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/cloud_white.svg" /></span><a href="<?= $aResult['row1']->url; ?>" itemprop="sameAs" target="_blank"><?= str_replace('http://', '', $aResult['row1']->url);?></a></p>
+   <?php if (!empty($this->url)) : ?>
+	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/cloud_white.svg" /></span><a href="<?= $this->url; ?>" itemprop="sameAs" target="_blank"><?= str_replace('http://', '', $this->url);?></a></p>
 	 <div class="divider"></div>
 	<?php endif; ?>
 
-  <?php if ($aResult['row1']->barrierefrei == '1') : ?>
+  <?php if ($this->barrierefrei == '1') : ?>
   <p><span class="icon" style="padding:7px 2px;"><img style="width:32px;" src="<?= base_path().path_to_theme(); ?>/img/accessibility_icon_white.svg" /></span><?= t('Barrierefreier Zugang'); ?></p>
   <div class="divider"></div>
   <?php endif; ?>
@@ -82,7 +82,7 @@
    <?php if (!empty($resultFestivals) && is_array($resultFestivals)) :
     foreach ($resultFestivals as $festival) : ?>
    <a href="https://leipziger-ecken.de/<?= $festival->alias; ?>"><button class="festival button" style="background:#fff;margin-top:2px;color:#2199e8;">
-   <?= ($festival->admin == $aResult['row1']->AID ? t('Veranstalter') : t('Teilnehmer')); ?> <?= t('des'); ?> <?= $festival->name; ?></button></a>
+   <?= ($festival->admin == $this->akteur_id ? t('Veranstalter') : t('Teilnehmer')); ?> <?= t('des'); ?> <?= $festival->name; ?></button></a>
     <?php endforeach; endif; ?>
   </div>
 
@@ -101,8 +101,8 @@
     <meta itemprop="position" content="1" />
    </li>
    <li id="activeEvent" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-    <a itemprop="item" href="<?= $base_url; ?>/akteurprofil/<?= $aResult['row1']->AID; ?>">
-    <span itemprop="name" title="<?= t('Akteurprofil von !username', array('!username' => $aResult['row1']->name)); ?>"><?= $aResult['row1']->name; ?></span></a>
+    <a itemprop="item" href="<?= $base_url; ?>/akteurprofil/<?= $this->akteur_id; ?>">
+    <span itemprop="name" title="<?= t('Akteurprofil von !username', array('!username' => $this->name)); ?>"><?= $this->name; ?></span></a>
     <meta itemprop="position" content="2" />
    </li>
   </ol>
@@ -120,16 +120,16 @@
     <ul class="tabs" data-tabs>
      <li class="tabs-title is-active"><a href="#pdesc" aria-selected="true"><?= t('Beschreibung'); ?></a></li>
      <?php if (!empty($resultEvents)) : ?><li class="tabs-title"><a href="#pevents"><?= t('Veranstaltungen'); ?></a></li><?php endif; ?>
-     <?php if (!empty($aResult['rssFeed'])) : ?><li class="tabs-title"><a href="#prss"><?= t('RSS-Feed'); ?></i></a></li><?php endif; ?>
+     <?php if (!empty($this->rssFeed)) : ?><li class="tabs-title"><a href="#prss"><?= t('RSS-Feed'); ?></i></a></li><?php endif; ?>
     </ul>
    </div>
 
    <div class="large-12 columns tabs-content">
 
     <div class="tabs-panel is-active" id="pdesc">
-     <?php if (!empty($aResult['row1']->beschreibung)): ?>
+     <?php if (!empty($this->beschreibung)): ?>
      <div class="akteur-content">
-      <p itemprop="description"><?= $aResult['row1']->beschreibung; ?></p>
+      <p itemprop="description"><?= $this->beschreibung; ?></p>
     </div>
     <?php else : ?>
      <p><i><?= t('Hier wurde leider noch keine Beschreibung angelegt'); ?> :(</i></p>
@@ -143,8 +143,8 @@
           <?php foreach($resultEvents as $event) : ?>
           <?php $start = new DateTime($event->start_ts);
                 $ende =  new DateTime($event->ende_ts);
-                $istAbgelaufen = ($start->format('Ymd') < date('Ymd')) ? true : false;  ?>
-                 <div class="aaeEvent row<?= ($istAbgelaufen ? ' outdated' : ''); ?>">
+                $isOutdated = ($start->format('Ymd') < date('Ymd')) ? true : false;  ?>
+                 <div class="aaeEvent row<?= ($isOutdated ? ' outdated' : ''); ?>">
                  <div class="date large-2 columns button secondary"><?= $start->format('d'); ?><br /><?= $this->monat_short[$start->format('m')]; ?></div>
                   <div class="content large-10 columns">
                    <p><a style="line-height:1.6em;" href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>"> <strong><?= $event->name; ?></strong></a>
@@ -162,16 +162,16 @@
     </div>
     <?php endif; ?>
 
-    <?php if (!empty($aResult['rssFeed'])) : ?>
+    <?php if (!empty($this->rssFeed)) : ?>
     <div class="tabs-panel" id="prss">
-     <?php foreach ($aResult['rssFeed'] as $feed) : ?>
+     <?php foreach ($this->rssFeed as $feed) : ?>
      <div class="rssitem">
       <h5><a href="<?= $feed->link; ?>"><?= $feed->title; ?></a></h5>
       <p><?= $feed->description; ?></p>
      </div>
      <?php endforeach; ?>
 
-     <a href="<?= $aResult['rssFeedUrl']; ?>" class="secondary hollow button"><?= t('Gesamten Feed öffnen'); ?></a>
+     <a href="<?= $rssFeedUrl; ?>" class="secondary hollow button"><?= t('Gesamten Feed öffnen'); ?></a>
    </div>
     <?php endif; ?>
 

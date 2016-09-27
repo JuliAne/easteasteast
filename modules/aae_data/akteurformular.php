@@ -275,6 +275,9 @@ Class akteurformular extends akteure {
 
    // Call hooks 
    module_invoke_all('hook_akteur_created'); */
+   $data = (object)$_POST;
+   // isset($_POST['barrierefrei']) && !empty($_POST['barrierefrei']) PUT true ?!
+   $data->adresse = (object)$_POST['adresse'];
 
    $this->setUpdateAkteur($data);
 
@@ -480,7 +483,7 @@ Class akteurformular extends akteure {
     // Gebe auf der nächsten Seite eine Erfolgsmeldung aus:
     if (session_status() == PHP_SESSION_NONE) session_start();
     drupal_set_message(t('Ihr Akteurprofil wurde erfolgreich bearbeitet!'));
-   	header("Location: ". $base_url ."/akteurprofil/" . $this->akteur_id);
+   	header('Location: '. $base_url .'/akteurprofil/' . $this->akteur_id);
 
   } // END function akteurUpdaten()
 

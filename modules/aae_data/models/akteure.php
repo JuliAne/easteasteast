@@ -25,7 +25,7 @@ Class akteure extends aae_data_helper {
  var $bild = '';
  var $beschreibung = '';
  var $oeffnungszeiten = '';
- var $barrierefrei = '';
+ var $barrierefrei = false;
  var $created = '';
  var $modified = '';
 
@@ -193,9 +193,6 @@ Class akteure extends aae_data_helper {
  }
 
  protected function __setSingleAkteurVars($data){
-   
-  # print_r($data);
-  # exit();
 
   $this->name = $this->clearContent($data->name);
   $this->email = $this->clearContent($data->email);
@@ -212,12 +209,22 @@ Class akteure extends aae_data_helper {
   $this->tags = $data->tags;
   $this->removedTags = $data->removedTags;
   $this->removedPic = $data->removeCurrentPic;
+  $this->barrierefrei = $data->barrierefrei;
   $this->rssFeed = $this->clearContent($data->rssFeed);
   $this->created = new \DateTime($row->created);
   $this->modified = new \DateTime($row->modified);
   $this->adresse = $data->adresse;
 
  }
+
+ /* 
+    Method to write or update an akteur to database
+    @param $data : akteure-object
+    @param $defaultAID : integer [optional, required for update-action]
+    @return $akteurId : integer OR throws exception
+
+    TODO: Remove $_POST's, improve exception-throw
+ */
  
  public function setUpdateAkteur($data, $defaultAID = NULL){
 
@@ -301,8 +308,10 @@ Class akteure extends aae_data_helper {
 
   if ($this->gps == 'Ermittle Geo-Koordinaten...') $this->gps = '';
 
-  if (false) {
+  if (!empty($this->fehler)) {
     print_r($this->fehler);
+    echo 'fehler';
+    exit();
    throw new \Exception(/*$this->fehler*/'bla');
   }
 
@@ -378,15 +387,15 @@ Class akteure extends aae_data_helper {
 	 'bild' => $this->bild,
 	 'beschreibung' => $this->beschreibung,
 	 'oeffnungszeiten' => $this->oeffnungszeiten,
-   'barrierefrei' => (isset($_POST['barrierefrei']) && !empty($_POST['barrierefrei']) ? '1' : '0'),
+   'barrierefrei' => $this->barrierefrei,
 	 ), ($defaultAID ? array('AID', $defaultAID) : NULL), true);
     
-   # TODO: if not private...
-   $userHasAkteur = $this->__db_action($this->tbl_hat_user, array(
-	  'hat_UID' => $this->user_id,
-	  'hat_AID' => $this->akteur_id
-   ));
-   # END TODO
+   if (!$defaultAID){
+    $userHasAkteur = $this->__db_action($this->tbl_hat_user, array(
+	   'hat_UID' => $this->user_id,
+	   'hat_AID' => $this->akteur_id
+    ));
+   }
 
    if (module_exists('aggregator')){
      
@@ -423,7 +432,7 @@ Class akteure extends aae_data_helper {
         ->condition('title', 'aae-feed-'.$this->akteur_id)
         ->execute();
 
-       // Trunk all current feed items
+       // Trunkate all current feed items
        db_delete('aggregator_item')
         ->condition('fid', $hasFeed);
 
@@ -486,13 +495,11 @@ Class akteure extends aae_data_helper {
   	} else {
      
      // ...YIP!
-  	 foreach ($resultSparte as $row) {
+  	 foreach ($resultTag as $row) {
   	   $tagId = $row->KID;
   	 }
 
   	}
-    
-    if (!empty($defaultAID)) {
 
      // Hat der Akteur dieses Tag bereits zugeteilt?
      $hatAkteurTag = db_select($this->tbl_hat_sparte, 'hs')
@@ -510,12 +517,11 @@ Class akteure extends aae_data_helper {
        ))
       ->execute();
 
-     }
-    } // END IF update_mode
+    }
    }
   }
 
-  // Finished, getSetAkteur-function, call hooks
+  // TODO: Call HOOKS properly
   if (empty($defaultAID)) {
    module_invoke_all('hook_akteur_created');
   } else {
@@ -527,7 +533,7 @@ Class akteure extends aae_data_helper {
  }
  
  /* TODO: Use native events-model-functions! */
- public function removeAkteur($aId){
+ public function __removeAkteur($aId){
      
   $resultAkteur = db_select($this->tbl_akteur, 'a')
    ->fields('a', array('name','bild'))
@@ -563,7 +569,7 @@ Class akteure extends aae_data_helper {
   ->condition('hat_AID', $aId)
   ->execute();
 
-  // remove profile-image (if possible)
+  // Remove profile-image (if possible)
   $bild = end(explode('/', $resultAkteur->bild));
 
   if (file_exists($this->short_bildpfad.$bild)) {

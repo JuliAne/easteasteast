@@ -136,31 +136,43 @@ function aae_preprocess_html(&$variables) {
 
   case ('events') :
 
-   $js = '$(window).ready(function(){$("#eventSpartenInput").tokenize({displayDropdownOnFocus:true,newElements:false,placeholder:"z.B. Jazz, Kultur,..."});});';
-   $js .= '$(window).ready(function(){$("#eventBezirkInput").tokenize({displayDropdownOnFocus:true,newElements:false,placeholder:"z.B. Reudnitz..."});});';
-
    drupal_add_css(path_to_theme(). '/css/subpage.css');
-   drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
-   drupal_add_js(path_to_theme().'/js/jquery.tokenize.js', array('scope'=>'footer'));
-   drupal_add_js($js, array('type' => 'inline', 'scope' => 'footer'));
 
-   if (trim($path[1]) == 'new')
+   if (trim($path[1]) == 'new') {
+
     addAkteurEventsAddEditHead();
+
+   } else {
+
+    $js = '$(window).ready(function(){$("#eventSpartenInput").tokenize({displayDropdownOnFocus:true,newElements:false,placeholder:"z.B. Jazz, Kultur,..."});});';
+    $js .= '$(window).ready(function(){$("#eventBezirkInput").tokenize({displayDropdownOnFocus:true,newElements:false,placeholder:"z.B. Reudnitz..."});});';
+
+    drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
+    drupal_add_js(path_to_theme().'/js/jquery.tokenize.js', array('scope'=>'footer'));
+    drupal_add_js($js, array('type' => 'inline', 'scope' => 'footer'));
+
+   }
 
   break;
 
   case ('akteure') :
 
-   $js = '$(window).ready(function(){$(".tokenize").tokenize({displayDropdownOnFocus:true,newElements:false});$("#akteure-content").stalactite({cssPrep:false,loader:"",duration:50});});';
-
    drupal_add_css(path_to_theme(). '/css/subpage.css');
-   drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
-   drupal_add_js(path_to_theme().'/js/jquery.tokenize.js', array('scope'=>'footer'));
-   drupal_add_js(path_to_theme().'/js/stalactite.min.js', array('scope'=>'footer'));
-   drupal_add_js($js, 'inline');
 
-   if (trim($path[1]) == 'new')
+   if (trim($path[1]) == 'new') {
+
     addAkteurEventsAddEditHead();
+
+   } else {
+
+    $js = '$(window).ready(function(){$(".tokenize").tokenize({displayDropdownOnFocus:true,newElements:false});$("#akteure-content").stalactite({cssPrep:false,loader:"",duration:50});});';
+
+    drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
+    drupal_add_js(path_to_theme().'/js/jquery.tokenize.js', array('scope'=>'footer'));
+    drupal_add_js(path_to_theme().'/js/stalactite.min.js', array('scope'=>'footer'));
+    drupal_add_js($js, 'inline');
+
+   }
 
   break;
   
@@ -169,7 +181,6 @@ function aae_preprocess_html(&$variables) {
   break;
 
   default:
-
     drupal_add_css(path_to_theme(). '/css/subpage.css');
 
   break;

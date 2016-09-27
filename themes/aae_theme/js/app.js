@@ -154,7 +154,7 @@ $(document).ready(function() {
    $('#alert').fadeOut('fast');
   }
 
-  event.preventDefault();
+  //event.preventDefault();
 }, true);
 
  setHandlers();

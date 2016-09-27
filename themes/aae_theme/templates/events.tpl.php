@@ -123,15 +123,15 @@
     <div class="large-12 columns"><h4><?= $this->monat_lang[$event->start->format('m')]; ?> <?= $event->start->format('Y'); ?></h4></div>
    <?php endif; $cur_month = $event->start->format('m.Y'); ?>
 
-   <div class="large-6 columns small-12 columns aaeEvent<?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? ' today' : ''; ?><?= (!empty($event->eventRecurringType) && ($event->eventRecurringType <= 5) ? ' eventRecurres' : ''); ?><?= ($event->eventRecurringType == 6 ? ' isFestival' : ''); ?>" itemscope itemtype="http://schema.org/Event"><!-- TODO: Make /SocialEvent -->
+   <div class="large-6 columns small-12 columns aaeEvent<?= ($event->start->format('Y-m-d') == date('Y-m-d')) ? ' today' : ''; ?><?= (!empty($event->eventRecurringType) && ($event->eventRecurringType <= 5) ? ' eventRecurres' : ''); ?><?= ($event->eventRecurringType == 6 ? ' isFestival' : ''); ?>" itemscope itemtype="http://schema.org/Event">
    <!-- Some microdata to enrich events-snippets for alien engines -->
    <?php if (!empty($event->bild)) : ?>
    <meta itemprop="image" content="<?= $base_root.$event->bild; ?>" />
    <?php else : ?>
-   <meta itemprop="image" content="<?= base_root.path_to_theme(); ?>/img/logo_new_new.png" />
+   <meta itemprop="image" content="<?= $base_root.path_to_theme(); ?>/img/logo_new_new.png" />
    <?php endif; ?>
    <meta itemprop="startDate" content="<?= $event->start->format('Y-m-dTH:i'); ?>" />
-   <?php if (empty($event->eventRecurringType)) : ?>
+   <?php if (empty($event->eventRecurringType) && $event->ende->format('Ymd') != '10000101') : ?>
    <meta itemprop="endDate" content="<?= $event->ende->format('Y-m-dTH:i'); ?>" />
    <!-- TODO: ELSE ?! -->
    <?php endif; ?>

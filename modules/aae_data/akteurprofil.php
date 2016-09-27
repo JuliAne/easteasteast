@@ -1,55 +1,47 @@
 <?php
 /**
- * Zeigt das Profil eines Akteurs an.
+ * @file akteurprofil.php
+ * Shows the profile of an akteur
  */
 
 namespace Drupal\AaeData;
 
-class akteurprofil extends aae_data_helper {
+class akteurprofil extends akteure {
   
  public function __construct(){
   parent::__construct();
 
-  require_once('models/akteure.php');
-  $this->akteur = new akteure();
+  #$this->akteur = new akteure();
+
+  $explodedpath = explode("/", current_path());
+  $this->akteur_id = $this->clearContent($explodedpath[1]);
+
  }
 
  public function run(){
 
-  $explodedpath = explode("/", current_path());
-  $akteur_id = $this->clearContent($explodedpath[1]);
+  $hat_recht = $this->isAuthorized($this->akteur_id);
 
-  $hat_recht = $this->akteur->isAuthorized($akteur_id);
+  $this->__setSingleAkteurVars(reset($this->getAkteure(array('AID' => $this->akteur_id), 'complete')));
 
-  //Auswahl der Daten des Akteurs
-  $resultAkteur = $this->akteur->getAkteure(array('AID' => $akteur_id), 'complete');
-
-  if (empty($resultAkteur)) {
-  // Akteur nicht vorhanden, beame ihn zur Akteure-Seite
+  if (empty($this->name)) {
 
    if (session_status() == PHP_SESSION_NONE) session_start();
    drupal_set_message(t('Dieses Akteurprofil konnte nicht gefunden werden...'));
-   header("Location: ". $base_url ."/akteure");
+   header('Location: '. $base_url .'/akteure');
 
  } else {
 
    // Watch out for possible RSS-Feeds...
   if (module_exists('aggregator')) {
 
-   $feed = db_query('SELECT fid, title, block, url FROM {aggregator_feed} WHERE title = :title', array(':title' => 'aae-feed-'.$akteur_id))->fetchObject();
+   $feed = db_query('SELECT fid, title, block, url FROM {aggregator_feed} WHERE title = :title', array(':title' => 'aae-feed-'.$this->akteur_id))->fetchObject();
 
    if ($feed) {
     $result = db_query('SELECT * FROM {aggregator_item} WHERE fid = :fid ORDER BY timestamp DESC, iid DESC LIMIT 5', array(':fid' => $feed->fid));
-    $rssFeed = $result->fetchAll();
+    $this->rssFeed = $result->fetchAll();
+    $rssFeedUrl = $feed->url;
    }
-  }
-
-  foreach ($resultAkteur as $row) {
-
-   $aResult['row1'] = $row;
-   if (isset($rssFeed)) $aResult['rssFeed'] = $rssFeed;
-   if (isset($rssFeed)) $aResult['rssFeedUrl'] = $feed->url;
-
   }
 
   // Ziehe Informationen über Events + Festivals vom Akteur
@@ -57,7 +49,7 @@ class akteurprofil extends aae_data_helper {
    SELECT * FROM {aae_data_event} AS e JOIN {aae_data_akteur_hat_event} AS he
    WHERE he.EID = e.EID AND he.AID = :aid
    ORDER BY start_ts DESC',
-   array(':aid' => $akteur_id));
+   array(':aid' => $this->akteur_id));
 
   $resultEvents = $events->fetchAll();
 
@@ -65,39 +57,39 @@ class akteurprofil extends aae_data_helper {
    SELECT * FROM {aae_data_festival} AS f JOIN {aae_data_akteur_hat_festival} AS hf
    WHERE hf.hat_FID = f.FID AND hf.hat_AID = :aid
    ORDER BY name DESC',
-   array(':aid' => $akteur_id));
+   array(':aid' => $this->akteur_id));
 
   $resultFestivals = $festivals->fetchAll();
 
   $showMap = false;
   
   // Generiere Mapbox-taugliche Koordinaten, übergebe diese ans Frontend
-  if (!empty($aResult['adresse']->gps_lat)) {
+  if (!empty($this->adresse->gps_lat)) {
 
     $showMap = true;
-    $koordinaten = $aResult['adresse']->gps_lat.','.$aResult['adresse']->gps_long;
+    $koordinaten = $this->adresse->gps_lat.','.$this->adresse->gps_long;
     $this->addMapContent($koordinaten, array(
      'gps' => $koordinaten,
-     'name' => $aResult['adresse']->name,
-     'strasse' => $aResult['adresse']->strasse,
-     'nr' => $aResult['adresse']->nr
+     'name' => $this->adresse->name,
+     'strasse' => $this->adresse->strasse,
+     'nr' => $this->adresse->nr
     ));
 
   }
 
-  $kategorien = db_select($this->tbl_hat_sparte, 'a')
+  $tags = db_select($this->tbl_hat_sparte, 'a')
   ->fields('a', array('hat_KID'))
-  ->condition('hat_AID', $akteur_id)
+  ->condition('hat_AID', $this->akteur_id)
   ->execute()
   ->fetchAll();
 
-  if (!empty($kategorien)) {
+  if (!empty($tags)) {
 
-   foreach($kategorien as $kategorie) {
+   foreach ($tags as $tag) {
 
     $resultTags[] = db_select($this->tbl_sparte, 't')
     ->fields('t')
-    ->condition('KID', $kategorie->hat_KID)
+    ->condition('KID', $tag->hat_KID)
     ->execute()
     ->fetchObject();
 
@@ -113,35 +105,32 @@ class akteurprofil extends aae_data_helper {
 
 /**
  *  @function removeAkteur()
- *  removes an Akteur from DB
+ *  Removes an Akteur from DB
+ *  TODO: t()!!! 
  */
 
 public function removeAkteur(){
 
- $explodedpath = explode("/", current_path());
- $akteur_id = $this->clearContent($explodedpath[1]);
-
- if (!user_is_logged_in() || !$this->akteur->isAuthorized($akteur_id)) {
+ if (!user_is_logged_in() || !$this->isAuthorized($this->akteur_id)) {
   drupal_access_denied();
   drupal_exit();
  }
 
  if (isset($_POST['submit'])) {
 
-  $this->akteur->removeAkteur($akteur_id);
+  $this->__removeAkteur($this->akteur_id);
 
   if (session_status() == PHP_SESSION_NONE) session_start();
   drupal_set_message(t('Der Akteur wurde gelöscht.'));
-  header("Location: ". $base_url ."/akteure");
+  header('Location: '. $base_url .'/akteure');
 
  } else {
 
  $pathThisFile = $_SERVER['REQUEST_URI'];
 
  return '<div class="callout row">
- <h3>Möchten Sie den Akteur <strong>'.$resultAkteur['name'].'</strong> wirklich löschen?</h3><br />
+ <h3>Möchten Sie den Akteur wirklich löschen?</h3><br />
  <form action="#" method="POST" enctype="multipart/form-data">
-   <input name="akteur_id" type="hidden" id="eventEIDInput" value="'.$akteur_id.'" />
    <a class="secondary button" href="javascript:history.go(-1)">Abbrechen</a>
    <input type="submit" class="button" id="akteurSubmit" name="submit" value="Löschen">
  </form>
@@ -159,12 +148,9 @@ public function removeAkteur(){
 
    global $user;
 
-   $explodedpath = explode("/", current_path());
-   $akteurId = $this->clearContent($explodedpath[1]);
-
    $resultAkteur = db_select($this->tbl_akteur, 'a')
     ->fields('a')
-    ->condition('AID', $akteurId)
+    ->condition('AID', $this->akteur_id)
     ->execute()
     ->fetchObject();
 

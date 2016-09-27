@@ -545,7 +545,6 @@ function eventformular_page() {
 /**
  * Gibt ajax-request's an entsprechende Klasse/Funktion weiter
  */
-
 function ajax_requests($id) {
 
   $modulePath = drupal_get_path('module', 'aae_data');
@@ -755,14 +754,7 @@ function aae_data_refresh_recurring_events(){
     $events->addEventChildren($eParent->EID, $eParent->recurring_event_type, end($eChildren->start_ts), end($eChildren->ende_ts));
     $countAddedEvents++;
    }
-  }
-  
-  if ($countAddedEvents >= 1){
-   // Some humanoid debugging, to be removed
-   $msg = "Der Aae-Data-Cron wurde aufgerufen und hat ".$countAddedEvents." neue Events erstellt".
-   mail('info@leipziger-ecken.de', 'AAE DATA Debugger', $msg);
-  }
-      
+  }      
     
     // TODO: Reset event-title to next date
     /*
@@ -778,7 +770,7 @@ function aae_data_refresh_recurring_events(){
     $item = array(
      'menu_name' => 'navigation',
      'weight' => 1,
-     'link_title' => t('Event "!name" am !datum in !ort, Leipzig', array('!name' => $this->name, '!datum' => ,'!ort' => $this->ort)),
+     'link_title' => t('Event "!name" am !datum in !ort | Events', array('!name' => $this->name, '!datum' => ,'!ort' => $this->ort)),
      'module' => 'aae_data',
      'link_path' => 'eventprofil/'.$this->event_id,
      'plid' => $plid->mlid

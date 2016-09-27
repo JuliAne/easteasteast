@@ -94,7 +94,7 @@
      <a itemprop="item" href="<?= $base_url; ?>">
      <span itemprop="name" title="<?= t('Startseite'); ?>"><?= t('Startseite'); ?></span></a>
      <meta itemprop="position" content="0" />
-   </li>
+   </li>  
    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
      <a itemprop="item" href="<?= $base_url; ?>/events">
      <span itemprop="name" title="<?= t('Events'); ?>"><?= t('Events'); ?></span></a>
@@ -138,7 +138,7 @@
    <?php elseif (isset($resultEvent->festival)) : ?>
    <p><strong><?= t('Teil des'); ?> <a href="<?= base_path().$resultEvent->festival->alias; ?>" title="<?= t('Zur Festivalseite'); ?>"><?= $resultEvent->festival->name; ?></a></strong></p>
    <?php else : ?>
-   <p><strong><?= t('Akteur'); ?>:</strong> <a href="<?= base_path(); ?>akteurprofil/<?= $resultEvent->akteur->AID; ?>" title="<?= t('Akteurprofil von !username besuchen',array('!username'=> $resultEvent->akteur->name)); ?>" itemprop="name"><?= $resultEvent->akteur->name; ?></a></p>
+   <p><strong><?= t('Akteur'); ?>:</strong> <a href="<?= base_path(); ?>akteurprofil/<?= $resultEvent->akteur->AID; ?>" title="<?= t('Akteurprofil von !username besuchen',array('!username'=> $resultEvent->akteur->name)); ?>" itemprop="name" content="<?= $resultEvent->akteur->name; ?>"><?= $resultEvent->akteur->name; ?></a></p>
    <?php endif; ?>
 
    <?php if (!empty($resultEvent->adresse)) : ?>
