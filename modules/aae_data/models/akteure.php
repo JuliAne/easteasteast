@@ -25,7 +25,7 @@ Class akteure extends aae_data_helper {
  var $bild = '';
  var $beschreibung = '';
  var $oeffnungszeiten = '';
- var $barrierefrei = false;
+ var $barrierefrei = '';
  var $created = '';
  var $modified = '';
 
@@ -206,7 +206,7 @@ Class akteure extends aae_data_helper {
   $this->adresse = $this->clearContent($data->adresse);
   $this->bezirk = $this->clearContent($data->bezirk);
   $this->gps = $this->clearContent($data->gps);
-  $this->tags = $data->tags;
+  $this->tags = (is_array($data->tags) ? (object)$data->tags : $data->tags);
   $this->removedTags = $data->removedTags;
   $this->removedPic = $data->removeCurrentPic;
   $this->barrierefrei = $data->barrierefrei;
@@ -221,18 +221,16 @@ Class akteure extends aae_data_helper {
     Method to write or update an akteur to database
     @param $data : akteure-object
     @param $defaultAID : integer [optional, required for update-action]
-    @return $akteurId : integer OR throws exception
+    @return $akteurId : integer || $this->fehler : array
 
-    TODO: Remove $_POST's, improve exception-throw
+    TODO: Remove $_POST's
  */
  
  public function setUpdateAkteur($data, $defaultAID = NULL){
-
- # print_r($data); exit();
   
   $this->__setSingleAkteurVars($data);
 
-  // Validate input's, throw exception if necessary
+  // Validate inputs, abort & return $this->fehler if necessary
 
   if (empty($this->name)) {
    $this->fehler['name'] = t('Bitte einen Organisationsnamen eingeben!');
@@ -309,13 +307,10 @@ Class akteure extends aae_data_helper {
   if ($this->gps == 'Ermittle Geo-Koordinaten...') $this->gps = '';
 
   if (!empty($this->fehler)) {
-    print_r($this->fehler);
-    echo 'fehler';
-    exit();
-   throw new \Exception(/*$this->fehler*/'bla');
+   return $this->fehler;
   }
 
-  // INSERT- or UPDATE-Action:
+  // ----- INSERT- or UPDATE-Actions --------
 
   // Wenn Bilddatei ausgewählt wurde...
   if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
@@ -387,7 +382,7 @@ Class akteure extends aae_data_helper {
 	 'bild' => $this->bild,
 	 'beschreibung' => $this->beschreibung,
 	 'oeffnungszeiten' => $this->oeffnungszeiten,
-   'barrierefrei' => $this->barrierefrei,
+   'barrierefrei' => (!empty($this->barrierefrei) && ($this->barrierefrei || $this->barrierefrei == 'on') ? 1 : 0),
 	 ), ($defaultAID ? array('AID', $defaultAID) : NULL), true);
     
    if (!$defaultAID){
@@ -469,15 +464,19 @@ Class akteure extends aae_data_helper {
   } // END IF module_exists('aggregator')
 
   // Update or insert Tags
+  if (!empty($this->tags)) {
 
-  if (is_array($this->tags) && !empty($this->tags)) {
-
-   $this->tags = array_unique($this->tags);
+   $collectedTags = array();
 
    foreach ($this->tags as $tag) {
 
     $tagId = '';
     $tag = strtolower($this->clearContent($tag));
+
+    if (empty($tag) || !empty($collectedTags[$tag]))
+      continue;
+
+    $collectedTags[$tag] = $tag;
 
   	$resultTag = db_select($this->tbl_sparte, 's')
   	 ->fields('s')
@@ -489,7 +488,7 @@ Class akteure extends aae_data_helper {
 
      // ...Nope!
      $tagId = db_insert($this->tbl_sparte)
-  	   ->fields(array('kategorie' => $sparte))
+  	   ->fields(array('kategorie' => $tag))
   	 	 ->execute();
 
   	} else {
@@ -501,21 +500,21 @@ Class akteure extends aae_data_helper {
 
   	}
 
-     // Hat der Akteur dieses Tag bereits zugeteilt?
-     $hatAkteurTag = db_select($this->tbl_hat_sparte, 'hs')
-      ->fields('hs')
-      ->condition('hat_KID', $tagId)
-      ->condition('hat_AID', $this->akteur_id)
-      ->execute();
+    // Hat der Akteur dieses Tag bereits zugeteilt?
+    $hatAkteurTag = db_select($this->tbl_hat_sparte, 'hs')
+     ->fields('hs')
+     ->condition('hat_KID', $tagId)
+     ->condition('hat_AID', $this->akteur_id)
+     ->execute();
 
-     if ($hatAkteurTag->rowCount() == 0) {
+    if ($hatAkteurTag->rowCount() == 0) {
 
-      db_insert($this->tbl_hat_sparte)
-      ->fields(array(
-       'hat_AID' => $this->akteur_id,
-       'hat_KID' => $tagId
-       ))
-      ->execute();
+     db_insert($this->tbl_hat_sparte)
+     ->fields(array(
+      'hat_AID' => $this->akteur_id,
+      'hat_KID' => $tagId
+      ))
+     ->execute();
 
     }
    }

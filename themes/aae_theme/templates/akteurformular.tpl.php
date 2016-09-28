@@ -1,5 +1,5 @@
 <div class="row">
-<h3><?= t('Akteur'); ?> <?php echo ($this->target == 'update' ? 'bearbeiten' : 'anlegen'); ?></h3>
+<h3><?= t('Akteur'); ?> <?= ($this->target == 'update' ? 'bearbeiten' : 'anlegen'); ?></h3>
 <?php if ($this->target == 'update') : ?>
 <a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/remove" class="small secondary button round right" style="margin-top:-37px;"><?= t('Löschen'); ?></a>
 <?php endif; ?>

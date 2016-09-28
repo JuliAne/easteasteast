@@ -10,9 +10,6 @@ namespace Drupal\AaeData;
 
 Class festivalformular extends festivals {
 
-  // $tbl_festival
-
-  
   // misc
   var $fehler = array();
   var $freigabe = true;
@@ -38,6 +35,9 @@ Class festivalformular extends festivals {
    if ($action == 'update') {
     $this->target = 'update';
    }
+
+   $explodedpath = explode('/', current_path());
+   $this->festival_id = $this->clearContent($explodedpath[1]);
    
   }
 
@@ -46,9 +46,6 @@ Class festivalformular extends festivals {
    *  @returns $output;
    */
   public function run() {
-
-    $explodedpath = explode('/', current_path());
-    $this->akteur_id = $this->clearContent($explodedpath[1]);
 
     $output = '';
 
@@ -199,20 +196,20 @@ Class festivalformular extends festivals {
     ))
 	 ->execute();
    
-  // Tell Drupal about new akteurprofil/ID-item
+  // Tell Drupal about new festival-item
 
   $parentItem = db_query(
    "SELECT menu_links.mlid
     FROM {menu_links} menu_links
     WHERE menu_name = :menu_name AND link_path = :link_path",
-    array(":menu_name" => "navigation", ":link_path" => 'akteure'));
+    array(":menu_name" => "navigation", ":link_path" => 'festivals'));
 
    $plid = $parentItem->fetchObject();
 
    $item = array(
     'menu_name' => 'navigation',
     'weight' => 1,
-    'link_title' => t('Akteurprofil von !username', array('!username' => $this->name)),
+    'link_title' => t('Festivalseite von !username', array('!username' => $this->name)),
     'module' => 'aae_data',
     'link_path' => 'akteurprofil/'.$this->akteur_id,
     'plid' => $plid->mlid
@@ -223,7 +220,7 @@ Class festivalformular extends festivals {
 
    if (session_status() == PHP_SESSION_NONE) session_start();
    drupal_set_message(t('Das Festival wurde erfolgreich erstellt!'));
-   header('Location: '. $base_url . '/akteurprofil/' . $this->akteur_id);
+   header('Location: '. $base_url . '/'. $this->alias);
 
   } // END function festivalSpeichern()
 
