@@ -44,8 +44,9 @@ Class akteurepage extends aae_data_helper {
   
   parent::__construct();
   
-  require_once('models/akteure.php');
+ # require_once('models/akteure.php');
   $this->akteure = new akteure();
+  $this->tags = new tags();
   
  }
 
@@ -138,7 +139,8 @@ Class akteurepage extends aae_data_helper {
                                             INNER JOIN {aae_data_akteur} a ON a.adresse = ad.ADID
                                             GROUP BY b.BID HAVING COUNT(*) > 0 ORDER BY count DESC', 0, 5);
 
-  $resultTags = $this->getAllTags('akteure');
+  $resultTags = $this->tags->getTags('akteure');
+
   $resultBezirke = $this->getAllBezirke('akteure');
 
   ob_start(); // Aktiviert "Render"-modus

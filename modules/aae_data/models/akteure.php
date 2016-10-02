@@ -40,13 +40,15 @@ Class akteure extends aae_data_helper {
  var $sparte_id = '';
 
  var $resultBezirke = '';
- var $target = '';
  var $removedTags;
  var $removedPic;
  var $rssFeed = '';
 
  public function __construct() {
+
   parent::__construct();
+  $this->tagsHelper = new tags();
+
  }
  
  /*
@@ -206,13 +208,13 @@ Class akteure extends aae_data_helper {
   $this->adresse = $this->clearContent($data->adresse);
   $this->bezirk = $this->clearContent($data->bezirk);
   $this->gps = $this->clearContent($data->gps);
-  $this->tags = (is_array($data->tags) ? (object)$data->tags : $data->tags);
+  $this->tags = $data->tags; // array!
   $this->removedTags = $data->removedTags;
   $this->removedPic = $data->removeCurrentPic;
   $this->barrierefrei = $data->barrierefrei;
   $this->rssFeed = $this->clearContent($data->rssFeed);
-  $this->created = new \DateTime($row->created);
-  $this->modified = new \DateTime($row->modified);
+  $this->created = new \DateTime($data->created);
+  $this->modified = new \DateTime($data->modified);
   $this->adresse = $data->adresse;
 
  }
@@ -328,22 +330,6 @@ Class akteure extends aae_data_helper {
    ->fetchObject();
 
    $akteurAdress = array('ADID', $akteurAdress->adresse);
-
-   if (!empty($this->removedTags) && is_array($this->removedTags)) {
-
-    foreach ($this->removedTags as $tag) {
-
-      $tag = $this->clearContent($tag);
-
-      // TODO: Put into public function $this->removeTag($tagID)
-      //       & remove tag itself if completely unused
-      db_delete($this->tbl_hat_sparte)
-       ->condition('hat_KID', $tag)
-       ->condition('hat_AID', $defaultAID)
-       ->execute();
-
-    }
-   }
 
    // remove current picture manually
    if (!empty($this->removedPic)) {
@@ -464,63 +450,9 @@ Class akteure extends aae_data_helper {
   } // END IF module_exists('aggregator')
 
   // Update or insert Tags
-  if (!empty($this->tags)) {
+  $this->tagsHelper->setRemoveTags($this->tags, array('akteur', $this->akteur_id), $this->removedTags);
 
-   $collectedTags = array();
-
-   foreach ($this->tags as $tag) {
-
-    $tagId = '';
-    $tag = strtolower($this->clearContent($tag));
-
-    if (empty($tag) || !empty($collectedTags[$tag]))
-      continue;
-
-    $collectedTags[$tag] = $tag;
-
-  	$resultTag = db_select($this->tbl_sparte, 's')
-  	 ->fields('s')
-  	 ->condition('KID', $tag)
-  	 ->execute();
-
-    // Tag already existing?...
-    if ($resultTag->rowCount() == 0) {
-
-     // ...Nope!
-     $tagId = db_insert($this->tbl_sparte)
-  	   ->fields(array('kategorie' => $tag))
-  	 	 ->execute();
-
-  	} else {
-     
-     // ...YIP!
-  	 foreach ($resultTag as $row) {
-  	   $tagId = $row->KID;
-  	 }
-
-  	}
-
-    // Hat der Akteur dieses Tag bereits zugeteilt?
-    $hatAkteurTag = db_select($this->tbl_hat_sparte, 'hs')
-     ->fields('hs')
-     ->condition('hat_KID', $tagId)
-     ->condition('hat_AID', $this->akteur_id)
-     ->execute();
-
-    if ($hatAkteurTag->rowCount() == 0) {
-
-     db_insert($this->tbl_hat_sparte)
-     ->fields(array(
-      'hat_AID' => $this->akteur_id,
-      'hat_KID' => $tagId
-      ))
-     ->execute();
-
-    }
-   }
-  }
-
-  // TODO: Call HOOKS properly
+  // TODO: Check for proper HOOK-call
   if (empty($defaultAID)) {
    module_invoke_all('hook_akteur_created');
   } else {

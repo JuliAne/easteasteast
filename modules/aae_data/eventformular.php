@@ -12,7 +12,6 @@
  */
 
 namespace Drupal\AaeData;
-#use Drupal\AaeData\events;
 
 Class eventformular extends aae_data_helper {
 
@@ -41,8 +40,8 @@ Class eventformular extends aae_data_helper {
   var $adresse = '';
 
   //$tbl_sparte
-  var $sparten = '';
-  var $all_sparten = ''; // Zur Darstellung des tokenizer (#akteurSpartenInput)
+  var $tags = '';
+  var $allTags = ''; // Zur Darstellung des tokenizer (#akteurSpartenInput)
   
   var $isFestival = false; // Only for submit-actions
   var $ownedFestivals;
@@ -67,8 +66,8 @@ Class eventformular extends aae_data_helper {
    $explodedpath = explode('/', current_path());
    $this->event_id = $this->clearContent($explodedpath[1]);
 
-   require_once('models/events.php');
-   $this->event = new events();
+   $this->event       = new events();
+   $this->tagsHelper  = new tags();
 
    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
    if ($action == 'update') {
@@ -140,7 +139,7 @@ Class eventformular extends aae_data_helper {
     $this->plz = $this->clearContent($_POST['plz']);
     $this->ort = $this->clearContent($_POST['ort']);
     $this->gps = $this->clearContent($_POST['gps']);
-    $this->sparten = $_POST['sparten'];
+    $this->tags = $_POST['tags'];
     $this->removedTags = $this->clearContent($_POST['removedTags']);
     $this->removedPic = $this->clearContent($_POST['removeCurrentPic']);
     $this->eventRecurres = $this->clearContent($_POST['eventRecurres']);
@@ -194,8 +193,8 @@ Class eventformular extends aae_data_helper {
      $this->freigabe = false;
     }
 
-    /*if ((count($this->sparten)/2) > 11) {
-     $this->fehler['sparten'] = "Bitte max. 10 Tags angeben.";
+    /*if ((count($this->tags)/2) > 11) {
+     $this->fehler['tags'] = "Bitte max. 10 Tags angeben.";
      $this->freigabe = false;
    } */
 
@@ -259,32 +258,8 @@ Class eventformular extends aae_data_helper {
     } */
     
     // Um die bereits gewählten Tag's anzuzeigen benötigen wir deren Namen...
-    if ($this->freigabe == false) {
-
-     $neueSparten = array();
-     $this->sparten = array_unique($this->sparten);
-
-     foreach ($this->sparten as $sparte) {
-
-      $sparte = strtolower($this->clearContent($sparte));
-
-      if (is_numeric($sparte)) {
-
-      $spartenName = db_select($this->tbl_sparte, 's')
-       ->fields('s', array('kategorie'))
-       ->condition('KID', $sparte)
-       ->execute()
-       ->fetchObject();
-
-      $neueSparten[$sparte] = $spartenName->kategorie;
-
-     } else {
-
-      $neueSparten[] = $sparte;
-
-     }
-    }
-     $this->sparten = $neueSparten;
+   if ($this->freigabe == false) {
+    $this->tags = $this->tagsHelper->__getKategorieForTags($this->tags);
    }
 
    if (!is_numeric($this->veranstalter)){
@@ -445,74 +420,9 @@ Class eventformular extends aae_data_helper {
 	  ->condition('EID', $this->event_id)
 	  ->execute();
 
-   // remove tags manually
-   if (!empty($this->removedTags) && is_array($this->removedTags)) {
+    // UPDATE, INSERT or REMOVE Tags
+    $this->tagsHelper->setRemoveTags($this->tags, array('event', $this->event_id), $this->removedTags);
 
-    foreach($this->removedTags as $tag) {
-
-     $tag = $this->clearContent($tag);
-
-     db_delete($this->tbl_event_sparte)
-      ->condition('hat_KID', $tag)
-      ->condition('hat_EID', $this->event_id)
-      ->execute();
-
-     }
-    }
-
-    // Update Tags
-    if (is_array($this->sparten) && !empty($this->sparten)) {
-
-     $this->sparten = array_unique($this->sparten);
-
-     foreach ($this->sparten as $id => $sparte) {
-
-     // Tag bereits in DB?
-     $sparte_id = '';
-     $sparte = strtolower($this->clearContent($sparte));
-
-     $resultsparte = db_select($this->tbl_sparte, 's')
-      ->fields('s')
-      ->condition('KID', $sparte)
-      ->execute();
-
-      if ($resultsparte->rowCount() == 0) {
-
-       $sparte_id = db_insert($this->tbl_sparte)
-        ->fields(array('kategorie' => $sparte))
-        ->execute();
-
-       } else {
-
-         foreach ($resultsparte as $row) {
-           $sparte_id = $row->KID;
-         }
-
-       }
-
-       // Hat das Event dieses Tag bereits zugeteilt bekommen?
-
-       $hatEventSparte = db_select($this->tbl_event_sparte, 'es')
-        ->fields('es')
-        ->condition('hat_EID', $this->event_id)
-        ->condition('hat_KID', $sparte_id)
-        ->execute();
-
-        if ($hatEventSparte->rowCount() == 0) {
-         // Nein, daher rein damit
-
-         db_insert($this->tbl_event_sparte)
-          ->fields(array(
-           'hat_EID' => $this->event_id,
-           'hat_KID' => $sparte_id
-           ))
-          ->execute();
-
-      }
-     }
-    }
-
-    // Call hooks (TODO)
     module_invoke_all('hook_event_modified');
 
     if (session_status() == PHP_SESSION_NONE) session_start();
@@ -562,7 +472,7 @@ Class eventformular extends aae_data_helper {
      $this->veranstalter = $row->ersteller;
     }
 
-    $this->sparten = $this->event->getTags($this->event_id);
+    $this->tags = $this->tagsHelper->getTags('events', array('hat_EID', $this->event_id));
 
   } // END function eventGetFields()
 
@@ -661,54 +571,18 @@ Class eventformular extends aae_data_helper {
    }
 
 	 // if Veranstalter != 'privat'
-    if (!empty($this->veranstalter)) {
+   if (!empty($this->veranstalter)) {
 
-	   db_insert($this->tbl_akteur_events)
-   	  ->fields(array(
-		  'AID' => $this->veranstalter,
-	    'EID' => $this->event_id,
-	    ))
-	    ->execute();
+	  db_insert($this->tbl_akteur_events)
+     ->fields(array(
+	   'AID' => $this->veranstalter,
+	   'EID' => $this->event_id,
+	   ))
+	   ->execute();
 
-  	}
+   }
 
-    if (is_array($this->sparten) && !empty($this->sparten)) {
-      
-     $this->sparten = array_unique($this->sparten);
-     
-     foreach ($this->sparten as $id => $sparte) {
- 		 // Tag bereits in DB?
-
-     $sparte = strtolower($this->clearContent($sparte));
-
-     $sparte_id = '';
-
- 		 $resultSparte = db_select($this->tbl_sparte, 's')
- 		  ->fields('s')
- 		  ->condition('KID', $sparte)
- 		  ->execute();
-
-  		if ($resultSparte->rowCount() == 0) {
-      // Tag in DB einfügen
- 	  	 $sparte_id = db_insert($this->tbl_sparte)
- 		   ->fields(array('kategorie' => $sparte))
- 		   ->execute();
-
- 		} else {
- 		 foreach ($resultSparte as $row) {
- 		   $sparte_id = $row->KID;
- 		 }
- 		}
-
- 		// Event & Tag in Tabelle $tbl_hat_sparte einfügen
- 		$insertEventSparte = db_insert($this->tbl_event_sparte)
- 		  ->fields(array(
- 		    'hat_EID' => $this->event_id,
- 		    'hat_KID' => $sparte_id,
- 		  ))
- 		  ->execute();
- 	  }
- 	 }
+   $this->tagsHelper->setRemoveTags($this->tags, array('event', $this->event_id), $this->removedTags);
 
    if ($this->eventRecurres == 'on' && !empty($this->eventRecurringType)) {
    
@@ -791,14 +665,11 @@ Class eventformular extends aae_data_helper {
      }
     }
 
-    $this->resultbezirke = db_select($this->tbl_bezirke, 'b')
+    $this->resultBezirke = db_select($this->tbl_bezirke, 'b')
      ->fields('b')
      ->execute();
 
-    $this->all_sparten = $this->event->getTags();
-   /* foreach ($all_sparten as $id => $sparte) {
-     $this->all_sparten[$id] = $sparte;
-    }*/
+    $this->allTags = $this->tagsHelper->getTags();
 
     $this->ownedFestivals = $this->event->userHasFestivals($this->user_id);
 

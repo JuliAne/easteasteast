@@ -20,9 +20,9 @@ Class eventspage extends aae_data_helper {
  public function __construct($isBlock = false){
    
   parent::__construct();
-  
-  require_once('models/events.php');
-  $this->events = new events();
+
+  $this->events  = new events();
+  $this->tags    = new tags();
   $this->isBlock = $isBlock;
   
  }
@@ -100,7 +100,7 @@ Class eventspage extends aae_data_helper {
   
   //-----------------------------------
 
-  $resultTags = $this->events->getTags();
+  $resultTags = $this->tags->getTags('events');
   $resultBezirke = $this->getAllBezirke('events');
   
   if (!empty($this->filter)) {

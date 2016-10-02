@@ -10,7 +10,7 @@
 function aae_data_cron() {
   aae_data_refresh_recurring_events();
   #aae_data_refresh_facebook_events();
-  #aae_install_clear_db_contents();
+  aae_install_clear_db_contents();
 }
 
 function aae_data_user_login(&$edit, $account){
@@ -590,6 +590,8 @@ function ajax_requests($id) {
 function aae_install_clear_db_contents() {
   
  $aae = new \Drupal\AaeData\aae_data_helper();
+ include_once $modulePath . '/models/tags.php';
+ $tags = new \Drupal\AaeData\tags();
    
  // Unify Akteure-URL's and -numbers
  $akteure = db_select($aae->tbl_akteur, 'a')
@@ -638,63 +640,8 @@ function aae_install_clear_db_contents() {
   }
  }
 
- // Remove double tags for Events & Akteure
- $allTags = db_select($aae->tbl_sparte, 's')
-  ->fields('s')
-  ->execute();
-  
- $tags = array();  
-  
- foreach ($allTags->fetchAll() as $tag){
-   
-   if (isset($tags[$tag->kategorie])) {
-    
-    // akteure_tags
-    // Avoid PDOException
-    $availTags = db_select($aae->tbl_hat_sparte, 'hs')
-     ->fields('hs')
-     ->condition('hat_KID', $tag->KID)
-     ->execute();
-     
-    foreach ($availTags->fetchAll() as $aTag) {
-     if (!db_select($aae->tbl_hat_sparte,'hs')->fields('hs')->condition('hat_AID',$aTag->hat_AID)->condition('hat_KID',$tags[$tag->kategorie])->execute()->rowCount()){
-      db_update($aae->tbl_hat_sparte)
-       ->fields(array(
-       'hat_KID' => $tags[$tag->kategorie]
-       ))
-       ->condition('hat_KID', $tag->KID)
-       ->execute();
-     }
-    }
-     
-    // events_tags
-    // Avoid PDOException
-    $availTags = db_select($aae->tbl_event_sparte, 'es')
-     ->fields('es')
-     ->condition('hat_KID', $tag->KID)
-     ->execute();
-    
-    foreach ($availTags->fetchAll() as $aTag) {
-     if (!db_select($aae->tbl_event_sparte,'es')->fields('es')->condition('hat_EID',$aTag->hat_EID)->condition('hat_KID',$tags[$tag->kategorie])->execute()->rowCount()){
-      db_update($aae->tbl_event_sparte)
-       ->fields(array(
-       'hat_KID' => $tags[$tag->kategorie]
-       ))
-       ->condition('hat_KID', $tag->KID)
-       ->execute();
-     }
-    }
-     
-    db_delete($aae->tbl_sparte)
-     ->condition('KID', $tag->KID)
-     ->execute();
-    
-   } else {
+ $tags->removeDoubleTags();
  
-    $tags[$tag->kategorie] = $tag->KID;
-   
-  } 
- }
 }
 
 /**

@@ -121,43 +121,43 @@
 
    <div class="large-4 columns">
     <label><?= t('Straße'); ?>: <?= $this->fehler['strasse']; ?>
-     <input type="text" id="StrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= t("Strasse"); ?>">
+     <input type="text" id="StrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= t("Straße"); ?>">
     </label>
    </div>
 
    <div class="large-1 columns">
-    <label><?= t('Nr.'); ?>: <?= $this->fehler['nr']; ?>
-     <input type="text" id="NrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= t("Hausnummer"); ?>">
+    <label><?= t('Hausnummer'); ?>: <?= $this->fehler['nr']; ?>
+     <input type="text" id="NrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= t('Nr.'); ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
     <label><?= t('Adresszusatz'); ?>: <?= $this->fehler['adresszusatz']; ?>
-     <input type="text" id="AdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= t("Adresszusatz"); ?>">
+     <input type="text" id="AdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= t('Adresszusatz'); ?>">
     </label>
    </div>
 
    <div class="large-4 columns">
     <label><?= t('PLZ'); ?>: <?= $this->fehler['plz']; ?>
-      <input type="text" pattern="[0-9]{5}" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= t("PLZ"); ?>">
+      <input type="text" pattern="[0-9]{5}" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= t('PLZ'); ?>">
     </label>
    </div>
 
    <div class="large-4 columns">
-  <label><?= t('Bezirk'); ?>: <?= $this->fehler['ort']; ?>
+   <label><?= t('Bezirk'); ?>: <?= $this->fehler['ort']; ?>
 
-  <select name="ort">
-   <option value="" selected="selected">- <?= t('Bezirk auswählen'); ?> -</option>
-   <?php foreach ($this->resultbezirke as $bezirk) : ?>
-    <option value="<?= $bezirk->BID; ?>" <?php echo ($bezirk->BID == $this->ort ? 'selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
-   <?php endforeach; ?>
-  </select>
- </label>
- </div>
+   <select name="ort">
+    <option value="" selected="selected">- <?= t('Bezirk auswählen'); ?> -</option>
+    <?php foreach ($this->resultBezirke as $bezirk) : ?>
+    <option value="<?= $bezirk->BID; ?>"<?= ($bezirk->BID == $this->ort ? ' selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
+    <?php endforeach; ?>
+   </select>
+   </label>
+  </div>
 
   <div class="large-4 columns">
   <label><?= t('Geodaten (Karte)'); ?>: <?= $this->fehler['gps']; ?>
-   <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= t("GPS Koordinaten"); ?>">
+   <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= t('GPS Koordinaten'); ?>">
   </label>
   <p id="show_coordinates" style="display:none;"><a href="#" target="_blank"><?= t('Zeige Koordinaten auf Karte'); ?></a></p>
 </div>
@@ -177,7 +177,7 @@
 
  <div class="row">
   <fieldset class="fieldset">
-   <legend>Eventbild</legend>
+   <legend><?= t('Eventbild'); ?></legend>
 
     <label for="eventBildInput" class="button"><?= t('Bild hochladen'); ?>...</label>
     <input type="file" id="eventBildInput" name="bild" class="show-for-sr" />
@@ -200,32 +200,28 @@
   <div class="row">
    <div class="large-12 columns">
 
-    <label><?= t('Kategorien:'); ?> <?= $this->fehler['sparten']; ?></label>
-
-    <select id="eventSpartenInput" multiple="multiple" class="tokenize" name="sparten[]">
+    <label><?= t('Kategorien:'); ?> <?= $this->fehler['tags']; ?></label>
+<?= print_r($this->tags); ?>
+    <select id="eventSpartenInput" multiple="multiple" class="tokenize" name="tags[]">
       
-    <?php if (!empty($this->sparten)) : ?>
-    <?php foreach ($this->sparten as $sparte) : ?>
-     <?php if (is_array($sparte)) : ?>
-      <option selected value="<?= $sparte[0]->KID; ?>"><?php echo $sparte[0]->kategorie; ?></option>
+    <?php foreach ($this->tags as $tag) : ?>
+     <?php if (is_array($tag)) : ?>
+      <option selected value="<?= $tag[0]->KID; ?>"><?= $tag[0]->kategorie; ?></option>
      <?php else : ?>
-     <!--<?= var_dump($sparte); ?>-->
-      <option selected value="<?= $sparte->KID; ?>"><?= $sparte->kategorie; ?></option>
+      <option selected value="<?= $tag->KID; ?>"><?= $tag->kategorie; ?></option>
      <?php endif; ?>
     <?php endforeach;?>
-    <?php endif; ?>
 
-    <?php foreach ($this->all_sparten as $sparte) : ?>
-     <option value="<?php echo $sparte->KID; ?>"><?php echo $sparte->kategorie; ?></option>
+    <?php foreach ($this->allTags as $tag) : ?>
+     <option value="<?= $tag->KID; ?>"><?= $tag->kategorie; ?></option>
     <?php endforeach;?>
     </select>
-
   </div>
 
  <div class="row">
  <?php if ($this->target == 'update' && !empty($resultEvent->created)) : ?>
   <?php if ($this->created->format('d.m.Y') != '01.01.1000') : ?>
-  <p style="color:grey;"><?= t('Event eingetragen am'); ?> <?= $this->created->format('d.m.Y, H:i'); ?> Uhr.
+  <p style="color:grey;"><?= t('Event eingetragen am'); ?> <?= $this->created->format('d.m.Y, H:i'); ?> <?= t('Uhr'); ?>.
   <?php if ($this->modified->format('d.m.Y') != '01.01.1000' && $this->modified->format('H:i') != date('H:i')) : ?> <?= t('Zuletzt aktualisiert am'); ?> <?= $this->modified->format('d.m.Y, H:i'); ?> <?= t('Uhr'); ?>.<?php endif; ?>
   </p><div class="divider" style="margin:17px 0;"></div>
   <?php endif; ?>

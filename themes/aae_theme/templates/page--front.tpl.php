@@ -80,7 +80,7 @@
     <div class="row">
      <div class="aaeHeadline">
       <h1><span><strong><?= t('Nächste Veranstaltungen'); ?></strong></span></h1>
-      <a href="<?= base_path(); ?>events/rss" id="rss" class="small button" title="<?= t('Alle Events als RSS-Feed abonnieren'); ?>"><img id="svg_logo" src="/sites/all/themes/aae_theme/img/rss.svg"></a>
+      <a href="<?= base_path(); ?>events/rss" id="rss" class="small button hide-for-small-only" title="<?= t('Alle Events als RSS-Feed abonnieren'); ?>"><img id="svg_logo" src="/sites/all/themes/aae_theme/img/rss.svg"></a>
       <a href="<?= base_path(); ?>events" id="allevents" class="small button frontpage"><?= t('Alle Events'); ?></a>
      </div>
     </div>
@@ -96,7 +96,7 @@
         <a href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>" title="<?= t('Event aufrufen'); ?>">
          <div class="events-align event">
           <h4><?= $event->name; ?></h4>
-          <?php if (!empty($time)) : ?><div class="divider"></div><aside><?= $time; ?></aside><?php endif; ?>
+          <?php if (!empty($time)) : ?><div class="divider hide-for-small-only"></div><aside class="hide-for-small-only"><?= $time; ?></aside><?php endif; ?>
          </div>
         </a>
       </div>
@@ -113,7 +113,7 @@
      </div>
 
       <?php
-      // Lade "Meine Akteure"-Block
+      // Load "Meine Akteure"-Block
 
       foreach ($blocks->print_letzte_akteure(8) as $count => $akteur) : ?>
       <a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">

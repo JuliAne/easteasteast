@@ -254,26 +254,6 @@ namespace Drupal\AaeData;
 
   }
 
-  /*
-   * function getAllTags($type)
-   * TODO: To be put in xy-models
-   * @return All given tags - sortable for only events / akteure
-   */
-  protected function getAllTags($type) {
-
-   if ($type == 'events'){
-     $tags = db_query('SELECT s.KID, s.kategorie FROM {aae_data_sparte} s JOIN {aae_data_event_hat_sparte} ehs WHERE s.KID = ehs.hat_KID ORDER BY s.kategorie DESC');
-   } else if ($type == 'akteure') {
-     $tags = db_query('SELECT s.KID, s.kategorie FROM {aae_data_sparte} s JOIN {aae_data_akteur_hat_sparte} ahs WHERE s.KID = ahs.hat_KID ORDER BY s.kategorie DESC');
-   } else {
-     $tags = db_select($this->tbl_sparte, 't')
-      ->fields('t', array('KID', 'kategorie' ))
-      ->execute();
-   }
-
-    return $tags->fetchAll();
-  }
-
   protected function getAllBezirke() {
 
     return db_select($this->tbl_bezirke, 'b')
@@ -285,7 +265,7 @@ namespace Drupal\AaeData;
   protected function getDuplicates($ids, $num) {
 
    $result = array();
-   $counts =  array_count_values($ids);
+   $counts = array_count_values($ids);
 
    foreach ($counts as $id => $count){
      if ($count >= $num) $result[$id] = $id;
@@ -295,12 +275,13 @@ namespace Drupal\AaeData;
 
   } // end protected function getDuplicates
 
-  /* TODO: Documentate function */
-
+  /* Helper method for INSERT- and UPDATE-actions
+     which forges a db_query from the given parameters
+     TODO (if required): Allow multiple $conditions */
   protected function __db_action($tbl, $fields, $condition = NULL, $putTimestamp = false){
 
    if ($putTimestamp){
-    $fields[($condition ? 'modified' : 'created')] = date('Y-m-d H:i:s', time());
+    $fields[(!empty($condition) ? 'modified' : 'created')] = date('Y-m-d H:i:s', time());
    }
 
    if ($tbl == $this->tbl_akteur && !$condition){ # || $this->tbl_events

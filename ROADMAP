@@ -20,7 +20,7 @@ V 0.6 (-> Events-Rework) (06/2016):
 
 V 0.7 (-> Modularisierung, Festivals):
 
-- Feature: "Festival-Veranstaltungen", entsprechende graphische Einbindung (Ticket #83) - ~
+- Feature: "Festival-Veranstaltungen", entsprechende graphische und funktionale Einbindung (Ticket #83) - ~
 - Facebook Events-API (Ticket #81)
 - Kalender: Mehrtägige Events kenntlich machen
 - Überarbeitung Journal(-Beitrags)-Darstellung (mehr Bilder, Sidebar mit Akteurs-Infos)
@@ -53,6 +53,7 @@ V 1.0 Alpha (ggf. auch alles früher):
 - Ressourcen-Feature
 - 100% responsive Interface
 - Alle benötigten Module in den AAE-Modul-Ordner
+- Microdata-tags erneut auf Validität mit schema.org prüfen
 - Klares Finanzierungsmodell
 
 _ _ _

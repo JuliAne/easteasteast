@@ -13,7 +13,10 @@ namespace Drupal\AaeData; # \events?
 Class events extends aae_data_helper {
 
  public function __construct() {
+
    parent::__construct();
+   $this->tags = new tags();
+
  }
 
  /*TODO For API CLASS:
@@ -44,7 +47,7 @@ Class events extends aae_data_helper {
    } else {
     $events->fields('e');
    }
-   
+
    foreach ($conditions as $key => $condition) {
 
     switch ($key) {
@@ -139,10 +142,7 @@ Class events extends aae_data_helper {
      $resultEvents[$realEID]['adresse'] = $resultAdresse->fetchObject();
 
      // Tags
-     $sparten = array();
-     $sparten = $this->getTags($event->EID);
-
-     $resultEvents[$realEID]['tags'] = $sparten;
+     $resultEvents[$realEID]['tags'] = $this->tags->getTags('events', array('hat_EID', $event->EID));
 
    }
    
@@ -288,17 +288,6 @@ Class events extends aae_data_helper {
 
  }
 
- public function getTags($eid = null){
-   
-  if (empty($eid)) {
-   $tags = db_query('SELECT s.KID, s.kategorie FROM {aae_data_sparte} s JOIN {aae_data_event_hat_sparte} ehs WHERE s.KID = ehs.hat_KID ORDER BY s.kategorie DESC');
-  } else {
-   $tags = db_query('SELECT s.KID, s.kategorie FROM {aae_data_sparte} s JOIN {aae_data_event_hat_sparte} ehs WHERE s.KID = ehs.hat_KID AND ehs.hat_EID = :eid ORDER BY s.kategorie DESC', array(':eid'=>$eid));
-  }
-  return $tags->fetchAllAssoc('KID');
-
- }
-
   public function addEventChildren($parent_EID, $eventRecurringType, $startQuery, $endQuery, $eventRecurresTill = null){
    
    $datePeriod = NULL;
@@ -409,26 +398,28 @@ Class events extends aae_data_helper {
    $numFilter = 0;
    $filteredTags = array();
    $filteredBezirke = array();
+   $filteredTags = array();
    
    if (isset($filter['tags'])){
    
-    $sparten = db_select($this->tbl_event_sparte, 'hs')
+    $tags = db_select($this->tbl_event_sparte, 'hs')
      ->fields('hs', array('hat_EID'));
+
     $and = db_and();
    
     foreach ($filter['tags'] as $tag) {
-     $numFilters++;
      $tag = $this->clearContent($tag);
      $filteredTags[$tag] = $tag;
      $and->condition('hat_KID', $tag, '=');
+     $numFilters++;
     }
     
-    $filterSparten = $sparten->condition($and)
+    $filterTags = $tags->condition($and)
      ->execute()
      ->fetchAll();
      
-    foreach ($filterSparten as $sparte){
-     $filteredEventIds[] = $sparte->hat_EID;
+    foreach ($filterTags as $tag){
+     $filteredEventIds[] = $tag->hat_EID;
     }
     
    } // end Tag-Filter
@@ -521,7 +512,7 @@ Class events extends aae_data_helper {
     $filteredEventIds[] = $child->EID;
    }
   }
-  
+
   return $this->getDuplicates($filteredEventIds, $numFilters);
    
  }

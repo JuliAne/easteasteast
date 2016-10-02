@@ -16,17 +16,13 @@ html.fp-enabled,
 #superContainer {
     height: 100%;
     position: relative;
-
-    /* Touch detection for Windows 8 */
     -ms-touch-action: none;
-
-    /* IE 11 on Windows Phone 8.1*/
     touch-action: none;
 }
 .fp-section {
     position: relative;
-    -webkit-box-sizing: border-box; /* Safari<=5 Android<=3 */
-    -moz-box-sizing: border-box; /* <=28 */
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
     position: relative;
     background-image: none !important;
@@ -210,7 +206,6 @@ html.fp-enabled,
     left: 20px;
 }
 
-/* Adjustments - keep them where they are! */
 #fullpage { margin-top: 1px; }
 
 /* STYLES FOR AAE */
@@ -542,4 +537,15 @@ html.fp-enabled,
 
 .large3-events:hover .event .divider {
   border-bottom: 1px solid lightgrey;
+}
+
+@media only screen and (max-width: 38em){
+ 
+ body {
+  font-size: 0.9em;
+ }
+ #projects-akteure .pcard {
+  float: left !important;
+ }
+
 }

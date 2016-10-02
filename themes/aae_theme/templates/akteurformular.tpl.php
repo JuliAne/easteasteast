@@ -181,14 +181,13 @@
   <div class="large-12 columns">
 
     <label><?= t('Kategorien'); ?>: <?= $this->fehler['sparten']; ?></label>
-
     <select id="eventSpartenInput" multiple="multiple" class="tokenize" name="tags[]">
 
     <?php foreach ($this->tags as $tag) : ?>
      <?php if (is_array($tag)) : ?>
      <option selected value="<?= $tag[0]->KID; ?>"><?= $tag[0]->kategorie; ?></option>
      <?php else : ?>
-     <option selected value="<?= $tag; ?>"><?= $tag; ?></option>
+     <option selected value="<?= $tag->KID; ?>"><?= $tag->kategorie; ?></option>
      <?php endif; ?>
     <?php endforeach;?>
 

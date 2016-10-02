@@ -19,7 +19,7 @@
   <?php endif; ?>
   <div class="large-6 columns right" style="text-align: right;">
    <a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/vcard_download" title="Akteur als .vcard exportieren">Export (VCard)</a>
-   <a href="https://leipziger-ecken.de/contact" title="<?= t('Das Profil wurde unbefugt erstellt? Melden Sie sich hier.'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" /><?= t('Melden'); ?></a>
+   <a href="https://leipziger-ecken.de/contact" title="<?= t('Das Profil wurde unbefugt erstellt? Melden Sie sich hier.'); ?>" class="hide-for-small-only"><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" /><?= t('Melden'); ?></a>
    <a href="#share" class="popup-link" title="Akteursseite in den sozialen Netzwerken posten"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" /><?= t('Teilen'); ?></a>
    <div id="share" class="popup large-3 columns">
      <a target="_blank" href="https://twitter.com/intent/tweet?text=<?php global $base_url;

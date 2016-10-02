@@ -3,7 +3,7 @@
  * @file akteurformular.php
  *
  * Stellt ein Formular dar, in welches alle Informationen über
- * einen Akteur eingetragen & bearbeitet werden koennen.
+ * einen Akteur eingetragen & bearbeitet werden können.
  *
  * Einzige Pflichtfelder sind bisher Name, Email-adresse und Bezirk.
  *
@@ -12,6 +12,8 @@
 namespace Drupal\AaeData;
 
 Class akteurformular extends akteure {
+
+ var $target;
 
  function __construct($action) {
     
@@ -84,13 +86,13 @@ Class akteurformular extends akteure {
 
   /**
    * Writes data into DB
-   * TODO: Vereinheitliche Funktion zum Adressspeichern
+   * TODO im model: Vereinheitliche Funktion zum Adressspeichern -> adressModel
    */
   private function akteurSpeichern() {
 
    $data = (object)$_POST;
    $data->adresse = (object)$_POST['adresse'];
-   $data->tags = (object)$_POST['tags'];
+   #$data->tags = (object)$_POST['tags'];
 
    $this->akteur_id = $this->setUpdateAkteur($data);
    
@@ -103,6 +105,7 @@ Class akteurformular extends akteure {
    } else {
     
     # If not extending from akteure-class you would now write $this->fehler = $this->akteur_id;
+    $this->tags = $this->tagsHelper->__getKategorieForTags($this->tags);
     # $this->akteurDisplay() will be called after that
 
    }
@@ -117,7 +120,7 @@ Class akteurformular extends akteure {
    // Turn arrays to objects...
    $data = (object)$_POST;
    $data->adresse = (object)$_POST['adresse'];
-   $data->tags = (object)$_POST['tags'];
+   #$data->tags = (object)$_POST['tags'];
 
    $this->akteur_id = $this->setUpdateAkteur($data, $this->akteur_id);
 
@@ -131,6 +134,7 @@ Class akteurformular extends akteure {
    } else {
 
     # If not extending from akteure-class you would now write $this->fehler = $this->akteur_id;
+    $this->tags = $this->tagsHelper->__getKategorieForTags($this->tags);
     # $this->akteurDisplay() will be called after that
 
    }
@@ -147,10 +151,7 @@ Class akteurformular extends akteure {
      ->execute()
      ->fetchAll();
 
-    $this->allTags = db_select($this->tbl_sparte, 's')
-     ->fields('s')
-     ->execute()
-     ->fetchAll();
+    $this->allTags = $this->tagsHelper->getTags();
 
     ob_start(); // Aktiviert "Render"-modus
     include_once path_to_theme() . '/templates/akteurformular.tpl.php';
