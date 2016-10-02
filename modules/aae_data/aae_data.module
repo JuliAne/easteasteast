@@ -590,7 +590,7 @@ function ajax_requests($id) {
 function aae_install_clear_db_contents() {
   
  $aae = new \Drupal\AaeData\aae_data_helper();
- include_once $modulePath . '/models/tags.php';
+ include_once 'models/tags.php';
  $tags = new \Drupal\AaeData\tags();
    
  // Unify Akteure-URL's and -numbers
