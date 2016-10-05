@@ -70,7 +70,7 @@ Class akteurformular extends akteure {
 
 	    # formerly: $this->akteurGetFields();
       $this->__setSingleAkteurVars(reset($this->getAkteure(array('AID' => $this->akteur_id), 'complete')));
-
+      
       if (module_exists('aggregator')) {
        $this->rssFeed = aggregator_feed_load('aae-feed-'.$this->akteur_id);
       }
@@ -113,14 +113,12 @@ Class akteurformular extends akteure {
   } // END function akteurSpeichern()
 
   /**
-   * Akteurinformationen aktualisieren in DB
+   * Akteurinformationen aktualisieren
    */
   private function akteurUpdaten() {
    
-   // Turn arrays to objects...
    $data = (object)$_POST;
    $data->adresse = (object)$_POST['adresse'];
-   #$data->tags = (object)$_POST['tags'];
 
    $this->akteur_id = $this->setUpdateAkteur($data, $this->akteur_id);
 
@@ -153,10 +151,13 @@ Class akteurformular extends akteure {
 
     $this->allTags = $this->tagsHelper->getTags();
 
-    ob_start(); // Aktiviert "Render"-modus
+    return $this->render('/templates/akteurformular.tpl.php');
+
+    /*ob_start(); // Aktiviert "Render"-modus
     include_once path_to_theme() . '/templates/akteurformular.tpl.php';
     return ob_get_clean(); // Übergabe des gerenderten "akteurformular.tpl"
-
+    */
+    
   } // END function akteurDisplay()
 
 } // END class akteurformular

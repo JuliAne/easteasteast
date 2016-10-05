@@ -32,6 +32,8 @@ Class akteure extends aae_data_helper {
  // $tbl_tag
  var $tags = '';
 
+ var $events;
+
  var $akteur_id = '';
  var $fehler = array();
 
@@ -51,10 +53,11 @@ Class akteure extends aae_data_helper {
 
  }
  
- /*
+ /**
   * Checks whether user owns akteur
+  * @param $akteur_id : integer
   * @return boolean
- */
+  */
  public function isAuthorized($aId, $uId = NULL){
 
   global $user;
@@ -86,12 +89,14 @@ Class akteure extends aae_data_helper {
 
  }
  
- /*
+ /**
   * @return Akteure-object, keyed by AID
   * @param $condition : array : see akteurepage.php for examples
   * @param $fields : integer : ULTRAMINIMAL (=EID & name)
-                               MINIMAL output (=preview-mode)
-  *                            NORMAL output
+  *                            MINIMAL output (=preview-mode)
+  *                            NORMAL output (=*)
+  *                            COMPLETE output (=normal + events + adress + events)
+  *
   *
   */
  public function getAkteure($conditions = NULL, $fields = 'normal', $orderBy = 'name') {
@@ -163,27 +168,14 @@ Class akteure extends aae_data_helper {
 
    if ($fields == 'complete'){
 
-    // get Tags
-    $resultTags = db_select($this->tbl_hat_sparte, 'ht')
-     ->fields('ht')
-     ->condition('hat_AID', $akteur->AID)
-     ->execute()
-     ->fetchAll();
+    // Get Tags
+    $this->tags = new tags();
+    $resultAkteure[$counter]['tags'] = $this->tags->getTags('akteure', array('hat_AID', $this->akteur_id));
 
-    $tags = array();
+    // Get Events
+    $this->eventsModel = new events();
+    $resultAkteure[$counter]['events'] = $this->eventsModel->getEvents(array('filter' => array('AID' => $this->akteur_id)));
 
-    foreach($resultTags as $tag) {
-
-     $tags[] = db_select($this->tbl_sparte, 's')
-     ->fields('s')
-     ->condition('KID', $tag->hat_KID)
-     ->execute()
-     ->fetchAll();
-
-    }
-
-    $resultAkteure[$counter]['tags'] = $tags;
-    
    }
 
    $resultAkteure[$counter] = (object)$resultAkteure[$counter];
@@ -202,13 +194,13 @@ Class akteure extends aae_data_helper {
   $this->url = $this->clearContent($data->url);
   $this->ansprechpartner = $this->clearContent($data->ansprechpartner);
   $this->funktion = $this->clearContent($data->funktion);
-  if (isset($data->bild)) $this->bild = $data->bild;
+  $this->bild = $data->bild;
   $this->beschreibung = $this->clearContent($data->beschreibung);
   $this->oeffnungszeiten = $this->clearContent($data->oeffnungszeiten);
   $this->adresse = $this->clearContent($data->adresse);
   $this->bezirk = $this->clearContent($data->bezirk);
   $this->gps = $this->clearContent($data->gps);
-  $this->tags = $data->tags; // array!
+  $this->tags = $data->tags;
   $this->removedTags = $data->removedTags;
   $this->removedPic = $data->removeCurrentPic;
   $this->barrierefrei = $data->barrierefrei;
@@ -216,17 +208,24 @@ Class akteure extends aae_data_helper {
   $this->created = new \DateTime($data->created);
   $this->modified = new \DateTime($data->modified);
   $this->adresse = $data->adresse;
+  if (isset($data->events)) $this->events = $data->events;
+
+  /*if (module_exists('aggregator')) {
+   $this->rssFeed = aggregator_feed_load('aae-feed-'.$this->akteur_id);
+  }*/
+
+  unset($data);
 
  }
 
- /* 
-    Method to write or update an akteur to database
-    @param $data : akteure-object
-    @param $defaultAID : integer [optional, required for update-action]
-    @return $akteurId : integer || $this->fehler : array
-
-    TODO: Remove $_POST's
- */
+ /** 
+  *  Method to write or update an akteur to database
+  *  @param $data : akteure-object
+  *  @param $defaultAID : integer [optional, required for update-action]
+  *  @return $akteurId : integer || $this->fehler : array
+  *
+  *  TODO: Remove $_POST's
+  */
  
  public function setUpdateAkteur($data, $defaultAID = NULL){
   
@@ -343,6 +342,7 @@ Class akteure extends aae_data_helper {
     if ($_POST['oldPic'] == $this->removedPic) $this->bild = '';
 
    }
+
   }
 
   $gps = explode(',', $this->adresse->gps, 2);
@@ -454,9 +454,32 @@ Class akteure extends aae_data_helper {
 
   // TODO: Check for proper HOOK-call
   if (empty($defaultAID)) {
-   module_invoke_all('hook_akteur_created');
+   
+   // Tell Drupal about new akteurprofil/ID-item
+  
+   $parentItem = db_query(
+    "SELECT menu_links.mlid
+     FROM {menu_links} menu_links
+     WHERE menu_name = :menu_name AND link_path = :link_path",
+     array(":menu_name" => "navigation", ":link_path" => 'akteure'));
+
+   $plid = $parentItem->fetchObject();
+
+   $item = array(
+     'menu_name' => 'navigation',
+     'weight' => 1,
+     'link_title' => t('Akteurprofil von !username', array('!username' => $this->name)),
+     'module' => 'aae_data',
+     'link_path' => 'akteurprofil/'.$this->akteur_id,
+     'plid' => $plid->mlid
+   );
+
+  module_invoke_all('hook_akteur_created');
+
   } else {
+
    module_invoke_all('hook_akteur_modified');
+
   }
 
   return $this->akteur_id;

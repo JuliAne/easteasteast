@@ -54,7 +54,10 @@ Class tags extends aae_data_helper {
    # ggf. return $tags->fetchAllAssoc('KID');
 
  }
-
+ 
+ /**
+  * TODO: Docu!
+  */
  public function setRemoveTags($tags, $target, $removedTags = null){
 
   if ($target[0] == 'akteur'){
@@ -98,13 +101,7 @@ Class tags extends aae_data_helper {
 
    $collectedTags = array(); # to save the "kategorie" (=string)-part
 
-   #print_r($tags);
-
    $tags = array_unique($tags);
-
-   #echo '<br />';
-   #print_r($tags);
-   #exit();
 
    foreach ($tags as $tag) {
 
@@ -296,8 +293,6 @@ Class tags extends aae_data_helper {
 
  private function isTagUsed($tagId){
   
-  return true; # bug in line 262?!
-
   $resultForAkteure = db_select($this->tbl_hat_sparte, 'as')
    ->fields('as')
    ->condition('hat_KID', $tagId)

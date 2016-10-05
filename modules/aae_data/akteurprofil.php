@@ -9,9 +9,8 @@ namespace Drupal\AaeData;
 class akteurprofil extends akteure {
   
  public function __construct(){
-  parent::__construct();
 
-  #$this->akteur = new akteure();
+  parent::__construct();
 
   $explodedpath = explode("/", current_path());
   $this->akteur_id = $this->clearContent($explodedpath[1]);
@@ -20,7 +19,7 @@ class akteurprofil extends akteure {
 
  public function run(){
 
-  $hat_recht = $this->isAuthorized($this->akteur_id);
+  $this->hasPermission = $this->isAuthorized($this->akteur_id);
 
   $this->__setSingleAkteurVars(reset($this->getAkteure(array('AID' => $this->akteur_id), 'complete')));
 
@@ -30,7 +29,7 @@ class akteurprofil extends akteure {
    drupal_set_message(t('Dieses Akteurprofil konnte nicht gefunden werden...'));
    header('Location: '. $base_url .'/akteure');
 
- } else {
+  } else {
 
    // Watch out for possible RSS-Feeds...
   if (module_exists('aggregator')) {
@@ -38,35 +37,29 @@ class akteurprofil extends akteure {
    $feed = db_query('SELECT fid, title, block, url FROM {aggregator_feed} WHERE title = :title', array(':title' => 'aae-feed-'.$this->akteur_id))->fetchObject();
 
    if ($feed) {
+
     $result = db_query('SELECT * FROM {aggregator_item} WHERE fid = :fid ORDER BY timestamp DESC, iid DESC LIMIT 5', array(':fid' => $feed->fid));
     $this->rssFeed = $result->fetchAll();
-    $rssFeedUrl = $feed->url;
+    $this->rssFeedUrl = $feed->url;
+
    }
   }
 
-  // Ziehe Informationen über Events + Festivals vom Akteur
-  $events = db_query('
-   SELECT * FROM {aae_data_event} AS e JOIN {aae_data_akteur_hat_event} AS he
-   WHERE he.EID = e.EID AND he.AID = :aid
-   ORDER BY start_ts DESC',
-   array(':aid' => $this->akteur_id));
-
-  $resultEvents = $events->fetchAll();
-
+  // Festivals of Akteur
   $festivals = db_query('
    SELECT * FROM {aae_data_festival} AS f JOIN {aae_data_akteur_hat_festival} AS hf
    WHERE hf.hat_FID = f.FID AND hf.hat_AID = :aid
    ORDER BY name DESC',
    array(':aid' => $this->akteur_id));
 
-  $resultFestivals = $festivals->fetchAll();
+  $this->resultFestivals = $festivals->fetchAll();
 
-  $showMap = false;
+  $this->showMap = false;
   
   // Generiere Mapbox-taugliche Koordinaten, übergebe diese ans Frontend
   if (!empty($this->adresse->gps_lat)) {
 
-    $showMap = true;
+    $this->showMap = true;
     $koordinaten = $this->adresse->gps_lat.','.$this->adresse->gps_long;
     $this->addMapContent($koordinaten, array(
      'gps' => $koordinaten,
@@ -76,31 +69,10 @@ class akteurprofil extends akteure {
     ));
 
   }
+  
+  return $this->render('/templates/akteurprofil.tpl.php');
 
-  $tags = db_select($this->tbl_hat_sparte, 'a')
-  ->fields('a', array('hat_KID'))
-  ->condition('hat_AID', $this->akteur_id)
-  ->execute()
-  ->fetchAll();
-
-  if (!empty($tags)) {
-
-   foreach ($tags as $tag) {
-
-    $resultTags[] = db_select($this->tbl_sparte, 't')
-    ->fields('t')
-    ->condition('KID', $tag->hat_KID)
-    ->execute()
-    ->fetchObject();
-
-   }
-  }
-
-  ob_start(); // Aktiviert "Render"-modus
-  include_once path_to_theme() . '/templates/akteurprofil.tpl.php';
-  return ob_get_clean(); // Übergabe des gerenderten "akteurprofil.tpl"
-
-  }
+ }
 } // end function run()
 
 /**
@@ -140,8 +112,9 @@ public function removeAkteur(){
 } // end function removeAkteur()
 
  /**
-  * Moeglichkeit, einen einzelnen Akteur als .vcf-Datei (VCard-Format)
+  * Möglichkeit, einen einzelnen Akteur als .vcf-Datei (VCard-Format)
   * zu exportieren.
+  * TODO: Behebe invalidität (ein Zeilenumbruch zu viel)
   */
 
   public function vcard_download(){
@@ -202,7 +175,7 @@ public function removeAkteur(){
    header("Content-Disposition: attachment; filename=vcard_".$fileName.".vcf");
    //header('Connection', 'close');
    echo $var;
-   exit();
+   drupal_exit();
   }
 
 } // end class aae_akteurprofil

@@ -18,17 +18,17 @@
 <form action="#" method="POST" enctype="multipart/form-data">
 
  <div class="row">
-    <div class="large-6 columns">
-      <label><?= t('Name'); ?> <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>: <?= $this->fehler['name']; ?>
-        <input type="text" id="akteurNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= t('Name des Vereins / der Organisation'); ?>" required />
-      </label>
-    </div>
+  <div class="large-6 columns">
+   <label><?= t('Name'); ?> <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>: <?= $this->fehler['name']; ?>
+    <input type="text" id="akteurNameInput" name="name" value="<?= $this->name; ?>" placeholder="<?= t('Name des Vereins / der Organisation'); ?>" required />
+   </label>
+  </div>
 
-    <div class="large-6 columns">
-     <label><?= t('Email-Adresse'); ?> <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>: <?= $this->fehler['email']; ?>
-      <input type="email" id="akteurEmailInput" name="email" value="<?= $this->email; ?>" placeholder="<?= t('E-mail Adresse'); ?>" required />
-     </label>
-    </div>
+  <div class="large-6 columns">
+   <label><?= t('Email-Adresse'); ?> <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>: <?= $this->fehler['email']; ?>
+    <input type="email" id="akteurEmailInput" name="email" value="<?= $this->email; ?>" placeholder="<?= t('E-mail Adresse'); ?>" required />
+   </label>
+  </div>
 
  </div><!-- /.row -->
 
@@ -55,7 +55,7 @@
 
    <div class="large-3 columns">
     <label><?= t('PLZ'); ?>: <?= $this->fehler['plz']; ?>
-      <input type="text" pattern="[0-9]{5}" id="PLZInput" name="adresse[plz]" value="<?= $this->adresse->plz; ?>" placeholder="<?= t('PLZ'); ?>">
+     <input type="text" pattern="[0-9]{5}" id="PLZInput" name="adresse[plz]" value="<?= $this->adresse->plz; ?>" placeholder="<?= t('PLZ'); ?>">
     </label>
    </div>
 
@@ -129,13 +129,13 @@
       <label for="akteurBildInput" class="button"><?= t('Bild hochladen'); ?>...</label>
       <input type="file" id="akteurBildInput" name="bild" class="show-for-sr" />
 
-        <?php if (!empty($this->bild)) : ?>
-          <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
-          <div id="currentPic">
-           <img src="<?= $this->bild; ?>" title="<?= t('Aktuelles Akteurbild'); ?>" />
-           <a href="#"><?= t('Akteurbild löschen.'); ?></a>
-          </div>
-        <?php endif; ?>
+      <?php if (!empty($this->bild)) : ?>
+       <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />
+       <div id="currentPic">
+        <img src="<?= $this->bild; ?>" title="<?= t('Aktuelles Akteurbild'); ?>" />
+        <a href="#"><?= t('Akteurbild löschen.'); ?></a>
+       </div>
+      <?php endif; ?>
       <!-- TODO: Make .licensetext editable via backend -->
       <p class="licensetext">Wir empfehlen, Bilder im <strong>Format 3:2</strong> hochzuladen (bspw. 640 x 400 Pixel)</p><br />
       <p class="licensetext"><strong>Lizenzhinweis:</strong> Mit der Freigabe ihrer Daten auf leipziger-ecken.de stimmen sie auch einer etwaigen Nutzung dieser Daten durch andere zu.</p>

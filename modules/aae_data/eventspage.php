@@ -134,6 +134,8 @@ Class eventspage extends aae_data_helper {
   ob_start(); // Aktiviert "Render"-modus
   
   if ($this->isBlock) {
+
+   // TODO: Interact with festivals-class
     
    drupal_add_js($this->themePath.'/js/CountUp.js');
    include_once $this->themePath . '/templates/festival_events_block.tpl.php';
@@ -163,7 +165,7 @@ Class eventspage extends aae_data_helper {
 
    ob_start();
    include_once path_to_theme() . '/templates/events.rss.tpl.php';
-   exit();
+   drupal_exit();
 
  } // end function rss()
 } // end class events

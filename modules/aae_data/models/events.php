@@ -487,8 +487,9 @@ Class events extends aae_data_helper {
   } // end Day-Filter
   
   if (isset($filter['AID'])) {
-    
+
    $numFilters++;
+
    $resultAkteur = db_select($this->tbl_akteur_events, 'ae')
     ->fields('ae')
     ->condition('AID', $filter['AID'])

@@ -344,7 +344,7 @@ Class festivalformular extends festivals {
     $this->allAkteure = $this->akteure->getAkteure(NULL, 'ultraminimal');
      
     ob_start(); // Aktiviert "Render"-modus
-    include_once path_to_theme() . '/templates/festivalformular.tpl.php';
+    include_once $this->themePath . '/templates/festivalformular.tpl.php';
     return ob_get_clean();
 
   } // END function festivalDisplay()

@@ -83,8 +83,11 @@ namespace Drupal\AaeData;
     global $user;
     $this->user_id = $user->uid;
     $this->modulePath = drupal_get_path('module', 'aae_data');
-    $this->themePath = drupal_get_path('theme', $GLOBALS['theme']);
-
+    # $this->themePath = drupal_get_path('theme', 'aae_data'/*$GLOBALS['theme']*/);
+    $this->themePath = path_to_theme();
+    // TODO: Return the universal path to aae_theme in order to enable
+    // templates for other themes ($this->themePath = 'themes/aae_theme';)
+    
    }
 
    public function aae_autoload($class){
@@ -168,12 +171,13 @@ namespace Drupal\AaeData;
    }
 
    /**
-    * Dickes fettes TODO... (bisher quasi ungenutzte Funktion)
+    * function render()
+    * Returns a template file
+    *
     * @param $tpl : Path within current theme
     * @param $setVars : Array that'll be extracted
     * @return rendered HTML
     */
-
   public function render($tpl, $setVars = NULL) {
    
     if ($setVars) {
@@ -182,7 +186,7 @@ namespace Drupal\AaeData;
 
     ob_start(); // Aktiviert "Render"-modus
     include_once path_to_theme().$tpl;
-    return ob_get_clean(); // Uebergabe des gerenderten Templates
+    return ob_get_clean(); // Übergabe des gerenderten Templates
 
   }
 

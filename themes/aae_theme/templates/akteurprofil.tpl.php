@@ -14,7 +14,7 @@
 
 <div class="aaeActionBar">
  <div class="row">
-  <?php if ($hat_recht): ?>
+  <?php if ($this->hasPermission): ?>
   <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/edit" title="<?= t('Akteur bearbeiten'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" /><?= t('Bearbeiten'); ?></a></div>
   <?php endif; ?>
   <div class="large-6 columns right" style="text-align: right;">
@@ -40,7 +40,7 @@
  <aside class="left large-4 columns">
 
   <div class="pcard">
-   <header <?php if (!empty($this->bild)) echo 'style="background-image:url('.$this->bild.');"'; ?>>
+   <header<?= (!empty($this->bild) ? ' style="background-image:url('.$this->bild.');"' : ''); ?>>
   	<?php if (!empty($this->bild)) echo '<img src="'.$this->bild.'" style="visbility:hidden;" itemprop="logo" alt="'. t('Logo von !username', array('!username' => $this->name)) .'"/>';
 	        else echo '<img src="'.base_path().path_to_theme().'/img/project_bg.png" style="visibility:hidden;" />';	?>
 	 </header>
@@ -71,7 +71,7 @@
   <div class="divider"></div>
   <?php endif; ?>
 
-	<?php if ($showMap) : ?>
+	<?php if ($this->showMap) : ?>
 	<div id="map" style="width: 100%; height: 180px;"></div>
 	<?php endif; ?>
 
@@ -79,11 +79,12 @@
 
   <div id="project-contact" class="pcard">
    <a href="#"><button class="button"><?= t('Kontaktieren'); ?></button></a>
-   <?php if (!empty($resultFestivals) && is_array($resultFestivals)) :
-    foreach ($resultFestivals as $festival) : ?>
+   <?php if (!empty($this->resultFestivals) && is_array($this->resultFestivals)) :
+    foreach ($this->resultFestivals as $festival) : ?>
    <a href="https://leipziger-ecken.de/<?= $festival->alias; ?>"><button class="festival button" style="background:#fff;margin-top:2px;color:#2199e8;">
    <?= ($festival->admin == $this->akteur_id ? t('Veranstalter') : t('Teilnehmer')); ?> <?= t('des'); ?> <?= $festival->name; ?></button></a>
-    <?php endforeach; endif; ?>
+    <?php endforeach; ?>
+   <?php endif; ?>
   </div>
 
  </aside>
@@ -107,9 +108,9 @@
    </li>
   </ol>
 
-  <?php if (!empty($resultTags)) : ?>
+  <?php if (!empty($this->tags)) : ?>
   <aside id="akteurSparten">
-  <?php foreach ($resultTags as $tag) : ?>
+  <?php foreach ($this->tags as $tag) : ?>
    <a href="<?= base_path(); ?>akteure/?filterTags[]=<?= $tag->KID; ?>" rel="nofollow" title="<?= t('Zeige alle mit !kategorie getaggten Akteure', array('!kategorie' => $tag->kategorie)); ?>">#<?= strtolower($tag->kategorie); ?></a>
   <?php endforeach; ?>
   </aside>
@@ -119,10 +120,10 @@
    <div class="large-12 columns">
     <ul class="tabs" data-tabs>
      <li class="tabs-title is-active"><a href="#pdesc" aria-selected="true"><?= t('Beschreibung'); ?></a></li>
-     <?php if (!empty($resultEvents)) : ?><li class="tabs-title"><a href="#pevents"><?= t('Veranstaltungen'); ?></a></li><?php endif; ?>
+     <?php if (!empty($this->events)) : ?><li class="tabs-title"><a href="#pevents"><?= t('Veranstaltungen'); ?></a></li><?php endif; ?>
      <?php if (!empty($this->rssFeed)) : ?><li class="tabs-title"><a href="#prss"><?= t('RSS-Feed'); ?></i></a></li><?php endif; ?>
     </ul>
-   </div>
+   </div> 
 
    <div class="large-12 columns tabs-content">
 
@@ -130,34 +131,31 @@
      <?php if (!empty($this->beschreibung)): ?>
      <div class="akteur-content">
       <p itemprop="description"><?= $this->beschreibung; ?></p>
-    </div>
-    <?php else : ?>
-     <p><i><?= t('Hier wurde leider noch keine Beschreibung angelegt'); ?> :(</i></p>
-    <?php endif; ?>
+     </div>
+     <?php else : ?>
+      <p><i><?= t('Hier wurde leider noch keine Beschreibung angelegt'); ?> :(</i></p>
+     <?php endif; ?>
     </div>
 
-    <?php if (!empty($resultEvents)) : ?>
+    <?php if (!empty($this->events)) : ?>
     <div class="tabs-panel" id="pevents">
      <div id="next-events">
 
-          <?php foreach($resultEvents as $event) : ?>
-          <?php $start = new DateTime($event->start_ts);
-                $ende =  new DateTime($event->ende_ts);
-                $isOutdated = ($start->format('Ymd') < date('Ymd')) ? true : false;  ?>
-                 <div class="aaeEvent row<?= ($isOutdated ? ' outdated' : ''); ?>">
-                 <div class="date large-2 columns button secondary"><?= $start->format('d'); ?><br /><?= $this->monat_short[$start->format('m')]; ?></div>
-                  <div class="content large-10 columns">
-                   <p><a style="line-height:1.6em;" href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>"> <strong><?= $event->name; ?></strong></a>
-                   <span class="right"><?php if($ende->format('H:i') !== '00:00') echo $start->format('H:i'); ?><?php if($ende->format('H:i') !== '00:00') echo' - '. $ende->format('H:i'); ?></span></p>
-                   <?php if (!empty($event->kurzbeschreibung)): ?>
-                     <div class="divider"></div>
-                     <?php $numwords = 30;
-                           preg_match("/(\S+\s*){0,$numwords}/", $event->kurzbeschreibung, $regs); ?>
-                     <p><?= trim($regs[0]); ?><a href="<?= base_path().'eventprofil/'.$event->EID; ?>">...</a></p>
-                    <?php endif; ?>
-                   </div>
-                  </div>
-             <?php endforeach; ?>
+     <?php foreach ($this->events as $event) : ?>
+     <?php $isOutdated = ($event->start->format('Ymd') < date('Ymd') ? true : false); ?>
+      <div class="aaeEvent row<?= ($isOutdated ? ' outdated' : ''); ?>">
+       <div class="date large-2 columns button secondary"><?= $event->start->format('d'); ?><br /><?= $this->monat_short[$event->start->format('m')]; ?></div>
+        <div class="content large-10 columns">
+         <p><a style="line-height:1.6em;" href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>"> <strong><?= $event->name; ?></strong></a>
+         <span class="right"><?= ($event->ende->format('H:i') !== '00:00' ? $event->start->format('H:i') : ''); ?><?= ($event->ende->format('H:i') !== '00:00' ? ' - '. $event->ende->format('H:i') : ''); ?></span></p>
+         <?php if (!empty($event->kurzbeschreibung)): ?>
+         <div class="divider"></div>
+         <?php $numwords = 30; preg_match("/(\S+\s*){0,$numwords}/", $event->kurzbeschreibung, $regs); ?>
+         <p><?= trim($regs[0]); ?><a href="<?= base_path().'eventprofil/'.$event->EID; ?>">...</a></p>      
+         <?php endif; ?>
+        </div>
+      </div>
+      <?php endforeach; ?>
      </div>
     </div>
     <?php endif; ?>
@@ -171,7 +169,7 @@
      </div>
      <?php endforeach; ?>
 
-     <a href="<?= $rssFeedUrl; ?>" class="secondary hollow button"><?= t('Gesamten Feed öffnen'); ?></a>
+     <a href="<?= $this->rssFeedUrl; ?>" class="secondary hollow button"><?= t('Gesamten Feed öffnen'); ?></a>
    </div>
     <?php endif; ?>
 
