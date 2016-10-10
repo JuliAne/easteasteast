@@ -67,7 +67,7 @@ Class eventspage extends aae_data_helper {
   }
 
   // Paginator (will be replaced by AJAX-calls)
-  $explodedPath = explode("/", $this->clearContent(current_path()));
+  $explodedPath = explode('/', $this->clearContent(current_path()));
   $currentPageNr = ($explodedPath[1] == '') ? '1' : $explodedPath[1];
   $orderBy = 'ASC';
   
@@ -81,6 +81,7 @@ Class eventspage extends aae_data_helper {
       'operator' => '<'
      )
     );
+    
     $orderBy = 'DESC';
     $this->getOldEvents = 1;
     
@@ -94,6 +95,7 @@ Class eventspage extends aae_data_helper {
       'operator' => '>='
      )
     );
+
    }
    
   }
@@ -156,12 +158,14 @@ Class eventspage extends aae_data_helper {
    header("Content-type: text/xml");
    echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
 
-   $resultEvents = db_select($this->tbl_event, 'e')
-    ->fields('e')
-    ->orderBy('start_ts', 'ASC')
-    ->where('DATE(start_ts) >= CURDATE()')
-    ->execute()
-    ->fetchAll();
+    $start = array(
+     '0' => array(
+      'date' => (new \DateTime(date()))->format('Y-m-d 00:00:00'),
+      'operator' => '>='
+     )
+    );
+
+   $resultEvents = $this->events->getEvents(array('start' => $start));
 
    ob_start();
    include_once path_to_theme() . '/templates/events.rss.tpl.php';

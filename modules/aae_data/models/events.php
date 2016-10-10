@@ -15,16 +15,13 @@ Class events extends aae_data_helper {
  public function __construct() {
 
    parent::__construct();
-   $this->tags = new tags();
+   $this->tagsHelper   = new tags();
+   $this->adressHelper = new adressen();
 
  }
 
- /*TODO For API CLASS:
-   private $allowed_selectors = array('adresse','akteur','tags');
-   */
-
  public function setEvent($data) {
-  # TODO
+  # TODO, s. eventformular
  }
 
  /*
@@ -43,7 +40,7 @@ Class events extends aae_data_helper {
    if ($fields == 'EID'){
     $events->fields('e', array('EID'));
    } else if ($fields == 'minimal') {
-    $events->fields('e', array('EID','name','start_ts','ende_ts','parent_EID','created','modified'));
+    $events->fields('e', array('EID','name','ersteller','start_ts','ende_ts','parent_EID','created','modified'));
    } else {
     $events->fields('e');
    }
@@ -108,13 +105,16 @@ Class events extends aae_data_helper {
     $realEID = $event->EID;
 
     if (!empty($event->parent_EID) && !$calledRecursively){
+ 
      // Inherit from parent
      $parentData = db_select($this->tbl_event,'e')->fields('e')->condition('EID', $event->parent_EID);
      
      $resultEvents[$realEID] = (isset($resultEvents[$event->parent_EID]) && !empty($resultEvents[$event->parent_EID]))
      ? $resultEvents[$event->parent_EID]
-     : $parentData->execute()->fetchAssoc();
+     : $parentData->execute()->fetchAssoc(); # trigger DB-action
+
      $event->EID = $event->parent_EID;
+
     }
 
     // Hack: add variables to $resultEvents-object
@@ -130,19 +130,17 @@ Class events extends aae_data_helper {
      
      }
 
-     $ersteller = db_select("users", 'u')
+     $ersteller = db_select('users', 'u')
       ->fields('u', array('name'))
       ->condition('uid', $event->ersteller)
-      ->execute();
+      ->execute()
+      ->fetchObject();
 
-     $resultEvents[$realEID]['ersteller'] = $ersteller->fetchObject();
-
-     // Adresse + Bezirk - HATING DRUPAL JOINS IN PARTICULAR
-     $resultAdresse = db_query('SELECT * FROM {aae_data_adresse} b INNER JOIN {aae_data_bezirke} bz ON bz.BID = b.bezirk WHERE b.ADID = :adresse', array(':adresse'=>$event->ort));
-     $resultEvents[$realEID]['adresse'] = $resultAdresse->fetchObject();
+     $resultEvents[$realEID]['ersteller'] = $ersteller->name;
+     $resultEvents[$realEID]['adresse'] = $this->adressHelper->getAdresse($event->ort);
 
      // Tags
-     $resultEvents[$realEID]['tags'] = $this->tags->getTags('events', array('hat_EID', $event->EID));
+     $resultEvents[$realEID]['tags'] = $this->tagsHelper->getTags('events', array('hat_EID', $event->EID));
 
    }
    
@@ -434,7 +432,7 @@ Class events extends aae_data_helper {
     
     $adressen = db_select($this->tbl_adresse, 'a')
      ->fields('a', array('ADID'))
-     ->condition('bezirk', $bezirk_id, '=')
+     ->condition('bezirk', $bezirk_id)
      ->execute()
      ->fetchAll();
      

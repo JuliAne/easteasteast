@@ -39,7 +39,7 @@
  <?php endif; ?>
   <div class="large-5 columns right" style="text-align: right;">
    <a href="<?= base_path(); ?>eventprofil/<?= $resultEvent->EID; ?>/ics_download/" title="<?= t('Event Als .ical exportieren'); ?>">Export (iCal)</a>
-   <a href="https://leipziger-ecken.de/contact" title="<?= t('Dieses Event wurde unbefugt erstellt? Melden Sie sich hier.'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" /><?= t('Melden'); ?></a>
+   <a href="https://leipziger-ecken.de/contact" title="<?= t('Dieses Event wurde unbefugt erstellt? Melden Sie sich hier.'); ?>" class="hide-for-small-only"><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" /><?= t('Melden'); ?></a>
    <a href="#share" class="popup-link" title="<?= t('Event in den sozialen Netzwerken teilen'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" /><?= t('Teilen'); ?></a>
    <div id="share" class="popup large-3 columns">
     <a target="_blank" href="https://twitter.com/intent/tweet?text=<?php global $base_url; echo $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Twitter')); ?>" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/social-twitter.svg"><span></span></a>
@@ -131,8 +131,8 @@
     <meta itemprop="longitude" content="<?= $resultEvent->adresse->gps_long; ?>" />
    </div>
   <?php endif; ?>
-
-   <p><strong><?= t('Erstellt von'); ?>:</strong> <?= $resultEvent->ersteller->name; ?> <?= t('am'); ?> <?= $resultEvent->created->format('d.m.Y'); ?></p>
+ 
+   <p><strong><?= t('Erstellt von'); ?>:</strong> <?= $resultEvent->ersteller; ?> <?= t('am'); ?> <?= $resultEvent->created->format('d.m.Y'); ?></p>
    <?php if (empty($resultEvent->akteur)) : ?>
    <p><strong><?= t('Privater Veranstalter'); ?></strong></p>
    <?php elseif (isset($resultEvent->festival)) : ?>

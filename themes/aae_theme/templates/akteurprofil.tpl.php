@@ -81,9 +81,12 @@
    <a href="#"><button class="button"><?= t('Kontaktieren'); ?></button></a>
    <?php if (!empty($this->resultFestivals) && is_array($this->resultFestivals)) :
     foreach ($this->resultFestivals as $festival) : ?>
-   <a href="https://leipziger-ecken.de/<?= $festival->alias; ?>"><button class="festival button" style="background:#fff;margin-top:2px;color:#2199e8;">
+   <a href="<?= $base_root .'/'. $festival->alias; ?>"><button class="festival button" style="background:#fff;margin-top:2px;color:#2199e8;">
    <?= ($festival->admin == $this->akteur_id ? t('Veranstalter') : t('Teilnehmer')); ?> <?= t('des'); ?> <?= $festival->name; ?></button></a>
     <?php endforeach; ?>
+   <?php endif; ?>
+   <?php if ($this->hasPermission): ?>
+   <a href="<?= $base_root; ?>/events/new"><button class="festival button" style="background:#fff;margin-top:2px;color:#2199e8;"><?= t('Event zum Akteur hinzufügen'); ?></button></a>
    <?php endif; ?>
   </div>
 

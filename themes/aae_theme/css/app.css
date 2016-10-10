@@ -556,7 +556,7 @@ transform: rotate(-10deg);
 }
 
 #share a {
- padding: 16px 24px;
+ padding: 14px 24px;
  float: left;
  height: 44px;
 }
@@ -1163,7 +1163,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   font-weight: bold;
 }
 
-#calendar #event:after {
+#calendar .dates li.has-events:after {
   content:attr(data-nr);
   position: absolute;
   width: 12px;
@@ -1248,6 +1248,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   #nav .region-mainnav ul { height: auto; position: absolute; background: #fff; left: 0;top: 60px;width: 75%;text-align: center;}
   #nav .region-mainnav ul li {width: 100%; float: none;}
   #nav ul li ul { position: static; }
+  .aaeEventTags, .aaeEventDate { max-width:unset !important; }
 }
 
 .pace {

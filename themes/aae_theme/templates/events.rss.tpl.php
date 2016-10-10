@@ -9,23 +9,23 @@
     <lastBuildDate><?php $rNow = new DateTime('NOW'); echo $rNow->format(DateTime::RFC822); ?></lastBuildDate>
     <docs>https://www.leipziger-ecken.de/events/rss</docs>
     <generator>AAE Data</generator>
-    <managingEditor>info@leipziger-ecken.de (Matthias Petzold)</managingEditor>
-    <webMaster>info@leipziger-ecken.de.de (Matthias Petzold)</webMaster>
+    <managingEditor>info@leipziger-ecken.de</managingEditor>
+    <webMaster>info@leipziger-ecken.de</webMaster>
     <image>
-     <url>https://leipziger-ecken.de<?= base_path().path_to_theme(); ?>/logo.png</url>
+     <url>https://leipziger-ecken.de/<?= path_to_theme(); ?>/logo.png</url>
      <title>Leipziger Ecken RSS Feed</title>
      <link>https://leipziger-ecken.de/events/rss</link>
     </image>
 
 <?php foreach ($resultEvents as $event) : ?>
-<?php $start = new DateTime($event->start_ts);
-      $created = new DateTime($event->created); ?>
+<?php # $start = new DateTime($event->start_ts);
+      #$created = new DateTime($event->created); ?>
     <item>
-     <title><?= htmlspecialchars($event->name); ?> am <?= $start->format('d.m.Y'); ?></title>
-     <link>https://leipziger-ecken.de<?= base_path(); ?>eventprofil/<?= $event->EID; ?></link>
+     <title><?= htmlspecialchars($event->name); ?> <?= t('am'); ?> <?= $event->start->format('d.m.Y'); ?></title>
+     <link>https://leipziger-ecken.de/eventprofil/<?= $event->EID; ?></link>
      <description><?= htmlspecialchars($event->kurzbeschreibung); ?></description>
      <category>Event</category>
-     <pubDate><?= $created->format(DateTime::RFC822); ?></pubDate>
+     <pubDate><?= $event->created->format(DateTime::RFC822); ?></pubDate>
     </item>
 <?php endforeach; ?>
 

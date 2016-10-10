@@ -121,35 +121,35 @@
 
    <div class="large-4 columns">
     <label><?= t('Straße'); ?>: <?= $this->fehler['strasse']; ?>
-     <input type="text" id="StrasseInput" name="strasse" value="<?= $this->strasse; ?>" placeholder="<?= t("Straße"); ?>">
+     <input type="text" id="StrasseInput" name="adresse[strasse]" value="<?= $this->adresse->strasse; ?>" placeholder="<?= t("Straße"); ?>">
     </label>
    </div>
 
    <div class="large-1 columns">
     <label><?= t('Hausnummer'); ?>: <?= $this->fehler['nr']; ?>
-     <input type="text" id="NrInput" name="nr" value="<?= $this->nr; ?>" placeholder="<?= t('Nr.'); ?>">
+     <input type="text" id="NrInput" name="adresse[nr]" value="<?= $this->adresse->nr; ?>" placeholder="<?= t('Nr.'); ?>">
     </label>
    </div>
 
    <div class="large-3 columns">
     <label><?= t('Adresszusatz'); ?>: <?= $this->fehler['adresszusatz']; ?>
-     <input type="text" id="AdresszusatzInput" name="adresszusatz" value="<?= $this->adresszusatz; ?>" placeholder="<?= t('Adresszusatz'); ?>">
+     <input type="text" id="AdresszusatzInput" name="adresse[adresszusatz]" value="<?= $this->adresse->adresszusatz; ?>" placeholder="<?= t('Adresszusatz'); ?>">
     </label>
    </div>
 
    <div class="large-4 columns">
     <label><?= t('PLZ'); ?>: <?= $this->fehler['plz']; ?>
-      <input type="text" pattern="[0-9]{5}" id="PLZInput" name="plz" value="<?= $this->plz; ?>" placeholder="<?= t('PLZ'); ?>">
+      <input type="text" pattern="[0-9]{5}" id="PLZInput" name="adresse[plz]" value="<?= $this->adresse->plz; ?>" placeholder="<?= t('PLZ'); ?>">
     </label>
    </div>
 
    <div class="large-4 columns">
-   <label><?= t('Bezirk'); ?>: <?= $this->fehler['ort']; ?>
+   <label><?= t('Bezirk'); ?>: <?= $this->fehler['bezirk']; ?>
 
-   <select name="ort">
+   <select name="adresse[bezirk]">
     <option value="" selected="selected">- <?= t('Bezirk auswählen'); ?> -</option>
     <?php foreach ($this->resultBezirke as $bezirk) : ?>
-    <option value="<?= $bezirk->BID; ?>"<?= ($bezirk->BID == $this->ort ? ' selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
+    <option value="<?= $bezirk->BID; ?>"<?= ($bezirk->BID == $this->adresse->bezirk ? ' selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
     <?php endforeach; ?>
    </select>
    </label>
@@ -157,7 +157,7 @@
 
   <div class="large-4 columns">
   <label><?= t('Geodaten (Karte)'); ?>: <?= $this->fehler['gps']; ?>
-   <input type="text" id="GPSInput" name="gps" value="<?= $this->gps; ?>" placeholder="<?= t('GPS Koordinaten'); ?>">
+   <input type="text" id="GPSInput" name="adresse[gps]" value="<?= $this->adresse->gps; ?>" placeholder="<?= t('GPS Koordinaten'); ?>">
   </label>
   <p id="show_coordinates" style="display:none;"><a href="#" target="_blank"><?= t('Zeige Koordinaten auf Karte'); ?></a></p>
 </div>
@@ -201,7 +201,7 @@
    <div class="large-12 columns">
 
     <label><?= t('Kategorien:'); ?> <?= $this->fehler['tags']; ?></label>
-<?= print_r($this->tags); ?>
+
     <select id="eventSpartenInput" multiple="multiple" class="tokenize" name="tags[]">
       
     <?php foreach ($this->tags as $tag) : ?>

@@ -49,7 +49,8 @@ Class akteure extends aae_data_helper {
  public function __construct() {
 
   parent::__construct();
-  $this->tagsHelper = new tags();
+  $this->tagsHelper   = new tags();
+  $this->adressHelper = new adressen();
 
  }
  
@@ -214,8 +215,6 @@ Class akteure extends aae_data_helper {
    $this->rssFeed = aggregator_feed_load('aae-feed-'.$this->akteur_id);
   }*/
 
-  unset($data);
-
  }
 
  /** 
@@ -328,7 +327,7 @@ Class akteure extends aae_data_helper {
    ->execute()
    ->fetchObject();
 
-   $akteurAdress = array('ADID', $akteurAdress->adresse);
+   $this->adresse->ADID = $akteurAdress->adresse;
 
    // remove current picture manually
    if (!empty($this->removedPic)) {
@@ -345,17 +344,7 @@ Class akteure extends aae_data_helper {
 
   }
 
-  $gps = explode(',', $this->adresse->gps, 2);
-
-  $this->adresse = $this->__db_action($this->tbl_adresse, array(
-	 'strasse' => $this->adresse->strasse,
-	 'nr' => $this->adresse->nr,
-	 'adresszusatz' => $this->adresse->adresszusatz,
-	 'plz' => $this->adresse->plz,
-	 'bezirk' => $this->adresse->bezirk, # = BID
-	 'gps_lat' => $gps[0],
-   'gps_long' => $gps[1]
-  ), $akteurAdress);
+  $this->adresse = $this->adressHelper->setUpdateAdresse($this->adresse);
 
   $this->akteur_id = $this->__db_action($this->tbl_akteur, array(
 	 'name' => $this->name,

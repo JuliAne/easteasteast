@@ -8,6 +8,7 @@
  * Anschließend werden die Daten gefiltert in die DB-Tabellen eingetragen
  * oder geupdatet (s. $this->target).
  *
+ * TODO: Outsource functionality into events_model->setUpdateEvent()
  * TODO: Integrate with akteure- and festivals-models
  */
 
@@ -66,8 +67,9 @@ Class eventformular extends aae_data_helper {
    $explodedpath = explode('/', current_path());
    $this->event_id = $this->clearContent($explodedpath[1]);
 
-   $this->event       = new events();
-   $this->tagsHelper  = new tags();
+   $this->event        = new events();
+   $this->tagsHelper   = new tags();
+   $this->adressHelper = new adressen();
 
    // Sollen die Werte im Anschluss gespeichert oder geupdatet werden?
    if ($action == 'update') {
@@ -98,23 +100,30 @@ Class eventformular extends aae_data_helper {
     $output = '';
 
     if (isset($_POST['submit'])) {
-      if ($this->eventCheckPost()) {
-        if ($this->target == 'update') {
-	       $this->eventUpdaten();
-        } else {
-	       $this->eventSpeichern();
-        }
-         $output = $this->eventDisplay();
+
+     if ($this->eventCheckPost()) {
+     
+      if ($this->target == 'update') {
+	     $this->eventUpdaten();
       } else {
-         $output = $this->eventDisplay();
+	     $this->eventSpeichern();
       }
-    } else {
+      
+      $output = $this->eventDisplay();
+
+      } else {
+       $output = $this->eventDisplay();
+      }
+
+     } else {
+
       // Was passiert, wenn Seite zum ersten mal gezeigt wird?
       if ($this->target == 'update') {
 	     $this->eventGetFields();
       }
       $output = $this->eventDisplay();
     }
+
     return $output;
   }
 
@@ -133,12 +142,7 @@ Class eventformular extends aae_data_helper {
     $this->zeit_bis = $this->clearContent($_POST['zeit_bis']);
     if (isset($_POST['bild'])) $this->bild = $_POST['bild'];
     $this->kurzbeschreibung = $this->clearContent($_POST['kurzbeschreibung']);
-    $this->strasse = $this->clearContent($_POST['strasse']);
-    $this->nr = $this->clearContent($_POST['nr']);
-    $this->adresszusatz = $this->clearContent($_POST['adresszusatz']);
-    $this->plz = $this->clearContent($_POST['plz']);
-    $this->ort = $this->clearContent($_POST['ort']);
-    $this->gps = $this->clearContent($_POST['gps']);
+    $this->adresse = (object)$_POST['adresse'];
     $this->tags = $_POST['tags'];
     $this->removedTags = $this->clearContent($_POST['removedTags']);
     $this->removedPic = $this->clearContent($_POST['removeCurrentPic']);
@@ -150,47 +154,38 @@ Class eventformular extends aae_data_helper {
 
     if (empty($this->name)) {
      $this->fehler['name'] = t("Bitte einen Veranstaltungsnamen eingeben!");
-	   $this->freigabe = false;
     }
 
     if (strlen($this->start) != 0 && $this->__validateDate($this->start) === false) {
-      $this->fehler['start'] = t("Bitte ein (gültiges) Startdatum angeben!");
-      $this->freigabe = false;
+     $this->fehler['start'] = t("Bitte ein (gültiges) Startdatum angeben!");
     }
 
     if (strlen($this->ende) != 0 && $this->__validateDate($this->ende) === false) {
-      $this->fehler['ende'] = t("Bitte ein (gültiges) Enddatum angeben!");
-      $this->freigabe = false;
+     $this->fehler['ende'] = t("Bitte ein (gültiges) Enddatum angeben!");
     }
 
     if (strlen($this->eventRecurresTill) != 0 && $this->__validateDate($this->eventRecurresTill) === false) {
-      $this->fehler['eventRecurresTill'] = t("Bitte ein (gültiges) Maximaldatum angeben!");
-      $this->freigabe = false;
+     $this->fehler['eventRecurresTill'] = t("Bitte ein (gültiges) Maximaldatum angeben!");
     }
 
-    if (empty($this->ort)) {
-  	  $this->fehler['ort'] = t("Bitte einen Bezirk auswählen!");
-  	  $this->freigabe = false;
+    if (empty($this->adresse->bezirk)) {
+  	 $this->fehler['bezirk'] = t("Bitte einen Bezirk auswählen!");
     }
 
     if (empty($this->kurzbeschreibung)) {
      $this->fehler['kurzbeschreibung'] = t("Ein paar Beschreibungs-Zeilen werden Dir einfallen...");
-     $this->freigabe = false;
     }
    
     if (!empty($this->zeit_von) && $this->__validateDate($this->zeit_von, 'H:i') === false) {
      $this->fehler['zeit_von'] = t("Bitte eine (gültige) Start-Uhrzeit angeben!");
-     $this->freigabe = false;
     }
 
     if (!empty($this->zeit_bis) && $this->__validateDate($this->zeit_bis, 'H:i') === false) {
      $this->fehler['zeit_bis'] = t("Bitte eine (gültige) End-Uhrzeit angeben!");
-     $this->freigabe = false;
     }
 
     if (!empty($this->url) && preg_match('/\A(http:\/\/|https:\/\/)(\w*[.|-]\w*)*\w+\.[a-z]{2,3}(\/.*)*\z/',$this->url)==0) {
      $this->fehler['url'] = t("Bitte eine gültige URL zur Eventwebseite anngeben! (z.B. <i>http://meinevent.de</i>)");
-     $this->freigabe = false;
     }
 
     /*if ((count($this->tags)/2) > 11) {
@@ -200,47 +195,34 @@ Class eventformular extends aae_data_helper {
 
     if (strlen($this->name) > 64) {
 	   $this->fehler['name'] = t("Bitte geben Sie einen kürzeren Namen an oder verwenden Sie ein Kürzel.");
-     $this->freigabe = false;
     }
 
     if (strlen($this->url) > 200) {
 	   $this->fehler['url'] = t("Bitte geben Sie eine kürzere URL an.");
-	   $this->freigabe = false;
     }
 
     if (strlen($this->kurzbeschreibung) > 65000) {
      $this->fehler['kurzbeschreibung'] = t("Bitte geben Sie eine kürzere Beschreibung an.");
-	   $this->freigabe = false;
     }
 
-    if (strlen($this->strasse) > 64) {
+    if (strlen($this->adresse->strasse) > 64) {
 	   $this->fehler['strasse'] = t("Bitte geben Sie einen kürzeren Strassennamen an.");
-	   $this->freigabe = false;
     }
 
-    if (strlen($this->nr) > 8) {
+    if (strlen($this->adresse->nr) > 8) {
 	   $this->fehler['nr'] = t("Bitte geben Sie eine kürzere Nummer an.");
-	   $this->freigabe = false;
     }
 
-    if (strlen($this->adresszusatz) > 100) {
+    if (strlen($this->adresse->adresszusatz) > 100) {
 	   $this->fehler['adresszusatz'] = t("Bitte geben Sie einen kürzeren Adresszusatz an.");
-     $this->freigabe = false;
     }
 
-    if (strlen($this->plz) > 8) {
+    if (strlen($this->adresse->plz) > 8) {
 	   $this->fehler['plz'] = t("Bitte geben Sie eine kürzere PLZ an.");
-     $this->freigabe = false;
     }
 
-    if (strlen($this->ort) > 100) {
-     $this->fehler['ort'] = t("Bitte geben Sie einen kürzeren Ortsnamen an.");
-	   $this->freigabe = false;
-    }
-
-    if (strlen($this->gps) > 100) {
+    if (strlen($this->adresse->gps) > 100) {
      $this->fehler['gps'] = t("Bitte geben Sie kürzere GPS-Daten an.");
-	   $this->freigabe = false;
     }
 
     if ($this->gps == t('Ermittle Geo-Koordinaten...')) $this->gps = '';
@@ -258,7 +240,8 @@ Class eventformular extends aae_data_helper {
     } */
     
     // Um die bereits gewählten Tag's anzuzeigen benötigen wir deren Namen...
-   if ($this->freigabe == false) {
+   if (!empty($this->fehler)) {
+    $this->freigabe = false;
     $this->tags = $this->tagsHelper->__getKategorieForTags($this->tags);
    }
 
@@ -279,61 +262,21 @@ Class eventformular extends aae_data_helper {
    if ($this->isFestival)
      $this->FID = str_replace('f','',$this->veranstalter);
 
-	 // Abfrage, ob Adresse bereits in Adresstabelle
-	 $this->resultAdresse = db_select($this->tbl_adresse, 'a')
-	  ->fields('a', array('ADID', 'gps_lat', 'gps_long'))
-	  ->condition('strasse', $this->strasse)
-	  ->condition('nr', $this->nr)
-	  ->condition('adresszusatz', $this->adresszusatz)
-	  ->condition('plz', $this->plz)
-	  ->condition('bezirk', $this->ort)
-	  ->execute();
+   $eventOrt = db_select($this->tbl_event, 'e')
+    ->fields('e', array('ort'))
+    ->condition('EID', $this->event_id)
+    ->execute()
+    ->fetchObject();
 
-    //  TODO: Überarbeite & vereinheitliche Funktion zum Adresspeichern
+   $this->adresse->ADID = $eventOrt->ort;
+   
+   $this->adresse = $this->adressHelper->setUpdateAdresse($this->adresse);
 
-    if ($this->resultAdresse->rowCount() == 0) {
-     // Adresse nicht vorhanden
-     $gps = explode(',', $this->gps, 2);
-
-	   $this->adresse = db_insert($this->tbl_adresse)
-	    ->fields(array(
-		   'strasse' => $this->strasse,
-		   'nr' => $this->nr,
-		   'adresszusatz' => $this->adresszusatz,
-		   'plz' => $this->plz,
-		   'bezirk' => $this->ort,
-		   'gps_lat' => $gps[0],
-       'gps_long' => $gps[1]
-		  ))
-		  ->execute();
-
-    } else {
-      // Adresse bereits vorhanden
-      foreach ($this->resultAdresse as $row) {
-      // TODO CHECK: $first call $this->resultAdresse->fetchObject()?
-        
-	    // Abfrage, ob GPS-Angaben gemacht wurden
-        if (strlen($this->gps) != 0 && strlen($row->gps) == 0 ) {
-        //ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
-        $gps = explode(',', $this->gps, 2);
-
-	      $adresse_updated = db_update($this->tbl_adresse)
-	 	     ->fields(array(
-          'gps_lat' => $gps[0],
-          'gps_long' => $gps[1]
-         ))
-	       ->condition('ADID', $row->ADID)
-	       ->execute();
-	    }
-	    $this->adresse = $row->ADID;
-	  }
-	}
-
-  if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
-   $this->bild = $this->upload_image($_FILES['bild']);
-  } else if (isset($_POST['oldPic'])) {
-   $this->bild = $this->clearContent($_POST['oldPic']);
-  }
+   if (isset($_FILES['bild']['name']) && !empty($_FILES['bild']['name'])) {
+    $this->bild = $this->upload_image($_FILES['bild']);
+   } else if (isset($_POST['oldPic'])) {
+    $this->bild = $this->clearContent($_POST['oldPic']);
+   }
   
   // remove current picture manually
   // TODO: Check for universal functionality
@@ -442,37 +385,32 @@ Class eventformular extends aae_data_helper {
    */
   private function eventGetFields() {
 
-    $resultEvent = $this->event->GetEvents(array('EID' => $this->event_id), 'complete');
+   $resultEvent = reset($this->event->GetEvents(array('EID' => $this->event_id), 'complete'));
 
-    foreach ($resultEvent as $row) {
-     $this->akteur_id = $row->akteur->AID;
-     $this->hat_zeit_von = ($row->start->format('s') == '01') ? true : false;
-     $this->hat_zeit_bis = ($row->ende->format('s') == '01') ? true : false;
-     $this->name = $row->name;
-     $this->ort = $row->ort;
-     $this->start = $row->start->format('Y-m-d');
-     $this->ende = $row->ende->format('Y-m-d');
-     $this->zeit_von = $row->start->format('H:i');
-     $this->zeit_bis = $row->ende->format('H:i');
-     $this->url = $row->url;
-     $this->bild = $row->bild;
-     $this->kurzbeschreibung = $row->kurzbeschreibung;
-     $this->created = $row->created;
-     $this->modified = $row->modified;
-     $this->eventRecurres = ($row->recurring_event_type >= 1);
-     $this->recurringEventType = $row->recurring_event_type;
-     $this->eventRecurresTill = $row->eventRecurresTill->format('Y-m-d');
-     $this->strasse = $row->adresse->strasse;
-	   $this->nr = $row->adresse->nr;
-	   $this->adresszusatz = $row->adresse->adresszusatz;
-	   $this->plz = $row->adresse->plz;
-	   $this->ort = $row->adresse->bezirk;
-	   $this->gps = (!empty($row->adresse->gps_lat)) ? $row->adresse->gps_lat.','.$row->adresse->gps_long : '';
-     $this->FID = $row->FID;
-     $this->veranstalter = $row->ersteller;
-    }
+   $this->akteur_id = $resultEvent->akteur->AID;
+   $this->hat_zeit_von = ($resultEvent->start->format('s') == '01') ? true : false;
+   $this->hat_zeit_bis = ($resultEvent->ende->format('s') == '01') ? true : false;
+   $this->name = $resultEvent->name;
+   $this->ort = $resultEvent->ort;
+   $this->start = $resultEvent->start->format('Y-m-d');
+   $this->ende = $resultEvent->ende->format('Y-m-d');
+   $this->zeit_von = $resultEvent->start->format('H:i');
+   $this->zeit_bis = $resultEvent->ende->format('H:i');
+   $this->url = $resultEvent->url;
+   $this->bild = $resultEvent->bild;
+   $this->kurzbeschreibung = $resultEvent->kurzbeschreibung;
+   $this->created = $resultEvent->created;
+   $this->modified = $resultEvent->modified;
+   $this->eventRecurres = ($resultEvent->recurring_event_type >= 1);
+   $this->recurringEventType = $resultEvent->recurring_event_type;
+   $this->eventRecurresTill = $resultEvent->eventRecurresTill->format('Y-m-d');
+	 $this->adresse = $resultEvent->adresse;
+   $this->adresse->gps = (!empty($resultEvent->adresse->gps_lat)) ? $resultEvent->adresse->gps_lat.','.$resultEvent->adresse->gps_long : '';
+   $this->FID = $resultEvent->FID;
+   $this->veranstalter = $resultEvent->ersteller;
+   $this->tags = $resultEvent->tags;
 
-    $this->tags = $this->tagsHelper->getTags('events', array('hat_EID', $this->event_id));
+   #$this->tags = $this->tagsHelper->getTags('events', array('hat_EID', $this->event_id));
 
   } // END function eventGetFields()
 
@@ -484,62 +422,15 @@ Class eventformular extends aae_data_helper {
 
    if ($this->isFestival)
      $this->FID = str_replace('f','',$this->veranstalter);
+   
+   $BID = $this->adresse->bezirk;
+	 $this->adresse = $this->adressHelper->setUpdateAdresse($this->adresse);
 
-	 // Abfrage, ob Adresse bereits in Adresstabelle
-	 $this->resultAdresse = db_select($this->tbl_adresse, 'a')
-	  ->fields('a', array('ADID', 'gps_lat', 'gps_long'))
-	  ->condition('strasse', $this->strasse)
-	  ->condition('nr', $this->nr)
-	  ->condition('adresszusatz', $this->adresszusatz)
-	  ->condition('plz', $this->plz)
-	  ->condition('bezirk', $this->ort)
-	  ->execute();
-
-    // Wenn ja: Holen der ID der Adresse, wenn nein: einfügen
-    if ($this->resultAdresse->rowCount() == 0) {
-
-     $gps = explode(',', $this->gps, 2);
-
-	   $this->adresse = db_insert($this->tbl_adresse)
-	    ->fields(array(
-		   'strasse' => $this->strasse,
-		   'nr' => $this->nr,
-		   'adresszusatz' => $this->adresszusatz,
-		   'plz' => $this->plz,
-		   'bezirk' => $this->ort,
-		   'gps_lat' => $gps[0],
-       'gps_long' => $gps[1]
-		  ))
-		  ->execute();
-
-	 } else {
-
-	  foreach ($this->resultAdresse as $row) {
-	    // Abfrage, ob GPS-Angaben gemacht wurden
-
-	    if (strlen($this->gps) != 0 && strlen($row->gps) == 0) {
-        // Ja UND es sind bisher keine GPS-Daten zu der Adresse in der DB
-
-        $gps = explode(',', $this->gps, 2);
-
-	      $adresse_updated = db_update($this->tbl_adresse)
-	 	     ->fields(array(
-          'gps_lat' => $gps[0],
-          'gps_long' => $gps[1]
-         ))
-	       ->condition('ADID', $row->ADID)
-	       ->execute();
-	    }
-
-	    $this->adresse = $row->ADID;
-	  }
-	}
-
-  $startQuery = $this->start.' '.(!empty($this->zeit_von) ? $this->zeit_von.':01' : '00:00:00');
-  $endeQuery  = (!empty($this->ende) ? $this->ende : '1000-01-01').' '.(!empty($this->zeit_bis) ? $this->zeit_bis.':01' : '00:00:00');
+   $startQuery = $this->start.' '.(!empty($this->zeit_von) ? $this->zeit_von.':01' : '00:00:00');
+   $endeQuery  = (!empty($this->ende) ? $this->ende : '1000-01-01').' '.(!empty($this->zeit_bis) ? $this->zeit_bis.':01' : '00:00:00');
   
-	$this->event_id = db_insert($this->tbl_event)
-   ->fields(array(
+	 $this->event_id = db_insert($this->tbl_event)
+    ->fields(array(
 		'name' => $this->name,
 		'ort' => $this->adresse,
 		'start_ts' => $startQuery,
@@ -553,9 +444,10 @@ Class eventformular extends aae_data_helper {
     'event_recurres_till' => ($this->eventRecurres && !empty($this->eventRecurresTill) ? $this->eventRecurresTill.' 00:00:00' : '1000-01-01 00:00:00'),
 	  'FID' => $this->FID,
     ))
-	 ->execute();
+	  ->execute();
    
    if (!empty($this->isFestival)){
+
      db_update($this->tbl_event)
      ->fields(array('recurring_event_type' => '6'))
      ->condition('EID', $this->event_id)
@@ -568,6 +460,7 @@ Class eventformular extends aae_data_helper {
       ->fetchObject();
 
      $this->veranstalter = $this->veranstalter->admin;
+
    }
 
 	 // if Veranstalter != 'privat'
@@ -597,10 +490,10 @@ Class eventformular extends aae_data_helper {
       FROM {menu_links} menu_links
       WHERE menu_name = :menu_name AND link_path = :link_path",
       array(":menu_name" => "navigation", ":link_path" => 'events'));
-    
+
     $bezirk = db_select($this->tbl_bezirke, 'b')
      ->fields('b')
-     ->condition('BID', $this->ort)
+     ->condition('BID', $BID)
      ->execute();
     
     $plid = $parentItem->fetchObject();
@@ -624,9 +517,9 @@ Class eventformular extends aae_data_helper {
     drupal_set_message(t('Das Event wurde erfolgreich erstellt!'));
 	  
     if ($this->isFestival) {
-     header("Location: ". $base_url ."/events/new");
+     header('Location: '. $base_url .'/events/new');
     } else {
-     header("Location: ". $base_url ."/eventprofil/" . $this->event_id);
+     header('Location: '. $base_url .'/eventprofil/' . $this->event_id);
     }
   } // END function eventSpeichern()
 
@@ -665,9 +558,7 @@ Class eventformular extends aae_data_helper {
      }
     }
 
-    $this->resultBezirke = db_select($this->tbl_bezirke, 'b')
-     ->fields('b')
-     ->execute();
+    $this->resultBezirke = $this->adressHelper->getAllBezirke();
 
     $this->allTags = $this->tagsHelper->getTags();
 

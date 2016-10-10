@@ -24,7 +24,7 @@ V 0.7 (-> Modularisierung, Festivals):
 - Facebook Events-API (Ticket #81)
 - Kalender: Mehrtägige Events kenntlich machen
 - Überarbeitung Journal(-Beitrags)-Darstellung (mehr Bilder, Sidebar mit Akteurs-Infos)
-- Autoload einbauen, Models fertig stellen & Tags- und Adress-Funktionen universalisieren - ~
+- Autoload einbauen, Models fertig stellen & Tags- und Adress-Funktionen universalisieren - ✓
 - Meta: Events (sowohl im Profil als auch auf Eventspage) nach schema.org lesbar machen - ✓
 
 V 0.8:
@@ -61,4 +61,5 @@ _ _ _
 Noch offen, ungeklärter Stand:
 
 - Integration RSS-Feeds von Akteuren aus Leipziger Osten in das Interface/Journal
-- Einrichtung "aae_data_termine" & "aae_data_event_hat_termine", um mehr Dynamik zu schaffen.
+- Einrichtung "aae_data_termine" & "aae_data_event_hat_termine", um mehr Dynamik zu schaffen (wenig Priorität)
+- Alle Theme-templates via $this->render ausgeben lassen, so dass auch andere Themes Zugriff auf's Modul haben 
