@@ -24,12 +24,12 @@ Class events extends aae_data_helper {
   # TODO, s. eventformular
  }
 
- /*
+ /**
   * @return Event-object, keyed by EID (for performance purposes when using children)
-            start, ende, created, modified & eventRecurresTill: DateTime-objects
+  *         start, ende, created, modified & eventRecurresTill: DateTime-objects
   * @param $conditions : array : Custom operators supported
   * @param $fields : integer: EID (= EID only)
-                              MINIMAL output (= puuurfect for date-calculation),
+  *                           MINIMAL output (= puuurfect for date-calculation),
   *                           NORMAL output (= full table-row),
   *                           COMPLETE (= joins all other tables)
   */
@@ -65,7 +65,7 @@ Class events extends aae_data_helper {
        $events->condition('start_ts', $s['date'], $s['operator']);
       }
       
-     } else {
+     } else if (!empty($condition)) {
       $events->condition('start_ts', $condition, '>=');
      }
      break;
@@ -73,16 +73,18 @@ Class events extends aae_data_helper {
      case ('ende_ts') :
      case ('end') :
       $events->condition('ende_ts', $condition, '<=');
-      $events->condition('ende', '1000-01-01 00:00:00', '!=');
-      // TODO for API: Make multiple end-values possible
+      $events->condition('ende_ts', '1000-01-01 00:00:00', '!=');
+      // TODO for API: Make multiple end-values possible, as above
       break;
       
      case ('filter') :
-      $events->condition('EID', $this->__filterEvents($conditions['filter']));
+      $events->condition('EID', $this->__filterEvents($conditions['filter'], $fields));
      break;
      
      default :
-      if (is_array($condition) && $key != 'EID') {
+
+      if (is_array($condition) && $key != 'EID' && $key != 'ort') {
+      // The above's not very beautiful, 2b changed pls
        foreach ($condition as $s){
         $events->condition($s['key'], $s['condition'], $s['operator']);
        }
@@ -111,7 +113,7 @@ Class events extends aae_data_helper {
      
      $resultEvents[$realEID] = (isset($resultEvents[$event->parent_EID]) && !empty($resultEvents[$event->parent_EID]))
      ? $resultEvents[$event->parent_EID]
-     : $parentData->execute()->fetchAssoc(); # trigger DB-action
+     : $parentData->execute()->fetchAssoc(); # trigger DB-action $parentData
 
      $event->EID = $event->parent_EID;
 
@@ -121,7 +123,6 @@ Class events extends aae_data_helper {
     $resultEvents[$realEID] = (array)$resultEvents[$realEID];
 
     if ($fields == 'complete') {
-
      if ($event->recurring_event_type >= 1) {
 
       $childrenEvents = $this->getEvents(array('parent_EID' => $conditions['EID']), 'minimal', true);
@@ -346,20 +347,20 @@ Class events extends aae_data_helper {
 
    $resultEvent = db_select($this->tbl_event, 'e')
     ->fields('e', array('bild','recurring_event_type'))
-    ->condition('EID', $event_id, '=')
+    ->condition('EID', $event_id)
     ->execute()
     ->fetchObject();
 
    db_delete($this->tbl_akteur_events)
-    ->condition('EID', $event_id, '=')
+    ->condition('EID', $event_id)
     ->execute();
 
    db_delete($this->tbl_event)
-    ->condition('EID', $event_id, '=')
+    ->condition('EID', $event_id)
     ->execute();
 
    db_delete($this->tbl_event_sparte)
-   ->condition('hat_EID', $event_id, '=')
+   ->condition('hat_EID', $event_id)
    ->execute();
 
    // remove children-items, if given
@@ -390,13 +391,29 @@ Class events extends aae_data_helper {
     
   }
   
-  private function __filterEvents($filter){
+  private function __filterEvents($filter, $fields = NULL){
     
    $filteredEventIds = array();
    $numFilter = 0;
    $filteredTags = array();
    $filteredBezirke = array();
    $filteredTags = array();
+
+   if (isset($filter['mustHaveGps'])){
+
+    $numFilters++;
+
+    $resultEvents = db_query(
+    "SELECT EID, ADID
+     FROM {aae_data_adresse} ad
+     JOIN {aae_data_event} e
+     WHERE ad.gps_long != '' AND ad.gps_lat != '' AND ad.ADID = e.ort");
+
+    foreach ($resultEvents->fetchAll() as $event){
+     $filteredEventIds[] = $event->EID;
+    }
+
+   } // end empty-GPS-jumper
    
    if (isset($filter['tags'])){
    
@@ -408,7 +425,7 @@ Class events extends aae_data_helper {
     foreach ($filter['tags'] as $tag) {
      $tag = $this->clearContent($tag);
      $filteredTags[$tag] = $tag;
-     $and->condition('hat_KID', $tag, '=');
+     $and->condition('hat_KID', $tag);
      $numFilters++;
     }
     
@@ -469,19 +486,21 @@ Class events extends aae_data_helper {
    foreach ($filterKeyword as $keyword){
     $filteredEventIds[] = $keyword->EID;
    }
+
   } // end Keyword-Filter
   
   if (isset($filter['day'])) {
+
+   // Search for the exact date OR multiple-days-events in between
     
    $numFilters++;
-   $resultDays = db_select($this->tbl_event, 'e')
-    ->fields('e', array('EID'))
-    ->condition('start_ts', $filter['day'].'%', 'LIKE')
-    ->execute()
-    ->fetchAll();
+
+   $resultDays  = db_query('SELECT EID FROM {aae_data_event} WHERE (start_ts <= :start AND ende_ts >= :start AND ende_ts NOT LIKE :zeroLike) OR start_ts LIKE :startLike', array(':start' => $filter['day'], ':startLike' => $filter['day'].'%', ':zeroLike' => '1000-01-01 00:00:0%'));
+
    foreach ($resultDays as $day){
     $filteredEventIds[] = $day->EID;
    }
+
   } // end Day-Filter
   
   if (isset($filter['AID'])) {
@@ -500,14 +519,13 @@ Class events extends aae_data_helper {
    
   } // end AkteurID-Filter
   
-  if (!empty($filteredEventIds)) {
+  if (!empty($filteredEventIds) && $fields == 'complete') {
    $filteredEventChildrenIds = db_select($this->tbl_event, 'e')
     ->fields('e',array('EID'))
     ->condition('parent_EID', $filteredEventIds)
     ->execute();
     
    foreach ($filteredEventChildrenIds->fetchAll() as $child){
-   # echo $filteredEventChildrenIds;
     $filteredEventIds[] = $child->EID;
    }
   }

@@ -3,7 +3,7 @@
  * @file eventspage.php
  *
  * Listet alle Events als Timeline oder Kalender auf.
- * Auch als Block für Festivals einsetzbar (Filterung erfordert automatisch).  
+ * Auch als Block für Festivals einsetzbar (Filterung erfolgt automatisch).  
  * Filterbar (via Model) nach Datum, Tags, keywords, Bezirken und Zeitraum
  */
 
@@ -29,7 +29,14 @@ Class eventspage extends aae_data_helper {
 
  public function run(){
 
-  $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) && $_GET['presentation'] == 'calendar') ? 'calendar' : 'timeline';
+  if (!empty($_GET['presentation']) && $_GET['presentation'] == 'calendar'){
+   $this->presentationMode = 'calendar';
+  } else {
+   $this->presentationMode = 'timeline';
+  }
+
+  $orderBy = 'ASC';
+  $start = NULL;
 
   if (isset($_GET['day']) && !empty($_GET['day'])) {
    $this->filter['day'] = $this->clearContent($_GET['day']);
@@ -49,9 +56,9 @@ Class eventspage extends aae_data_helper {
   
   if (isset($_GET['timespan']) && !empty($_GET['timespan'])) {
    # Input: ...?timespan=02.16-05.16
-   $timespan = explode('-',$this->clearContent($_GET['timespan']));
-   $begin = explode('.',$timespan[0]);
-   $end = explode('.',$timespan[1]);
+   $timespan = explode('-', $this->clearContent($_GET['timespan']));
+   $begin = explode('.', $timespan[0]);
+   $end = explode('.', $timespan[1]);
    
    $start = array(
     '0' => array(
@@ -66,12 +73,14 @@ Class eventspage extends aae_data_helper {
    
   }
 
+  if (!empty($this->filter))
+    $orderBy = 'DESC';
+
   // Paginator (will be replaced by AJAX-calls)
   $explodedPath = explode('/', $this->clearContent(current_path()));
   $currentPageNr = ($explodedPath[1] == '') ? '1' : $explodedPath[1];
-  $orderBy = 'ASC';
   
-  if (!isset($start)) {
+  if (empty($start) && empty($this->filter)) {
   
    if ($explodedPath[1] == 'old') {
      
@@ -99,7 +108,7 @@ Class eventspage extends aae_data_helper {
    }
    
   }
-  
+
   //-----------------------------------
 
   $resultTags = $this->tags->getTags('events');
@@ -122,7 +131,56 @@ Class eventspage extends aae_data_helper {
    $kal = new kalender((isset($resultEvents) ? (empty($resultEvents) ? 'empty' : $resultEvents) : null));
    $resultKalender = $kal->show();
 
-  }
+  } /*else if ($this->presentationMode == 'map'){
+  
+   // New feature: Look for all events (&akteure) in radius of 20Km
+   // MAY BE USED IN FUTURE TIMES TO GENERATE new/interesting spots in location and send them by mail
+   if (empty($_GET['geodata'] || !isset($_GET['geodata']))) {
+    break;
+   }
+
+   $userLocation = explode(',', $this->clearContent($_GET['geodata']));
+   $collectedADIDs = array();
+   $distance = 2; // Distance-radius in km
+
+   print_r($userLocation);
+
+   $resultLocations = db_query('SELECT `ADID`, (6371 * acos( cos( radians( :lat) ) * cos( radians( `gps_lat` ) ) * cos( radians( `gps_long` ) - radians(:lng) ) + sin( radians(:lat) ) * sin( radians( `gps_lat` ) ) ) ) AS distance
+    FROM `aae_data_adresse` HAVING distance <= :distance
+    ORDER BY distance ASC', array(':distance' => $distance, ':lat' => $userLocation[0] , ':lng' => $userLocation[1] ))->fetchAll();
+
+   echo '<br />'.count($resultLocations);
+
+   foreach ($resultLocations as $location){
+    $collectedADIDs[$location->ADID] = $location->ADID;
+   }
+
+print_r($collectedADIDs);
+   #print_r($resultLocations);
+
+   $resultEventsInRadius = $this->events->getEvents(array('start' => $start, 'ort' => $collectedADIDs), 'complete');
+   
+   print_r($resultEventsInRadius);
+   exit();
+
+   $js = 'var addressPoints = [';
+
+   foreach ($resultLocations as $location) {
+
+    if (!empty($akteur->gps)) {
+     $beschreibung = (!empty($akteur->kurzbeschreibung)) ? ' - '.$akteur->kurzbeschreibung.'...' : '';
+     $js .= '['.$akteur->gps.',"<a href=\''.base_path().'akteurprofil/'.$akteur->AID.'\'>'.$akteur->name.'</a>'.strip_tags($beschreibung, '<p>').'"],';
+    }
+
+   }
+
+   $js .= '];';
+   drupal_add_js($js, 'inline');
+   // Needed to add Map-Files:
+   $this->addMapContent('','',array('something' => 'bla'));
+   
+
+  } */
 
   $resultTagCloud = db_query_range('SELECT COUNT(*) AS count, s.KID, s.kategorie FROM {aae_data_sparte} s INNER JOIN {aae_data_event_hat_sparte} hs ON s.KID = hs.hat_KID GROUP BY hs.hat_KID HAVING COUNT(*) > 0 ORDER BY count DESC', 0, 10);
   $itemsCount = db_query("SELECT COUNT(EID) AS count FROM " . $this->tbl_event)->fetchField();

@@ -547,6 +547,8 @@ function eventformular_page() {
  */
 function ajax_requests($id) {
 
+  $id = (!empty($id) ? $id : NULL);
+
   $modulePath = drupal_get_path('module', 'aae_data');
   include $modulePath . '/aae_data_ajax_requests.php';
 
@@ -554,38 +556,26 @@ function ajax_requests($id) {
 
   $path = current_path();
   $explodedpath = explode("/", $path);
-  $function_called = $request->clearContent($explodedpath[1]);
+  $functionCalled = $request->clearContent($explodedpath[1]);
 
-  switch($function_called) {
+  if (method_exists($request,$functionCalled)){
 
-   case ('getAkteurKontakt') :
-    $request->getAkteurKontakt($id);
-   break;
+   $request->$functionCalled($id);
 
-   case ('getAkteurAdresse') :
-    $request->getAkteurAdresse($id);
-   break;
+  } else {
 
-   case ('getKalender') :
-    $request->getKalender();
-   break;
-   
-   case ('removeEventChildren') :
-    $request->removeEventChildren($id);
-   break;
-
-   default :
-    // U mad? Unbekannter Funktionsaufruf, weg damit...
-    drupal_add_http_header('Content-Type', 'application/json');
-    echo '{"error" : "Unknown AJAX method"}';
-    exit();
-   break;
+   // U mad? Unbekannter Funktionsaufruf, weg damit...
+   drupal_add_http_header('Content-Type', 'application/json');
+   echo '{"error" : "AAE: Unknown AJAX method"}';
+   drupal_exit();
 
   }
+
  }
 
 /**
- * Funktion zum Vereinheitlichen der DB-Bestände
+ * Funktion zum Vereinheitlichen & Säubern der DB-Bestände
+ * TODO: Check for not-given profile-pic's
  */
 function aae_install_clear_db_contents() {
   

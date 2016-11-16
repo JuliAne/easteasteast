@@ -125,7 +125,7 @@
     </label>
    </div>
 
-   <div class="large-1 columns">
+   <div class="large-2 columns">
     <label><?= t('Hausnummer'); ?>: <?= $this->fehler['nr']; ?>
      <input type="text" id="NrInput" name="adresse[nr]" value="<?= $this->adresse->nr; ?>" placeholder="<?= t('Nr.'); ?>">
     </label>
@@ -137,7 +137,7 @@
     </label>
    </div>
 
-   <div class="large-4 columns">
+   <div class="large-3 columns">
     <label><?= t('PLZ'); ?>: <?= $this->fehler['plz']; ?>
       <input type="text" pattern="[0-9]{5}" id="PLZInput" name="adresse[plz]" value="<?= $this->adresse->plz; ?>" placeholder="<?= t('PLZ'); ?>">
     </label>

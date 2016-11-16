@@ -3,6 +3,7 @@
 /**
  *  Class to handle Ajax-requests
  *  TODO: Connect with models, if necessary
+ *  TODO: drupal_add_http_header('Generator', 'AAE Data');
  */
 
 namespace Drupal\AaeData;
@@ -11,6 +12,50 @@ Class aae_data_ajax_requests extends aae_data_helper {
   
  public function __construct(){
   parent::__construct();
+ }
+
+/**
+ * @function getAllLocations()
+ *
+ * Returns everything necessary to build a map/modal in frontend 
+ * TODO: Response-data, especially those regarding additional Html-Head-files,
+ * should be caplsulated in a more native function/automated process (in both, JS and Drupal)
+ */
+ 
+ public function getAllLocations(){
+
+  $akteure = new akteure();
+  $events  = new events();
+  
+  # We only want future events to be shown...
+  # TODO: ...Or even active events?
+  $start = array(
+   '0' => array(
+    'date' => (new \DateTime(date()))->format('Y-m-d 00:00:00'),
+    'operator' => '>='
+   )
+  );
+
+  $resultAkteure = $akteure->getAkteure(array('filter' => array('mustHaveGps' => 1)), 'minimal');
+  $resultEvents  = $events->getEvents(array(/*'start' => $start,*/ 'filter' => array('mustHaveGps' => 1)), 'complete');
+
+  drupal_add_http_header('Content-Type', 'application/json');
+
+  echo '{ "response" :
+  {
+   "akteure" : '.json_encode($resultAkteure).',
+   "events"  : '.json_encode($resultEvents).',
+   "htmlHeaders" :
+   {
+    "css" : "'.$this->mapboxCss.'",
+    "js"  : "'.$this->mapboxJs.'",
+    "jsInline" : "'.$this->mapboxJsInline.'",
+    "mapName" : "'.$this->mapboxMap.'"
+   }
+   }}';
+
+  drupal_exit();
+
  }
 
 /**

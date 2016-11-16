@@ -2,6 +2,11 @@
  margin: 0 auto;
  /*max-width: 62.5rem;*/
  margin-top: 85px;
+ transition: 0.3s margin-top;
+}
+
+.region-content.enlarged {
+ margin-top: 110px;
 }
 
 #footer {
