@@ -139,9 +139,9 @@ $(document).ready(function() {
 
  $('#project-contact a').click(function(){
 
-  var segments = $(location).attr('href').split('/')
+  var urlSegments = $(location).attr('href').split('/');
 
-  loadAaeModal('../ajax/getAkteurKontakt/' . segments[4], null, 'Lade Kontaktinformationen...');
+  loadAaeModal('../ajax/getAkteurKontakt/' + urlSegments[4], null, 'Lade Kontaktinformationen...');
 
  });
 
@@ -210,33 +210,54 @@ function loadMapModal(position) {
 
    $('#aaeModal .content').html('<div id="map"></div>');
    eval(htmlHeaders.jsInline);
-   var map = L.mapbox.map("map", htmlHeaders.mapName).setView([position.coords.latitude,position.coords.longitude], 13);
+   var map = L.mapbox.map("map", htmlHeaders.mapName).setView([position.coords.latitude,position.coords.longitude], 15);
    L.circle([position.coords.latitude,position.coords.longitude],1000).addTo(map);
    var myLayer = L.mapbox.featureLayer().addTo(map);
+   var geojson = [];
 
-   console.log(data.response.akteure);
+   $.each(data.response.akteure ,function(key, akteur){
 
-   data.response.akteure.array.forEach(function(akteur){
-
-   var geojson = [
+   geojson.push(
     {
     "type": "Feature",
     "geometry": {
       "type": "Point",
-      "coordinates": akteur.gps_lat + ',' + akteur.gps_long,
+      "coordinates": [akteur.adresse.gps_long, akteur.adresse.gps_lat],
     },
     "properties": {
-      "title": akteur.name,
-      "description": akteur.kurzbeschreibung,
+      "title": "<a href=\"https://leipziger-ecken.de/akteurprofil/" + akteur.AID + "\">" + akteur.name + "</a>",
+      "description": akteur.kurzbeschreibung.replace(/<[^>]*>?/g, ''),
       "marker-color": "#2199E8",
       "marker-size": "large",
       "marker-symbol": "star"
      }
     }
-   ];
-   myLayer.setGeoJSON(geojson);
-     
-   });
+   );
+
+  });
+
+  $.each(data.response.events ,function(key, event){
+
+   geojson.push(
+    {
+    "type": "Feature",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [event.adresse.gps_long, event.adresse.gps_lat],
+    },
+    "properties": {
+      "title": "<a href=\"https://leipziger-ecken.de/eventprofil/" + event.EID + "\">" + event.name + "</a>",
+      "description": event.kurzbeschreibung.replace(/<[^>]*>?/g, ''),
+      "marker-color": "#ff5217",
+      "marker-size": "large",
+      "marker-symbol": "rocket"
+     }
+    }
+   );
+
+  });
+
+  myLayer.setGeoJSON(geojson);
 
    mapModalLoaded = true;
 

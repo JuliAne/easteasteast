@@ -54,7 +54,7 @@ Class akteurepage extends aae_data_helper {
 
   $this->presentationMode = (isset($_GET['presentation']) && !empty($_GET['presentation']) ? $this->clearContent($_GET['presentation']) : 'boxen');
   $this->maxAkteure = (isset($_GET['display_number']) && !empty($_GET['display_number']) ? $this->clearContent($_GET['display_number']) : '40');
-
+  
   if (isset($_GET['filterTags']) && !empty($_GET['filterTags'])) {
    $this->filter['tags'] = $_GET['filterTags']; # Becomes escaped in model
   }
@@ -73,15 +73,15 @@ Class akteurepage extends aae_data_helper {
   $itemsCount = db_query("SELECT COUNT(AID) AS count FROM " . $this->tbl_akteur)->fetchField();
   $maxPages = ceil($itemsCount / $this->maxAkteure); # How many pages?
   # TODO, if filtered, too much page-numbers
-  if ($currentPageNr > $maxPages) {
+  if ($currentPageNr > $maxPages && $this->maxAkteure != 'all' && $this->presentationMode == 'boxen') {
    // Diese URL gibt es nicht, daher zurueck...
    header('Location: '. $base_url . '/akteure/' . $maxPages);
-  } elseif ($currentPageNr > 1) {
+  } elseif ($currentPageNr > 1 && $this->maxAkteure != 'all' && $this->presentationMode == 'boxen') {
    $start = $this->maxAkteure * ($currentPageNr - 1);
    $ende = $this->maxAkteure * $currentPageNr;
   } else {
    $start = 0;
-   $ende = $this->maxAkteure;
+   $ende = (($this->maxAkteure == 'all' || $this->presentationMode != 'boxen') ? '99999' : $this->maxAkteure);
   }
 
   $resultAkteure = $this->akteure->getAkteure(array('range' => array('start' => $start, 'end' => $ende),'filter' => $this->filter), 'minimal');

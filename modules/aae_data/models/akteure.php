@@ -463,7 +463,7 @@ Class akteure extends aae_data_helper {
      'plid' => $plid->mlid
    );
 
-  module_invoke_all('hook_akteur_created');
+   module_invoke_all('hook_akteur_created');
 
   } else {
 

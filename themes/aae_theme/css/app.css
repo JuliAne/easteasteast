@@ -427,7 +427,7 @@ transform: rotate(-10deg);
 }
 
 #mainnav #actions #login-popup {
- margin-left: -164px;
+ margin-left: -128px;
  width: 250px;
 }
 
@@ -1148,6 +1148,50 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 #footer #about p {
  padding-bottom: 13px;
 }
+
+.aae-tt a {
+    position: relative;
+    text-decoration: none;
+}
+.aae-tt a:after {
+    content: attr(title);
+    position: absolute;
+    bottom: 130%;
+    left: 20%;
+    background: #ffcb66;
+    padding: 5px 15px;
+    color: black;
+    -webkit-border-radius: 10px;
+    -moz-border-radius   : 10px;
+    border-radius        : 10px;
+    white-space: nowrap;
+    opacity: 0;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition   : all 0.4s ease;
+ }
+ .aae-tt a:before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 20px solid #ffcb66;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition   : all 0.4s ease;
+    opacity: 0;
+    left: 30%;
+    bottom: 90%;
+ }
+ .aae-tt:hover a:after {
+    bottom: 100%;
+ }
+ .aae-tt:hover a:before {
+    bottom: 70%;
+ }
+ .aae-tt:hover a:after, .aae-tt:hover a:before {
+   opacity: 1;
+ }
 
 /*CALENDAR section settings*/
 

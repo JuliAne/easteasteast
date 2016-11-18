@@ -123,6 +123,7 @@ Class events extends aae_data_helper {
     $resultEvents[$realEID] = (array)$resultEvents[$realEID];
 
     if ($fields == 'complete') {
+      
      if ($event->recurring_event_type >= 1) {
 
       $childrenEvents = $this->getEvents(array('parent_EID' => $conditions['EID']), 'minimal', true);

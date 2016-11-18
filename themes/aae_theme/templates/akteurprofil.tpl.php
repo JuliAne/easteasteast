@@ -6,9 +6,6 @@
  overflow: hidden;
 }
 </style>
-<aside class="aaeModal">
- <div class="content"></div>
-</aside>
 
 <header id="header" <?php if ($this->bild != '') : ?> style="background-image:url('<?= $this->bild; ?>');"<?php endif; ?>></header>
 
@@ -50,18 +47,18 @@
 	<?php if (!empty($this->oeffnungszeiten)) : ?>
 	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" title="<?= t('Öffnunszeiten'); ?>" /></span><?= $this->oeffnungszeiten; ?></p>
 	 <div class="divider"></div>
-	 <?php endif; ?>
+	<?php endif; ?>
 
 	 <!-- TODO: Zu ergänzen mit "Bezirk" in strong-case's -->
-   <?php if (!empty($this->adresse->strasse) || !empty($this->adresse->plz)) : ?>
+  <?php if (!empty($this->adresse->strasse) || !empty($this->adresse->plz)) : ?>
    <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
 	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" title="<?= t('Adresse'); ?>" /></span>
    <span itemprop="streetAddress"><?= $this->adresse->strasse; ?> <?= $this->adresse->nr; ?></span><br />
    <?php if (!empty($this->adresse->plz)) : ?><span itemprop="postalCode"><?= $this->adresse->plz; ?></span> <span itemprop="addressLocality">Leipzig</span></p><?php endif; ?>
    </div><div class="divider"></div>
-   <?php endif; ?>
+  <?php endif; ?>
 
-   <?php if (!empty($this->url)) : ?>
+  <?php if (!empty($this->url) && $this->url != 'http://') : ?>
 	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/cloud_white.svg" /></span><a href="<?= $this->url; ?>" itemprop="sameAs" target="_blank"><?= str_replace('http://', '', $this->url);?></a></p>
 	 <div class="divider"></div>
 	<?php endif; ?>

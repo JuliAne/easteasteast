@@ -37,7 +37,7 @@ Class aae_data_ajax_requests extends aae_data_helper {
   );
 
   $resultAkteure = $akteure->getAkteure(array('filter' => array('mustHaveGps' => 1)), 'minimal');
-  $resultEvents  = $events->getEvents(array(/*'start' => $start,*/ 'filter' => array('mustHaveGps' => 1)), 'complete');
+  $resultEvents  = $events->getEvents(array(/*'start' => $start,*/ 'filter' => array('mustHaveGps' => 1), 'parent_EID' => NULL), 'complete');
 
   drupal_add_http_header('Content-Type', 'application/json');
 
@@ -142,6 +142,7 @@ Class aae_data_ajax_requests extends aae_data_helper {
   
   /**
    * @function removeEvent()
+   * TODO: Kann raus? Muss überarbeitet werden!
    */
    public function removeEventChildren($eid){
     
