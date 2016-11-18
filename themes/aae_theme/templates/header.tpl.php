@@ -84,7 +84,8 @@
   <?php if (user_is_logged_in() && module_exists('invite')) : ?>
   <a href="#" id="inviteBtn" class="hollow secondary button right show-for-large" title="<?= t('Bekannte einladen'); ?>">+ <?= t('Bekannte einladen'); ?></a>
   <aside id="invite-modal" class="aaeModal">
-   <div class="content">
+   <div class="aaeModalWrapper">
+    <div class="content">
     <h3>Spread the word.</h3>
     <p>Wie im Kiez, so auch im Web: Die <strong>Leipziger Ecken</strong> leben vom Engagement und der Vielfältigkeit ihrer Benutzer. Wenn Dir dieser Ort gefällt, dann teile ihn auf diesem Wege ganz komfortabel via Mail Deinen Bekannten mit.</p>
     <br />
@@ -92,6 +93,7 @@
     <div class="divider"></div>
     <?php print render($page['user_invite_by_mail']); ?>
     <a href="#" class="button secondary round closeBtn" title="<?= t('Fenster schliessen'); ?>">x</a>
+    </div>
    </div>
  </aside>
   <?php endif; ?>
