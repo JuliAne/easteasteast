@@ -82,7 +82,7 @@
   </aside>
   
   <?php if (user_is_logged_in() && module_exists('invite')) : ?>
-  <a href="#" id="inviteBtn" class="hollow secondary button right show-for-large" title="<?= t('Bekannte einladen'); ?>">+ <?= t('Bekannte einladen'); ?></a>
+  <a href="#" id="inviteBtn" style="display:none;" class="hollow secondary button right show-for-large" title="<?= t('Bekannte einladen'); ?>">+ <?= t('Bekannte einladen'); ?></a>
   <aside id="invite-modal" class="aaeModal">
    <div class="aaeModalWrapper">
     <div class="content">
