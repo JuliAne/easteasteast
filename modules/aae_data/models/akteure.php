@@ -120,7 +120,7 @@ Class akteure extends aae_data_helper {
      $akteure->range($condition['start'], $condition['end']);
     break;
 
-    case('filter') :
+    case ('filter') :
      if (!empty($conditions['filter']))
        $akteure->condition('AID', $this->__filterAkteure($conditions['filter']));
     break;
@@ -463,7 +463,7 @@ Class akteure extends aae_data_helper {
      'plid' => $plid->mlid
    );
 
-  module_invoke_all('hook_akteur_created');
+   module_invoke_all('hook_akteur_created');
 
   } else {
 
@@ -548,6 +548,22 @@ Class akteure extends aae_data_helper {
    }
 
   } // end UserID-Filter
+
+  if (isset($filter['mustHaveGps'])){
+
+   $numFilters++;
+
+   $resultAkteure = db_query(
+    "SELECT AID, ADID
+     FROM {aae_data_adresse} ad
+     JOIN {aae_data_akteur} a
+     WHERE ad.gps_long != '' AND ad.gps_lat != '' AND ad.ADID = a.adresse");
+
+   foreach ($resultAkteure->fetchAll() as $akteur){
+    $filteredAkteurIds[] = $akteur->AID;
+   }
+
+  } // end empty-GPS-jumper
   
   if (isset($filter['tags'])){
 

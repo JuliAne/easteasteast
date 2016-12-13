@@ -11,7 +11,6 @@
  */
 
 namespace Drupal\AaeData;
-#use Drupal\AaeData\events;
 
 class kalender extends aae_data_helper {
 
@@ -26,12 +25,12 @@ class kalender extends aae_data_helper {
  private $month = null;
  private $eventsForMonth = array();
  private $alreadyFilteredEIDs = array();
+ private $multipleDayEvents;
 
  public function __construct($filteredEIDs = NULL){
    
   parent::__construct();
 
-  include_once('models/events.php');
   $this->events = new events();
 
   if (empty($filteredEIDs) && isset($_GET['EID'])){
@@ -134,30 +133,54 @@ class kalender extends aae_data_helper {
      }
    }
    if (($this->currentDay != 0) && ($this->currentDay <= $this->daysInMonth)) {
-     $this->currentDate = date('Y-m-d', strtotime($this->currentYear . '-' . $this->currentMonth . '-' . $this->currentDay));
-     $cellContent = $this->currentDay;
-     //$events = null;
+    $this->currentDate = date('Y-m-d', strtotime($this->currentYear . '-' . $this->currentMonth . '-' . $this->currentDay));
+    $cellContent = $this->currentDay;
 
-    # echo $this->currentDay;
     if (!empty($this->eventsForMonth[$this->currentDay])){
      foreach ($this->eventsForMonth[$this->currentDay] as $row) {
-      $events .= $row->name.'&#10';
+      $cellTitle .= $row->name.'&#10';
+      if ($row->ende->format('Ymd') != '10000101' && $row->ende->format('Ymd') != $row->start->format('Ymd') && !isset($this->multipleDayEvents[$row->EID]) && empty($row->recurring_event_type)/*&& $row->recurring_event_type <6*/){
+      // Or would the !== operand work?
+       $this->multipleDayEvents[$row->EID] = $row;
+      }
      }
     } 
 
-     $countrows = count($this->eventsForMonth[$this->currentDay]);
-     $this->currentDay++;
+    $countrows = count($this->eventsForMonth[$this->currentDay]);
+    $this->currentDay++;
 
    } else {
 
-     $this->currentDate = null;
-     $cellContent = null;
+    $this->currentDate = null;
+    $cellContent = null;
 
    }
-   if ($countrows == 0) {
-     return '<li class="' . ($cellNumber%7==1?'start ':($cellNumber%7==0?'end ':' ')) . ($cellContent==null?' mask':'') . '">' . $cellContent . '</li>';
+
+    if (!empty($this->multipleDayEvents)) {
+     foreach ($this->multipleDayEvents as $key => $event){
+
+      if ($this->currentDate == $event->start->format('Y-m-d')) {
+       $cellClasses = (empty($cellClasses) ? 'evt-start ' : 'evt-middle ');
+      } else if ($this->currentDate == $event->ende->format('Y-m-d')) {
+       $cellClasses = (empty($cellClasses) ? 'evt-end ' : 'evt-middle ');
+       $cellTitle .= $event->name.' ('.t('Veranstaltungsende').')&#10';
+       unset($this->multipleDayEvents[$key]);
+      } else {
+       $cellClasses = 'evt-middle ';
+       $cellTitle .= $event->name.' ('.t('Im Gange').')&#10';
+      }
+
+      $countrows = 1;
+
+    }
+   }
+
+   $cellClasses .= ($cellContent <= 9 ? 'sngl-dgt ' : '');
+
+   if ($countrows == 0 || empty($cellContent)) {
+     return '<li class="'. $cellClasses . ($cellNumber%7==1?'start ':($cellNumber%7==0?'end ': '')) . ($cellContent==null?'mask' : '') . '">' . $cellContent . '</li>';
    } else {
-     return '<li data-nr="'.$countrows.'" title="'.$events.'" class="has-events ' . ($cellNumber%7==1?'start ':($cellNumber%7==0?'end ':' ')) . ($cellContent==null?' mask':'') . '"><a href="'.base_path().'events/?day=' . $this->currentDate . '" rel="nofollow">' . $cellContent . '</a></li>';
+     return '<li data-nr="'.substr_count($cellTitle,'&#10').'" class="'.$cellClasses.'has-events ' . ($cellNumber%7==1?'start ':($cellNumber%7==0?'end ':'')) . ($cellContent==null?' mask':'') . '"><a title="'.$cellTitle.'" href="'.base_path().'events/?day=' . $this->currentDate . '" rel="nofollow">' . $cellContent . '</a></li>';
    }
  }
 
@@ -175,8 +198,7 @@ class kalender extends aae_data_helper {
    return
      '<div class="header">'.
        '<a class="prev" href="'.base_path().'ajax/getKalender/?month=' . sprintf('%02d',$preMonth) . '&year=' . $preYear . $filterParam .'" rel="nofollow"><<</a>'.
-         '<span class="title">' . date('Y M',strtotime($this->currentYear . '-' . $this->currentMonth . '-1')) . '</span>'.
-         // $this->monat_lang[01];
+        '<span class="title">' . date('Y M',strtotime($this->currentYear . '-' . $this->currentMonth . '-1')) . '</span>'.
        '<a class="next" href="'.base_path().'ajax/getKalender/?month=' . sprintf("%02d", $nextMonth) . '&year=' . $nextYear . $filterParam .'" rel="nofollow">>></a>'.
      '</div>';
  }
@@ -186,7 +208,7 @@ class kalender extends aae_data_helper {
   */
  private function _createLabels() {
    $content = '';
-   foreach ($this->dayLabels as $index=>$label) {
+   foreach ($this->dayLabels as $index => $label) {
      $content .= '<li class="start title '.$label.'">' . $label . '</li>';
    }
    return $content;

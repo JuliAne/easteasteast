@@ -22,7 +22,7 @@ V 0.7 (-> Modularisierung, Festivals):
 
 - Feature: "Festival-Veranstaltungen", entsprechende graphische und funktionale Einbindung (Ticket #83) - ~
 - Facebook Events-API (Ticket #81)
-- Kalender: Mehrtägige Events kenntlich machen
+- Kalender: Mehrtägige Events kenntlich machen - ✓
 - Überarbeitung Journal(-Beitrags)-Darstellung (mehr Bilder, Sidebar mit Akteurs-Infos)
 - Autoload einbauen, Models fertig stellen & Tags- und Adress-Funktionen universalisieren - ✓
 - Meta: Events (sowohl im Profil als auch auf Eventspage) nach schema.org lesbar machen - ✓

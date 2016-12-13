@@ -39,6 +39,11 @@ namespace Drupal\AaeData;
    var $mapboxDefaultView = "51.336, 12.433";
    var $mapboxDefaultZoom = "13";
 
+   // Mapbox-File's (unsauber, aber zweckdienlich)
+   var $mapboxCss = 'https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css';
+   var $mapboxJs = 'https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js';
+   var $mapboxJsInline; # set down there
+
    var $uses;
    var $servercheck;
    var $modulePath;
@@ -79,6 +84,8 @@ namespace Drupal\AaeData;
     foreach ($this->monat_lang as $key => $monat) {
      $this->monat_short[$key] = substr($monat, 0, 3);
     }
+
+    $this->mapboxJsInline = "L.mapbox.accessToken = '".$this->mapboxAccessToken."';";
 
     global $user;
     $this->user_id = $user->uid;
@@ -194,9 +201,9 @@ namespace Drupal\AaeData;
 
     if (empty($geoCord)) $geoCord = $this->mapboxDefaultView;
 
-    drupal_add_css('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.css', array('type' => 'external'));
-    drupal_add_js('https://api.tiles.mapbox.com/mapbox.js/v2.1.9/mapbox.js');
-    drupal_add_js('L.mapbox.accessToken = "'.$this->mapboxAccessToken.'";', 'inline', array('type' => 'inline', 'scope' => 'footer', 'weight' => -1));
+    drupal_add_css($this->mapboxCss, array('type' => 'external'));
+    drupal_add_js($this->mapboxJs);
+    drupal_add_js($this->mapboxJsInline, 'inline', array('type' => 'inline', 'scope' => 'footer', 'weight' => -1));
 
     $js = '$(window).ready(function(){var map = L.mapbox.map("map", "'.$this->mapboxMap.'").setView(['.$geoCord.'], '.$this->mapboxDefaultZoom.');';
 

@@ -14,7 +14,6 @@ Class tags extends aae_data_helper {
 
  public function __construct() {
   
-  // TODO: evtl. Zufalls-check, der self::removeDoubleTags() aufruft
   parent::__construct();
 
  }
@@ -56,7 +55,13 @@ Class tags extends aae_data_helper {
  }
  
  /**
-  * TODO: Docu!
+  * Method that unifies SET, UPDATE and REMOVE actions for tags
+  * and interacts with hat-xy-table's
+  *
+  * @param $tags : array
+  * @param $target : array (set's join-tables & will be automated in future times)
+  * @param $removedTags : array [opt]
+  * @returnTODO $collectedTags (array)
   */
  public function setRemoveTags($tags, $target, $removedTags = null){
 
@@ -99,14 +104,14 @@ Class tags extends aae_data_helper {
   // UPDATE or INSERT tags (if required)
   if (!empty($tags) && is_array($tags)) {
 
-   $collectedTags = array(); # to save the "kategorie" (=string)-part
+   $collectedTags = array(); # Yet unused, should be 'kategoriename' => 'KID'
 
    $tags = array_unique($tags);
 
    foreach ($tags as $tag) {
 
     $tagId = '';
-    $tag = strtolower($this->clearContent($tag));
+    $tag = str_replace('#','',strtolower($this->clearContent($tag)));
 
     if (empty($tag) /*|| !empty($collectedTags[$tag])*/) {
      break;

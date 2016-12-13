@@ -1,14 +1,20 @@
-<?php if(!empty($messages) && !strpos($messages, 'Warning') && !strpos($messages, 'session')) : ?>
-<div id="alert" class="drupal-error">
- <?php print($messages); ?>
- <a href="#" class="close" title="<?= t('Schliessen'); ?>">x</a>
-</div>
-<?php endif; ?>
+<aside id="alert" class="drupal-error" style="display:<?= (!empty($messages) && !strpos($messages, 'Warning') && !strpos($messages,'temporary') && !strpos($messages, 'session') ? 'block' : 'none'); ?>;">
+ <div id="alert-content"><?php if(!empty($messages) && !strpos($messages, 'Warning') && !strpos($messages, 'session')) : ?>
+<?php print($messages); ?><?php endif; ?></div>
+ <a href="#" class="close button hollow closeBtn" title="<?= t('Schliessen'); ?>">x</a>
+</aside>
+
+<aside id="aaeModal" class="aaeModal">
+ <div class="aaeModalWrapper">
+  <div class="content"></div>
+  <a href="#" class="button secondary round closeBtn" title="<?= t('Fenster schliessen'); ?>">x</a>
+ </div>
+</aside>
 
 <div id="mainnav">
  <div class="row">
 
- <nav id="nav" role="navigation" class="large-9 small-8 columns">
+ <nav id="nav" role="navigation" class="large-8 small-8 columns">
   <!-- for responsive menu (CSS only) -->
   <input type="checkbox" id="responsive-menu" name="responsive-menu" class="show-for-small-only" title="<?= t('Zeige/Verstecke Menü'); ?>">
   <label for="responsive-menu" onclick="javascript:$('#mainnav').removeClass('scrolled');"></label>
@@ -19,6 +25,7 @@
  </nav>
 
   <aside id="actions" class="large-1 small-4 medium-2 columns panel radius right">
+   <a href="#" id="searchByLocation" title="<?= t('NEU: Alle Events & Akteure in meiner Nähe'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" /></a>
    <a id="search-button" href="#search-popup" class="popup-link" title="Suchen"><img src="<?= base_path().path_to_theme(); ?>/img/search.svg" /></a>
     <div id="search-popup" class="popup large-3 small-12 columns">
      <!-- <input type="text" placeholder="Suchen..." />
@@ -71,14 +78,14 @@
      <p><a href="<?= base_path(); ?>user/<?= $user->uid; ?>/edit" style="color:grey;"><?= t('Einstellungen'); ?></a> | <a href="<?= base_path(); ?>user/logout" style="color:grey;"><?= t('Logout'); ?></a></p><br />
      <?php endif; ?>
 
-
     </div>
   </aside>
-
+  
   <?php if (user_is_logged_in() && module_exists('invite')) : ?>
-  <a href="#" id="inviteBtn" class="hollow secondary button right show-for-large" title="<?= t('Bekannte einladen'); ?>">+ <?= t('Bekannte einladen'); ?></a>
+  <a href="#" id="inviteBtn" style="display:none;" class="hollow secondary button right show-for-large" title="<?= t('Bekannte einladen'); ?>">+ <?= t('Bekannte einladen'); ?></a>
   <aside id="invite-modal" class="aaeModal">
-   <div class="content">
+   <div class="aaeModalWrapper">
+    <div class="content">
     <h3>Spread the word.</h3>
     <p>Wie im Kiez, so auch im Web: Die <strong>Leipziger Ecken</strong> leben vom Engagement und der Vielfältigkeit ihrer Benutzer. Wenn Dir dieser Ort gefällt, dann teile ihn auf diesem Wege ganz komfortabel via Mail Deinen Bekannten mit.</p>
     <br />
@@ -86,6 +93,7 @@
     <div class="divider"></div>
     <?php print render($page['user_invite_by_mail']); ?>
     <a href="#" class="button secondary round closeBtn" title="<?= t('Fenster schliessen'); ?>">x</a>
+    </div>
    </div>
  </aside>
   <?php endif; ?>
@@ -93,25 +101,26 @@
  </div>
 </div>
 
-<!-- TODO: -->
 <div id="karibu-modal" class="aaeModalX" style="display:none;">
  <div id="karibu">
   <div class="row">
     <div class="large-12 columns">
-     <h3>Herzlich willkommen bei den Leipziger Ecken!</h3>
-     <p class="headline">Wir arbeiten ständig daran die besten zu sein, sir!</p>
+     <h3>Herzlich willkommen bei den <strong>Leipziger Ecken</strong>...</h3>
+     <p class="headline">...Eurer freien Plattform für xy. Mit unserem wachsenden Angebot möchten wir Kreativität & Engagement durch gemeinsamen Austausch und Interaktion fördern. Hier ein paar erste Schritte:</p>
      <div class="button hollow closeBtn" title="<?= t('Fenster schließen'); ?>">x</div>
     </div>
 
     <div class="large-3 large-offset-1 columns">
-     <h4><img src="<?= base_path().path_to_theme(); ?>/img/akteur_icon.png" />Akteure</h4>
-     <p>Jetzt akteur anlegen</p>
+     <h4><img src="<?= base_path().path_to_theme(); ?>/img/akteur_icon.png" />Akteurprofil</h4>
+     <p>Stellt Eure Projekte unkompliziert der Öffentlichkeit zur Verfügung</p>
     </div>
     <div class="large-3 large-offset-1 columns">
      <h4><img src="<?= base_path().path_to_theme(); ?>/img/events_icon.png" />Events</h4>
+     <p></p>
     </div>
     <div class="large-3 large-offset-1 columns">
      <h4><img src="<?= base_path().path_to_theme(); ?>/img/journal_icon.png" />Dranbleiben</h4>
+     <p></p>
     </div>
 
   </div>

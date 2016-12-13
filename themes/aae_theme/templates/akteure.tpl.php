@@ -49,8 +49,8 @@
   <div class="large-5 small-6 columns">
    <label for="display_number"><?= t('Anzahl'); ?>:</label>
    <select name="display_number" id="displayNumber">
-    <option value="15" <?= ($this->maxAkteure == '15' ? 'selected="selected"' : ''); ?>>15</option>
-    <option value="20" <?= ($this->maxAkteure == '20' ? 'selected="selected"' : ''); ?>>20</option>
+    <option value="15" <?= ($this->maxAkteure == '20' ? 'selected="selected"' : ''); ?>>20</option>
+    <option value="20" <?= ($this->maxAkteure == '25' ? 'selected="selected"' : ''); ?>>25</option>
     <option value="30" <?= ($this->maxAkteure == '30' ? 'selected="selected"' : ''); ?>>30</option>
     <option value="all" <?= ($this->maxAkteure == 'all' ? 'selected="selected"' : ''); ?>><?= t('Alle'); ?></option>
    </select>

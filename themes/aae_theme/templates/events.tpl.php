@@ -29,9 +29,9 @@
     <div class="divider hide-for-small-only"></div>
    </div>
 
-   <div class="large-12 columns">
+   <form id="filterForm" method="GET" action="<?= base_path(); ?>events<?= (isset($resultKalender) && !empty($resultKalender) ? '?presentation=calendar' : ''); ?>">
 
-    <form id="filterForm" method="GET" action="<?= base_path(); ?>events<?= (isset($resultKalender) && !empty($resultKalender) ? '?presentation=calendar' : ''); ?>">
+   <div class="large-12 columns">
 
      <label for="filterKeyword"><?= t('Schlagwort:'); ?></label>
      <input name="filterKeyword" id="filterKeywordInput" type="text" <?= (isset($this->filter['keyword']) ? 'value="'.$this->filter['keyword'].'"' : ''); ?>/>
@@ -39,7 +39,7 @@
      <label for="filterTags"><?= t('Tags:'); ?></label>
      <select name="filterTags[]" id="eventSpartenInput" multiple="multiple" class="tokenize">
      <?php foreach ($resultTags as $tag) : ?>
-      <option value="<?= $tag->KID; ?>"<?= (in_array($tag->KID,$this->filter['tags']) ? ' selected="selected"' : ''); ?>><?= $tag->kategorie; ?></option>
+      <option value="<?= $tag->KID; ?>"<?= (@in_array($tag->KID,$this->filter['tags']) ? ' selected="selected"' : ''); ?>><?= $tag->kategorie; ?></option>
      <?php endforeach; ?>
      </select>
 
@@ -49,7 +49,7 @@
      <label for="filterBezirke"><?= t('Bezirke:'); ?></label>
      <select name="filterBezirke[]" id="eventBezirkInput" multiple="multiple" class="tokenize">
      <?php foreach ($resultBezirke as $bezirk) : ?>
-      <option value="<?= $bezirk->BID; ?>"<?= (in_array($bezirk->BID,$this->filter['bezirke']) ? ' selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
+      <option value="<?= $bezirk->BID; ?>"<?= (@in_array($bezirk->BID,$this->filter['bezirke']) ? ' selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
      <?php endforeach; ?>
    </select>
 
@@ -81,8 +81,8 @@
      <input type="submit" class="medium button large-12 columns" id="eventSubmit" name="submit" value="<?= t('Filter anwenden'); ?>">
     </div>
 
-   </form>
   </div>
+  </form>
   
   <?php if (!empty($festivals)) : ?>
   <div class="tagcloud akteure-tc large-12 columns" style="margin-top:0;">
@@ -100,11 +100,10 @@
   <div id="events_content" class="large-9 small-12 columns">
 
    <ul class="tabs" id="events-tabs" style="margin-bottom:22px;">
-    <li class="tabs-title<?= ($this->getOldEvents || !empty($this->filter) ? '' : ' is-active'); ?>"><a href="<?= base_path(); ?>events"<?= ($this->getOldEvents || !empty($this->filter) ? '' : ' aria-selected="true"'); ?>><?= t('Demnächst'); ?></a></li>
-    <li class="tabs-title<?= ($this->getOldEvents && empty($this->filter) ? ' is-active' : ''); ?>"><a href="<?= base_path(); ?>events/old"<?= ($this->getOldEvents ? ' aria-selected="true"' : ''); ?>><?= t('Vergangene Events'); ?></a></li>
-    <!--<li class="tabs-title"><a href="#"><?= t('NEU: In meiner Nähe'); ?></a></li>-->
+    <li class="tabs-title<?= ($this->getOldEvents || !empty($this->filter) ? '' : ' is-active'); ?>" title="<?= t('Alle kommenden Events'); ?>"><a href="<?= base_path(); ?>events"<?= ($this->getOldEvents || !empty($this->filter) ? '' : ' aria-selected="true"'); ?>><?= t('Demnächst'); ?></a></li>
+    <li class="tabs-title<?= ($this->getOldEvents && empty($this->filter) ? ' is-active' : ''); ?>" title="<?= t('Alle vergangenen Events'); ?>"><a href="<?= base_path(); ?>events/old"<?= ($this->getOldEvents ? ' aria-selected="true"' : ''); ?>><?= t('Vergangene Events'); ?></a></li>
     <?php if (!empty($this->filter)) : ?><li class="tabs-title is-active"><a href="#" aria-selected="true"><?= t('Filterergebnisse'); ?> (<?= count($resultEvents); ?>)</a></li><?php endif; ?>
-    <ul id="presentationFilter" class="button-group round large-3 columns hide-for-small-only right">
+    <ul id="presentationFilter" class="button-group round large-4 columns hide-for-small-only right">
      <li class="right"><a href="<?= base_path(); ?>events" name="timeline" class="small button <?= ($this->presentationMode !== 'calendar' ? 'active' : 'secondary'); ?>" title="<?= t('Darstellung als Timeline'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/ios-list-outline.svg" /></a></li>
      <li class="right"><a href="<?= base_path(); ?>events/?presentation=calendar" name="calendar" class="small button <?= ($this->presentationMode == 'calendar' ? 'active' : 'secondary'); ?>" title="<?= t('Darstellung als Kalender'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
     </ul>
@@ -117,7 +116,13 @@
    <?= $resultKalender; ?>
   </div>
 
+ <?php elseif ($this->presentationMode == 'map') : ?>
+  
+  <h4>Kommende Events & Akteure im Umkreis von 15Km</h4>
+  <div id="map" style="width: 100%; height: 400px;"></div>
+
  <?php elseif (is_array($resultEvents) && !empty($resultEvents)) : ?>
+ 
   <?php foreach ($resultEvents as $key => $event): global $base_root; ?>
    <?php if ($event->start->format('m.Y') != $cur_month) : ?>
     <div class="large-12 columns"><h4><?= $this->monat_lang[$event->start->format('m')]; ?> <?= $event->start->format('Y'); ?></h4></div>

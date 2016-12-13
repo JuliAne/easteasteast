@@ -8,4 +8,3 @@
 <?php endif; ?>
 <p><strong>Mail:</strong> <a href="mailto:<?= $resultAkteur[0]->email; ?>"><?= $resultAkteur[0]->email; ?></a></p>
 <div class="divider"></div>
-<a href="#" class="button secondary round closeBtn" title="<?= t('Fenster schliessen'); ?>">x</a>
