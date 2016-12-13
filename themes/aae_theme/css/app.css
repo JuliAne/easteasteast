@@ -661,7 +661,7 @@ transform: rotate(-10deg);
  min-height: 55px;
 }
 
-.pcard#project-contact {
+.pcard#project-buttons {
  min-height: auto !important;
 }
 

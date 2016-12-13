@@ -177,7 +177,7 @@ class kalender extends aae_data_helper {
 
    $cellClasses .= ($cellContent <= 9 ? 'sngl-dgt ' : '');
 
-   if ($countrows == 0) {
+   if ($countrows == 0 || empty($cellContent)) {
      return '<li class="'. $cellClasses . ($cellNumber%7==1?'start ':($cellNumber%7==0?'end ': '')) . ($cellContent==null?'mask' : '') . '">' . $cellContent . '</li>';
    } else {
      return '<li data-nr="'.substr_count($cellTitle,'&#10').'" class="'.$cellClasses.'has-events ' . ($cellNumber%7==1?'start ':($cellNumber%7==0?'end ':'')) . ($cellContent==null?' mask':'') . '"><a title="'.$cellTitle.'" href="'.base_path().'events/?day=' . $this->currentDate . '" rel="nofollow">' . $cellContent . '</a></li>';

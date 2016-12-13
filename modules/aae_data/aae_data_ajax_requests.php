@@ -28,7 +28,6 @@ Class aae_data_ajax_requests extends aae_data_helper {
   $events  = new events();
   
   # We only want future events to be shown...
-  # TODO: ...Or even active events?
   $start = array(
    '0' => array(
     'date' => (new \DateTime(date()))->format('Y-m-d 00:00:00'),
@@ -37,7 +36,7 @@ Class aae_data_ajax_requests extends aae_data_helper {
   );
 
   $resultAkteure = $akteure->getAkteure(array('filter' => array('mustHaveGps' => 1)), 'minimal');
-  $resultEvents  = $events->getEvents(array(/*'start' => $start,*/ 'filter' => array('mustHaveGps' => 1), 'parent_EID' => NULL), 'complete');
+  $resultEvents  = $events->getEvents(array('start' => $start, 'filter' => array('mustHaveGps' => 1), 'parent_EID' => NULL), 'complete');
 
   drupal_add_http_header('Content-Type', 'application/json');
 

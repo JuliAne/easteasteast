@@ -74,8 +74,8 @@
 
 	</div>
 
-  <div id="project-contact" class="pcard">
-   <a href="#"><button class="button"><?= t('Kontaktieren'); ?></button></a>
+  <div id="project-buttons" class="pcard">
+   <a href="#"><button id="akteur-contact" class="button"><?= t('Kontaktieren'); ?></button></a>
    <?php if (!empty($this->resultFestivals) && is_array($this->resultFestivals)) :
     foreach ($this->resultFestivals as $festival) : ?>
    <a href="<?= $base_root .'/'. $festival->alias; ?>"><button class="festival button" style="background:#fff;margin-top:2px;color:#2199e8;">

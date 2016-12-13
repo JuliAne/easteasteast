@@ -137,7 +137,7 @@ $(document).ready(function() {
    setHandlers();
  })
 
- $('#project-contact a').click(function(){
+ $('#project-buttons #akteur-contact').click(function(){
 
   var urlSegments = $(location).attr('href').split('/');
 
@@ -211,7 +211,7 @@ function loadMapModal(position) {
    $('#aaeModal .content').html('<div id="map"></div>');
    eval(htmlHeaders.jsInline);
    var map = L.mapbox.map("map", htmlHeaders.mapName).setView([position.coords.latitude,position.coords.longitude], 15);
-   L.circle([position.coords.latitude,position.coords.longitude],1000).addTo(map);
+   L.circle([position.coords.latitude,position.coords.longitude],600).addTo(map);
    var myLayer = L.mapbox.featureLayer().addTo(map);
    var geojson = [];
 
