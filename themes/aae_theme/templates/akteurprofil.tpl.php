@@ -23,7 +23,7 @@
  echo $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen', array('!network' => 'Twitter')); ?>" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/social-twitter.svg"><span></span></a>
      <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen', array('!network' => 'Facebook')); ?>" class="fb button"><img alt="Facebook" src="<?= base_path().path_to_theme(); ?>/img/social-facebook.svg"><span></span></a>
      <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen', array('!network' => 'Google+')); ?>" class="g_plus button"><img alt="Google+" src="<?= base_path().path_to_theme(); ?>/img/social-googleplus-outline.svg"><span></span></a>
-     <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $this->name; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="<?= t('Auf !network teilen', array('!network' => 'Diaspora / Friendica')); ?>"><img alt="Federated networks" src="<?= base_path().path_to_theme(); ?>/img/social-diaspora.png"></a>
+     <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $this->name; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="<?= t('Auf !network teilen', array('!network' => 'Diaspora / Friendica')); ?>"><img alt="Federated networks" src="<?= base_path().path_to_theme(); ?>/img/social-diaspora.svg"></a>
    </div>
   </div>
  </div>
@@ -38,7 +38,7 @@
 
   <div class="pcard">
    <header<?= (!empty($this->bild) ? ' style="background-image:url('.$this->bild.');"' : ''); ?>>
-  	<?php if (!empty($this->bild)) echo '<img src="'.$this->bild.'" style="visbility:hidden;" itemprop="logo" alt="'. t('Logo von !username', array('!username' => $this->name)) .'"/>';
+  	<?php if (!empty($this->bild)) echo '<img src="'.$this->bild.'" style="visbility:hidden;" itemprop="logo" alt="'. t('Profilbild von !username', array('!username' => $this->name)) .'"/>';
 	        else echo '<img src="'.base_path().path_to_theme().'/img/project_bg.png" style="visibility:hidden;" />';	?>
 	 </header>
 	</div>
@@ -66,6 +66,15 @@
   <?php if ($this->barrierefrei == '1') : ?>
   <p><span class="icon" style="padding:7px 2px;"><img style="width:32px;" src="<?= base_path().path_to_theme(); ?>/img/accessibility_icon_white.svg" /></span><?= t('Barrierefreier Zugang'); ?></p>
   <div class="divider"></div>
+  <?php endif; ?>
+
+  <?php if (!empty($this->twitterFeed)) : ?>
+  <p><span class="icon twitter-icon"><img src="<?= base_path().path_to_theme(); ?>/img/social-twitter-blue.svg" /></span><a href="<?= $this->twitterFeed; ?>" target="_blank">@blakeks auf Twitter</a></p>
+ 	<div class="divider"></div>
+  <?php endif; ?>
+  
+  <?php if (!empty($this->fbFeed)) : ?>
+  <p><span class="icon fb-icon"><img src="<?= base_path().path_to_theme(); ?>/img/social-facebook-blue.svg" /></span><a href="<?= $this->fbFeed; ?>" target="_blank">Akteur auf Facebook</a></p>
   <?php endif; ?>
 
 	<?php if ($this->showMap) : ?>
@@ -135,6 +144,8 @@
      <?php else : ?>
       <p><i><?= t('Hier wurde leider noch keine Beschreibung angelegt'); ?> :(</i></p>
      <?php endif; ?>
+
+	 
     </div>
 
     <?php if (!empty($this->events)) : ?>

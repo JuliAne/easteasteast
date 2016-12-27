@@ -197,9 +197,9 @@ class kalender extends aae_data_helper {
 
    return
      '<div class="header">'.
-       '<a class="prev" href="'.base_path().'ajax/getKalender/?month=' . sprintf('%02d',$preMonth) . '&year=' . $preYear . $filterParam .'" rel="nofollow"><<</a>'.
-        '<span class="title">' . date('Y M',strtotime($this->currentYear . '-' . $this->currentMonth . '-1')) . '</span>'.
-       '<a class="next" href="'.base_path().'ajax/getKalender/?month=' . sprintf("%02d", $nextMonth) . '&year=' . $nextYear . $filterParam .'" rel="nofollow">>></a>'.
+       '<a class="prev" href="'.base_path().'ajax/getKalender/?month=' . sprintf('%02d',$preMonth) . '&year=' . $preYear . $filterParam .'" rel="nofollow">&#60;&#60;</a>'.
+        '<span class="title">' . date('M Y',strtotime($this->currentYear . '-' . $this->currentMonth . '-1')) . '</span>'.
+       '<a class="next" href="'.base_path().'ajax/getKalender/?month=' . sprintf("%02d", $nextMonth) . '&year=' . $nextYear . $filterParam .'" rel="nofollow">&#62;&#62;</a>'.
      '</div>';
  }
 

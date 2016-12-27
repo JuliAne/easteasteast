@@ -23,7 +23,7 @@
 
       <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="Auf Google+ teilen" class="g_plus button"><img alt="Google+" src="<?= base_path().$theme_path; ?>/img/social-googleplus-outline.svg"><span></span></a>
 
-      <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $title; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="Teile auf Diaspora / Friendica"><img alt="Federated networks" src="<?= base_path().$theme_path; ?>/img/social-diaspora.png"></a>
+      <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $title; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="Teile auf Diaspora / Friendica"><img alt="Federated networks" src="<?= base_path().$theme_path; ?>/img/social-diaspora.svg"></a>
 
     </div>
    </div>

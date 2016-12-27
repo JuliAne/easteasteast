@@ -4,7 +4,6 @@ $(document).ready(function(){
   * ACTIVATE SOME PLUGINS ONLY IF A MOBILE DEVICE
   * IS USED (640px)
 
-
  if($(window).width() < 640) {*/
 
   $('#hitMeScrollMe').click(function(){
@@ -12,8 +11,6 @@ $(document).ready(function(){
   });
 
   $('#fullpage').fullpage({
-	 /*anchors: ['images','home', 'blog', 'events', 'akteure', 'ueberuns'],
-	 sectionsColor: ['#FFF', '#F7F7F7', '#F7F7F7', '#F7F7F7', '#FFF'],*/
 	 scrollBar: true,
    navigation: true,
 	 navigationPosition: 'right',
@@ -26,6 +23,7 @@ $(document).ready(function(){
        $('#fp-nav').fadeOut('fast');
        $('#imgSlideSection').removeClass('blurme');
        $('#hitMeScrollMe').fadeIn('slow');
+        
       } else {
        $('#fp-nav').fadeIn('slow');
        $('#imgSlideSection').addClass('blurme');

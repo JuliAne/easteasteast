@@ -32,7 +32,7 @@
 
  </div><!-- /.row -->
 
-  <fieldset class="Adresse fieldset row">
+  <fieldset class="Adresse fieldset large-12 columns">
    <legend><?= t('Adresse'); ?></legend>
 
    <div class="large-4 columns">
@@ -68,16 +68,17 @@
 
    <div class="large-4 columns">
 
-  <label><?= t('Bezirk'); ?> <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>: <?= $this->fehler['ort']; ?>
+    <label><?= t('Bezirk'); ?> <span class="pflichtfeld">(<?= t('Pflichtfeld'); ?>)</span>: <?= $this->fehler['ort']; ?>
 
-  <select name="adresse[bezirk]">
-   <option value="" <?= (empty($this->adresse->bezirk) ? ' selected="selected"' : ''); ?>>- <?= t('Bezirk auswählen'); ?> -</option>
-   <?php foreach ($this->allBezirke as $bezirk) : ?>
-    <option value="<?= $bezirk->BID; ?>"<?= ($bezirk->BID == $this->adresse->bezirk ? ' selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
-   <?php endforeach; ?>
-  </select>
-  </label>
- </div>
+     <select name="adresse[bezirk]">
+      <option value="" <?= (empty($this->adresse->bezirk) ? ' selected="selected"' : ''); ?>>- <?= t('Bezirk auswählen'); ?> -</option>
+      <?php foreach ($this->allBezirke as $bezirk) : ?>
+      <option value="<?= $bezirk->BID; ?>"<?= ($bezirk->BID == $this->adresse->bezirk ? ' selected="selected"' : ''); ?>><?= $bezirk->bezirksname; ?></option>
+      <?php endforeach; ?>
+     </select>
+   </label>
+
+  </div>
 
   <div class="large-4 columns">
   <label><?= t('Geodaten (Karte)'); ?>: <?= $this->fehler['gps']; ?>
@@ -119,7 +120,7 @@
   <div class="medium-3 columns">
     <ul class="tabs vertical" id="example-vert-tabs" data-tabs>
       <li class="tabs-title is-active"><a href="#pbild" aria-selected="true"><?= t('Akteurbild'); ?></a></li>
-      <li class="tabs-title"><a href="#prss"><?= t('RSS-Integration'); ?> <i>(Beta)</i></a></li>
+      <li class="tabs-title"><a href="#pfeeds"><?= t('Feeds-Integration'); ?> <i>(Beta)</i></a></li>
       <li class="tabs-title"><a href="#psonstiges"><?= t('Sonstige Informationen'); ?></a></li>
     </ul>
     </div>
@@ -143,11 +144,31 @@
       <p class="licensetext">Wir übernehmen keinerlei Haftung für Schadensersatzforderung etc. in Bezug auf Dritte. Bildmaterial sollte vorher abgeklärt werden mit erkennbaren Menschen. Haftung übernimmt der Urheber.</p>
       <!-- END TODO -->
        </div>
-      <div class="tabs-panel" id="prss">
-        <img src="<?= base_path().path_to_theme(); ?>/img/rss.svg" style="width:18px;float:left;margin-right:10px;" />
-        <p>Hier haben Sie die Möglichkeit, einen bestehenden <strong>RSS-Feed</strong> (bspw. ihres Blogs) in das Profil einzubinden.</p>
-        <p class="licensetext" style="padding-bottom: 8px;">Hinweis: Nicht mit diesem Profil zusammenhängende Feeds können ggf. entfernt werden. Eine Aktualisierung des Feeds erfolgt im Tagestakt.</p>
-        <input type="url" name="rssFeed" placholder="URL zum RSS-Feed" value="<?= $this->rssFeed->url; ?>" />
+      <div class="tabs-panel" id="pfeeds">
+
+        <div class="large-12 columns">
+         <p>Hier haben Sie die Möglichkeit, externe Feeds in das Profil einzubinden.</p>
+         <p class="licensetext" style="padding-bottom: 8px;">Hinweis: Nicht mit diesem Profil zusammenhängende Feeds können ggf. entfernt werden. Eine Aktualisierung des Feeds erfolgt im Tagestakt.</p>
+         <?php if (!empty($this->fehler['rssFeed']) || !empty($this->fehler['fbFeed']) || !empty($this->fehler['twitterFeed'])) : ?>
+          <p><span class="pflichtfeld"><strong><?= t('Hinweis:'); ?> </strong><?=  $this->fehler['rssFeed'] . ' ' . $this->fehler['fbFeed'] . ' ' . $this->fehler['twitterFeed']; ?></span></p>
+         <?php endif; ?>
+         <label><img src="<?= base_path().path_to_theme(); ?>/img/rss.svg" style="width:17px;float:left;margin-right:10px;" /><strong>RSS-Feed</strong>
+          <input type="url" name="rssFeed" placeholder="URL zum RSS-Feed (bspw. Vereinsblog)" value="<?= $this->rssFeed->url; ?>" />
+         </label>
+        </div>
+
+        <div class="large-6 columns">
+         <label><img src="<?= base_path().path_to_theme(); ?>/img/social-facebook-blue.svg" style="width:19px;float:left;margin-right:10px;" /><strong>Facebook-Seite</strong>
+          <input type="url" name="fbFeed" placeholder="URL zur Facebook-Seite" value="<?= $this->fbFeed; ?>" />
+         </label>
+        </div>
+
+        <div class="large-6 columns">
+         <label><img src="<?= base_path().path_to_theme(); ?>/img/social-twitter-blue.svg" style="width:18px;float:left;margin-right:10px;" /><strong>Twitter</strong>
+          <input type="text" name="twitterFeed" placeholder="Nickname (ohne @)" value="<?= $this->twitterFeed; ?>" />
+         </label>
+        </div>
+
       </div>
 
       <div class="tabs-panel" id="psonstiges">

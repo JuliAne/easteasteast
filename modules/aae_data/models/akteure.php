@@ -45,6 +45,8 @@ Class akteure extends aae_data_helper {
  var $removedTags;
  var $removedPic;
  var $rssFeed = '';
+ var $fbFeed;
+ var $twitterFeed;
 
  public function __construct() {
 
@@ -206,6 +208,8 @@ Class akteure extends aae_data_helper {
   $this->removedPic = $data->removeCurrentPic;
   $this->barrierefrei = $data->barrierefrei;
   $this->rssFeed = $this->clearContent($data->rssFeed);
+  $this->fbFeed = $this->clearContent($data->fbFeed);
+  $this->twitterFeed = $this->clearContent($data->twitterFeed);
   $this->created = new \DateTime($data->created);
   $this->modified = new \DateTime($data->modified);
   $this->adresse = $data->adresse;
@@ -292,7 +296,7 @@ Class akteure extends aae_data_helper {
 	 $this->fehler['adresszusatz'] = t('Bitte geben Sie einen kürzeren Adresszusatz an.');
   }
 
-  if (strlen($this->adresse->plz) > 100) {
+  if (strlen($this->adresse->plz) > 6) {
 	 $this->fehler['plz'] = t('Bitte geben Sie eine kürzere PLZ an.');
   }
 
@@ -300,13 +304,24 @@ Class akteure extends aae_data_helper {
    $this->fehler['gps'] = t('Bitte geben Sie kürzere GPS-Daten an.');
   }
 
-  if (strlen($this->rssFeed) > 400 || preg_match('/\A(http:\/\/|https:\/\/)(\w*[.|-]\w*)*\w+\.[a-z]{2,3}(\/.*)*\z/',$this->rssFeed) == 0) {
-   # $this->fehler['rssFeed'] = t('Die URL zum RSS-Feed ist zu lang oder ungültig...');
+  if (strlen($this->rssFeed) > 256 /*|| preg_match('/\A(http:\/\/|https:\/\/)(\w*[.|-]\w*)*\w+\.[a-z]{2,3}(\/.*)*\z/',$this->rssFeed) == 0*/) {
+   #$this->fehler['rssFeed'] = t('Die URL zum RSS-Feed ist zu lang oder ungültig...');
+   #TODO: Allow URI's in different types.. maybe even check feed for its format...
+   $this->fehler['rssFeed'] = t('Die URL zum RSS-Feed ist zu lang...');
+  }
+
+  if (strlen($this->fbFeed) > 256 || preg_match('/\A(http:\/\/|https:\/\/)(\w*[.|-]\w*)*\w+\.[a-z]{2,3}(\/.*)*\z/',$this->fbFeed) == 0) {
+    $this->fehler['fbFeed'] = t('Die URL zum Facebook-Feed ist zu lang oder ungültig.');
+  }
+
+  if (strlen($this->twitterFeed) > 64) {
+    $this->fehler['twitterFeed'] = t('Dein Twitter-Nickname ist zu lang.');
   }
 
   if ($this->gps == 'Ermittle Geo-Koordinaten...') $this->gps = '';
 
   if (!empty($this->fehler)) {
+   # We should now throw an exception; however, this requires some more OOP-ishness of the code as a whole
    return $this->fehler;
   }
 
@@ -357,6 +372,8 @@ Class akteure extends aae_data_helper {
 	 'bild' => $this->bild,
 	 'beschreibung' => $this->beschreibung,
 	 'oeffnungszeiten' => $this->oeffnungszeiten,
+   'fbFeed' => $this->fbFeed,
+   'twitterFeed' => $this->twitterFeed,
    'barrierefrei' => (!empty($this->barrierefrei) && ($this->barrierefrei || $this->barrierefrei == 'on') ? 1 : 0),
 	 ), ($defaultAID ? array('AID', $defaultAID) : NULL), true);
     
@@ -475,8 +492,7 @@ Class akteure extends aae_data_helper {
 
  }
  
- /* TODO: Use native events-model-functions! */
- public function __removeAkteur($aId){
+ protected function __removeAkteur($aId){
      
   $resultAkteur = db_select($this->tbl_akteur, 'a')
    ->fields('a', array('name','bild'))
@@ -511,6 +527,8 @@ Class akteure extends aae_data_helper {
   db_delete($this->tbl_hat_sparte)
   ->condition('hat_AID', $aId)
   ->execute();
+
+  // TODO: Remove any feeds/data from other modules...
 
   // Remove profile-image (if possible)
   $bild = end(explode('/', $resultAkteur->bild));

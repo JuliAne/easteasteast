@@ -18,7 +18,7 @@
 
     <div class="jFooter large-12 columns">
      <div class="jAside">
-      <span><a href="<?= $url; ?>#comments"><?= $node->comment_count; ?> <?= ($node->comment_count != 0 ? t('Kommentare') : t('Kommentar')); ?></a></span><br /><span><?= t('Von'); ?> <strong><?= $node->name; ?></strong></span>
+      <span style="display:none;" ><a href="<?= $url; ?>#comments"><?= $node->comment_count; ?> <?= ($node->comment_count != 0 ? t('Kommentare') : t('Kommentar')); ?></a></span><br /><span><?= t('Von'); ?> <strong><?= $node->name; ?></strong></span>
      </div>
      <div id="share">
        <a target="_blank" href="https://twitter.com/intent/tweet?text=<?= $url; ?>" title="<?= t('Auf !network teilen',array('!network'=>'Twitter')); ?>" class="twitter"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/social-twitter.svg"><span></span></a>

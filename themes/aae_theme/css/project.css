@@ -38,6 +38,16 @@
  min-width: 369px;
 }
 
+#project .pcard header:after {
+ display: block;
+ position: absolute;
+ content: '';
+ background: rgba(0,0,0,0.3);
+ width: 30px;
+ height: 22px;
+ background: url(../img/see_more.svg);
+}
+
 #project .pcard header img {
   width:100%;
 }
@@ -51,7 +61,7 @@
 }
 
 #project #project-info p {
- padding: 5px 0 6px 60px;
+ padding: 5px 0 6px 30px;
  margin: 8px 0;
 }
 
@@ -60,17 +70,28 @@
  margin-bottom: 0;
 }
 
-#project #project-info span.icon {
+#project span.icon {
  background-color: #ce7e12;
  border-radius: 20px;
  padding: 7px 7px;
  /*box-shadow: 0 0 3px #ce7e12; */
- margin-right: 10px;
+ margin-right: 15px;
  float: left;
+ margin-top: 3px;
 }
 
-#project #project-info span.icon img {
+#project span.icon img {
  width: 20px;
+}
+
+#project span.icon.fb-icon {
+ background-color: unset;
+ border: 1px solid #2199e8;
+}
+
+#project span.icon.twitter-icon {
+ background-color: unset;
+ border: 1px solid #00cdff;
 }
 
 #project #project-buttons .button {

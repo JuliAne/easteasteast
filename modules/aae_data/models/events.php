@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\AaeData; # \events?
+namespace Drupal\AaeData;
 
 /*
 *  Small wannabe-model class that delivers methods
@@ -21,7 +21,7 @@ Class events extends aae_data_helper {
  }
 
  public function setEvent($data) {
-  # TODO, s. eventformular
+  # TODO, s. akteurformular
  }
 
  /**
@@ -98,11 +98,11 @@ Class events extends aae_data_helper {
    }
 
    $events->orderBy('start_ts', $orderBy);
-   $resultEvents = $events->execute()->fetchAllAssoc('EID');
+   $datas = $events->execute()->fetchAllAssoc('EID');
 
    // Format & add specific data from other tables...
 
-   foreach ($resultEvents as $event) {
+   foreach ($datas as $event) {
      
     $realEID = $event->EID;
 
@@ -111,16 +111,16 @@ Class events extends aae_data_helper {
      // Inherit from parent
      $parentData = db_select($this->tbl_event,'e')->fields('e')->condition('EID', $event->parent_EID);
      
-     $resultEvents[$realEID] = (isset($resultEvents[$event->parent_EID]) && !empty($resultEvents[$event->parent_EID]))
-     ? $resultEvents[$event->parent_EID]
+     $datas[$realEID] = (isset($datas[$event->parent_EID]) && !empty($datas[$event->parent_EID]))
+     ? $datas[$event->parent_EID]
      : $parentData->execute()->fetchAssoc(); # trigger DB-action $parentData
 
      $event->EID = $event->parent_EID;
 
     }
 
-    // Hack: add variables to $resultEvents-object
-    $resultEvents[$realEID] = (array)$resultEvents[$realEID];
+    // Hack: add variables to $datas-object
+    $datas[$realEID] = (array)$datas[$realEID];
 
     if ($fields == 'complete') {
       
@@ -128,7 +128,7 @@ Class events extends aae_data_helper {
 
       $childrenEvents = $this->getEvents(array('parent_EID' => $conditions['EID']), 'minimal', true);
       if (!empty($childrenEvents))
-        $resultEvents[$realEID]['childrenEvents'] = $childrenEvents;
+        $datas[$realEID]['childrenEvents'] = $childrenEvents;
      
      }
 
@@ -138,11 +138,11 @@ Class events extends aae_data_helper {
       ->execute()
       ->fetchObject();
 
-     $resultEvents[$realEID]['ersteller'] = $ersteller->name;
-     $resultEvents[$realEID]['adresse'] = $this->adressHelper->getAdresse($event->ort);
+     $datas[$realEID]['ersteller'] = $ersteller->name;
+     $datas[$realEID]['adresse'] = $this->adressHelper->getAdresse($event->ort);
 
      // Tags
-     $resultEvents[$realEID]['tags'] = $this->tagsHelper->getTags('events', array('hat_EID', $event->EID));
+     $datas[$realEID]['tags'] = $this->tagsHelper->getTags('events', array('hat_EID', $event->EID));
 
    }
    
@@ -160,7 +160,7 @@ Class events extends aae_data_helper {
       ->execute()
       ->fetchObject();
     
-     $resultEvents[$realEID]['akteur'] = $resultAkteur;
+     $datas[$realEID]['akteur'] = $resultAkteur;
 
      if (!empty($event->FID)) {
       // TODO: Outsource into festivals-model, ->get('normal')
@@ -169,21 +169,21 @@ Class events extends aae_data_helper {
        ->condition('FID', $event->FID)
        ->execute()
        ->fetchObject();
-      $resultEvents[$realEID]['festival'] = $resultFestival;
+      $datas[$realEID]['festival'] = $resultFestival;
      }
     }
 
-    $resultEvents[$realEID]['start'] = new \DateTime($event->start_ts);
-    $resultEvents[$realEID]['ende'] = new \DateTime($event->ende_ts);
-    $resultEvents[$realEID]['created'] = new \DateTime($event->created);
-    $resultEvents[$realEID]['modified'] = new \DateTime($event->modified);
-    $resultEvents[$realEID]['eventRecurresTill'] = new \DateTime($event->event_recurres_till);
-    $resultEvents[$realEID]['eventRecurringType'] = $event->recurring_event_type;
-    $resultEvents[$realEID] = (object)$resultEvents[$realEID];
+    $datas[$realEID]['start'] = new \DateTime($event->start_ts);
+    $datas[$realEID]['ende'] = new \DateTime($event->ende_ts);
+    $datas[$realEID]['created'] = new \DateTime($event->created);
+    $datas[$realEID]['modified'] = new \DateTime($event->modified);
+    $datas[$realEID]['eventRecurresTill'] = new \DateTime($event->event_recurres_till);
+    $datas[$realEID]['eventRecurringType'] = $event->recurring_event_type;
+    $datas[$realEID] = (object)$datas[$realEID];
 
   }
 
-  return $resultEvents;
+  return $datas;
 
  }
  
@@ -344,9 +344,9 @@ Class events extends aae_data_helper {
    }
   }
 
-  public function removeEvent($event_id){
+  public function __removeEvent($event_id){
 
-   $resultEvent = db_select($this->tbl_event, 'e')
+   $data = db_select($this->tbl_event, 'e')
     ->fields('e', array('bild','recurring_event_type'))
     ->condition('EID', $event_id)
     ->execute()
@@ -365,12 +365,13 @@ Class events extends aae_data_helper {
    ->execute();
 
    // remove children-items, if given
-   if (!empty($resultEvent->recurring_event_type)) {
+   if (!empty($data->recurring_event_type)) {
     $this->removeEventChildren($event_id);
    }
 
    // remove profile-image
-   $bild = end(explode('/', $resultEvent->bild));
+   // To be improved soon
+   $bild = end(explode('/', $data->bild));
 
    if (file_exists($this->short_bildpfad.$bild)) {
     @unlink($this->short_bildpfad.$bild);
@@ -404,13 +405,13 @@ Class events extends aae_data_helper {
 
     $numFilters++;
 
-    $resultEvents = db_query(
+    $datas = db_query(
     "SELECT EID, ADID
      FROM {aae_data_adresse} ad
      JOIN {aae_data_event} e
      WHERE ad.gps_long != '' AND ad.gps_lat != '' AND ad.ADID = e.ort");
 
-    foreach ($resultEvents->fetchAll() as $event){
+    foreach ($datas->fetchAll() as $event){
      $filteredEventIds[] = $event->EID;
     }
 
@@ -534,4 +535,35 @@ Class events extends aae_data_helper {
   return $this->getDuplicates($filteredEventIds, $numFilters);
    
  }
+ 
+ // TODO: Unnötiges Zeugs rauswerfen, am besten nach output von $data orientieren!
+ protected function __setSingleEventVars($data){
+   
+   $this->akteur = $data->akteur;
+   $this->festival = $data->festival;
+   $this->akteur_id = $data->akteur->AID;
+   $this->has_starting_time = ($data->start->format('s') == '01') ? true : false;
+   $this->has_ending_time = ($data->ende->format('s') == '01') ? true : false;
+   $this->name = $data->name;
+   $this->ort = $data->ort;
+   $this->start = $data->start; #->format('Y-m-d');
+   $this->ende = $data->ende; #->format('Y-m-d');
+   $this->starting_time = $data->start->format('H:i');
+   $this->ending_time = $data->ende->format('H:i');
+   $this->url = $data->url;
+   $this->bild = $data->bild;
+   $this->kurzbeschreibung = $data->kurzbeschreibung;
+   $this->created = $data->created;
+   $this->modified = $data->modified;
+   $this->eventRecurres = ($data->recurring_event_type >= 1);
+   $this->recurringEventType = $data->recurring_event_type;
+   $this->eventRecurresTill = $data->eventRecurresTill->format('Y-m-d');
+	 $this->adresse = $data->adresse;
+   $this->adresse->gps = (!empty($data->adresse->gps_lat)) ? $data->adresse->gps_lat.','.$data->adresse->gps_long : '';
+   $this->FID = $data->FID;
+   $this->ersteller = $data->ersteller;
+   $this->tags = $data->tags;
+
+ }
+
 }

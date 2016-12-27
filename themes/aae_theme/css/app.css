@@ -119,9 +119,14 @@ button.button, #actions {
   padding-top: 11px;
 }
 
-/*#alert.drupal-error {
-  height: auto;
-}*/
+.form-required {
+  color: red;
+}
+
+#user-register-form, #contact-site-form {
+  margin: 0 auto;
+  width: 68%;
+}
 
 #alert.drupal-error h2 {
   font-size: 1em;
@@ -284,6 +289,18 @@ input[type=submit].isSubmitButton{
 #mainnav.scrolled #actions {
  margin-top: 4px;
 }
+
+.front #mainnav .region-mainnav {width:auto;opacity:1;transition:all 0.4s;}
+.front #mainnav #actions {margin-left:0;opacity:1;transition:all 0.4s;}
+.front #mainnav.scrolled .region-mainnav {width:0;opacity:0;overflow:hidden;}
+.front #mainnav.scrolled #actions {position:relative;margin-left:500px;opacity:0;}
+.front #mainnav{transition:all 0.4s;}
+.front #mainnav.scrolled {background:rgba(255,255,255,0);border-bottom:unset;}
+.front #mainnav label { display:none;margin-left:95px; }
+.front #mainnav label:after { position:absolute;content:"\2261";font-size:2.7em;padding:3px;color:#fff; }
+.front #mainnav.scrolled label { display:block; }
+/*.front #mainnav.scrolled label:after {display:block;}*/
+
 
 #mainnav ul.menu {
  list-style: none !important; /* Overwrites Drupal-CSS */
@@ -462,6 +479,9 @@ transform: rotate(-10deg);
   padding: 0 0 6px 0 !important;
 }
 
+.tabs {
+  border: unset;
+}
 .tabs-title {
   background: #e6e6e6;
   border-bottom: 1px solid #e6e6e6;
@@ -469,10 +489,12 @@ transform: rotate(-10deg);
 .tabs-title > a:focus, .tabs-title > a[aria-selected="true"] {
   background: #fff;
 }
-.tabs-title:not(.is-active){
-  border-left: 1px solid #ecedec;
+.tabs-title > a {
+  padding: 1.25rem 2.5rem;
 }
-
+.tabs-title:not(.is-active){
+  border-left: 1px solid #fff;
+}
 .tabs-title.is-active {
   border-bottom: 1px solid #2199e8;
 }
@@ -729,7 +751,7 @@ transform: rotate(-10deg);
 
 .pcard h3 {
  padding-top: 13px;
- background-color: rgba(255,255,255,0.8);
+ background-color: rgba(255,255,255,0.85);
  font-size: 0.9em;
  text-align: center;
  line-height: 1.6em;
@@ -1115,12 +1137,26 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
  list-style: none !important;
 }
 
+#footer #block-system-main-menu ul li:hover {
+ background:rgba(255,255,255,0.15);
+}
+
 #footer #block-system-main-menu ul .expanded .menu {
   display: none;
 }
 
-#footer #block-system-main-menu ul li:last-child {
+#footer #block-system-main-menu ul li#social-networks {
  border-bottom: none;
+ height: 48px;
+}
+
+#footer #block-system-main-menu ul li#social-networks a {
+ width: 50%;
+ float: left;
+}
+
+#footer #block-system-main-menu ul li#social-networks a:last-child {
+ border-left: 1px solid #fff;
 }
 
 #footer #mini-nav .side-nav {
@@ -1339,9 +1375,10 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   #fp-nav {display:none !important;}
   #mainnav #actions {margin-right: 10px;}
   #fullpage { margin-top: 40px;}
-  #fullpage #slideSection h1 { padding-top:10px;padding-bottom:30px; }
-  #hitMeScrollMe {display:none;}
+  #fullpage #slideSection h1 { padding-top:10px;padding-bottom:30px;font-size:2.4em !important; }
+  #hitMeScrollMe {display:none !important;}
   .fp-slides .slide {background-size:300% !important;}
+  .fp-tableCell {padding:8px;}
   #fullpage .section {font-size:0.9em;}
   #fullpage .pcard {width:47% !important;}
   #fullpage #hitMeScrollMe {width:60px !important;height:60px !important;left:42% !important;padding:4px 9px !important;margin-top:-87px !important;}
@@ -1350,32 +1387,36 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   #project #project-content h1 { position: absolute;top:-100px; }
   .aaeEvent .content:before {opacity:0!important;}
   .fp-controlArrow { top: 18% !important; }
-  .fp-controlArrow.fp-prev { border-width: 23.5px 26px 23.5px 0!important;left:unset !important;right:56px; }
-  .fp-controlArrow.fp-next { border-width: 23.5px 0 23.5px 26px!important; }
+  .fp-controlArrow.fp-prev { border-width: 21.5px 21px 21.5px 0!important;left:unset !important;right:54px; }
+  .fp-controlArrow.fp-next { border-width: 21.5px 0 21.5px 21px!important; }
   #footer {background-size:350%;}
   #imgSlideSection .slide {  background-position: top center; }
-  section#journal .large-2.columns { width: 25% !important;height: 150px; }
+  section#journal .large-2.columns { width: 25% !important;height:83px; }
   section#journal .large-8.columns { min-height:auto !important;}
   #projects-akteure .pcard { float:none !important;display:inline-block;vertical-align:top; }
   #projects-akteure .pcard header { min-width:205px !important; }
   #footer #mini-nav {display:none;}
   .tagcloud { display:none; }
   #akteure .pcard { width: 41.66667%;overflow: hidden; }
-  #akteure .pcard header { min-width:205px !important; }
+  #akteure .pcard header { min-width:205px !important;height:100px !important; }
   .pageHeader {background-size:150% !important;background-position:top center !important;}
   #eventsPageHeader {color:#fff!important;}
   .large3-events { float: none;vertical-align: top;display: inline-block;max-width: 49%;}
   .aaeModal .aaeModalWrapper {width:85% !important;}
   .singlesite #footer {height:auto;background-repeat:repeat;}
-  .jEntryPrev { height:170px; }
+  .jEntry {margin-bottom:10px !important;}
+  .jEntry:last-child:not(:first-child) {float:unset !important;}
+  .jEntryPrev { height:95px; }
+  .section h1 {font-size:1.15em !important;padding-top:10px;}
+  #user-register-form { width: 95% !important; }
 
   #events #filter, #akteure #filter {margin-bottom:20px;}
   #events #filter .large-12, #akteure #filter #filterForm { display:none; }
   #events #filter #removeFilter, #akteure #filter #removeFilter {display:block;}
 
   #nav .region-mainnav { display: none; }
-  #nav label { display:block;margin-left:95px;margin-top:-6px; }
-  #nav label:after { position:absolute; content: "\2261";font-size:2.6em;padding:3px; }
+  #nav label { display:block;margin-left:95px;margin-top:-6px !important;display:block !important; }
+  #nav label:after { display:block;position:absolute;content:"\2261";font-size:2.6em;padding:3px;color:#484747 !important; }
   #nav input:checked ~ .region-mainnav { display: block; }
   #nav .region-mainnav ul { height: auto; position: absolute; background: #fff; left: 0;top: 60px;width: 75%;text-align: center;}
   #nav .region-mainnav ul li {width: 100%; float: none;}

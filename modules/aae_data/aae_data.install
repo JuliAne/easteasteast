@@ -35,6 +35,8 @@ function aae_data_schema() {
 	  'oeffnungszeiten' => array('description' => 'Wann der Akteur erreichbar ist', 'type' => 'varchar', 'length' => 200, 'not null' => FALSE, 'default' => ''),
 	  'adresse' => array('description' => 'Verweis auf Adresse', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => ''),
 	  'barrierefrei' => array('description' => 'Barrierefreier Zugang?', 'type' => 'int', 'size' => 'tiny', 'not null' => FALSE, 'default' => ''),
+	  'fbFeed' => array('description' => 'Link to FB-page', 'type' => 'varchar', 'length' => 256, 'not null' => FALSE),
+	  'twitterFeed' => array('description' => 'Username (without @)', 'type' => 'varchar', 'length' => 64, 'not null' => FALSE),
     'ersteller' => array('description' => 'ID von User, der Akteur angelegt hat', 'type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0),
     'created' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Created als Timestamp'),
     'modified' => array( 'type' => 'datetime', 'mysql_type' => 'datetime', 'not null' => FALSE, 'description' => 'Modified als Timestamp')
@@ -427,13 +429,27 @@ function aae_data_update_7107() {
 
 /**
  * Implements hook_update_N().
- * Add festival functionality to module (aae_data_festival & aae_data_akteur_festival),
- * add bezirksname "Stadtweit"
- * add aae_data_events.FID
+ * TODO: Add festival functionality to module (aae_data_festival & aae_data_akteur_festival),
+ * TODO: add bezirksname "Stadtweit"
+ * TODO: add aae_data_events.FID
+ * Add fbFeed & TwitterFeed to akteure-table
  */
-/*function aae_data_update_7108() {
+function aae_data_update_7108() {
 
-}*/
+  aae_install_clear_db_contents();
+
+  $newSchemaAkteure = array(
+   'fbFeed' => array('description' => 'Link to FB-page', 'type' => 'varchar', 'length' => 256, 'not null' => FALSE),
+	 'twitterFeed' => array('description' => 'Username (without @)', 'type' => 'varchar', 'length' => 64, 'not null' => FALSE),
+  );
+
+  foreach ($newSchemaAkteure as $key => $field)  {
+     if (!db_field_exists('aae_data_akteur', $key)) {
+       db_add_field('aae_data_akteur', $key, $field);
+     }
+   }
+
+}
 
 /**
  * Implements hook_install().

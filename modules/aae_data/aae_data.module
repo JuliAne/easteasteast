@@ -2,6 +2,8 @@
 
  $modulePath = drupal_get_path('module', 'aae_data');
  include_once $modulePath . '/aae_data_helper.php';
+
+ aae_data_get_update_fb_events();
  
 /*
 * Implements hook_data_cron()
@@ -9,7 +11,7 @@
 */
 function aae_data_cron() {
   aae_data_refresh_recurring_events();
-  #aae_data_refresh_facebook_events();
+#aae_data_get_update_fb_events
   aae_install_clear_db_contents();
 }
 
@@ -362,7 +364,7 @@ function admin_form_submit($form, $form_state) {
 
 function event_ics_download() {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/eventprofil.php';
+  include $modulePath . '/pages/eventprofil.php';
 
   $ics = new Drupal\AaeData\eventprofil();
   return $ics->ics_download();
@@ -374,7 +376,7 @@ function event_ics_download() {
 
 function akteur_vcard_download() {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/akteurprofil.php';
+  include $modulePath . '/pages/akteurprofil.php';
 
   $vcard = new Drupal\AaeData\akteurprofil();
   return $vcard->vcard_download();
@@ -385,7 +387,7 @@ function akteur_vcard_download() {
  */
 function akteure_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/akteurepage.php';
+  include $modulePath . '/pages/akteurepage.php';
 
   $akteur = new Drupal\AaeData\akteurepage();
   return $akteur->run();
@@ -396,7 +398,7 @@ function akteure_page() {
  */
 function akteurformular_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/akteurformular.php';
+  include $modulePath . '/pages/akteurformular.php';
 
   $akteur = new Drupal\AaeData\akteurformular();
 
@@ -408,7 +410,7 @@ function akteurformular_page() {
  */
 function akteurprofil_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/akteurprofil.php';
+  include $modulePath . '/pages/akteurprofil.php';
 
   $akteurprofil = new Drupal\AaeData\akteurprofil();
 
@@ -420,7 +422,7 @@ function akteurprofil_page() {
  */
 function akteuredit_page($aid = 0) {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/akteurformular.php';
+  include $modulePath . '/pages/akteurformular.php';
 
   $aae_akteur = new Drupal\AaeData\akteurformular('update');
 
@@ -435,7 +437,7 @@ function akteuredit_page($aid = 0) {
  */
 function akteurloeschen_page($eid=0) {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/akteurprofil.php';
+  include $modulePath . '/pages/akteurprofil.php';
 
   $aae_akteur = new Drupal\AaeData\akteurprofil();
 
@@ -444,8 +446,8 @@ function akteurloeschen_page($eid=0) {
 
 /* Festivals */
 function festivalformular_page($fid=0){
-   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/festivalformular.php';
+  $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/pages/festivalformular.php';
 
   $aae_akteur = new Drupal\AaeData\festivalformular();
 
@@ -457,7 +459,7 @@ function festivalformular_page($fid=0){
 
 function festivaledit_page($fid=0){
    $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/festivalformular.php';
+  include $modulePath . '/pages/festivalformular.php';
 
   $aae_akteur = new Drupal\AaeData\festivalformular('update');
 
@@ -470,7 +472,7 @@ function festivaledit_page($fid=0){
 function events_page($isBlock = false) {
   
   $modulePath = drupal_get_path('module', 'aae_data');
-  include_once $modulePath . '/eventspage.php';
+  include_once $modulePath . '/pages/eventspage.php';
   
   $event = new Drupal\AaeData\eventspage((!is_bool($isBlock)) ? false : $isBlock);
   return $event->run();
@@ -481,7 +483,7 @@ function events_page($isBlock = false) {
  */
 function events_rss() {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include_once $modulePath . '/eventspage.php';
+  include_once $modulePath . '/pages/eventspage.php';
 
   $event = new Drupal\AaeData\eventspage();
   return $event->rss();
@@ -492,10 +494,9 @@ function events_rss() {
  */
 function eventprofil_page() {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/eventprofil.php';
+  include $modulePath . '/pages/eventprofil.php';
 
   $aae_event = new Drupal\AaeData\eventprofil();
-
   return $aae_event->run();
 }
 
@@ -504,7 +505,7 @@ function eventprofil_page() {
  */
 function eventloeschen_page($eid = 0) {
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/eventprofil.php';
+  include $modulePath . '/pages/eventprofil.php';
 
   $aae_event = new Drupal\AaeData\eventprofil();
   return $aae_event->removeEvent();
@@ -516,7 +517,7 @@ function eventloeschen_page($eid = 0) {
 function eventedit_page($aid = 0) {
 
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/eventformular.php';
+  include $modulePath . '/pages/eventformular.php';
 
   $event = new Drupal\AaeData\eventformular('update');
 
@@ -532,7 +533,7 @@ function eventedit_page($aid = 0) {
 function eventformular_page() {
 
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/eventformular.php';
+  include $modulePath . '/pages/eventformular.php';
 
   $event = new Drupal\AaeData\eventformular();
 
@@ -540,6 +541,22 @@ function eventformular_page() {
   $path_alias = drupal_lookup_path('alias', $path);
 
   return $event->run();
+}
+
+function aae_data_get_update_fb_events() {
+   /* ob_start(); // Aktiviert "Render"-modus
+
+  $modulePath = drupal_get_path('module', 'aae_data');
+  include $modulePath . '/aae_connector.php'; // WUT?
+
+  $request = new Drupal\AaeData\aae_fb_connector();
+  $request->getUpdateFbEvents();
+  echo 'bla';
+      return ob_get_clean(); // Übergabe des gerenderten Templates
+
+  drupal_exit();
+  // / return*/
+
 }
 
 /**
@@ -550,7 +567,7 @@ function ajax_requests($id) {
   $id = (!empty($id) ? $id : NULL);
 
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/aae_data_ajax_requests.php';
+  include $modulePath . '/pages/aae_data_ajax_requests.php';
 
   $request = new Drupal\AaeData\aae_data_ajax_requests();
 
@@ -721,10 +738,11 @@ function aae_data_refresh_recurring_events(){
 
  # }
 }
-  
-/*
+
+/**
  * Implements hook_libraries_info().
- 
+ * TODO: Mark libraries-module as a requirenment
+ */ 
 function aae_data_libraries_info() {
   $libraries['facebook-php-sdk-v4'] = array(
     'name' => 'Facebook PHP SDK v4',
@@ -740,22 +758,7 @@ function aae_data_libraries_info() {
     },
   );
   return $libraries;
-} */
-
-function aae_data_refresh_facebook_events(){
-  /*
- use Facebook\FacebookSession;
-use Facebook\FacebookRedirectLoginHelper;
-use Facebook\FacebookSDKException;
-use Facebook\FacebookRequest;
-use Facebook\FacebookRequestException;
-use Facebook\GraphObject;
-
-  $login_helper = new FacebookRedirectLoginHelper($return_url);
-
-
- */
-} 
+}
 
 /**
  * Funktion zum Einlesen aller Stadtteile

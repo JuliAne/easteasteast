@@ -49,7 +49,7 @@ $sliders = array(
    'whiteText' => true,
    'blueButton' => array(
      'text' => '<span>Jetzt registrieren!</span>',
-     'link' => base_path().'user/register'
+     'link' => base_path().'nutzer/register'
    )
  )
 

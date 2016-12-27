@@ -1,6 +1,5 @@
 <aside id="alert" class="drupal-error" style="display:<?= (!empty($messages) && !strpos($messages, 'Warning') && !strpos($messages,'temporary') && !strpos($messages, 'session') ? 'block' : 'none'); ?>;">
- <div id="alert-content"><?php if(!empty($messages) && !strpos($messages, 'Warning') && !strpos($messages, 'session')) : ?>
-<?php print($messages); ?><?php endif; ?></div>
+ <div id="alert-content"><?php if(!empty($messages) && !strpos($messages, 'Warning') && !strpos($messages, 'session')) : ?><?php print($messages); ?><?php endif; ?></div>
  <a href="#" class="close button hollow closeBtn" title="<?= t('Schliessen'); ?>">x</a>
 </aside>
 
@@ -16,8 +15,8 @@
 
  <nav id="nav" role="navigation" class="large-8 small-8 columns">
   <!-- for responsive menu (CSS only) -->
-  <input type="checkbox" id="responsive-menu" name="responsive-menu" class="show-for-small-only" title="<?= t('Zeige/Verstecke Menü'); ?>">
-  <label for="responsive-menu" onclick="javascript:$('#mainnav').removeClass('scrolled');"></label>
+  <input type="checkbox" id="responsive-menu" name="responsive-menu" class="show-for-small-only">
+  <label for="responsive-menu" onclick="javascript:$('#mainnav').removeClass('scrolled');" title="<?= t('Toggle Menü'); ?>"></label>
 
   <a href="<?= base_path(); ?>"><img id="logo" class="left" src="<?= base_path().path_to_theme(); ?>/img/logo_new_new.png" alt="Leipziger Ecken Logo" title="<?= t('Zur Startseite'); ?>" /></a>
 
@@ -62,20 +61,20 @@
       <div class="tabs-panel is-active" id="panelLogin">
        <?php print render($page['user_region']); ?>
        <?php if (module_exists('simple_fb_connect')) : ?>
-       <a href="<?= base_path(); ?>user/simple-fb-connect" class="small button large-12 columns hollow" title="<?= t('Mit Facebook anmelden') ?>"><img src="<?= base_path().path_to_theme(); ?>/img/social-facebook-blue.svg" /><?= t('Mit Facebook anmelden');?></a>
+       <a href="<?= base_path(); ?>nutzer/simple-fb-connect" class="small button large-12 columns hollow" title="<?= t('Mit Facebook anmelden') ?>"><img src="<?= base_path().path_to_theme(); ?>/img/social-facebook-blue.svg" /><?= t('Mit Facebook anmelden');?></a>
        <?php endif; ?>
-       <p><a href="<?= base_path(); ?>user/password" style="color:grey;"><?= t('Passwort vergessen?'); ?></a></p>
+       <p><a href="<?= base_path(); ?>nutzer/password" style="color:grey;"><?= t('Passwort vergessen?'); ?></a></p>
       </div>
       <div class="tabs-panel" id="panelRegister">
        <p><strong>Neu hier?</strong> Registriere Dich kostenfrei, um die Leipziger Ecken voll nutzen zu können und zu einem schöneren Platz für uns alle zu machen. <a href="<?= base_path(); ?>faq" title="FAQ öffnen">Zum "Wieso & warum?"</a></p><br />
-       <a href="<?= base_path(); ?>user/register" class="large-12 columns small button" title="<?= t('Jetzt registrieren'); ?>"><?= t('Registrieren'); ?></a>
+       <a href="<?= base_path(); ?>nutzer/register" class="large-12 columns small button" title="<?= t('Jetzt registrieren'); ?>"><?= t('Registrieren'); ?></a>
        <?php if (module_exists('simple_fb_connect')) : ?>
-       <a href="<?= base_path(); ?>user/simple-fb-connect" class="large-12 columns small hollow button" title="<?= t('Mit Facebook registrieren'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/social-facebook-blue.svg" /><?= t('Mit Facebook registrieren'); ?></a><p>
+       <a href="<?= base_path(); ?>nutzer/simple-fb-connect" class="large-12 columns small hollow button" title="<?= t('Mit Facebook registrieren'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/social-facebook-blue.svg" /><?= t('Mit Facebook registrieren'); ?></a><p>
        <?php endif; ?>
       </div>
      </div>
      <?php else : ?>
-     <p><a href="<?= base_path(); ?>user/<?= $user->uid; ?>/edit" style="color:grey;"><?= t('Einstellungen'); ?></a> | <a href="<?= base_path(); ?>user/logout" style="color:grey;"><?= t('Logout'); ?></a></p><br />
+     <p><a href="<?= base_path(); ?>nutzer/<?= $user->uid; ?>/edit" style="color:grey;"><?= t('Einstellungen'); ?></a> | <a href="<?= base_path(); ?>nutzer/logout" style="color:grey;"><?= t('Logout'); ?></a></p><br />
      <?php endif; ?>
 
     </div>
@@ -89,7 +88,7 @@
     <h3>Spread the word.</h3>
     <p>Wie im Kiez, so auch im Web: Die <strong>Leipziger Ecken</strong> leben vom Engagement und der Vielfältigkeit ihrer Benutzer. Wenn Dir dieser Ort gefällt, dann teile ihn auf diesem Wege ganz komfortabel via Mail Deinen Bekannten mit.</p>
     <br />
-    <p>Speicherung der Angaben nur zu Anmeldezwecken. Keine Weitergabe an Dritte. <a style="text-align:right;" href="<?= $base_path; ?>user/<?= $user->uid; ?>/invites">Offene Einladungen einsehen.</a></p>
+    <p>Speicherung der Angaben nur zu Anmeldezwecken. Keine Weitergabe an Dritte. <a style="text-align:right;" href="<?= $base_path; ?>nutzer/<?= $user->uid; ?>/invites">Offene Einladungen einsehen.</a></p>
     <div class="divider"></div>
     <?php print render($page['user_invite_by_mail']); ?>
     <a href="#" class="button secondary round closeBtn" title="<?= t('Fenster schliessen'); ?>">x</a>

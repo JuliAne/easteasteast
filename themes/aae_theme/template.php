@@ -1,5 +1,7 @@
 <?php
 
+// define('aae-version', 0.1);
+
 function aae_preprocess_html(&$variables) {
 
  // Add theme-specific meta-tags to HTML-head
@@ -241,11 +243,37 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
     $form['actions']['submit']['#attributes']['class'][] = 'small button';
     $form['actions']['submit']['#value'] = t('Suchen');
 
+  } else if ( TRUE === in_array( $form_id, array('user_register_form')) )  {
+
+    $form['actions']['submit']['#attributes']['class'][] = 'medium button';
+    $form['actions']['submit']['#value'] = t('Jetzt registrieren');
+
+    $form['cutomtext'] = array(
+        '#type' => 'item',
+        '#markup' => '<div class="callout">
+         <h5><strong>Registrierung</strong> | Hereinspaziert!</h5>
+         <br />
+         <p>Um auf den Leipziger Ecken Inhalte erstellen zu können, musst Du Dich (bzw. Deine Organisation/en) zunächst kostenfrei registrieren. Deine Nutzerdaten werden dabei verschlüsselt übertragen und selbstverständlich nicht an Dritte weitergegeben.</p>
+         <p><strong>Achtung:</strong> Aus diversen Gründen bitten wir darum, vorerst <strong>keine gewerblichen oder rein privaten</strong> Profile anzulegen!</p>
+         <br />
+         <p><a href="'. base_path(). 'nutzer/simple-fb-connect"><img alt="Facebook" src="'. base_path().path_to_theme() .'/img/social-facebook-blue.svg" style="width:20px;padding-right:6px;" />Mit Facebook registrieren.</a></p>
+        </div>',
+        '#weight' => -50,
+     );
+
+    $form['terms_of_use'] = array(
+     '#type' => 'checkbox',
+     '#title' => t('Ich habe oben stehendes gelesen und akzeptiert.'),
+     '#required' => TRUE,
+    );
+
   } else {
 
     $form['actions']['submit']['#attributes']['class'][] = 'small button';
     $form['actions']['submit']['#value'] = t('Absenden');
     $form['actions']['preview']['#attributes']['class'][] = 'small button secondary';
+    $form['actions']['cancel']['#attributes']['class'][] = 'small button secondary';
+
 
   }
  }
@@ -299,4 +327,14 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
 
  }
 }
+
+function aae_html_head_alter(&$head_elements) {
+  // Replace Drupal's "generator" meta-tag.
+  $generator = 'Leipziger Ecken';
+  $head_elements['system_meta_generator']['#attributes']['content'] = $generator;
+  if (isset($head_elements['system_meta_generator']['#attached']['drupal_add_http_header'][0][1])) {
+    $head_elements['system_meta_generator']['#attached']['drupal_add_http_header'][0][1] = $generator;
+  }
+}
+
 ?>

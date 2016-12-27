@@ -204,7 +204,7 @@ p.licensetext:hover {
   text-decoration: underline;
 }
 
-.aaeEvent .akteurData img {
+.aaeEvent .akteurData img, #eventprofil #akteurData img {
   width: 30px;
   height: 30px;
   border-radius: 18px;

@@ -140,8 +140,8 @@ Class aae_data_ajax_requests extends aae_data_helper {
   }
   
   /**
-   * @function removeEvent()
-   * TODO: Kann raus? Muss überarbeitet werden!
+   * @function removeEventChildren()
+   * TODO: REFACTORING!
    */
    public function removeEventChildren($eid){
     

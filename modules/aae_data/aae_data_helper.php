@@ -180,6 +180,7 @@ namespace Drupal\AaeData;
    /**
     * function render()
     * Returns a template file
+    * Similiar to Drupal's theme()
     *
     * @param $tpl : Path within current theme
     * @param $setVars : Array that'll be extracted
@@ -286,9 +287,13 @@ namespace Drupal\AaeData;
 
   } // end protected function getDuplicates
 
-  /* Helper method for INSERT- and UPDATE-actions
-     which forges a db_query from the given parameters
-     TODO (if required): Allow multiple $conditions */
+  /** __db_action()
+   *
+   * Helper method for INSERT- and UPDATE-actions
+   * which forges a db_query from the given parameters
+   * and adds timestamps.
+   * TODO (if required): Allow multiple $conditions
+   */
   protected function __db_action($tbl, $fields, $condition = NULL, $putTimestamp = false){
 
    if ($putTimestamp){
