@@ -1,4 +1,15 @@
 $(document).ready(function(){
+
+  var datePickerOptions = {
+   /* TODO get lang-vars from inline-code */
+   readonly_element : false,
+   direction : true,
+   format : 'Y-m-d',
+   days : ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+   months : ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
+   lang_clear_date : 'Löschen',
+   show_select_today : 'Heute'
+  };
  
   $('#eventSpartenInput').tokenize({
     displayDropdownOnFocus : true,
@@ -26,16 +37,16 @@ $(document).ready(function(){
    }
   });
 
-  $("#eventStartdatumInput,#eventEnddatumInput,.page-events-new #eventRecurresTill,.page-eventprofil-edit #eventRecurresTill").Zebra_DatePicker({
-    /* TODO get lang-vars from inline-code */
-    readonly_element : false,
-    direction : true,
-    format : 'Y-m-d',
-    days : ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
-    months : ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
-    lang_clear_date : 'Löschen',
-    show_select_today : 'Heute'
-   });
+  $('#eventEnddatumInput,.page-events-new #eventRecurresTill,.page-eventprofil-edit #eventRecurresTill').Zebra_DatePicker(
+   datePickerOptions
+  );
+
+  datePickerOptions['pair'] = $('#eventEnddatumInput');
+
+  $('#eventStartdatumInput').Zebra_DatePicker(
+   datePickerOptions
+  );
+
   
   $(document).on('change', '#eventBildInput,#akteurBildInput', function(){
    $(this).parent().find('label').html($(this).val());

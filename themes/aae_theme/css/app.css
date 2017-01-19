@@ -245,7 +245,7 @@ input[type=submit].isSubmitButton{
  height: 60px;
  width: 100%;
  border-bottom: 1px solid #ecedec;
- transition: 0.35s all;
+ transition: 0.25s all;
  top: 0;
  background: linear-gradient(to bottom, #fff 90%, #f9fafa);
 }
@@ -345,7 +345,8 @@ transform: rotate(-10deg);
  content: "▾";
  position: relative;
  float: right;
- font-size: 0.6em;
+ color: #7b7b7b;
+ font-size: 0.7em;
  margin-top: 12px;
  margin-left: 9px;
 }
@@ -422,7 +423,7 @@ transform: rotate(-10deg);
  padding-right: 6px;
 }
 
-.logged-in #mainnav #actions #search-button {
+.logged-in #mainnav #actions #search-button, .logged-in #mainnav #actions #searchByLocation {
  border-right: 1px solid #AA3912;
 }
 
@@ -647,6 +648,7 @@ transform: rotate(-10deg);
  font-weight: 400;
 }
 
+/* I guess this once was relevant for page--front only:
 #journal {
  background: url(../img/rabet_abends_ida_bg.jpg);
  background-size: 100%;
@@ -665,7 +667,7 @@ transform: rotate(-10deg);
 #projects-events {
  background: url(../img/ostspiele_fussball_ida.jpg);
  background-size: 100%;
-}
+} */
 
 #footer {
  background: url(../img/rabet_seil_kids_ida_bg.jpg);
@@ -714,12 +716,11 @@ transform: rotate(-10deg);
   width: 256px;
   height: 150px;
   background-position: center;
-  /* Make the background image cover the area of the <div>, and clip the excess */
   background-size: cover;
 }
 
 #projects-akteure .pcard header {
- min-width: 274px;
+ /*min-width: 274px;*/
 }
 
 .pcard .akteur-content p,  .pcard .akteur-content li {
@@ -775,12 +776,6 @@ transform: rotate(-10deg);
 
 .pcard section p {
  padding-top: 6px;
- opacity: 0.8;
- transition: opacity 0.25s;
-}
-
-.pcard:hover section p {
- opacity: 1;
 }
 
 .pcard section p strong {
@@ -1066,7 +1061,6 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 /*FOOTER section settings*/
 
 #footer {
- padding-top: 55px;
  min-height: 400px;
 }
 
@@ -1109,7 +1103,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 
 .singlesite #footer .row {
   margin:0 auto;
-  margin-top: 15px;
+  margin-top: 40px;
   margin-bottom:15px;
   position: relative;
   background: none;
@@ -1167,7 +1161,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   display: block !important;
 }
 
-#footer .row {
+#footer #footerContent {
   background-color: rgba(255,255,255,0.8);
   padding: 15px 20px 25px 20px;
   min-width: 350px;
@@ -1178,6 +1172,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 }
 
 #footer h4 {
+ color: #232323;
  padding: 10px 0 25px 0;
 }
 
@@ -1232,16 +1227,20 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 /*CALENDAR section settings*/
 
 #calendar .header {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 #calendar .header .title {
-  color: #333;
+  color: #232323;
 }
 
 #calendar .header a {
- margin: 8px;
- font-size: 0.7em;
+ margin: 6px 5px;
+ font-size: 0.65em;
+}
+
+#calendar .header a img {
+ width: 15px;
 }
 
 #calendar ul.label {
@@ -1253,7 +1252,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   width: 14%;
   padding: 6px;
   text-align: center;
-  border-right: 1px solid #fff;
+  border-right: 1px solid rgba(255,255,255,0.5);
 }
 
 #calendar ul.label li:last-child {
@@ -1353,9 +1352,18 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   letter-spacing: -2px;
 }
 
-#aae_calendar .header {
-  font-size: 1.2em;
-  text-align: center;
+#aaeCalendar .header {
+  font-size: 1.45em;
+  text-align: left;
+}
+
+#mini-calendar #aaeCalendar .header {
+  margin-top: 24px;
+  margin-bottom: 18px;
+}
+
+#mini-calendar #aaeCalendar .header a {
+  float: right;
 }
 
 #nav [type=checkbox] {
@@ -1370,7 +1378,13 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 	user-select: none;
 }
 
+@media only screen and (min-width: 64em){
+  /* desktop only */
+  #footer { padding-top: 55px; }
+}
+
 @media only screen and (max-width: 38em){
+  /* mobile only */
 
   #fp-nav {display:none !important;}
   #mainnav #actions {margin-right: 10px;}
@@ -1383,7 +1397,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   #fullpage .pcard {width:47% !important;}
   #fullpage #hitMeScrollMe {width:60px !important;height:60px !important;left:42% !important;padding:4px 9px !important;margin-top:-87px !important;}
   .popup { position: fixed;margin-top:28px !important;width:98% !important;margin-left:0 !important;left:0; }
-  #akteure-content { min-width:100% !important; }
+  #akteureContent { min-width:100% !important; }
   #project #project-content h1 { position: absolute;top:-100px; }
   .aaeEvent .content:before {opacity:0!important;}
   .fp-controlArrow { top: 18% !important; }
@@ -1401,27 +1415,24 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   #akteure .pcard header { min-width:205px !important;height:100px !important; }
   .pageHeader {background-size:150% !important;background-position:top center !important;}
   #eventsPageHeader {color:#fff!important;}
-  .large3-events { float: none;vertical-align: top;display: inline-block;max-width: 49%;}
   .aaeModal .aaeModalWrapper {width:85% !important;}
   .singlesite #footer {height:auto;background-repeat:repeat;}
   .jEntry {margin-bottom:10px !important;}
   .jEntry:last-child:not(:first-child) {float:unset !important;}
   .jEntryPrev { height:95px; }
-  .section h1 {font-size:1.15em !important;padding-top:10px;}
   #user-register-form { width: 95% !important; }
 
-  #events #filter, #akteure #filter {margin-bottom:20px;}
-  #events #filter .large-12, #akteure #filter #filterForm { display:none; }
-  #events #filter #removeFilter, #akteure #filter #removeFilter {display:block;}
-
+  .aaeEventTags, .aaeEventDate { max-width:unset !important; }
+}
+@media only screen and (max-width:64em){
+ /* tablet and downwards */
   #nav .region-mainnav { display: none; }
   #nav label { display:block;margin-left:95px;margin-top:-6px !important;display:block !important; }
   #nav label:after { display:block;position:absolute;content:"\2261";font-size:2.6em;padding:3px;color:#484747 !important; }
   #nav input:checked ~ .region-mainnav { display: block; }
-  #nav .region-mainnav ul { height: auto; position: absolute; background: #fff; left: 0;top: 60px;width: 75%;text-align: center;}
+  #nav .region-mainnav ul { height: auto;position:absolute;-ms-align-self: baseline;align-self:baseline;background: #fff;left: 0;top:60px;width:75%;text-align: center;}
   #nav .region-mainnav ul li {width: 100%; float: none;}
-  #nav ul li ul { position: static; }
-  .aaeEventTags, .aaeEventDate { max-width:unset !important; }
+  #nav .region-mainnav ul li ul { margin-left:0 !important;top:unset;width:100%; }
 }
 
 .pace {
@@ -1590,36 +1601,35 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   font-size: 1.45em;
 }
 
-#akteure-content {
+#akteureContent {
  /* Prevents stalactite.js-inline-CSS */
  width: 75% !important;
 }
 
-#akteure-content .pcard header{
+#akteureContent .pcard header{
 	border-bottom: 1px solid lightgrey;
 	display: table-cell;
 	vertical-align: middle;
-  	width: 256px;
-  	height: 150px;
-  	background-position: center;
-  	/* Make the background image cover the area of the <div>, and clip the excess */
-  	background-size: cover;
+  width: 256px;
+  height: 150px;
+  background-position: center;
+  background-size: cover;
 }
 
-#akteure-content section .akteur-content p, #akteure-content section .akteur-content li, .content .event-content li, .content .event-content p{
+#akteureContent section .akteur-content p, #akteureContent section .akteur-content li, .content .event-content li, .content .event-content p{
  padding-bottom: 0.7em;
  word-wrap: break-word;
  font-family: 'Lora', 'Open Sans', serif;
 }
 
-#akteure-content section .akteur-content ul li, .content .event-content ul li{
+#akteureContent section .akteur-content ul li, .content .event-content ul li{
  list-style-type: disc;
  font-size: 0.8em;
  line-height: 1.65em;
  list-style-position: inside;
 }
 
-#akteure-content section .akteur-content .weiterlesen, .content .event-content .weiterlesen {
+#akteureContent section .akteur-content .weiterlesen, .content .event-content .weiterlesen {
 	font-size: 12px;
   font-family: 'Lora', 'Open Sans', serif;
 }
@@ -1672,6 +1682,15 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   padding: 5px 11px;
   margin-top: -30px;
   float: right;
+}
+
+.aaeModal.onlyBgActive {
+  display: block;
+  z-index: 80;
+}
+
+.aaeModal.onlyBgActive .aaeModalWrapper {
+  display: none;
 }
 
 .button, .panel {
@@ -1759,7 +1778,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 .neustadtEvents #presentationFilter li a:hover {
   background-color: #61b8f1;
 }
-.neustadtEvents #events_content {
+.neustadtEvents #eventsContent {
  padding-bottom: 20px;
 }
 #neustadtIntro {

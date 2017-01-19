@@ -46,12 +46,18 @@
       <?php require_once DRUPAL_ROOT . '/sites/all/modules/aae_data/aae_blocks.php';
             $blocks = new Drupal\AaeData\aae_blocks();
             $myAkteure = $blocks->print_my_akteure();
+            $myAkteureIds = array();
 
-            if (!empty($myAkteure)) : ?>
-            <p><?= t('Meine Akteure'); ?>:</p>
-            <?php foreach($myAkteure as $myAkteur) : ?>
-            <p><a href="<?= base_path(); ?>akteurprofil/<?= $myAkteur[0]->AID; ?>"><?= $myAkteur[0]->name; ?></a></p>
-        <?php endforeach; endif; ?>
+       if (!empty($myAkteure)) : ?>
+       <p><?= t('Meine Akteure'); ?>:</p>
+        <?php foreach($myAkteure as $myAkteur) :
+        $myAkteureIds[] = $myAkteur[0]->AID; ?>
+        <p><a href="<?= base_path(); ?>akteurprofil/<?= $myAkteur[0]->AID; ?>"><?= $myAkteur[0]->name; ?></a></p>
+        <?php endforeach; ?>
+        <div class="divider"></div>
+        <p><a href="<?= base_path(); ?>events?UID=<?= $user->uid; ?>&AID[]=<?= implode('&AID[]=',$myAkteureIds); ?>" title="<?= t('Auflistung aller mit meinen Profilen verknüpften Events'); ?>"><?= t('Auflistung meiner Events'); ?></a></p>
+        <div class="divider"></div>
+       <?php endif; ?>
         <a href="<?= base_path(); ?>akteure/new" class="large-12 columns small button" style="margin:5px 0;">+ <?= t('Akteur erstellen'); ?></a>
         <a href="<?= base_path(); ?>events/new" class="large-12 columns small hollow button">+ <?= t('Event erstellen'); ?></a>
      <?php endif; ?>

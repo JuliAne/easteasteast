@@ -567,7 +567,7 @@ function ajax_requests($id) {
   $id = (!empty($id) ? $id : NULL);
 
   $modulePath = drupal_get_path('module', 'aae_data');
-  include $modulePath . '/pages/aae_data_ajax_requests.php';
+  include $modulePath . '/aae_data_ajax_requests.php';
 
   $request = new Drupal\AaeData\aae_data_ajax_requests();
 
@@ -625,12 +625,13 @@ function aae_install_clear_db_contents() {
   
  }
  
- // Make "str." to "straße" & "ss" to "ß"
+ // Make "str." to "straße" & "ss" to "ß", remove invalid geodata
  $adressen = db_select($aae->tbl_adresse, 'a')
   ->fields('a')
   ->execute();
  
  foreach ($adressen->fetchAll() as $adresse){
+
   if (strpos($adresse->strasse, 'str.')){
    db_update($aae->tbl_adresse)
     ->fields(array(
@@ -638,6 +639,7 @@ function aae_install_clear_db_contents() {
     ))
     ->condition('ADID', $adresse->ADID)->execute();
   }
+  
   if (strpos($adresse->strasse, 'strasse')){
    db_update($aae->tbl_adresse)
     ->fields(array(
@@ -645,6 +647,17 @@ function aae_install_clear_db_contents() {
     ))
     ->condition('ADID', $adresse->ADID)->execute();
   }
+
+  if ($adresse->gps_lat == 'Ermittle Geo-Koordinaten...'){
+   db_update($aae->tbl_adresse)
+    ->fields(array(
+     'gps_lat' => '',
+     'gps_long' => ''
+    ))
+    ->condition('ADID', $adresse->ADID)->execute();
+  }
+  // TODO: Check if geoData is in radius to Leipzig!
+
  }
 
  $tags->removeDoubleTags();

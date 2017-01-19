@@ -1,4 +1,4 @@
-#contentRow, #contentRow .row {
+#contentRow, #contentRow .row:not(#footerContent) {
  padding: 0 0 !important;
 }
 
@@ -6,7 +6,7 @@
  margin-bottom: 170px;
 }
 
-.region-content .row {
+.region-content .row:not(.aaeEvent) {
   margin: 0 auto;
 }
 
@@ -31,14 +31,18 @@
 }
 
 #project .pcard header {
- height: auto;
  background-size: 100%;
  background-color: none !important;
  padding-top: 0;
  min-width: 369px;
 }
 
-#project .pcard header:after {
+#project #event-data .pcard header, #project aside .pcard header {
+ height: auto;
+
+}
+
+/*TODO:#project .pcard header:after {
  display: block;
  position: absolute;
  content: '';
@@ -46,7 +50,7 @@
  width: 30px;
  height: 22px;
  background: url(../img/see_more.svg);
-}
+} */
 
 #project .pcard header img {
   width:100%;
@@ -134,7 +138,7 @@
   color: #fff;
 }
 
-#project #project-content h3 {
+#project #project-content h3:not(#akteurCard) {
  padding-top: 15px;
  padding-bottom: 22px;
  font-size: 1.6em;
@@ -142,6 +146,10 @@
 
 #project #project-content p, #project .event-content li, #project .akteur-content li{
  padding-bottom: 0.7em;
+}
+
+#project #eOrganizator .pcard header {
+ display: block;
 }
 
 #project .event-content ul, #project .akteur-content ul, #project .event-content ol, #project .akteur-content ol{

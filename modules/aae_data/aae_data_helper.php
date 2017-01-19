@@ -10,7 +10,7 @@ namespace Drupal\AaeData;
   *
   */
 
-  spl_autoload_register(array((new aae_data_helper), 'aae_autoload'));
+ spl_autoload_register(array((new aae_data_helper), 'aae_autoload'));
 
  Class aae_data_helper {
 
@@ -101,8 +101,8 @@ namespace Drupal\AaeData;
 
     $class = explode('\\', $class)[2];
     include_once('models/'. $class .'.php');
+    // Run above within catch-block
     $class = __NAMESPACE__ . '\\' . $class;
-   # $this->{$class} = new $class();
 
    }
 
@@ -266,11 +266,12 @@ namespace Drupal\AaeData;
 
   }
 
-  protected function getAllBezirke() {
+  public function getAllBezirke() {
 
     return db_select($this->tbl_bezirke, 'b')
      ->fields('b')
-     ->execute();
+     ->execute()
+     ->fetchAll();
 
   }
 

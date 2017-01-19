@@ -47,7 +47,7 @@ drupal_add_html_head($og_desc, 'og_description');*/
 </aside>
 
 <div id="events" class="neustadtEvents row">
-  <div id="events_content" class="large-12 small-12 columns">
+  <div id="eventsContent" class="large-12 small-12 columns">
 
    <ul class="tabs large-12 columns" id="events-tabs">
     <?php #$path = explode("/", current_path());

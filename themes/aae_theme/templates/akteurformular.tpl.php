@@ -128,7 +128,7 @@
     <div class="tabs-content vertical" data-tabs-content="example-vert-tabs">
      <div class="tabs-panel is-active" id="pbild">
       <label for="akteurBildInput" class="button"><?= t('Bild hochladen'); ?>...</label>
-      <input type="file" id="akteurBildInput" name="bild" class="show-for-sr" />
+      <input type="file" id="akteurBildInput" name="bild" class="show-for-sr" accept="image/*" />
 
       <?php if (!empty($this->bild)) : ?>
        <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />

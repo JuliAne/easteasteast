@@ -132,6 +132,22 @@ $(document).ready(function() {
 
  });
 
+ var filterMenuToggled = false;
+
+ $('#filter #toggleFilterForm').click(function(){
+  if (filterMenuToggled) {
+   $('#filter #filterForm').slideUp(400);
+   $('#aaeModal').removeClass('onlyBgActive');
+   $(this).html('&#x25B4;');
+   filterMenuToggled = false;
+  } else {
+   $('#filter #filterForm').slideDown(400);
+   $('#aaeModal').addClass('onlyBgActive');
+   $(this).html('&#x25BE;');
+   filterMenuToggled = true;
+  }
+ });
+
  $('#inviteBtn').click(function(){
    $('#invite-modal').fadeIn('slow');
    setHandlers();
@@ -154,7 +170,7 @@ $(document).ready(function() {
    $('#calendar').fadeOut('slow');
 
    $.get($(this).attr('href'), function(data){
-     $('#aae_calendar').html(data);
+     $('#aaeCalendar').html(data);
      setHandlers();
    });
 

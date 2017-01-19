@@ -1,6 +1,6 @@
 <?php if (isset($resultKalender) && !empty($resultKalender)) : ?>
 
-  <div id="aae_calendar">
+  <div id="aaeCalendar">
    <?= $resultKalender; ?>
   </div>
 

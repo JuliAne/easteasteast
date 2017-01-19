@@ -184,9 +184,6 @@ class kalender extends aae_data_helper {
    }
  }
 
- /**
-  * create navigation
-  */
  private function _createNavi() {
 
    $nextMonth = $this->currentMonth==12?1:intval($this->currentMonth)+1;
@@ -194,13 +191,17 @@ class kalender extends aae_data_helper {
    $preMonth = $this->currentMonth==1?12:intval($this->currentMonth)-1;
    $preYear = $this->currentMonth==1?intval($this->currentYear)-1:$this->currentYear;
    $filterParam = (!empty($this->alreadyFilteredEIDs) ? '&EID[]='.implode('&EID[]=',$this->alreadyFilteredEIDs) : NULL);
+   $monthName = $this->monat_lang[sprintf("%02d", $this->currentMonth)];
 
    return
-     '<div class="header">'.
-       '<a class="prev" href="'.base_path().'ajax/getKalender/?month=' . sprintf('%02d',$preMonth) . '&year=' . $preYear . $filterParam .'" rel="nofollow">&#60;&#60;</a>'.
-        '<span class="title">' . date('M Y',strtotime($this->currentYear . '-' . $this->currentMonth . '-1')) . '</span>'.
-       '<a class="next" href="'.base_path().'ajax/getKalender/?month=' . sprintf("%02d", $nextMonth) . '&year=' . $nextYear . $filterParam .'" rel="nofollow">&#62;&#62;</a>'.
-     '</div>';
+     '<header class="header">'.
+       '<span class="title" title="'. t('!month', array('!month' => $monthName)) .' '. $this->currentYear .'">' . $monthName . ' ' . $this->currentYear . '.</span>'.
+       '<a class="next" href="'.base_path().'ajax/getKalender/?month=' . sprintf("%02d", $nextMonth) . '&year=' . $nextYear . $filterParam .'" rel="nofollow" title="'. t('Monat vor') .'">&#62;&#62;</a>'.
+       '<a title="'.t('Alle Events im Monat !month', array('!month' => $monthName)).'" href="'.base_path().'events?timespan='.sprintf("%02d",$this->currentMonth).'.'.$this->currentYear.'-'.sprintf("%02d",$nextMonth).'.'.$nextYear.'"><img src="'.base_path().path_to_theme().'/img/events-timeline-view.svg" /></a>'.
+       '<a class="prev" href="'.base_path().'ajax/getKalender/?month=' . sprintf('%02d',$preMonth) . '&year=' . $preYear . $filterParam .'" rel="nofollow" title="'. t('Monat zurück') .'">&#60;&#60;</a>'.
+     '</header>';
+
+     // MEMO: In .title there once was a date('Y', strtotime($this->currentYear . '-' . $this->currentMonth . '-1') 
  }
 
  /**

@@ -3,7 +3,7 @@
   <p>Lerne Vereine, Initiativen und Akteure aus dem Leipziger Osten kennen.</p>
 </header>
 
-<div id="akteure" class="row" style="padding-top:280px;">
+<div id="akteure" class="row">
 
  <aside class="aae-sidebar large-3 columns right">
 
@@ -15,14 +15,17 @@
 
   <div id="filter" class="large-12 columns">
 
-  <div class="large-12 columns" id="removeFilter">
+  <header class="large-12 columns">
    <h4 class="left"><?= t('Filter'); ?></h4>
-   <a class="small button right hide-for-medium" style="padding:4px 10px;margin-left:5px;" href="#" title="<?= t('Zeige Filter'); ?>" onclick="javascript:$('#filterForm').slideDown(400);">&#x25BE;</a>
-   <a class="small secondary button right" style="padding:4px 10px;" href="<?= base_path(); ?>akteure" title="<?= t('Alle Filter entfernen'); ?>">X</a>
-   <div class="divider hide-for-small-only"></div>
-  </div>
+   <a id="toggleFilterForm" class="small button right hide-for-large" style="margin-left:5px;" href="#" title="<?= t('Zeige Filter'); ?>">&#x25B4;</a>
+   <?php if (!empty($this->filter)) : ?>
+   <a class="small secondary button right" href="<?= base_path(); ?>akteure" title="<?= t('Alle Filter entfernen'); ?>">✗</a>
+   <?php endif; ?>
+   <div class="divider hide-for-small-only hide-for-medium-only"></div>
+  </header>
 
   <form id="filterForm" method="get" action="<?= base_path(); ?>akteure">
+  
    <div class="large-12 columns">
     <label for="filterKeyword"><?= t('Schlagwort'); ?>:</label>
     <input name="filterKeyword" id="filterKeywordInput" type="text" <?= (isset($this->filter['keyword']) ? 'value="'.$this->filter['keyword'].'"' : ''); ?>/>
@@ -56,9 +59,9 @@
    </select>
   </div>
 
-  <div id="change-style" class="large-7 columns">
+  <div id="changeStyle" class="large-7 small-6 columns">
    <ul id="presentationFilter" class="button-group round" style="margin-top:27px;">
-    <li><a href="#" name="boxen" class="small button <?= ($this->presentationMode !== 'map' ? 'active' : 'secondary'); ?>" title="<?= t('Normale Darstellung'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/ios-grid-view-outline.svg" /></a></li>
+    <li><a href="#" name="boxen" class="small button <?= ($this->presentationMode !== 'map' ? 'active' : 'secondary'); ?>" title="<?= t('Normale Darstellung'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/events-calendar-view.svg" /></a></li>
     <li><a href="#" name="map" class="small button <?= ($this->presentationMode == 'map' ? 'active' : 'secondary'); ?>" title="<?= t('Darstellung auf Karte'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/map.svg" /></a></li>
    </ul>
   </div>
@@ -70,7 +73,7 @@
  </form>
  </div>
 
- <div class="tagcloud akteure-tc large-12 columns">
+ <div class="tagcloud akteure-tc large-12 columns hide-for-small-only hide-for-medium-only">
   <h4><?= t('Bezirke nach Häufigkeit'); ?></h4>
   <ul>
    <?php foreach ($resultBezirkeRelevance as $bez) : ?>
@@ -81,7 +84,7 @@
 
 </aside>
 
-<div id="akteure-content" class="large-9 small-12 columns">
+<div id="akteureContent" class="large-9 small-12 columns">
 
  <?php if ($this->hasFilters) : ?>
  <ul class="tabs small-12 columns" data-tabs id="events-tabs" style="margin-bottom:22px;">
@@ -96,22 +99,22 @@
 
 <?php if (is_array($resultAkteure) && !empty($resultAkteure)) : ?>
 
-<?php foreach($resultAkteure as $akteur): ?>
+<?php foreach ($resultAkteure as $akteur): ?>
   <div class="large-4 large-offset-1 small-5 small-offset-1 columns pcard">
    <a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">
     <header <?= (!empty($akteur->bild) ? 'style="background-image:url('.$akteur->bild.');" ' : ''); ?>class="<?= ($akteur->renderSmallName ? 'renderSmallName ' : ''); ?><?= ($akteur->renderBigImg ? 'renderBigImg' : ''); ?>"></header>
    </a>
    <a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">
     <h3><?= $akteur->name; ?></h3>
-   </a>
+   </a> 
    <section>
-     <?php if (!empty($akteur->bezirk)) : ?><a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>"><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk->bezirksname; ?></p></a><?php endif; ?>
-     <?php if (!empty($akteur->beschreibung)): ?>
-      <div class="divider"></div>
-        <div class="akteur-content">
-          <p><?= $akteur->kurzbeschreibung; ?> <a class="weiterlesen" href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>"><?= t('...weiterlesen'); ?></a></p>
-        </div>
-     <?php endif; ?>
+   <?php if (!empty($akteur->bezirk)) : ?><a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>"><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk->bezirksname; ?></p></a><?php endif; ?>
+   <?php if (!empty($akteur->beschreibung)): ?>
+    <div class="divider"></div>
+    <div class="akteur-content">
+     <p><?= $akteur->kurzbeschreibung; ?> <a class="weiterlesen" href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>"><?= t('... zum Akteur'); ?></a></p>
+    </div>
+   <?php endif; ?>
    </section>
   </div>
  <?php endforeach; ?>

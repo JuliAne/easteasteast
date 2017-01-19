@@ -45,36 +45,37 @@
 
 	<div id="project-info" class="pcard">
 	<?php if (!empty($this->oeffnungszeiten)) : ?>
-	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" title="<?= t('Öffnunszeiten'); ?>" /></span><?= $this->oeffnungszeiten; ?></p>
+	 <p title="<?= t('Öffnungszeiten'); ?>"><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" /></span><?= $this->oeffnungszeiten; ?></p>
 	 <div class="divider"></div>
 	<?php endif; ?>
 
 	 <!-- TODO: Zu ergänzen mit "Bezirk" in strong-case's -->
   <?php if (!empty($this->adresse->strasse) || !empty($this->adresse->plz)) : ?>
    <div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" title="<?= t('Adresse'); ?>" /></span>
+	 <p title="<?= t('Adresse'); ?>"><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" /></span>
    <span itemprop="streetAddress"><?= $this->adresse->strasse; ?> <?= $this->adresse->nr; ?></span><br />
    <?php if (!empty($this->adresse->plz)) : ?><span itemprop="postalCode"><?= $this->adresse->plz; ?></span> <span itemprop="addressLocality">Leipzig</span></p><?php endif; ?>
    </div><div class="divider"></div>
   <?php endif; ?>
 
   <?php if (!empty($this->url) && $this->url != 'http://') : ?>
-	 <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/cloud_white.svg" /></span><a href="<?= $this->url; ?>" itemprop="sameAs" target="_blank"><?= str_replace('http://', '', $this->url);?></a></p>
+	 <p title="<?= t('Projektwebsite'); ?>"><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/cloud_white.svg" /></span><a href="<?= $this->url; ?>" itemprop="sameAs" target="_blank"><?= str_replace('http://', '', $this->url);?></a></p>
 	 <div class="divider"></div>
 	<?php endif; ?>
 
   <?php if ($this->barrierefrei == '1') : ?>
-  <p><span class="icon" style="padding:7px 2px;"><img style="width:32px;" src="<?= base_path().path_to_theme(); ?>/img/accessibility_icon_white.svg" /></span><?= t('Barrierefreier Zugang'); ?></p>
+  <p title="<?= t('Barrierefreier Zugang'); ?>"><span class="icon" style="padding:7px 10px;"><img style="width:15px;" src="<?= base_path().path_to_theme(); ?>/img/accessibility_icon_white.svg" /></span><?= t('Barrierefreier Zugang'); ?></p>
   <div class="divider"></div>
   <?php endif; ?>
 
   <?php if (!empty($this->twitterFeed)) : ?>
-  <p><span class="icon twitter-icon"><img src="<?= base_path().path_to_theme(); ?>/img/social-twitter-blue.svg" /></span><a href="<?= $this->twitterFeed; ?>" target="_blank">@blakeks auf Twitter</a></p>
+  <p title="<?= t('@!user auf Twitter',array('!user'=>$this->twitterFeed)); ?>"><span class="icon twitter-icon"><img src="<?= base_path().path_to_theme(); ?>/img/social-twitter-blue.svg" /></span><a href="https://twitter.com/<?= $this->twitterFeed; ?>" target="_blank"><?= t('@!user auf Twitter',array('!user'=>$this->twitterFeed)); ?></a></p>
  	<div class="divider"></div>
   <?php endif; ?>
   
   <?php if (!empty($this->fbFeed)) : ?>
-  <p><span class="icon fb-icon"><img src="<?= base_path().path_to_theme(); ?>/img/social-facebook-blue.svg" /></span><a href="<?= $this->fbFeed; ?>" target="_blank">Akteur auf Facebook</a></p>
+  <p title="<?= t('Akteur auf Twitter'); ?>"><span class="icon fb-icon"><img src="<?= base_path().path_to_theme(); ?>/img/social-facebook-blue.svg" /></span><a href="<?= $this->fbFeed; ?>" target="_blank"><?= t('Akteur auf Facebook'); ?></a></p>
+  <div class="divider"></div>
   <?php endif; ?>
 
 	<?php if ($this->showMap) : ?>
@@ -152,19 +153,20 @@
     <div class="tabs-panel" id="pevents">
      <div id="next-events">
 
-     <?php foreach ($this->events as $event) : ?>
+     <?php foreach (array_reverse($this->events) as $event) : ?>
      <?php $isOutdated = ($event->start->format('Ymd') < date('Ymd') ? true : false); ?>
       <div class="aaeEvent row<?= ($isOutdated ? ' outdated' : ''); ?>">
        <div class="date large-2 columns button secondary"><?= $event->start->format('d'); ?><br /><?= $this->monat_short[$event->start->format('m')]; ?></div>
-        <div class="content large-10 columns">
-         <p><a style="line-height:1.6em;" href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>"> <strong><?= $event->name; ?></strong></a>
-         <span class="right"><?= ($event->ende->format('H:i') !== '00:00' ? $event->start->format('H:i') : ''); ?><?= ($event->ende->format('H:i') !== '00:00' ? ' - '. $event->ende->format('H:i') : ''); ?></span></p>
+       <div class="content large-10 columns">
+        <p><a style="line-height:1.6em;" href="<?= base_path(); ?>eventprofil/<?= $event->EID; ?>"> <strong><?= $event->name; ?></strong></a>
+        <span class="right"><?= ($event->ende->format('H:i') !== '00:00' ? $event->start->format('H:i') : ''); ?><?= ($event->ende->format('H:i') !== '00:00' ? ' - '. $event->ende->format('H:i') : ''); ?></span></p>
          <?php if (!empty($event->kurzbeschreibung)): ?>
          <div class="divider"></div>
          <?php $numwords = 30; preg_match("/(\S+\s*){0,$numwords}/", $event->kurzbeschreibung, $regs); ?>
-         <p><?= trim($regs[0]); ?><a href="<?= base_path().'eventprofil/'.$event->EID; ?>">...</a></p>      
+         <p><?= strip_tags(trim($regs[0])); ?></p>
+         <p><a href="<?= base_path().'eventprofil/'.$event->EID; ?>">... <?= t('zum Event'); ?></a></p>      
          <?php endif; ?>
-        </div>
+       </div>
       </div>
       <?php endforeach; ?>
      </div>

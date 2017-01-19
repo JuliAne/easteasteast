@@ -2,16 +2,16 @@
 
  <div class="divider"></div>
 
- <div class="row">
+ <div id="footerContent" class="row">
 
  <div class="large-4 columns" id="about">
-  <h4><!--&Uuml;ber--><?= t('Über den Stadtteil.'); ?></h4>
+  <h4><?= t('Über den Stadtteil.'); ?></h4>
   <?php print render($page['footer']); ?>
  </div>
 
  <div class="large-4 columns" id="mini-nav">
   <h4>Schaltzentrale.</h4>
-  <!-- To replace with a native menu, replace with "print render($page['mainnav']);" -->
+  <?php // To replace with a native menu, call "print render($page['mainnav']);" ?>
   <div class="region region-mainnav">
     <div id="block-system-main-menu" class="block block-system contextual-links-region block-menu">
      <div class="content">
@@ -27,10 +27,7 @@
  </div>
 
  <div id="mini-calendar" class="large-4 columns">
-  <h4>Events.</h4>
-  <!--<div class="month-view"></div>-->
-
-   <div id="aae_calendar" style="margin-top:-15px;">
+   <div id="aaeCalendar" style="margin-top:-15px;">
    <?php $modulePath = drupal_get_path('module', 'aae_data');
          include_once $modulePath . '/kalender.php';
 
@@ -39,5 +36,15 @@
    </div>
  </div>
 
+ </div><!-- /#footerContent -->
+ 
+ <div class="row hide-on-small-only" style="display:none;">
+  <div class="large-3 columns">
+   <p>Teils unter Förderung von</p>
+  </div>
+  <div class="large-9 columns">
+  <img src="/sites/all/themes/aae_theme/img/sponsors.png" />
+  </div>
  </div>
+
 </section><!-- /#footer -->

@@ -26,7 +26,8 @@
  $style = 'style="';
  if (!empty($this->bild)) $style .= "background-image:url('".$this->bild."');";
  if ($this->showMap) $style .= "filter:none !important;-webkit-filter:none !important;padding-top:38px;";
- $style .= '"'; ?>
+ $style .= '"';
+ $this->seoName = str_replace(array('"',"'"),'',$this->name); ?>
 
 <header id="header" <?= $style; ?>>
  <?php if ($this->showMap) : ?><div id="map" style="height:280px;width:100%;margin-bottom:20px;"></div><?php endif; ?>
@@ -45,7 +46,7 @@
     <a target="_blank" href="https://twitter.com/intent/tweet?text=<?php global $base_url; echo $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Twitter')); ?>" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/social-twitter.svg"><span></span></a>
     <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Facebook')); ?>" class="fb button"><img alt="Facebook" src="<?= base_path().path_to_theme(); ?>/img/social-facebook.svg"><span></span></a>
     <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Google+')); ?>" class="g_plus button"><img alt="Google+" src="<?= base_path().path_to_theme(); ?>/img/social-googleplus-outline.svg"><span></span></a>
-    <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $this->name; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="<?= t('Auf !network teilen',array('!network'=>'Diaspora/Friendica')); ?>"><img alt="Federated networks" src="<?= base_path().path_to_theme(); ?>/img/social-diaspora.svg"></a>
+    <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $this->seoName . ' '. t('auf leipziger-ecken.de'); ?>&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="<?= t('Auf !network teilen',array('!network'=>'Diaspora/Friendica')); ?>"><img alt="Federated networks" src="<?= base_path().path_to_theme(); ?>/img/social-diaspora.svg"></a>
     </div>
    </div>
   </div>
@@ -54,7 +55,7 @@
  <div id="project" class="row" itemscope itemtype="http://schema.org/Event">
   <?php global $base_root; ?>
   <meta itemprop="url" content="<?= $base_root .'/eventprofil/'.$this->event_id; ?>" />
-  <meta itemprop="name" content="<?= $this->name; ?>" />
+  <meta itemprop="name" content="<?= $this->seoName; ?>" />
 
   <div id="event-data" class="large-4 columns">
     <div class="pcard">
@@ -65,20 +66,33 @@
     </div>
 
    <div id="project-info" class="pcard" style="margin-top:5px;">
-     <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" /></span>
-     <strong style="color:rgb(96,94,94);"><?= t('Start:'); ?> </strong><a href="<?= base_path(); ?>events/?day=<?= $this->start->format('Y-m-d'); ?>" rel="nofollow" itemprop="startDate" content="<?= $this->start->format('Y-m-dTH:i'); ?>"><?= $this->start->format('d.m.Y'); ?></a>
+     <p title="<?= t('Datum und Uhrzeit'); ?>"><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/clock_white.svg" /></span>
+     <strong style="color:rgb(60,60,60);"><?= t('Start:'); ?> </strong><a href="<?= base_path(); ?>events/?day=<?= $this->start->format('Y-m-d'); ?>" rel="nofollow" itemprop="startDate" content="<?= $this->start->format('Y-m-dTH:i'); ?>"><?= $this->dayNames[date('N', $this->start->getTimestamp())-1]; ?>, <?= $this->start->format('d.m.Y'); ?></a>
      <?= ($this->has_starting_time ? ', '.$this->starting_time .' '. t('Uhr') : ''); ?>
      <?php if ($this->ende->format('Ymd') !== '10000101' || $this->has_ending_time) : ?>
-       <br /><strong style="color:rgb(96,94,94);"><?= t('Bis:'); ?> </strong>
-       <?= ($this->ende->format('Ymd') !== '10000101' && $this->ende->format('Ymd') != $this->start->format('Ymd') ? '<a href="'.base_path().'events/?day='.$this->ende->format('Y-m-d').'" rel="nofollow" itemprop="endDate" content="'.$this->ende->format('Y-m-dTH:i').'">'.$this->ende->format('d.m.Y').'</a>' : ''); ?>
-       <?= ($this->has_ending_time ? ' '. $this->ending_time .' '. t('Uhr') : ''); ?></p>
-    <?php endif; ?>
-
-   <?php if (!empty($this->adresse)) : ?>
+      <br /><strong style="color:rgb(60,60,60);"><?= t('Bis:'); ?> </strong>
+      <?= ($this->ende->format('Ymd') !== '10000101' && $this->ende->format('Ymd') != $this->start->format('Ymd') ? '<a href="'.base_path().'events/?day='.$this->ende->format('Y-m-d').'" rel="nofollow" itemprop="endDate" content="'.$this->ende->format('Y-m-dTH:i').'">'. $this->dayNames[date('N', $this->ende->getTimestamp())-1]. ', '. $this->ende->format('d.m.Y').'</a>' : ''); ?>
+      <?= ($this->has_ending_time ? ' '. $this->ending_time .' '. t('Uhr') : ''); ?></p>
+     <?php endif; ?>
     <div class="divider"></div>
 
+    <?php if (!empty($this->adresse)) : ?>
+
+    <div itemscope itemprop="location" itemtype="http://schema.org/Place">
+
+    <?php if (!empty($this->adresse->gps_lat)) : ?>
+    <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
+     <meta itemprop="latitude" content="<?= $this->adresse->gps_lat; ?>" />
+     <meta itemprop="longitude" content="<?= $this->adresse->gps_long; ?>" />
+    </div>
+    <?php endif; ?>
+
     <div id="address" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-     <p><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg" title="Adresse"></span>
+     <p title="Adresse"><span class="icon"><img src="<?= base_path().path_to_theme(); ?>/img/location_white.svg"></span>
+    
+    <?php if (!empty($this->akteur->name)) : ?>
+     <meta itemprop="name" content="<?= str_replace(array('"',"'"),'',$this->akteur->name); ?>" />
+    <?php endif; ?>
 
     <?php if (!empty($this->adresse->strasse) && !empty($this->adresse->nr)) : ?>
      <span itemprop="streetAddress"><?= $this->adresse->strasse .' '. $this->adresse->nr; ?>,</span>
@@ -92,7 +106,7 @@
     <?= $this->adresse->bezirksname; ?>
    <?php endif; ?>
 
-    </p></div><?php endif; ?>
+    </p><div class="divider"></div></div></div><?php endif; ?>
 
     <?php if (!empty($this->childrenEvents)) : ?>
      <div class="divider"></div>
@@ -129,7 +143,7 @@
    </li>
    <li id="activeEvent" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
      <a itemprop="item" href="<?= $base_url; ?>/eventprofil/<?= $this->event_id; ?>">
-     <span itemprop="name" title="<?= $this->name; ?>"><?= $this->name; ?></span></a>
+     <span itemprop="name" title="<?= $this->seoName; ?>"><?= $this->name; ?></span></a>
      <meta itemprop="position" content="2" />
    </li>
   </ol>
@@ -153,45 +167,48 @@
   <div class="large-12 columns tabs-content">
 
    <div class="tabs-panel is-active event-content" id="eDesc">
-   <?php if(!empty($this->kurzbeschreibung)) : ?>
-    <p itemprop="description"><?= $this->kurzbeschreibung; ?></p>
+   <?php if(!empty($this->kurzbeschreibung)) :
+         // Eventually we have to set a paragraph manually...
+         $startsWithTag = (preg_match('#<(.*)>(.*?)</(.*)>#', $this->kurzbeschreibung) === 1); ?>
+    <div itemprop="description"><?= (!$startsWithTag ? '<p>'.$this->kurzbeschreibung.'</p>' : $this->kurzbeschreibung); ?></div>
    <?php else : ?>
     <p><i><?= t('Hier wurde leider noch keine Beschreibung angelegt'); ?> :(</i></p>
-   <?php endif; ?>	 
+   <?php endif; ?>	
+   <?php if (!empty($this->url)) : ?>
+    <br /><p><strong><?= t('Weitere Informationen'); ?>: </strong><a href="<?= $this->url; ?>" itemprop="sameAs" target="_blank"><?= $this->url; ?></a></p>
+   <?php endif; ?> 
    </div>
 
    <div class="tabs-panel" id="eOrganizator">
-
-  <section itemscope itemprop="location" itemtype="http://schema.org/Place">
-
-  <?php if (!empty($this->adresse->gps_lat)) : ?>
-   <div itemprop="geo" itemscope itemtype="http://schema.org/GeoCoordinates">
-    <meta itemprop="latitude" content="<?= $this->adresse->gps_lat; ?>" />
-    <meta itemprop="longitude" content="<?= $this->adresse->gps_long; ?>" />
+    <?php if ($this->isOwner) : ?>
+    <p><strong><?= t('Erstellt von'); ?>:</strong> <?= $this->ersteller; ?> <?= t('am'); ?> <?= $this->created->format('d.m.Y'); ?></p>
+    <?php endif; ?>
+    <?php if (empty($this->akteur)) : ?>
+    <p><strong><?= t('Privater Veranstalter'); ?></strong> (<?= $this->ersteller; ?>)</p>
+    <?php elseif (isset($this->festival)) : ?>
+    <p><strong><?= t('Teil des'); ?> <a href="<?= base_path().$this->festival->alias; ?>" title="<?= t('Zur Festivalseite'); ?>"><?= $this->festival->name; ?></a></strong></p>
+    <?php else : ?>
+    <div class="large-12 columns pcard">
+    <a href="<?= base_path().'akteurprofil/'.$this->akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">
+     <header <?= (!empty($this->akteur->bild) ? 'style="background-image:url('.$this->akteur->bild.');"' : ''); ?>></header>
+    </a>
+    <a href="<?= base_path().'akteurprofil/'.$this->akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>">
+     <h3 id="akteurCard"><?= $this->akteur->name; ?></h3>
+    </a>
+    <section>
+    <?php if (!empty($this->akteur->bezirk)) : ?><a href="<?= base_path().'akteurprofil/'.$this->akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>"><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $this->akteur->bezirk->bezirksname; ?></p></a><?php endif; ?>
+    <?php if (!empty($this->akteur->beschreibung)): ?>
+     <div class="divider"></div>
+     <div class="akteur-content">
+      <p><?= strip_tags($this->akteur->kurzbeschreibung); ?> <a class="weiterlesen" href="<?= base_path().'akteurprofil/'.$this->akteur->AID; ?>" title="<?= t('Akteurprofil besuchen'); ?>"><?= t('... zum Akteur'); ?></a></p>
+     </div>
+    <?php endif; ?>
+    </section>
    </div>
-  <?php endif; ?>
-  
-   <?php if ($this->isOwner) : ?>
-   <p><strong><?= t('Erstellt von'); ?>:</strong> <?= $this->ersteller; ?> <?= t('am'); ?> <?= $this->created->format('d.m.Y'); ?></p>
    <?php endif; ?>
-
-   <?php if (empty($this->akteur)) : ?>
-   <p><strong><?= t('Privater Veranstalter'); ?></strong></p>
-   <?php elseif (isset($this->festival)) : ?>
-   <p><strong><?= t('Teil des'); ?> <a href="<?= base_path().$this->festival->alias; ?>" title="<?= t('Zur Festivalseite'); ?>"><?= $this->festival->name; ?></a></strong></p>
-   <?php else : ?>
-   <p><strong><?= t('Akteur'); ?>:</strong> <a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur->AID; ?>" title="<?= t('Akteurprofil von !username besuchen',array('!username'=> $this->akteur->name)); ?>" itemprop="name" content="<?= $this->akteur->name; ?>"><?= $this->akteur->name; ?></a></p>
-   <?php endif; ?>
+   </div>
 
    </div>
-  </div>
-
-
-  <?php if (!empty($this->url)) : ?>
-   <br /><p><strong><?= t('Weitere Informationen'); ?>: </strong><a href="<?= $this->url; ?>" itemprop="sameAs" target="_blank"><?= $this->url; ?></a></p>
-  <?php endif; ?>
-
-   </div></section>
   </div>
  </div><!-- /#project -->
 </div><!-- /#eventprofil -->

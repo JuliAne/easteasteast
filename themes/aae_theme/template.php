@@ -1,6 +1,7 @@
 <?php
 
 // define('aae-version', 0.1);
+// TODO: Implement mobileDetect-library/-module to save performance on some scripts
 
 function aae_preprocess_html(&$variables) {
 
@@ -101,11 +102,13 @@ function aae_preprocess_html(&$variables) {
 
   case ('node') :
 
-    $node = node_load(arg(1));
+   $node = node_load(arg(1));
 
-    if (drupal_is_front_page()) {
+   if (drupal_is_front_page()) {
 
      drupal_add_css(path_to_theme().'/css/page_front.css');
+     drupal_add_js('https://d3js.org/d3.v3.min.js', array('scope' => 'footer'));
+    // drupal_add_js(path_to_theme().'/js/sly.min.js', array('scope' => 'footer'));
      drupal_add_js(path_to_theme().'/js/jquery.fullPage.min.js', array('scope'=>'footer'));
      drupal_add_js(path_to_theme().'/js/home.js', array('scope' => 'footer'));
 
@@ -167,7 +170,7 @@ function aae_preprocess_html(&$variables) {
 
    } else {
 
-    $js = '$(window).ready(function(){$(".tokenize").tokenize({displayDropdownOnFocus:true,newElements:false});$("#akteure-content").stalactite({cssPrep:false,loader:"",duration:50});});';
+    $js = '$(window).ready(function(){$(".tokenize").tokenize({displayDropdownOnFocus:true,newElements:false});$("#akteureContent").stalactite({cssPrep:false,loader:"",duration:50});});';
 
     drupal_add_css(path_to_theme().'/css/jquery.tokenize.css');
     drupal_add_js(path_to_theme().'/js/jquery.tokenize.js', array('scope'=>'footer'));

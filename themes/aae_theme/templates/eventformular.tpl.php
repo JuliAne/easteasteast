@@ -61,25 +61,25 @@
    <legend><?= t('Datum'); ?></legend>
 
    <div class="large-3 columns">
-    <label>Start (Datum, <span class="pflichtfeld"><?= t('Pflichtfeld'); ?></span>): <?= $this->fehler['start']; ?>
+    <label><?= t('Start'); ?> (<?= t('Datum'); ?>, <span class="pflichtfeld"><?= t('Pflichtfeld'); ?></span>): <?= $this->fehler['start']; ?>
      <input type="date" id="eventStartdatumInput" name="start" value="<?= $this->start; ?>" placeholder="<?= t("Starttag")." (yyyy-mm-dd)"; ?>" required/>
     </label>
    </div>
 
    <div class="large-3 columns">
-    <label>Ende (Datum): <?= $this->fehler['ende']; ?>
+    <label><?= t('Ende'); ?> (<?= t('Datum'); ?>): <?= $this->fehler['ende']; ?>
      <input type="date" id="eventEnddatumInput" name="ende" value="<?= ($this->ende != '1000-01-01' ? $this->ende : ''); ?>" placeholder="<?= t("Endtag")." (yyyy-mm-dd)"; ?>">
     </label>
    </div>
 
    <div class="large-2 columns">
-    <label>Von... (Uhrzeit): <?= $this->fehler['zeit_von']; ?>
+    <label><?= t('Von'); ?>... (<?= t('Uhrzeit'); ?>): <?= $this->fehler['zeit_von']; ?>
      <input type="text" id="eventZeitvonInput" name="zeit_von" value="<?= ($this->hat_zeit_von ? $this->zeit_von : ''); ?>" placeholder="<?= t("Uhrzeit: hh:mm"); ?>">
     </label>
    </div>
 
    <div class="large-2 columns">
-    <label>...Bis (Uhrzeit): <?= $this->fehler['zeit_bis']; ?>
+    <label>...<?= t('Bis'); ?> (<?= t('Uhrzeit'); ?>): <?= $this->fehler['zeit_bis']; ?>
      <input type="text" id="eventZeitbisInput" name="zeit_bis" value="<?= ($this->hat_zeit_bis ? $this->zeit_bis : ''); ?>" placeholder="<?= t("Uhrzeit: hh:mm"); ?>" data-zdp_pair="#eventRecurresTill">
     </label>
    </div>
@@ -180,7 +180,7 @@
    <legend><?= t('Eventbild'); ?></legend>
 
     <label for="eventBildInput" class="button"><?= t('Bild hochladen'); ?>...</label>
-    <input type="file" id="eventBildInput" name="bild" class="show-for-sr" />
+    <input type="file" id="eventBildInput" name="bild" class="show-for-sr" accept="image/*" />
 
     <?php if (!empty($this->bild)) : ?>
     <input type="hidden" name="oldPic" value="<?= $this->bild; ?>" />

@@ -12,6 +12,8 @@ namespace Drupal\AaeData;
 
 Class events extends aae_data_helper {
 
+ var $allowDuplicates = false; // Will we filter (=reduce) the results [default] or count together (maximize)
+
  public function __construct() {
 
    parent::__construct();
@@ -141,7 +143,6 @@ Class events extends aae_data_helper {
      $datas[$realEID]['ersteller'] = $ersteller->name;
      $datas[$realEID]['adresse'] = $this->adressHelper->getAdresse($event->ort);
 
-     // Tags
      $datas[$realEID]['tags'] = $this->tagsHelper->getTags('events', array('hat_EID', $event->EID));
 
    }
@@ -154,23 +155,21 @@ Class events extends aae_data_helper {
       ->execute()
       ->fetchObject();
 
-     $resultAkteur = db_select($this->tbl_akteur, 'a')
-      ->fields('a',array('AID','name','bild'))
-      ->condition('AID', $akteurId->AID)
-      ->execute()
-      ->fetchObject();
+     $this->akteur = new akteure();
     
-     $datas[$realEID]['akteur'] = $resultAkteur;
-
+     $datas[$realEID]['akteur'] = $this->akteur->getAkteure(array('AID' => $akteurId->AID),'minimal')[$akteurId->AID];
+    
      if (!empty($event->FID)) {
-      // TODO: Outsource into festivals-model, ->get('normal')
+      // TODO: Outsource into festivals-model, ->get('normal'), check akteure-models first
       $resultFestival = db_select($this->tbl_festival, 'f')
        ->fields('f')
        ->condition('FID', $event->FID)
        ->execute()
        ->fetchObject();
+
       $datas[$realEID]['festival'] = $resultFestival;
      }
+     
     }
 
     $datas[$realEID]['start'] = new \DateTime($event->start_ts);
@@ -507,19 +506,50 @@ Class events extends aae_data_helper {
   
   if (isset($filter['AID'])) {
 
+   if (!is_array($filter['AID']))
+    $filter['AID'] = array($filter['AID']);
+
    $numFilters++;
 
-   $resultAkteur = db_select($this->tbl_akteur_events, 'ae')
-    ->fields('ae')
-    ->condition('AID', $filter['AID'])
-    ->execute()
-    ->fetchAll();
+   foreach ($filter['AID'] as $aid){
+
+    $resultAkteur = db_select($this->tbl_akteur_events, 'ae')
+     ->fields('ae')
+     ->condition('AID', $this->clearContent($aid))
+     ->execute()
+     ->fetchAll();
     
-   foreach ($resultAkteur as $akteur){
-    $filteredEventIds[] = $akteur->EID;
-   }
+    foreach ($resultAkteur as $akteur){
+     $filteredEventIds[] = $akteur->EID;
+    }
+
+   } 
    
   } // end AkteurID-Filter
+
+  if (isset($filter['UID'])) {
+   // Filter for events marked as "private" OR created by user
+
+   if (!is_array($filter['UID']))
+    $filter['UID'] = array($filter['UID']);
+
+   $numFilters++;
+
+   foreach ($filter['UID'] as $uid){
+
+    $resultUser = db_select($this->tbl_event, 'e')
+     ->fields('e')
+     ->condition('ersteller', $this->clearContent($uid))
+     ->execute()
+     ->fetchAll();
+    
+    foreach ($resultUser as $user){
+     $filteredEventIds[] = $user->EID;
+    }
+
+   } 
+   
+  } // end UserID-Filter
   
   if (!empty($filteredEventIds) && $fields == 'complete') {
    $filteredEventChildrenIds = db_select($this->tbl_event, 'e')
@@ -531,14 +561,19 @@ Class events extends aae_data_helper {
     $filteredEventIds[] = $child->EID;
    }
   }
+return $filteredEventIds;
 
+  if ($this->allowDuplicates){
+   return $filteredEventIds;
+  } else {
   return $this->getDuplicates($filteredEventIds, $numFilters);
-   
+  }
+
  }
  
  // TODO: Unnötiges Zeugs rauswerfen, am besten nach output von $data orientieren!
  protected function __setSingleEventVars($data){
-   
+
    $this->akteur = $data->akteur;
    $this->festival = $data->festival;
    $this->akteur_id = $data->akteur->AID;
@@ -562,6 +597,7 @@ Class events extends aae_data_helper {
    $this->adresse->gps = (!empty($data->adresse->gps_lat)) ? $data->adresse->gps_lat.','.$data->adresse->gps_long : '';
    $this->FID = $data->FID;
    $this->ersteller = $data->ersteller;
+  // $this->ersteller = user_load($data->ersteller);
    $this->tags = $data->tags;
 
  }

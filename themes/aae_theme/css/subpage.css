@@ -52,30 +52,26 @@ p.licensetext:hover {
 
 #filter #eventSubmit {float:none!important;margin-top:15px;}
 
-#removeFilter {
+#filter header {
   padding-top: 15px;
   margin-bottom: 8px;
 }
 
-#removeFilter .button {
+#filter header .button {
   padding: 4px 8px;
   background: #fff;
-  color: #777;
+  color: #595757;
   margin-right: 0;
 }
 
-#events_content h4 {
+#eventsContent h4 {
  color: grey;
  width: 100%;
  text-align: center;
- padding-bottom: 15px;
+ padding: 15px 0;
 }
-/*
-#events_content h4 ~ .date {
-  margin-top: 32px;
-}*/
 
-#events_content h4.heading-event {
+#eventsContent h4.heading-event {
   width:100%;
   text-align: center;
   color:grey;
@@ -352,6 +348,7 @@ p.licensetext:hover {
 
 #eventsPageHeader {
   background-image: url(../img/rabet_abends_ida.jpg);
+  background-position: bottom;
   color: #2d2d2d;
 }
 
@@ -368,7 +365,12 @@ p.licensetext:hover {
   background-size: 100%;
   background-position: center center;
 }
-#events_content #calendar .dates li {
+
+#events, #akteure {
+  padding-top: 280px;
+}
+
+#eventsContent #calendar .dates li {
   width: 14.2%;
   padding-right: 16px;
   padding-top: 35px;
@@ -379,7 +381,7 @@ p.licensetext:hover {
   transition: 0.3s background-color;
   margin: 0 !important;
 }
-#events_content #calendar .dates li:hover {
+#eventsContent #calendar .dates li:hover {
   background-color: #F1EFEF;
 }
 
@@ -389,4 +391,45 @@ p.licensetext:hover {
 .removeAppointment a:hover {
   color: red;
   padding-left: 4px;
+}
+
+@media only screen and (max-width: 64em){
+ /* styles for tablet-and-downwards. site-specific prefix: .page-events / .akteure-events */
+ #events, #akteure {
+  padding-top: 240px;
+ }
+
+ #akteure #akteureContent {
+  width: 100% !important;
+ }
+
+ #filter {
+  margin-bottom: 0 !important;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+ }
+
+ #filter header {
+  margin-bottom:0;
+ }
+
+ #filter header h4 {
+  font-size: 1.55em;
+  padding-top: 5px;
+ }
+
+ #filter header .button {
+  padding: 10px 17px; 
+ }
+
+ #filter #filterForm {
+  display: none;  
+ }
+
+ .pageHeader h2 {
+  font-size: 1.3em;
+ }
+
 }
