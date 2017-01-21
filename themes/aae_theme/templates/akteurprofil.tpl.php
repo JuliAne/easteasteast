@@ -14,18 +14,20 @@
   <?php if ($this->hasPermission): ?>
   <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/edit" title="<?= t('Akteur bearbeiten'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" /><?= t('Bearbeiten'); ?></a></div>
   <?php endif; ?>
-  <div class="large-6 columns right" style="text-align: right;">
-   <a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/vcard_download" title="Akteur als .vcard exportieren">Export (VCard)</a>
-   <a href="https://leipziger-ecken.de/contact" title="<?= t('Das Profil wurde unbefugt erstellt? Melden Sie sich hier.'); ?>" class="hide-for-small-only"><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" /><?= t('Melden'); ?></a>
-   <a href="#share" class="popup-link" title="Akteursseite in den sozialen Netzwerken posten"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" /><?= t('Teilen'); ?></a>
-   <div id="share" class="popup large-3 columns">
+  <nav class="large-6 columns right" style="text-align: right;">
+   <ul>
+    <li><a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/vcard_download" title="Akteur als .vcard exportieren">Export (VCard)</a>
+    <li><a href="https://leipziger-ecken.de/contact" title="<?= t('Das Profil wurde unbefugt erstellt? Melden Sie sich hier.'); ?>" class="hide-for-small-only"><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" /><?= t('Melden'); ?></a>
+    <li><a href="#share" class="popup-link" title="Akteursseite in den sozialen Netzwerken posten"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" /><?= t('Teilen'); ?></a>
+    <div id="share" class="popup large-3 columns">
      <a target="_blank" href="https://twitter.com/intent/tweet?text=<?php global $base_url;
  echo $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen', array('!network' => 'Twitter')); ?>" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/social-twitter.svg"><span></span></a>
      <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen', array('!network' => 'Facebook')); ?>" class="fb button"><img alt="Facebook" src="<?= base_path().path_to_theme(); ?>/img/social-facebook.svg"><span></span></a>
      <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen', array('!network' => 'Google+')); ?>" class="g_plus button"><img alt="Google+" src="<?= base_path().path_to_theme(); ?>/img/social-googleplus-outline.svg"><span></span></a>
      <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $this->name; ?> auf leipziger-ecken.de&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="<?= t('Auf !network teilen', array('!network' => 'Diaspora / Friendica')); ?>"><img alt="Federated networks" src="<?= base_path().path_to_theme(); ?>/img/social-diaspora.svg"></a>
-   </div>
-  </div>
+    </div>
+   </ul>
+  </nav>
  </div>
 </div><!-- /.aaeActionBar -->
 
@@ -35,6 +37,7 @@
  <meta itemprop="url" content="<?= $base_root.'/akteurprofil/'.$this->akteur_id; ?>" />
 
  <aside class="left large-4 columns">
+  <h3 id="mobileTitle" title="<?= t('Akteurprofil von !username', array('!username' => $this->name)); ?>" class="hide-for-medium"><?= $this->name; ?></h3>
 
   <div class="pcard">
    <header<?= (!empty($this->bild) ? ' style="background-image:url('.$this->bild.');"' : ''); ?>>
@@ -100,7 +103,7 @@
  </aside>
  <section id="project-content" class="large-7 large-offset-1 columns">
 
-  <ol id="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+  <ol id="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList" class="hide-for-small-only">
    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
     <a itemprop="item" href="<?= $base_url; ?>">
     <span itemprop="name" title="<?= t('Startseite'); ?>"><?= t('Startseite'); ?></span></a>

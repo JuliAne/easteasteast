@@ -561,7 +561,6 @@ Class events extends aae_data_helper {
     $filteredEventIds[] = $child->EID;
    }
   }
-return $filteredEventIds;
 
   if ($this->allowDuplicates){
    return $filteredEventIds;

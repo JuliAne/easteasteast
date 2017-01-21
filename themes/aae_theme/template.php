@@ -1,5 +1,7 @@
 <?php
 
+ global $user;
+
 // define('aae-version', 0.1);
 // TODO: Implement mobileDetect-library/-module to save performance on some scripts
 
@@ -281,8 +283,16 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
   }
  }
 
- function aae_css_alter(&$css) {
+ function aae_js_alter(&$js){
+  // Remove Drupal core- and modules-JS
+  global $user;
 
+  if (!array_intersect(array('redakteur','administrator'), $user->roles)) {
+  unset($js['misc/drupal.js']);
+  }
+ }
+
+ function aae_css_alter(&$css) {
  // Remove Drupal core css
 
  global $user;
@@ -322,10 +332,11 @@ function aae_form_alter(&$form, &$form_state, $form_id) {
  'modules/tracker/tracker.css' => FALSE,
  'modules/update/update.css' => FALSE,
  'modules/user/user.css' => FALSE,
+ 'modules/logintoboggan/logintoboggan.css' => FALSE,
+ 'modules/ctools/css/ctools.css' => FALSE,
  'misc/vertical-tabs.css' => FALSE,
-
- // Remove contrib module CSS
  drupal_get_path('module', 'views') . '/css/views.css' => FALSE, );
+
  $css = array_diff_key($css, $exclude);
 
  }

@@ -13,9 +13,11 @@
 ?>
 <div id="fullpage">
 
+ <div id="bgImageWrapper"></div>
+
  <section class="section" id="startSection">
 
-  <div class="slide whiteText" id="slide0">
+  <div class="row slide whiteText" id="slide0">
     <h1>Den Leipziger Osten entdecken.</h1>
     <p>Deine Stadtteilplattform: Erfahre mehr über Vereine, Initiativen und Akteure aus Deiner Umgebung,</p>
     <p>werde Teil der Community und registriere dich.</p>
@@ -28,13 +30,13 @@
 
   <section class="section" id="aboutEcken">
 
-    <div class="row">
-     <div class="aaeHeadline">
-      <h1 id="dieEckenLink" class="active"><?= t('Die Ecken'); ?></h1>
-      <h1 id="journalLink"><?= t('Digitales Stadtteiljournal'); ?></h1>
-      <a href="https://leipziger-ecken.de/rss.xml" id="rss" class="small button hide-for-small-only right" title="<?= t('Beiträge als RSS'); ?>"><img id="svg_logo" src="/sites/all/themes/aae_theme/img/rss.svg"></a>
-      <a href="<?= base_path(); ?>journal" id="fullJournalLink" class="small button hollow transparent right"><?= t('Zum Journal'); ?></a>
-     </div>
+   <div class="row hide-for-small-only">
+    <div class="aaeHeadline">
+     <h1 id="dieEckenLink" class="active"><?= t('Die Ecken'); ?></h1>
+     <h1 id="journalLink"><?= t('Digitales Stadtteiljournal'); ?></h1>
+     <a href="https://leipziger-ecken.de/rss.xml" id="rss" class="small button hide-for-small-only right" title="<?= t('Beiträge als RSS'); ?>"><img id="svg_logo" src="/sites/all/themes/aae_theme/img/rss.svg"></a>
+     <a href="<?= base_path(); ?>journal" id="fullJournalLink" class="small button hollow transparent right"><?= t('Zum Journal'); ?></a>
+    </div>
    </div>
 
    <div id="aboutEckenWelcome" class="slide">
@@ -43,11 +45,11 @@
 
     <div class="large-4 columns" id="mainTable">
      <h3>Vernetzt und kooperativ für ein buntes Leipzig.</h3>
-     <p>Die <strong>Leipziger Ecken</strong> sind ein einzigartiges Web-Format für zivile Akteure aus den Bezirken des Leipziger Ostens.</p>
-     <p>Mit unseren freien Tools möchten wir gelebtes Engagement, Kreativität und Schaffenskultur für unsere Nachbarn und Gäste sichtbar machen und Zugangspunkte schaffen.</p>
+     <p>Die <span>Leipziger Ecken</span> sind ein einzigartiges Web-Format für zivile Akteure aus den Bezirken des Leipziger Ostens.</p>
+     <p>Mit unseren freien Tools möchten wir gelebtes Engagement, Kreativität und Schaffenskultur für unsere Nachbarn und Gäste sichtbar machen und Sprachrohre schaffen.</p>
     </div>
 
-    <div class="large-7 right hide-for-small-only columns">
+    <div class="large-7 right columns">
     
     <div class="large-12 infoTable columns">
      <h3>Hereinspaziert...</h3>
@@ -61,7 +63,7 @@
 
     </div>
 
-    <div id="bottomJournalLink" class="large-4 columns hide-on-small-only left">
+    <div id="bottomJournalLink" class="large-4 columns hide-for-small-only left">
      <a href="#">&#62; <?= t('Zur Journalvorschau'); ?></a>
     </div>
 
@@ -80,7 +82,7 @@
     <div class="row">
      <div class="aaeHeadline large-2 columns right">
       <h1><span><strong><?= t('Nächste Events'); ?></strong></span></h1>
-      <a href="<?= base_path(); ?>events/rss" id="rss" class="small button hide-for-small-only" title="<?= t('Alle Events als RSS-Feed abonnieren'); ?>"><img id="svg_logo" src="/sites/all/themes/aae_theme/img/rss.svg"></a>
+      <a href="<?= base_path(); ?>events/rss" id="rss" class="small button hide-for-small-only" title="<?= t('Alle Events als RSS-Feed abonnieren'); ?>"><img id="svg_logo" src="/sites/all/themes/aae_theme/img/rss.svg"><?= t('Events via RSS'); ?></a>
       <a href="<?= base_path(); ?>events" class="small button transparent hollow"><?= t('Alle Events'); ?></a>
      </div>
 
@@ -130,7 +132,7 @@
 
       foreach ($blocks->print_letzte_akteure(8) as $count => $akteur) : ?>
       <a href="<?= base_path().'akteurprofil/'.$akteur->AID; ?>" title="<?= t('Akteurprofil von !username', array('!username' => $akteur->name)); ?>">
-      <div class="large-3 small-5 columns pcard<?= ($count >= 4 ? ' show-for-medium':''); ?>">
+      <div class="large-3 small-5 columns pcard<?= ($count >= 6 ? ' show-for-medium':''); ?><?= (!empty($akteur->bild) ? ' hasBg' : ''); ?>">
        <header <?= (!empty($akteur->bild) ? 'style="background-image:url('.$akteur->bild.');"' : ''); ?><?= ($akteur->renderSmallName ? ' class="renderSmallName"' : ''); ?>></header>
          <h3><p class="akteurname"><?= $akteur->name; ?></p>
          <?php if (!empty($akteur->bezirk)) : ?><p class="plocation"><img src="/sites/all/themes/aae_theme/img/location.svg" /><?= $akteur->bezirk; ?></p><?php endif; ?></h3>

@@ -1385,17 +1385,10 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
 
 @media only screen and (max-width: 38em){
   /* mobile only */
-
   #fp-nav {display:none !important;}
   #mainnav #actions {margin-right: 10px;}
-  #fullpage { margin-top: 40px;}
-  #fullpage #slideSection h1 { padding-top:10px;padding-bottom:30px;font-size:2.4em !important; }
-  #hitMeScrollMe {display:none !important;}
   .fp-slides .slide {background-size:300% !important;}
   .fp-tableCell {padding:8px;}
-  #fullpage .section {font-size:0.9em;}
-  #fullpage .pcard {width:47% !important;}
-  #fullpage #hitMeScrollMe {width:60px !important;height:60px !important;left:42% !important;padding:4px 9px !important;margin-top:-87px !important;}
   .popup { position: fixed;margin-top:28px !important;width:98% !important;margin-left:0 !important;left:0; }
   #akteureContent { min-width:100% !important; }
   #project #project-content h1 { position: absolute;top:-100px; }
@@ -1403,7 +1396,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   .fp-controlArrow { top: 18% !important; }
   .fp-controlArrow.fp-prev { border-width: 21.5px 21px 21.5px 0!important;left:unset !important;right:54px; }
   .fp-controlArrow.fp-next { border-width: 21.5px 0 21.5px 21px!important; }
-  #footer {background-size:350%;}
+  #footer {background-size:350%;margin-top:0;}
   #imgSlideSection .slide {  background-position: top center; }
   section#journal .large-2.columns { width: 25% !important;height:83px; }
   section#journal .large-8.columns { min-height:auto !important;}
@@ -1413,7 +1406,7 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   .tagcloud { display:none; }
   #akteure .pcard { width: 41.66667%;overflow: hidden; }
   #akteure .pcard header { min-width:205px !important;height:100px !important; }
-  .pageHeader {background-size:150% !important;background-position:top center !important;}
+  .pageHeader {background-size:155% !important;background-position:top center !important;}
   #eventsPageHeader {color:#fff!important;}
   .aaeModal .aaeModalWrapper {width:85% !important;}
   .singlesite #footer {height:auto;background-repeat:repeat;}
@@ -1421,8 +1414,10 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   .jEntry:last-child:not(:first-child) {float:unset !important;}
   .jEntryPrev { height:95px; }
   #user-register-form { width: 95% !important; }
-
   .aaeEventTags, .aaeEventDate { max-width:unset !important; }
+  .tabs-title > a { padding: 1.2rem 1.5rem;}
+  .singlesite #footer .row {margin:0;}
+  .jEntry {margin-left:0 !important;}
 }
 @media only screen and (max-width:64em){
  /* tablet and downwards */

@@ -58,6 +58,7 @@
   <meta itemprop="name" content="<?= $this->seoName; ?>" />
 
   <div id="event-data" class="large-4 columns">
+   <h3 id="mobileTitle" title="<?= $this->name; ?>" class="hide-for-medium"><?= $this->name; ?></h3>
     <div class="pcard">
      <header <?php if (!empty($this->bild)) echo 'style="background-image:url('.$this->bild.');"'; ?>>
       <?php if (!empty($this->bild)) echo '<img src="'.$this->bild.'" style="visbility:hidden;" itemprop="image" alt="'. t('Logo vom Event').'" />';
@@ -130,7 +131,7 @@
 </div>
 
 <div id="project-content" class="large-7 large-offset-1 columns">
-  <ol id="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList">
+  <ol id="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList" class="hide-for-small-only">
    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
      <a itemprop="item" href="<?= $base_url; ?>">
      <span itemprop="name" title="<?= t('Startseite'); ?>"><?= t('Startseite'); ?></span></a>

@@ -24,11 +24,9 @@ class eventprofil extends events {
 
  public function run(){
 
-  $this->__setSingleEventVars(reset($this->getEvents(array('EID' => $this->event_id), 'complete')));
+  $eventResult = reset($this->getEvents(array('EID' => $this->event_id), 'complete'));
   
-  $this->isOwner = $this->isAuthorized($this->event_id);
-  
-  if (empty($this->name) || !isset($this->name)) {
+  if (empty($eventResult)) {
 
    // Event not existing
    if (session_status() == PHP_SESSION_NONE) session_start();
@@ -36,6 +34,9 @@ class eventprofil extends events {
    header("Location: ". $base_url ."/events");
 
   }
+  
+  $this->__setSingleEventVars($eventResult);
+  $this->isOwner = $this->isAuthorized($this->event_id);
 
   if (!empty($this->adresse->gps_lat)) {
   

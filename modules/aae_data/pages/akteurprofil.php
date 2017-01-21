@@ -25,8 +25,10 @@ class akteurprofil extends akteure {
   $this->hasPermission = $this->isAuthorized($this->akteur_id);
 
   $this->__setSingleAkteurVars(reset($this->getAkteure(array('AID' => $this->akteur_id), 'complete')));
-
+  
   if (empty($this->name)) {
+
+   // Well, not very beautiful, cuz if __setSingleAk... throws an error, we are done...
 
    if (session_status() == PHP_SESSION_NONE) session_start();
    drupal_set_message(t('Dieses Akteurprofil konnte nicht gefunden werden...'));
