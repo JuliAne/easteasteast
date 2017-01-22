@@ -11,14 +11,15 @@
 
 <div class="aaeActionBar">
  <div class="row">
-  <?php if ($this->hasPermission): ?>
-  <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/edit" title="<?= t('Akteur bearbeiten'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" /><?= t('Bearbeiten'); ?></a></div>
-  <?php endif; ?>
-  <nav class="large-6 columns right" style="text-align: right;">
+  <nav class="large-12 columns">
    <ul>
-    <li><a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/vcard_download" title="Akteur als .vcard exportieren">Export (VCard)</a>
-    <li><a href="https://leipziger-ecken.de/contact" title="<?= t('Das Profil wurde unbefugt erstellt? Melden Sie sich hier.'); ?>" class="hide-for-small-only"><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" /><?= t('Melden'); ?></a>
-    <li><a href="#share" class="popup-link" title="Akteursseite in den sozialen Netzwerken posten"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" /><?= t('Teilen'); ?></a>
+    <li class="toggleActionBar hide-for-medium"><a href="#"><img src="<?= base_path().path_to_theme(); ?>/img/toggleBubbles.svg" /></a></li>
+    <?php if ($this->hasPermission): ?>
+    <li class="editBtn"><a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/edit" title="<?= t('Akteur bearbeiten'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" /><?= t('Bearbeiten'); ?></a></li>
+    <?php endif; ?>
+    <li><a href="<?= base_path(); ?>akteurprofil/<?= $this->akteur_id; ?>/vcard_download" title="Akteur als .vcard exportieren">Export (VCard)</a></li>
+    <li><a href="https://leipziger-ecken.de/contact" title="<?= t('Das Profil wurde unbefugt erstellt? Melden Sie sich hier.'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" /><?= t('Melden'); ?></a></li>
+    <li><a href="#share" class="popup-link" title="Akteursseite in den sozialen Netzwerken posten"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" /><?= t('Teilen'); ?></a></li>
     <div id="share" class="popup large-3 columns">
      <a target="_blank" href="https://twitter.com/intent/tweet?text=<?php global $base_url;
  echo $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen', array('!network' => 'Twitter')); ?>" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/social-twitter.svg"><span></span></a>

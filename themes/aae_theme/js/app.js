@@ -208,10 +208,17 @@ function getLocation() {
   }
 }
 
-
  $('#mainnav #actions #searchByLocation').click(function(){
   getLocation();
   return false;
+ });
+
+ $('.aaeActionBar .toggleActionBar').click(function(){
+ if ($('.aaeActionBar').hasClass('toggled')){
+  $('.aaeActionBar').removeClass('toggled');
+ } else {
+  $('.aaeActionBar').addClass('toggled');
+ }
  });
 
 

@@ -581,6 +581,20 @@ transform: rotate(-10deg);
  background: rgba(27, 27, 27, 0.61);
 }
 
+.aaeActionBar ul {
+ float: right;
+ text-align: right;
+ width: 100%;
+}
+
+.aaeActionBar ul li {
+ float: right;
+}
+
+.aaeActionBar ul li.editBtn {
+  float: left;
+  margin-left: 108px;
+}
 .aaeActionBar img {
  width: 19px;
  padding-right: 6px;
@@ -1418,6 +1432,18 @@ section#journal .row.article .large-8.large-offset-2.columns br:after {
   .tabs-title > a { padding: 1.2rem 1.5rem;}
   .singlesite #footer .row {margin:0;}
   .jEntry {margin-left:0 !important;}
+  .aaeActionBar {padding-top:0;transition:all 0.25s;overflow:hidden;}
+  .aaeActionBar ul li.toggleActionBar {border-bottom:unset;}
+  .aaeActionBar.toggled ul li.toggleActionBar{border-bottom:1px solid #fff;}
+  .aaeActionBar.toggled {height:auto;}
+  .aaeActionBar ul, .aaeActionBar ul li {float:unset !important;width:100%;text-align:center;}
+  .aaeActionBar ul li {border-bottom:1px solid #fff;margin-left:0 !important;}
+  .aaeActionBar ul li:last-child {border-bottom:unset;}
+  .aaeActionBar ul li a {border:unset;line-height:3em;}
+  .aaeActionBar ul li.toggleActionBar img {width:38px;float:right;padding-top:20px;}
+  .aaeActionBar #share {margin-top:-2px !important;}
+  .aaeActionBar #share:before{margin-left:47% !important;}
+  .aaeActionBar #share a {line-height:unset;}
 }
 @media only screen and (max-width:64em){
  /* tablet and downwards */

@@ -34,25 +34,28 @@
 </header>
 
 <div class="aaeActionBar">
- <div class="row" style="margin: 0 auto;">
- <?php if ($this->isOwner) : ?>
-  <div class="large-3 large-offset-1 columns"><a href="<?= base_path(); ?>eventprofil/<?= $this->event_id; ?>/edit" title="<?= t('Event bearbeiten'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" /><?= t('Bearbeiten'); ?></a></div>
- <?php endif; ?>
-  <div class="large-5 columns right" style="text-align: right;">
-   <a href="<?= base_path(); ?>eventprofil/<?= $this->event_id; ?>/ics_download/" title="<?= t('Event Als .ical exportieren'); ?>">Export (iCal)</a>
-   <a href="https://leipziger-ecken.de/contact" title="<?= t('Dieses Event wurde unbefugt erstellt? Melden Sie sich hier.'); ?>" class="hide-for-small-only"><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" /><?= t('Melden'); ?></a>
-   <a href="#share" class="popup-link" title="<?= t('Event in den sozialen Netzwerken teilen'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" /><?= t('Teilen'); ?></a>
-   <div id="share" class="popup large-3 columns">
-    <a target="_blank" href="https://twitter.com/intent/tweet?text=<?php global $base_url; echo $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Twitter')); ?>" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/social-twitter.svg"><span></span></a>
-    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Facebook')); ?>" class="fb button"><img alt="Facebook" src="<?= base_path().path_to_theme(); ?>/img/social-facebook.svg"><span></span></a>
-    <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Google+')); ?>" class="g_plus button"><img alt="Google+" src="<?= base_path().path_to_theme(); ?>/img/social-googleplus-outline.svg"><span></span></a>
-    <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $this->seoName . ' '. t('auf leipziger-ecken.de'); ?>&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="<?= t('Auf !network teilen',array('!network'=>'Diaspora/Friendica')); ?>"><img alt="Federated networks" src="<?= base_path().path_to_theme(); ?>/img/social-diaspora.svg"></a>
+ <div class="row">
+  <nav class="large-12 columns">
+   <ul>
+    <li class="toggleActionBar hide-for-medium"><a href="#"><img src="<?= base_path().path_to_theme(); ?>/img/toggleBubbles.svg" /></a></li>
+    <?php if ($this->isOwner) : ?>
+    <li class="editBtn"><a href="<?= base_path(); ?>eventprofil/<?= $this->event_id; ?>/edit" title="<?= t('Event bearbeiten'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/manage.svg" /><?= t('Bearbeiten'); ?></a></li>
+    <?php endif; ?>
+    <li><a href="<?= base_path(); ?>eventprofil/<?= $this->event_id; ?>/ics_download/" title="<?= t('Event Als .ical exportieren'); ?>">Export (iCal)</a>
+    <li><a href="https://leipziger-ecken.de/contact" title="<?= t('Dieses Event wurde unbefugt erstellt? Melden Sie sich hier.'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/fake.svg" /><?= t('Melden'); ?></a>
+    <li><a href="#share" class="popup-link" title="<?= t('Event in den sozialen Netzwerken teilen'); ?>"><img src="<?= base_path().path_to_theme(); ?>/img/share.svg" /><?= t('Teilen'); ?></a>
+    <div id="share" class="popup large-3 columns">
+     <a target="_blank" href="https://twitter.com/intent/tweet?text=<?php global $base_url; echo $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Twitter')); ?>" class="twitter button"><img alt="Twitter" src="<?= base_path().path_to_theme(); ?>/img/social-twitter.svg"><span></span></a>
+     <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=<?= $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Facebook')); ?>" class="fb button"><img alt="Facebook" src="<?= base_path().path_to_theme(); ?>/img/social-facebook.svg"><span></span></a>
+     <a target="_blank" href="https://plus.google.com/share?url=<?= $base_url.'/'.current_path(); ?>" title="<?= t('Auf !network teilen',array('!network'=>'Google+')); ?>" class="g_plus button"><img alt="Google+" src="<?= base_path().path_to_theme(); ?>/img/social-googleplus-outline.svg"><span></span></a>
+     <a target="_blank" href="https://sharetodiaspora.github.io/?title=<?= $this->seoName . ' '. t('auf leipziger-ecken.de'); ?>&url=<?= $base_url.'/'.current_path(); ?>" class="diaspora button" title="<?= t('Auf !network teilen',array('!network'=>'Diaspora/Friendica')); ?>"><img alt="Federated networks" src="<?= base_path().path_to_theme(); ?>/img/social-diaspora.svg"></a>
     </div>
-   </div>
-  </div>
- </div><!-- /.aaeActionBar -->
+   </ul>
+  </nav>
+ </div>
+</div>
 
- <div id="project" class="row" itemscope itemtype="http://schema.org/Event">
+<div id="project" class="row" itemscope itemtype="http://schema.org/Event">
   <?php global $base_root; ?>
   <meta itemprop="url" content="<?= $base_root .'/eventprofil/'.$this->event_id; ?>" />
   <meta itemprop="name" content="<?= $this->seoName; ?>" />

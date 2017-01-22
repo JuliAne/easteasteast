@@ -135,6 +135,10 @@
   color: #fff;
 }
 
+#project h3#mobileTitle {
+  text-align: center;
+}
+
 #project #breadcrumb li#activeEvent a {
   color: #fff;
 }
@@ -232,4 +236,5 @@
  #project #eventSparten, #project #akteurSparten {
   text-align:center;
  }
+
 }
