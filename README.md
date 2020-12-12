@@ -1,5 +1,7 @@
 # easteasteast
 
+## THIS IS AN ARCHIVE! You can find the current version of Leipziger Ecken [here](https://github.com/Leipziger-Ecken/drupal).
+
 *Deine soziale Stadtteilplattform powered by Drupal.*
 Alpha, alpha everywhere. If you'd like to join us take a look @ https://leipziger-ecken.de/faq
 
